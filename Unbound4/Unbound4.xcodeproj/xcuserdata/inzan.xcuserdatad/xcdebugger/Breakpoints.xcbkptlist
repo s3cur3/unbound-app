@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound4/AppDelegate.m"
-         timestampString = "371000831.295412"
+         timestampString = "371005887.874191"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "102"
-         endingLineNumber = "102"
+         startingLineNumber = "103"
+         endingLineNumber = "103"
          landmarkName = "-loadDataWithPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -515,11 +515,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound4/AppDelegate.m"
-         timestampString = "370991558.857559"
+         timestampString = "371005887.874191"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "44"
-         endingLineNumber = "44"
+         startingLineNumber = "45"
+         endingLineNumber = "45"
          landmarkName = "-loadDataWithPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -528,11 +528,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound4/AppDelegate.m"
-         timestampString = "371000831.295412"
+         timestampString = "371005887.874191"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "117"
-         endingLineNumber = "117"
+         startingLineNumber = "118"
+         endingLineNumber = "118"
          landmarkName = "-loadDataFromDefaults"
          landmarkType = "5">
       </FileBreakpoint>
@@ -554,11 +554,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound4/AppDelegate.m"
-         timestampString = "371000831.295412"
+         timestampString = "371005887.874191"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "55"
-         endingLineNumber = "55"
+         startingLineNumber = "56"
+         endingLineNumber = "56"
          landmarkName = "-loadDataWithPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -580,7 +580,46 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound4/AppDelegate.m"
-         timestampString = "371000831.295412"
+         timestampString = "371005887.874191"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "111"
+         endingLineNumber = "111"
+         landmarkName = "-loadDataWithPath:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound4/AppDelegate.m"
+         timestampString = "371005887.874191"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "82"
+         endingLineNumber = "82"
+         landmarkName = "-loadDataWithPath:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound4/AppDelegate.m"
+         timestampString = "371005887.874191"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "88"
+         endingLineNumber = "88"
+         landmarkName = "-loadDataWithPath:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound4/AppDelegate.m"
+         timestampString = "371005887.874191"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "110"
@@ -593,76 +632,37 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound4/AppDelegate.m"
-         timestampString = "371000831.295412"
+         timestampString = "371005887.874191"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "97"
+         endingLineNumber = "97"
+         landmarkName = "-loadDataWithPath:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound4/AppDelegate.m"
+         timestampString = "371005887.874191"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "95"
+         endingLineNumber = "95"
+         landmarkName = "-loadDataWithPath:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound4/AppDelegate.m"
+         timestampString = "371005887.874191"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "81"
          endingLineNumber = "81"
-         landmarkName = "-loadDataWithPath:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Unbound4/AppDelegate.m"
-         timestampString = "371000831.295412"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "87"
-         endingLineNumber = "87"
-         landmarkName = "-loadDataWithPath:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Unbound4/AppDelegate.m"
-         timestampString = "371000831.295412"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "109"
-         endingLineNumber = "109"
-         landmarkName = "-loadDataWithPath:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Unbound4/AppDelegate.m"
-         timestampString = "371000831.295412"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "96"
-         endingLineNumber = "96"
-         landmarkName = "-loadDataWithPath:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Unbound4/AppDelegate.m"
-         timestampString = "371000831.295412"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "94"
-         endingLineNumber = "94"
-         landmarkName = "-loadDataWithPath:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Unbound4/AppDelegate.m"
-         timestampString = "371000831.295412"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "80"
-         endingLineNumber = "80"
          landmarkName = "-loadDataWithPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -676,8 +676,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "152"
          endingLineNumber = "152"
-         landmarkName = "-outlineView:numberOfChildrenOfItem:"
-         landmarkType = "5">
+         landmarkName = "@implementation MainViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -689,8 +689,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "157"
          endingLineNumber = "157"
-         landmarkName = "-outlineView:isItemExpandable:"
-         landmarkType = "5">
+         landmarkName = "@implementation MainViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -702,8 +702,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "163"
          endingLineNumber = "163"
-         landmarkName = "-outlineView:child:ofItem:"
-         landmarkType = "5">
+         landmarkName = "@implementation MainViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -715,11 +715,11 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "169"
          endingLineNumber = "169"
-         landmarkName = "-outlineView:objectValueForTableColumn:byItem:"
-         landmarkType = "5">
+         landmarkName = "@implementation MainViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound4/MainViewController.m"
@@ -732,7 +732,7 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound4/MainViewController.m"
@@ -745,7 +745,7 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound4/MainViewController.m"
@@ -762,12 +762,51 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound4/AppDelegate.m"
-         timestampString = "371000831.295412"
+         timestampString = "371005887.874191"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "91"
-         endingLineNumber = "91"
+         startingLineNumber = "92"
+         endingLineNumber = "92"
          landmarkName = "-loadDataWithPath:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound4/ItemCellView.m"
+         timestampString = "371006223.424724"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "36"
+         endingLineNumber = "36"
+         landmarkName = "-layoutViewsForLargeSize:animated:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound4/ItemCellView.m"
+         timestampString = "371006226.37348"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "25"
+         endingLineNumber = "25"
+         landmarkName = "-setObjectValue:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound4/MainViewController.m"
+         timestampString = "371007512.552656"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "103"
+         endingLineNumber = "103"
+         landmarkName = "-zoomSliderDidChange:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

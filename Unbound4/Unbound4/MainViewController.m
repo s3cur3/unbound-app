@@ -65,7 +65,7 @@ static NSArray *openFiles()
     
     _tableContents = [[AppDelegate applicationDelegate] subdirectoryArray];
     
-    [self.tableView reloadData];
+    //[self.tableView reloadData];
 }
 
 -(void) loadView
@@ -147,7 +147,7 @@ static NSArray *openFiles()
 // Data Source methods
 
 
-- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item {
+/*- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item {
     
     return (item == nil) ? 1 : [item numberOfChildren];
 }
@@ -167,7 +167,7 @@ static NSArray *openFiles()
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item {
     NSString *rootPath = [[AppDelegate applicationDelegate] currentFilePath];
     return (item == nil) ? rootPath : [item relativePath];
-}
+}*/
 
 
 

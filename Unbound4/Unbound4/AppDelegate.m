@@ -23,6 +23,7 @@
     [self loadDataFromDefaults];
     self.mainWindowController = [[MainWindowController alloc] initWithWindow:self.window];
     self.window.delegate = self.mainWindowController;
+    [self.mainWindowController showWindow:self];
 }
 
 

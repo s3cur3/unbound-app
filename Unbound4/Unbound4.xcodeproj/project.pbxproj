@@ -36,6 +36,7 @@
 /* Begin PBXFileReference section */
 		1D0EA385161B9A88002937EA /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
 		1D0EA386161B9A88002937EA /* MainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindowController.m; sourceTree = "<group>"; };
+		1D3DE745161E8EC400805174 /* Unbound4.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Unbound4.entitlements; sourceTree = "<group>"; };
 		1D5E77F2161A40CF006FD2AF /* Unbound4.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unbound4.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D5E77F6161A40CF006FD2AF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		1D5E77F9161A40CF006FD2AF /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -129,6 +130,7 @@
 		1D5E77FC161A40CF006FD2AF /* Unbound4 */ = {
 			isa = PBXGroup;
 			children = (
+				1D3DE745161E8EC400805174 /* Unbound4.entitlements */,
 				1DA7DA56161CD0D900CAAC5F /* Item.h */,
 				1DA7DA57161CD0D900CAAC5F /* Item.m */,
 				1DA7DA58161CD0D900CAAC5F /* ItemCellView.h */,
@@ -355,6 +357,8 @@
 		1D5E7811161A40CF006FD2AF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Unbound4/Unbound4.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Unbound4/Unbound4-Prefix.pch";
@@ -367,6 +371,8 @@
 		1D5E7812161A40CF006FD2AF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Unbound4/Unbound4.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Unbound4/Unbound4-Prefix.pch";
