@@ -13,6 +13,8 @@
 #import <AppKit/NSPathComponentCell.h>
 #import <Quartz/Quartz.h>
 
+@class PageViewController;
+
 @interface MainWindowController : NSObject <NSWindowDelegate, NSPathControlDelegate>
 {
 @private
@@ -34,10 +36,14 @@
 @property(readwrite,retain) NSMutableArray * browserData;
 @property IBOutlet IKImageBrowserView * browserView;
 @property (nonatomic, assign) IBOutlet NSTableView *tableView;
+@property (nonatomic, strong) PageViewController *pageViewController;
+@property (nonatomic, strong) NSView *mainContentView;
 
 //- (IBAction)predicateEditorChanged:(id)sender;
 
 - (IBAction)searchLocationChanged:(id)sender;
 - (IBAction)zoomSliderDidChange:(id)sender;
+
+-(void)showMainView;
 
 @end

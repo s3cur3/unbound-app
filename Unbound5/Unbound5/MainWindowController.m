@@ -8,7 +8,10 @@
 
 #import "MainWindowController.h"
 #import "SearchQuery.h"
-#import "IKBBrowserItem.h"
+//#import "IKBBrowserItem.h"
+#import "PageViewController.h"
+#import "ImageViewController.h"
+#import "IKImageViewController.h"
 
 @interface MainWindowController()
 
@@ -18,6 +21,7 @@
 @end
 
 @implementation MainWindowController
+
 
 - (void)awakeFromNib {
     
@@ -31,13 +35,35 @@
                                                         options:NSURLBookmarkResolutionWithSecurityScope
                                                   relativeToURL:nil
                                             bookmarkDataIsStale:nil
-                                                          error:&error];
+                                                        error:&error];
+    } else {
+        NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+        [openPanel setAllowsMultipleSelection:NO];
+        [openPanel setMessage:@"Choose a location to search for photos and images:"];
+        [openPanel setCanChooseDirectories:YES];
+        [openPanel setCanChooseFiles:NO];
+        [openPanel setPrompt:@"Choose"];
+        [openPanel setTitle:@"Choose Location"];
+        
+        // set the default location to the Documents folder
+        NSArray *documentsFolderPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSURL *dbURL = [NSURL URLWithString:@"/Users/inzan/Documents/Dropbox"];
+        [openPanel setDirectoryURL:dbURL];
+        //[openPanel setDirectoryURL:[NSURL fileURLWithPath:[documentsFolderPath objectAtIndex:0]]];
+        [openPanel beginSheetModalForWindow:window
+                          completionHandler:^(NSInteger returnCode) {
+                              /* the completion handler */
+                              NSLog(@"done open panel");
+                          }];
+        //[NSApp runModalForWindow:panel];
+        //[window addChildWindow:panel ordered:NSWindowAbove];
+        return;
     }
     
     self.directoryArray = [[NSMutableArray alloc] init];
     self.browserData = [[NSMutableArray alloc] init];
     iSearchQueries = [[NSMutableArray alloc] init];
-    iThumbnailSize = 32.0;
+    //iThumbnailSize = 32.0;
     
 
     
@@ -120,7 +146,13 @@
         //[[query _searchURL] stopAccessingSecurityScopedResource];
     }
     [self.searchLocation stopAccessingSecurityScopedResource];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     return YES;
+}
+
+-(void)showMainView
+{
+    [window setContentView:self.mainContentView];
 }
 
 //- (void)createNewSearchForPredicate:(NSPredicate *)predicate withTitle:(NSString *)title withScopeURL:(NSURL *)url
@@ -308,7 +340,7 @@
     [openPanel setTitle:@"Choose Location"];
     
     // set the default location to the Documents folder
-    NSArray *documentsFolderPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSArray *documentsFolderPath = NSSearchPathForDirectoriesInDomains(NSUserDirectory, NSUserDomainMask, YES);
     [openPanel setDirectoryURL:[NSURL fileURLWithPath:[documentsFolderPath objectAtIndex:0]]];
 }
 
@@ -361,6 +393,7 @@
 
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification
 {
+    NSLog(@"tableViewSelectionDidChange : %@", aNotification.object);
     NSDictionary *newDir =  [self.directoryArray objectAtIndex:[self.tableView selectedRow]];
     
     //[self.browserData removeAllObjects];
@@ -402,6 +435,104 @@
     return nil;
 }*/
 
+
+// -------------------------------------------------------------------------------
+//	imageBrowserSelectionDidChange:aBrowser
+//
+//	User chose a new image from the image browser.
+// -------------------------------------------------------------------------------
+- (void)imageBrowserSelectionDidChange:(IKImageBrowserView *)aBrowser
+{
+	/*NSIndexSet *selectionIndexes = [aBrowser selectionIndexes];
+     
+     if ([selectionIndexes count] > 0)
+     {
+     NSDictionary *screenOptions = [[NSWorkspace sharedWorkspace] desktopImageOptionsForScreen:curScreen];
+     
+     MyImageObject *anItem = [images objectAtIndex:[selectionIndexes firstIndex]];
+     NSURL *url = [anItem imageRepresentation];
+     
+     NSNumber *isDirectoryFlag = nil;
+     if ([url getResourceValue:&isDirectoryFlag forKey:NSURLIsDirectoryKey error:nil] && ![isDirectoryFlag boolValue])
+     {
+     /*NSError *error = nil;
+     [[NSWorkspace sharedWorkspace] setDesktopImageURL:url
+     forScreen:curScreen
+     options:screenOptions
+     error:&error];
+     if (error)
+     {
+     [NSApp presentError:error];
+     }* /
+     
+     //IKImageEditPanel *editor = [IKImageEditPanel sharedImageEditPanel];
+     IKImageView *anImageView = [[IKImageView alloc] init];
+     [anImageView setImageWithURL: url];
+     //[editor setDataSource: anImageView];
+     //[anImageView makeKeyAndOrderFront: nil];
+     
+     }
+     }*/
+    
+    NSLog(@"imageBrowserSelectionDidChange");
+}
+
+// -------------------------------------------------------------------------------
+//  imageBrowser:cellWasDoubleClickedAtIndex:index
+// -------------------------------------------------------------------------------
+- (void)imageBrowser:(IKImageBrowserView *)aBrowser cellWasDoubleClickedAtIndex:(NSUInteger)index
+{
+    //[_imageBrowser setHidden:YES];
+    /*MyImageObject *anItem = (MyImageObject *)[_images objectAtIndex:index];
+     //NSURL *dirURL = [NSURL fileURLWithPath:@"/Users/inzan/Dropbox/Camera Uploads"];
+     //NSURL *url = [NSURL fileURLWithPath:[anItem imageRepresentation]];
+     //[_imageView setHidden:NO];
+     //NSData *data = UIImageJPEGRepresentation(anItem.image, 1.0);
+     NSImage *anImage = anItem.image;
+     //CIImage * image = [CIImage imageWithContentsOfURL: anItem.url];
+     NSImageView *anImageView = [[NSImageView alloc] initWithFrame:CGRectMake(0,0,400,400)];
+     [anImageView setImage:anImage];
+     //CGImageRef imageRef = anImage.CGImage;
+     //[_imageView setImageWithURL:url];
+     
+     [anImageView setNeedsDisplay:YES];
+     [aBrowser addSubview:anImageView];
+     [aBrowser setNeedsDisplay:YES];*/
+    
+    
+    
+    //[[[AppDelegate applicationDelegate] mainWindowController] showPageViewForIndex:index];
+    
+    
+    self.pageViewController = [[PageViewController alloc] initWithNibName:@"PageViewController" bundle:nil];
+    NSInteger selectedRow = self.tableView.selectedRow;
+    if (selectedRow<0 || selectedRow>[self.directoryArray count]) {
+        selectedRow = 0;
+    }
+    NSURL *aURL = [[self.directoryArray objectAtIndex:selectedRow ] valueForKey:@"URL"];
+    self.pageViewController.directoryURL = aURL;
+    
+    self.pageViewController.searchData = self.browserData;
+    self.pageViewController.parentWindowController = self;
+    self.pageViewController.view.frame = ((NSView*)window.contentView).bounds;
+    self.mainContentView = window.contentView;
+    self.pageViewController.pageController.selectedIndex = index;
+    [window setContentView:self.pageViewController.view];
+    
+    
+    
+    
+    
+
+    
+    
+    /*ImageViewController *aViewController = [[ImageViewController alloc] initWithNibName:@"ImageViewController" bundle:nil];
+    aViewController.view.frame = ((NSView*)window.contentView).bounds;
+    [window setContentView:aViewController.view];*/
+    
+    
+    NSLog(@"cellWasDoubleClickedAtIndex");
+}
 
 
 @end
