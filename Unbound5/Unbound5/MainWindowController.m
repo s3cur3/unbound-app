@@ -190,10 +190,10 @@
 -(NSMutableArray *)searchItemsFromResults:(NSArray *)children forDirectory:(NSString *)path
 {
     //Add a trailing slash to match the metdataitems
-    if (![path hasSuffix:@"/"])
+    /*if (![path hasSuffix:@"/"])
     {
         path = [NSString stringWithFormat:@"%@/",path];
-    }
+    }*/
     NSMutableArray *tmpArray = [NSMutableArray arrayWithCapacity:[children count] ];
     for (SearchItem *item in children)
     {
@@ -204,10 +204,12 @@
         //NSLog(@"item : %@", [item debugDescription]);
 
         NSString *fullPath = [item.metadataItem valueForAttribute:(NSString *)kMDItemPath];
-        NSString *fileName = [item.metadataItem valueForAttribute:(NSString *)kMDItemFSName];
+        NSString *dirPath = [fullPath stringByDeletingLastPathComponent];
+        
+        /*NSString *fileName = [item.metadataItem valueForAttribute:(NSString *)kMDItemFSName];
         NSScanner *scanner = [NSScanner scannerWithString:fullPath];
         NSString *dirPath = nil;
-        [scanner scanUpToString:fileName intoString:&dirPath];
+        [scanner scanUpToString:fileName intoString:&dirPath];*/
 
         if ([path isEqualToString:dirPath])
         {
@@ -221,7 +223,7 @@
 - (void)queryChildrenChanged:(NSNotification *)note {
     NSLog(@"searchItemChanged : %@", note);
     SearchQuery *query = (SearchQuery *)[note object];
-    NSLog(@"children : %@", query.children);
+    //NSLog(@"children : %@", query.children);
     /*for (SearchItem *item in query.children)
     {
         NSLog(@"item : %@", [item debugDescription]);
@@ -277,6 +279,8 @@
     [currentDirectory setObject:dirURL forKey:@"URL"];
     [self.directoryArray addObject:currentDirectory];
     
+    self.selectedAlbum = currentDirectory;
+    
     NSDirectoryEnumerator *itr = [[NSFileManager defaultManager] enumeratorAtURL:dirURL includingPropertiesForKeys:[NSArray arrayWithObjects:NSURLLocalizedNameKey, NSURLEffectiveIconKey, NSURLIsDirectoryKey, NSURLTypeIdentifierKey, nil] options:NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsPackageDescendants /*| NSDirectoryEnumerationSkipsSubdirectoryDescendants*/ errorHandler:nil];
     
     for (NSURL *url in itr) {
@@ -326,6 +330,7 @@
     }
     
     [self.tableView reloadData];
+    [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
 }
 
 -(void)refreshBrowser
@@ -335,8 +340,9 @@
     //NSURL *url = self.searchLocation;
     
     //[self loadPhotosForURL:self.searchLocation];
-    [self createNewSearchForWithScopeURL:self.searchLocation];
     [self loadSubDirectoryInfo:self.searchLocation];
+    [self createNewSearchForWithScopeURL:self.searchLocation];
+    
     
     [self.browserView reloadData];
 }
@@ -437,6 +443,7 @@
 {
     NSLog(@"tableViewSelectionDidChange : %@", aNotification.object);
     NSDictionary *newDir =  [self.directoryArray objectAtIndex:[self.tableView selectedRow]];
+    self.selectedAlbum = newDir;
     
     //[self.browserData removeAllObjects];
     //[self.browserView reloadData];

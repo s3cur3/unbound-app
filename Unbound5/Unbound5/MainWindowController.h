@@ -39,6 +39,9 @@
 @property (nonatomic, strong) PageViewController *pageViewController;
 @property (nonatomic, strong) NSView *mainContentView;
 
+
+@property (nonatomic, strong) NSDictionary *selectedAlbum;
+
 //- (IBAction)predicateEditorChanged:(id)sender;
 
 - (IBAction)searchLocationChanged:(id)sender;
