@@ -16,7 +16,7 @@
 {
 	if (self = [super init]) {
 		self.image = [anImage copy];
-		imageID = [[anImageID lastPathComponent] copy];
+		//imageID = [[anImageID lastPathComponent] copy];
 	}
 	return self;
 }*/
@@ -30,7 +30,13 @@
 {
     //return IKImageBrowserNSURLRepresentationType;
 	//return IKImageBrowserPathRepresentationType;
-    return IKImageBrowserNSImageRepresentationType;
+    
+    if ([self.image class] == [NSImage class])
+    {
+        return IKImageBrowserNSImageRepresentationType;
+    } else {
+        return IKImageBrowserQTMoviePathRepresentationType;
+    }
     //return IKImageBrowserQuickLookPathRepresentationType;
 }
 
@@ -38,7 +44,13 @@
 - (id)imageRepresentation
 {
     //return self.url;
-	return self.image;
+    if ([self.image class] == [NSImage class])
+    {
+        return self.image;
+    } else {
+        return self.url;
+    }
+	
     /*NSString* imagePathStr = [[NSBundle mainBundle] pathForResource:@"Abstract 1" ofType:@"jpg"];
     NSImage* image = [[NSImage alloc] initWithContentsOfFile:imagePathStr];
     return image;*/

@@ -104,6 +104,10 @@
     
     [window setDelegate:self];  // we want to be notified when this window is closed
     
+#ifdef DEBUG
+    [self.browserView setCellsStyleMask:IKCellsStyleTitled | IKCellsStyleSubtitled];
+#endif
+    
     if (self.searchLocation == nil)
     {
         // we don't have a default search location setup yet,
@@ -135,6 +139,8 @@
     
     // lastly, point our searchLocation NSPathControl to the search location
     [searchLocationPathControl setURL:self.searchLocation];
+    
+
 }
 
 - (BOOL)windowShouldClose:(id)sender {
@@ -157,7 +163,7 @@
 
 //- (void)createNewSearchForPredicate:(NSPredicate *)predicate withTitle:(NSString *)title withScopeURL:(NSURL *)url
 - (void)createNewSearchForWithScopeURL:(NSURL *)url {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(kMDItemContentTypeTree = 'public.image')"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(kMDItemContentTypeTree = 'public.image') OR  (kMDItemContentTypeTree = 'public.movie')"];
 
         
     //TODO: add video/custom query support

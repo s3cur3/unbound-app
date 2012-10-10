@@ -269,8 +269,13 @@ static NSMutableArray *computeThumbnailClientQueue = nil;
 {
     return [[self filePathURL] path];
 }
+
 - (NSString *) imageRepresentationType;
 {
+    if ([[_item valueForAttribute:(NSString *)kMDItemContentType] isEqualToString:@"com.apple.quicktime-movie"])
+    {
+        return IKImageBrowserQTMoviePathRepresentationType;
+    }
     return IKImageBrowserPathRepresentationType;
 }
 - (id) imageRepresentation;
@@ -285,5 +290,23 @@ static NSMutableArray *computeThumbnailClientQueue = nil;
 {
     return [self title];
 }
+
+/*!
+ @method imageSubtitle
+ @abstract Returns the subtitle to display as a NSString. Use setValue:forKey: with IKImageBrowserCellsSubtitleAttributesKey on the IKImageBrowserView instance to set text attributes.
+ */
+- (NSString *) imageSubtitle;
+{
+    return self.filePathURL.path;
+}
+
+/*!
+ @method imageVersion
+ @abstract Returns a version of this item. The receiver can return a new version to let the image browser knows that it shouldn't use its cache for this item
+ */
+/*- (NSUInteger) imageVersion;
+{
+    return (NSInteger)[[NSDate date] timeIntervalSince1970];
+}*/
 
 @end

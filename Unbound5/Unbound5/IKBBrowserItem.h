@@ -12,12 +12,12 @@
 
 @interface IKBBrowserItem : NSObject 
 {
-	
+	BOOL _isImage;
 }
 
 //- (id)initWithImage:(NSImage *)image imageID:(NSString *)imageID;
 
-@property (readwrite,copy) NSImage *image;
+@property (readwrite,copy) id image;
 @property (readwrite,copy) NSURL *url;
 //@property (readwrite,copy) NSString *title;
 

@@ -13,12 +13,85 @@
 #import "IKImageViewController.h"
 #import "SearchItem.h"
 #import "ImageViewController.h"
+#import <QTKit/QTKit.h>
+
+// Make sure that we have the right headers.
+#import <objc/runtime.h>
+
+// The selectors should be recognized by class_addMethod().
+@interface PageViewController (SliderCellBugFix)
+
+- (NSSliderType)sliderType;
+- (NSInteger)numberOfTickMarks;
+
+@end
+
 
 @interface PageViewController ()
 @end
 
 
 @implementation PageViewController
+
+// Add C implementations of missing methods that we’ll add
+// to the StdMovieUISliderCell class later.
+static NSSliderType SliderType(id self, SEL _cmd)
+{
+    return NSLinearSlider;
+}
+
+static NSInteger NumberOfTickMarks(id self, SEL _cmd)
+{
+    return 0;
+}
+
+// rot13, just to be extra safe.
+static NSString *ResolveName(NSString *aName)
+{
+    const char *_string = [aName cStringUsingEncoding:NSASCIIStringEncoding];
+    NSUInteger stringLength = [aName length];
+    char newString[stringLength+1];
+    
+    NSUInteger x;
+    for(x = 0; x < stringLength; x++)
+    {
+        unsigned int aCharacter = _string[x];
+        
+        if( 0x40 < aCharacter && aCharacter < 0x5B ) // A - Z
+            newString[x] = (((aCharacter - 0x41) + 0x0D) % 0x1A) + 0x41;
+        else if( 0x60 < aCharacter && aCharacter < 0x7B ) // a-z
+            newString[x] = (((aCharacter - 0x61) + 0x0D) % 0x1A) + 0x61;
+        else  // Not an alpha character
+            newString[x] = aCharacter;
+    }
+    newString[x] = '\0';
+    
+    return [NSString stringWithCString:newString encoding:NSASCIIStringEncoding];
+}
+
+// Add both methods if they aren’t already there. This should makes this
+// code safe, even if Apple decides to implement the methods later on.
++ (void)load
+{
+    Class MovieSliderCell = NSClassFromString(ResolveName(@"FgqZbivrHVFyvqrePryy"));
+    
+    if (!class_getInstanceMethod(MovieSliderCell, @selector(sliderType)))
+    {
+        const char *types = [[NSString stringWithFormat:@"%s%s%s",
+                              @encode(NSSliderType), @encode(id), @encode(SEL)] UTF8String];
+        class_addMethod(MovieSliderCell, @selector(sliderType),
+                        (IMP)SliderType, types);
+    }
+    if (!class_getInstanceMethod(MovieSliderCell, @selector(numberOfTickMarks)))
+    {
+        const char *types = [[NSString stringWithFormat: @"%s%s%s",
+                              @encode(NSInteger), @encode(id), @encode(SEL)] UTF8String];
+        class_addMethod(MovieSliderCell, @selector(numberOfTickMarks),
+                        (IMP)NumberOfTickMarks, types);
+    }
+}
+
+
 
 - (IBAction)goBack:sender;
 {
@@ -43,6 +116,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        [PageViewController load];
         // Initialization code here.
         //[self updateData];
         //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateData) name:@"UB_PATH_CHANGED" object:nil];
@@ -116,6 +190,21 @@
                 //NSImage *image = [[NSImage alloc] initWithContentsOfURL:url];
                 NSImage *image = [[NSImage alloc] initByReferencingURL:url];
                 [self.pagerData addObject:image];
+            } else if (UTTypeConformsTo((__bridge CFStringRef)(utiValue), kUTTypeMovie)) {
+                //TODO figure out movie stuff
+                //NSImage *image = [[NSImage alloc] initWithContentsOfURL:url];
+                NSError *error=nil;
+                id movie = [QTMovie movieWithURL:url error:&error];
+                if (!movie)
+                {
+                    NSLog(@"error loading movie : %@", error);
+                    [self.pagerData addObject:[NSImage imageNamed:@"NSFolder"]];
+                } else {
+                    [self.pagerData addObject:movie];
+                }
+            } else {
+                [self.pagerData addObject:[NSImage imageNamed:@"NSFolder"]];
+                NSLog(@"Undifientifed type : %@", utiValue); //@"public.folder"
             }
     }
     
@@ -145,13 +234,23 @@
 
 @implementation PageViewController (NSPageControllerDelegate)
 - (NSString *)pageController:(NSPageController *)pageController identifierForObject:(id)object {
-    return @"picture";
+    if ([object class] == [NSImage class])
+    {
+        return @"picture";
+    } else {
+        return @"video";
+    }
     //return [NSString stringWithFormat:@"picture-%@", [NSDate date]];
 }
 
 - (NSViewController *)pageController:(NSPageController *)pageController viewControllerForIdentifier:(NSString *)identifier {
     //NSLog(@"pageController.selectedIndex : %ld", pageController.selectedIndex);
-    return [[NSViewController alloc] initWithNibName:@"imageview" bundle:nil];
+    if (![identifier isEqualToString:@"video"])
+    {
+        return [[NSViewController alloc] initWithNibName:@"imageview" bundle:nil];
+    } else {
+        return [[NSViewController alloc] initWithNibName:@"videoview" bundle:nil];
+    }
 }
 
 -(void)pageController:(NSPageController *)pageController prepareViewController:(NSViewController *)viewController withObject:(id)object {

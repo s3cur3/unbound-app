@@ -47,6 +47,9 @@
 		1D3DE7F4161FE6E500805174 /* IKImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D3DE7F2161FE6E500805174 /* IKImageViewController.xib */; };
 		1D3DE7F7161FEF6200805174 /* earring.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1D3DE7F6161FEF6200805174 /* earring.jpg */; };
 		1D3DE7FD16201D7A00805174 /* ScrollViewWorkaround.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3DE7FB16201D7A00805174 /* ScrollViewWorkaround.m */; };
+		1D4B948E1624F95C00C7BE3F /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4B948D1624F95C00C7BE3F /* QTKit.framework */; };
+		1D4B94901624FC2700C7BE3F /* videoview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4B948F1624FC2700C7BE3F /* videoview.xib */; };
+		1D4B9493162501ED00C7BE3F /* AutoSizingVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4B9492162501ED00C7BE3F /* AutoSizingVideoView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -113,6 +116,11 @@
 		1D3DE7F6161FEF6200805174 /* earring.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = earring.jpg; sourceTree = "<group>"; };
 		1D3DE7FB16201D7A00805174 /* ScrollViewWorkaround.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollViewWorkaround.m; sourceTree = "<group>"; };
 		1D3DE7FC16201D7A00805174 /* ScrollViewWorkaround.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollViewWorkaround.h; sourceTree = "<group>"; };
+		1D4B948D1624F95C00C7BE3F /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
+		1D4B948F1624FC2700C7BE3F /* videoview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = videoview.xib; sourceTree = "<group>"; };
+		1D4B9491162501ED00C7BE3F /* AutoSizingVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoSizingVideoView.h; sourceTree = "<group>"; };
+		1D4B9492162501ED00C7BE3F /* AutoSizingVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoSizingVideoView.m; sourceTree = "<group>"; };
+		1DEF1EE01624EA1D00F09E4E /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +128,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D4B948E1624F95C00C7BE3F /* QTKit.framework in Frameworks */,
 				1D3DE78D161EA79E00805174 /* Quartz.framework in Frameworks */,
 				1D3DE757161E8FCF00805174 /* Cocoa.framework in Frameworks */,
 			);
@@ -131,6 +140,8 @@
 		1D3DE747161E8FCF00805174 = {
 			isa = PBXGroup;
 			children = (
+				1D4B948D1624F95C00C7BE3F /* QTKit.framework */,
+				1DEF1EE01624EA1D00F09E4E /* QuickTime.framework */,
 				1D3DE78C161EA79E00805174 /* Quartz.framework */,
 				1D3DE75C161E8FCF00805174 /* Unbound5 */,
 				1D3DE755161E8FCF00805174 /* Frameworks */,
@@ -261,6 +272,9 @@
 				1D1FB39B162117CD002CD358 /* ImageViewController.h */,
 				1D1FB39C162117CD002CD358 /* ImageViewController.m */,
 				1D1FB39D162117CD002CD358 /* ImageViewController.xib */,
+				1D4B948F1624FC2700C7BE3F /* videoview.xib */,
+				1D4B9491162501ED00C7BE3F /* AutoSizingVideoView.h */,
+				1D4B9492162501ED00C7BE3F /* AutoSizingVideoView.m */,
 			);
 			name = PageView;
 			sourceTree = "<group>";
@@ -364,6 +378,7 @@
 				1D3DE7F4161FE6E500805174 /* IKImageViewController.xib in Resources */,
 				1D3DE7F7161FEF6200805174 /* earring.jpg in Resources */,
 				1D1FB39F162117CD002CD358 /* ImageViewController.xib in Resources */,
+				1D4B94901624FC2700C7BE3F /* videoview.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,6 +407,7 @@
 				1D1FB3A316211E97002CD358 /* LoadOperation.m in Sources */,
 				1D1FB3EB16237174002CD358 /* ImageBrowserCell.m in Sources */,
 				1D1FB3EE162371F0002CD358 /* ImageBrowserView.m in Sources */,
+				1D4B9493162501ED00C7BE3F /* AutoSizingVideoView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
