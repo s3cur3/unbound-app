@@ -187,6 +187,37 @@
     
 }
 
+-(NSMutableArray *)searchItemsFromResults:(NSArray *)children forDirectory:(NSString *)path
+{
+    //Add a trailing slash to match the metdataitems
+    if (![path hasSuffix:@"/"])
+    {
+        path = [NSString stringWithFormat:@"%@/",path];
+    }
+    NSMutableArray *tmpArray = [NSMutableArray arrayWithCapacity:[children count] ];
+    for (SearchItem *item in children)
+    {
+        if ([self.browserData containsObject:item])
+        {
+            continue;
+        }
+        //NSLog(@"item : %@", [item debugDescription]);
+
+        NSString *fullPath = [item.metadataItem valueForAttribute:(NSString *)kMDItemPath];
+        NSString *fileName = [item.metadataItem valueForAttribute:(NSString *)kMDItemFSName];
+        NSScanner *scanner = [NSScanner scannerWithString:fullPath];
+        NSString *dirPath = nil;
+        [scanner scanUpToString:fileName intoString:&dirPath];
+
+        if ([path isEqualToString:dirPath])
+        {
+            [tmpArray addObject:item];
+        }
+        
+    }
+    return tmpArray;
+}
+
 - (void)queryChildrenChanged:(NSNotification *)note {
     NSLog(@"searchItemChanged : %@", note);
     SearchQuery *query = (SearchQuery *)[note object];
@@ -202,7 +233,12 @@
             [self.browserData addObject:bItem];
         }
     }*/
-    self.browserData = [NSMutableArray arrayWithArray:query.children];
+    
+    //Filter for the correct directory
+    //NSString *path = [_item valueForAttribute:(NSString *)kMDItemPath];
+    
+    
+    self.browserData = [self searchItemsFromResults:query.children forDirectory:[query._searchURL path]];//[NSMutableArray arrayWithArray:query.children];
     [self.browserView reloadData];
     //[resultsOutlineView reloadItem:[note object] reloadChildren:YES];
 }

@@ -272,6 +272,15 @@ static NSMutableArray *computeThumbnailClientQueue = nil;
 
 - (NSString *) imageRepresentationType;
 {
+#ifdef DEBUG_ITEMS
+    NSLog(@"*** START ***");
+    for (id attr in [_item attributes])
+    {
+        
+        NSLog(@"%@ : %@", attr, [_item valueForAttribute:(NSString *)attr] );
+    }
+    NSLog(@"*** END ***");
+#endif
     if ([[_item valueForAttribute:(NSString *)kMDItemContentType] isEqualToString:@"com.apple.quicktime-movie"])
     {
         return IKImageBrowserQTMoviePathRepresentationType;
@@ -297,7 +306,8 @@ static NSMutableArray *computeThumbnailClientQueue = nil;
  */
 - (NSString *) imageSubtitle;
 {
-    return self.filePathURL.path;
+    return @"";
+    //return [NSString stringWithFormat:@"%f x %f", _imageSize.height, _imageSize.width];
 }
 
 /*!
