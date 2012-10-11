@@ -50,6 +50,8 @@
 		1D4B948E1624F95C00C7BE3F /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4B948D1624F95C00C7BE3F /* QTKit.framework */; };
 		1D4B94901624FC2700C7BE3F /* videoview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4B948F1624FC2700C7BE3F /* videoview.xib */; };
 		1D4B9493162501ED00C7BE3F /* AutoSizingVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4B9492162501ED00C7BE3F /* AutoSizingVideoView.m */; };
+		1D9EE78516276600008E7977 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D9EE78416276600008E7977 /* Preferences.xib */; };
+		1D9EE7891627719E008E7977 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9EE7881627719E008E7977 /* Utils.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1DE22E2416263F4A00D5B106 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE22E2316263F4A00D5B106 /* Album.m */; };
 /* End PBXBuildFile section */
 
@@ -121,6 +123,9 @@
 		1D4B948F1624FC2700C7BE3F /* videoview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = videoview.xib; sourceTree = "<group>"; };
 		1D4B9491162501ED00C7BE3F /* AutoSizingVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoSizingVideoView.h; sourceTree = "<group>"; };
 		1D4B9492162501ED00C7BE3F /* AutoSizingVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoSizingVideoView.m; sourceTree = "<group>"; };
+		1D9EE78416276600008E7977 /* Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
+		1D9EE7871627719E008E7977 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		1D9EE7881627719E008E7977 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 		1DE22E2216263F4A00D5B106 /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
 		1DE22E2316263F4A00D5B106 /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
 		1DEF1EE01624EA1D00F09E4E /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
@@ -186,6 +191,7 @@
 				1D3DE7F5161FEF4D00805174 /* Resources */,
 				1D3DE75D161E8FCF00805174 /* Supporting Files */,
 				1D3DE76B161E8FD000805174 /* MainMenu.xib */,
+				1D9EE78416276600008E7977 /* Preferences.xib */,
 				1D3DE77E161E9BB900805174 /* Unbound5.entitlements */,
 				1D3DE76E161E8FD000805174 /* Unbound5.xcdatamodeld */,
 			);
@@ -207,6 +213,8 @@
 		1D3DE7AF161F698B00805174 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
+				1D9EE7871627719E008E7977 /* Utils.h */,
+				1D9EE7881627719E008E7977 /* Utils.m */,
 				1D3DE7A9161F697E00805174 /* Preferences.h */,
 				1D3DE7AA161F697E00805174 /* Preferences.m */,
 				1D3DE7AB161F697F00805174 /* PreferencesWindowController.h */,
@@ -384,6 +392,7 @@
 				1D3DE7F7161FEF6200805174 /* earring.jpg in Resources */,
 				1D1FB39F162117CD002CD358 /* ImageViewController.xib in Resources */,
 				1D4B94901624FC2700C7BE3F /* videoview.xib in Resources */,
+				1D9EE78516276600008E7977 /* Preferences.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,6 +423,7 @@
 				1D1FB3EE162371F0002CD358 /* ImageBrowserView.m in Sources */,
 				1D4B9493162501ED00C7BE3F /* AutoSizingVideoView.m in Sources */,
 				1DE22E2416263F4A00D5B106 /* Album.m in Sources */,
+				1D9EE7891627719E008E7977 /* Utils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

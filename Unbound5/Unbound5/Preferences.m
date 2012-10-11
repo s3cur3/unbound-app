@@ -81,6 +81,9 @@ static Preferences * instance = nil;
 -(void)resetToDefaults
 {
 	[[NSUserDefaultsController sharedUserDefaultsController] revertToInitialValues:nil];
+    NSURL *url = nil;
+    [[NSUserDefaults standardUserDefaults] setValue:url forKey:@"searchLocationKey"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 -(BOOL)boolForKey:(NSString *)key

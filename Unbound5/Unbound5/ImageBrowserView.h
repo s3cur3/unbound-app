@@ -58,4 +58,8 @@
 	NSRect lastVisibleRect;
 }
 
+// for binding
+-(BOOL)showTitles;
+-(void)setShowTitles:(BOOL)showTitles;
+
 @end

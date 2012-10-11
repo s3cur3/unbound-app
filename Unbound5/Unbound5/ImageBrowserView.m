@@ -88,4 +88,17 @@
 	[super drawRect:rect];
 }
 
+-(BOOL)showTitles
+{
+	return [self cellsStyleMask] & IKCellsStyleTitled;
+}
+
+-(void)setShowTitles:(BOOL)showTitles
+{
+	if (showTitles == YES)
+		[self setCellsStyleMask:[self cellsStyleMask] | IKCellsStyleTitled];
+	else
+		[self setCellsStyleMask:[self cellsStyleMask] & ~IKCellsStyleTitled];
+}
+
 @end
