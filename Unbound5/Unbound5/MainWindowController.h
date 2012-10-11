@@ -13,6 +13,8 @@
 #import <AppKit/NSPathComponentCell.h>
 #import <Quartz/Quartz.h>
 
+
+@class Album;
 @class PageViewController;
 
 @interface MainWindowController : NSObject <NSWindowDelegate, NSPathControlDelegate>
@@ -32,7 +34,9 @@
     IBOutlet NSPathControl *searchLocationPathControl;  // path control determining the search location
 }
 
-@property (strong,nonatomic) NSMutableArray *directoryArray;
+@property (strong,nonatomic) NSMutableDictionary *directoryDict;
+@property (nonatomic, readonly) NSMutableArray *albumArray;
+//@property (strong,nonatomic) NSMutableArray *directoryArray;
 @property(readwrite,retain) NSMutableArray * browserData;
 @property IBOutlet IKImageBrowserView * browserView;
 @property (nonatomic, assign) IBOutlet NSTableView *tableView;
@@ -40,7 +44,7 @@
 @property (nonatomic, strong) NSView *mainContentView;
 
 
-@property (nonatomic, strong) NSDictionary *selectedAlbum;
+@property (nonatomic, strong) Album *selectedAlbum;
 
 //- (IBAction)predicateEditorChanged:(id)sender;
 
@@ -48,5 +52,7 @@
 - (IBAction)zoomSliderDidChange:(id)sender;
 
 -(void)showMainView;
+
+//-(NSMutableArray *)albumArray;
 
 @end

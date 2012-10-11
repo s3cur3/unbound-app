@@ -12,6 +12,7 @@
 #import "PageViewController.h"
 #import "ImageViewController.h"
 #import "IKImageViewController.h"
+#import "Album.h"
 
 @interface MainWindowController()
 
@@ -60,7 +61,8 @@
         return;
     }
     
-    self.directoryArray = [[NSMutableArray alloc] init];
+    self.directoryDict = [[NSMutableDictionary alloc] init];
+    //self.directoryArray = [[NSMutableArray alloc] init];
     self.browserData = [[NSMutableArray alloc] init];
     iSearchQueries = [[NSMutableArray alloc] init];
     //iThumbnailSize = 32.0;
@@ -194,30 +196,46 @@
     {
         path = [NSString stringWithFormat:@"%@/",path];
     }*/
-    NSMutableArray *tmpArray = [NSMutableArray arrayWithCapacity:[children count] ];
+    //NSMutableArray *tmpArray = [NSMutableArray arrayWithCapacity:[children count] ];
     for (SearchItem *item in children)
     {
         if ([self.browserData containsObject:item])
         {
+            //assert(NO);
             continue;
         }
         //NSLog(@"item : %@", [item debugDescription]);
 
         NSString *fullPath = [item.metadataItem valueForAttribute:(NSString *)kMDItemPath];
         NSString *dirPath = [fullPath stringByDeletingLastPathComponent];
+        Album *album = [self.directoryDict valueForKey:dirPath];
+        if (album==nil)
+        {
+            album = [[Album alloc] initWithFilePath:dirPath];
+            [self.directoryDict setValue:album forKey:dirPath];
+            [self.tableView reloadData];
+            //[self.directoryArray addObject:album];
+        }
+        if (![album.photos containsObject:item])
+        {
+            [album addPhotosObject:item];
+        } else {
+            //assert(NO);
+        }
         
         /*NSString *fileName = [item.metadataItem valueForAttribute:(NSString *)kMDItemFSName];
         NSScanner *scanner = [NSScanner scannerWithString:fullPath];
         NSString *dirPath = nil;
         [scanner scanUpToString:fileName intoString:&dirPath];*/
 
-        if ([path isEqualToString:dirPath])
+        /*if ([path isEqualToString:dirPath])
         {
             [tmpArray addObject:item];
-        }
+        }*/
         
     }
-    return tmpArray;
+    Album *anAlbum = [self.directoryDict valueForKey:path];
+    return anAlbum.photos;
 }
 
 - (void)queryChildrenChanged:(NSNotification *)note {
@@ -270,14 +288,16 @@
 
 -(void)loadSubDirectoryInfo:(NSURL *)dirURL
 {
-    [self.directoryArray removeAllObjects];
+    return;
+    //[self.directoryArray removeAllObjects];
+    [self.directoryDict removeAllObjects];
     NSMutableDictionary *currentDirectory = [[NSMutableDictionary alloc] init];
     //FileSystemItem anItem = [[[FileSystemItem alloc] init];
     [currentDirectory setObject:[dirURL lastPathComponent] forKey:@"Name"];
     NSImage *image = [NSImage imageNamed:@"NSFolder"];
     [currentDirectory setObject:image forKey:@"Image"];
     [currentDirectory setObject:dirURL forKey:@"URL"];
-    [self.directoryArray addObject:currentDirectory];
+    //[self.directoryArray addObject:currentDirectory];
     
     self.selectedAlbum = currentDirectory;
     
@@ -305,7 +325,7 @@
             NSImage *image = [NSImage imageNamed:@"NSFolder"];
             [aSubDir setObject:image forKey:@"Image"];
             [aSubDir setObject:url forKey:@"URL"];
-            [self.directoryArray addObject:aSubDir];
+            //[self.directoryArray addObject:aSubDir];
             NSLog(@"Adding subdir at url : %@", url.path);
         }
         
@@ -340,11 +360,21 @@
     //NSURL *url = self.searchLocation;
     
     //[self loadPhotosForURL:self.searchLocation];
-    [self loadSubDirectoryInfo:self.searchLocation];
+    //[self loadSubDirectoryInfo:self.searchLocation];
     [self createNewSearchForWithScopeURL:self.searchLocation];
-    
+    //[self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
     
     [self.browserView reloadData];
+}
+
+-(NSMutableArray *)albumArray;
+{
+    NSMutableArray *anArray = [NSMutableArray array];
+    for (id anObject in [self.directoryDict objectEnumerator])
+    {
+        [anArray addObject:anObject];
+    }
+    return anArray;
 }
 
 #pragma mark - NSPathControl support
@@ -354,6 +384,8 @@
     
     
     [self.browserData removeAllObjects];
+    
+    
     self.searchLocation = [sender URL];
     
     
@@ -368,6 +400,13 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self.searchLocation startAccessingSecurityScopedResource];
+    
+    self.directoryDict = [NSMutableDictionary dictionary];
+    //Album *anAlbum = [[Album alloc] initWithFilePath:[[sender URL] path]];
+    //self.selectedAlbum = anAlbum;
+    
+    [self.tableView reloadData];
+    
     [self refreshBrowser];
     //[self.directoryArray removeAllObjects];
 }
@@ -431,24 +470,37 @@
 
 // The only essential/required tableview dataSource method
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return [self.directoryArray count];
+    return [self.albumArray count];
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-    return [[self.directoryArray objectAtIndex:rowIndex] objectForKey:@"Name"];
+    return [[self.albumArray objectAtIndex:rowIndex] valueForKey:@"title"];
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification
 {
     NSLog(@"tableViewSelectionDidChange : %@", aNotification.object);
-    NSDictionary *newDir =  [self.directoryArray objectAtIndex:[self.tableView selectedRow]];
-    self.selectedAlbum = newDir;
+    if ([self.tableView selectedRow]==-1)
+    {
+        return;
+    }
+    Album *anAlbum =  [self.albumArray objectAtIndex:[self.tableView selectedRow]];
+    self.selectedAlbum = anAlbum;
     
     //[self.browserData removeAllObjects];
     //[self.browserView reloadData];
-    NSURL *searchURL = [newDir valueForKey:@"URL"];
-    [self createNewSearchForWithScopeURL:searchURL];
+   // NSURL *searchURL = [NSURL URLWithString:[newDir valueForKey:@"filePath"]];
+    //Album *anAlbum = [self.directoryDict valueForKey:newDir.filePath];
+    if (anAlbum!=nil)
+    {
+        self.browserData = anAlbum.photos;
+        //[self.browserView reloadData];
+    } else {
+        //assert(NO);
+        NSURL *searchURL = [NSURL URLWithString:[anAlbum valueForKey:@"filePath"]];
+        [self createNewSearchForWithScopeURL:searchURL];
+    }
     
     //[url startAccessingSecurityScopedResource];
     //[self loadPhotosForURL:searchURL];
@@ -555,10 +607,10 @@
     
     self.pageViewController = [[PageViewController alloc] initWithNibName:@"PageViewController" bundle:nil];
     NSInteger selectedRow = self.tableView.selectedRow;
-    if (selectedRow<0 || selectedRow>[self.directoryArray count]) {
+    if (selectedRow<0 || selectedRow>[self.albumArray count]) {
         selectedRow = 0;
     }
-    NSURL *aURL = [[self.directoryArray objectAtIndex:selectedRow ] valueForKey:@"URL"];
+    NSURL *aURL = [NSURL URLWithString:[[self.albumArray objectAtIndex:selectedRow ] valueForKey:@"filePath"]];
     self.pageViewController.directoryURL = aURL;
     
     self.pageViewController.searchData = self.browserData;

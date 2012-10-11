@@ -249,7 +249,8 @@ static NSString *ResolveName(NSString *aName)
     {
         return [[NSViewController alloc] initWithNibName:@"imageview" bundle:nil];
     } else {
-        return [[NSViewController alloc] initWithNibName:@"videoview" bundle:nil];
+        NSViewController *videoView = [[NSViewController alloc] initWithNibName:@"videoview" bundle:nil];
+        return videoView;
     }
 }
 

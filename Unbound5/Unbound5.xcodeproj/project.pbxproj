@@ -50,6 +50,7 @@
 		1D4B948E1624F95C00C7BE3F /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4B948D1624F95C00C7BE3F /* QTKit.framework */; };
 		1D4B94901624FC2700C7BE3F /* videoview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4B948F1624FC2700C7BE3F /* videoview.xib */; };
 		1D4B9493162501ED00C7BE3F /* AutoSizingVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4B9492162501ED00C7BE3F /* AutoSizingVideoView.m */; };
+		1DE22E2416263F4A00D5B106 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE22E2316263F4A00D5B106 /* Album.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -120,6 +121,8 @@
 		1D4B948F1624FC2700C7BE3F /* videoview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = videoview.xib; sourceTree = "<group>"; };
 		1D4B9491162501ED00C7BE3F /* AutoSizingVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoSizingVideoView.h; sourceTree = "<group>"; };
 		1D4B9492162501ED00C7BE3F /* AutoSizingVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoSizingVideoView.m; sourceTree = "<group>"; };
+		1DE22E2216263F4A00D5B106 /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
+		1DE22E2316263F4A00D5B106 /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
 		1DEF1EE01624EA1D00F09E4E /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -238,6 +241,8 @@
 				1D3DE780161EA26200805174 /* SearchQuery.m */,
 				1D3DE782161EA34700805174 /* SearchItem.h */,
 				1D3DE783161EA34700805174 /* SearchItem.m */,
+				1DE22E2216263F4A00D5B106 /* Album.h */,
+				1DE22E2316263F4A00D5B106 /* Album.m */,
 			);
 			name = Search;
 			sourceTree = "<group>";
@@ -408,6 +413,7 @@
 				1D1FB3EB16237174002CD358 /* ImageBrowserCell.m in Sources */,
 				1D1FB3EE162371F0002CD358 /* ImageBrowserView.m in Sources */,
 				1D4B9493162501ED00C7BE3F /* AutoSizingVideoView.m in Sources */,
+				1DE22E2416263F4A00D5B106 /* Album.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
