@@ -369,7 +369,7 @@
 
 -(NSMutableArray *)albumArray;
 {
-    NSMutableArray *anArray = [NSMutableArray array];
+    NSMutableArray *anArray = [[NSMutableArray alloc] init];
     for (id anObject in [self.directoryDict objectEnumerator])
     {
         [anArray addObject:anObject];
@@ -610,7 +610,9 @@
     if (selectedRow<0 || selectedRow>[self.albumArray count]) {
         selectedRow = 0;
     }
-    NSURL *aURL = [NSURL URLWithString:[[self.albumArray objectAtIndex:selectedRow ] valueForKey:@"filePath"]];
+    //NSURL *aURL = [NSURL fileURLWithPath:self.selectedAlbum.filePath isDirectory:YES];
+    
+    NSURL *aURL = [NSURL fileURLWithPath:[[[self albumArray] objectAtIndex:selectedRow ] valueForKey:@"filePath"]];
     self.pageViewController.directoryURL = aURL;
     
     self.pageViewController.searchData = self.browserData;

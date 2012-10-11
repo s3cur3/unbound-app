@@ -22,7 +22,7 @@
 {
     self = [super init];
     if (self) {
-        self.filePath = aPath;
+        self.filePath = [aPath copy];
         self.title = [aPath lastPathComponent];
         self.photos = [NSMutableArray array];
     }
