@@ -24,96 +24,15 @@
 	[[PreferencesWindowController instance] runModal];
 }
 
+/*
+ To reset defaults for testing:
+ 
+   defaults read com.pixite.Unbound5
+   defaults delete com.pixite.Unbound5
+   defaults read com.pixite.Unbound5
+ */
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification
-{
-    //
-    /*if ([[NSUserDefaults standardUserDefaults] valueForKey:@"thumbnailSize"]==nil)
-    {
-        NSMutableDictionary * defaults = [NSMutableDictionary dictionary];
-        //[defaults setValue:colorData forKey:@"backgroundColor"];
-        [defaults setValue:[NSNumber numberWithFloat:0.38f] forKey:@"thumbnailSize"];
-        [defaults setValue:[NSNumber numberWithFloat:8.0f] forKey:@"thumbnailMargin"];
-        [defaults setValue:[NSNumber numberWithBool:YES] forKey:@"showTitles"];
-        
-        // last step : register the default parameters
-        [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
-        
-        // now, register which options can be resetted
-        [[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:defaults];
-    }*/
-    
-	// bind the currently selected directory of the directory browser to the
-	// image browser view. This way, each time we select another directory,
-	// the image browser view will update itself
-	/*[Utils bind:mImageDataSource
-        keyPath:@"currentDirectory"
-             to:mDirectoryBrowserDelegate
-        keyPath:@"currentDirectory"
-     continuous:YES
-         twoWay:NO];
-    
-	// bind the image view and the image browser delegate. We do that to avoid
-	// having direct reference of one class in the other and vice versa.
-	// First, we need to bind the selected image, since the image view can
-	// browse image in fullscreen, and the image browser needs to keep
-	// synchronized.
-	[Utils bind:mImageView
-        keyPath:@"currentImage"
-             to:mImageBrowserDelegate
-        keyPath:@"selectedImage"
-     continuous:YES
-         twoWay:YES];
-    
-	// we also need to bind the fullscreen : the image browser can request
-	// fullscreen, but it is the image view which is responsible for this. And
-	// when the image view leaves fullscreen, it needs to notify the image
-	// browser
-	[Utils bind:mImageView
-        keyPath:@"fullscreen"
-             to:mImageBrowserDelegate
-        keyPath:@"fullscreen"
-     continuous:YES
-         twoWay:YES];
-    
-	// bind the currently selected directory to the FileUtils instance, so that
-	// we can paste anytime.
-	[Utils bind:[FileUtils instance]
-        keyPath:@"destinationDirectory"
-             to:mDirectoryBrowserDelegate
-        keyPath:@"currentDirectory"
-     continuous:YES
-         twoWay:NO];
-	
-	// bind attributes which are saved as user preferences
-	Preferences * preferences = [Preferences instance];
-	[preferences bind:mImageView
-                  key:@"backgroundColor"
-                   to:@"backgroundColor"
-       withUnarchiver:YES];
-	[preferences bind:mImageBrowser
-                  key:@"zoomValue"
-                   to:@"thumbnailSize"
-       withUnarchiver:NO];
-	[preferences bind:mImageBrowser
-                  key:@"thumbnailMargin"
-                   to:@"thumbnailMargin"
-       withUnarchiver:NO];
-	[preferences bind:mImageBrowser
-                  key:@"showTitles"
-                   to:@"showTitles"
-       withUnarchiver:NO];
-	[preferences bind:mImageBrowser
-                  key:@"backgroundColor"
-                   to:@"backgroundColor"
-       withUnarchiver:YES];
-    
-	// restore last visited folder if needed
-	if ([preferences boolForKey:@"startInLastVisitedFolder"] == YES)
-	{
-		[mDirectoryBrowser setDirectory:[preferences stringForKey:@"lastVisitedFolder"]];
-	}*/
-
-    
+{    
     IKImageBrowserView *mImageBrowser = [(MainWindowController *)[self.window delegate] browserView];
     Preferences * preferences = [Preferences instance];
     [preferences bind:mImageBrowser

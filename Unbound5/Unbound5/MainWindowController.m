@@ -46,13 +46,15 @@
     // Create and configure the panel.
     NSOpenPanel* panel = [NSOpenPanel openPanel];
     [panel setCanChooseDirectories:YES];
-    [panel setAllowsMultipleSelection:YES];
-    [panel setMessage:@"Import one or more files or directories."];
+    [panel setCanChooseFiles:NO];
+    [panel setAllowsMultipleSelection:NO];
+    [panel setMessage:@"Please select your Dropbox camera uploads folder"];
     
     // Display the panel attached to the document's window.
     [panel beginSheetModalForWindow:window completionHandler:^(NSInteger result){
         if (result == NSFileHandlingPanelOKButton) {
             NSArray* urls = [panel URLs];
+            //self.searchLocation = [NSURL fileURLWithPath:@"~/Dropbox/Camera Uploads" isDirectory:YES];//[urls lastObject];
             self.searchLocation = [urls lastObject];
             [searchLocationPathControl setURL:self.searchLocation];
             [self updateRootSearchPath:self.searchLocation];
@@ -271,6 +273,7 @@
 
 -(NSMutableArray *)searchItemsFromResults:(NSArray *)children forDirectory:(NSString *)path
 {
+    DLog(@"Starting searchItemsFromResults");
     //NSMutableArray *tmpArray = [NSMutableArray arrayWithCapacity:[children count] ];
     for (SearchItem *item in children)
     {
@@ -298,6 +301,7 @@
         
     }
     Album *anAlbum = [self.directoryDict valueForKey:path];
+    DLog(@"Finished searchItemsFromResults");
     return anAlbum.photos;
 }
 
