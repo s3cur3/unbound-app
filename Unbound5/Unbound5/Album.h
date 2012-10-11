@@ -18,8 +18,8 @@
     
 }
 
-@property (nonatomic, copy) NSString *filePath;
-@property (nonatomic, copy) NSString *title;
+@property (nonatomic, strong) NSString *filePath;
+@property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSMutableArray *photos;
 
 - (id)initWithFilePath:(NSString *) aPath;

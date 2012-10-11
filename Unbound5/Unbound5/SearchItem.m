@@ -270,22 +270,45 @@ static NSMutableArray *computeThumbnailClientQueue = nil;
     return [[self filePathURL] path];
 }
 
+-(BOOL)matchesContentType:(NSString *)contentType
+{
+    //Searching for generic categories, could look for individual types if there are problems - example below
+    /*NSString *itemType = [_item valueForAttribute:(NSString *)kMDItemContentType];
+    if ([itemType isEqualToString:@"public.jpeg"] ||
+        [itemType isEqualToString:@"public.png"] ||
+        [itemType isEqualToString:@"com.compuserve.gif"]) {
+        return YES;
+    }*/
+    NSArray *types = (NSArray *)[_item valueForAttribute:(NSString *)kMDItemContentTypeTree];
+    return [types containsObject:contentType];
+}
+
 - (NSString *) imageRepresentationType;
 {
-#ifdef DEBUG_ITEMS
-    NSLog(@"*** START ***");
-    for (id attr in [_item attributes])
+    if (_imageRepresentationType==nil)
     {
-        
-        NSLog(@"%@ : %@", attr, [_item valueForAttribute:(NSString *)attr] );
-    }
-    NSLog(@"*** END ***");
+
+        NSString *itemType = [_item valueForAttribute:(NSString *)kMDItemContentType];
+        if ([self matchesContentType:@"public.image"])
+        {
+            _imageRepresentationType = IKImageBrowserPathRepresentationType;
+        } else if ([self matchesContentType:@"public.movie"]) {
+            _imageRepresentationType = IKImageBrowserQTMoviePathRepresentationType;
+        } else {
+            ALog(@"Unexpected file type : %@", itemType);
+#ifdef DEBUG
+            NSLog(@"*** START ***");
+            for (id attr in [_item attributes])
+            {
+                
+                NSLog(@"%@ : %@", attr, [_item valueForAttribute:(NSString *)attr] );
+            }
+            NSLog(@"*** END ***");
 #endif
-    if ([[_item valueForAttribute:(NSString *)kMDItemContentType] isEqualToString:@"com.apple.quicktime-movie"])
-    {
-        return IKImageBrowserQTMoviePathRepresentationType;
+            _imageRepresentationType = IKImageBrowserQuickLookPathRepresentationType;
+        }
     }
-    return IKImageBrowserPathRepresentationType;
+    return _imageRepresentationType;
 }
 - (id) imageRepresentation;
 {

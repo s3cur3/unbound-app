@@ -9,6 +9,8 @@
 #import <Cocoa/Cocoa.h>
 
 @class MainWindowController;
+@class Album;
+@class SearchItem;
 
 @interface PageViewController : NSViewController <NSPageControllerDelegate>
 {
@@ -17,9 +19,11 @@
 
 @property (assign) IBOutlet MainWindowController *parentWindowController;
 @property (strong) IBOutlet NSPageController *pageController;
-@property (nonatomic, strong) IBOutlet NSURL *directoryURL;
+//@property (nonatomic, strong) IBOutlet NSURL *directoryURL;
+@property (nonatomic, strong) IBOutlet Album *album;
+@property (nonatomic, strong) IBOutlet SearchItem *initialSelectedItem;
 @property (strong) NSMutableArray *pagerData;
-@property (strong) NSMutableArray *searchData;
+//@property (strong) NSMutableArray *searchData;
 @property (assign) id initialSelectedObject;
 
 

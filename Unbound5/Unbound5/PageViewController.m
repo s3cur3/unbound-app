@@ -13,6 +13,8 @@
 #import "IKImageViewController.h"
 #import "SearchItem.h"
 #import "ImageViewController.h"
+#import "Album.h"
+#import "SearchItem.h"
 #import <QTKit/QTKit.h>
 
 // Make sure that we have the right headers.
@@ -146,9 +148,12 @@ static NSString *ResolveName(NSString *aName)
 - (void)updateData {
     //NSURL *dirURL = [NSURL fileURLWithPath:@"/Users/inzan/Dropbox/Camera Uploads"];//[[NSFileManager defaultManager] url];
     //NSURL *dirURL = [[NSFileManager defaultManager] URLForDirectory:NSPicturesDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
-    NSURL *dirURL = [[NSBundle mainBundle] resourceURL];
-    if (self.directoryURL == nil) {
+    /*NSURL *dirURL = [[NSBundle mainBundle] resourceURL];
+    if (self.album == nil) {
         self.directoryURL = dirURL;
+    } else {
+        DLog(@"PageController called with no directory set");
+        assert(NO);
     }
     
     // load all the necessary image files by enumerating through the bundle's Resources folder,
@@ -157,10 +162,12 @@ static NSString *ResolveName(NSString *aName)
     self.pageController.delegate = self;
     self.pagerData = [[NSMutableArray alloc] initWithCapacity:1];
     
+    
+    
     NSDirectoryEnumerator *itr = [[NSFileManager defaultManager] enumeratorAtURL:self.directoryURL includingPropertiesForKeys:[NSArray arrayWithObjects:NSURLLocalizedNameKey, NSURLEffectiveIconKey, NSURLIsDirectoryKey, NSURLTypeIdentifierKey, nil] options:NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsSubdirectoryDescendants errorHandler:nil];
     
     // loop through tags and set them up in a background thread
-    /*dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+    / *dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
         NSMutableArray *tmpArray = [NSMutableArray arrayWithCapacity:10];
         for (NSURL *url in itr) {
             
@@ -180,37 +187,73 @@ static NSString *ResolveName(NSString *aName)
         }
     });*/
     
+    self.pageController.delegate = self;
+    self.pagerData = [[NSMutableArray alloc] initWithCapacity:self.album.photos.count];
     
-    for (NSURL *url in itr) {
+    for (SearchItem *anItem in self.album.photos) {
+        
+        BOOL isSelected = anItem == self.initialSelectedItem;
 
-            NSString *utiValue;
-            [url getResourceValue:&utiValue forKey:NSURLTypeIdentifierKey error:nil];
-            
-            if (UTTypeConformsTo((__bridge CFStringRef)(utiValue), kUTTypeImage)) {
-                //NSImage *image = [[NSImage alloc] initWithContentsOfURL:url];
-                NSImage *image = [[NSImage alloc] initByReferencingURL:url];
-                [self.pagerData addObject:image];
-            } else if (UTTypeConformsTo((__bridge CFStringRef)(utiValue), kUTTypeMovie)) {
-                //TODO figure out movie stuff
-                //NSImage *image = [[NSImage alloc] initWithContentsOfURL:url];
-                NSError *error=nil;
-                id movie = [QTMovie movieWithURL:url error:&error];
-                if (!movie)
-                {
-                    NSLog(@"error loading movie : %@", error);
-                    [self.pagerData addObject:[NSImage imageNamed:@"NSFolder"]];
-                } else {
-                    [self.pagerData addObject:movie];
-                }
-            } else {
-                [self.pagerData addObject:[NSImage imageNamed:@"NSFolder"]];
-                NSLog(@"Undifientifed type : %@", utiValue); //@"public.folder"
+        if ([[anItem imageRepresentationType] isEqualToString:IKImageBrowserPathRepresentationType])
+        {
+            NSImage *image = [[NSImage alloc] initByReferencingURL:anItem.filePathURL];
+            [self.pagerData addObject:image];
+            if (isSelected)
+            {
+                self.initialSelectedObject = image;
             }
+        } else if ([[anItem imageRepresentationType] isEqualToString:IKImageBrowserQTMoviePathRepresentationType]) {
+            DLog(@"video found : %@", anItem.filePathURL);
+            NSError *error=nil;
+            id movie = [QTMovie movieWithURL:anItem.filePathURL error:&error];
+            if (!movie)
+            {
+                ALog(@"error loading movie : %@", error);
+                [self.pagerData addObject:[NSImage imageNamed:@"NSImage"]];
+            } else {
+                [self.pagerData addObject:movie];
+                if (isSelected)
+                {
+                    self.initialSelectedObject = movie;
+                }
+            }
+        } else {
+            ALog(@"Unexpected file type found : %@", anItem.filePathURL);
+            [self.pagerData addObject:[NSImage imageNamed:@"NSImage"]];
+        }
     }
+        /*NSURL *url = anItem.filePathURL;
+        NSString *utiValue;
+    
+        [url getResourceValue:&utiValue forKey:NSURLTypeIdentifierKey error:nil];
+        
+        if (UTTypeConformsTo((__bridge CFStringRef)(utiValue), kUTTypeImage)) {
+            //NSImage *image = [[NSImage alloc] initWithContentsOfURL:url];
+            NSImage *image = [[NSImage alloc] initByReferencingURL:url];
+            [self.pagerData addObject:image];
+        } else if (UTTypeConformsTo((__bridge CFStringRef)(utiValue), kUTTypeMovie)) {
+            //TODO figure out movie stuff
+            //NSImage *image = [[NSImage alloc] initWithContentsOfURL:url];
+            NSError *error=nil;
+            id movie = [QTMovie movieWithURL:url error:&error];
+            if (!movie)
+            {
+                NSLog(@"error loading movie : %@", error);
+                [self.pagerData addObject:[NSImage imageNamed:@"NSFolder"]];
+            } else {
+                [self.pagerData addObject:movie];
+            }
+        } else {
+            [self.pagerData addObject:[NSImage imageNamed:@"NSFolder"]];
+            NSLog(@"Undifientifed type : %@", utiValue); //@"public.folder"
+        }
+    }*/
     
     // set the first image in our list to the main magnifying view
     if ([self.pagerData count] > 0) {
         [self.pageController setArrangedObjects:self.pagerData];
+        NSInteger index = [self.album.photos indexOfObject:self.initialSelectedItem];
+        [self.pageController setSelectedIndex:index];
     }
     
     //[self.view setNeedsDisplay:YES];

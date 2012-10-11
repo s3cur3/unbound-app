@@ -36,7 +36,7 @@
 
 @property (strong,nonatomic) NSMutableDictionary *directoryDict;
 @property (nonatomic, readonly) NSMutableArray *albumArray;
-//@property (strong,nonatomic) NSMutableArray *directoryArray;
+@property (strong,nonatomic) NSMutableArray *directoryArray;
 @property(readwrite,retain) NSMutableArray * browserData;
 @property IBOutlet IKImageBrowserView * browserView;
 @property (nonatomic, assign) IBOutlet NSTableView *tableView;
@@ -46,12 +46,15 @@
 
 @property (nonatomic, strong) Album *selectedAlbum;
 
+@property (nonatomic, strong) NSArray *albumSortDescriptors;
+
 //- (IBAction)predicateEditorChanged:(id)sender;
 
 - (IBAction)searchLocationChanged:(id)sender;
 - (IBAction)zoomSliderDidChange:(id)sender;
 
 -(void)showMainView;
+-(void)startLoading;
 
 //-(NSMutableArray *)albumArray;
 

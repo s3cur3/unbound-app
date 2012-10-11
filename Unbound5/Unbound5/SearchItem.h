@@ -65,6 +65,7 @@ enum {
     NSInteger _state;
     NSURL *_url;
     NSSize _imageSize;
+    NSString *_imageRepresentationType;
 }
 
 - (id)initWithItem:(NSMetadataItem *)item;

@@ -23,8 +23,117 @@
 
 @implementation MainWindowController
 
+- (IBAction)openExistingDocument:(id)sender {
+    NSOpenPanel* panel = [NSOpenPanel openPanel];
+    
+    // This method displays the panel and returns immediately.
+    // The completion handler is called when the user selects an
+    // item or cancels the panel.
+    [panel beginWithCompletionHandler:^(NSInteger result){
+        if (result == NSFileHandlingPanelOKButton) {
+            NSURL*  theDoc = [[panel URLs] objectAtIndex:0];
+            
+            // Open  the document.
+        }
+        
+    }];
+}
+
+- (IBAction)importFilesAndDirectories:(id)sender {
+    // Get the main window for the document.
+    //NSWindow* window = [[[self windowControllers] objectAtIndex:0] window];
+    
+    // Create and configure the panel.
+    NSOpenPanel* panel = [NSOpenPanel openPanel];
+    [panel setCanChooseDirectories:YES];
+    [panel setAllowsMultipleSelection:YES];
+    [panel setMessage:@"Import one or more files or directories."];
+    
+    // Display the panel attached to the document's window.
+    [panel beginSheetModalForWindow:window completionHandler:^(NSInteger result){
+        if (result == NSFileHandlingPanelOKButton) {
+            NSArray* urls = [panel URLs];
+            self.searchLocation = [urls lastObject];
+            [searchLocationPathControl setURL:self.searchLocation];
+            [self updateRootSearchPath:self.searchLocation];
+            // Use the URLs to build a list of items to import.
+        }
+        
+    }];
+}
+
+-(void)punchHoleInSandboxForFile:(NSString*)file
+{
+    //only needed if we are in 10.7
+    if (floor(NSAppKitVersionNumber) <= 1038) return;
+    //only needed if we do not allready have permisions to the file
+    if ([[NSFileManager defaultManager] isReadableFileAtPath:file] == YES) return;
+    //make sure we have a expanded path
+    file = [file stringByResolvingSymlinksInPath];
+    NSString *message = [NSString stringWithFormat:@"Sandbox requires user permision to read %@",[file lastPathComponent]];
+    
+    NSOpenPanel *openDlg = [NSOpenPanel openPanel];
+    [openDlg setPrompt:@"Allow in Sandbox"];
+    [openDlg setTitle:message];
+    [openDlg setShowsHiddenFiles:NO];
+    [openDlg setTreatsFilePackagesAsDirectories:YES];
+    [openDlg setDirectoryURL:[NSURL URLWithString:file]];
+	[openDlg setCanChooseFiles:YES];
+	[openDlg setCanChooseDirectories:NO];
+	[openDlg setAllowsMultipleSelection:NO];
+	if ([openDlg runModal] == NSOKButton){
+        NSURL *selection = [[openDlg URLs] objectAtIndex:0];
+        if ([[[selection path] stringByResolvingSymlinksInPath] isEqualToString:file]) {
+            self.searchLocation = selection;
+            return;
+        }else{
+            [[NSAlert alertWithMessageText:@"Wrong file was selected." defaultButton:@"Try Again" alternateButton:nil otherButton:nil informativeTextWithFormat:message] runModal];
+            [self punchHoleInSandboxForFile:file];
+        }
+	}else{
+        [[NSAlert alertWithMessageText:@"Was denied access to required files." defaultButton:@"Carry On" alternateButton:nil otherButton:nil informativeTextWithFormat:@"This software can not provide it's full functionality without access to certain files."] runModal];
+    }
+}
+
+-(void)resetProperties
+{
+    self.directoryDict = [[NSMutableDictionary alloc] init];
+    self.browserData = [[NSMutableArray alloc] init];
+    self.directoryArray = [[NSMutableArray alloc] init];
+    iSearchQueries = [[NSMutableArray alloc] init];
+    
+    
+}
 
 - (void)awakeFromNib {
+    DLog(@"awakeFromNib");
+    
+    self.albumSortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES]];
+    
+    [window setDelegate:self];  // we want to be notified when this window is closed
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(queryChildrenChanged:)
+                                                 name:SearchQueryChildrenDidChangeNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(searchItemChanged:)
+                                                 name:SearchItemDidChangeNotification
+                                               object:nil];
+    
+#ifdef DEBUG
+    [self.browserView setCellsStyleMask:IKCellsStyleTitled | IKCellsStyleSubtitled];
+#endif
+    
+    if ([[NSUserDefaults standardUserDefaults] valueForKey:@"searchLocationKey"]!=nil)
+    {
+        [self startLoading];
+    }
+}
+
+- (void)startLoading {
+    
+    [self resetProperties];
     
     // look for the saved search location in NSUserDefaults
     NSError *error = nil;
@@ -37,8 +146,13 @@
                                                   relativeToURL:nil
                                             bookmarkDataIsStale:nil
                                                         error:&error];
+        [self.searchLocation startAccessingSecurityScopedResource];
     } else {
-        NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+        //[self punchHoleInSandboxForFile:@"/Users/inzan/Dropbox/Camera Uploads"];
+        [self importFilesAndDirectories:nil];
+        
+        return;
+        /*NSOpenPanel *openPanel = [NSOpenPanel openPanel];
         [openPanel setAllowsMultipleSelection:NO];
         [openPanel setMessage:@"Choose a location to search for photos and images:"];
         [openPanel setCanChooseDirectories:YES];
@@ -53,30 +167,19 @@
         //[openPanel setDirectoryURL:[NSURL fileURLWithPath:[documentsFolderPath objectAtIndex:0]]];
         [openPanel beginSheetModalForWindow:window
                           completionHandler:^(NSInteger returnCode) {
-                              /* the completion handler */
+
                               NSLog(@"done open panel");
                           }];
         //[NSApp runModalForWindow:panel];
         //[window addChildWindow:panel ordered:NSWindowAbove];
-        return;
+        return;*/
     }
     
-    self.directoryDict = [[NSMutableDictionary alloc] init];
-    //self.directoryArray = [[NSMutableArray alloc] init];
-    self.browserData = [[NSMutableArray alloc] init];
-    iSearchQueries = [[NSMutableArray alloc] init];
-    //iThumbnailSize = 32.0;
+    
     
 
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(queryChildrenChanged:)
-                                                 name:SearchQueryChildrenDidChangeNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(searchItemChanged:)
-                                                 name:SearchItemDidChangeNotification
-                                               object:nil];
+
     /*iGroupRowCell = [[NSTextFieldCell alloc] init];
     [iGroupRowCell setEditable:NO];
     [iGroupRowCell setLineBreakMode:NSLineBreakByTruncatingTail];
@@ -104,55 +207,32 @@
     
     [self updatePathControl];*/
     
-    [window setDelegate:self];  // we want to be notified when this window is closed
     
-#ifdef DEBUG
-    [self.browserView setCellsStyleMask:IKCellsStyleTitled | IKCellsStyleSubtitled];
-#endif
+    
+
     
     if (self.searchLocation == nil)
     {
-        // we don't have a default search location setup yet,
-        // default our searchLocation pointing to "Pictures" folder
-        //
-        //NSArray *picturesDirectory = NSSearchPathForDirectoriesInDomains(NSPicturesDirectory, NSUserDomainMask, YES);
-        //self.searchLocation = [NSURL fileURLWithPath:[picturesDirectory objectAtIndex:0]];
-        
-        // write out the NSURL as a security-scoped bookmark to NSUserDefaults
-        // (so that we can resolve it again at re-launch)
-        //
-        /*NSData *bookmarkData = [self.searchLocation bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope
-                                             includingResourceValuesForKeys:nil
-                                                              relativeToURL:nil
-                                                                      error:&error];*/
-        //[[NSUserDefaults standardUserDefaults] setObject:bookmarkData forKey:@"searchLocationKey"];
-        //[[NSUserDefaults standardUserDefaults] synchronize];
-    } else {
-        /*NSData *bookmarkData = [self.searchLocation bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope
-                                             includingResourceValuesForKeys:nil
-                                                              relativeToURL:nil
-                                                                      error:nil];
-        [[NSUserDefaults standardUserDefaults] setObject:bookmarkData forKey:@"searchLocationKey"];
-        [[NSUserDefaults standardUserDefaults] synchronize];*/
-        
-        [self.searchLocation startAccessingSecurityScopedResource];
-        [self refreshBrowser];
-    }
+        DLog(@"No searchLocation specified!");
+        assert(NO);
+    } 
     
     // lastly, point our searchLocation NSPathControl to the search location
     [searchLocationPathControl setURL:self.searchLocation];
+    [self createNewSearchForWithScopeURL:self.searchLocation];
+    //[self updateRootSearchPath:self.searchLocation];
     
 
 }
 
 - (BOOL)windowShouldClose:(id)sender {
     NSLog(@"windowShouldClose was called");
-    for (SearchQuery *query in iSearchQueries) {
+    //for (SearchQuery *query in iSearchQueries) {
         // we are no longer interested in accessing SearchQuery's bookmarked search location,
         // so it's important we balance the start/stop access to security scoped bookmarks here
         //
         //[[query _searchURL] stopAccessingSecurityScopedResource];
-    }
+    //}
     [self.searchLocation stopAccessingSecurityScopedResource];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     return YES;
@@ -191,11 +271,6 @@
 
 -(NSMutableArray *)searchItemsFromResults:(NSArray *)children forDirectory:(NSString *)path
 {
-    //Add a trailing slash to match the metdataitems
-    /*if (![path hasSuffix:@"/"])
-    {
-        path = [NSString stringWithFormat:@"%@/",path];
-    }*/
     //NSMutableArray *tmpArray = [NSMutableArray arrayWithCapacity:[children count] ];
     for (SearchItem *item in children)
     {
@@ -213,25 +288,13 @@
         {
             album = [[Album alloc] initWithFilePath:dirPath];
             [self.directoryDict setValue:album forKey:dirPath];
+            [self.directoryArray addObject:album];
             [self.tableView reloadData];
-            //[self.directoryArray addObject:album];
         }
         if (![album.photos containsObject:item])
         {
             [album addPhotosObject:item];
-        } else {
-            //assert(NO);
         }
-        
-        /*NSString *fileName = [item.metadataItem valueForAttribute:(NSString *)kMDItemFSName];
-        NSScanner *scanner = [NSScanner scannerWithString:fullPath];
-        NSString *dirPath = nil;
-        [scanner scanUpToString:fileName intoString:&dirPath];*/
-
-        /*if ([path isEqualToString:dirPath])
-        {
-            [tmpArray addObject:item];
-        }*/
         
     }
     Album *anAlbum = [self.directoryDict valueForKey:path];
@@ -239,8 +302,11 @@
 }
 
 - (void)queryChildrenChanged:(NSNotification *)note {
-    NSLog(@"searchItemChanged : %@", note);
+    DLog(@"queryChildrenChanged : %@", note);
+    
     SearchQuery *query = (SearchQuery *)[note object];
+    DLog(@"Current album count     : %ld", self.directoryArray.count);
+    DLog(@"incoming children count : %ld", query.children.count);
     //NSLog(@"children : %@", query.children);
     /*for (SearchItem *item in query.children)
     {
@@ -286,72 +352,6 @@
     }*/
 }
 
--(void)loadSubDirectoryInfo:(NSURL *)dirURL
-{
-    return;
-    //[self.directoryArray removeAllObjects];
-    [self.directoryDict removeAllObjects];
-    NSMutableDictionary *currentDirectory = [[NSMutableDictionary alloc] init];
-    //FileSystemItem anItem = [[[FileSystemItem alloc] init];
-    [currentDirectory setObject:[dirURL lastPathComponent] forKey:@"Name"];
-    NSImage *image = [NSImage imageNamed:@"NSFolder"];
-    [currentDirectory setObject:image forKey:@"Image"];
-    [currentDirectory setObject:dirURL forKey:@"URL"];
-    //[self.directoryArray addObject:currentDirectory];
-    
-    self.selectedAlbum = currentDirectory;
-    
-    NSDirectoryEnumerator *itr = [[NSFileManager defaultManager] enumeratorAtURL:dirURL includingPropertiesForKeys:[NSArray arrayWithObjects:NSURLLocalizedNameKey, NSURLEffectiveIconKey, NSURLIsDirectoryKey, NSURLTypeIdentifierKey, nil] options:NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsPackageDescendants /*| NSDirectoryEnumerationSkipsSubdirectoryDescendants*/ errorHandler:nil];
-    
-    for (NSURL *url in itr) {
-        //NSString *utiValue;
-        //[url getResourceValue:&utiValue forKey:NSURLTypeIdentifierKey error:nil];
-        
-        NSError *error = nil;
-        id isDirectoryValue;
-        if ([url getResourceValue:&isDirectoryValue forKey:NSURLIsDirectoryKey error:&error])
-        {
-            NSLog(@"isDirectoryValue : %@", isDirectoryValue);
-        } else {
-            NSLog(@"error : %@", error);
-        }
-        
-        
-        if ([isDirectoryValue boolValue])//(UTTypeConformsTo((__bridge CFStringRef)(utiValue), kUTTypeFolder)) {
-        {
-            NSMutableDictionary *aSubDir = [[NSMutableDictionary alloc] init];
-            //FileSystemItem anItem = [[[FileSystemItem alloc] init];
-            [aSubDir setObject:[url lastPathComponent] forKey:@"Name"];
-            NSImage *image = [NSImage imageNamed:@"NSFolder"];
-            [aSubDir setObject:image forKey:@"Image"];
-            [aSubDir setObject:url forKey:@"URL"];
-            //[self.directoryArray addObject:aSubDir];
-            NSLog(@"Adding subdir at url : %@", url.path);
-        }
-        
-        /*if (UTTypeConformsTo((__bridge CFStringRef)(utiValue), kUTTypeImage)) {
-            NSImage *image = [[NSImage alloc] initWithContentsOfURL:url];
-            IKBBrowserItem *anObject = [[IKBBrowserItem alloc] init];
-            anObject.image = image;
-            anObject.url = url;
-            [self.browserData addObject:anObject];
-        } else if (UTTypeConformsTo((__bridge CFStringRef)(utiValue), kUTTypeFolder)) {
-            NSMutableDictionary *aSubDir = [[NSMutableDictionary alloc] init];
-            //FileSystemItem anItem = [[[FileSystemItem alloc] init];
-            [aSubDir setObject:[url lastPathComponent] forKey:@"Name"];
-            NSImage *image = [NSImage imageNamed:@"NSFolder"];
-            [aSubDir setObject:image forKey:@"Image"];
-            [aSubDir setObject:url forKey:@"URL"];
-            [self.directoryArray addObject:aSubDir];
-            NSLog(@"Adding subdir at url : %@", url.path);
-        } else {
-            NSLog(@"Skipping file at url : %@", url.path);
-        }*/
-    }
-    
-    [self.tableView reloadData];
-    [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
-}
 
 -(void)refreshBrowser
 {
@@ -369,45 +369,61 @@
 
 -(NSMutableArray *)albumArray;
 {
-    NSMutableArray *anArray = [[NSMutableArray alloc] init];
+    return self.directoryArray;//[self.directoryArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES]]];
+    /*NSMutableArray *anArray = [[NSMutableArray alloc] init];
     for (id anObject in [self.directoryDict objectEnumerator])
     {
         [anArray addObject:anObject];
     }
-    return anArray;
+    return anArray;*/
 }
 
 #pragma mark - NSPathControl support
 
-- (IBAction)searchLocationChanged:(id)sender {
-    
-    
-    
-    [self.browserData removeAllObjects];
-    
-    
-    self.searchLocation = [sender URL];
-    
-    
-    // write out the NSURL as a security-scoped bookmark to NSUserDefaults
-    // (so that we can resolve it again at re-launch)
-    //
+-(void)updateRootSearchPath:(NSURL *)newRootSearchPath
+{
+    self.searchLocation = newRootSearchPath;
     NSData *bookmarkData = [self.searchLocation bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope
                                          includingResourceValuesForKeys:nil
                                                           relativeToURL:nil
                                                                   error:nil];
+    DLog(@"updateRootSearchPath : %@", newRootSearchPath.path);
+    assert(bookmarkData);
     [[NSUserDefaults standardUserDefaults] setObject:bookmarkData forKey:@"searchLocationKey"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self.searchLocation startAccessingSecurityScopedResource];
+    [self resetProperties];
+    [self.tableView reloadData];
+    [self createNewSearchForWithScopeURL:self.searchLocation];
+}
+
+//NSFilePathControl calls this when user selects a new root directory
+- (IBAction)searchLocationChanged:(id)sender {
     
-    self.directoryDict = [NSMutableDictionary dictionary];
+    NSURL *oldSearchURL = self.searchLocation;
+    NSURL *newURL = (NSURL *)[sender URL];
+    [self updateRootSearchPath:newURL];
+    
+    if (oldSearchURL!=nil)
+    {
+        [oldSearchURL stopAccessingSecurityScopedResource];
+    }
+    
+    // write out the NSURL as a security-scoped bookmark to NSUserDefaults
+    // (so that we can resolve it again at re-launch)
+    //
+
+    
+    //self.directoryDict = [NSMutableDictionary dictionary];
     //Album *anAlbum = [[Album alloc] initWithFilePath:[[sender URL] path]];
     //self.selectedAlbum = anAlbum;
     
-    [self.tableView reloadData];
     
-    [self refreshBrowser];
+    
+    
+    
+    //[self refreshBrowser];
     //[self.directoryArray removeAllObjects];
 }
 
@@ -475,7 +491,8 @@
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-    return [[self.albumArray objectAtIndex:rowIndex] valueForKey:@"title"];
+    Album *album = [self.albumArray objectAtIndex:rowIndex];
+    return album.title;
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification
@@ -511,19 +528,28 @@
 // This method is optional if you use bindings to provide the data
 /*- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     // Group our "model" object, which is a dictionary
-    NSDictionary *dictionary = [self.directoryArray objectAtIndex:row];
+    Album *album = (Album *)[self.albumArray objectAtIndex:row];
+    
     
     // In IB the tableColumn has the identifier set to the same string as the keys in our dictionary
     NSString *identifier = [tableColumn identifier];
+    //NSTableCellView *cellView = [tableView makeViewWithIdentifier:identifier owner:self];
+    //cellView.objectValue = album;
     
-    if (YES || [identifier isEqualToString:@"MainCell"]) {
+    NSTextField *textField = [tableView makeViewWithIdentifier:identifier owner:self];
+    textField.objectValue = album.title;
+    return textField;
+    
+    / *if (!identifier || [identifier isEqualToString:@"MainCell"]) {
+        
+        
+        
         // We pass us as the owner so we can setup target/actions into this main controller object
-        NSTableCellView *cellView = [tableView makeViewWithIdentifier:identifier owner:self];
+        
         // Then setup properties on the cellView based on the column
-        cellView.textField.stringValue = [dictionary objectForKey:@"Name"];
-        cellView.imageView.image = [dictionary objectForKey:@"Image"];
-        return cellView;
-    } else if ([identifier isEqualToString:@"SizeCell"]) {
+        //cellView.textField.stringValue = album.title;
+        //cellView.imageView.image = [dictionary objectForKey:@"Image"];
+    } /*else if ([identifier isEqualToString:@"SizeCell"]) {
         NSTextField *textField = [tableView makeViewWithIdentifier:identifier owner:self];
         NSImage *image = [dictionary objectForKey:@"Image"];
         NSSize size = image ? [image size] : NSZeroSize;
@@ -532,8 +558,8 @@
         return textField;
     } else {
         NSAssert1(NO, @"Unhandled table column identifier %@", identifier);
-    }
-    return nil;
+    }* /
+    //return cellView;
 }*/
 
 
@@ -544,36 +570,6 @@
 // -------------------------------------------------------------------------------
 - (void)imageBrowserSelectionDidChange:(IKImageBrowserView *)aBrowser
 {
-	/*NSIndexSet *selectionIndexes = [aBrowser selectionIndexes];
-     
-     if ([selectionIndexes count] > 0)
-     {
-     NSDictionary *screenOptions = [[NSWorkspace sharedWorkspace] desktopImageOptionsForScreen:curScreen];
-     
-     MyImageObject *anItem = [images objectAtIndex:[selectionIndexes firstIndex]];
-     NSURL *url = [anItem imageRepresentation];
-     
-     NSNumber *isDirectoryFlag = nil;
-     if ([url getResourceValue:&isDirectoryFlag forKey:NSURLIsDirectoryKey error:nil] && ![isDirectoryFlag boolValue])
-     {
-     /*NSError *error = nil;
-     [[NSWorkspace sharedWorkspace] setDesktopImageURL:url
-     forScreen:curScreen
-     options:screenOptions
-     error:&error];
-     if (error)
-     {
-     [NSApp presentError:error];
-     }* /
-     
-     //IKImageEditPanel *editor = [IKImageEditPanel sharedImageEditPanel];
-     IKImageView *anImageView = [[IKImageView alloc] init];
-     [anImageView setImageWithURL: url];
-     //[editor setDataSource: anImageView];
-     //[anImageView makeKeyAndOrderFront: nil];
-     
-     }
-     }*/
     
     NSLog(@"imageBrowserSelectionDidChange");
 }
@@ -583,27 +579,6 @@
 // -------------------------------------------------------------------------------
 - (void)imageBrowser:(IKImageBrowserView *)aBrowser cellWasDoubleClickedAtIndex:(NSUInteger)index
 {
-    //[_imageBrowser setHidden:YES];
-    /*MyImageObject *anItem = (MyImageObject *)[_images objectAtIndex:index];
-     //NSURL *dirURL = [NSURL fileURLWithPath:@"/Users/inzan/Dropbox/Camera Uploads"];
-     //NSURL *url = [NSURL fileURLWithPath:[anItem imageRepresentation]];
-     //[_imageView setHidden:NO];
-     //NSData *data = UIImageJPEGRepresentation(anItem.image, 1.0);
-     NSImage *anImage = anItem.image;
-     //CIImage * image = [CIImage imageWithContentsOfURL: anItem.url];
-     NSImageView *anImageView = [[NSImageView alloc] initWithFrame:CGRectMake(0,0,400,400)];
-     [anImageView setImage:anImage];
-     //CGImageRef imageRef = anImage.CGImage;
-     //[_imageView setImageWithURL:url];
-     
-     [anImageView setNeedsDisplay:YES];
-     [aBrowser addSubview:anImageView];
-     [aBrowser setNeedsDisplay:YES];*/
-    
-    
-    
-    //[[[AppDelegate applicationDelegate] mainWindowController] showPageViewForIndex:index];
-    
     
     self.pageViewController = [[PageViewController alloc] initWithNibName:@"PageViewController" bundle:nil];
     NSInteger selectedRow = self.tableView.selectedRow;
@@ -611,28 +586,21 @@
         selectedRow = 0;
     }
     //NSURL *aURL = [NSURL fileURLWithPath:self.selectedAlbum.filePath isDirectory:YES];
+    if (self.selectedAlbum == nil)
+    {
+        self.selectedAlbum = (Album*)[[self albumArray] objectAtIndex:selectedRow ];
+    }
     
-    NSURL *aURL = [NSURL fileURLWithPath:[[[self albumArray] objectAtIndex:selectedRow ] valueForKey:@"filePath"]];
-    self.pageViewController.directoryURL = aURL;
+    //NSURL *aURL = [NSURL fileURLWithPath:[[[self albumArray] objectAtIndex:selectedRow ] valueForKey:@"filePath"]];
+    self.pageViewController.album = self.selectedAlbum;
+    self.pageViewController.initialSelectedItem = [self.selectedAlbum.photos objectAtIndex:index];
     
-    self.pageViewController.searchData = self.browserData;
     self.pageViewController.parentWindowController = self;
     self.pageViewController.view.frame = ((NSView*)window.contentView).bounds;
     self.mainContentView = window.contentView;
-    self.pageViewController.pageController.selectedIndex = index;
+    
+    //self.pageViewController.pageController.selectedIndex = index;
     [window setContentView:self.pageViewController.view];
-    
-    
-    
-    
-    
-
-    
-    
-    /*ImageViewController *aViewController = [[ImageViewController alloc] initWithNibName:@"ImageViewController" bundle:nil];
-    aViewController.view.frame = ((NSView*)window.contentView).bounds;
-    [window setContentView:aViewController.view];*/
-    
     
     NSLog(@"cellWasDoubleClickedAtIndex");
 }

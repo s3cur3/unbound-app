@@ -143,9 +143,6 @@
 		1D3DE747161E8FCF00805174 = {
 			isa = PBXGroup;
 			children = (
-				1D4B948D1624F95C00C7BE3F /* QTKit.framework */,
-				1DEF1EE01624EA1D00F09E4E /* QuickTime.framework */,
-				1D3DE78C161EA79E00805174 /* Quartz.framework */,
 				1D3DE75C161E8FCF00805174 /* Unbound5 */,
 				1D3DE755161E8FCF00805174 /* Frameworks */,
 				1D3DE753161E8FCF00805174 /* Products */,
@@ -163,6 +160,9 @@
 		1D3DE755161E8FCF00805174 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1D4B948D1624F95C00C7BE3F /* QTKit.framework */,
+				1DEF1EE01624EA1D00F09E4E /* QuickTime.framework */,
+				1D3DE78C161EA79E00805174 /* Quartz.framework */,
 				1D3DE756161E8FCF00805174 /* Cocoa.framework */,
 				1D3DE758161E8FCF00805174 /* Other Frameworks */,
 			);
@@ -182,12 +182,12 @@
 		1D3DE75C161E8FCF00805174 /* Unbound5 */ = {
 			isa = PBXGroup;
 			children = (
-				1D3DE7F5161FEF4D00805174 /* Resources */,
-				1D3DE77E161E9BB900805174 /* Unbound5.entitlements */,
 				1D3DE7B0161F69B400805174 /* Sources */,
-				1D3DE76B161E8FD000805174 /* MainMenu.xib */,
-				1D3DE76E161E8FD000805174 /* Unbound5.xcdatamodeld */,
+				1D3DE7F5161FEF4D00805174 /* Resources */,
 				1D3DE75D161E8FCF00805174 /* Supporting Files */,
+				1D3DE76B161E8FD000805174 /* MainMenu.xib */,
+				1D3DE77E161E9BB900805174 /* Unbound5.entitlements */,
+				1D3DE76E161E8FD000805174 /* Unbound5.xcdatamodeld */,
 			);
 			path = Unbound5;
 			sourceTree = "<group>";
@@ -219,12 +219,12 @@
 			isa = PBXGroup;
 			children = (
 				1D3DE768161E8FD000805174 /* AppDelegate.h */,
-				1D3DE7C6161F8E4200805174 /* PageView */,
 				1D3DE769161E8FD000805174 /* AppDelegate.m */,
 				1D3DE77B161E944E00805174 /* MainWindowController.h */,
 				1D3DE77C161E944E00805174 /* MainWindowController.m */,
 				1D3DE789161EA4AD00805174 /* IKBBrowserItem.h */,
 				1D3DE78A161EA4AD00805174 /* IKBBrowserItem.m */,
+				1D3DE7C6161F8E4200805174 /* PageView */,
 				1D3DE7B1161F724400805174 /* Search */,
 				1D3DE7AF161F698B00805174 /* Preferences */,
 				1D3DE7C5161F8E0E00805174 /* ImageView */,

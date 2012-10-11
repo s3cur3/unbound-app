@@ -7,12 +7,14 @@
 //
 
 #import "AppDelegate.h"
+#import "MainWindowController.h"
 
 @implementation AppDelegate
 
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize managedObjectContext = _managedObjectContext;
+@synthesize window = _window;
 
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification
 {
@@ -31,11 +33,18 @@
         // now, register which options can be resetted
         [[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:defaults];
     }*/
+    
+    DLog(@"Application will finish launching.");
+    if ([[NSUserDefaults standardUserDefaults] valueForKey:@"searchLocationKey"]==nil)
+    {
+        [(MainWindowController *)[self.window delegate] startLoading];
+    }
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
+    DLog(@"Application did finish launching.");
     
 }
 
