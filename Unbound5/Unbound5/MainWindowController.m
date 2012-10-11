@@ -49,12 +49,15 @@
     [panel setCanChooseFiles:NO];
     [panel setAllowsMultipleSelection:NO];
     [panel setMessage:@"Please select your Dropbox camera uploads folder"];
+    //[panel setDirectoryURL:[NSURL URLWithString:@"~/Dropbox/Camera\\ Uploads"]];
+    //DLog(@"1)panel.directoryURL = %@", panel.directoryURL);
+    [panel setDirectoryURL:[NSURL URLWithString:@"~/Dropbox"]];
+    //DLog(@"2)panel.directoryURL = %@", panel.directoryURL);
     
     // Display the panel attached to the document's window.
     [panel beginSheetModalForWindow:window completionHandler:^(NSInteger result){
         if (result == NSFileHandlingPanelOKButton) {
             NSArray* urls = [panel URLs];
-            //self.searchLocation = [NSURL fileURLWithPath:@"~/Dropbox/Camera Uploads" isDirectory:YES];//[urls lastObject];
             self.searchLocation = [urls lastObject];
             [searchLocationPathControl setURL:self.searchLocation];
             [self updateRootSearchPath:self.searchLocation];
