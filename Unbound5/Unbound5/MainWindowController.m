@@ -25,23 +25,10 @@
 
 @implementation MainWindowController
 
-- (IBAction)openExistingDocument:(id)sender {
-    NSOpenPanel* panel = [NSOpenPanel openPanel];
-    
-    // This method displays the panel and returns immediately.
-    // The completion handler is called when the user selects an
-    // item or cancels the panel.
-    [panel beginWithCompletionHandler:^(NSInteger result){
-        if (result == NSFileHandlingPanelOKButton) {
-            NSURL*  theDoc = [[panel URLs] objectAtIndex:0];
-            
-            // Open  the document.
-        }
-        
-    }];
-}
-
-NSString * IVHomeDirectory()
+/*
+ * Used to get the home directory of the user, UNIX/C based workaround for sandbox issues
+ */
+NSString * UserHomeDirectory()
 {
     const struct passwd * passwd = getpwnam([NSUserName() UTF8String]);
     if(!passwd)
@@ -53,9 +40,9 @@ NSString * IVHomeDirectory()
     return homeDir;
 }
 
-NSArray * IVLibraryDirectory()
+NSArray * DropBoxDirectory()
 {
-    NSArray * libraryDirectories = [NSArray arrayWithObject: [IVHomeDirectory() stringByAppendingPathComponent:@"Dropbox/"]];
+    NSArray * libraryDirectories = [NSArray arrayWithObject: [UserHomeDirectory() stringByAppendingPathComponent:@"Dropbox/"]];
     return libraryDirectories;
 }
 
@@ -68,10 +55,14 @@ NSArray * IVLibraryDirectory()
     [panel setCanChooseDirectories:YES];
     [panel setCanChooseFiles:NO];
     [panel setAllowsMultipleSelection:NO];
-    [panel setMessage:@"Please select your Dropbox camera uploads folder"];
+    [panel setShowsHiddenFiles:NO];
+    [panel setTreatsFilePackagesAsDirectories:YES];
+    NSString *selectMsg = NSLocalizedString(@"Please select your Dropbox camera uploads folder", @"Select Dropbox Folder Msg");
+    [panel setMessage:selectMsg];
     
-    NSArray *dirs = IVLibraryDirectory();
+    NSArray *dirs = DropBoxDirectory();
     DLog(@"dirs : %@", dirs);
+    
     if ([dirs count]>0)
     {
         NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[dirs lastObject] error:&error];
@@ -97,11 +88,21 @@ NSArray * IVLibraryDirectory()
         } 
 
     }
-    
+    NSString *dropboxPath = nil;
+    if ([dirs count]>0)
+    {
+        dropboxPath = [dirs lastObject];
+    } else {
+        dropboxPath = @"~/Dropbox/";
+    }
     //[panel setDirectoryURL:[NSURL fileURLWithPath:@"~/Dropbox/Camera Uploads/" isDirectory:YES]];
     //DLog(@"1)panel.directoryURL = %@", panel.directoryURL);
-    [panel setDirectoryURL:[NSURL URLWithString:@"~/Dropbox"]];
-    DLog(@"2)panel.directoryURL = %@", panel.directoryURL);
+    NSURL *dropBoxHomeURL = [NSURL fileURLWithPath:dropboxPath isDirectory:YES];
+    if (dropBoxHomeURL!=nil)
+    {
+        [panel setDirectoryURL:dropBoxHomeURL];
+        DLog(@" set the panel.directoryURL : %@", panel.directoryURL);
+    }
     
     // Display the panel attached to the document's window.
     [panel beginSheetModalForWindow:window completionHandler:^(NSInteger result){
@@ -116,7 +117,7 @@ NSArray * IVLibraryDirectory()
     }];
 }
 
--(void)punchHoleInSandboxForFile:(NSString*)file
+/*-(void)punchHoleInSandboxForFile:(NSString*)file
 {
     //only needed if we are in 10.7
     if (floor(NSAppKitVersionNumber) <= 1038) return;
@@ -147,7 +148,7 @@ NSArray * IVLibraryDirectory()
 	}else{
         [[NSAlert alertWithMessageText:@"Was denied access to required files." defaultButton:@"Carry On" alternateButton:nil otherButton:nil informativeTextWithFormat:@"This software can not provide it's full functionality without access to certain files."] runModal];
     }
-}
+}*/
 
 -(void)resetProperties
 {
@@ -176,7 +177,7 @@ NSArray * IVLibraryDirectory()
                                                object:nil];
     
 #ifdef DEBUG
-    [self.browserView setCellsStyleMask:IKCellsStyleTitled | IKCellsStyleSubtitled];
+    //[self.browserView setCellsStyleMask:IKCellsStyleTitled | IKCellsStyleSubtitled];
 #endif
     
     if ([[NSUserDefaults standardUserDefaults] valueForKey:@"searchLocationKey"]!=nil)
@@ -206,64 +207,7 @@ NSArray * IVLibraryDirectory()
         [self importFilesAndDirectories:nil];
         
         return;
-        /*NSOpenPanel *openPanel = [NSOpenPanel openPanel];
-        [openPanel setAllowsMultipleSelection:NO];
-        [openPanel setMessage:@"Choose a location to search for photos and images:"];
-        [openPanel setCanChooseDirectories:YES];
-        [openPanel setCanChooseFiles:NO];
-        [openPanel setPrompt:@"Choose"];
-        [openPanel setTitle:@"Choose Location"];
-        
-        // set the default location to the Documents folder
-        NSArray *documentsFolderPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSURL *dbURL = [NSURL URLWithString:@"/Users/inzan/Documents/Dropbox"];
-        [openPanel setDirectoryURL:dbURL];
-        //[openPanel setDirectoryURL:[NSURL fileURLWithPath:[documentsFolderPath objectAtIndex:0]]];
-        [openPanel beginSheetModalForWindow:window
-                          completionHandler:^(NSInteger returnCode) {
-
-                              NSLog(@"done open panel");
-                          }];
-        //[NSApp runModalForWindow:panel];
-        //[window addChildWindow:panel ordered:NSWindowAbove];
-        return;*/
     }
-    
-    
-    
-
-    
-
-    /*iGroupRowCell = [[NSTextFieldCell alloc] init];
-    [iGroupRowCell setEditable:NO];
-    [iGroupRowCell setLineBreakMode:NSLineBreakByTruncatingTail];
-    
-
-    [resultsOutlineView setTarget:self];
-    [resultsOutlineView setDoubleAction:@selector(resultsOutlineDoubleClickAction:)];
-    
-    NSString *placeHolderStr = NSLocalizedString(@"Select an item to show its location.", @"Placeholder string for location items");
-    [[pathControl cell] setPlaceholderString:placeHolderStr];
-    [pathControl setTarget:self];
-    [pathControl setDoubleAction:@selector(pathControlDoubleClick:)];
-    
-    [predicateEditor setRowHeight:25];
-    
-    // add some rows
-    [[predicateEditor enclosingScrollView] setHasVerticalScroller:NO];
-    iPreviousRowCount = 3;
-    [predicateEditor addRow:self];
-    
-    // put the focus in the text field
-    id displayValue = [[predicateEditor displayValuesForRow:1] lastObject];
-    if ([displayValue isKindOfClass:[NSControl class]])
-        [window makeFirstResponder:displayValue];
-    
-    [self updatePathControl];*/
-    
-    
-    
-
     
     if (self.searchLocation == nil)
     {
@@ -271,10 +215,10 @@ NSArray * IVLibraryDirectory()
         assert(NO);
     } 
     
-    // lastly, point our searchLocation NSPathControl to the search location
+    //Point our searchLocation NSPathControl to the search location
     [searchLocationPathControl setURL:self.searchLocation];
+    
     [self createNewSearchForWithScopeURL:self.searchLocation];
-    //[self updateRootSearchPath:self.searchLocation];
     
 
 }
