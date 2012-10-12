@@ -13,6 +13,8 @@
 #import "ImageViewController.h"
 #import "IKImageViewController.h"
 #import "Album.h"
+#include <sys/types.h>
+#include <pwd.h>
 
 @interface MainWindowController()
 
@@ -39,20 +41,67 @@
     }];
 }
 
+NSString * IVHomeDirectory()
+{
+    const struct passwd * passwd = getpwnam([NSUserName() UTF8String]);
+    if(!passwd)
+        return nil; // bail out cowardly
+    const char *homeDir_c = getpwnam([NSUserName() UTF8String])->pw_dir;
+    NSString *homeDir = [[NSFileManager defaultManager]
+                         stringWithFileSystemRepresentation:homeDir_c
+                         length:strlen(homeDir_c)];
+    return homeDir;
+}
+
+NSArray * IVLibraryDirectory()
+{
+    NSArray * libraryDirectories = [NSArray arrayWithObject: [IVHomeDirectory() stringByAppendingPathComponent:@"Dropbox/"]];
+    return libraryDirectories;
+}
+
 - (IBAction)importFilesAndDirectories:(id)sender {
     // Get the main window for the document.
     //NSWindow* window = [[[self windowControllers] objectAtIndex:0] window];
-    
+    NSError *error = nil;
     // Create and configure the panel.
     NSOpenPanel* panel = [NSOpenPanel openPanel];
     [panel setCanChooseDirectories:YES];
     [panel setCanChooseFiles:NO];
     [panel setAllowsMultipleSelection:NO];
     [panel setMessage:@"Please select your Dropbox camera uploads folder"];
-    //[panel setDirectoryURL:[NSURL URLWithString:@"~/Dropbox/Camera\\ Uploads"]];
+    
+    NSArray *dirs = IVLibraryDirectory();
+    DLog(@"dirs : %@", dirs);
+    if ([dirs count]>0)
+    {
+        NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[dirs lastObject] error:&error];
+        if (!files)
+        {
+            DLog(@"%@", error);
+        } else if (files != nil)
+        {
+            NSURL *mainDropBoxFolderURL = [NSURL fileURLWithPath:[dirs lastObject] isDirectory:YES];
+            NSDirectoryEnumerator *itr = [[NSFileManager defaultManager] enumeratorAtURL:mainDropBoxFolderURL includingPropertiesForKeys:[NSArray arrayWithObjects:NSURLLocalizedNameKey, NSURLEffectiveIconKey, NSURLIsDirectoryKey, NSURLTypeIdentifierKey, nil] options:NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsSubdirectoryDescendants errorHandler:nil];
+            
+            for (NSURL *url in itr) {
+                if ([url.filePathURL.lastPathComponent isEqualToString:@"Camera Uploads"])
+                {
+                    NSURL *aFileURL = url;
+                    self.searchLocation = aFileURL;
+                    [searchLocationPathControl setURL:self.searchLocation];
+                    [self updateRootSearchPath:self.searchLocation];
+                    return;
+                }
+            }
+            
+        } 
+
+    }
+    
+    //[panel setDirectoryURL:[NSURL fileURLWithPath:@"~/Dropbox/Camera Uploads/" isDirectory:YES]];
     //DLog(@"1)panel.directoryURL = %@", panel.directoryURL);
     [panel setDirectoryURL:[NSURL URLWithString:@"~/Dropbox"]];
-    //DLog(@"2)panel.directoryURL = %@", panel.directoryURL);
+    DLog(@"2)panel.directoryURL = %@", panel.directoryURL);
     
     // Display the panel attached to the document's window.
     [panel beginSheetModalForWindow:window completionHandler:^(NSInteger result){
@@ -395,11 +444,13 @@
                                                           relativeToURL:nil
                                                                   error:nil];
     DLog(@"updateRootSearchPath : %@", newRootSearchPath.path);
-    assert(bookmarkData);
-    [[NSUserDefaults standardUserDefaults] setObject:bookmarkData forKey:@"searchLocationKey"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    if(bookmarkData){
+        [[NSUserDefaults standardUserDefaults] setObject:bookmarkData forKey:@"searchLocationKey"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self.searchLocation startAccessingSecurityScopedResource];
+    }
     
-    [self.searchLocation startAccessingSecurityScopedResource];
+    
     [self resetProperties];
     [self.tableView reloadData];
     [self createNewSearchForWithScopeURL:self.searchLocation];
