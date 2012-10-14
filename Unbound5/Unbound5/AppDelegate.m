@@ -11,6 +11,7 @@
 #import "PreferencesWindowController.h"
 #import "Preferences.h"
 #import "Utils.h"
+#import "SimpleProfiler.h"
 
 @implementation AppDelegate
 
@@ -62,7 +63,6 @@
 
 -(void)applicationWillTerminate:(NSNotification *)notification
 {
-    NSLog(@"applicationWillTerminate");
     IKImageBrowserView *mImageBrowser = [(MainWindowController *)[self.window delegate] browserView];
     [mImageBrowser unbind:@"zoomValue"];
     [mImageBrowser unbind:@"showTitles"];
@@ -70,6 +70,8 @@
     
 	// cleanup
 	[Preferences destroy];
+	[[SimpleProfiler instance] log];
+	[SimpleProfiler destroyInstance];
 }
 
 // Returns the directory the application uses to store the Core Data store file. This code uses a directory named "com.pixite.Unbound5" in the user's Application Support directory.

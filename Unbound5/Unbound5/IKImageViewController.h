@@ -23,6 +23,10 @@
 }
 
 @property (nonatomic, strong) IBOutlet IKImageView *imageView;
-@property (nonatomic, copy) NSURL* url;
+@property (nonatomic, strong) NSURL* url;
 @property (nonatomic, strong) NSImage* image;
+
+- (id)initWithNibName:(NSString *)nibNameOrNil
+               bundle:(NSBundle *)nibBundleOrNil
+                  url:(NSURL *)aURL;
 @end

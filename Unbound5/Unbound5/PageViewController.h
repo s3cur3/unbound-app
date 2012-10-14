@@ -26,6 +26,8 @@
 //@property (strong) NSMutableArray *searchData;
 @property (assign) id initialSelectedObject;
 
+@property (nonatomic, strong) NSViewController *pageControllerSelectedViewController;
+
 
 - (IBAction)goBack:sender;
 - (IBAction)editPhoto:sender;

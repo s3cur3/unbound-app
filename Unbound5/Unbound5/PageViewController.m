@@ -8,7 +8,6 @@
 
 #import "PageViewController.h"
 #import "AppDelegate.h"
-#import "IKBBrowserItem.h"
 #import "MainWindowController.h"
 #import "IKImageViewController.h"
 #import "SearchItem.h"
@@ -102,10 +101,14 @@ static NSString *ResolveName(NSString *aName)
 
 - (IBAction)editPhoto:(id)sender;
 {
-    IKImageViewController *anImageViewController = [[IKImageViewController alloc] initWithNibName:@"IKImageViewController" bundle:nil];
-    NSViewController *currentView = self.pageController.selectedViewController;
-    id aURL = currentView.representedObject;
-    anImageViewController.url = aURL;
+
+    //NSViewController *currentView = self.pageController.selectedViewController;
+    //id aURL = currentView.representedObject;
+    SearchItem *anItem = (SearchItem *)[self.album.photos objectAtIndex:self.pageController.selectedIndex];
+    IKImageViewController *anImageViewController = [[IKImageViewController alloc] initWithNibName:@"IKImageViewController"
+                                                                                           bundle:nil
+                                                                                              url:anItem.filePathURL];
+    //anImageViewController.url = anItem.filePathURL;
     anImageViewController.view.frame = ((NSView*)self.pageController.selectedViewController.view).bounds;
     
     [self.view addSubview:anImageViewController.view];

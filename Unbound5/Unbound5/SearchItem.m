@@ -296,15 +296,7 @@ static NSMutableArray *computeThumbnailClientQueue = nil;
             _imageRepresentationType = IKImageBrowserQTMoviePathRepresentationType;
         } else {
             ALog(@"Unexpected file type : %@", itemType);
-#ifdef DEBUG
-            NSLog(@"*** START ***");
-            for (id attr in [_item attributes])
-            {
-                
-                NSLog(@"%@ : %@", attr, [_item valueForAttribute:(NSString *)attr] );
-            }
-            NSLog(@"*** END ***");
-#endif
+            [self dumpAttributesToLog];
             _imageRepresentationType = IKImageBrowserQuickLookPathRepresentationType;
         }
     }
@@ -341,5 +333,18 @@ static NSMutableArray *computeThumbnailClientQueue = nil;
 {
     return (NSInteger)[[NSDate date] timeIntervalSince1970];
 }*/
+
+-(void)dumpAttributesToLog;
+{
+#ifdef DEBUG
+    NSLog(@"*** START ***");
+    for (id attr in [_item attributes])
+    {
+        
+        NSLog(@"%@ : %@", attr, [_item valueForAttribute:(NSString *)attr] );
+    }
+    NSLog(@"*** END ***");
+#endif
+}
 
 @end

@@ -16,7 +16,13 @@
 #	define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
 #else
 #	define DLog(...)
+#   ifndef NS_BLOCK_ASSERTIONS
+#       define NS_BLOCK_ASSERTIONS
+#   endif
 #endif
 
 // ALog always displays output regardless of the DEBUG setting
 #define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+
+//Mimics NSAssert but still prints to the log if condition fails if NS_BLOCK_ASSERTIONS is off (i.e. DEBUG=YES)
+#define ZAssert(condition, ...) do { if (!(condition)) { ALog(__VA_ARGS__); }} while(0)

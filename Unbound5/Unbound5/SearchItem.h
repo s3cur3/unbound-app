@@ -70,6 +70,8 @@ enum {
 
 - (id)initWithItem:(NSMetadataItem *)item;
 
+-(void)dumpAttributesToLog;
+
 - (NSString *)title;
 - (void)setTitle:(NSString *)title;
 

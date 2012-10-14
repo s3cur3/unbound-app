@@ -53,7 +53,7 @@
     //NSString *   path = [[NSBundle mainBundle] pathForResource: @"earring"
                                                         //ofType: @"jpg"];
     //NSURL *      url = [NSURL fileURLWithPath: path];
-    self.url = self.representedObject;
+    //self.url = self.representedObject;
     
     if (_imageView.image == nil)
     {
@@ -74,12 +74,14 @@
     
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithNibName:(NSString *)nibNameOrNil
+               bundle:(NSBundle *)nibBundleOrNil
+             url:(NSURL *)aURL
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Initialization code here.
-        
+        self.url = aURL;
     }
     
     return self;

@@ -8,13 +8,13 @@
 
 #import "MainWindowController.h"
 #import "SearchQuery.h"
-//#import "IKBBrowserItem.h"
 #import "PageViewController.h"
 #import "ImageViewController.h"
 #import "IKImageViewController.h"
 #import "Album.h"
 #include <sys/types.h>
 #include <pwd.h>
+#import "SimpleProfiler.h"
 
 @interface MainWindowController()
 
@@ -269,18 +269,26 @@ NSArray * DropBoxDirectory()
 
 -(NSMutableArray *)searchItemsFromResults:(NSArray *)children forDirectory:(NSString *)path
 {
-    DLog(@"Starting searchItemsFromResults");
+    PROFILING_START(@"FileUtils - searchItemsFromResults");
+    //DLog(@"Starting searchItemsFromResults");
     //NSMutableArray *tmpArray = [NSMutableArray arrayWithCapacity:[children count] ];
+    NSInteger index =0;
     for (SearchItem *item in children)
     {
-        if ([self.browserData containsObject:item])
-        {
-            //assert(NO);
+        index++;
+        if ([self.browserData containsObject:item]){
             continue;
         }
         //NSLog(@"item : %@", [item debugDescription]);
 
         NSString *fullPath = [item.metadataItem valueForAttribute:(NSString *)kMDItemPath];
+        if (fullPath==nil) {
+            DLog(@"SearchItem has no path item %ld of %ld", index, children.count);
+            //NSAssert(fullPath!=nil, @"SearchItem has no path");
+            [item dumpAttributesToLog];
+            continue;
+        }
+        
         NSString *dirPath = [fullPath stringByDeletingLastPathComponent];
         Album *album = [self.directoryDict valueForKey:dirPath];
         if (album==nil)
@@ -297,34 +305,19 @@ NSArray * DropBoxDirectory()
         
     }
     Album *anAlbum = [self.directoryDict valueForKey:path];
-    DLog(@"Finished searchItemsFromResults");
+    //DLog(@"Finished searchItemsFromResults");
+    PROFILING_STOP();
     return anAlbum.photos;
 }
 
 - (void)queryChildrenChanged:(NSNotification *)note {
-    DLog(@"queryChildrenChanged : %@", note);
     
     SearchQuery *query = (SearchQuery *)[note object];
-    DLog(@"Current album count     : %ld", self.directoryArray.count);
-    DLog(@"incoming children count : %ld", query.children.count);
-    //NSLog(@"children : %@", query.children);
-    /*for (SearchItem *item in query.children)
-    {
-        NSLog(@"item : %@", [item debugDescription]);
-        if (item.thumbnailImage!=nil)
-        {
-            IKBBrowserItem *bItem = [[IKBBrowserItem alloc] init];
-            bItem.url = item.filePathURL;
-            bItem.image = item.thumbnailImage;
-            [self.browserData addObject:bItem];
-        }
-    }*/
-    
-    //Filter for the correct directory
-    //NSString *path = [_item valueForAttribute:(NSString *)kMDItemPath];
+    DLog(@"Current count  : %ld", self.directoryArray.count);
+    DLog(@"incoming count : %ld", query.children.count);
     
     
-    self.browserData = [self searchItemsFromResults:query.children forDirectory:[query._searchURL path]];//[NSMutableArray arrayWithArray:query.children];
+    self.browserData = [self searchItemsFromResults:query.children forDirectory:[query._searchURL path]];
     [self.browserView reloadData];
     //[resultsOutlineView reloadItem:[note object] reloadChildren:YES];
 }
@@ -333,14 +326,7 @@ NSArray * DropBoxDirectory()
     NSLog(@"searchItemChanged : %@", note);
     SearchItem *item = (SearchItem *)[note object];
     NSLog(@"item : %@", [item debugDescription]);
-    /*if (item.thumbnailImage!=nil)
-    {
-        IKBBrowserItem *bItem = [[IKBBrowserItem alloc] init];
-        bItem.url = item.filePathURL;
-        bItem.image = item.thumbnailImage;
-        [self.browserData addObject:bItem];
-        [self.browserView reloadData];
-    }*/
+
     // When an item changes, it only will affect the display state.
     // So, we only need to redisplay its contents, and not reload it
     /*NSInteger row = [resultsOutlineView rowForItem:[note object]];
@@ -499,7 +485,7 @@ NSArray * DropBoxDirectory()
 
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification
 {
-    NSLog(@"tableViewSelectionDidChange : %@", aNotification.object);
+    //NSLog(@"tableViewSelectionDidChange : %@", aNotification.object);
     if ([self.tableView selectedRow]==-1)
     {
         return;

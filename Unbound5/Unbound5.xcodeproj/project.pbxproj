@@ -10,7 +10,6 @@
 		1D1FB36C1620F763002CD358 /* AutoSizingIKImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1FB36B1620F763002CD358 /* AutoSizingIKImageView.m */; };
 		1D1FB39E162117CD002CD358 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1FB39C162117CD002CD358 /* ImageViewController.m */; };
 		1D1FB39F162117CD002CD358 /* ImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D1FB39D162117CD002CD358 /* ImageViewController.xib */; };
-		1D1FB3A316211E97002CD358 /* LoadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1FB3A216211E97002CD358 /* LoadOperation.m */; };
 		1D1FB3EB16237174002CD358 /* ImageBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1FB3EA16237174002CD358 /* ImageBrowserCell.m */; };
 		1D1FB3EE162371F0002CD358 /* ImageBrowserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1FB3ED162371F0002CD358 /* ImageBrowserView.m */; };
 		1D3DE757161E8FCF00805174 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3DE756161E8FCF00805174 /* Cocoa.framework */; };
@@ -23,7 +22,6 @@
 		1D3DE77D161E944E00805174 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3DE77C161E944E00805174 /* MainWindowController.m */; };
 		1D3DE781161EA26200805174 /* SearchQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3DE780161EA26200805174 /* SearchQuery.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1D3DE784161EA34700805174 /* SearchItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3DE783161EA34700805174 /* SearchItem.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		1D3DE78B161EA4AD00805174 /* IKBBrowserItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3DE78A161EA4AD00805174 /* IKBBrowserItem.m */; };
 		1D3DE78D161EA79E00805174 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3DE78C161EA79E00805174 /* Quartz.framework */; };
 		1D3DE7AD161F698000805174 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3DE7AA161F697E00805174 /* Preferences.m */; };
 		1D3DE7AE161F698000805174 /* PreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3DE7AC161F697F00805174 /* PreferencesWindowController.m */; };
@@ -53,6 +51,7 @@
 		1D9EE78516276600008E7977 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D9EE78416276600008E7977 /* Preferences.xib */; };
 		1D9EE7891627719E008E7977 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9EE7881627719E008E7977 /* Utils.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1DE22E2416263F4A00D5B106 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE22E2316263F4A00D5B106 /* Album.m */; };
+		1DFAC716162A596000FCF155 /* SimpleProfiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DFAC715162A596000FCF155 /* SimpleProfiler.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,8 +60,6 @@
 		1D1FB39B162117CD002CD358 /* ImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewController.h; sourceTree = "<group>"; };
 		1D1FB39C162117CD002CD358 /* ImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageViewController.m; sourceTree = "<group>"; };
 		1D1FB39D162117CD002CD358 /* ImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageViewController.xib; sourceTree = "<group>"; };
-		1D1FB3A116211E97002CD358 /* LoadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadOperation.h; sourceTree = "<group>"; };
-		1D1FB3A216211E97002CD358 /* LoadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadOperation.m; sourceTree = "<group>"; };
 		1D1FB3E916237174002CD358 /* ImageBrowserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageBrowserCell.h; sourceTree = "<group>"; };
 		1D1FB3EA16237174002CD358 /* ImageBrowserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageBrowserCell.m; sourceTree = "<group>"; };
 		1D1FB3EC162371F0002CD358 /* ImageBrowserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageBrowserView.h; sourceTree = "<group>"; };
@@ -88,8 +85,6 @@
 		1D3DE780161EA26200805174 /* SearchQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchQuery.m; sourceTree = "<group>"; };
 		1D3DE782161EA34700805174 /* SearchItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchItem.h; sourceTree = "<group>"; };
 		1D3DE783161EA34700805174 /* SearchItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchItem.m; sourceTree = "<group>"; };
-		1D3DE789161EA4AD00805174 /* IKBBrowserItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKBBrowserItem.h; sourceTree = "<group>"; };
-		1D3DE78A161EA4AD00805174 /* IKBBrowserItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKBBrowserItem.m; sourceTree = "<group>"; };
 		1D3DE78C161EA79E00805174 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		1D3DE7A9161F697E00805174 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
 		1D3DE7AA161F697E00805174 /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; };
@@ -129,6 +124,12 @@
 		1DE22E2216263F4A00D5B106 /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
 		1DE22E2316263F4A00D5B106 /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
 		1DEF1EE01624EA1D00F09E4E /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
+		1DFAC70C162A4C4B00FCF155 /* ImageBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageBrowser.h; sourceTree = "<group>"; };
+		1DFAC70D162A4C4B00FCF155 /* ImageBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageBrowser.m; sourceTree = "<group>"; };
+		1DFAC70E162A4C4B00FCF155 /* ImageBrowserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageBrowserDelegate.h; sourceTree = "<group>"; };
+		1DFAC70F162A4C4B00FCF155 /* ImageBrowserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageBrowserDelegate.m; sourceTree = "<group>"; };
+		1DFAC714162A596000FCF155 /* SimpleProfiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleProfiler.h; sourceTree = "<group>"; };
+		1DFAC715162A596000FCF155 /* SimpleProfiler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleProfiler.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,8 +231,8 @@
 				1D3DE769161E8FD000805174 /* AppDelegate.m */,
 				1D3DE77B161E944E00805174 /* MainWindowController.h */,
 				1D3DE77C161E944E00805174 /* MainWindowController.m */,
-				1D3DE789161EA4AD00805174 /* IKBBrowserItem.h */,
-				1D3DE78A161EA4AD00805174 /* IKBBrowserItem.m */,
+				1DFAC717162A596800FCF155 /* Utils */,
+				1DFAC713162A4C5400FCF155 /* ImageBrowser */,
 				1D3DE7C6161F8E4200805174 /* PageView */,
 				1D3DE7B1161F724400805174 /* Search */,
 				1D3DE7AF161F698B00805174 /* Preferences */,
@@ -243,8 +244,6 @@
 		1D3DE7B1161F724400805174 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				1D1FB3A116211E97002CD358 /* LoadOperation.h */,
-				1D1FB3A216211E97002CD358 /* LoadOperation.m */,
 				1D3DE77F161EA26200805174 /* SearchQuery.h */,
 				1D3DE780161EA26200805174 /* SearchQuery.m */,
 				1D3DE782161EA34700805174 /* SearchItem.h */,
@@ -258,10 +257,6 @@
 		1D3DE7C5161F8E0E00805174 /* ImageView */ = {
 			isa = PBXGroup;
 			children = (
-				1D1FB3EC162371F0002CD358 /* ImageBrowserView.h */,
-				1D1FB3ED162371F0002CD358 /* ImageBrowserView.m */,
-				1D1FB3E916237174002CD358 /* ImageBrowserCell.h */,
-				1D1FB3EA16237174002CD358 /* ImageBrowserCell.m */,
 				1D3DE7FB16201D7A00805174 /* ScrollViewWorkaround.m */,
 				1D3DE7FC16201D7A00805174 /* ScrollViewWorkaround.h */,
 				1D3DE7F0161FE6E500805174 /* IKImageViewController.h */,
@@ -318,6 +313,30 @@
 				1D3DE7D0161F951100805174 /* images */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		1DFAC713162A4C5400FCF155 /* ImageBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				1DFAC70C162A4C4B00FCF155 /* ImageBrowser.h */,
+				1DFAC70D162A4C4B00FCF155 /* ImageBrowser.m */,
+				1D1FB3EC162371F0002CD358 /* ImageBrowserView.h */,
+				1D1FB3ED162371F0002CD358 /* ImageBrowserView.m */,
+				1D1FB3E916237174002CD358 /* ImageBrowserCell.h */,
+				1D1FB3EA16237174002CD358 /* ImageBrowserCell.m */,
+				1DFAC70E162A4C4B00FCF155 /* ImageBrowserDelegate.h */,
+				1DFAC70F162A4C4B00FCF155 /* ImageBrowserDelegate.m */,
+			);
+			name = ImageBrowser;
+			sourceTree = "<group>";
+		};
+		1DFAC717162A596800FCF155 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				1DFAC714162A596000FCF155 /* SimpleProfiler.h */,
+				1DFAC715162A596000FCF155 /* SimpleProfiler.m */,
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -409,7 +428,6 @@
 				1D3DE77D161E944E00805174 /* MainWindowController.m in Sources */,
 				1D3DE781161EA26200805174 /* SearchQuery.m in Sources */,
 				1D3DE784161EA34700805174 /* SearchItem.m in Sources */,
-				1D3DE78B161EA4AD00805174 /* IKBBrowserItem.m in Sources */,
 				1D3DE7AD161F698000805174 /* Preferences.m in Sources */,
 				1D3DE7AE161F698000805174 /* PreferencesWindowController.m in Sources */,
 				1D3DE7B9161F89E800805174 /* PageViewController.m in Sources */,
@@ -418,12 +436,12 @@
 				1D3DE7FD16201D7A00805174 /* ScrollViewWorkaround.m in Sources */,
 				1D1FB36C1620F763002CD358 /* AutoSizingIKImageView.m in Sources */,
 				1D1FB39E162117CD002CD358 /* ImageViewController.m in Sources */,
-				1D1FB3A316211E97002CD358 /* LoadOperation.m in Sources */,
 				1D1FB3EB16237174002CD358 /* ImageBrowserCell.m in Sources */,
 				1D1FB3EE162371F0002CD358 /* ImageBrowserView.m in Sources */,
 				1D4B9493162501ED00C7BE3F /* AutoSizingVideoView.m in Sources */,
 				1DE22E2416263F4A00D5B106 /* Album.m in Sources */,
 				1D9EE7891627719E008E7977 /* Utils.m in Sources */,
+				1DFAC716162A596000FCF155 /* SimpleProfiler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -501,6 +519,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "NS_BLOCK_ASSERTIONS=1";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -518,6 +537,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Unbound5/Unbound5-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"PROFILING=1",
+				);
 				INFOPLIST_FILE = "Unbound5/Unbound5-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -532,6 +556,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Unbound5/Unbound5-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "NS_BLOCK_ASSERTIONS=1";
 				INFOPLIST_FILE = "Unbound5/Unbound5-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
