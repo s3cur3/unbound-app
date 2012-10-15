@@ -69,6 +69,7 @@
     [_imageView setDoubleClickOpensImageEditPanel: YES];
     [_imageView setCurrentToolMode: IKToolModeNone];
     //[_imageView zoomImageToActualSize: self];
+    [_imageView zoomImageToFit: self];
 
     [_imageView setDelegate: self];
     

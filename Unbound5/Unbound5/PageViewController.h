@@ -11,6 +11,7 @@
 @class MainWindowController;
 @class Album;
 @class SearchItem;
+@class IKImageViewController;
 
 @interface PageViewController : NSViewController <NSPageControllerDelegate>
 {
@@ -27,6 +28,8 @@
 @property (assign) id initialSelectedObject;
 
 @property (nonatomic, strong) NSViewController *pageControllerSelectedViewController;
+
+@property (nonatomic, strong) IKImageViewController *imageEditViewController;
 
 
 - (IBAction)goBack:sender;

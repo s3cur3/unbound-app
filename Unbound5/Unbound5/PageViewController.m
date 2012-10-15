@@ -96,22 +96,35 @@ static NSString *ResolveName(NSString *aName)
 
 - (IBAction)goBack:sender;
 {
+    if (self.imageEditViewController!=nil)
+    {
+        [self.imageEditViewController.view removeFromSuperview];
+        self.imageEditViewController = nil;
+    }
     [self.parentWindowController showMainView];
 }
 
 - (IBAction)editPhoto:(id)sender;
 {
+    if (self.imageEditViewController!=nil)
+    {
+        [self.imageEditViewController.view removeFromSuperview];
+        self.imageEditViewController = nil;
+        return;
+    }
 
     //NSViewController *currentView = self.pageController.selectedViewController;
     //id aURL = currentView.representedObject;
     SearchItem *anItem = (SearchItem *)[self.album.photos objectAtIndex:self.pageController.selectedIndex];
-    IKImageViewController *anImageViewController = [[IKImageViewController alloc] initWithNibName:@"IKImageViewController"
+    self.imageEditViewController = [[IKImageViewController alloc] initWithNibName:@"IKImageViewController"
                                                                                            bundle:nil
                                                                                               url:anItem.filePathURL];
-    //anImageViewController.url = anItem.filePathURL;
-    anImageViewController.view.frame = ((NSView*)self.pageController.selectedViewController.view).bounds;
     
-    [self.view addSubview:anImageViewController.view];
+    
+    //anImageViewController.url = anItem.filePathURL;
+    self.imageEditViewController.view.frame = ((NSView*)self.pageController.selectedViewController.view).bounds;
+    
+    [self.view addSubview:self.imageEditViewController.view];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
