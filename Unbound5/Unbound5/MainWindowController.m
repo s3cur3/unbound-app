@@ -537,9 +537,9 @@ NSArray * DropBoxDirectory()
     Album *anAlbum =  [self.albumArray objectAtIndex:[self.tableView selectedRow]];
     if (self.selectedAlbum == anAlbum) {
         DLog(@"selectedAlbum didn't seem to change - no need to update browserView");
-        return;
+    } else {
+        self.selectedAlbum = anAlbum;
     }
-    self.selectedAlbum = anAlbum;
     
     //[self.browserData removeAllObjects];
     //[self.browserView reloadData];
@@ -551,8 +551,8 @@ NSArray * DropBoxDirectory()
         //[self.browserView reloadData];
     } else {
         //assert(NO);
-        NSURL *searchURL = [NSURL URLWithString:[anAlbum valueForKey:@"filePath"]];
-        [self createNewSearchForWithScopeURL:searchURL];
+        //NSURL *searchURL = [NSURL URLWithString:[anAlbum valueForKey:@"filePath"]];
+        //[self createNewSearchForWithScopeURL:searchURL];
     }
     
     //[url startAccessingSecurityScopedResource];
