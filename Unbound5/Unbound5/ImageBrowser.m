@@ -5,7 +5,7 @@
 #import "../Preferences/Preferences.h"
 #import "../Utils/FileUtils.h"
 #import "../Utils/Utils.h"
-#import "../Utils/SlideShow.h"
+//#import "../Utils/SlideShow.h"
 
 
 @implementation ImageBrowser
@@ -73,7 +73,7 @@
 -(void)selectNextImage:(NSTimer *)timer
 {
 	// get the index of the first selected image
-	int selectedImage = -1;
+	/*int selectedImage = -1;
 	if ([self selectionIndexes] != nil || [[self selectionIndexes] count] != 0)
 		selectedImage = (int)[[self selectionIndexes] firstIndex];
 
@@ -97,7 +97,7 @@
 
 	// finally, set the new image
 	[self setSelectionIndexes:[NSIndexSet indexSetWithIndex:selectedImage]
-		  byExtendingSelection:NO];
+		  byExtendingSelection:NO];*/
 }
 
 -(BOOL)showTitles
@@ -213,7 +213,7 @@
 -(void)keyDown:(NSEvent *)theEvent
 {
 	// get the event and the modifiers
-	NSString * characters = [theEvent charactersIgnoringModifiers];
+	/*NSString * characters = [theEvent charactersIgnoringModifiers];
 	unichar event = [characters characterAtIndex:0];
 
 	switch (event)
@@ -240,7 +240,7 @@
 
 		default:
 			[super keyDown:theEvent];
-	}
+	}*/
 }
 
 -(void)otherMouseDown:(NSEvent *)theEvent

@@ -15,6 +15,7 @@
 #include <sys/types.h>
 #include <pwd.h>
 #import "SimpleProfiler.h"
+//#import "AppDelegate.h"
 
 @interface MainWindowController()
 
@@ -152,6 +153,7 @@ NSArray * DropBoxDirectory()
 
 -(void)resetProperties
 {
+    self.selectedAlbum = nil;
     self.directoryDict = [[NSMutableDictionary alloc] init];
     self.browserData = [[NSMutableArray alloc] init];
     self.directoryArray = [[NSMutableArray alloc] init];
@@ -167,6 +169,10 @@ NSArray * DropBoxDirectory()
     
     [window setDelegate:self];  // we want to be notified when this window is closed
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(searchFinished:)
+                                                 name:SearchQueryDidFinishNotification
+                                               object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(queryChildrenChanged:)
                                                  name:SearchQueryChildrenDidChangeNotification
@@ -267,7 +273,7 @@ NSArray * DropBoxDirectory()
     
 }
 
--(NSMutableArray *)searchItemsFromResults:(NSArray *)children forDirectory:(NSString *)path
+-(void)updateAlbumsWithSearchResults:(NSArray *)children //forDirectory:(NSString *)path
 {
     PROFILING_START(@"FileUtils - searchItemsFromResults");
     //DLog(@"Starting searchItemsFromResults");
@@ -296,7 +302,7 @@ NSArray * DropBoxDirectory()
             album = [[Album alloc] initWithFilePath:dirPath];
             [self.directoryDict setValue:album forKey:dirPath];
             [self.directoryArray addObject:album];
-            [self.tableView reloadData];
+            //[self.tableView reloadData];
         }
         if (![album.photos containsObject:item])
         {
@@ -304,20 +310,58 @@ NSArray * DropBoxDirectory()
         }
         
     }
-    Album *anAlbum = [self.directoryDict valueForKey:path];
+    
     //DLog(@"Finished searchItemsFromResults");
     PROFILING_STOP();
-    return anAlbum.photos;
+    return;
+}
+
+-(void)searchFinished:(NSNotification *)note
+{
+    DLog(@"searchFinished")
+    SearchQuery *query = (SearchQuery *)[note object];
+    NSString *topLevelPath = [query._searchURL path];
+    Album *topLevelAlbum = (Album *)[self.directoryDict valueForKey:topLevelPath];
+    if (!topLevelAlbum)
+    {
+        topLevelAlbum = [[Album alloc] initWithFilePath:topLevelPath];
+        [self.directoryArray addObject:topLevelAlbum];
+        [self.directoryDict setValue:topLevelAlbum forKey:topLevelPath];
+    }
+    
+    if (self.selectedAlbum == nil) {
+        self.selectedAlbum = topLevelAlbum;
+    }
+    
+    [self.directoryArray sortUsingDescriptors:self.albumSortDescriptors];
+    NSInteger selectedAlbumIndex = [self.directoryArray indexOfObject:self.selectedAlbum];
+    
+    [self.tableView reloadData];
+    [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:selectedAlbumIndex] byExtendingSelection:NO];
+    [self.tableView scrollRowToVisible:selectedAlbumIndex];
+    [self.browserView reloadData];
 }
 
 - (void)queryChildrenChanged:(NSNotification *)note {
     
     SearchQuery *query = (SearchQuery *)[note object];
-    DLog(@"Current count  : %ld", self.directoryArray.count);
-    DLog(@"incoming count : %ld", query.children.count);
+    DLog(@"Current album count  : %ld", self.directoryArray.count);
+    DLog(@"incoming item count  : %ld", query.children.count);
+    //[self searchItemsFromResults:query.children forDirectory:[query._searchURL path]];
     
     
-    self.browserData = [self searchItemsFromResults:query.children forDirectory:[query._searchURL path]];
+    //Update the albums and their contents based on the updated search results
+    [self updateAlbumsWithSearchResults:query.children];
+    Album * anAlbum = self.selectedAlbum;
+    if (anAlbum!=nil)
+    {
+        self.browserData = anAlbum.photos;//[self.directoryDict valueForKey:anAlbum.filePath];
+    } else {
+        DLog(@"No selected album");
+        return;
+    }
+    
+    [self.tableView reloadData];
     [self.browserView reloadData];
     //[resultsOutlineView reloadItem:[note object] reloadChildren:YES];
 }
@@ -491,6 +535,10 @@ NSArray * DropBoxDirectory()
         return;
     }
     Album *anAlbum =  [self.albumArray objectAtIndex:[self.tableView selectedRow]];
+    if (self.selectedAlbum == anAlbum) {
+        DLog(@"selectedAlbum didn't seem to change - no need to update browserView");
+        return;
+    }
     self.selectedAlbum = anAlbum;
     
     //[self.browserData removeAllObjects];

@@ -17,7 +17,9 @@
 @class Album;
 @class PageViewController;
 
-@interface MainWindowController : NSObject <NSWindowDelegate, NSPathControlDelegate>
+@interface MainWindowController : NSObject <NSWindowDelegate,
+                                            NSPathControlDelegate,
+                                            NSTableViewDelegate>
 {
 @private
     NSMutableArray *iSearchQueries;

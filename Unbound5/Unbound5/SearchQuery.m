@@ -49,6 +49,7 @@
 #import "SearchQuery.h"
 
 NSString *SearchQueryChildrenDidChangeNotification = @"SearchQueryChildrenDidChangeNotification";
+NSString *SearchQueryDidFinishNotification = @"SearchQueryDidFinishNotification";
 
 @implementation SearchQuery
 
@@ -95,6 +96,10 @@ NSString *SearchQueryChildrenDidChangeNotification = @"SearchQueryChildrenDidCha
     [[NSNotificationCenter defaultCenter] postNotificationName:SearchQueryChildrenDidChangeNotification object:self];
 }
 
+- (void)sendQueryDidFinishNote {
+    [[NSNotificationCenter defaultCenter] postNotificationName:SearchQueryDidFinishNotification object:self];
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     // Delegate the KVO notification by sending a children changed note.
     // We could check the keyPath, but there is no need, since we only observe one value.
@@ -122,8 +127,11 @@ NSString *SearchQueryChildrenDidChangeNotification = @"SearchQueryChildrenDidCha
             SearchItem *emptyItem = [[[SearchItem alloc] initWithItem:nil] autorelease];
             [emptyItem setTitle:NSLocalizedString(@"No results", @"Text to display when there are no results")];
             _children = [[NSArray alloc] initWithObjects:emptyItem, nil];
-            [self sendChildrenDidChangeNote];
-        }        
+            //[self sendChildrenDidChangeNote];
+            [self sendQueryDidFinishNote];
+        } else {
+            [self sendQueryDidFinishNote];
+        }
     }
 }
 

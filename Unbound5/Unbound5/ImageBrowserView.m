@@ -56,6 +56,60 @@
 
 @implementation ImageBrowserView
 
+-(void)awakeFromNib
+{
+	// cell spacing
+	//[self setIntercellSpacing:NSMakeSize(5.0f, 5.0f)];
+    
+	// forground color for the cell's titles
+	//NSMutableDictionary * options = [[NSMutableDictionary alloc] init];
+	//[options setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
+	//[self setValue:options forKey:IKImageBrowserCellsTitleAttributesKey];
+}
+
+/**
+ This method is used to seemlessly reload data. Since the selected image is
+ bound to the current image of the image view, when we do the usual
+ reloadData, the selection is lost. If we're in fullscreen, it'll break it.
+ So this method reloads data and select the next available image just after
+ that.
+ */
+-(void)reloadDataAndKeepSelection
+{
+	// remember the first selected image
+	int selectedIndex = (int)[[self selectionIndexes] firstIndex];
+    
+	// reload the data
+	/*[(ImageBrowserDelegate *)[self delegate] setIgnoreSelectionChanges:YES];
+	[super reloadData];
+	[(ImageBrowserDelegate *)[self delegate] setIgnoreSelectionChanges:NO];
+    
+	// restore the selection, taking care of out of bound indexes
+	int numImages = (int)[[self dataSource] numberOfItemsInImageBrowser:self];
+	if (numImages != 0)
+	{
+		if (selectedIndex >= numImages)
+			selectedIndex = numImages - 1;
+		[self setSelectionIndexes:[NSIndexSet indexSetWithIndex:selectedIndex]
+             byExtendingSelection:NO];
+	}
+	else
+	{
+		// if there is no more images, we need to explicitely set the image
+		// property of the delegate to nil.
+		// This is because [super reloadData] set the current selection to
+		// nothing, so setting it again to nothing will NOT call the selection
+		// changed delegate, thus the need to explicitely call setSelectedImage.
+		[(ImageBrowserDelegate *)[self delegate] setSelectedImage:nil];
+	}*/
+}
+
+/*-(void)reloadData
+{
+	[super reloadData];
+	[self scrollPoint:NSMakePoint(0, [self frame].size.height)];
+}*/
+
 //---------------------------------------------------------------------------------
 // newCellForRepresentedItem:
 //

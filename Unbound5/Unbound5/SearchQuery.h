@@ -53,6 +53,7 @@
 // SearchQuery is made up of a query string that will have individual SearchItems as children.
 
 extern NSString *SearchQueryChildrenDidChangeNotification;
+extern NSString *SearchQueryDidFinishNotification;
 
 @interface SearchQuery : NSObject <NSMetadataQueryDelegate> {
     NSURL *_searchURL;
