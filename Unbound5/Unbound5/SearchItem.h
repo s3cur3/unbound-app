@@ -68,6 +68,8 @@ enum {
     NSString *_imageRepresentationType;
 }
 
+//@property (weak, nonatomic) NSMetadataItem *item;
+
 - (id)initWithItem:(NSMetadataItem *)item;
 
 -(void)dumpAttributesToLog;

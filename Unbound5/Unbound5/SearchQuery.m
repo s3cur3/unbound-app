@@ -71,6 +71,8 @@ NSString *SearchQueryDidFinishNotification = @"SearchQueryDidFinishNotification"
         // Use KVO to watch the results of the query
         [_query addObserver:self forKeyPath:@"results" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
         [_query setDelegate:self];
+        //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(queryNote:) name:NSMetadataQueryDidFinishGatheringNotification object:_query];
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(queryNote:) name:nil object:_query];
         
         // define the scope/where the search will take placce
@@ -104,6 +106,34 @@ NSString *SearchQueryDidFinishNotification = @"SearchQueryDidFinishNotification"
     // Delegate the KVO notification by sending a children changed note.
     // We could check the keyPath, but there is no need, since we only observe one value.
     //
+#ifdef DEBUG
+    NSArray *oldVals = self.children;
+    //NSArray *oldVals = (NSArray *)[change valueForKey:@"old"];
+    NSArray *newVals = (NSArray *)[change valueForKey:@"new"];
+    NSInteger oldCount = [oldVals count];
+    NSInteger newCount = [newVals count];
+    DLog(@"\nCur #:%ld \nNew #:%ld", [oldVals count], [newVals count]);
+    if (oldCount > newCount)
+    {
+        //Something was removed
+        NSMutableArray *intermediate = [NSMutableArray arrayWithArray:oldVals];
+        [intermediate removeObjectsInArray:newVals];
+        NSUInteger difference = [intermediate count];
+        DLog(@"%ld item(s) removed : ", difference);
+    } else if (newCount > oldCount) {
+        //Something was added
+        NSMutableArray *intermediate = [NSMutableArray arrayWithArray:newVals];
+        [intermediate removeObjectsInArray:oldVals];
+        NSUInteger difference = [intermediate count];
+        DLog(@"%ld item(s) added : ", difference);
+    } else {
+        //Same number of items
+        NSMutableArray *intermediate = [NSMutableArray arrayWithArray:oldVals];
+        [intermediate removeObjectsInArray:newVals];
+        NSUInteger difference = [intermediate count];
+        DLog(@"%ld item(s) differ : ", difference);
+    }
+#endif
     [_children release];
     _children = [[_query results] retain];
     [self sendChildrenDidChangeNote];
@@ -121,6 +151,16 @@ NSString *SearchQueryDidFinishNotification = @"SearchQueryDidFinishNotification"
     // By looking at the [note name], we can tell what is happening
     //
     if ([[note name] isEqualToString:NSMetadataQueryDidFinishGatheringNotification]) {
+        //[self sendQueryDidFinishNote];
+        if ([_children count] > 0) {
+            //[[NSNotificationCenter defaultCenter] removeObserver:self name:NSMetadataQueryDidFinishGatheringNotification object:_query];
+            /*[_children release];
+            _children = [[_query results] retain];
+            [self sendChildrenDidChangeNote];*/
+            [self sendQueryDidFinishNote];
+        }
+        return;
+        
         // At this point, the query will be done. You may recieve an update later on.
         if ([_children count] == 0) {
             [_children release];

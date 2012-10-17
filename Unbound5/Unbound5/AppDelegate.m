@@ -48,10 +48,11 @@
 
     
     DLog(@"Application will finish launching.");
-    if ([[NSUserDefaults standardUserDefaults] valueForKey:@"searchLocationKey"]==nil)
+    /*if ([[NSUserDefaults standardUserDefaults] valueForKey:@"searchLocationKey"]==nil)
     {
         [(MainWindowController *)[self.window delegate] startLoading];
-    }
+    }*/
+    [(MainWindowController *)[self.window delegate] startLoading];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification

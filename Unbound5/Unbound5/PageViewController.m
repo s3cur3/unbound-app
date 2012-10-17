@@ -15,6 +15,7 @@
 #import "Album.h"
 #import "SearchItem.h"
 #import <QTKit/QTKit.h>
+#import <Quartz/Quartz.h>
 
 // Make sure that we have the right headers.
 #import <objc/runtime.h>
@@ -143,22 +144,22 @@ static NSString *ResolveName(NSString *aName)
     self.pageController.delegate = self;
     self.pagerData = [[NSMutableArray alloc] initWithCapacity:self.album.photos.count];
     
-    for (SearchItem *anItem in self.album.photos) {
+    for (id anItem in self.album.photos) {
         
         BOOL isSelected = anItem == self.initialSelectedItem;
-
+        NSURL *fileURL = (NSURL *)[anItem imageRepresentation];
         if ([[anItem imageRepresentationType] isEqualToString:IKImageBrowserPathRepresentationType])
         {
-            NSImage *image = [[NSImage alloc] initByReferencingURL:anItem.filePathURL];
+            NSImage *image = [[NSImage alloc] initByReferencingURL:fileURL];
             [self.pagerData addObject:image];
             if (isSelected)
             {
                 self.initialSelectedObject = image;
             }
         } else if ([[anItem imageRepresentationType] isEqualToString:IKImageBrowserQTMoviePathRepresentationType]) {
-            DLog(@"video found : %@", anItem.filePathURL);
+            DLog(@"video found : %@", fileURL);
             NSError *error=nil;
-            id movie = [QTMovie movieWithURL:anItem.filePathURL error:&error];
+            id movie = [QTMovie movieWithURL:fileURL error:&error];
             if (!movie)
             {
                 ALog(@"error loading movie : %@", error);
@@ -171,7 +172,7 @@ static NSString *ResolveName(NSString *aName)
                 }
             }
         } else {
-            ALog(@"Unexpected file type found : %@", anItem.filePathURL);
+            ALog(@"Unexpected file type found : %@", fileURL);
             [self.pagerData addObject:[NSImage imageNamed:@"NSImage"]];
         }
     }

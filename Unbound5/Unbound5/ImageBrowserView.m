@@ -155,4 +155,28 @@
 		[self setCellsStyleMask:[self cellsStyleMask] & ~IKCellsStyleTitled];
 }
 
+-(void)keyDown:(NSEvent *)theEvent
+{
+    DLog(@"keyDown : %@", theEvent);
+	// get the event and the modifiers
+	 NSString * characters = [theEvent charactersIgnoringModifiers];
+     unichar event = [characters characterAtIndex:0];
+     
+     switch (event)
+     {
+     case ' ':
+
+     break;
+     
+     default:
+     [super keyDown:theEvent];
+     }
+}
+
+-(void)otherMouseDown:(NSEvent *)theEvent
+{
+	DLog(@"otherMouseDown");
+}
+
+
 @end

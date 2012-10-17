@@ -15,16 +15,9 @@
 #include <sys/types.h>
 #include <pwd.h>
 #import "SimpleProfiler.h"
+#import "SpotlightFetchController.h"
+#import "FileSystemEventController.h"
 //#import "AppDelegate.h"
-
-@interface MainWindowController()
-
-@property (strong) NSURL *searchLocation;
-//- (void)updatePathControl;
-
-@end
-
-@implementation MainWindowController
 
 /*
  * Used to get the home directory of the user, UNIX/C based workaround for sandbox issues
@@ -47,9 +40,109 @@ NSArray * DropBoxDirectory()
     return libraryDirectories;
 }
 
+@interface MainWindowController()
+
+@property (strong) NSURL *searchLocation;
+@property (strong) FileSystemEventController *fileSystemEventController;
+
+@end
+
+@implementation MainWindowController
+
+
+- (void)awakeFromNib {
+    DLog(@"awakeFromNib");
+    
+    self.albumSortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES]];
+    
+    [window setDelegate:self];  // we want to be notified when this window is closed
+    
+    
+    //Register for notifications from the fetch controller
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(searchFinished:)
+                                                 name:SearchQueryDidFinishNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(queryChildrenChanged:)
+                                                 name:SearchQueryChildrenDidChangeNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(searchItemChanged:)
+                                                 name:SearchItemDidChangeNotification
+                                               object:nil];
+    
+    //New file-based notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(albumChanged:)
+                                                 name:AlbumDidChangeNotification
+                                               object:nil];
+    
+    
+    //If a search location is already set we can begin loading...
+    /*if ([[NSUserDefaults standardUserDefaults] valueForKey:@"searchLocationKey"]!=nil)
+    {
+        [self startLoading];
+    }*/
+}
+
+-(void)albumChanged:(NSNotification *)note
+{
+    Album *anAlbum = (Album *)note.object;
+    if (anAlbum == self.selectedAlbum)
+    {
+        self.browserData = anAlbum.photos;
+        [self.browserView reloadData];
+    }
+}
+
+
+//called by the AppDelegate in applicationWillFinishLaunching
+- (void)startLoading {
+    
+    [self resetProperties];
+    
+    // look for the saved search location in NSUserDefaults
+    NSError *error = nil;
+    NSData *bookMarkDataToResolve = [[NSUserDefaults standardUserDefaults] objectForKey:@"searchLocationKey"];
+    if (bookMarkDataToResolve)
+    {
+        // resolve the bookmark data into our NSURL
+        self.searchLocation = [NSURL URLByResolvingBookmarkData:bookMarkDataToResolve
+                                                        options:NSURLBookmarkResolutionWithSecurityScope
+                                                  relativeToURL:nil
+                                            bookmarkDataIsStale:nil
+                                                          error:&error];
+        [self.searchLocation startAccessingSecurityScopedResource];
+    } else {
+        //[self punchHoleInSandboxForFile:@"/Users/inzan/Dropbox/Camera Uploads"];
+        [self importFilesAndDirectories:nil];
+        
+        return;
+    }
+    
+    if (self.searchLocation == nil)
+    {
+        DLog(@"No searchLocation specified!");
+        assert(NO);
+    }
+    
+    //Point our searchLocation NSPathControl to the search location
+    [searchLocationPathControl setURL:self.searchLocation];
+    
+    [self createNewSearchForWithScopeURL:self.searchLocation];
+    
+    
+}
+
+
+// -------------------------------------------------------------------------------
+//	importFilesAndDirectories:
+//
+//	This is called when the app is first run and no root dir has been identified yet.
+// -------------------------------------------------------------------------------
 - (IBAction)importFilesAndDirectories:(id)sender {
-    // Get the main window for the document.
-    //NSWindow* window = [[[self windowControllers] objectAtIndex:0] window];
+
     NSError *error = nil;
     // Create and configure the panel.
     NSOpenPanel* panel = [NSOpenPanel openPanel];
@@ -118,38 +211,6 @@ NSArray * DropBoxDirectory()
     }];
 }
 
-/*-(void)punchHoleInSandboxForFile:(NSString*)file
-{
-    //only needed if we are in 10.7
-    if (floor(NSAppKitVersionNumber) <= 1038) return;
-    //only needed if we do not allready have permisions to the file
-    if ([[NSFileManager defaultManager] isReadableFileAtPath:file] == YES) return;
-    //make sure we have a expanded path
-    file = [file stringByResolvingSymlinksInPath];
-    NSString *message = [NSString stringWithFormat:@"Sandbox requires user permision to read %@",[file lastPathComponent]];
-    
-    NSOpenPanel *openDlg = [NSOpenPanel openPanel];
-    [openDlg setPrompt:@"Allow in Sandbox"];
-    [openDlg setTitle:message];
-    [openDlg setShowsHiddenFiles:NO];
-    [openDlg setTreatsFilePackagesAsDirectories:YES];
-    [openDlg setDirectoryURL:[NSURL URLWithString:file]];
-	[openDlg setCanChooseFiles:YES];
-	[openDlg setCanChooseDirectories:NO];
-	[openDlg setAllowsMultipleSelection:NO];
-	if ([openDlg runModal] == NSOKButton){
-        NSURL *selection = [[openDlg URLs] objectAtIndex:0];
-        if ([[[selection path] stringByResolvingSymlinksInPath] isEqualToString:file]) {
-            self.searchLocation = selection;
-            return;
-        }else{
-            [[NSAlert alertWithMessageText:@"Wrong file was selected." defaultButton:@"Try Again" alternateButton:nil otherButton:nil informativeTextWithFormat:message] runModal];
-            [self punchHoleInSandboxForFile:file];
-        }
-	}else{
-        [[NSAlert alertWithMessageText:@"Was denied access to required files." defaultButton:@"Carry On" alternateButton:nil otherButton:nil informativeTextWithFormat:@"This software can not provide it's full functionality without access to certain files."] runModal];
-    }
-}*/
 
 -(void)resetProperties
 {
@@ -162,81 +223,10 @@ NSArray * DropBoxDirectory()
     
 }
 
-- (void)awakeFromNib {
-    DLog(@"awakeFromNib");
-    
-    self.albumSortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES]];
-    
-    [window setDelegate:self];  // we want to be notified when this window is closed
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(searchFinished:)
-                                                 name:SearchQueryDidFinishNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(queryChildrenChanged:)
-                                                 name:SearchQueryChildrenDidChangeNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(searchItemChanged:)
-                                                 name:SearchItemDidChangeNotification
-                                               object:nil];
-    
-#ifdef DEBUG
-    //[self.browserView setCellsStyleMask:IKCellsStyleTitled | IKCellsStyleSubtitled];
-#endif
-    
-    if ([[NSUserDefaults standardUserDefaults] valueForKey:@"searchLocationKey"]!=nil)
-    {
-        [self startLoading];
-    }
-}
 
-- (void)startLoading {
-    
-    [self resetProperties];
-    
-    // look for the saved search location in NSUserDefaults
-    NSError *error = nil;
-    NSData *bookMarkDataToResolve = [[NSUserDefaults standardUserDefaults] objectForKey:@"searchLocationKey"];
-    if (bookMarkDataToResolve)
-    {
-        // resolve the bookmark data into our NSURL
-        self.searchLocation = [NSURL URLByResolvingBookmarkData:bookMarkDataToResolve
-                                                        options:NSURLBookmarkResolutionWithSecurityScope
-                                                  relativeToURL:nil
-                                            bookmarkDataIsStale:nil
-                                                        error:&error];
-        [self.searchLocation startAccessingSecurityScopedResource];
-    } else {
-        //[self punchHoleInSandboxForFile:@"/Users/inzan/Dropbox/Camera Uploads"];
-        [self importFilesAndDirectories:nil];
-        
-        return;
-    }
-    
-    if (self.searchLocation == nil)
-    {
-        DLog(@"No searchLocation specified!");
-        assert(NO);
-    } 
-    
-    //Point our searchLocation NSPathControl to the search location
-    [searchLocationPathControl setURL:self.searchLocation];
-    
-    [self createNewSearchForWithScopeURL:self.searchLocation];
-    
-
-}
 
 - (BOOL)windowShouldClose:(id)sender {
     NSLog(@"windowShouldClose was called");
-    //for (SearchQuery *query in iSearchQueries) {
-        // we are no longer interested in accessing SearchQuery's bookmarked search location,
-        // so it's important we balance the start/stop access to security scoped bookmarks here
-        //
-        //[[query _searchURL] stopAccessingSecurityScopedResource];
-    //}
     [self.searchLocation stopAccessingSecurityScopedResource];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     return YES;
@@ -247,31 +237,25 @@ NSArray * DropBoxDirectory()
     [window setContentView:self.mainContentView];
 }
 
-//- (void)createNewSearchForPredicate:(NSPredicate *)predicate withTitle:(NSString *)title withScopeURL:(NSURL *)url
 - (void)createNewSearchForWithScopeURL:(NSURL *)url {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(kMDItemContentTypeTree = 'public.image') OR  (kMDItemContentTypeTree = 'public.movie')"];
 
-        
-    //TODO: add video/custom query support
-    //predicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:imagesPredicate, predicate, nil]];
-    
-    // we are interested in accessing this bookmark for our SearchQuery class
-    //NSURL *url = self.searchLocation;
-    //[url startAccessingSecurityScopedResource];
     
     // Create an instance of our datamodel and keep track of things.
     SearchQuery *searchQuery = [[SearchQuery alloc] initWithSearchPredicate:predicate title:@"Search" scopeURL:url];
     [iSearchQueries addObject:searchQuery];
-    //[searchQuery release];
-    
-    // Reload the children of the root item, "nil". This only works on 10.5 or higher
-    /*[resultsOutlineView reloadItem:nil reloadChildren:YES];
-    [resultsOutlineView expandItem:searchQuery];
-    NSInteger row = [resultsOutlineView rowForItem:searchQuery];
-    [resultsOutlineView scrollRowToVisible:row];
-    [resultsOutlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];*/
     
 }
+
+/*- (void)createNewFetchForWithScopeURL:(NSURL *)url {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(kMDItemContentTypeTree = 'public.image') OR  (kMDItemContentTypeTree = 'public.movie')"];
+    
+    
+    // Create an instance of our datamodel and keep track of things.
+    SpotlightFetchController *searchQuery = [[SpotlightFetchController alloc] initWithSearchPredicate:predicate title:@"Search" scopeURL:url];
+    [iSearchQueries addObject:searchQuery];
+    
+}*/
 
 -(void)updateAlbumsWithSearchResults:(NSArray *)children //forDirectory:(NSString *)path
 {
@@ -282,9 +266,9 @@ NSArray * DropBoxDirectory()
     for (SearchItem *item in children)
     {
         index++;
-        if ([self.browserData containsObject:item]){
+        /*if ([self.browserData containsObject:item]){
             continue;
-        }
+        }*/
         //NSLog(@"item : %@", [item debugDescription]);
 
         NSString *fullPath = [item.metadataItem valueForAttribute:(NSString *)kMDItemPath];
@@ -302,12 +286,13 @@ NSArray * DropBoxDirectory()
             album = [[Album alloc] initWithFilePath:dirPath];
             [self.directoryDict setValue:album forKey:dirPath];
             [self.directoryArray addObject:album];
+            [album updatePhotosFromFileSystem];
             //[self.tableView reloadData];
         }
-        if (![album.photos containsObject:item])
+        /*if (![album.photos containsObject:item])
         {
             [album addPhotosObject:item];
-        }
+        }*/
         
     }
     
@@ -340,6 +325,17 @@ NSArray * DropBoxDirectory()
     [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:selectedAlbumIndex] byExtendingSelection:NO];
     [self.tableView scrollRowToVisible:selectedAlbumIndex];
     [self.browserView reloadData];
+    
+    //Disabling spotlight updates
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:SearchQueryChildrenDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:SearchQueryDidFinishNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:SearchItemDidChangeNotification object:nil];
+    //query is dealloced and stopped when removed
+    [iSearchQueries removeAllObjects];
+    
+    self.fileSystemEventController = [[FileSystemEventController alloc] initWithPath:self.searchLocation albumsTable:self.directoryDict];
+    
+    [self.fileSystemEventController startObserving];
 }
 
 - (void)queryChildrenChanged:(NSNotification *)note {
@@ -370,6 +366,7 @@ NSArray * DropBoxDirectory()
     NSLog(@"searchItemChanged : %@", note);
     SearchItem *item = (SearchItem *)[note object];
     NSLog(@"item : %@", [item debugDescription]);
+    [self.browserView reloadData];
 
     // When an item changes, it only will affect the display state.
     // So, we only need to redisplay its contents, and not reload it
@@ -382,30 +379,9 @@ NSArray * DropBoxDirectory()
     }*/
 }
 
-
--(void)refreshBrowser
-{
-    //[self.browserData removeAllObjects];
-    //[self.browserView reloadData];
-    //NSURL *url = self.searchLocation;
-    
-    //[self loadPhotosForURL:self.searchLocation];
-    //[self loadSubDirectoryInfo:self.searchLocation];
-    [self createNewSearchForWithScopeURL:self.searchLocation];
-    //[self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
-    
-    [self.browserView reloadData];
-}
-
 -(NSMutableArray *)albumArray;
 {
-    return self.directoryArray;//[self.directoryArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES]]];
-    /*NSMutableArray *anArray = [[NSMutableArray alloc] init];
-    for (id anObject in [self.directoryDict objectEnumerator])
-    {
-        [anArray addObject:anObject];
-    }
-    return anArray;*/
+    return self.directoryArray;
 }
 
 #pragma mark - NSPathControl support
@@ -441,22 +417,6 @@ NSArray * DropBoxDirectory()
     {
         [oldSearchURL stopAccessingSecurityScopedResource];
     }
-    
-    // write out the NSURL as a security-scoped bookmark to NSUserDefaults
-    // (so that we can resolve it again at re-launch)
-    //
-
-    
-    //self.directoryDict = [NSMutableDictionary dictionary];
-    //Album *anAlbum = [[Album alloc] initWithFilePath:[[sender URL] path]];
-    //self.selectedAlbum = anAlbum;
-    
-    
-    
-    
-    
-    //[self refreshBrowser];
-    //[self.directoryArray removeAllObjects];
 }
 
 // -------------------------------------------------------------------------------
@@ -561,42 +521,7 @@ NSArray * DropBoxDirectory()
     [self.browserView reloadData];
 }
 
-// This method is optional if you use bindings to provide the data
-/*- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    // Group our "model" object, which is a dictionary
-    Album *album = (Album *)[self.albumArray objectAtIndex:row];
-    
-    
-    // In IB the tableColumn has the identifier set to the same string as the keys in our dictionary
-    NSString *identifier = [tableColumn identifier];
-    //NSTableCellView *cellView = [tableView makeViewWithIdentifier:identifier owner:self];
-    //cellView.objectValue = album;
-    
-    NSTextField *textField = [tableView makeViewWithIdentifier:identifier owner:self];
-    textField.objectValue = album.title;
-    return textField;
-    
-    / *if (!identifier || [identifier isEqualToString:@"MainCell"]) {
-        
-        
-        
-        // We pass us as the owner so we can setup target/actions into this main controller object
-        
-        // Then setup properties on the cellView based on the column
-        //cellView.textField.stringValue = album.title;
-        //cellView.imageView.image = [dictionary objectForKey:@"Image"];
-    } /*else if ([identifier isEqualToString:@"SizeCell"]) {
-        NSTextField *textField = [tableView makeViewWithIdentifier:identifier owner:self];
-        NSImage *image = [dictionary objectForKey:@"Image"];
-        NSSize size = image ? [image size] : NSZeroSize;
-        NSString *sizeString = [NSString stringWithFormat:@"%.0fx%.0f", size.width, size.height];
-        textField.objectValue = sizeString;
-        return textField;
-    } else {
-        NSAssert1(NO, @"Unhandled table column identifier %@", identifier);
-    }* /
-    //return cellView;
-}*/
+
 
 
 // -------------------------------------------------------------------------------

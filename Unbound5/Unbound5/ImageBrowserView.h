@@ -62,4 +62,8 @@
 -(BOOL)showTitles;
 -(void)setShowTitles:(BOOL)showTitles;
 
+// event methods
+-(void)keyDown:(NSEvent *)theEvent;
+-(void)otherMouseDown:(NSEvent *)theEvent;
+
 @end

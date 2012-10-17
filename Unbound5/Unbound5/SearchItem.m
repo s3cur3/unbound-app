@@ -53,10 +53,13 @@ NSString *SearchItemDidChangeNotification = @"SearchItemDidChangeNotification";
 
 @implementation SearchItem
 
-- (id)initWithItem:(NSMetadataItem *)item {
+
+- (id)initWithItem:(NSMetadataItem *)anItem {
     self = [super init];
     if (self)
-        _item = [item retain];
+    {
+        _item = [anItem retain];
+    }
     return self;
 }
 
@@ -74,7 +77,7 @@ NSString *SearchItemDidChangeNotification = @"SearchItemDidChangeNotification";
 }
 
 - (NSString *)title {
-    if (_title == nil) {
+    if (YES || _title == nil) {
         // First access -- dynamically get the title and cache it.
         _title = [(NSString *)[_item valueForAttribute:(NSString *)kMDItemDisplayName] retain];
     }
