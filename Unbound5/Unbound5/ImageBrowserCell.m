@@ -151,7 +151,7 @@ static CGImageRef pinImage()
         
         NSRect borderFrame = NSInsetRect(relativeImageFrame, -1, -1);
 		
-		//add a glossy overlay
+		//add a white border overlay
 		CALayer *borderLayer = [CALayer layer];
 		borderLayer.frame = borderFrame;
 		
@@ -177,28 +177,36 @@ static CGImageRef pinImage()
 	/* selection layer */
 	if(type == IKImageBrowserCellSelectionLayer){
 
-		//create a selection layer
-		CALayer *selectionLayer = [CALayer layer];
-		selectionLayer.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
+		//no background layer on place holders
+		if([self cellState] != IKImageStateReady)
+			return nil;
+        
+		CALayer *layer = [CALayer layer];
+		layer.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
 		
-		CGFloat fillComponents[4] = {1.0, 0, 0.5, 0.3};
-		CGFloat strokeComponents[4] = {1.0, 0.0, 0.5, 1.0};
+		NSRect selectionRect = relativeImageFrame;
+        selectionRect.origin.x += 5;
+        selectionRect.origin.y += 5;
+        
+        selectionRect = CGRectInset(selectionRect, -3, -3);
 		
-		//set a background color
-		CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-		color = CGColorCreate(colorSpace, fillComponents);
-		[selectionLayer setBackgroundColor:color];
+		CALayer *photoSelectionLayer = [CALayer layer];
+		photoSelectionLayer.frame = selectionRect;
+        
+        //set a border color
+		color = CGColorCreateGenericRGB(1.0, 1.0, 0.0, 1.0);
+		[photoSelectionLayer setBorderColor:color];
+        [photoSelectionLayer setBorderWidth:6.0];
+        [photoSelectionLayer setCornerRadius:4.0];
 		CFRelease(color);
+        
+        [photoSelectionLayer setBackgroundColor:CGColorCreateGenericGray(0.4, 1.0)];
+		[photoSelectionLayer setShadowOpacity:0.6];
+        [photoSelectionLayer setShadowOffset:CGSizeMake(0, -1)];
+        
+		[layer addSublayer:photoSelectionLayer];
 		
-		//set a border color
-		color = CGColorCreate(colorSpace, strokeComponents);
-		[selectionLayer setBorderColor:color];
-		CFRelease(color);
-
-		[selectionLayer setBorderWidth:2.0];
-		[selectionLayer setCornerRadius:5];
-		
-		return selectionLayer;
+		return layer;
 	}
 	
 	/* background layer */
@@ -206,8 +214,6 @@ static CGImageRef pinImage()
 		//no background layer on place holders
 		if([self cellState] != IKImageStateReady)
 			return nil;
-        
-        
 
 		CALayer *layer = [CALayer layer];
 		layer.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
@@ -216,30 +222,11 @@ static CGImageRef pinImage()
 		
 		CALayer *photoBackgroundLayer = [CALayer layer];
 		photoBackgroundLayer.frame = backgroundRect;
-		
-		/*
-		CGFloat fillComponents[4] = {0.95, 0.95, 0.95, 1.0};
-		CGFloat strokeComponents[4] = {0.2, 0.2, 0.2, 0.5};
 
-		CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-		
-		color = CGColorCreate(colorSpace, fillComponents);
-		[photoBackgroundLayer setBackgroundColor:color];
-		CFRelease(color);
-		
-		color = CGColorCreate(colorSpace, strokeComponents);
-		[photoBackgroundLayer setBorderColor:color];
-		CFRelease(color);
-         */
-        
-		//[photoBackgroundLayer setBorderWidth:1.0];
         
         [photoBackgroundLayer setBackgroundColor:CGColorCreateGenericGray(1.0, 1.0)];
 		[photoBackgroundLayer setShadowOpacity:0.5];
-		//[photoBackgroundLayer setCornerRadius:3];
-		
-		//CFRelease(colorSpace);
-		
+				
 		[layer addSublayer:photoBackgroundLayer];
 		
 		return layer;
@@ -291,6 +278,7 @@ static CGImageRef pinImage()
 	return imageFrame;
 }
 
+/*
 //---------------------------------------------------------------------------------
 // imageContainerFrame
 //
@@ -305,7 +293,7 @@ static CGImageRef pinImage()
 	container.size.height -= 15;
 	
 	return container;
-}
+}*/
 
 //---------------------------------------------------------------------------------
 // titleFrame
