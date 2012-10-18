@@ -226,6 +226,13 @@ static CGImageRef pinImage()
         
         [photoBackgroundLayer setBackgroundColor:CGColorCreateGenericGray(1.0, 1.0)];
 		[photoBackgroundLayer setShadowOpacity:0.5];
+        
+        CGMutablePathRef path = CGPathCreateMutable();
+        CGPathAddRect(path, NULL, photoBackgroundLayer.bounds);
+        
+        [photoBackgroundLayer setShadowPath:path];
+        CGPathRelease(path);
+        
 				
 		[layer addSublayer:photoBackgroundLayer];
 		
