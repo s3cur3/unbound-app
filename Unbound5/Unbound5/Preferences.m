@@ -34,7 +34,7 @@ static Preferences * instance = nil;
 	[defaults setValue:colorData forKey:@"backgroundColor"];
 	[defaults setValue:[NSNumber numberWithFloat:0.38f] forKey:@"thumbnailSize"];
 	[defaults setValue:[NSNumber numberWithFloat:8.0f] forKey:@"thumbnailMargin"];
-	[defaults setValue:[NSNumber numberWithBool:YES] forKey:@"showTitles"];
+	[defaults setValue:[NSNumber numberWithBool:NO] forKey:@"showTitles"];
 	[defaults setValue:[NSNumber numberWithBool:NO] forKey:@"permanentlyDeleteFiles"];
 	[defaults setValue:[NSNumber numberWithFloat:3.0f] forKey:@"slideshowInterval"];
 	[defaults setValue:[NSNumber numberWithBool:YES] forKey:@"slideshowLoop"];

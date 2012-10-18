@@ -264,7 +264,6 @@ static CGImageRef pinImage()
 	
 	// compute the rectangle included in container with a margin of at least 10 pixel at the bottom, 5 pixel at the top and keep a correct  aspect ratio
 	NSRect container = [self imageContainerFrame];
-	container = NSInsetRect(container, 8, 8);
 	
 	if(container.size.height <= 0) return NSZeroRect;
 	
@@ -280,7 +279,7 @@ static CGImageRef pinImage()
 		imageFrame.size.width = container.size.width;
 		imageFrame.origin.x = container.origin.x;		
 		imageFrame.size.height = imageFrame.size.width / aspectRatio;
-		imageFrame.origin.y = container.origin.y + container.size.height - imageFrame.size.height;
+		imageFrame.origin.y = container.origin.y + (container.size.height - imageFrame.size.height)*0.5;
 	}
 	
 	//round it

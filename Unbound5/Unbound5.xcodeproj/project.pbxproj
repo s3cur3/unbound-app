@@ -157,8 +157,6 @@
 		1DE22E2216263F4A00D5B106 /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
 		1DE22E2316263F4A00D5B106 /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
 		1DEF1EE01624EA1D00F09E4E /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
-		1DFAC70C162A4C4B00FCF155 /* ImageBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageBrowser.h; sourceTree = "<group>"; };
-		1DFAC70D162A4C4B00FCF155 /* ImageBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageBrowser.m; sourceTree = "<group>"; };
 		1DFAC70E162A4C4B00FCF155 /* ImageBrowserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageBrowserDelegate.h; sourceTree = "<group>"; };
 		1DFAC70F162A4C4B00FCF155 /* ImageBrowserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageBrowserDelegate.m; sourceTree = "<group>"; };
 		1DFAC714162A596000FCF155 /* SimpleProfiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleProfiler.h; sourceTree = "<group>"; };
@@ -381,8 +379,6 @@
 		1DFAC713162A4C5400FCF155 /* ImageBrowser */ = {
 			isa = PBXGroup;
 			children = (
-				1DFAC70C162A4C4B00FCF155 /* ImageBrowser.h */,
-				1DFAC70D162A4C4B00FCF155 /* ImageBrowser.m */,
 				1D1FB3EC162371F0002CD358 /* ImageBrowserView.h */,
 				1D1FB3ED162371F0002CD358 /* ImageBrowserView.m */,
 				1D1FB3E916237174002CD358 /* ImageBrowserCell.h */,
