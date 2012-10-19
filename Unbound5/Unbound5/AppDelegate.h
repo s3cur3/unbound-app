@@ -19,4 +19,7 @@
 - (IBAction)saveAction:(id)sender;
 - (IBAction)showPreferences:(id)sender;
 
++(AppDelegate *)applicationDelegate;
+-(void)updatePhotoSearchURL:(NSURL *)aURL;
+
 @end

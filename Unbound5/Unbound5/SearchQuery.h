@@ -57,6 +57,7 @@ extern NSString *SearchQueryDidFinishNotification;
 
 @interface SearchQuery : NSObject <NSMetadataQueryDelegate> {
     NSURL *_searchURL;
+    NSArray *_searchURLs;
 @private
     NSMetadataQuery *_query;
     NSString *_title;
@@ -64,8 +65,10 @@ extern NSString *SearchQueryDidFinishNotification;
 }
 
 @property (retain) NSURL *_searchURL;
+@property (retain) NSArray *_searchURLs;
 
 - (id)initWithSearchPredicate:(NSPredicate *)searchPredicate title:(NSString *)title scopeURL:(NSURL *)url;
+- (id)initWithSearchPredicate:(NSPredicate *)searchPredicate title:(NSString *)title scopeURLs:(NSArray *)urls;
 
 - (NSString *)title;
 - (NSArray *)children;

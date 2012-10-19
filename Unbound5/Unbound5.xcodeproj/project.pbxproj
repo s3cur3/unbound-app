@@ -55,8 +55,8 @@
 		1D77E658162F52D800DB3553 /* ArchDirectoryObserver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D77E657162F52D800DB3553 /* ArchDirectoryObserver.framework */; };
 		1D77E65B162F534200DB3553 /* ArchDirectoryObserver.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1D77E657162F52D800DB3553 /* ArchDirectoryObserver.framework */; };
 		1D77E65E162F541B00DB3553 /* FileSystemEventController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D77E65D162F541A00DB3553 /* FileSystemEventController.m */; };
+		1D828A721630BEB90099D639 /* FileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D828A711630BEB90099D639 /* FileUtils.m */; };
 		1D9EE78516276600008E7977 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D9EE78416276600008E7977 /* Preferences.xib */; };
-		1D9EE7891627719E008E7977 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9EE7881627719E008E7977 /* Utils.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1DE22E2416263F4A00D5B106 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE22E2316263F4A00D5B106 /* Album.m */; };
 		1DFAC716162A596000FCF155 /* SimpleProfiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DFAC715162A596000FCF155 /* SimpleProfiler.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
@@ -151,6 +151,8 @@
 		1D77E657162F52D800DB3553 /* ArchDirectoryObserver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ArchDirectoryObserver.framework; sourceTree = "<group>"; };
 		1D77E65C162F541900DB3553 /* FileSystemEventController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystemEventController.h; sourceTree = "<group>"; };
 		1D77E65D162F541A00DB3553 /* FileSystemEventController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileSystemEventController.m; sourceTree = "<group>"; };
+		1D828A701630BEB90099D639 /* FileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileUtils.h; sourceTree = "<group>"; };
+		1D828A711630BEB90099D639 /* FileUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileUtils.m; sourceTree = "<group>"; };
 		1D9EE78416276600008E7977 /* Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		1D9EE7871627719E008E7977 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		1D9EE7881627719E008E7977 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
@@ -260,8 +262,7 @@
 		1D3DE7AF161F698B00805174 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
-				1D9EE7871627719E008E7977 /* Utils.h */,
-				1D9EE7881627719E008E7977 /* Utils.m */,
+				1DFAC717162A596800FCF155 /* Utils */,
 				1D3DE7A9161F697E00805174 /* Preferences.h */,
 				1D3DE7AA161F697E00805174 /* Preferences.m */,
 				1D3DE7AB161F697F00805174 /* PreferencesWindowController.h */,
@@ -278,7 +279,6 @@
 				1D3DE769161E8FD000805174 /* AppDelegate.m */,
 				1D3DE77B161E944E00805174 /* MainWindowController.h */,
 				1D3DE77C161E944E00805174 /* MainWindowController.m */,
-				1DFAC717162A596800FCF155 /* Utils */,
 				1DFAC713162A4C5400FCF155 /* ImageBrowser */,
 				1D3DE7C6161F8E4200805174 /* PageView */,
 				1D3DE7B1161F724400805174 /* Model */,
@@ -392,6 +392,10 @@
 		1DFAC717162A596800FCF155 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				1D9EE7871627719E008E7977 /* Utils.h */,
+				1D9EE7881627719E008E7977 /* Utils.m */,
+				1D828A701630BEB90099D639 /* FileUtils.h */,
+				1D828A711630BEB90099D639 /* FileUtils.m */,
 				1DFAC714162A596000FCF155 /* SimpleProfiler.h */,
 				1DFAC715162A596000FCF155 /* SimpleProfiler.m */,
 			);
@@ -500,13 +504,13 @@
 				1D1FB3EE162371F0002CD358 /* ImageBrowserView.m in Sources */,
 				1D4B9493162501ED00C7BE3F /* AutoSizingVideoView.m in Sources */,
 				1DE22E2416263F4A00D5B106 /* Album.m in Sources */,
-				1D9EE7891627719E008E7977 /* Utils.m in Sources */,
 				1DFAC716162A596000FCF155 /* SimpleProfiler.m in Sources */,
 				1D13ADC4162CD37700116A44 /* SCEvent.m in Sources */,
 				1D13ADC5162CD37700116A44 /* SCEvents.m in Sources */,
 				1D77E614162E077000DB3553 /* Photo.m in Sources */,
 				1D77E617162E150700DB3553 /* SpotlightFetchController.m in Sources */,
 				1D77E65E162F541B00DB3553 /* FileSystemEventController.m in Sources */,
+				1D828A721630BEB90099D639 /* FileUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

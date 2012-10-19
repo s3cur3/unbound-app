@@ -40,9 +40,16 @@ NSArray * DropBoxDirectory()
     return libraryDirectories;
 }
 
+NSString *searchLocationKey = @"searchLocationKey";
+NSString *dropboxHomeLocationKey = @"dropboxHomeLocationKey";
+NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";
+
 @interface MainWindowController()
 
 @property (strong) NSURL *searchLocation;
+@property (strong) NSURL *cameraUploadsLocation;
+@property (strong) NSURL *dropboxHome;
+@property (strong) NSString *dropboxHomePath;
 @property (strong) FileSystemEventController *fileSystemEventController;
 
 @end
@@ -100,20 +107,23 @@ NSArray * DropBoxDirectory()
 //called by the AppDelegate in applicationWillFinishLaunching
 - (void)startLoading {
     
+    //[self.fileSystemEventController stopObserving];
     [self resetProperties];
     
     // look for the saved search location in NSUserDefaults
     NSError *error = nil;
-    NSData *bookMarkDataToResolve = [[NSUserDefaults standardUserDefaults] objectForKey:@"searchLocationKey"];
+    NSData *bookMarkDataToResolve = [[NSUserDefaults standardUserDefaults] objectForKey:dropboxHomeLocationKey];
     if (bookMarkDataToResolve)
     {
+        self.dropboxHomePath = [[NSUserDefaults standardUserDefaults] objectForKey:dropboxHomeStringKey];
         // resolve the bookmark data into our NSURL
-        self.searchLocation = [NSURL URLByResolvingBookmarkData:bookMarkDataToResolve
+        self.dropboxHome = [NSURL URLByResolvingBookmarkData:bookMarkDataToResolve
                                                         options:NSURLBookmarkResolutionWithSecurityScope
                                                   relativeToURL:nil
                                             bookmarkDataIsStale:nil
                                                           error:&error];
-        [self.searchLocation startAccessingSecurityScopedResource];
+        [self.dropboxHome startAccessingSecurityScopedResource];
+        
     } else {
         //[self punchHoleInSandboxForFile:@"/Users/inzan/Dropbox/Camera Uploads"];
         [self importFilesAndDirectories:nil];
@@ -121,16 +131,25 @@ NSArray * DropBoxDirectory()
         return;
     }
     
-    if (self.searchLocation == nil)
+    if (self.dropboxHome == nil)
     {
         DLog(@"No searchLocation specified!");
         assert(NO);
     }
-    
+    self.dropboxHomePath = [[NSUserDefaults standardUserDefaults] objectForKey:dropboxHomeStringKey];
+    NSString *aSearchString = [[NSUserDefaults standardUserDefaults] objectForKey:searchLocationKey];
+#define DEBUG_ROOT_PATH 0
+#if DEBUG_ROOT_PATH
+    //aSearchString = @"/Users/inzan/Dropbox";
+#else
+    //aSearchString = @"/Users/inzan/Dropbox/Photos";
+#endif
+    self.searchLocation = [NSURL fileURLWithPath:aSearchString];
+    //[[NSUserDefaults standardUserDefaults] objectForKey:@"sear"];
     //Point our searchLocation NSPathControl to the search location
-    [searchLocationPathControl setURL:self.searchLocation];
+    [searchLocationPathControl setURL:self.dropboxHome];
     
-    [self createNewSearchForWithScopeURL:self.searchLocation];
+    [self createNewSearchForWithScopeURLs:[self searchPaths]];
     
     
 }
@@ -155,7 +174,31 @@ NSArray * DropBoxDirectory()
     [panel setMessage:selectMsg];
     
     NSArray *dirs = DropBoxDirectory();
-    DLog(@"dirs : %@", dirs);
+    NSString *dropboxDir = [dirs lastObject];
+    self.dropboxHomePath = dropboxDir;
+    if (dropboxDir!=nil)
+    {
+        self.dropboxHome = [NSURL fileURLWithPath:[dirs lastObject] isDirectory:YES];
+        NSData *bookmarkData = [self.dropboxHome bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope
+                                          includingResourceValuesForKeys:nil
+                                                           relativeToURL:nil
+                                                                   error:nil];
+        DLog(@"update dropbox root Path : %@", self.dropboxHome.path);
+        if(bookmarkData){
+            [[NSUserDefaults standardUserDefaults] setObject:self.dropboxHomePath forKey:dropboxHomeStringKey];
+            [[NSUserDefaults standardUserDefaults] setObject:bookmarkData forKey:dropboxHomeLocationKey];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [self.dropboxHome startAccessingSecurityScopedResource];
+        }
+        
+        NSString *photosDirPath = [NSString stringWithFormat:@"%@/Photos", dropboxDir];
+        self.searchLocation = [NSURL fileURLWithPath:photosDirPath isDirectory:YES];
+        [searchLocationPathControl setURL:self.dropboxHome];
+        [self updateRootSearchPath:self.searchLocation];
+        return;
+    }
+    
+    /*DLog(@"dirs : %@", dirs);
     
     if ([dirs count]>0)
     {
@@ -165,11 +208,24 @@ NSArray * DropBoxDirectory()
             DLog(@"%@", error);
         } else if (files != nil)
         {
-            NSURL *mainDropBoxFolderURL = [NSURL fileURLWithPath:[dirs lastObject] isDirectory:YES];
-            NSDirectoryEnumerator *itr = [[NSFileManager defaultManager] enumeratorAtURL:mainDropBoxFolderURL includingPropertiesForKeys:[NSArray arrayWithObjects:NSURLLocalizedNameKey, NSURLEffectiveIconKey, NSURLIsDirectoryKey, NSURLTypeIdentifierKey, nil] options:NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsSubdirectoryDescendants errorHandler:nil];
+            self.dropboxHome = [NSURL fileURLWithPath:[dirs lastObject] isDirectory:YES];
+            NSData *bookmarkData = [self.dropboxHome bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope
+                                                 includingResourceValuesForKeys:nil
+                                                                  relativeToURL:nil
+                                                                          error:nil];
+            DLog(@"update dropbox root Path : %@", self.dropboxHome.path);
+            if(bookmarkData){
+                [[NSUserDefaults standardUserDefaults] setObject:bookmarkData forKey:dropboxHomeLocationKey];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [self.dropboxHome startAccessingSecurityScopedResource];
+            }
             
+            NSDirectoryEnumerator *itr = [[NSFileManager defaultManager] enumeratorAtURL:self.dropboxHome includingPropertiesForKeys:[NSArray arrayWithObjects:NSURLLocalizedNameKey, NSURLEffectiveIconKey, NSURLIsDirectoryKey, NSURLTypeIdentifierKey, nil] options:NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsSubdirectoryDescendants errorHandler:nil];
+            
+
+
             for (NSURL *url in itr) {
-                if ([url.filePathURL.lastPathComponent isEqualToString:@"Camera Uploads"])
+                if ([url.filePathURL.lastPathComponent isEqualToString:@"Photos"])
                 {
                     NSURL *aFileURL = url;
                     self.searchLocation = aFileURL;
@@ -181,7 +237,8 @@ NSArray * DropBoxDirectory()
             
         } 
 
-    }
+    }*/
+    
     NSString *dropboxPath = nil;
     if ([dirs count]>0)
     {
@@ -237,15 +294,25 @@ NSArray * DropBoxDirectory()
     [window setContentView:self.mainContentView];
 }
 
-- (void)createNewSearchForWithScopeURL:(NSURL *)url {
+- (void)createNewSearchForWithScopeURLs:(NSArray *)urls {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(kMDItemContentTypeTree = 'public.image') OR  (kMDItemContentTypeTree = 'public.movie')"];
+    
+    
+    // Create an instance of our datamodel and keep track of things.
+    SearchQuery *searchQuery = [[SearchQuery alloc] initWithSearchPredicate:predicate title:@"Search" scopeURLs:urls];
+    [iSearchQueries addObject:searchQuery];
+    
+}
+
+/*- (void)createNewSearchForWithScopeURL:(NSURL *)url {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(kMDItemContentTypeTree = 'public.image') OR  (kMDItemContentTypeTree = 'public.movie')"];
 
     
     // Create an instance of our datamodel and keep track of things.
-    SearchQuery *searchQuery = [[SearchQuery alloc] initWithSearchPredicate:predicate title:@"Search" scopeURL:url];
+    SearchQuery *searchQuery = [[SearchQuery alloc] initWithSearchPredicate:predicate title:@"Search" scopeURLs:[self searchPaths]];
     [iSearchQueries addObject:searchQuery];
     
-}
+}*/
 
 /*- (void)createNewFetchForWithScopeURL:(NSURL *)url {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(kMDItemContentTypeTree = 'public.image') OR  (kMDItemContentTypeTree = 'public.movie')"];
@@ -305,7 +372,7 @@ NSArray * DropBoxDirectory()
 {
     DLog(@"searchFinished")
     SearchQuery *query = (SearchQuery *)[note object];
-    NSString *topLevelPath = [query._searchURL path];
+    NSString *topLevelPath = [[query._searchURLs lastObject] path];
     Album *topLevelAlbum = (Album *)[self.directoryDict valueForKey:topLevelPath];
     if (!topLevelAlbum)
     {
@@ -384,12 +451,28 @@ NSArray * DropBoxDirectory()
     return self.directoryArray;
 }
 
+-(NSArray *)searchPaths
+{
+    if ([self.searchLocation.path isEqualToString:self.dropboxHome.path])
+    {
+        return [NSArray arrayWithObject:self.dropboxHome];
+    } else {
+        NSAssert(self.dropboxHomePath!=nil, @"self.dropboxHomePath not set");
+        NSString *aPath = [NSString stringWithFormat:@"%@/Camera Uploads", self.dropboxHomePath];
+        self.cameraUploadsLocation = [NSURL fileURLWithPath:aPath];
+        return [NSArray arrayWithObjects:self.searchLocation, self.cameraUploadsLocation, nil];
+    }
+}
+
 #pragma mark - NSPathControl support
 
 -(void)updateRootSearchPath:(NSURL *)newRootSearchPath
 {
     self.searchLocation = newRootSearchPath;
-    NSData *bookmarkData = [self.searchLocation bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope
+    [[NSUserDefaults standardUserDefaults] setObject:self.searchLocation.path forKey:searchLocationKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    /*NSData *bookmarkData = [self.searchLocation bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope
                                          includingResourceValuesForKeys:nil
                                                           relativeToURL:nil
                                                                   error:nil];
@@ -398,25 +481,25 @@ NSArray * DropBoxDirectory()
         [[NSUserDefaults standardUserDefaults] setObject:bookmarkData forKey:@"searchLocationKey"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         [self.searchLocation startAccessingSecurityScopedResource];
-    }
+    }*/
     
     
     [self resetProperties];
     [self.tableView reloadData];
-    [self createNewSearchForWithScopeURL:self.searchLocation];
+    [self createNewSearchForWithScopeURLs:[self searchPaths]];
 }
 
 //NSFilePathControl calls this when user selects a new root directory
 - (IBAction)searchLocationChanged:(id)sender {
     
-    NSURL *oldSearchURL = self.searchLocation;
+    //NSURL *oldSearchURL = self.searchLocation;
     NSURL *newURL = (NSURL *)[sender URL];
     [self updateRootSearchPath:newURL];
     
-    if (oldSearchURL!=nil)
+    /*if (oldSearchURL!=nil)
     {
         [oldSearchURL stopAccessingSecurityScopedResource];
-    }
+    }*/
 }
 
 // -------------------------------------------------------------------------------
@@ -478,13 +561,22 @@ NSArray * DropBoxDirectory()
 
 // The only essential/required tableview dataSource method
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
+    if (!self.albumArray) {
+        return 0;
+    }
     return [self.albumArray count];
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-    Album *album = [self.albumArray objectAtIndex:rowIndex];
-    return album.title;
+    if (rowIndex < self.albumArray.count)
+    {
+        Album *album = [self.albumArray objectAtIndex:rowIndex];
+        return album.title;
+    } else {
+        return @"";
+    }
+    
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification
@@ -497,8 +589,11 @@ NSArray * DropBoxDirectory()
     Album *anAlbum =  [self.albumArray objectAtIndex:[self.tableView selectedRow]];
     if (self.selectedAlbum == anAlbum) {
         DLog(@"selectedAlbum didn't seem to change - no need to update browserView");
-    } else {
+    } else if (anAlbum!=nil){
         self.selectedAlbum = anAlbum;
+    } else {
+        DLog(@"selectedAlbum in tableView doesn't exist - no need to update browserView");
+        return;
     }
     
     //[self.browserData removeAllObjects];

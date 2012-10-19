@@ -6,8 +6,9 @@
 	class to manage preferences (setting their default values, etc.)
 */
 @interface PreferencesWindowController
-	: NSWindowController
+	: NSWindowController <NSPathControlDelegate>
 {
+    IBOutlet NSPathControl *photoPathControl;
 }
 
 +(PreferencesWindowController *)instance;
@@ -17,5 +18,9 @@
 -(IBAction)handleOK:(id)sender;
 -(IBAction)resetToDefaults:(id)sender;
 -(IBAction)showColorPanel:(id)sender;
+
+- (void)pathControl:(NSPathControl *)pathControl willDisplayOpenPanel:(NSOpenPanel *)openPanel;
+- (IBAction)photosPathChanged:(id)sender;
+- (IBAction)dropboxHomeChanged:(id)sender;
 
 @end

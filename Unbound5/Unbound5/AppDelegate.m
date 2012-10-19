@@ -20,6 +20,21 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize window = _window;
 
++(AppDelegate *)applicationDelegate;
+{
+    return (AppDelegate *)[[NSApplication sharedApplication] delegate];
+}
+
+-(void)updatePhotoSearchURL:(NSURL *)aURL
+{
+    DLog(@"updatePhotoSearchURL");
+    MainWindowController *windowController = (MainWindowController *)[self.window delegate];
+    [[NSUserDefaults standardUserDefaults] setValue:aURL.path forKey:@"searchLocationKey"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [windowController awakeFromNib];
+    [windowController startLoading];
+}
+
 -(IBAction)showPreferences:(id)sender
 {
 	[[PreferencesWindowController instance] runModal];
@@ -33,8 +48,11 @@
    defaults read com.pixite.Unbound5
  */
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification
-{    
+{
+    
     IKImageBrowserView *mImageBrowser = [(MainWindowController *)[self.window delegate] browserView];
+    
+    
     Preferences * preferences = [Preferences instance];
     [preferences bind:mImageBrowser
                   key:@"zoomValue"
@@ -45,7 +63,7 @@
                   key:@"showTitles"
                    to:@"showTitles"
        withUnarchiver:NO];
-
+    
     
     DLog(@"Application will finish launching.");
     /*if ([[NSUserDefaults standardUserDefaults] valueForKey:@"searchLocationKey"]==nil)
