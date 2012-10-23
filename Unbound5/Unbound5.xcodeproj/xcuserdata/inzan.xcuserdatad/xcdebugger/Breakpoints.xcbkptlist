@@ -8,13 +8,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "391"
-         endingLineNumber = "391"
-         landmarkName = "-searchFinished:"
-         landmarkType = "5">
+         startingLineNumber = "443"
+         endingLineNumber = "443"
+         landmarkName = "@implementation MainWindowController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -47,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "410"
-         endingLineNumber = "410"
+         startingLineNumber = "462"
+         endingLineNumber = "462"
          landmarkName = "-queryChildrenChanged:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -60,11 +60,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "433"
-         endingLineNumber = "433"
+         startingLineNumber = "485"
+         endingLineNumber = "485"
          landmarkName = "-searchItemChanged:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -294,11 +294,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/Album.m"
-         timestampString = "372204910.64973"
+         timestampString = "372643046.123285"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "84"
-         endingLineNumber = "84"
+         startingLineNumber = "89"
+         endingLineNumber = "89"
          landmarkName = "-pathWatcher:eventOccurred:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -307,13 +307,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "374"
-         endingLineNumber = "374"
-         landmarkName = "-searchFinished:"
-         landmarkType = "5">
+         startingLineNumber = "426"
+         endingLineNumber = "426"
+         landmarkName = "@implementation MainWindowController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -359,11 +359,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "341"
-         endingLineNumber = "341"
+         startingLineNumber = "393"
+         endingLineNumber = "393"
          landmarkName = "-updateAlbumsWithSearchResults:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -372,11 +372,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/Album.m"
-         timestampString = "372204910.64973"
+         timestampString = "372643046.123285"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "80"
-         endingLineNumber = "80"
+         startingLineNumber = "85"
+         endingLineNumber = "85"
          landmarkName = "-pathWatcher:eventOccurred:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -385,11 +385,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "335"
-         endingLineNumber = "335"
+         startingLineNumber = "387"
+         endingLineNumber = "387"
          landmarkName = "-updateAlbumsWithSearchResults:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -411,11 +411,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "112"
-         endingLineNumber = "112"
+         startingLineNumber = "161"
+         endingLineNumber = "161"
          landmarkName = "-startLoading"
          landmarkType = "5">
       </FileBreakpoint>
@@ -424,11 +424,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "111"
-         endingLineNumber = "111"
+         startingLineNumber = "160"
+         endingLineNumber = "160"
          landmarkName = "-startLoading"
          landmarkType = "5">
       </FileBreakpoint>
@@ -446,15 +446,15 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "165"
-         endingLineNumber = "165"
+         startingLineNumber = "217"
+         endingLineNumber = "217"
          landmarkName = "-importFilesAndDirectories:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -476,11 +476,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "421"
-         endingLineNumber = "421"
+         startingLineNumber = "473"
+         endingLineNumber = "473"
          landmarkName = "-queryChildrenChanged:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -489,24 +489,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372219290.754618"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "98"
-         endingLineNumber = "98"
-         landmarkName = "-albumChanged:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372219290.754618"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "102"
-         endingLineNumber = "102"
+         startingLineNumber = "103"
+         endingLineNumber = "103"
          landmarkName = "-albumChanged:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -554,50 +541,50 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "345"
-         endingLineNumber = "345"
+         startingLineNumber = "397"
+         endingLineNumber = "397"
          landmarkName = "-updateAlbumsWithSearchResults:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "No"
+         shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/FileSystemEventController.m"
-         timestampString = "372204635.545646"
+         timestampString = "372665654.678074"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "38"
-         endingLineNumber = "38"
+         startingLineNumber = "102"
+         endingLineNumber = "102"
          landmarkName = "-observedDirectory:childrenAtURLDidChange:historical:resumeToken:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "No"
+         shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/FileSystemEventController.m"
-         timestampString = "372204635.545646"
+         timestampString = "372668500.241315"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "44"
-         endingLineNumber = "44"
+         startingLineNumber = "123"
+         endingLineNumber = "123"
          landmarkName = "-observedDirectory:descendantsAtURLDidChange:reason:historical:resumeToken:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "No"
+         shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/FileSystemEventController.m"
-         timestampString = "372204635.545646"
+         timestampString = "372668500.241315"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "48"
-         endingLineNumber = "48"
+         startingLineNumber = "127"
+         endingLineNumber = "127"
          landmarkName = "-observedDirectory:ancestorAtURLDidChange:historical:resumeToken:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -606,13 +593,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "401"
-         endingLineNumber = "401"
-         landmarkName = "-searchFinished:"
-         landmarkType = "5">
+         startingLineNumber = "453"
+         endingLineNumber = "453"
+         landmarkName = "@implementation MainWindowController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -632,11 +619,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "231"
-         endingLineNumber = "231"
+         startingLineNumber = "283"
+         endingLineNumber = "283"
          landmarkName = "-importFilesAndDirectories:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -645,11 +632,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "480"
-         endingLineNumber = "480"
+         startingLineNumber = "532"
+         endingLineNumber = "532"
          landmarkName = "-updateRootSearchPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -658,11 +645,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "497"
-         endingLineNumber = "497"
+         startingLineNumber = "554"
+         endingLineNumber = "554"
          landmarkName = "-searchLocationChanged:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -671,11 +658,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "220"
-         endingLineNumber = "220"
+         startingLineNumber = "272"
+         endingLineNumber = "272"
          landmarkName = "-importFilesAndDirectories:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -684,11 +671,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "197"
-         endingLineNumber = "197"
+         startingLineNumber = "249"
+         endingLineNumber = "249"
          landmarkName = "-importFilesAndDirectories:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -697,11 +684,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "191"
-         endingLineNumber = "191"
+         startingLineNumber = "243"
+         endingLineNumber = "243"
          landmarkName = "-importFilesAndDirectories:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -723,11 +710,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "461"
-         endingLineNumber = "461"
+         startingLineNumber = "513"
+         endingLineNumber = "513"
          landmarkName = "-searchPaths"
          landmarkType = "5">
       </FileBreakpoint>
@@ -736,11 +723,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "302"
-         endingLineNumber = "302"
+         startingLineNumber = "354"
+         endingLineNumber = "354"
          landmarkName = "-createNewSearchForWithScopeURLs:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -749,11 +736,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "130"
-         endingLineNumber = "130"
+         startingLineNumber = "179"
+         endingLineNumber = "179"
          landmarkName = "-startLoading"
          landmarkType = "5">
       </FileBreakpoint>
@@ -775,11 +762,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "140"
-         endingLineNumber = "140"
+         startingLineNumber = "189"
+         endingLineNumber = "189"
          landmarkName = "-startLoading"
          landmarkType = "5">
       </FileBreakpoint>
@@ -788,11 +775,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "458"
-         endingLineNumber = "458"
+         startingLineNumber = "510"
+         endingLineNumber = "510"
          landmarkName = "-searchPaths"
          landmarkType = "5">
       </FileBreakpoint>
@@ -801,37 +788,37 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "384"
-         endingLineNumber = "384"
-         landmarkName = "-searchFinished:"
-         landmarkType = "5">
+         startingLineNumber = "436"
+         endingLineNumber = "436"
+         landmarkName = "@implementation MainWindowController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "379"
-         endingLineNumber = "379"
-         landmarkName = "-searchFinished:"
-         landmarkType = "5">
+         startingLineNumber = "431"
+         endingLineNumber = "431"
+         landmarkName = "@implementation MainWindowController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "419"
-         endingLineNumber = "419"
+         startingLineNumber = "471"
+         endingLineNumber = "471"
          landmarkName = "-queryChildrenChanged:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -840,11 +827,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "423"
-         endingLineNumber = "423"
+         startingLineNumber = "475"
+         endingLineNumber = "475"
          landmarkName = "-queryChildrenChanged:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -853,11 +840,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "145"
-         endingLineNumber = "145"
+         startingLineNumber = "194"
+         endingLineNumber = "194"
          landmarkName = "-startLoading"
          landmarkType = "5">
       </FileBreakpoint>
@@ -866,16 +853,16 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "143"
-         endingLineNumber = "143"
+         startingLineNumber = "192"
+         endingLineNumber = "192"
          landmarkName = "-startLoading"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/PreferencesWindowController.m"
@@ -918,11 +905,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "595"
-         endingLineNumber = "595"
+         startingLineNumber = "652"
+         endingLineNumber = "652"
          landmarkName = "-tableViewSelectionDidChange:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -931,11 +918,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "565"
-         endingLineNumber = "565"
+         startingLineNumber = "622"
+         endingLineNumber = "622"
          landmarkName = "-numberOfRowsInTableView:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -944,11 +931,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297165.989842"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "333"
-         endingLineNumber = "333"
+         startingLineNumber = "385"
+         endingLineNumber = "385"
          landmarkName = "-updateAlbumsWithSearchResults:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -957,16 +944,16 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/MainWindowController.m"
-         timestampString = "372297315.94686"
+         timestampString = "372668001.748396"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "298"
-         endingLineNumber = "298"
+         startingLineNumber = "350"
+         endingLineNumber = "350"
          landmarkName = "-createNewSearchForWithScopeURLs:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/PreferencesWindowController.m"
@@ -979,7 +966,7 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/PreferencesWindowController.m"
@@ -992,7 +979,7 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/PreferencesWindowController.m"
@@ -1002,6 +989,253 @@
          startingLineNumber = "36"
          endingLineNumber = "36"
          landmarkName = "-awakeFromNib"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/FileSystemEventController.m"
+         timestampString = "372665654.678074"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "100"
+         endingLineNumber = "100"
+         landmarkName = "-observedDirectory:childrenAtURLDidChange:historical:resumeToken:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/MainWindowController.m"
+         timestampString = "372668001.748396"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "545"
+         endingLineNumber = "545"
+         landmarkName = "-updateRootSearchPath:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/MainWindowController.m"
+         timestampString = "372668001.748396"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "205"
+         endingLineNumber = "205"
+         landmarkName = "-startLoading"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/MainWindowController.m"
+         timestampString = "372668001.748396"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "144"
+         endingLineNumber = "144"
+         landmarkName = "-loadAlbumsFromFileSystem"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/FileSystemEventController.m"
+         timestampString = "372663797.014644"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "42"
+         endingLineNumber = "42"
+         landmarkName = "-fetchAllAlbums"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/MainWindowController.m"
+         timestampString = "372668001.748396"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "149"
+         endingLineNumber = "149"
+         landmarkName = "-loadAlbumsFromFileSystem"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/MainWindowController.m"
+         timestampString = "372668001.748396"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "125"
+         endingLineNumber = "125"
+         landmarkName = "-albumsFinishedLoading:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/FileSystemEventController.m"
+         timestampString = "372664723.48311"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "39"
+         endingLineNumber = "39"
+         landmarkName = "-fetchAllAlbums"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/FileSystemEventController.m"
+         timestampString = "372664732.492871"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "44"
+         endingLineNumber = "44"
+         landmarkName = "-fetchAllAlbums"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/FileSystemEventController.m"
+         timestampString = "372665654.678074"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "55"
+         endingLineNumber = "55"
+         landmarkName = "-fetchAllAlbums"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/FileSystemEventController.m"
+         timestampString = "372665654.678074"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "80"
+         endingLineNumber = "80"
+         landmarkName = "-fetchAllAlbums"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/FileSystemEventController.m"
+         timestampString = "372665654.678074"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "77"
+         endingLineNumber = "77"
+         landmarkName = "-fetchAllAlbums"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/FileSystemEventController.m"
+         timestampString = "372665654.678074"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "75"
+         endingLineNumber = "75"
+         landmarkName = "-fetchAllAlbums"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/MainWindowController.m"
+         timestampString = "372668001.748396"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "112"
+         endingLineNumber = "112"
+         landmarkName = "-albumsUpdatedLoading:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/MainWindowController.m"
+         timestampString = "372668001.748396"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "204"
+         endingLineNumber = "204"
+         landmarkName = "-startLoading"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/FileSystemEventController.m"
+         timestampString = "372666106.747673"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "57"
+         endingLineNumber = "57"
+         landmarkName = "-fetchAllAlbums"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/FileSystemEventController.m"
+         timestampString = "372667975.313895"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "109"
+         endingLineNumber = "109"
+         landmarkName = "-observedDirectory:childrenAtURLDidChange:historical:resumeToken:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/FileSystemEventController.m"
+         timestampString = "372667978.161273"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "110"
+         endingLineNumber = "110"
+         landmarkName = "-observedDirectory:childrenAtURLDidChange:historical:resumeToken:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/FileSystemEventController.m"
+         timestampString = "372667998.809032"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "106"
+         endingLineNumber = "106"
+         landmarkName = "-observedDirectory:childrenAtURLDidChange:historical:resumeToken:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

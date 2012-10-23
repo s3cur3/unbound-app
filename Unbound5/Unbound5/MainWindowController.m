@@ -66,7 +66,7 @@ NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";
     
     
     //Register for notifications from the fetch controller
-    [[NSNotificationCenter defaultCenter] addObserver:self
+    /*[[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(searchFinished:)
                                                  name:SearchQueryDidFinishNotification
                                                object:nil];
@@ -77,7 +77,7 @@ NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(searchItemChanged:)
                                                  name:SearchItemDidChangeNotification
-                                               object:nil];
+                                               object:nil];*/
     
     //New file-based notifications
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -96,11 +96,60 @@ NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";
 -(void)albumChanged:(NSNotification *)note
 {
     Album *anAlbum = (Album *)note.object;
+
     if (anAlbum == self.selectedAlbum)
     {
         self.browserData = anAlbum.photos;
         [self.browserView reloadData];
     }
+}
+
+-(void)albumsUpdatedLoading:(NSNotification *)note
+{
+    NSMutableArray *albums = (NSMutableArray *)[note.userInfo valueForKey:@"albums"];
+    self.directoryArray = albums;
+    if (self.selectedAlbum == nil)
+    {
+        self.selectedAlbum = [self.directoryArray lastObject];
+        self.browserData = self.selectedAlbum.photos;
+    }
+    
+    [self.tableView reloadData];
+    [self.browserView reloadData];
+    
+    //[self.fileSystemEventController startObserving];
+}
+
+-(void)albumsFinishedLoading:(NSNotification *)note
+{
+    /*NSMutableArray *albums = (NSMutableArray *)[note.userInfo valueForKey:@"albums"];
+    self.directoryArray = albums;
+    if (self.selectedAlbum == nil)
+    {
+        self.selectedAlbum = [self.directoryArray lastObject];
+        self.browserData = self.selectedAlbum.photos;
+    }
+    [self.tableView reloadData];
+    [self.browserView reloadData];*/
+    [self albumsUpdatedLoading:note];
+    [self.fileSystemEventController startObserving];
+}
+
+-(void)loadAlbumsFromFileSystem
+{
+    if (self.fileSystemEventController)
+    {
+        [self.fileSystemEventController stopObserving];
+    }
+    self.fileSystemEventController = [[FileSystemEventController alloc] initWithPath:self.searchLocation albumsTable:self.directoryDict];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(albumsUpdatedLoading:) name:@"AlbumsUpdatedLoading" object:self.fileSystemEventController];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(albumsFinishedLoading:) name:@"AlbumsFinishedLoading" object:self.fileSystemEventController];
+    
+    [self.fileSystemEventController fetchAllAlbums];
+    
+    
+    //[self albumsFinishedLoading];
 }
 
 
@@ -149,8 +198,11 @@ NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";
     //Point our searchLocation NSPathControl to the search location
     [searchLocationPathControl setURL:self.dropboxHome];
     
-    [self createNewSearchForWithScopeURLs:[self searchPaths]];
     
+    //OLD SPOTLIGHT SEARCH
+    //[self createNewSearchForWithScopeURLs:[self searchPaths]];
+    
+    [self loadAlbumsFromFileSystem];
     
 }
 
@@ -368,7 +420,7 @@ NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";
     return;
 }
 
--(void)searchFinished:(NSNotification *)note
+/*-(void)searchFinished:(NSNotification *)note
 {
     DLog(@"searchFinished")
     SearchQuery *query = (SearchQuery *)[note object];
@@ -400,10 +452,10 @@ NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";
     //query is dealloced and stopped when removed
     [iSearchQueries removeAllObjects];
     
-    self.fileSystemEventController = [[FileSystemEventController alloc] initWithPath:self.searchLocation albumsTable:self.directoryDict];
+    //self.fileSystemEventController = [[FileSystemEventController alloc] initWithPath:self.searchLocation albumsTable:self.directoryDict];
     
     [self.fileSystemEventController startObserving];
-}
+}*/
 
 - (void)queryChildrenChanged:(NSNotification *)note {
     
@@ -486,7 +538,12 @@ NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";
     
     [self resetProperties];
     [self.tableView reloadData];
-    [self createNewSearchForWithScopeURLs:[self searchPaths]];
+    
+    //OLD SPOTLIGHT SEARCH
+    //[self createNewSearchForWithScopeURLs:[self searchPaths]];
+    
+    [self loadAlbumsFromFileSystem];
+    //[self.fileSystemEventController startObserving];
 }
 
 //NSFilePathControl calls this when user selects a new root directory

@@ -16,9 +16,15 @@
 
 @property (copy) NSURL *rootFilePathURL;
 @property (weak) NSDictionary *albumLookupTable;
+@property (strong) NSMutableArray *albums;
+
+-(id)initWithPath:(NSURL *)aFilePathURL;
 
 -(id)initWithPath:(NSURL *)aFilePathURL
       albumsTable:(NSDictionary *)anAlbumsDict;
+
+//-(NSArray *)fetchAllAlbums;
+-(void)fetchAllAlbums;
 
 -(void)startObserving;
 -(void)stopObserving;

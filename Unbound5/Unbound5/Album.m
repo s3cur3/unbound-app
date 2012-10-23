@@ -70,7 +70,12 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
             [somePhotos addObject:aPhoto];
         }
     }
-    self.photos = somePhotos;
+    if ([somePhotos count]==0)
+    {
+        self.photos = nil;
+    } else {
+        self.photos = somePhotos;
+    }
     [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
     
 }
@@ -107,7 +112,6 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
 
 -(void)dealloc
 {
-    [self.events stopWatchingPaths];
-    self.events.delegate = nil;
+
 }
 @end

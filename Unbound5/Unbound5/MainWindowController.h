@@ -57,6 +57,7 @@
 
 -(void)showMainView;
 -(void)startLoading;
+-(void)albumsFinishedLoading;
 
 //-(NSMutableArray *)albumArray;
 

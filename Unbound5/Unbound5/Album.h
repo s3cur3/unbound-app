@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SCEvents.h"
+//#import "SCEvents.h"
+@class FileSystemEventController;
 
 extern NSString *AlbumDidChangeNotification;
 
@@ -16,15 +17,15 @@ extern NSString *AlbumDidChangeNotification;
  * in a common directory on the file system.
  */
 
-@interface Album : NSObject <SCEventListenerProtocol>
+@interface Album : NSObject
 {
     
 }
 
+@property (strong) FileSystemEventController *fileSystemEventController;
 @property (nonatomic, strong) NSString *filePath;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSMutableArray *photos;
-@property (nonatomic, strong) SCEvents *events;
 
 - (id)initWithFilePath:(NSString *) aPath;
 -(void)addPhotosObject:(id)object;
