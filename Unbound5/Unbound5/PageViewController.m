@@ -116,10 +116,10 @@ static NSString *ResolveName(NSString *aName)
 
     //NSViewController *currentView = self.pageController.selectedViewController;
     //id aURL = currentView.representedObject;
-    SearchItem *anItem = (SearchItem *)[self.album.photos objectAtIndex:self.pageController.selectedIndex];
+    id anItem = [self.album.photos objectAtIndex:self.pageController.selectedIndex];
     self.imageEditViewController = [[IKImageViewController alloc] initWithNibName:@"IKImageViewController"
                                                                                            bundle:nil
-                                                                                              url:anItem.filePathURL];
+                                                                                              url:(NSURL *)[anItem imageRepresentation]];
     
     
     //anImageViewController.url = anItem.filePathURL;
