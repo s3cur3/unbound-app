@@ -26,9 +26,11 @@ extern NSString *AlbumDidChangeNotification;
 @property (nonatomic, strong) NSString *filePath;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSMutableArray *photos;
+@property (nonatomic, strong) NSDate *dateLastScanned;
 
 - (id)initWithFilePath:(NSString *) aPath;
 -(void)addPhotosObject:(id)object;
 -(void)updatePhotosFromFileSystem;
+-(BOOL)albumExistsWithPhotos;
 
 @end

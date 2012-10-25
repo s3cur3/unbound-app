@@ -58,6 +58,7 @@
 
 -(void)awakeFromNib
 {
+    [self setConstrainsToOriginalSize:YES];
 	// cell spacing
 	//[self setIntercellSpacing:NSMakeSize(5.0f, 5.0f)];
     

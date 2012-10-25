@@ -36,6 +36,7 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
         {
             [self.events setDelegate:self];
         }*/
+        //DLog(@"Album created at path : %@", self.filePath);
     }
     return self;
 }
@@ -45,10 +46,27 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
     [self.photos addObject:object];
 }
 
+
+-(NSArray *)children
+{
+    NSError *error = nil;
+    NSURL *myDir = [NSURL fileURLWithPath:self.filePath isDirectory:YES];
+    NSArray *content = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:myDir
+                                                     includingPropertiesForKeys:[NSArray arrayWithObjects:NSURLLocalizedNameKey, NSURLIsDirectoryKey, NSURLTypeIdentifierKey, nil]
+                                                                        options:NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsSubdirectoryDescendants
+                                                                          error:&error];
+    
+    if (error!=nil) {
+        DLog(@"%@", error);
+        return [NSArray array];
+    }
+    return content;
+}
+
 -(void)updatePhotosFromFileSystem
 {
     
-    NSError *error = nil;
+    /*NSError *error = nil;
     NSURL *myDir = [NSURL fileURLWithPath:self.filePath isDirectory:YES];
     NSArray *content = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:myDir
                                                         includingPropertiesForKeys:[NSArray arrayWithObjects:NSURLLocalizedNameKey, NSURLIsDirectoryKey, NSURLTypeIdentifierKey, nil]
@@ -57,7 +75,8 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
     
     if (error!=nil) {
         DLog(@"%@", error);
-    }
+    }*/
+    NSArray *content = [self children];
     NSMutableArray *somePhotos = [NSMutableArray arrayWithCapacity:content.count];
     for (NSURL *itemURL in content)
     {
@@ -80,34 +99,36 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
     
 }
 
-- (void)pathWatcher:(SCEvents *)pathWatcher eventOccurred:(SCEvent *)event;
+-(BOOL)albumExists
 {
-    DLog(@"%@", event);
-    [self updatePhotosFromFileSystem];
-    [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
-    /*NSMutableArray *itemsToDelete = [[NSMutableArray alloc] init];
-    for (SearchItem *searchItem in self.photos)
+    BOOL isDir;
+    if (self.filePath && [[NSFileManager defaultManager] fileExistsAtPath:self.filePath isDirectory:&isDir] && isDir)
     {
-        NSMetadataItem *anItem = [searchItem metadataItem];
-        NSNumber *fileSize= [anItem valueForAttribute:(NSString *)kMDItemFSSize];
-        if (fileSize == nil) {
-            //[self.photos removeObject:anItem];
-            [itemsToDelete addObject:searchItem];
+        return YES;
+    }
+    return NO;
+}
+
+
+
+-(BOOL)albumExistsWithPhotos
+{
+    BOOL existsWithPhotos = NO;
+    if ([self albumExists])
+    {
+        NSArray *content = [self children];
+        for (NSURL *itemURL in content)
+        {
+            NSString *utiValue;
+            [itemURL getResourceValue:&utiValue forKey:NSURLTypeIdentifierKey error:nil];
             
+            if (UTTypeConformsTo((__bridge CFStringRef)(utiValue), kUTTypeImage)) {
+                existsWithPhotos = YES;
+                break;
+            }
         }
     }
-    [self.photos removeObjectsInArray:itemsToDelete];*/
-    
-    
-    
-    //SearchItem *searchItem = (SearchItem *)[self.photos lastObject];
-    //[[NSNotificationCenter defaultCenter] postNotificationName:SearchItemDidChangeNotification object:searchItem];
-    
-    //SearchItem *searchItem = (SearchItem *)[self.photos lastObject];
-    //NSString *newTitle = [anItem valueForAttribute:(NSString *)kMDItemDisplayName];
-    //DLog(@"new title : %@", newTitle);
-    //[searchItem setTitle:nil];
-    
+    return existsWithPhotos;
 }
 
 -(void)dealloc

@@ -17,9 +17,14 @@
 @class Album;
 @class PageViewController;
 
+extern NSString *searchLocationKey;
+extern NSString *dropboxHomeLocationKey;
+extern NSString *dropboxHomeStringKey;
+
 @interface MainWindowController : NSObject <NSWindowDelegate,
                                             NSPathControlDelegate,
-                                            NSTableViewDelegate>
+                                            NSTableViewDelegate,
+                                            NSSplitViewDelegate>
 {
 @private
     NSMutableArray *iSearchQueries;

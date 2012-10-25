@@ -1,3 +1,4 @@
+
 //
 //  MainWindowController.m
 //  Unbound5
@@ -18,6 +19,12 @@
 #import "SpotlightFetchController.h"
 #import "FileSystemEventController.h"
 //#import "AppDelegate.h"
+
+#define kMinContrainValue 100.0f
+
+NSString *searchLocationKey  = @"searchLocationKey";
+NSString *dropboxHomeLocationKey  = @"dropboxHomeLocationKey";
+NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";
 
 /*
  * Used to get the home directory of the user, UNIX/C based workaround for sandbox issues
@@ -40,9 +47,7 @@ NSArray * DropBoxDirectory()
     return libraryDirectories;
 }
 
-NSString *searchLocationKey = @"searchLocationKey";
-NSString *dropboxHomeLocationKey = @"dropboxHomeLocationKey";
-NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";
+
 
 @interface MainWindowController()
 
@@ -58,26 +63,11 @@ NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";
 
 
 - (void)awakeFromNib {
-    DLog(@"awakeFromNib");
     
-    self.albumSortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES]];
+    //TODO: Sort descriptors not working when bound to tableView
+    //self.albumSortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES]];
     
     [window setDelegate:self];  // we want to be notified when this window is closed
-    
-    
-    //Register for notifications from the fetch controller
-    /*[[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(searchFinished:)
-                                                 name:SearchQueryDidFinishNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(queryChildrenChanged:)
-                                                 name:SearchQueryChildrenDidChangeNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(searchItemChanged:)
-                                                 name:SearchItemDidChangeNotification
-                                               object:nil];*/
     
     //New file-based notifications
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -85,18 +75,11 @@ NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";
                                                  name:AlbumDidChangeNotification
                                                object:nil];
     
-    
-    //If a search location is already set we can begin loading...
-    /*if ([[NSUserDefaults standardUserDefaults] valueForKey:@"searchLocationKey"]!=nil)
-    {
-        [self startLoading];
-    }*/
 }
 
 -(void)albumChanged:(NSNotification *)note
 {
     Album *anAlbum = (Album *)note.object;
-
     if (anAlbum == self.selectedAlbum)
     {
         self.browserData = anAlbum.photos;
@@ -107,6 +90,7 @@ NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";
 -(void)albumsUpdatedLoading:(NSNotification *)note
 {
     NSMutableArray *albums = (NSMutableArray *)[note.userInfo valueForKey:@"albums"];
+
     self.directoryArray = albums;
     if (self.selectedAlbum == nil)
     {
@@ -122,17 +106,21 @@ NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";
 
 -(void)albumsFinishedLoading:(NSNotification *)note
 {
-    /*NSMutableArray *albums = (NSMutableArray *)[note.userInfo valueForKey:@"albums"];
-    self.directoryArray = albums;
-    if (self.selectedAlbum == nil)
-    {
-        self.selectedAlbum = [self.directoryArray lastObject];
-        self.browserData = self.selectedAlbum.photos;
-    }
-    [self.tableView reloadData];
-    [self.browserView reloadData];*/
     [self albumsUpdatedLoading:note];
-    [self.fileSystemEventController startObserving];
+}
+
+-(void)albumsWereDeleted:(NSNotification *)note
+{
+    NSArray *albumsDeleted = (NSArray *) [note.userInfo valueForKey:@"Albums"];
+    DLog(@"the following albums were deleted : %@", albumsDeleted);
+    if ([albumsDeleted containsObject:self.selectedAlbum])
+    {
+        self.selectedAlbum = [self.albumArray objectAtIndex:0];
+    }
+    [self.directoryArray removeObjectsInArray:albumsDeleted];
+    //[self.albumArray removeObject:anAlbum];
+    //[self.directoryDict removeObjectForKey:anAlbum.filePath];
+    [self.tableView reloadData];
 }
 
 -(void)loadAlbumsFromFileSystem
@@ -141,15 +129,16 @@ NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";
     {
         [self.fileSystemEventController stopObserving];
     }
-    self.fileSystemEventController = [[FileSystemEventController alloc] initWithPath:self.searchLocation albumsTable:self.directoryDict];
+    //self.fileSystemEventController = [[FileSystemEventController alloc] initWithPath:self.searchLocation albumsTable:self.directoryDict];
+    self.fileSystemEventController = [[FileSystemEventController alloc] initWithPath:self.searchLocation
+                                      dropboxHome:[NSURL fileURLWithPath:self.dropboxHomePath]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(albumsUpdatedLoading:) name:@"AlbumsUpdatedLoading" object:self.fileSystemEventController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(albumsFinishedLoading:) name:@"AlbumsFinishedLoading" object:self.fileSystemEventController];
     
-    [self.fileSystemEventController fetchAllAlbums];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(albumsWereDeleted:) name:@"AlbumsWereDeleted" object:self.fileSystemEventController];
     
-    
-    //[self albumsFinishedLoading];
+    [self.fileSystemEventController startObserving];
 }
 
 
@@ -234,13 +223,15 @@ NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";
         NSData *bookmarkData = [self.dropboxHome bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope
                                           includingResourceValuesForKeys:nil
                                                            relativeToURL:nil
-                                                                   error:nil];
+                                                                   error:&error];
         DLog(@"update dropbox root Path : %@", self.dropboxHome.path);
         if(bookmarkData){
             [[NSUserDefaults standardUserDefaults] setObject:self.dropboxHomePath forKey:dropboxHomeStringKey];
             [[NSUserDefaults standardUserDefaults] setObject:bookmarkData forKey:dropboxHomeLocationKey];
             [[NSUserDefaults standardUserDefaults] synchronize];
             [self.dropboxHome startAccessingSecurityScopedResource];
+        } else {
+            DLog(@"Error creating security scoped bookmark : %@", error);
         }
         
         NSString *photosDirPath = [NSString stringWithFormat:@"%@/Photos", dropboxDir];
@@ -249,47 +240,7 @@ NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";
         [self updateRootSearchPath:self.searchLocation];
         return;
     }
-    
-    /*DLog(@"dirs : %@", dirs);
-    
-    if ([dirs count]>0)
-    {
-        NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[dirs lastObject] error:&error];
-        if (!files)
-        {
-            DLog(@"%@", error);
-        } else if (files != nil)
-        {
-            self.dropboxHome = [NSURL fileURLWithPath:[dirs lastObject] isDirectory:YES];
-            NSData *bookmarkData = [self.dropboxHome bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope
-                                                 includingResourceValuesForKeys:nil
-                                                                  relativeToURL:nil
-                                                                          error:nil];
-            DLog(@"update dropbox root Path : %@", self.dropboxHome.path);
-            if(bookmarkData){
-                [[NSUserDefaults standardUserDefaults] setObject:bookmarkData forKey:dropboxHomeLocationKey];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                [self.dropboxHome startAccessingSecurityScopedResource];
-            }
-            
-            NSDirectoryEnumerator *itr = [[NSFileManager defaultManager] enumeratorAtURL:self.dropboxHome includingPropertiesForKeys:[NSArray arrayWithObjects:NSURLLocalizedNameKey, NSURLEffectiveIconKey, NSURLIsDirectoryKey, NSURLTypeIdentifierKey, nil] options:NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsSubdirectoryDescendants errorHandler:nil];
-            
 
-
-            for (NSURL *url in itr) {
-                if ([url.filePathURL.lastPathComponent isEqualToString:@"Photos"])
-                {
-                    NSURL *aFileURL = url;
-                    self.searchLocation = aFileURL;
-                    [searchLocationPathControl setURL:self.searchLocation];
-                    [self updateRootSearchPath:self.searchLocation];
-                    return;
-                }
-            }
-            
-        } 
-
-    }*/
     
     NSString *dropboxPath = nil;
     if ([dirs count]>0)
@@ -327,12 +278,10 @@ NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";
     self.directoryDict = [[NSMutableDictionary alloc] init];
     self.browserData = [[NSMutableArray alloc] init];
     self.directoryArray = [[NSMutableArray alloc] init];
-    iSearchQueries = [[NSMutableArray alloc] init];
+    //iSearchQueries = [[NSMutableArray alloc] init];
     
     
 }
-
-
 
 - (BOOL)windowShouldClose:(id)sender {
     NSLog(@"windowShouldClose was called");
@@ -346,157 +295,8 @@ NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";
     [window setContentView:self.mainContentView];
 }
 
-- (void)createNewSearchForWithScopeURLs:(NSArray *)urls {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(kMDItemContentTypeTree = 'public.image') OR  (kMDItemContentTypeTree = 'public.movie')"];
-    
-    
-    // Create an instance of our datamodel and keep track of things.
-    SearchQuery *searchQuery = [[SearchQuery alloc] initWithSearchPredicate:predicate title:@"Search" scopeURLs:urls];
-    [iSearchQueries addObject:searchQuery];
-    
-}
 
-/*- (void)createNewSearchForWithScopeURL:(NSURL *)url {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(kMDItemContentTypeTree = 'public.image') OR  (kMDItemContentTypeTree = 'public.movie')"];
 
-    
-    // Create an instance of our datamodel and keep track of things.
-    SearchQuery *searchQuery = [[SearchQuery alloc] initWithSearchPredicate:predicate title:@"Search" scopeURLs:[self searchPaths]];
-    [iSearchQueries addObject:searchQuery];
-    
-}*/
-
-/*- (void)createNewFetchForWithScopeURL:(NSURL *)url {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(kMDItemContentTypeTree = 'public.image') OR  (kMDItemContentTypeTree = 'public.movie')"];
-    
-    
-    // Create an instance of our datamodel and keep track of things.
-    SpotlightFetchController *searchQuery = [[SpotlightFetchController alloc] initWithSearchPredicate:predicate title:@"Search" scopeURL:url];
-    [iSearchQueries addObject:searchQuery];
-    
-}*/
-
--(void)updateAlbumsWithSearchResults:(NSArray *)children //forDirectory:(NSString *)path
-{
-    PROFILING_START(@"FileUtils - searchItemsFromResults");
-    //DLog(@"Starting searchItemsFromResults");
-    //NSMutableArray *tmpArray = [NSMutableArray arrayWithCapacity:[children count] ];
-    NSInteger index =0;
-    for (SearchItem *item in children)
-    {
-        index++;
-        /*if ([self.browserData containsObject:item]){
-            continue;
-        }*/
-        //NSLog(@"item : %@", [item debugDescription]);
-
-        NSString *fullPath = [item.metadataItem valueForAttribute:(NSString *)kMDItemPath];
-        if (fullPath==nil) {
-            DLog(@"SearchItem has no path item %ld of %ld", index, children.count);
-            //NSAssert(fullPath!=nil, @"SearchItem has no path");
-            [item dumpAttributesToLog];
-            continue;
-        }
-        
-        NSString *dirPath = [fullPath stringByDeletingLastPathComponent];
-        Album *album = [self.directoryDict valueForKey:dirPath];
-        if (album==nil)
-        {
-            album = [[Album alloc] initWithFilePath:dirPath];
-            [self.directoryDict setValue:album forKey:dirPath];
-            [self.directoryArray addObject:album];
-            [album updatePhotosFromFileSystem];
-            //[self.tableView reloadData];
-        }
-        /*if (![album.photos containsObject:item])
-        {
-            [album addPhotosObject:item];
-        }*/
-        
-    }
-    
-    //DLog(@"Finished searchItemsFromResults");
-    PROFILING_STOP();
-    return;
-}
-
-/*-(void)searchFinished:(NSNotification *)note
-{
-    DLog(@"searchFinished")
-    SearchQuery *query = (SearchQuery *)[note object];
-    NSString *topLevelPath = [[query._searchURLs lastObject] path];
-    Album *topLevelAlbum = (Album *)[self.directoryDict valueForKey:topLevelPath];
-    if (!topLevelAlbum)
-    {
-        topLevelAlbum = [[Album alloc] initWithFilePath:topLevelPath];
-        [self.directoryArray addObject:topLevelAlbum];
-        [self.directoryDict setValue:topLevelAlbum forKey:topLevelPath];
-    }
-    
-    if (self.selectedAlbum == nil) {
-        self.selectedAlbum = topLevelAlbum;
-    }
-    
-    [self.directoryArray sortUsingDescriptors:self.albumSortDescriptors];
-    NSInteger selectedAlbumIndex = [self.directoryArray indexOfObject:self.selectedAlbum];
-    
-    [self.tableView reloadData];
-    [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:selectedAlbumIndex] byExtendingSelection:NO];
-    [self.tableView scrollRowToVisible:selectedAlbumIndex];
-    [self.browserView reloadData];
-    
-    //Disabling spotlight updates
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:SearchQueryChildrenDidChangeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:SearchQueryDidFinishNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:SearchItemDidChangeNotification object:nil];
-    //query is dealloced and stopped when removed
-    [iSearchQueries removeAllObjects];
-    
-    //self.fileSystemEventController = [[FileSystemEventController alloc] initWithPath:self.searchLocation albumsTable:self.directoryDict];
-    
-    [self.fileSystemEventController startObserving];
-}*/
-
-- (void)queryChildrenChanged:(NSNotification *)note {
-    
-    SearchQuery *query = (SearchQuery *)[note object];
-    DLog(@"Current album count  : %ld", self.directoryArray.count);
-    DLog(@"incoming item count  : %ld", query.children.count);
-    //[self searchItemsFromResults:query.children forDirectory:[query._searchURL path]];
-    
-    
-    //Update the albums and their contents based on the updated search results
-    [self updateAlbumsWithSearchResults:query.children];
-    Album * anAlbum = self.selectedAlbum;
-    if (anAlbum!=nil)
-    {
-        self.browserData = anAlbum.photos;//[self.directoryDict valueForKey:anAlbum.filePath];
-    } else {
-        DLog(@"No selected album");
-        return;
-    }
-    
-    [self.tableView reloadData];
-    [self.browserView reloadData];
-    //[resultsOutlineView reloadItem:[note object] reloadChildren:YES];
-}
-
-- (void)searchItemChanged:(NSNotification *)note {
-    NSLog(@"searchItemChanged : %@", note);
-    SearchItem *item = (SearchItem *)[note object];
-    NSLog(@"item : %@", [item debugDescription]);
-    [self.browserView reloadData];
-
-    // When an item changes, it only will affect the display state.
-    // So, we only need to redisplay its contents, and not reload it
-    /*NSInteger row = [resultsOutlineView rowForItem:[note object]];
-    if (row != -1) {
-        [resultsOutlineView setNeedsDisplayInRect:[resultsOutlineView rectOfRow:row]];
-        if ([resultsOutlineView isRowSelected:row]) {
-            [self updatePathControl];
-        }
-    }*/
-}
 
 -(NSMutableArray *)albumArray;
 {
@@ -521,8 +321,10 @@ NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";
 -(void)updateRootSearchPath:(NSURL *)newRootSearchPath
 {
     self.searchLocation = newRootSearchPath;
+    //self.dropboxHome = newRootSearchPath;
     [[NSUserDefaults standardUserDefaults] setObject:self.searchLocation.path forKey:searchLocationKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    //[[NSUserDefaults standardUserDefaults] setObject:self.dropboxHome.path forKey:dropboxHomeStringKey];
+    //[[NSUserDefaults standardUserDefaults] synchronize];
     
     /*NSData *bookmarkData = [self.searchLocation bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope
                                          includingResourceValuesForKeys:nil
@@ -670,6 +472,7 @@ NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";
     //[url startAccessingSecurityScopedResource];
     //[self loadPhotosForURL:searchURL];
     //[url stopAccessingSecurityScopedResource];
+    [window setTitle:anAlbum.filePath];
     [self.browserView reloadData];
 }
 
@@ -718,5 +521,56 @@ NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";
     NSLog(@"cellWasDoubleClickedAtIndex");
 }
 
+#pragma mark - NSSplitViewDelegate methods
+
+// -------------------------------------------------------------------------------
+//	canCollapseSubview:
+//
+//	This delegate allows the collapsing of the first and last subview.
+// -------------------------------------------------------------------------------
+- (BOOL)splitView:(NSSplitView *)splitView canCollapseSubview:(NSView *)subview
+{
+    return NO;
+}
+
+// -------------------------------------------------------------------------------
+//	shouldCollapseSubview:subView:dividerIndex
+//
+//	This delegate allows the collapsing of the first and last subview.
+// -------------------------------------------------------------------------------
+- (BOOL)splitView:(NSSplitView *)splitView shouldCollapseSubview:(NSView *)subview forDoubleClickOnDividerAtIndex:(NSInteger)dividerIndex
+{
+    // yes, if you can collapse you should collapse it
+    return NO;
+}
+
+// -------------------------------------------------------------------------------
+//	constrainMinCoordinate:proposedCoordinate:index
+// -------------------------------------------------------------------------------
+- (CGFloat)splitView:(NSSplitView *)splitView constrainMinCoordinate:(CGFloat)proposedCoordinate ofSubviewAt:(NSInteger)index
+{
+    if (proposedCoordinate < kMinContrainValue) {
+        proposedCoordinate = kMinContrainValue;
+    }
+    return proposedCoordinate;
+}
+
+// -------------------------------------------------------------------------------
+//	constrainMaxCoordinate:proposedCoordinate:proposedCoordinate:index
+// -------------------------------------------------------------------------------
+- (CGFloat)splitView:(NSSplitView *)splitView constrainMaxCoordinate:(CGFloat)proposedCoordinate ofSubviewAt:(NSInteger)index
+{
+    CGFloat constrainedCoordinate = proposedCoordinate;
+    if (index == ([[splitView subviews] count] - 2))
+	{
+		constrainedCoordinate = proposedCoordinate - kMinContrainValue;
+    }
+	
+    return constrainedCoordinate;
+}
+
+
+
 
 @end
+

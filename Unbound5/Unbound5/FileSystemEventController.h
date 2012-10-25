@@ -15,10 +15,15 @@
 }
 
 @property (copy) NSURL *rootFilePathURL;
-@property (weak) NSDictionary *albumLookupTable;
+@property (copy) NSURL *dropboxHome;
+@property (copy) NSURL *cameraUploadsLocation;
+@property (strong) NSMutableDictionary *albumLookupTable;
 @property (strong) NSMutableArray *albums;
 
--(id)initWithPath:(NSURL *)aFilePathURL;
+-(NSArray *) observedDirectories;
+
+-(id)initWithPath:(NSURL *)aFilePathURL
+      dropboxHome:(NSURL *)dropboxURL;
 
 -(id)initWithPath:(NSURL *)aFilePathURL
       albumsTable:(NSDictionary *)anAlbumsDict;
