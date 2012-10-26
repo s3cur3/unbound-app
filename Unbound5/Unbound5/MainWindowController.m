@@ -65,7 +65,7 @@ NSArray * DropBoxDirectory()
 - (void)awakeFromNib {
     
     //TODO: Sort descriptors not working when bound to tableView
-    //self.albumSortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES]];
+    self.albumSortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES]];
     
     [window setDelegate:self];  // we want to be notified when this window is closed
     
@@ -90,6 +90,7 @@ NSArray * DropBoxDirectory()
 -(void)albumsUpdatedLoading:(NSNotification *)note
 {
     NSMutableArray *albums = (NSMutableArray *)[note.userInfo valueForKey:@"albums"];
+    [albums sortUsingDescriptors:self.albumSortDescriptors];
 
     self.directoryArray = albums;
     if (self.selectedAlbum == nil)
@@ -375,6 +376,9 @@ NSArray * DropBoxDirectory()
     [openPanel setCanChooseFiles:NO];
     [openPanel setPrompt:@"Choose"];
     [openPanel setTitle:@"Choose Location"];
+#ifdef DEBUG
+    [openPanel setTreatsFilePackagesAsDirectories:YES];
+#endif
     
     // set the default location to the Documents folder
     NSArray *documentsFolderPath = NSSearchPathForDirectoriesInDomains(NSUserDirectory, NSUserDomainMask, YES);

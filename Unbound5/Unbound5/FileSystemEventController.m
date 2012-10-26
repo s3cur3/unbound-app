@@ -87,16 +87,25 @@ NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";*/
 
 //TODO: add recursive flag
 -(void)updateAlbumsAtPath:(NSURL *)filePath
+              scanSubdirs:(BOOL)shouldScanSubDirs
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),^(void){
         
         //NSDate *scanDate = [NSDate date];
+        if (self.albums == nil) {
+            self.albums = [NSMutableArray arrayWithCapacity:100];
+        }
         
         [self updateAlbumsForURL:filePath];
         
+        NSDirectoryEnumerationOptions options = NSDirectoryEnumerationSkipsHiddenFiles;
+        if (!shouldScanSubDirs) {
+            options = options | NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsSubdirectoryDescendants;
+        }
+        
         //walk files in the background thread
         //Get all the subdirectories
-        NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtURL:filePath includingPropertiesForKeys:[NSArray arrayWithObjects:NSURLLocalizedNameKey, NSURLEffectiveIconKey, NSURLIsDirectoryKey, NSURLTypeIdentifierKey, nil] options:NSDirectoryEnumerationSkipsHiddenFiles /*| NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsSubdirectoryDescendants*/ errorHandler:^(NSURL *url, NSError *error) {
+        NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtURL:filePath includingPropertiesForKeys:[NSArray arrayWithObjects:NSURLLocalizedNameKey, NSURLEffectiveIconKey, NSURLIsDirectoryKey, NSURLTypeIdentifierKey, nil] options:options errorHandler:^(NSURL *url, NSError *error) {
             // Handle the error.
             DLog(@"error creating enumerator for directory %@ : %@", url.path, error);
             // Return YES if the enumeration should continue after the error.
@@ -278,7 +287,7 @@ NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";*/
         
     }
     [self checkForNewOrDeletedAlbumsInPath:changedURL.path];
-    [self updateAlbumsAtPath:changedURL];
+    [self updateAlbumsAtPath:changedURL scanSubdirs:NO];
 }
 
 // At least one file somewhere inside--but not necessarily directly descended from--changedURL has changed.  You should examine the directory at changedURL and all subdirectories to see which files changed.
@@ -293,12 +302,13 @@ NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";*/
     //If this is the first notication, rebuild all albums from directory structure
     if (reason == ArchDirectoryObserverNoHistoryReason)
     {
-        if(![changedURL.path hasSuffix:@"Uploads"])
+        [self updateAlbumsAtPath:changedURL scanSubdirs:YES];
+        /*if(![changedURL.path hasSuffix:@"Uploads"])
         {
             [self fetchAllAlbums];
         } else {
-            [self updateAlbumsAtPath:changedURL];
-        }
+            [self updateAlbumsAtPath:changedURL scanSubdirs:YES];
+        }*/
         //[self updateAlbumsAtPath:changedURL];
     }
 }
