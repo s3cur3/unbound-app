@@ -19,6 +19,7 @@
 #import "SpotlightFetchController.h"
 #import "FileSystemEventController.h"
 //#import "AppDelegate.h"
+#import "SidebarTableCellView.h"
 
 #define kMinContrainValue 100.0f
 
@@ -75,6 +76,11 @@ NSArray * DropBoxDirectory()
                                                  name:AlbumDidChangeNotification
                                                object:nil];
     
+    [self.browserView setDraggingDestinationDelegate:self];
+    
+    [self.outlineView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
+    
+    
 }
 
 -(void)albumChanged:(NSNotification *)note
@@ -100,6 +106,7 @@ NSArray * DropBoxDirectory()
     }
     
     [self.tableView reloadData];
+    [self.outlineView reloadData];
     [self.browserView reloadData];
     
     //[self.fileSystemEventController startObserving];
@@ -122,6 +129,7 @@ NSArray * DropBoxDirectory()
     //[self.albumArray removeObject:anAlbum];
     //[self.directoryDict removeObjectForKey:anAlbum.filePath];
     [self.tableView reloadData];
+    [self.outlineView reloadData];
 }
 
 -(void)loadAlbumsFromFileSystem
@@ -341,6 +349,7 @@ NSArray * DropBoxDirectory()
     
     [self resetProperties];
     [self.tableView reloadData];
+    [self.outlineView reloadData];
     
     //OLD SPOTLIGHT SEARCH
     //[self createNewSearchForWithScopeURLs:[self searchPaths]];
@@ -441,6 +450,7 @@ NSArray * DropBoxDirectory()
     }
     
 }
+
 
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification
 {
@@ -573,8 +583,291 @@ NSArray * DropBoxDirectory()
     return constrainedCoordinate;
 }
 
+#pragma mark -
+#pragma mark Browser Drag and Drop Methods
+- (unsigned int)draggingEntered:(id <NSDraggingInfo>)sender
+{
+	
+	if([sender draggingSource] != self){
+		NSPasteboard *pb = [sender draggingPasteboard];
+		NSString * type = [pb availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]];
+		
+		if(type != nil){
+			return NSDragOperationEvery;
+		}
+	}
+	return NSDragOperationNone;
+}
+
+- (unsigned int)draggingUpdated:(id <NSDraggingInfo>)sender
+{
+	return NSDragOperationEvery;
+}
+
+- (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender
+{
+	return YES;
+}
+
+- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
+{
+    NSFileManager * fileManager = [NSFileManager defaultManager];
+	//Get the files from the drop
+	NSArray * files = [[sender draggingPasteboard] propertyListForType:NSFilenamesPboardType];
+	
+	/*for(id file in files){
+		NSImage * image = [[NSWorkspace sharedWorkspace] iconForFile:file];
+		NSString * imageID = [file lastPathComponent];
+		DLog(@"File dragged abd dropped onto browser : %@", imageID);
+		//IKBBrowserItem * item = [[IKBBrowserItem alloc] initWithImage:image imageID:imageID];
+		//[self.browserData addObject:item];
+        
+
+	}*/
+    
+    // handle copied files
+    NSError *anError = nil;
+    for (NSString * url in files)
+    {
+        // check if the destination folder is different from the source folder
+        if ([self.selectedAlbum.filePath isEqualToString:[  url stringByDeletingLastPathComponent]])
+            continue;
+        
+        NSURL * destinationURL = [NSURL fileURLWithPath:self.selectedAlbum.filePath];
+        
+        NSURL *srcURL = [NSURL fileURLWithPath:url];
+        destinationURL = [destinationURL URLByAppendingPathComponent:[url lastPathComponent]];
+        
+        [fileManager copyItemAtURL:srcURL toURL:destinationURL error:&anError];
+    }
+    if (anError!=nil)
+    {
+        DLog(@"error copying dragged files : %@", anError);
+    }
+	
+	if([self.browserData count] > 0) {
+        [self.selectedAlbum updatePhotosFromFileSystem];
+        [self.browserView reloadData];
+        return YES;
+    }
+	
+	return NO;
+}
+
+- (void)concludeDragOperation:(id < NSDraggingInfo >)sender
+{
+	[self.browserView reloadData];
+}
+
+- (NSInteger) outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item {
+    return [self.directoryArray count];
+}
 
 
+- (NSArray *)_childrenForItem:(id)item {
+    NSArray *children;
+    if (item == nil) {
+        children = self.directoryArray;
+    } else {
+        children = [NSArray arrayWithObject:self.selectedAlbum];
+    }
+    return children;
+}
+
+- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item {
+    return [self.directoryArray objectAtIndex:index];
+}
+
+- (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item {
+    return NO;
+}
+
+-(id)outlineView:(NSOutlineView *) aView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
+{
+    return [item title];
+}
+
+- (void)outlineViewSelectionDidChange:(NSNotification *)notification {
+    if ([self.outlineView selectedRow] != -1) {
+        //Album *item = [self.outlineView itemAtRow:[self.outlineView selectedRow]];
+        Album *anAlbum =  [self.outlineView itemAtRow:[self.outlineView selectedRow]];
+        if (self.selectedAlbum == anAlbum) {
+            DLog(@"selectedAlbum didn't seem to change - no need to update browserView");
+        } else if (anAlbum!=nil){
+            self.selectedAlbum = anAlbum;
+        } else {
+            DLog(@"selectedAlbum in tableView doesn't exist - no need to update browserView");
+            return;
+        }
+        
+        //[self.browserData removeAllObjects];
+        //[self.browserView reloadData];
+        // NSURL *searchURL = [NSURL URLWithString:[newDir valueForKey:@"filePath"]];
+        //Album *anAlbum = [self.directoryDict valueForKey:newDir.filePath];
+        if (anAlbum!=nil)
+        {
+            self.browserData = anAlbum.photos;
+            //[self.browserView reloadData];
+        } else {
+            //assert(NO);
+            //NSURL *searchURL = [NSURL URLWithString:[anAlbum valueForKey:@"filePath"]];
+            //[self createNewSearchForWithScopeURL:searchURL];
+        }
+        
+        //[url startAccessingSecurityScopedResource];
+        //[self loadPhotosForURL:searchURL];
+        //[url stopAccessingSecurityScopedResource];
+        [window setTitle:anAlbum.filePath];
+        [self.browserView reloadData];
+    }
+}
+
+- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(id)item {
+    // For the groups, we just return a regular text view.
+    if (YES) {//[_topLevelItems containsObject:item]) {
+        NSTextField *result = [outlineView makeViewWithIdentifier:@"MainCell" owner:self];
+        // Uppercase the string value, but don't set anything else. NSOutlineView automatically applies attributes as necessary
+        if (result == nil) {
+            
+            // create the new NSTextField with a frame of the {0,0} with the width of the table
+            // note that the height of the frame is not really relevant, the row-height will modify the height
+            // the new text field is then returned as an autoreleased object
+            NSRect aRect = NSMakeRect(0, 0, 75, 10);
+            result = [[NSTextField alloc] initWithFrame:aRect];
+            [result setBezeled:NO];
+            [result setDrawsBackground:NO];
+            [result setEditable:NO];
+            [result setSelectable:YES];
+            
+            // the identifier of the NSTextField instance is set to MyView. This
+            // allows it to be re-used
+            result.identifier = @"MainCell";
+        }
+        NSString *value = [item title];
+        [result setStringValue:value];
+        return result;
+    } else  {
+        // The cell is setup in IB. The textField and imageView outlets are properly setup.
+        // Special attributes are automatically applied by NSTableView/NSOutlineView for the source list
+        SidebarTableCellView *result = [outlineView makeViewWithIdentifier:@"MainCell" owner:self];
+        if (result == nil) {
+            
+            // create the new NSTextField with a frame of the {0,0} with the width of the table
+            // note that the height of the frame is not really relevant, the row-height will modify the height
+            // the new text field is then returned as an autoreleased object
+            NSRect aRect = NSMakeRect(0, 0, 75, 10);
+            result = [[SidebarTableCellView alloc] initWithFrame:aRect];
+            
+            // the identifier of the NSTextField instance is set to MyView. This
+            // allows it to be re-used
+            result.identifier = @"MainCell";
+        }
+        NSString *value = [item title];
+        [result.textField setStringValue:value];
+        return result;
+        
+        /*result.textField.stringValue = item;
+        // Setup the icon based on our section
+        id parent = [outlineView parentForItem:item];
+        NSInteger index = [_topLevelItems indexOfObject:parent];
+        NSInteger iconOffset = index % 4;
+        switch (iconOffset) {
+            case 0: {
+                result.imageView.image = [NSImage imageNamed:NSImageNameIconViewTemplate];
+                break;
+            }
+            case 1: {
+                result.imageView.image = [NSImage imageNamed:NSImageNameHomeTemplate];
+                break;
+            }
+            case 2: {
+                result.imageView.image = [NSImage imageNamed:NSImageNameQuickLookTemplate];
+                break;
+            }
+            case 3: {
+                result.imageView.image = [NSImage imageNamed:NSImageNameSlideshowTemplate];
+                break;
+            }
+        }
+        BOOL hideUnreadIndicator = YES;
+        // Setup the unread indicator to show in some cases. Layout is done in SidebarTableCellView's viewWillDraw
+        if (index == 0) {
+            // First row in the index
+            hideUnreadIndicator = NO;
+            [result.button setTitle:@"42"];
+            [result.button sizeToFit];
+            // Make it appear as a normal label and not a button
+            [[result.button cell] setHighlightsBy:0];
+        } else if (index == 2) {
+            // Example for a button
+            hideUnreadIndicator = NO;
+            result.button.target = self;
+            result.button.action = @selector(buttonClicked:);
+            [result.button setImage:[NSImage imageNamed:NSImageNameAddTemplate]];
+            // Make it appear as a button
+            [[result.button cell] setHighlightsBy:NSPushInCellMask|NSChangeBackgroundCellMask];
+        }
+        [result.button setHidden:hideUnreadIndicator];
+        return result;*/
+    }
+}
+
+-(BOOL)outlineView:(NSOutlineView *)outlineView acceptDrop:(id < NSDraggingInfo >)info item:(id)item childIndex:(NSInteger)index
+{
+	// get the URLs
+	NSArray * urls = [[info draggingPasteboard] readObjectsForClasses:[NSArray arrayWithObject:[NSURL class]] options:nil];
+    NSFileManager * fileManager = [NSFileManager defaultManager];
+	//Get the files from the drop
+    //NSArray * files = [[sender draggingPasteboard] propertyListForType:NSFilenamesPboardType];
+	
+	/*for(id file in files){
+     NSImage * image = [[NSWorkspace sharedWorkspace] iconForFile:file];
+     NSString * imageID = [file lastPathComponent];
+     DLog(@"File dragged abd dropped onto browser : %@", imageID);
+     //IKBBrowserItem * item = [[IKBBrowserItem alloc] initWithImage:image imageID:imageID];
+     //[self.browserData addObject:item];
+     
+     
+     }*/
+    
+    // handle copied files
+    NSError *anError = nil;
+    for (NSURL * url in urls)
+    {
+        // check if the destination folder is different from the source folder
+        if ([self.dragDropDestination.filePath isEqualToString:[  url.path stringByDeletingLastPathComponent]])
+            continue;
+        
+        NSURL * destinationURL = [NSURL fileURLWithPath:self.dragDropDestination.filePath];
+        
+        NSURL *srcURL = url;//NSURL fileURLWithPath:url];
+        destinationURL = [destinationURL URLByAppendingPathComponent:[url.path lastPathComponent]];
+        
+        [fileManager copyItemAtURL:srcURL toURL:destinationURL error:&anError];
+    }
+    if (anError!=nil)
+    {
+        DLog(@"error copying dragged files : %@", anError);
+    }
+	
+	if([self.browserData count] > 0) {
+        [self.dragDropDestination updatePhotosFromFileSystem];
+        [self.browserView reloadData];
+        return YES;
+    }
+	
+	return NO;
+    
+	return YES;
+}
+
+-(NSDragOperation)outlineView:(NSOutlineView *)outlineView validateDrop:(id < NSDraggingInfo >)info proposedItem:(id)item proposedChildIndex:(NSInteger)index
+{
+	// always accept proposed item / index
+	//[mDirectoryBrowserView setDropItem:item dropChildIndex:index];
+    self.dragDropDestination = item;
+	return NSDragOperationMove;
+}
 
 @end
 

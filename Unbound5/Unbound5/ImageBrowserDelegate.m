@@ -9,11 +9,6 @@
 @implementation ImageBrowserDelegate
 
 
-@synthesize fullscreen;
-@synthesize ignoreSelectionChanges	= mIgnoreSelectionChanges;
-@synthesize imageBrowser			= mImageBrowser;
-
-
 -(id)init
 {
 	self = [super init];
@@ -109,5 +104,37 @@
 	return [selectedImages count];
 }
 
+#pragma mark Browser Data Source Methods
+
+- (NSUInteger) numberOfItemsInImageBrowser:(IKImageBrowserView *) aBrowser
+{
+	return [self.browserData count];
+}
+
+- (id) imageBrowser:(IKImageBrowserView *) aBrowser itemAtIndex:(NSUInteger)index
+{
+	return [self.browserData objectAtIndex:index];
+}
+
+/* implement some optional methods of the image-browser's datasource protocol to be able to remove and reoder items */
+
+/*	remove
+ The user wants to delete images, so remove these entries from our datasource.
+ */
+- (void)imageBrowser:(IKImageBrowserView *)view removeItemsAtIndexes:(NSIndexSet *)indexes
+{
+	[self.browserData removeObjectsAtIndexes:indexes];
+    [self.browserView reloadData];
+}
+
+/* action called when the zoom slider did change */
+- (IBAction)zoomSliderDidChange:(id)sender
+{
+	/* update the zoom value to scale images */
+    [self.browserView setZoomValue:[sender floatValue]];
+	
+	/* redisplay */
+    //
+}
 
 @end

@@ -24,7 +24,9 @@ extern NSString *dropboxHomeStringKey;
 @interface MainWindowController : NSObject <NSWindowDelegate,
                                             NSPathControlDelegate,
                                             NSTableViewDelegate,
-                                            NSSplitViewDelegate>
+                                            NSSplitViewDelegate,
+                                            NSOutlineViewDataSource,
+                                            NSOutlineViewDelegate>
 {
 @private
     NSMutableArray *iSearchQueries;
@@ -47,11 +49,13 @@ extern NSString *dropboxHomeStringKey;
 @property(readwrite,retain) NSMutableArray * browserData;
 @property IBOutlet IKImageBrowserView * browserView;
 @property (nonatomic, assign) IBOutlet NSTableView *tableView;
+@property (nonatomic, assign) IBOutlet NSOutlineView *outlineView;
 @property (nonatomic, strong) PageViewController *pageViewController;
 @property (nonatomic, strong) NSView *mainContentView;
 
 
 @property (nonatomic, strong) Album *selectedAlbum;
+@property (nonatomic, strong) Album *dragDropDestination;
 
 @property (nonatomic, strong) NSArray *albumSortDescriptors;
 
