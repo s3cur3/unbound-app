@@ -144,8 +144,8 @@ static CGImageRef pinImage()
 		CALayer *layer = [CALayer layer];
 		layer.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
 
-		NSRect imageContainerFrame = [self imageContainerFrame];
-		NSRect relativeImageContainerFrame = NSMakeRect(imageContainerFrame.origin.x - frame.origin.x, imageContainerFrame.origin.y - frame.origin.y, imageContainerFrame.size.width, imageContainerFrame.size.height);
+		//NSRect imageContainerFrame = [self imageContainerFrame];
+		//NSRect relativeImageContainerFrame = NSMakeRect(imageContainerFrame.origin.x - frame.origin.x, imageContainerFrame.origin.y - frame.origin.y, imageContainerFrame.size.width, imageContainerFrame.size.height);
         
         //layer.frame = relativeImageFrame;
         
@@ -163,9 +163,11 @@ static CGImageRef pinImage()
         [borderLayer setBorderWidth:5.0];
 		CFRelease(color);
         
-        [layer setShadowColor:CGColorCreateGenericGray(0.0, 0.0)];
+        color = CGColorCreateGenericGray(0.0, 0.0);
+        [layer setShadowColor:color];
         [layer setShadowOpacity:1.0];
         [layer setShadowRadius:5.0];
+        CFRelease(color);
         
         [layer addSublayer:borderLayer];
 		
@@ -200,9 +202,11 @@ static CGImageRef pinImage()
         [photoSelectionLayer setCornerRadius:4.0];
 		CFRelease(color);
         
-        [photoSelectionLayer setBackgroundColor:CGColorCreateGenericGray(0.4, 1.0)];
+        color = CGColorCreateGenericGray(0.4, 1.0);
+        [photoSelectionLayer setBackgroundColor:color];
 		[photoSelectionLayer setShadowOpacity:0.6];
         [photoSelectionLayer setShadowOffset:CGSizeMake(0, -1)];
+        CFRelease(color);
         
 		[layer addSublayer:photoSelectionLayer];
 		
@@ -223,9 +227,10 @@ static CGImageRef pinImage()
 		CALayer *photoBackgroundLayer = [CALayer layer];
 		photoBackgroundLayer.frame = backgroundRect;
 
-        
-        [photoBackgroundLayer setBackgroundColor:CGColorCreateGenericGray(1.0, 1.0)];
+        color = CGColorCreateGenericGray(1.0, 1.0);
+        [photoBackgroundLayer setBackgroundColor:color];
 		[photoBackgroundLayer setShadowOpacity:0.5];
+        CFRelease(color);
         
         CGMutablePathRef path = CGPathCreateMutable();
         CGPathAddRect(path, NULL, photoBackgroundLayer.bounds);

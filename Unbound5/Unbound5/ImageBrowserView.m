@@ -102,7 +102,7 @@
 -(void)reloadDataAndKeepSelection
 {
 	// remember the first selected image
-	int selectedIndex = (int)[[self selectionIndexes] firstIndex];
+	//int selectedIndex = (int)[[self selectionIndexes] firstIndex];
     
 	// reload the data
 	/*[(ImageBrowserDelegate *)[self delegate] setIgnoreSelectionChanges:YES];
