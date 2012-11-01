@@ -90,8 +90,16 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
         self.photos = somePhotos;
     }
     self.dateLastScanned = [NSDate date];
+    
+    [self resetThumbImage];
     [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
     
+}
+
+-(void)resetThumbImage
+{
+    self.thumbnailImage = nil;
+    _state = 0;
 }
 
 -(BOOL)albumExists
