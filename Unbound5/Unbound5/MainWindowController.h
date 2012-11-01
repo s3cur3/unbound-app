@@ -29,8 +29,8 @@ extern NSString *dropboxHomeStringKey;
                                             NSOutlineViewDelegate>
 {
 @private
-    NSMutableArray *iSearchQueries;
-    CGFloat iThumbnailSize;
+    //NSMutableArray *iSearchQueries;
+    //CGFloat iThumbnailSize;
     //NSTextFieldCell *iGroupRowCell;
     //NSInteger iPreviousRowCount;
     NSURL *_searchLocation;
@@ -66,7 +66,7 @@ extern NSString *dropboxHomeStringKey;
 
 -(void)showMainView;
 -(void)startLoading;
--(void)albumsFinishedLoading;
+//-(void)albumsFinishedLoading;
 
 //-(NSMutableArray *)albumArray;
 

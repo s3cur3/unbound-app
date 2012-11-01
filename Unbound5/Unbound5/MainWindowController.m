@@ -760,94 +760,9 @@ NSArray * DropBoxDirectory()
 }
 
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(id)item {
-    // For the groups, we just return a regular text view.
-    if (NO) {//[_topLevelItems containsObject:item]) {
-        NSTextField *result = [outlineView makeViewWithIdentifier:@"MainCell" owner:self];
-        // Uppercase the string value, but don't set anything else. NSOutlineView automatically applies attributes as necessary
-        if (result == nil) {
-            
-            // create the new NSTextField with a frame of the {0,0} with the width of the table
-            // note that the height of the frame is not really relevant, the row-height will modify the height
-            // the new text field is then returned as an autoreleased object
-            NSRect aRect = NSMakeRect(0, 0, 75, 10);
-            result = [[NSTextField alloc] initWithFrame:aRect];
-            [result setBezeled:NO];
-            [result setDrawsBackground:NO];
-            [result setEditable:NO];
-            [result setSelectable:YES];
-            
-            // the identifier of the NSTextField instance is set to MyView. This
-            // allows it to be re-used
-            result.identifier = @"MainCell";
-        }
-        NSString *value = [item title];
-        //[result setStringValue:value];
-        return result;
-    } else  {
-        // The cell is setup in IB. The textField and imageView outlets are properly setup.
-        // Special attributes are automatically applied by NSTableView/NSOutlineView for the source list
-        SidebarTableCellView *result = [outlineView makeViewWithIdentifier:@"MainCell" owner:self];
-        /*if (result == nil) {
-            
-            // create the new NSTextField with a frame of the {0,0} with the width of the table
-            // note that the height of the frame is not really relevant, the row-height will modify the height
-            // the new text field is then returned as an autoreleased object
-            NSRect aRect = NSMakeRect(0, 0, 75, 10);
-            result = [[SidebarTableCellView alloc] initWithFrame:aRect];
-            
-            // the identifier of the NSTextField instance is set to MyView. This
-            // allows it to be re-used
-            result.identifier = @"MainCell";
-        }*/
-        //NSString *value = [item title];
-        //[result.textField setStringValue:value];
-        result.album = (Album *)item;
-        return result;
-        
-        /*result.textField.stringValue = item;
-        // Setup the icon based on our section
-        id parent = [outlineView parentForItem:item];
-        NSInteger index = [_topLevelItems indexOfObject:parent];
-        NSInteger iconOffset = index % 4;
-        switch (iconOffset) {
-            case 0: {
-                result.imageView.image = [NSImage imageNamed:NSImageNameIconViewTemplate];
-                break;
-            }
-            case 1: {
-                result.imageView.image = [NSImage imageNamed:NSImageNameHomeTemplate];
-                break;
-            }
-            case 2: {
-                result.imageView.image = [NSImage imageNamed:NSImageNameQuickLookTemplate];
-                break;
-            }
-            case 3: {
-                result.imageView.image = [NSImage imageNamed:NSImageNameSlideshowTemplate];
-                break;
-            }
-        }
-        BOOL hideUnreadIndicator = YES;
-        // Setup the unread indicator to show in some cases. Layout is done in SidebarTableCellView's viewWillDraw
-        if (index == 0) {
-            // First row in the index
-            hideUnreadIndicator = NO;
-            [result.button setTitle:@"42"];
-            [result.button sizeToFit];
-            // Make it appear as a normal label and not a button
-            [[result.button cell] setHighlightsBy:0];
-        } else if (index == 2) {
-            // Example for a button
-            hideUnreadIndicator = NO;
-            result.button.target = self;
-            result.button.action = @selector(buttonClicked:);
-            [result.button setImage:[NSImage imageNamed:NSImageNameAddTemplate]];
-            // Make it appear as a button
-            [[result.button cell] setHighlightsBy:NSPushInCellMask|NSChangeBackgroundCellMask];
-        }
-        [result.button setHidden:hideUnreadIndicator];
-        return result;*/
-    }
+    SidebarTableCellView *result = [outlineView makeViewWithIdentifier:@"MainCell" owner:self];
+    result.album = (Album *)item;
+    return result;
 }
 
 -(BOOL)outlineView:(NSOutlineView *)outlineView acceptDrop:(id < NSDraggingInfo >)info item:(id)item childIndex:(NSInteger)index
@@ -855,20 +770,6 @@ NSArray * DropBoxDirectory()
 	// get the URLs
 	NSArray * urls = [[info draggingPasteboard] readObjectsForClasses:[NSArray arrayWithObject:[NSURL class]] options:nil];
     NSFileManager * fileManager = [NSFileManager defaultManager];
-	//Get the files from the drop
-    //NSArray * files = [[sender draggingPasteboard] propertyListForType:NSFilenamesPboardType];
-	
-	/*for(id file in files){
-     NSImage * image = [[NSWorkspace sharedWorkspace] iconForFile:file];
-     NSString * imageID = [file lastPathComponent];
-     DLog(@"File dragged abd dropped onto browser : %@", imageID);
-     //IKBBrowserItem * item = [[IKBBrowserItem alloc] initWithImage:image imageID:imageID];
-     //[self.browserData addObject:item];
-     
-     
-     }*/
-    
-
     
     // handle copied files
     NSError *anError = nil;
