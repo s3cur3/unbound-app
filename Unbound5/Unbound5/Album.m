@@ -134,11 +134,17 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
     return existsWithPhotos;
 }
 
+-(NSMutableArray *)photos{
+    NSSortDescriptor *dateSorter = [NSSortDescriptor sortDescriptorWithKey:@"dateLastModified" ascending:NO];
+    [_photos sortUsingDescriptors:[NSArray arrayWithObject:dateSorter]];
+    return _photos;
+}
+
 -(Photo *)coverImage
 {
-    if (self.photos.count)
+    if (self.photos.count>0)
     {
-        return [self.photos lastObject];
+        return [self.photos objectAtIndex:0];
     }
     return nil;
 }
