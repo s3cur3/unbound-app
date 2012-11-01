@@ -134,9 +134,16 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
     return existsWithPhotos;
 }
 
+-(NSSortDescriptor *)dateLastModifiedSortDescriptor
+{
+    if (_dateLastModifiedSortDescriptor==nil) {
+        _dateLastModifiedSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"dateLastModified" ascending:NO];
+    }
+    return _dateLastModifiedSortDescriptor;
+}
+
 -(NSMutableArray *)photos{
-    NSSortDescriptor *dateSorter = [NSSortDescriptor sortDescriptorWithKey:@"dateLastModified" ascending:NO];
-    [_photos sortUsingDescriptors:[NSArray arrayWithObject:dateSorter]];
+    [_photos sortUsingDescriptors:[NSArray arrayWithObject:[self dateLastModifiedSortDescriptor]]];
     return _photos;
 }
 
@@ -337,6 +344,6 @@ static NSMutableArray *computeThumbnailClientQueue = nil;
 
 -(void)dealloc
 {
-
+    _dateLastModifiedSortDescriptor = nil;
 }
 @end

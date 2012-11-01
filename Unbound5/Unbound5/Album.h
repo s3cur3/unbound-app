@@ -29,6 +29,7 @@ enum {
     //NSImage *_thumbnailImage;
     NSInteger _state;
     NSSize _imageSize;
+    NSSortDescriptor *_dateLastModifiedSortDescriptor;
 }
 
 @property (strong) FileSystemEventController *fileSystemEventController;
@@ -37,12 +38,15 @@ enum {
 @property (nonatomic, strong) NSMutableArray *photos;
 @property (nonatomic, strong) NSDate *dateLastScanned;
 @property (nonatomic, strong) NSImage *thumbnailImage;
+
 //@property NSSize imageSize;
 
 - (id)initWithFilePath:(NSString *) aPath;
 -(void)addPhotosObject:(id)object;
 -(void)updatePhotosFromFileSystem;
 -(BOOL)albumExistsWithPhotos;
+
+-(NSSortDescriptor *) dateLastModifiedSortDescriptor;
 
 /* The thumbnail image may return nil if it isn't loaded. The first access of it will request it to load.
  */
