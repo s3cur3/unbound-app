@@ -43,6 +43,7 @@ NSString *PhotoDidChangeNotification = @"PhotoDidChangeNotification";
     DLog(@"%@", self.filePath);
 }
 
+
 @end
 
 @implementation Photo(IKImageBrowserItem)

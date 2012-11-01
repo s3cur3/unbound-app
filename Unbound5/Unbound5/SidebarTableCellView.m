@@ -50,6 +50,7 @@
 #import "SidebarTableCellView.h"
 #import "Album.h"
 
+extern NSString *AlbumDidChangeNotification;
 
 @implementation SidebarTableCellView
 
@@ -61,7 +62,7 @@
     NSImage *anImage = [NSImage imageNamed:@"nophoto"];
     
     [self.imageView setImage:anImage];
-    [self.detailTextLabel setStringValue:@"Testing"];
+    [self.detailTextLabel setStringValue:@"Loading"];
 }
 
 - (void)dealloc {
@@ -72,6 +73,11 @@
 -(void)updateAlbumInfo:(NSNotification *)note
 {
     [self.textField setStringValue:self.album.title];
+    if ([_album thumbnailImage]!=nil)
+    {
+        [self.imageView setImage:[_album thumbnailImage]];
+    }
+    [self.detailTextLabel setStringValue:[self.album imageSubtitle]];
 }
 
 -(void)setAlbum:(Album *)newAlbum
@@ -80,13 +86,14 @@
     {
         if (_album)
         {
-            [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AlbumUpdated" object:_album];
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:_album];
         }
         _album = newAlbum;
         if (_album!=nil)
         {
             [self updateAlbumInfo:nil];
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAlbumInfo:) name:@"AlbumUpdated" object:_album];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAlbumInfo:) name:AlbumDidChangeNotification object:_album];
+            
         }
         
         

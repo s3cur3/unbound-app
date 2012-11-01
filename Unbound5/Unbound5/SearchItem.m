@@ -267,6 +267,8 @@ static NSMutableArray *computeThumbnailClientQueue = nil;
     return _imageSize;
 }
 
+
+
 #pragma mark Required Methods IKImageBrowserItem Informal Protocol
 - (NSString *) imageUID;
 {
