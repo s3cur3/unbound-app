@@ -21,6 +21,6 @@
 
 - (void)pathControl:(NSPathControl *)pathControl willDisplayOpenPanel:(NSOpenPanel *)openPanel;
 - (IBAction)photosPathChanged:(id)sender;
-- (IBAction)dropboxHomeChanged:(id)sender;
+//- (IBAction)dropboxHomeChanged:(id)sender;
 
 @end
