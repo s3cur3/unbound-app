@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D13ADC4162CD37700116A44 /* SCEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D13ADC0162CD37700116A44 /* SCEvent.m */; };
-		1D13ADC5162CD37700116A44 /* SCEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D13ADC3162CD37700116A44 /* SCEvents.m */; };
 		1D1FB36C1620F763002CD358 /* AutoSizingIKImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1FB36B1620F763002CD358 /* AutoSizingIKImageView.m */; };
 		1D1FB39E162117CD002CD358 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1FB39C162117CD002CD358 /* ImageViewController.m */; };
 		1D1FB39F162117CD002CD358 /* ImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D1FB39D162117CD002CD358 /* ImageViewController.xib */; };
@@ -78,12 +76,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1D13ADBE162CD37700116A44 /* SCConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCConstants.h; sourceTree = "<group>"; };
-		1D13ADBF162CD37700116A44 /* SCEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEvent.h; sourceTree = "<group>"; };
-		1D13ADC0162CD37700116A44 /* SCEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEvent.m; sourceTree = "<group>"; };
-		1D13ADC1162CD37700116A44 /* SCEventListenerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEventListenerProtocol.h; sourceTree = "<group>"; };
-		1D13ADC2162CD37700116A44 /* SCEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEvents.h; sourceTree = "<group>"; };
-		1D13ADC3162CD37700116A44 /* SCEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEvents.m; sourceTree = "<group>"; };
 		1D1FB36A1620F763002CD358 /* AutoSizingIKImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoSizingIKImageView.h; sourceTree = "<group>"; };
 		1D1FB36B1620F763002CD358 /* AutoSizingIKImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoSizingIKImageView.m; sourceTree = "<group>"; };
 		1D1FB39B162117CD002CD358 /* ImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewController.h; sourceTree = "<group>"; };
@@ -187,19 +179,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1D13ADC7162CD37D00116A44 /* SCEvents */ = {
-			isa = PBXGroup;
-			children = (
-				1D13ADBE162CD37700116A44 /* SCConstants.h */,
-				1D13ADBF162CD37700116A44 /* SCEvent.h */,
-				1D13ADC0162CD37700116A44 /* SCEvent.m */,
-				1D13ADC1162CD37700116A44 /* SCEventListenerProtocol.h */,
-				1D13ADC2162CD37700116A44 /* SCEvents.h */,
-				1D13ADC3162CD37700116A44 /* SCEvents.m */,
-			);
-			name = SCEvents;
-			sourceTree = "<group>";
-		};
 		1D3DE747161E8FCF00805174 = {
 			isa = PBXGroup;
 			children = (
@@ -283,7 +262,6 @@
 			children = (
 				1DEF5A08163F2B2C00DDD5D2 /* SidebarTableCellView.h */,
 				1DEF5A09163F2B2C00DDD5D2 /* SidebarTableCellView.m */,
-				1D13ADC7162CD37D00116A44 /* SCEvents */,
 				1D3DE768161E8FD000805174 /* AppDelegate.h */,
 				1D3DE769161E8FD000805174 /* AppDelegate.m */,
 				1D3DE77B161E944E00805174 /* MainWindowController.h */,
@@ -534,8 +512,6 @@
 				1D4B9493162501ED00C7BE3F /* AutoSizingVideoView.m in Sources */,
 				1DE22E2416263F4A00D5B106 /* Album.m in Sources */,
 				1DFAC716162A596000FCF155 /* SimpleProfiler.m in Sources */,
-				1D13ADC4162CD37700116A44 /* SCEvent.m in Sources */,
-				1D13ADC5162CD37700116A44 /* SCEvents.m in Sources */,
 				1D77E614162E077000DB3553 /* Photo.m in Sources */,
 				1D77E617162E150700DB3553 /* SpotlightFetchController.m in Sources */,
 				1D77E65E162F541B00DB3553 /* FileSystemEventController.m in Sources */,

@@ -7,7 +7,6 @@
 //
 
 #import "Album.h"
-#import "SCEvents.h"
 #import "SearchItem.h"
 #import "Photo.h"
 
@@ -30,13 +29,6 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
         self.filePath = [aPath copy];
         self.title = [aPath lastPathComponent];
         self.photos = [NSMutableArray array];
-        /*self.events = [[SCEvents alloc] init];
-        NSString *watchPath = [NSString stringWithFormat:@"%@/", self.filePath];
-        if ([self.events startWatchingPaths:[NSArray arrayWithObject:watchPath]])
-        {
-            [self.events setDelegate:self];
-        }*/
-        //DLog(@"Album created at path : %@", self.filePath);
     }
     return self;
 }
