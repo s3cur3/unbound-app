@@ -585,27 +585,51 @@ NSArray * DropBoxDirectory()
 
 #pragma mark -
 #pragma mark Browser Drag and Drop Methods
+
+-(BOOL) optionKeyIsPressed
+{
+    if(( [NSEvent modifierFlags] & NSAlternateKeyMask ) != 0 ) {
+        return YES;
+    } else {
+        return NO;
+    }
+    
+}
 - (unsigned int)draggingEntered:(id <NSDraggingInfo>)sender
 {
-	
+
 	if([sender draggingSource] != self){
 		NSPasteboard *pb = [sender draggingPasteboard];
 		NSString * type = [pb availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]];
 		
 		if(type != nil){
-			return NSDragOperationEvery;
+            if ([self optionKeyIsPressed])
+            {
+                return NSDragOperationMove;
+            } else {
+                return NSDragOperationCopy;
+            }
 		}
 	}
 	return NSDragOperationNone;
 }
 
-- (unsigned int)draggingUpdated:(id <NSDraggingInfo>)sender
+- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
 {
-	return NSDragOperationEvery;
+	if([sender draggingSource] != self){
+        if ([self optionKeyIsPressed])
+        {
+            return NSDragOperationMove;
+        } else {
+            return NSDragOperationCopy;
+        }
+	}
+	return NSDragOperationNone;
 }
 
 - (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender
 {
+    [self.browserView setAnimates:YES];
 	return YES;
 }
 
@@ -638,7 +662,14 @@ NSArray * DropBoxDirectory()
         NSURL *srcURL = [NSURL fileURLWithPath:url];
         destinationURL = [destinationURL URLByAppendingPathComponent:[url lastPathComponent]];
         
-        [fileManager copyItemAtURL:srcURL toURL:destinationURL error:&anError];
+        //if ([sender draggingSourceOperationMask]!=NSDragOperationCopy)
+        if ([self optionKeyIsPressed])
+        {
+            [fileManager moveItemAtURL:srcURL toURL:destinationURL error:&anError];
+        } else {
+            [fileManager copyItemAtURL:srcURL toURL:destinationURL error:&anError];
+        }
+        
     }
     if (anError!=nil)
     {
@@ -656,7 +687,13 @@ NSArray * DropBoxDirectory()
 
 - (void)concludeDragOperation:(id < NSDraggingInfo >)sender
 {
+    [self.browserView setAnimates:NO];
 	[self.browserView reloadData];
+}
+
+-(CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
+{
+    return 55;
 }
 
 - (NSInteger) outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item {
@@ -724,7 +761,7 @@ NSArray * DropBoxDirectory()
 
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(id)item {
     // For the groups, we just return a regular text view.
-    if (YES) {//[_topLevelItems containsObject:item]) {
+    if (NO) {//[_topLevelItems containsObject:item]) {
         NSTextField *result = [outlineView makeViewWithIdentifier:@"MainCell" owner:self];
         // Uppercase the string value, but don't set anything else. NSOutlineView automatically applies attributes as necessary
         if (result == nil) {
@@ -744,13 +781,13 @@ NSArray * DropBoxDirectory()
             result.identifier = @"MainCell";
         }
         NSString *value = [item title];
-        [result setStringValue:value];
+        //[result setStringValue:value];
         return result;
     } else  {
         // The cell is setup in IB. The textField and imageView outlets are properly setup.
         // Special attributes are automatically applied by NSTableView/NSOutlineView for the source list
         SidebarTableCellView *result = [outlineView makeViewWithIdentifier:@"MainCell" owner:self];
-        if (result == nil) {
+        /*if (result == nil) {
             
             // create the new NSTextField with a frame of the {0,0} with the width of the table
             // note that the height of the frame is not really relevant, the row-height will modify the height
@@ -761,9 +798,10 @@ NSArray * DropBoxDirectory()
             // the identifier of the NSTextField instance is set to MyView. This
             // allows it to be re-used
             result.identifier = @"MainCell";
-        }
-        NSString *value = [item title];
-        [result.textField setStringValue:value];
+        }*/
+        //NSString *value = [item title];
+        //[result.textField setStringValue:value];
+        result.album = (Album *)item;
         return result;
         
         /*result.textField.stringValue = item;
@@ -830,12 +868,16 @@ NSArray * DropBoxDirectory()
      
      }*/
     
+
+    
     // handle copied files
     NSError *anError = nil;
+    BOOL refreshSrcDir = NO;
+    NSString *srcpath = nil;
     for (NSURL * url in urls)
     {
         // check if the destination folder is different from the source folder
-        if ([self.dragDropDestination.filePath isEqualToString:[  url.path stringByDeletingLastPathComponent]])
+        if ([self.dragDropDestination.filePath isEqualToString:[  url.path stringByDeletingLastPathComponent]] || !self.dragDropDestination)
             continue;
         
         NSURL * destinationURL = [NSURL fileURLWithPath:self.dragDropDestination.filePath];
@@ -843,7 +885,27 @@ NSArray * DropBoxDirectory()
         NSURL *srcURL = url;//NSURL fileURLWithPath:url];
         destinationURL = [destinationURL URLByAppendingPathComponent:[url.path lastPathComponent]];
         
-        [fileManager copyItemAtURL:srcURL toURL:destinationURL error:&anError];
+        
+        if ([info draggingSource] == self.browserView) {
+            DLog(@"Drag and drop is from browser view - default to move operation");
+            if ([self optionKeyIsPressed]) {
+                [fileManager copyItemAtURL:srcURL toURL:destinationURL error:&anError];
+            } else {
+                [fileManager moveItemAtPath:srcURL.path toPath:destinationURL.path error:&anError];
+                refreshSrcDir = YES;
+                srcpath = [srcURL.path stringByDeletingLastPathComponent];
+            }
+        } else {
+            DLog(@"Drag and drop is outside source - default to copy operation");
+            if (![NSEvent modifierFlags] & NSAlternateKeyMask) {
+                [fileManager copyItemAtURL:srcURL toURL:destinationURL error:&anError];
+            } else {
+                [fileManager moveItemAtPath:srcURL.path toPath:destinationURL.path error:&anError];
+                refreshSrcDir = YES;
+                srcpath = [srcURL.path stringByDeletingLastPathComponent];
+            }
+        }
+        
     }
     if (anError!=nil)
     {
@@ -852,21 +914,68 @@ NSArray * DropBoxDirectory()
 	
 	if([self.browserData count] > 0) {
         [self.dragDropDestination updatePhotosFromFileSystem];
+        if (refreshSrcDir && srcpath) {
+            Album *srcAlbum = [self.fileSystemEventController.albumLookupTable valueForKey:srcpath];
+            [srcAlbum updatePhotosFromFileSystem];
+        }
         [self.browserView reloadData];
         return YES;
     }
 	
 	return NO;
     
-	return YES;
+	//return YES;
 }
+
+/*- (NSDragOperation)tableView:(NSTableView*)tv validateDrop:(id <NSDraggingInfo>)info proposedRow:(int)row proposedDropOperation:(NSTableViewDropOperation)op {
+	if ([info draggingSource] == self.browserView) {
+		
+        if ([[[NSApplication sharedApplication] currentEvent] modifierFlags] & NSAlternateKeyMask)
+            return NSDragOperationCopy;
+        else
+            return NSDragOperationMove;
+	} else {
+		return NSDragOperationCopy;
+	}
+}*/
 
 -(NSDragOperation)outlineView:(NSOutlineView *)outlineView validateDrop:(id < NSDraggingInfo >)info proposedItem:(id)item proposedChildIndex:(NSInteger)index
 {
+    if (index != -1)
+    {
+        return NSDragOperationNone;
+    }
 	// always accept proposed item / index
 	//[mDirectoryBrowserView setDropItem:item dropChildIndex:index];
     self.dragDropDestination = item;
-	return NSDragOperationMove;
+	//return NSDragOperationMove;
+    //return NSDragOperationCopy;
+    //DLog(@"validateDrop : %ld", index);
+    if ([info draggingSource] == self.browserView) {
+		DLog(@"Drag and drop is from browser view - default to move operation");
+        if ([self optionKeyIsPressed])
+            return NSDragOperationCopy;
+        else
+            return NSDragOperationMove;
+	} else {
+        
+        if (![self optionKeyIsPressed])
+        {
+            DLog(@"Drag and drop is outside source - default to copy operation");
+            return NSDragOperationCopy;
+        } else {
+            DLog(@"Drag and drop is outside source with alt pressed - use move operation");
+            return NSDragOperationMove;
+        }
+	}
+    
+    /*if(( [[[ NSApplication sharedApplication ] currentEvent ]
+          modifierFlags ] & NSAlternateKeyMask ) != 0 ) {
+        return NSDragOperationCopy;
+    } else {
+        return NSDragOperationMove;
+    }
+    return [self dropOperationForKeysPressed];*/
 }
 
 @end

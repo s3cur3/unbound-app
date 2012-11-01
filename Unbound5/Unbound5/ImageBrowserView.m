@@ -59,7 +59,7 @@
 -(void)awakeFromNib
 {
     [self setConstrainsToOriginalSize:YES];
-    [self setAnimates:YES];
+    //[self setAnimates:YES];
     [self setAllowsReordering:YES];
 	// cell spacing
 	//[self setIntercellSpacing:NSMakeSize(5.0f, 5.0f)];
@@ -68,6 +68,28 @@
 	//NSMutableDictionary * options = [[NSMutableDictionary alloc] init];
 	//[options setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
 	//[self setValue:options forKey:IKImageBrowserCellsTitleAttributesKey];
+    
+}
+
+-(BOOL)ignoreModifierKeysForDraggingSession:(NSDraggingSession *)session
+{
+    return YES;
+}
+
+-(NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context
+{
+    switch (context)
+    {
+        case NSDraggingContextOutsideApplication:
+            return NSDragOperationCopy;
+            break;
+            
+        case NSDraggingContextWithinApplication:
+            return NSDragOperationMove;
+            break;
+            
+    }
+    return NSDragOperationCopy;
 }
 
 /**

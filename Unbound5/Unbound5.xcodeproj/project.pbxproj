@@ -59,6 +59,8 @@
 		1D9EE78516276600008E7977 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D9EE78416276600008E7977 /* Preferences.xib */; };
 		1DE22E2416263F4A00D5B106 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE22E2316263F4A00D5B106 /* Album.m */; };
 		1DEF5A0A163F2B2C00DDD5D2 /* SidebarTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DEF5A09163F2B2C00DDD5D2 /* SidebarTableCellView.m */; };
+		1DEF5A1F1641F68900DDD5D2 /* nophoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DEF5A1D1641F68900DDD5D2 /* nophoto@2x.png */; };
+		1DEF5A201641F68900DDD5D2 /* nophoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DEF5A1E1641F68900DDD5D2 /* nophoto.png */; };
 		1DFAC716162A596000FCF155 /* SimpleProfiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DFAC715162A596000FCF155 /* SimpleProfiler.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
@@ -162,6 +164,8 @@
 		1DEF1EE01624EA1D00F09E4E /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
 		1DEF5A08163F2B2C00DDD5D2 /* SidebarTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SidebarTableCellView.h; sourceTree = "<group>"; };
 		1DEF5A09163F2B2C00DDD5D2 /* SidebarTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidebarTableCellView.m; sourceTree = "<group>"; };
+		1DEF5A1D1641F68900DDD5D2 /* nophoto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nophoto@2x.png"; sourceTree = "<group>"; };
+		1DEF5A1E1641F68900DDD5D2 /* nophoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nophoto.png; sourceTree = "<group>"; };
 		1DFAC70E162A4C4B00FCF155 /* ImageBrowserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageBrowserDelegate.h; sourceTree = "<group>"; };
 		1DFAC70F162A4C4B00FCF155 /* ImageBrowserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageBrowserDelegate.m; sourceTree = "<group>"; };
 		1DFAC714162A596000FCF155 /* SimpleProfiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleProfiler.h; sourceTree = "<group>"; };
@@ -338,6 +342,8 @@
 		1D3DE7D0161F951100805174 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				1DEF5A1D1641F68900DDD5D2 /* nophoto@2x.png */,
+				1DEF5A1E1641F68900DDD5D2 /* nophoto.png */,
 				1D3DE7D1161F951100805174 /* image1.jpg */,
 				1D3DE7D2161F951100805174 /* image10.jpg */,
 				1D3DE7D3161F951100805174 /* image11.jpg */,
@@ -497,6 +503,8 @@
 				1D1FB39F162117CD002CD358 /* ImageViewController.xib in Resources */,
 				1D4B94901624FC2700C7BE3F /* videoview.xib in Resources */,
 				1D9EE78516276600008E7977 /* Preferences.xib in Resources */,
+				1DEF5A1F1641F68900DDD5D2 /* nophoto@2x.png in Resources */,
+				1DEF5A201641F68900DDD5D2 /* nophoto.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

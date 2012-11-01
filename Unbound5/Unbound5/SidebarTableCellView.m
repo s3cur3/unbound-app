@@ -48,24 +48,54 @@
 */
 
 #import "SidebarTableCellView.h"
+#import "Album.h"
 
 
 @implementation SidebarTableCellView
 
-@synthesize button = _button;
+//@synthesize button = _button;
 
 - (void)awakeFromNib {
     // We want it to appear "inline"
-    [[self.button cell] setBezelStyle:NSInlineBezelStyle];
+    //[[self.button cell] setBezelStyle:NSInlineBezelStyle];
+    NSImage *anImage = [NSImage imageNamed:@"nophoto"];
+    
+    [self.imageView setImage:anImage];
+    [self.detailTextLabel setStringValue:@"Testing"];
 }
 
 - (void)dealloc {
-    self.button = nil;
+    //self.button = nil;
     //[super dealloc];
 }
 
+-(void)updateAlbumInfo:(NSNotification *)note
+{
+    [self.textField setStringValue:self.album.title];
+}
+
+-(void)setAlbum:(Album *)newAlbum
+{
+    if (newAlbum!=_album)
+    {
+        if (_album)
+        {
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AlbumUpdated" object:_album];
+        }
+        _album = newAlbum;
+        if (_album!=nil)
+        {
+            [self updateAlbumInfo:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAlbumInfo:) name:@"AlbumUpdated" object:_album];
+        }
+        
+        
+    }
+    
+}
+
 // The standard rowSizeStyle does some specific layout for us. To customize layout for our button, we first call super and then modify things
-- (void)viewWillDraw {
+/*- (void)viewWillDraw {
     [super viewWillDraw];
     if (![self.button isHidden]) {
         [self.button sizeToFit];
@@ -77,6 +107,6 @@
         textFrame.size.width = NSMinX(buttonFrame) - NSMinX(textFrame);
         self.textField.frame = textFrame;
     }
-}
+}*/
 
 @end

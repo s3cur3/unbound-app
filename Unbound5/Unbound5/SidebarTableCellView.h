@@ -49,11 +49,16 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class Album;
+
 @interface SidebarTableCellView : NSTableCellView {
 @private
-    NSButton *_button;
+    //NSButton *_button;
 }
 
-@property(retain) IBOutlet NSButton *button;
+@property(strong) IBOutlet NSTextField *detailTextLabel;
+@property(nonatomic, strong) IBOutlet Album *album;
+//@property(strong) IBOutlet NSButton *button;
+//@property(strong) IBOutlet NSImageView *image;
 
 @end
