@@ -16,6 +16,7 @@
 	{
 		mSelectedImage			= nil;
 		mIgnoreSelectionChanges	= NO;
+        
 	}
 	return self;
 }

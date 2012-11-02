@@ -63,7 +63,6 @@
 		8CD071F91644498C00F2D703 /* unbound_icon_512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CD071F81644498C00F2D703 /* unbound_icon_512x512.png */; };
 		8CD071FB16444DEC00F2D703 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8CD071FA16444DEC00F2D703 /* icon.icns */; };
 		8CD071FE16444E6500F2D703 /* SquareImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CD071FD16444E6500F2D703 /* SquareImageView.m */; };
-		8CD0720216445AAF00F2D703 /* CustomSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CD0720116445AAF00F2D703 /* CustomSplitView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -170,8 +169,6 @@
 		8CD071FA16444DEC00F2D703 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		8CD071FC16444E6500F2D703 /* SquareImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SquareImageView.h; sourceTree = "<group>"; };
 		8CD071FD16444E6500F2D703 /* SquareImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SquareImageView.m; sourceTree = "<group>"; };
-		8CD0720016445AAF00F2D703 /* CustomSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomSplitView.h; sourceTree = "<group>"; };
-		8CD0720116445AAF00F2D703 /* CustomSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomSplitView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -425,8 +422,6 @@
 				1DEF5A09163F2B2C00DDD5D2 /* SidebarTableCellView.m */,
 				8CD071FC16444E6500F2D703 /* SquareImageView.h */,
 				8CD071FD16444E6500F2D703 /* SquareImageView.m */,
-				8CD0720016445AAF00F2D703 /* CustomSplitView.h */,
-				8CD0720116445AAF00F2D703 /* CustomSplitView.m */,
 			);
 			name = "Album Sidebar";
 			sourceTree = "<group>";
@@ -544,7 +539,6 @@
 				1D828A721630BEB90099D639 /* FileUtils.m in Sources */,
 				1DEF5A0A163F2B2C00DDD5D2 /* SidebarTableCellView.m in Sources */,
 				8CD071FE16444E6500F2D703 /* SquareImageView.m in Sources */,
-				8CD0720216445AAF00F2D703 /* CustomSplitView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

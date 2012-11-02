@@ -63,6 +63,7 @@ extern NSString *AlbumDidChangeNotification;
     
     
     [self.imageView setImage:anImage];
+    [self.imageView setImageScaling:NSImageScaleNone];
     //[self.imageView setImageFrameStyle:NSImagef:]
     [self.detailTextLabel setStringValue:@"Loading"];
 }

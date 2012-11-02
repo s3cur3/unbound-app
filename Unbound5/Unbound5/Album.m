@@ -167,12 +167,12 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
     if (self.photos.count > 0 && self.dateLastScanned)
     {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd 'at' HH:mm"];
+        [dateFormatter setDateFormat:@"yy/MM/dd"];
         NSDate *aDate = [[self coverImage] dateLastModified];
         
         NSString *formattedDateString = [dateFormatter stringFromDate:aDate];
         //DLog(@"formattedDateString: %@", formattedDateString);
-        return [NSString stringWithFormat:@"%ld photos - updated %@", self.photos.count, formattedDateString];
+        return [NSString stringWithFormat:@"%ld items from %@", self.photos.count, formattedDateString];
     } else {
         return @"Loading...";
     }
@@ -196,7 +196,7 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
     NSImage *result;
     // This code needs to be threadsafe, as it will be called from the background thread.
     // The easiest way to ensure you only use stack variables is to make it a class method.
-    NSNumber *maxPixelSize = [NSNumber numberWithInteger:55];
+    NSNumber *maxPixelSize = [NSNumber numberWithInteger:100];
     NSDictionary *imageOptions = [NSDictionary dictionaryWithObjectsAndKeys:
                                   (id)kCFBooleanTrue,(id)kCGImageSourceCreateThumbnailFromImageIfAbsent,
                                   //(id)kCFBooleanFalse,(id)kCGImageSourceCreateThumbnailFromImageIfAbsent,
