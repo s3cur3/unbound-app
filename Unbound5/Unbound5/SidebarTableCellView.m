@@ -61,7 +61,9 @@ extern NSString *AlbumDidChangeNotification;
     //[[self.button cell] setBezelStyle:NSInlineBezelStyle];
     NSImage *anImage = [NSImage imageNamed:@"nophoto"];
     
+    
     [self.imageView setImage:anImage];
+    //[self.imageView setImageFrameStyle:NSImagef:]
     [self.detailTextLabel setStringValue:@"Loading"];
 }
 

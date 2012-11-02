@@ -60,6 +60,10 @@
 		1DEF5A1F1641F68900DDD5D2 /* nophoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DEF5A1D1641F68900DDD5D2 /* nophoto@2x.png */; };
 		1DEF5A201641F68900DDD5D2 /* nophoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DEF5A1E1641F68900DDD5D2 /* nophoto.png */; };
 		1DFAC716162A596000FCF155 /* SimpleProfiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DFAC715162A596000FCF155 /* SimpleProfiler.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CD071F91644498C00F2D703 /* unbound_icon_512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CD071F81644498C00F2D703 /* unbound_icon_512x512.png */; };
+		8CD071FB16444DEC00F2D703 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8CD071FA16444DEC00F2D703 /* icon.icns */; };
+		8CD071FE16444E6500F2D703 /* SquareImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CD071FD16444E6500F2D703 /* SquareImageView.m */; };
+		8CD0720216445AAF00F2D703 /* CustomSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CD0720116445AAF00F2D703 /* CustomSplitView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -162,6 +166,12 @@
 		1DFAC70F162A4C4B00FCF155 /* ImageBrowserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageBrowserDelegate.m; sourceTree = "<group>"; };
 		1DFAC714162A596000FCF155 /* SimpleProfiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleProfiler.h; sourceTree = "<group>"; };
 		1DFAC715162A596000FCF155 /* SimpleProfiler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleProfiler.m; sourceTree = "<group>"; };
+		8CD071F81644498C00F2D703 /* unbound_icon_512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unbound_icon_512x512.png; sourceTree = "<group>"; };
+		8CD071FA16444DEC00F2D703 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
+		8CD071FC16444E6500F2D703 /* SquareImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SquareImageView.h; sourceTree = "<group>"; };
+		8CD071FD16444E6500F2D703 /* SquareImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SquareImageView.m; sourceTree = "<group>"; };
+		8CD0720016445AAF00F2D703 /* CustomSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomSplitView.h; sourceTree = "<group>"; };
+		8CD0720116445AAF00F2D703 /* CustomSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomSplitView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +192,8 @@
 		1D3DE747161E8FCF00805174 = {
 			isa = PBXGroup;
 			children = (
+				8CD071FA16444DEC00F2D703 /* icon.icns */,
+				8CD071F81644498C00F2D703 /* unbound_icon_512x512.png */,
 				1D3DE75C161E8FCF00805174 /* Unbound5 */,
 				1D3DE755161E8FCF00805174 /* Frameworks */,
 				1D3DE753161E8FCF00805174 /* Products */,
@@ -260,12 +272,11 @@
 		1D3DE7B0161F69B400805174 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				1DEF5A08163F2B2C00DDD5D2 /* SidebarTableCellView.h */,
-				1DEF5A09163F2B2C00DDD5D2 /* SidebarTableCellView.m */,
 				1D3DE768161E8FD000805174 /* AppDelegate.h */,
 				1D3DE769161E8FD000805174 /* AppDelegate.m */,
 				1D3DE77B161E944E00805174 /* MainWindowController.h */,
 				1D3DE77C161E944E00805174 /* MainWindowController.m */,
+				8CD071FF16445A6E00F2D703 /* Album Sidebar */,
 				1DFAC713162A4C5400FCF155 /* ImageBrowser */,
 				1D3DE7C6161F8E4200805174 /* PageView */,
 				1D3DE7B1161F724400805174 /* Model */,
@@ -407,6 +418,19 @@
 			name = Utils;
 			sourceTree = "<group>";
 		};
+		8CD071FF16445A6E00F2D703 /* Album Sidebar */ = {
+			isa = PBXGroup;
+			children = (
+				1DEF5A08163F2B2C00DDD5D2 /* SidebarTableCellView.h */,
+				1DEF5A09163F2B2C00DDD5D2 /* SidebarTableCellView.m */,
+				8CD071FC16444E6500F2D703 /* SquareImageView.h */,
+				8CD071FD16444E6500F2D703 /* SquareImageView.m */,
+				8CD0720016445AAF00F2D703 /* CustomSplitView.h */,
+				8CD0720116445AAF00F2D703 /* CustomSplitView.m */,
+			);
+			name = "Album Sidebar";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -437,7 +461,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Pixite Apps LLC";
 			};
-			buildConfigurationList = 1D3DE74C161E8FCF00805174 /* Build configuration list for PBXProject "Unbound5" */;
+			buildConfigurationList = 1D3DE74C161E8FCF00805174 /* Build configuration list for PBXProject "Unbound" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -483,6 +507,8 @@
 				1D9EE78516276600008E7977 /* Preferences.xib in Resources */,
 				1DEF5A1F1641F68900DDD5D2 /* nophoto@2x.png in Resources */,
 				1DEF5A201641F68900DDD5D2 /* nophoto.png in Resources */,
+				8CD071F91644498C00F2D703 /* unbound_icon_512x512.png in Resources */,
+				8CD071FB16444DEC00F2D703 /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,6 +543,8 @@
 				1D77E65E162F541B00DB3553 /* FileSystemEventController.m in Sources */,
 				1D828A721630BEB90099D639 /* FileUtils.m in Sources */,
 				1DEF5A0A163F2B2C00DDD5D2 /* SidebarTableCellView.m in Sources */,
+				8CD071FE16444E6500F2D703 /* SquareImageView.m in Sources */,
+				8CD0720216445AAF00F2D703 /* CustomSplitView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -651,7 +679,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D3DE74C161E8FCF00805174 /* Build configuration list for PBXProject "Unbound5" */ = {
+		1D3DE74C161E8FCF00805174 /* Build configuration list for PBXProject "Unbound" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D3DE771161E8FD000805174 /* Debug */,
