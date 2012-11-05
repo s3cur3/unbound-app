@@ -69,7 +69,15 @@
 	//[options setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
 	//[self setValue:options forKey:IKImageBrowserCellsTitleAttributesKey];
     
+    CALayer* layer = [CALayer layer];
+    [layer setFrame: NSMakeRect(0, 0, 1000, 1000)];
+    NSColor * color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
+    [layer setBackgroundColor:[color CGColor]];
+    [self setBackgroundLayer: layer];
+    
+    
 }
+
 
 -(BOOL)ignoreModifierKeysForDraggingSession:(NSDraggingSession *)session
 {

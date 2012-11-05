@@ -21,7 +21,7 @@
 //#import "AppDelegate.h"
 #import "SidebarTableCellView.h"
 
-#define kMinContrainValue 100.0f
+#define kMinContrainValue 240.0f
 
 NSString *searchLocationKey  = @"searchLocationKey";
 NSString *dropboxHomeLocationKey  = @"dropboxHomeLocationKey";
@@ -78,10 +78,7 @@ NSArray * DropBoxDirectory()
     
     [self.browserView setDraggingDestinationDelegate:self];
     
-    CALayer* layer = [CALayer layer];
-    [layer setFrame: NSMakeRect(0, 0, 1000, 1000)];
-    [layer setBackgroundColor:[[NSColor blackColor] CGColor]];
-    [self.browserView setBackgroundLayer: layer];
+    
     
     [self.outlineView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
     
@@ -568,10 +565,7 @@ NSArray * DropBoxDirectory()
 // -------------------------------------------------------------------------------
 - (CGFloat)splitView:(NSSplitView *)splitView constrainMinCoordinate:(CGFloat)proposedCoordinate ofSubviewAt:(NSInteger)index
 {
-    if (proposedCoordinate < kMinContrainValue) {
-        proposedCoordinate = kMinContrainValue;
-    }
-    return proposedCoordinate;
+    return kMinContrainValue;
 }
 
 // -------------------------------------------------------------------------------
@@ -585,7 +579,7 @@ NSArray * DropBoxDirectory()
 		constrainedCoordinate = proposedCoordinate - kMinContrainValue;
     }
 	
-    return constrainedCoordinate;
+    return kMinContrainValue;
 }
 
 #pragma mark -

@@ -63,6 +63,8 @@
 		8CD071F91644498C00F2D703 /* unbound_icon_512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CD071F81644498C00F2D703 /* unbound_icon_512x512.png */; };
 		8CD071FB16444DEC00F2D703 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8CD071FA16444DEC00F2D703 /* icon.icns */; };
 		8CD071FE16444E6500F2D703 /* SquareImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CD071FD16444E6500F2D703 /* SquareImageView.m */; };
+		8CD0720916487B4000F2D703 /* dark_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CD0720716487B4000F2D703 /* dark_bg.png */; };
+		8CD0720A16487B4000F2D703 /* dark_bg@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CD0720816487B4000F2D703 /* dark_bg@2X.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -169,6 +171,8 @@
 		8CD071FA16444DEC00F2D703 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		8CD071FC16444E6500F2D703 /* SquareImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SquareImageView.h; sourceTree = "<group>"; };
 		8CD071FD16444E6500F2D703 /* SquareImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SquareImageView.m; sourceTree = "<group>"; };
+		8CD0720716487B4000F2D703 /* dark_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dark_bg.png; sourceTree = "<group>"; };
+		8CD0720816487B4000F2D703 /* dark_bg@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_bg@2X.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -328,6 +332,8 @@
 		1D3DE7D0161F951100805174 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				8CD0720716487B4000F2D703 /* dark_bg.png */,
+				8CD0720816487B4000F2D703 /* dark_bg@2X.png */,
 				1DEF5A1D1641F68900DDD5D2 /* nophoto@2x.png */,
 				1DEF5A1E1641F68900DDD5D2 /* nophoto.png */,
 				1D3DE7D1161F951100805174 /* image1.jpg */,
@@ -504,6 +510,8 @@
 				1DEF5A201641F68900DDD5D2 /* nophoto.png in Resources */,
 				8CD071F91644498C00F2D703 /* unbound_icon_512x512.png in Resources */,
 				8CD071FB16444DEC00F2D703 /* icon.icns in Resources */,
+				8CD0720916487B4000F2D703 /* dark_bg.png in Resources */,
+				8CD0720A16487B4000F2D703 /* dark_bg@2X.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
