@@ -82,6 +82,9 @@ NSArray * DropBoxDirectory()
     
     [self.outlineView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
     
+    NSColor * color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
+    [self.browserScrollView setBackgroundColor:color];
+    
     
 }
 

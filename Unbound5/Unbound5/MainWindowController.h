@@ -48,6 +48,7 @@ extern NSString *dropboxHomeStringKey;
 @property (strong,nonatomic) NSMutableArray *directoryArray;
 @property(readwrite,retain) NSMutableArray * browserData;
 @property IBOutlet IKImageBrowserView * browserView;
+@property IBOutlet NSScrollView * browserScrollView;
 @property (nonatomic, assign) IBOutlet NSTableView *tableView;
 @property (nonatomic, assign) IBOutlet NSOutlineView *outlineView;
 @property (nonatomic, strong) PageViewController *pageViewController;

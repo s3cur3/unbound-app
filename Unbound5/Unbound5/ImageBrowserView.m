@@ -71,10 +71,13 @@
     
     CALayer* layer = [CALayer layer];
     [layer setFrame: NSMakeRect(0, 0, 1000, 1000)];
-    NSColor * color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
-    [layer setBackgroundColor:[color CGColor]];
-    [self setBackgroundLayer: layer];
     
+    [layer setBackgroundColor:[[NSColor clearColor] CGColor]];
+    //[self setBackgroundLayer: layer];
+    
+    [self setValue:[NSColor colorWithDeviceRed:0.0 green:0.0 blue:0.0 alpha:0.0] forKey:IKImageBrowserBackgroundColorKey];
+
+    //[self setWantsLayer:YES];
     
 }
 

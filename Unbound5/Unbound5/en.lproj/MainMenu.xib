@@ -1576,7 +1576,7 @@
 															<bytes key="NSWhite">MC41AA</bytes>
 														</object>
 													</object>
-													<double key="NSRowHeight">55</double>
+													<double key="NSRowHeight">24</double>
 													<int key="NSTvFlags">-767557632</int>
 													<reference key="NSDelegate"/>
 													<reference key="NSDataSource"/>
@@ -1823,7 +1823,7 @@
 													<bool key="cellsHaveSubtitle">NO</bool>
 													<bool key="cellsHaveTitle">NO</bool>
 													<bool key="outlinesCells">NO</bool>
-													<bool key="shadowsCells">YES</bool>
+													<bool key="shadowsCells">NO</bool>
 													<bool key="animates">NO</bool>
 													<bool key="allowsReordering">NO</bool>
 													<bool key="allowsMultipleSelection">YES</bool>
@@ -2662,6 +2662,14 @@
 						<reference key="destination" ref="1042227970"/>
 					</object>
 					<int key="connectionID">756</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">browserScrollView</string>
+						<reference key="source" ref="1045367098"/>
+						<reference key="destination" ref="872877535"/>
+					</object>
+					<int key="connectionID">969</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -4890,7 +4898,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">968</int>
+			<int key="maxID">969</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4936,6 +4944,32 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">IKImageBrowserView</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="_dataSource">id</string>
+						<string key="_delegate">id</string>
+						<string key="_dragDestinationDelegate">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="_dataSource">
+							<string key="name">_dataSource</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="_delegate">
+							<string key="name">_delegate</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="_dragDestinationDelegate">
+							<string key="name">_dragDestinationDelegate</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/IKImageBrowserView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">ImageBrowserView</string>
 					<string key="superclassName">IKImageBrowserView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -4961,6 +4995,7 @@
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="browserScrollView">NSScrollView</string>
 						<string key="browserView">IKImageBrowserView</string>
 						<string key="outlineView">NSOutlineView</string>
 						<string key="searchLocationPathControl">NSPathControl</string>
@@ -4968,6 +5003,10 @@
 						<string key="window">NSWindow</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="browserScrollView">
+							<string key="name">browserScrollView</string>
+							<string key="candidateClassName">NSScrollView</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="browserView">
 							<string key="name">browserView</string>
 							<string key="candidateClassName">IKImageBrowserView</string>
