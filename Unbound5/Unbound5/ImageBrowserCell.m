@@ -88,6 +88,7 @@ static CGImageRef pinImage()
 
 @implementation ImageBrowserCell
 
+
 //---------------------------------------------------------------------------------
 // layerForType:
 //

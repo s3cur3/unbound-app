@@ -21,7 +21,7 @@
 //#import "AppDelegate.h"
 #import "SidebarTableCellView.h"
 
-#define kMinContrainValue 240.0f
+#define kMinContrainValue 245.0f
 
 NSString *searchLocationKey  = @"searchLocationKey";
 NSString *dropboxHomeLocationKey  = @"dropboxHomeLocationKey";
@@ -84,6 +84,9 @@ NSArray * DropBoxDirectory()
     
     NSColor * color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
     [self.browserScrollView setBackgroundColor:color];
+    
+    //[self.browserView setWantsLayer:YES];
+    //[self.browserScrollView setWantsLayer:YES];
     
     
 }
@@ -583,6 +586,24 @@ NSArray * DropBoxDirectory()
     }
 	
     return kMinContrainValue;
+}
+
+-(void)splitView:(NSSplitView *)sender resizeSubviewsWithOldSize: (NSSize)oldSize
+{
+    CGFloat dividerThickness = [sender dividerThickness];
+    NSRect leftRect = [[[sender subviews] objectAtIndex:0] frame];
+    NSRect rightRect = [[[sender subviews] objectAtIndex:1] frame];
+    NSRect newFrame = [sender frame];
+    
+ 	leftRect.size.height = newFrame.size.height;
+	leftRect.origin = NSMakePoint(0, 0);
+	rightRect.size.width = newFrame.size.width - leftRect.size.width
+	- dividerThickness;
+	rightRect.size.height = newFrame.size.height;
+	rightRect.origin.x = leftRect.size.width + dividerThickness;
+    
+ 	[[[sender subviews] objectAtIndex:0] setFrame:leftRect];
+	[[[sender subviews] objectAtIndex:1] setFrame:rightRect];
 }
 
 #pragma mark -

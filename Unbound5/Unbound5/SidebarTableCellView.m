@@ -80,7 +80,21 @@ extern NSString *AlbumDidChangeNotification;
     {
         [self.imageView setImage:[_album thumbnailImage]];
     }
+    
+    else
+    {
+        [self.imageView setImage:[NSImage imageNamed:@"nophoto"]];
+    }
     [self.detailTextLabel setStringValue:[self.album imageSubtitle]];
+}
+
+-(void)setFrame:(NSRect)frameRect
+{
+    // i wasn't able to figure out where the 10px inset was coming
+    // from in the cells. I'm fixing it here but it's a bit of a hack. (scott)
+    frameRect.size.width += 10;
+    [super setFrame:frameRect];
+    
 }
 
 -(void)setAlbum:(Album *)newAlbum
@@ -102,6 +116,27 @@ extern NSString *AlbumDidChangeNotification;
         
     }
     
+}
+
+// use this to switch text color when highligthed
+- (void)setBackgroundStyle:(NSBackgroundStyle)style
+{
+    [super setBackgroundStyle:style];
+    
+    // If the cell's text color is black, this sets it to white
+    [((NSCell *)self.detailTextLabel.cell) setBackgroundStyle:style];
+    
+    // Otherwise you need to change the color manually
+    switch (style) {
+        case NSBackgroundStyleLight:
+            [self.detailTextLabel setTextColor:[NSColor colorWithCalibratedWhite:0.4 alpha:1.0]];
+            break;
+            
+        case NSBackgroundStyleDark:
+        default:
+            [self.detailTextLabel setTextColor:[NSColor colorWithCalibratedWhite:1.0 alpha:1.0]];
+            break;
+    }
 }
 
 // The standard rowSizeStyle does some specific layout for us. To customize layout for our button, we first call super and then modify things

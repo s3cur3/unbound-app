@@ -64,20 +64,10 @@
 	// cell spacing
 	//[self setIntercellSpacing:NSMakeSize(5.0f, 5.0f)];
     
-	// forground color for the cell's titles
-	//NSMutableDictionary * options = [[NSMutableDictionary alloc] init];
-	//[options setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
-	//[self setValue:options forKey:IKImageBrowserCellsTitleAttributesKey];
-    
-    CALayer* layer = [CALayer layer];
-    [layer setFrame: NSMakeRect(0, 0, 1000, 1000)];
-    
-    [layer setBackgroundColor:[[NSColor clearColor] CGColor]];
-    //[self setBackgroundLayer: layer];
     
     [self setValue:[NSColor colorWithDeviceRed:0.0 green:0.0 blue:0.0 alpha:0.0] forKey:IKImageBrowserBackgroundColorKey];
 
-    //[self setWantsLayer:YES];
+    
     
 }
 
