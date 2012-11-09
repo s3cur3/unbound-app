@@ -40,6 +40,7 @@
     {
         NSUInteger index = [self.directoryArray indexOfObject:self.selectedAlbum];
         [self.outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
+        [self.outlineView scrollRowToVisible:index];
     }
 }
 
