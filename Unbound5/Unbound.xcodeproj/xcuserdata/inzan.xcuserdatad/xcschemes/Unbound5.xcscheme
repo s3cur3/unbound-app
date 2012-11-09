@@ -35,7 +35,7 @@
             BlueprintIdentifier = "1D3DE751161E8FCF00805174"
             BuildableName = "Unbound5.app"
             BlueprintName = "Unbound5"
-            ReferencedContainer = "container:Unbound5.xcodeproj">
+            ReferencedContainer = "container:Unbound.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -54,7 +54,7 @@
             BlueprintIdentifier = "1D3DE751161E8FCF00805174"
             BuildableName = "Unbound5.app"
             BlueprintName = "Unbound5"
-            ReferencedContainer = "container:Unbound5.xcodeproj">
+            ReferencedContainer = "container:Unbound.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>

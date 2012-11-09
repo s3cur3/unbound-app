@@ -25,6 +25,17 @@
     return (AppDelegate *)[[NSApplication sharedApplication] delegate];
 }
 
+// -------------------------------------------------------------------------------
+//	applicationShouldTerminateAfterLastWindowClosed:sender
+//
+//	NSApplication delegate method placed here so the sample conveniently quits
+//	after we close the window.
+// -------------------------------------------------------------------------------
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender
+{
+	return YES;
+}
+
 -(void)updatePhotoSearchURL:(NSURL *)aURL
 {
     DLog(@"updatePhotoSearchURL");

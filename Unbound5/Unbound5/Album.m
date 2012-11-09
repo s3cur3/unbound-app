@@ -312,6 +312,7 @@ static NSMutableArray *computeThumbnailClientQueue = nil;
     [computeThumbnailConditionLock unlockWithCondition:hasMoreData ? HAS_DATA : NO_DATA];
 }
 
+
 - (NSImage *)thumbnailImage {
     if (!(_state & ItemStateThumbnailLoaded)) {
         if (_thumbnailImage == nil && (_state & ItemStateThumbnailLoading) == 0) {

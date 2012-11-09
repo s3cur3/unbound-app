@@ -16,6 +16,10 @@
 
 @class Album;
 @class PageViewController;
+@class AlbumViewController;
+@class ImageBrowserViewController;
+@class PINavigationViewController;
+@class SplitViewController;
 
 extern NSString *searchLocationKey;
 extern NSString *dropboxHomeLocationKey;
@@ -52,7 +56,21 @@ extern NSString *dropboxHomeStringKey;
 @property (nonatomic, assign) IBOutlet NSTableView *tableView;
 @property (nonatomic, assign) IBOutlet NSOutlineView *outlineView;
 @property (nonatomic, strong) PageViewController *pageViewController;
+@property (nonatomic, strong) AlbumViewController *albumViewController;
+@property (nonatomic, strong) SplitViewController *splitViewController;
+@property (nonatomic, strong) ImageBrowserViewController *imageBrowserViewController;
 @property (nonatomic, strong) NSView *mainContentView;
+
+
+@property (strong,nonatomic) IBOutlet PINavigationViewController *navigationViewController;
+
+@property IBOutlet NSView *targetView;
+
+
+
+
+@property IBOutlet NSView *splitViewLeft;
+@property IBOutlet NSView *splitViewRight;
 
 
 @property (nonatomic, strong) Album *selectedAlbum;

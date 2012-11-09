@@ -20,6 +20,10 @@
 #import "FileSystemEventController.h"
 //#import "AppDelegate.h"
 #import "SidebarTableCellView.h"
+#import "AlbumViewController.h"
+#import "ImageBrowserViewController.h"
+#import "PINavigationViewController.h"
+#import "SplitViewController.h"
 
 #define kMinContrainValue 245.0f
 
@@ -76,6 +80,11 @@ NSArray * DropBoxDirectory()
                                                  name:AlbumDidChangeNotification
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showPhotosViewForAlbum:)
+                                                 name:@"ShowPhotos"
+                                               object:nil];
+    
     [self.browserView setDraggingDestinationDelegate:self];
     
     
@@ -87,6 +96,16 @@ NSArray * DropBoxDirectory()
     
     //[self.browserView setWantsLayer:YES];
     //[self.browserScrollView setWantsLayer:YES];
+    
+    [self.outlineView setHidden:YES];
+    [self.browserView setHidden:YES];
+    
+    self.albumViewController = [[AlbumViewController alloc] initWithNibName:@"Collection" bundle:nil];
+    self.splitViewController = [[SplitViewController alloc] initWithNibName:@"SplitViewController" bundle:nil];
+    //[self showAlbumView];
+    [self.navigationViewController pushViewController:self.albumViewController];
+    //[self.navigationViewController pushViewController:self.splitViewController];
+    
     
     
 }
@@ -113,10 +132,12 @@ NSArray * DropBoxDirectory()
         self.browserData = self.selectedAlbum.photos;
     }
     
-    [self.tableView reloadData];
-    [self.outlineView reloadData];
-    [self.browserView reloadData];
+    //[self.tableView reloadData];
+    //[self.outlineView reloadData];
+    //[self.browserView reloadData];
     
+    
+    [self.albumViewController updateContent:self.directoryArray];
     //[self.fileSystemEventController startObserving];
 }
 
@@ -307,12 +328,53 @@ NSArray * DropBoxDirectory()
     return YES;
 }
 
+-(void)showPhotosViewForAlbum:(NSNotification *)notification
+{
+    Album *anAlbum = notification.object;
+    self.imageBrowserViewController  = [[ImageBrowserViewController alloc] initWithNibName:@"Collections" bundle:nil album:anAlbum];
+    [self.imageBrowserViewController.view setFrame:self.targetView.bounds];
+    [self.albumViewController.view removeFromSuperview];
+    [self.targetView addSubview:self.imageBrowserViewController.view];// positioned:NSWindowAbove relativeTo:self.albumViewController.view];
+    //[self.albumViewController.view setHidden:YES];
+    //[window setContentView:self.imageBrowserViewController.view];
+}
+
 -(void)showMainView
 {
     [window setContentView:self.mainContentView];
 }
 
-
+-(void)showAlbumView
+{
+    [self.albumArray makeObjectsPerformSelector:@selector(thumbnailImage)];
+    //[[self window] setAutorecalculatesContentBorderThickness:YES forEdge:NSMinYEdge];
+    //[[self window] setContentBorderThickness:30 forEdge:NSMinYEdge];
+    
+    // load our nib that contains the collection view
+    [self willChangeValueForKey:@"viewController"];
+    
+    [self didChangeValueForKey:@"viewController"];
+    
+    self.albumViewController.albums = self.albumArray;
+    
+    //self.targetView = self.albumViewController.view;
+    
+    // make sure we resize the viewController's view to match its super view
+    CGRect aRect = [self.targetView bounds];
+    aRect.size.height -= 50;
+    aRect.origin.y -= 50;
+    [self.albumViewController.view setFrame:aRect];
+    
+    [self.albumViewController setSortingMode:0];		// ascending sort order
+    [self.albumViewController setAlternateColors:NO];	// no alternate background colors (initially use gradient background)
+    
+    for (NSView * aView in self.targetView.subviews)
+    {
+        [aView removeFromSuperview];
+    }
+    [self.targetView addSubview:self.albumViewController.view];
+    //[window setContentView:self.mainContentView];
+}
 
 
 -(NSMutableArray *)albumArray;

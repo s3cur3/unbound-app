@@ -7,13 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "PIViewController.h"
 
 @class MainWindowController;
 @class Album;
 @class SearchItem;
 @class IKImageViewController;
 
-@interface PageViewController : NSViewController <NSPageControllerDelegate>
+@interface PageViewController : PIViewController <NSPageControllerDelegate>
 {
     //IBOutlet NSPageController *pageController;
 }

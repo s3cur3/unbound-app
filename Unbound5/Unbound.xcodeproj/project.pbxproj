@@ -55,6 +55,23 @@
 		1D77E65E162F541B00DB3553 /* FileSystemEventController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D77E65D162F541A00DB3553 /* FileSystemEventController.m */; };
 		1D828A721630BEB90099D639 /* FileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D828A711630BEB90099D639 /* FileUtils.m */; };
 		1D9EE78516276600008E7977 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D9EE78416276600008E7977 /* Preferences.xib */; };
+		1DC00136164C8F4B00AE375B /* SidebarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DC00134164C8F4B00AE375B /* SidebarViewController.m */; };
+		1DC00137164C8F4B00AE375B /* SidebarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DC00135164C8F4B00AE375B /* SidebarViewController.xib */; };
+		1DCE3BF7164AEA820037F21A /* AlbumCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCE3BF6164AEA820037F21A /* AlbumCollectionView.m */; };
+		1DCE3BFC164AFA1B0037F21A /* ImageBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCE3BFA164AFA1B0037F21A /* ImageBrowserViewController.m */; };
+		1DCE3BFD164AFA1B0037F21A /* ImageBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DCE3BFB164AFA1B0037F21A /* ImageBrowserViewController.xib */; };
+		1DCE3C01164B2D450037F21A /* PINavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCE3BFF164B2D430037F21A /* PINavigationViewController.m */; };
+		1DCE3C02164B2D450037F21A /* PINavigationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DCE3C00164B2D430037F21A /* PINavigationViewController.xib */; };
+		1DCE3C05164B2F750037F21A /* PIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCE3C04164B2F740037F21A /* PIViewController.m */; };
+		1DCE3C08164B353E0037F21A /* SplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCE3C07164B353C0037F21A /* SplitViewController.m */; };
+		1DCE3C0A164B54130037F21A /* SplitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DCE3C09164B54110037F21A /* SplitViewController.xib */; };
+		1DD45A1916489E05008A0BBF /* AlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD45A1716489E05008A0BBF /* AlbumViewController.m */; };
+		1DD45A1A16489E05008A0BBF /* AlbumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD45A1816489E05008A0BBF /* AlbumViewController.xib */; };
+		1DD45A281648A353008A0BBF /* Collection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD45A261648A353008A0BBF /* Collection.xib */; };
+		1DD45A291648A353008A0BBF /* IconViewPrototype.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD45A271648A353008A0BBF /* IconViewPrototype.xib */; };
+		1DD45A2B1648A910008A0BBF /* icons.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1DD45A2A1648A910008A0BBF /* icons.plist */; };
+		1DD45A2D1648B124008A0BBF /* SplitView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DD45A2C1648B124008A0BBF /* SplitView.xib */; };
+		1DD45A5F16498E97008A0BBF /* CollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD45A5E16498E96008A0BBF /* CollectionViewItem.m */; };
 		1DE22E2416263F4A00D5B106 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE22E2316263F4A00D5B106 /* Album.m */; };
 		1DEF5A0A163F2B2C00DDD5D2 /* SidebarTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DEF5A09163F2B2C00DDD5D2 /* SidebarTableCellView.m */; };
 		1DEF5A1F1641F68900DDD5D2 /* nophoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DEF5A1D1641F68900DDD5D2 /* nophoto@2x.png */; };
@@ -156,6 +173,31 @@
 		1D9EE78416276600008E7977 /* Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		1D9EE7871627719E008E7977 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		1D9EE7881627719E008E7977 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
+		1DC00133164C8F4B00AE375B /* SidebarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SidebarViewController.h; sourceTree = "<group>"; };
+		1DC00134164C8F4B00AE375B /* SidebarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidebarViewController.m; sourceTree = "<group>"; };
+		1DC00135164C8F4B00AE375B /* SidebarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SidebarViewController.xib; sourceTree = "<group>"; };
+		1DCE3BF5164AEA820037F21A /* AlbumCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumCollectionView.h; sourceTree = "<group>"; };
+		1DCE3BF6164AEA820037F21A /* AlbumCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumCollectionView.m; sourceTree = "<group>"; };
+		1DCE3BF9164AFA1A0037F21A /* ImageBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageBrowserViewController.h; sourceTree = "<group>"; };
+		1DCE3BFA164AFA1B0037F21A /* ImageBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageBrowserViewController.m; sourceTree = "<group>"; };
+		1DCE3BFB164AFA1B0037F21A /* ImageBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageBrowserViewController.xib; sourceTree = "<group>"; };
+		1DCE3BFE164B2D420037F21A /* PINavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PINavigationViewController.h; sourceTree = "<group>"; };
+		1DCE3BFF164B2D430037F21A /* PINavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PINavigationViewController.m; sourceTree = "<group>"; };
+		1DCE3C00164B2D430037F21A /* PINavigationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PINavigationViewController.xib; sourceTree = "<group>"; };
+		1DCE3C03164B2F730037F21A /* PIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIViewController.h; sourceTree = "<group>"; };
+		1DCE3C04164B2F740037F21A /* PIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIViewController.m; sourceTree = "<group>"; };
+		1DCE3C06164B353C0037F21A /* SplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplitViewController.h; sourceTree = "<group>"; };
+		1DCE3C07164B353C0037F21A /* SplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplitViewController.m; sourceTree = "<group>"; };
+		1DCE3C09164B54110037F21A /* SplitViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SplitViewController.xib; sourceTree = "<group>"; };
+		1DD45A1616489E05008A0BBF /* AlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumViewController.h; sourceTree = "<group>"; };
+		1DD45A1716489E05008A0BBF /* AlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumViewController.m; sourceTree = "<group>"; };
+		1DD45A1816489E05008A0BBF /* AlbumViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlbumViewController.xib; sourceTree = "<group>"; };
+		1DD45A261648A353008A0BBF /* Collection.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Collection.xib; sourceTree = "<group>"; };
+		1DD45A271648A353008A0BBF /* IconViewPrototype.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IconViewPrototype.xib; sourceTree = "<group>"; };
+		1DD45A2A1648A910008A0BBF /* icons.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = icons.plist; sourceTree = "<group>"; };
+		1DD45A2C1648B124008A0BBF /* SplitView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SplitView.xib; sourceTree = "<group>"; };
+		1DD45A5D16498E96008A0BBF /* CollectionViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewItem.h; sourceTree = "<group>"; };
+		1DD45A5E16498E96008A0BBF /* CollectionViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewItem.m; sourceTree = "<group>"; };
 		1DE22E2216263F4A00D5B106 /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
 		1DE22E2316263F4A00D5B106 /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
 		1DEF1EE01624EA1D00F09E4E /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
@@ -283,6 +325,16 @@
 				1D3DE7B1161F724400805174 /* Model */,
 				1D3DE7AF161F698B00805174 /* Preferences */,
 				1D3DE7C5161F8E0E00805174 /* ImageView */,
+				1DD45A1C16489E0A008A0BBF /* AlbumView */,
+				1DD45A2C1648B124008A0BBF /* SplitView.xib */,
+				1DCE3C09164B54110037F21A /* SplitViewController.xib */,
+				1DCE3C06164B353C0037F21A /* SplitViewController.h */,
+				1DCE3C07164B353C0037F21A /* SplitViewController.m */,
+				1DCE3BFE164B2D420037F21A /* PINavigationViewController.h */,
+				1DCE3BFF164B2D430037F21A /* PINavigationViewController.m */,
+				1DCE3C00164B2D430037F21A /* PINavigationViewController.xib */,
+				1DCE3C03164B2F730037F21A /* PIViewController.h */,
+				1DCE3C04164B2F740037F21A /* PIViewController.m */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -395,6 +447,23 @@
 			name = FileSystem;
 			sourceTree = "<group>";
 		};
+		1DD45A1C16489E0A008A0BBF /* AlbumView */ = {
+			isa = PBXGroup;
+			children = (
+				1DD45A2A1648A910008A0BBF /* icons.plist */,
+				1DD45A261648A353008A0BBF /* Collection.xib */,
+				1DD45A271648A353008A0BBF /* IconViewPrototype.xib */,
+				1DD45A1616489E05008A0BBF /* AlbumViewController.h */,
+				1DD45A1716489E05008A0BBF /* AlbumViewController.m */,
+				1DD45A1816489E05008A0BBF /* AlbumViewController.xib */,
+				1DD45A5D16498E96008A0BBF /* CollectionViewItem.h */,
+				1DD45A5E16498E96008A0BBF /* CollectionViewItem.m */,
+				1DCE3BF5164AEA820037F21A /* AlbumCollectionView.h */,
+				1DCE3BF6164AEA820037F21A /* AlbumCollectionView.m */,
+			);
+			name = AlbumView;
+			sourceTree = "<group>";
+		};
 		1DFAC713162A4C5400FCF155 /* ImageBrowser */ = {
 			isa = PBXGroup;
 			children = (
@@ -404,6 +473,9 @@
 				1D1FB3EA16237174002CD358 /* ImageBrowserCell.m */,
 				1DFAC70E162A4C4B00FCF155 /* ImageBrowserDelegate.h */,
 				1DFAC70F162A4C4B00FCF155 /* ImageBrowserDelegate.m */,
+				1DCE3BF9164AFA1A0037F21A /* ImageBrowserViewController.h */,
+				1DCE3BFA164AFA1B0037F21A /* ImageBrowserViewController.m */,
+				1DCE3BFB164AFA1B0037F21A /* ImageBrowserViewController.xib */,
 			);
 			name = ImageBrowser;
 			sourceTree = "<group>";
@@ -428,6 +500,9 @@
 				1DEF5A09163F2B2C00DDD5D2 /* SidebarTableCellView.m */,
 				8CD071FC16444E6500F2D703 /* SquareImageView.h */,
 				8CD071FD16444E6500F2D703 /* SquareImageView.m */,
+				1DC00133164C8F4B00AE375B /* SidebarViewController.h */,
+				1DC00134164C8F4B00AE375B /* SidebarViewController.m */,
+				1DC00135164C8F4B00AE375B /* SidebarViewController.xib */,
 			);
 			name = "Album Sidebar";
 			sourceTree = "<group>";
@@ -512,6 +587,15 @@
 				8CD071FB16444DEC00F2D703 /* icon.icns in Resources */,
 				8CD0720916487B4000F2D703 /* dark_bg.png in Resources */,
 				8CD0720A16487B4000F2D703 /* dark_bg@2X.png in Resources */,
+				1DD45A1A16489E05008A0BBF /* AlbumViewController.xib in Resources */,
+				1DD45A281648A353008A0BBF /* Collection.xib in Resources */,
+				1DD45A291648A353008A0BBF /* IconViewPrototype.xib in Resources */,
+				1DD45A2B1648A910008A0BBF /* icons.plist in Resources */,
+				1DD45A2D1648B124008A0BBF /* SplitView.xib in Resources */,
+				1DCE3BFD164AFA1B0037F21A /* ImageBrowserViewController.xib in Resources */,
+				1DCE3C02164B2D450037F21A /* PINavigationViewController.xib in Resources */,
+				1DCE3C0A164B54130037F21A /* SplitViewController.xib in Resources */,
+				1DC00137164C8F4B00AE375B /* SidebarViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -547,6 +631,14 @@
 				1D828A721630BEB90099D639 /* FileUtils.m in Sources */,
 				1DEF5A0A163F2B2C00DDD5D2 /* SidebarTableCellView.m in Sources */,
 				8CD071FE16444E6500F2D703 /* SquareImageView.m in Sources */,
+				1DD45A1916489E05008A0BBF /* AlbumViewController.m in Sources */,
+				1DD45A5F16498E97008A0BBF /* CollectionViewItem.m in Sources */,
+				1DCE3BF7164AEA820037F21A /* AlbumCollectionView.m in Sources */,
+				1DCE3BFC164AFA1B0037F21A /* ImageBrowserViewController.m in Sources */,
+				1DCE3C01164B2D450037F21A /* PINavigationViewController.m in Sources */,
+				1DCE3C05164B2F750037F21A /* PIViewController.m in Sources */,
+				1DCE3C08164B353E0037F21A /* SplitViewController.m in Sources */,
+				1DC00136164C8F4B00AE375B /* SidebarViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
