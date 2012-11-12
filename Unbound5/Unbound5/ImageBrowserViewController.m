@@ -56,7 +56,7 @@
         [self.browserView setDraggingDestinationDelegate:self];
         
         NSColor * color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
-        [[self.view enclosingScrollView] setBackgroundColor:color];
+        [[self.browserView enclosingScrollView] setBackgroundColor:color];
         self.browserData = self.album.photos;
         [self.browserView reloadData];
     }
