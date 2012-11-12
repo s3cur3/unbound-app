@@ -19,4 +19,6 @@
 
 @property (strong) IBOutlet NSView* menuView;
 
++(BOOL)optionKeyIsPressed;
+
 @end

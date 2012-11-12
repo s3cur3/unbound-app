@@ -18,7 +18,8 @@
 @property (nonatomic, assign) IBOutlet MainWindowController *mainWindow;
 @property (nonatomic, assign) SplitViewController *splitViewController;
 
-@property (nonatomic, strong) Album *selectedAlbum;
 @property (nonatomic, strong) NSMutableArray *directoryArray;
+@property (nonatomic, strong) Album *selectedAlbum;
+@property (nonatomic, strong) Album *dragDropDestination;
 
 @end

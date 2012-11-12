@@ -12,7 +12,7 @@
 @class ImageBrowserViewController;
 @class SidebarViewController;
 
-@interface SplitViewController : PIViewController
+@interface SplitViewController : PIViewController <NSOutlineViewDataSource>
 {
     
 }
@@ -26,7 +26,12 @@
 @property (strong, nonatomic) Album *selectedAlbum;
 @property (strong, nonatomic) NSArray *albums;
 
+//Album in outlineView where items are being dropped
+@property (nonatomic, strong) Album *dragDropDestination;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil albums:(NSArray *)newAlbums selectedAlbum:(Album *)aSelectedAlbum;
+
+-(void)updateViewsForDragDrop;
 
 @end

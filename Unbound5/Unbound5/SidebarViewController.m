@@ -11,6 +11,7 @@
 #import "SidebarTableCellView.h"
 #import "SplitViewController.h"
 #import "ImageBrowserViewController.h"
+#import "PIViewController.h"
 
 @interface SidebarViewController ()
 {
@@ -41,9 +42,30 @@
         NSUInteger index = [self.directoryArray indexOfObject:self.selectedAlbum];
         [self.outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
         [self.outlineView scrollRowToVisible:index];
+        
+        //[self.outlineView setDataSource:self.splitViewController];
+        
+        [self.outlineView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
     }
 }
 
+
+
+
+
+-(void)setSelectedAlbum:(Album *)anAlbum
+{
+    _selectedAlbum = anAlbum;
+}
+
+
+
+@end
+
+@implementation SidebarViewController(NSOutlineViewDataSource)
+
+
+//Working with Items in a View
 -(CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
 {
     return 55;
@@ -109,7 +131,7 @@
             //[self createNewSearchForWithScopeURL:searchURL];
         }
         
-
+        
     }
 }
 
@@ -122,11 +144,14 @@
     }
     return result;
 }
+//
+
+//Drag and Drop Support
 
 -(BOOL)outlineView:(NSOutlineView *)outlineView acceptDrop:(id < NSDraggingInfo >)info item:(id)item childIndex:(NSInteger)index
 {
 	// get the URLs
-	/*NSArray * urls = [[info draggingPasteboard] readObjectsForClasses:[NSArray arrayWithObject:[NSURL class]] options:nil];
+	NSArray * urls = [[info draggingPasteboard] readObjectsForClasses:[NSArray arrayWithObject:[NSURL class]] options:nil];
     NSFileManager * fileManager = [NSFileManager defaultManager];
     
     // handle copied files
@@ -145,9 +170,9 @@
         destinationURL = [destinationURL URLByAppendingPathComponent:[url.path lastPathComponent]];
         
         
-        if ([info draggingSource] == self.browserView) {
-            DLog(@"Drag and drop is from browser view - default to move operation");
-            if ([self optionKeyIsPressed]) {
+        if ( [[[info draggingSource] identifier] isEqualToString:@"MyImageBrowserView"]) {
+            //DLog(@"Drag and drop is from browser view - default to move operation");
+            if ([PIViewController optionKeyIsPressed]) {
                 [fileManager copyItemAtURL:srcURL toURL:destinationURL error:&anError];
             } else {
                 [fileManager moveItemAtPath:srcURL.path toPath:destinationURL.path error:&anError];
@@ -155,7 +180,7 @@
                 srcpath = [srcURL.path stringByDeletingLastPathComponent];
             }
         } else {
-            DLog(@"Drag and drop is outside source - default to copy operation");
+            //DLog(@"Drag and drop is outside source - default to copy operation");
             if (![NSEvent modifierFlags] & NSAlternateKeyMask) {
                 [fileManager copyItemAtURL:srcURL toURL:destinationURL error:&anError];
             } else {
@@ -170,41 +195,48 @@
     {
         DLog(@"error copying dragged files : %@", anError);
     }
+    
+    [self.dragDropDestination updatePhotosFromFileSystem];
+    [self.splitViewController updateViewsForDragDrop];
 	
-	if([self.browserData count] > 0) {
-        [self.dragDropDestination updatePhotosFromFileSystem];
-        if (refreshSrcDir && srcpath) {
-            Album *srcAlbum = [self.fileSystemEventController.albumLookupTable valueForKey:srcpath];
-            [srcAlbum updatePhotosFromFileSystem];
-        }
-        [self.browserView reloadData];
-        return YES;
-    }
+	/*if([self.browserData count] > 0) {
+     [self.dragDropDestination updatePhotosFromFileSystem];
+     if (refreshSrcDir && srcpath) {
+     Album *srcAlbum = [self.fileSystemEventController.albumLookupTable valueForKey:srcpath];
+     [srcAlbum updatePhotosFromFileSystem];
+     }
+     [self.browserView reloadData];
+     return YES;
+     }*/
 	
-	return NO;*/
-
+	return NO;
+    
 }
 
 
 
 -(NSDragOperation)outlineView:(NSOutlineView *)outlineView validateDrop:(id < NSDraggingInfo >)info proposedItem:(id)item proposedChildIndex:(NSInteger)index
 {
-    /*if (index != -1)
+    if (index != -1)
     {
         return NSDragOperationNone;
     }
-
+    
     self.dragDropDestination = item;
-
-    if ([info draggingSource] == self.browserView) {
-		DLog(@"Drag and drop is from browser view - default to move operation");
-        if ([self optionKeyIsPressed])
+    
+    if ( [[[info draggingSource] identifier] isEqualToString:@"MyImageBrowserView"])
+    {
+		
+        if ([PIViewController optionKeyIsPressed]) {
+            DLog(@"Drag and drop is from browser WITH alt key pressed - copy operation");
             return NSDragOperationCopy;
-        else
+        } else {
+            DLog(@"Drag and drop is from browser - move operation");
             return NSDragOperationMove;
+        }
 	} else {
         
-        if (![self optionKeyIsPressed])
+        if (![PIViewController optionKeyIsPressed])
         {
             DLog(@"Drag and drop is outside source - default to copy operation");
             return NSDragOperationCopy;
@@ -212,16 +244,9 @@
             DLog(@"Drag and drop is outside source with alt pressed - use move operation");
             return NSDragOperationMove;
         }
-	}*/
-
+	}
+    
 }
-
-
--(void)setSelectedAlbum:(Album *)anAlbum
-{
-    _selectedAlbum = anAlbum;
-}
-
 
 
 @end

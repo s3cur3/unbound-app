@@ -53,6 +53,8 @@
 {
     if (self.browserView)
     {
+        [self.browserView setDraggingDestinationDelegate:self];
+        
         NSColor * color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
         [[self.view enclosingScrollView] setBackgroundColor:color];
         self.browserData = self.album.photos;
@@ -126,6 +128,115 @@
     pageViewController.album = self.album;
     pageViewController.initialSelectedItem = [self.album.photos objectAtIndex:index];
     [self.navigationViewController pushViewController:pageViewController];
+}
+
+//
+#pragma mark Browser Drag and Drop Methods
+
+-(BOOL) optionKeyIsPressed
+{
+    if(( [NSEvent modifierFlags] & NSAlternateKeyMask ) != 0 ) {
+        return YES;
+    } else {
+        return NO;
+    }
+    
+}
+- (unsigned int)draggingEntered:(id <NSDraggingInfo>)sender
+{
+    
+	if([sender draggingSource] != self){
+		NSPasteboard *pb = [sender draggingPasteboard];
+		NSString * type = [pb availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]];
+		
+		if(type != nil){
+            if ([self optionKeyIsPressed])
+            {
+                return NSDragOperationMove;
+            } else {
+                return NSDragOperationCopy;
+            }
+		}
+	}
+	return NSDragOperationNone;
+}
+
+- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
+{
+	if([sender draggingSource] != self){
+        if ([self optionKeyIsPressed])
+        {
+            return NSDragOperationMove;
+        } else {
+            return NSDragOperationCopy;
+        }
+	}
+	return NSDragOperationNone;
+}
+
+- (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender
+{
+    //[self.browserView setAnimates:YES];
+	return YES;
+}
+
+- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
+{
+    NSFileManager * fileManager = [NSFileManager defaultManager];
+	//Get the files from the drop
+	NSArray * files = [[sender draggingPasteboard] propertyListForType:NSFilenamesPboardType];
+	
+	/*for(id file in files){
+     NSImage * image = [[NSWorkspace sharedWorkspace] iconForFile:file];
+     NSString * imageID = [file lastPathComponent];
+     DLog(@"File dragged abd dropped onto browser : %@", imageID);
+     //IKBBrowserItem * item = [[IKBBrowserItem alloc] initWithImage:image imageID:imageID];
+     //[self.browserData addObject:item];
+     
+     
+     }*/
+    
+    // handle copied files
+    NSError *anError = nil;
+    for (NSString * url in files)
+    {
+        // check if the destination folder is different from the source folder
+        if ([self.album.filePath isEqualToString:[  url stringByDeletingLastPathComponent]])
+            continue;
+        
+        NSURL * destinationURL = [NSURL fileURLWithPath:self.album.filePath];
+        
+        NSURL *srcURL = [NSURL fileURLWithPath:url];
+        destinationURL = [destinationURL URLByAppendingPathComponent:[url lastPathComponent]];
+        
+        //if ([sender draggingSourceOperationMask]!=NSDragOperationCopy)
+        if ([self optionKeyIsPressed])
+        {
+            [fileManager moveItemAtURL:srcURL toURL:destinationURL error:&anError];
+        } else {
+            [fileManager copyItemAtURL:srcURL toURL:destinationURL error:&anError];
+        }
+        
+    }
+    if (anError!=nil)
+    {
+        DLog(@"error copying dragged files : %@", anError);
+    }
+	
+	if([self.browserData count] > 0) {
+        [self.album updatePhotosFromFileSystem];
+        self.browserData = self.album.photos;
+        [self.browserView reloadData];
+        return YES;
+    }
+	
+	return NO;
+}
+
+- (void)concludeDragOperation:(id < NSDraggingInfo >)sender
+{
+    //[self.browserView setAnimates:NO];
+	//[self.browserView reloadData];
 }
 
 @end

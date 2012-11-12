@@ -10,7 +10,9 @@
 #import "PINavigationViewController.h"
 
 @interface PIViewController ()
-
+{
+    
+}
 @end
 
 @implementation PIViewController
@@ -23,6 +25,16 @@
     }
     
     return self;
+}
+
++(BOOL)optionKeyIsPressed
+{
+    if(( [NSEvent modifierFlags] & NSAlternateKeyMask ) != 0 ) {
+        return YES;
+    } else {
+        return NO;
+    }
+    
 }
 
 @end

@@ -194,7 +194,7 @@ NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";*/
 }
 
 
-
+//possible options are ArchDirectoryObserverResponsive and ArchDirectoryObserverObservesSelf
 -(void)startObserving
 {
     for (NSURL *aDir in [self observedDirectories])

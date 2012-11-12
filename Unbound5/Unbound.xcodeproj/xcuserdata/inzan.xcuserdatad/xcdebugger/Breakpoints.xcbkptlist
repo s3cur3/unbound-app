@@ -1477,11 +1477,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/ImageBrowserViewController.m"
-         timestampString = "374114402.782286"
+         timestampString = "374383753.578035"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "125"
-         endingLineNumber = "125"
+         startingLineNumber = "127"
+         endingLineNumber = "127"
          landmarkName = "-imageBrowser:cellWasDoubleClickedAtIndex:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1490,11 +1490,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/ImageBrowserViewController.m"
-         timestampString = "374114402.782286"
+         timestampString = "374383753.578035"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "115"
-         endingLineNumber = "115"
+         startingLineNumber = "117"
+         endingLineNumber = "117"
          landmarkName = "-imageBrowserSelectionDidChange:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1503,11 +1503,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/ImageBrowserViewController.m"
-         timestampString = "374114402.782286"
+         timestampString = "374383753.578035"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "58"
-         endingLineNumber = "58"
+         startingLineNumber = "60"
+         endingLineNumber = "60"
          landmarkName = "-awakeFromNib"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1516,11 +1516,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/ImageBrowserViewController.m"
-         timestampString = "374114402.782286"
+         timestampString = "374383753.578035"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "78"
-         endingLineNumber = "78"
+         startingLineNumber = "80"
+         endingLineNumber = "80"
          landmarkName = "-numberOfItemsInImageBrowser:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1529,11 +1529,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/ImageBrowserViewController.m"
-         timestampString = "374114402.782286"
+         timestampString = "374383753.578035"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "83"
-         endingLineNumber = "83"
+         startingLineNumber = "85"
+         endingLineNumber = "85"
          landmarkName = "-imageBrowser:itemAtIndex:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1646,20 +1646,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/ImageBrowserViewController.m"
-         timestampString = "374114402.782286"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "66"
-         endingLineNumber = "66"
-         landmarkName = "-setAlbum:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Unbound5/ImageBrowserViewController.m"
-         timestampString = "374114402.782286"
+         timestampString = "374383753.578035"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "68"
@@ -1672,11 +1659,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/ImageBrowserViewController.m"
-         timestampString = "374114402.782286"
+         timestampString = "374383753.578035"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "69"
-         endingLineNumber = "69"
+         startingLineNumber = "70"
+         endingLineNumber = "70"
          landmarkName = "-setAlbum:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1685,11 +1672,24 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/ImageBrowserViewController.m"
-         timestampString = "374114402.782286"
+         timestampString = "374383753.578035"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "59"
-         endingLineNumber = "59"
+         startingLineNumber = "71"
+         endingLineNumber = "71"
+         landmarkName = "-setAlbum:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/ImageBrowserViewController.m"
+         timestampString = "374383753.578035"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "61"
+         endingLineNumber = "61"
          landmarkName = "-awakeFromNib"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1711,11 +1711,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/ImageBrowserViewController.m"
-         timestampString = "374114402.782286"
+         timestampString = "374383753.578035"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "67"
-         endingLineNumber = "67"
+         startingLineNumber = "69"
+         endingLineNumber = "69"
          landmarkName = "-setAlbum:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1724,11 +1724,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/ImageBrowserViewController.m"
-         timestampString = "374114402.782286"
+         timestampString = "374383753.578035"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "56"
-         endingLineNumber = "56"
+         startingLineNumber = "58"
+         endingLineNumber = "58"
          landmarkName = "-awakeFromNib"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1737,11 +1737,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/SplitViewController.m"
-         timestampString = "374129105.839489"
+         timestampString = "374381548.57218"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "48"
-         endingLineNumber = "48"
+         startingLineNumber = "49"
+         endingLineNumber = "49"
          landmarkName = "-awakeFromNib"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1776,11 +1776,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/ImageBrowserViewController.m"
-         timestampString = "374114402.782286"
+         timestampString = "374383753.578035"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "84"
-         endingLineNumber = "84"
+         startingLineNumber = "86"
+         endingLineNumber = "86"
          landmarkName = "-imageBrowser:itemAtIndex:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1867,11 +1867,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/ImageBrowserViewController.m"
-         timestampString = "374114399.339072"
+         timestampString = "374383753.578035"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "128"
-         endingLineNumber = "128"
+         startingLineNumber = "130"
+         endingLineNumber = "130"
          landmarkName = "-imageBrowser:cellWasDoubleClickedAtIndex:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1893,11 +1893,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/SplitViewController.m"
-         timestampString = "374129105.839489"
+         timestampString = "374381548.57218"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "41"
-         endingLineNumber = "41"
+         startingLineNumber = "42"
+         endingLineNumber = "42"
          landmarkName = "-awakeFromNib"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1915,16 +1915,16 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/SplitViewController.m"
-         timestampString = "374129105.839489"
+         timestampString = "374381548.57218"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "62"
-         endingLineNumber = "62"
-         landmarkName = "@implementation SplitViewController"
+         startingLineNumber = "110"
+         endingLineNumber = "110"
+         landmarkName = "@implementation SplitViewController(NSOutlineViewDataSource)"
          landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
@@ -1932,11 +1932,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/SplitViewController.m"
-         timestampString = "374129105.839489"
+         timestampString = "374381548.57218"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "58"
-         endingLineNumber = "58"
+         startingLineNumber = "59"
+         endingLineNumber = "59"
          landmarkName = "-setNavigationViewController:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1945,20 +1945,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/SidebarViewController.m"
-         timestampString = "374129105.839489"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "35"
-         endingLineNumber = "35"
-         landmarkName = "-awakeFromNib"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Unbound5/SidebarViewController.m"
-         timestampString = "374129105.839489"
+         timestampString = "374180851.715443"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "36"
@@ -1971,37 +1958,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/SidebarViewController.m"
-         timestampString = "374174112.49304"
+         timestampString = "374180851.715443"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "76"
-         endingLineNumber = "76"
-         landmarkName = "-outlineView:objectValueForTableColumn:byItem:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Unbound5/SidebarViewController.m"
-         timestampString = "374174112.49304"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "116"
-         endingLineNumber = "116"
-         landmarkName = "-outlineView:viewForTableColumn:item:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Unbound5/SplitViewController.m"
-         timestampString = "374129105.839489"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "46"
-         endingLineNumber = "46"
+         startingLineNumber = "37"
+         endingLineNumber = "37"
          landmarkName = "-awakeFromNib"
          landmarkType = "5">
       </FileBreakpoint>
@@ -2009,13 +1970,13 @@
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Unbound5/SidebarViewController.m"
-         timestampString = "374174112.49304"
+         filePath = "Unbound5/SplitViewController.m"
+         timestampString = "374381548.57218"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "101"
-         endingLineNumber = "101"
-         landmarkName = "-outlineViewSelectionDidChange:"
+         startingLineNumber = "47"
+         endingLineNumber = "47"
+         landmarkName = "-awakeFromNib"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -2036,11 +1997,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/SidebarViewController.m"
-         timestampString = "374174112.49304"
+         timestampString = "374380772.820256"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "221"
-         endingLineNumber = "221"
+         startingLineNumber = "58"
+         endingLineNumber = "58"
          landmarkName = "-setSelectedAlbum:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -2049,12 +2010,145 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Unbound5/SidebarViewController.m"
-         timestampString = "374174116.824329"
+         timestampString = "374180851.715443"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "41"
-         endingLineNumber = "41"
+         startingLineNumber = "42"
+         endingLineNumber = "42"
          landmarkName = "-awakeFromNib"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/SplitViewController.m"
+         timestampString = "374381548.57218"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "66"
+         endingLineNumber = "66"
+         landmarkName = "-updateViewsForDragDrop"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "Yes"
+         filePath = "Unbound5/SplitViewController.m"
+         timestampString = "374381532.93401"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "184"
+         endingLineNumber = "184"
+         landmarkName = "-outlineView:validateDrop:proposedItem:proposedChildIndex:"
+         landmarkType = "5">
+         <Actions>
+            <BreakpointActionProxy
+               ActionType = "Xcode.BreakpointAction.DebuggerCommand">
+               <ActionContent
+                  consoleCommand = "po @&quot;validateDrop called on SplitViewController&quot;">
+               </ActionContent>
+            </BreakpointActionProxy>
+         </Actions>
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "Yes"
+         filePath = "Unbound5/SplitViewController.m"
+         timestampString = "374381537.905024"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "119"
+         endingLineNumber = "119"
+         landmarkName = "-outlineView:acceptDrop:item:childIndex:"
+         landmarkType = "5">
+         <Actions>
+            <BreakpointActionProxy
+               ActionType = "Xcode.BreakpointAction.DebuggerCommand">
+               <ActionContent
+                  consoleCommand = "po @&quot;acceptDrop called on SplitViewController&quot;">
+               </ActionContent>
+            </BreakpointActionProxy>
+         </Actions>
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/SplitViewController.m"
+         timestampString = "374381541.39944"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "107"
+         endingLineNumber = "107"
+         landmarkName = "-outlineView:objectValueForTableColumn:byItem:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/SplitViewController.m"
+         timestampString = "374381546.097459"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "83"
+         endingLineNumber = "83"
+         landmarkName = "-outlineView:numberOfChildrenOfItem:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/ImageBrowserViewController.m"
+         timestampString = "374384199.998908"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "185"
+         endingLineNumber = "185"
+         landmarkName = "-performDragOperation:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/ImageBrowserViewController.m"
+         timestampString = "374384201.844072"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "179"
+         endingLineNumber = "179"
+         landmarkName = "-prepareForDragOperation:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/ImageBrowserViewController.m"
+         timestampString = "374384855.880634"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "228"
+         endingLineNumber = "228"
+         landmarkName = "-performDragOperation:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Unbound5/ImageBrowserViewController.m"
+         timestampString = "374384855.880634"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "239"
+         endingLineNumber = "239"
+         landmarkName = "-concludeDragOperation:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

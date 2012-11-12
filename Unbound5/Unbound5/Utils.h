@@ -15,6 +15,8 @@
 +(NSMutableParagraphStyle *)defaultParagraphStyle;
 +(NSSize)stringSize:(NSString *)string withAttribute:(NSDictionary *)attributes;
 
++(BOOL) optionKeyIsPressed;
+
 @end
 
 
