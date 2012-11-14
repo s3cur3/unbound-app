@@ -23,7 +23,7 @@
 
 @interface AlbumViewController : PIViewController <NSCollectionViewDelegate>
 {
-    IBOutlet NSCollectionView *collectionView;
+    
     IBOutlet NSArrayController *arrayController;
     //NSMutableArray *images;
     
@@ -37,6 +37,8 @@
 @property (strong) NSMutableArray *images;
 @property (nonatomic, assign) NSUInteger sortingMode;
 @property (nonatomic, assign) BOOL alternateColors;
+
+@property (strong) IBOutlet NSCollectionView *collectionView;
 //@property IBOutlet NSCollectionView *collectionView;
 //@property IBOutlet NSArrayController *arrayController;
 
