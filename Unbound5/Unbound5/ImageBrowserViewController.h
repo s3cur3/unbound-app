@@ -10,6 +10,7 @@
 #import "Album.h"
 #import "ImageBrowserView.h"
 #import "PIViewController.h"
+#import "MainWindowController.h"
 
 
 @interface ImageBrowserViewController : PIViewController

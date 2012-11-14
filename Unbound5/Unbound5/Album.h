@@ -41,10 +41,13 @@ enum {
 
 //@property NSSize imageSize;
 
++(Album *)createAlbumAtPath:(NSString *)aPath withName:(NSString *)aName;
+
 - (id)initWithFilePath:(NSString *) aPath;
 -(void)addPhotosObject:(id)object;
 -(void)updatePhotosFromFileSystem;
 -(BOOL)albumExistsWithPhotos;
+-(BOOL)directoryHasUBMetadaFile;
 
 -(NSSortDescriptor *) dateLastModifiedSortDescriptor;
 

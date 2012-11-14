@@ -71,7 +71,7 @@ NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";*/
         {
             anAlbum = [[Album alloc] initWithFilePath:url.path];
             [anAlbum updatePhotosFromFileSystem];
-            if (anAlbum.photos.count!=0)
+            if (anAlbum.photos.count!=0 || [anAlbum directoryHasUBMetadaFile])
             {
                 [self.albumLookupTable setValue:anAlbum forKey:url.path];
                 [self.albums addObject:anAlbum];

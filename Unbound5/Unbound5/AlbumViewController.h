@@ -49,4 +49,7 @@
 
 -(void)updateContent:(NSMutableArray *)newContent;
 
+-(IBAction)createNewAlbum:(id)sender;
+
+
 @end

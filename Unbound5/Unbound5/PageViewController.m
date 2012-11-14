@@ -190,6 +190,12 @@ static NSString *ResolveName(NSString *aName)
 - (void)awakeFromNib
 {
     self.pageController.transitionStyle = NSPageControllerTransitionStyleHorizontalStrip;
+    //TODO: use [NSColor underPageBackgroundColor]
+    /*CALayer *aLayer = [CALayer layer];
+    aLayer.backgroundColor = (__bridge CGColorRef)([NSColor blackColor]);
+    [self.pageController.view setWantsLayer:YES];
+    aLayer.frame = self.pageController.view.bounds;
+    [self.pageController.view.layer addSublayer:aLayer];*/
     [self updateData];
 }
 

@@ -98,38 +98,26 @@
     
     self.images = self.albums;
     return;
-    
-    NSMutableArray	*tempArray = [[NSMutableArray alloc] init];
-    for (Album *anAlbum in self.albums)
-    {
-        //[anAlbum thumbnailImage];
-        NSImage *anImage = [anAlbum thumbnailImage];
-        if (anImage == nil)
-        {
-            anImage = [NSImage imageNamed:NSImageNameIconViewTemplate];
-        }
-        [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                               anImage, KEY_IMAGE,
-                               [anAlbum title], KEY_NAME,
-                               nil]];
-        
-        //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAlbumInfo:) name:AlbumDidChangeNotification object:anAlbum];
-        
-        
-        
-    }
-
-    self.images = tempArray;
-    [self.albums makeObjectsPerformSelector:@selector(thumbnailImage)];
-    
 
     
-    [self.collectionView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
     
-    NSColor * color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
-    [[self.collectionView enclosingScrollView] setBackgroundColor:color];
+}
+
+-(IBAction)createNewAlbum:(id)sender;
+{
+    DLog(@"createNewAlbum");
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //[dateFormatter setDateFormat:@"yy-MM-dd HH:mm:ss"];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+    Album *newAlbum = [Album createAlbumAtPath:@"/Users/inzan/Dropbox/Photos" withName:[NSString stringWithFormat:@"%@", [dateFormatter stringFromDate:[NSDate date]]]];
+    //[newAlbum updatePhotosFromFileSystem];
+    //[self.images addObject:newAlbum];
     
+    [arrayController addObject:newAlbum];
     
+    //[self updateContent:self.images];
+    //[collectionView setNeedsDisplay:YES];
 }
 
 
@@ -233,4 +221,5 @@
     self.albums = newContent;
     [self.collectionView setContent:newContent];
 }
+
 @end

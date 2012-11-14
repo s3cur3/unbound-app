@@ -9,6 +9,8 @@
 #import "PINavigationViewController.h"
 #import "PIViewController.h"
 
+#import "AlbumViewController.h"
+
 @interface PINavigationViewController ()
 
 @property (strong, nonatomic) NSMutableArray *viewControllers;
@@ -21,12 +23,19 @@
 
 @implementation PINavigationViewController
 
+-(void)awakeFromNib
+{
+    DLog(@"awakeFromNib");
+    //[self.mainWindow setContentView:self.view];
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Initialization code here.
         self.viewControllers = [NSMutableArray arrayWithCapacity:5];
+        //[self.mainWindow setContentView:self.view];
     }
     
     return self;
@@ -36,8 +45,12 @@
 {
     if (self.viewControllers.count <=1)
     {
-        [self.backButton setHidden:YES];
+        [self.backButton setTitle:@""];
+        [self.backButton setImage:[NSImage imageNamed:NSImageNameAddTemplate]];
+        //[self.backButton setHidden:YES];
     } else {
+        [self.backButton setTitle:@"Back"];
+        [self.backButton setImage:nil];
         [self.backButton setHidden:NO];
     }
 }
@@ -47,6 +60,8 @@
     PIViewController *currentViewController = [self.viewControllers lastObject];
     [aViewController.view setFrame:self.view.bounds];
     aViewController.navigationViewController = self;
+    
+    
     
     if(NO )//|| self.viewControllers.count)
     {
@@ -67,7 +82,13 @@
             [aVC.view setHidden:NO];
         }
     }
+    
+    
+    
     [self checkHideBackButton];
+    //NSWindow *mainWindow = [[NSApplication sharedApplication] mainWindow];
+    //[mainWindow setContentView:aViewController.view];
+    //[mainWindow makeFirstResponder:aViewController.view];
 }
 
 -(void)popViewController;
@@ -87,7 +108,12 @@
 
 - (IBAction)backPressed:(id)sender;
 {
-    [self popViewController];
+    if ([[self.viewControllers lastObject] class] == NSClassFromString(@"AlbumViewController"))
+    {
+        [(AlbumViewController *)[self.viewControllers lastObject] createNewAlbum:sender];
+    } else {
+        [self popViewController];
+    }
 }
 
 @end
