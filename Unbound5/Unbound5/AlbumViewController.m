@@ -116,7 +116,7 @@
     //[dateFormatter setDateFormat:@"yy-MM-dd HH:mm:ss"];
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
     [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
-    Album *newAlbum = [Album createAlbumAtPath:@"/Users/inzan/Dropbox/Photos" withName:[NSString stringWithFormat:@"%@", [dateFormatter stringFromDate:[NSDate date]]]];
+    Album *newAlbum = [Album createAlbumWithName:[NSString stringWithFormat:@"%@", [dateFormatter stringFromDate:[NSDate date]]]];
     //[newAlbum updatePhotosFromFileSystem];
     //[self.images addObject:newAlbum];
     
