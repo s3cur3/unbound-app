@@ -89,4 +89,6 @@ extern NSString *dropboxHomeStringKey;
 
 //-(NSMutableArray *)albumArray;
 
+- (void)showPageControllerForAlbum:(Album *)anAlbum;
+
 @end

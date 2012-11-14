@@ -605,6 +605,27 @@ NSArray * DropBoxDirectory()
     NSLog(@"cellWasDoubleClickedAtIndex");
 }
 
+- (void)showPageControllerForAlbum:(Album *)anAlbum
+{
+    
+    self.pageViewController = [[PageViewController alloc] initWithNibName:@"PageViewController" bundle:nil];
+
+
+    
+    //NSURL *aURL = [NSURL fileURLWithPath:[[[self albumArray] objectAtIndex:selectedRow ] valueForKey:@"filePath"]];
+    self.pageViewController.album = anAlbum;
+    self.pageViewController.initialSelectedItem = [self.selectedAlbum.photos objectAtIndex:0];
+    
+    self.pageViewController.parentWindowController = self;
+    self.pageViewController.view.frame = ((NSView*)window.contentView).bounds;
+    self.mainContentView = window.contentView;
+    
+    //self.pageViewController.pageController.selectedIndex = index;
+    [window setContentView:self.pageViewController.view];
+    
+    NSLog(@"cellWasDoubleClickedAtIndex");
+}
+
 #pragma mark - NSSplitViewDelegate methods
 
 // -------------------------------------------------------------------------------

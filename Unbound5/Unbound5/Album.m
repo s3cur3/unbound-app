@@ -33,6 +33,28 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
     return self;
 }
 
++(Album *)createAlbumAtPath:(NSString *)aPath withName:(NSString *)aName
+{
+    NSString *newAlbumPath = nil;
+    if (!aPath) {
+        //TODO fill with a missing path with a value from defaults db
+        aPath = @"/Users/inzan/Dropbox/Photos";
+    } 
+    newAlbumPath = [NSString stringWithFormat:@"%@/%@",aPath, aName];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:newAlbumPath])
+    {
+        //TODO: error handling
+        NSError *error;
+        if (![[NSFileManager defaultManager] createDirectoryAtPath:newAlbumPath withIntermediateDirectories:YES attributes:nil error:&error])
+        {
+            [[NSApplication sharedApplication] presentError:error];
+        }
+    }
+    Album *newAlbum = [[Album alloc] initWithFilePath:newAlbumPath];
+    [newAlbum createOrUpdateUnboundMetadataFile];
+    return newAlbum;
+}
+
 -(void)addPhotosObject:(id)object
 {
     [self.photos addObject:object];
@@ -53,6 +75,23 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
         return [NSArray array];
     }
     return content;
+}
+
+-(void)createOrUpdateUnboundMetadataFile
+{
+    NSString *unboundFilePath = [NSString stringWithFormat:@"%@/.unbound", self.filePath];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:unboundFilePath])
+    {
+        NSDictionary *unboundDict = @{ @"version" : @"0.1" };
+        //Plist version
+        //[unboundDict writeToFile:unboundFilePath atomically:YES];
+        
+        NSOutputStream *os = [[NSOutputStream alloc] initToFileAtPath:unboundFilePath append:NO];
+        
+        [os open];
+        [NSJSONSerialization writeJSONObject:unboundDict toStream:os options:0 error:nil];
+        [os close];
+    }
 }
 
 -(void)updatePhotosFromFileSystem
@@ -88,6 +127,7 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
         self.photos = nil;
     } else {
         self.photos = somePhotos;
+        [self createOrUpdateUnboundMetadataFile];
     }
     self.dateLastScanned = [NSDate date];
     
@@ -100,6 +140,16 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
 {
     self.thumbnailImage = nil;
     _state = 0;
+}
+
+-(BOOL)directoryHasUBMetadaFile
+{
+    NSString *unboundFilePath = [NSString stringWithFormat:@"%@/.unbound", self.filePath];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:unboundFilePath])
+    {
+        return YES;
+    }
+    return NO;
 }
 
 -(BOOL)albumExists
@@ -173,6 +223,8 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
         NSString *formattedDateString = [dateFormatter stringFromDate:aDate];
         //DLog(@"formattedDateString: %@", formattedDateString);
         return [NSString stringWithFormat:@"%ld items from %@", self.photos.count, formattedDateString];
+    } else if (self.photos.count == 0 && self.dateLastScanned) {
+        return @"No items";
     } else {
         return @"Loading...";
     }
@@ -314,6 +366,12 @@ static NSMutableArray *computeThumbnailClientQueue = nil;
 
 
 - (NSImage *)thumbnailImage {
+    
+    if (!self.photos.count)
+    {
+        return [NSImage imageNamed:@"nophoto"];
+    }
+    
     if (!(_state & ItemStateThumbnailLoaded)) {
         if (_thumbnailImage == nil && (_state & ItemStateThumbnailLoading) == 0) {
             _state |= ItemStateThumbnailLoading;

@@ -97,9 +97,34 @@
     [self setSortingMode:0];		// icon collection in ascending sort order
     
     self.images = self.albums;
+    
+    
+    [self.collectionView setMaxItemSize:NSSizeFromCGSize(CGSizeMake(300, 200))];
+    
+    [self.collectionView setWantsLayer:YES];
+    
     return;
+
+    
+    
 }
 
+-(IBAction)createNewAlbum:(id)sender;
+{
+    DLog(@"createNewAlbum");
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //[dateFormatter setDateFormat:@"yy-MM-dd HH:mm:ss"];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+    Album *newAlbum = [Album createAlbumAtPath:@"/Users/inzan/Dropbox/Photos" withName:[NSString stringWithFormat:@"%@", [dateFormatter stringFromDate:[NSDate date]]]];
+    //[newAlbum updatePhotosFromFileSystem];
+    //[self.images addObject:newAlbum];
+    
+    [arrayController addObject:newAlbum];
+    
+    //[self updateContent:self.images];
+    //[collectionView setNeedsDisplay:YES];
+}
 
 -(void)updateAlbumInfo:(NSNotification *)notification
 {
@@ -201,4 +226,5 @@
     self.albums = newContent;
     [self.collectionView setContent:newContent];
 }
+
 @end
