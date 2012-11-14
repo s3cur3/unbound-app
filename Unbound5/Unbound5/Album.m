@@ -9,6 +9,7 @@
 #import "Album.h"
 #import "SearchItem.h"
 #import "Photo.h"
+#import "MainWindowController.h"
 
 NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
 
@@ -33,12 +34,18 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
     return self;
 }
 
++(Album *)createAlbumWithName:(NSString *)aName;
+{
+    return [self createAlbumAtPath:nil withName:aName];
+}
+
 +(Album *)createAlbumAtPath:(NSString *)aPath withName:(NSString *)aName
 {
     NSString *newAlbumPath = nil;
     if (!aPath) {
-        //TODO fill with a missing path with a value from defaults db
-        aPath = @"/Users/inzan/Dropbox/Photos";
+        NSString *defaultPhotosPath = [[NSUserDefaults standardUserDefaults] stringForKey:searchLocationKey];
+        aPath = defaultPhotosPath;
+        
     } 
     newAlbumPath = [NSString stringWithFormat:@"%@/%@",aPath, aName];
     if (![[NSFileManager defaultManager] fileExistsAtPath:newAlbumPath])

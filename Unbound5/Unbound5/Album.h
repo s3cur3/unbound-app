@@ -42,6 +42,7 @@ enum {
 //@property NSSize imageSize;
 
 +(Album *)createAlbumAtPath:(NSString *)aPath withName:(NSString *)aName;
++(Album *)createAlbumWithName:(NSString *)aName;
 
 - (id)initWithFilePath:(NSString *) aPath;
 -(void)addPhotosObject:(id)object;
