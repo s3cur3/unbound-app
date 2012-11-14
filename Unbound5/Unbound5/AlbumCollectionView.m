@@ -20,9 +20,22 @@
     return self;
 }
 
+- (void) awakeFromNib
+{
+    [super awakeFromNib];
+    
+    NSColor * color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
+    [[self enclosingScrollView] setBackgroundColor:color];
+}
+
+
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.
+    
+    /*NSColor * color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
+    [color setFill];
+    NSRectFill(dirtyRect);*/
 }
 
 - (void)setSelectionIndexes:(NSIndexSet *)indexes

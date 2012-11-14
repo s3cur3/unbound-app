@@ -59,7 +59,7 @@
 			</object>
 			<object class="NSScrollView" id="236214384">
 				<reference key="NSNextResponder"/>
-				<int key="NSvFlags">286</int>
+				<int key="NSvFlags">4382</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="NSClipView" id="52813598">
@@ -69,7 +69,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="NSCollectionView" id="972803657">
 								<reference key="NSNextResponder" ref="52813598"/>
-								<int key="NSvFlags">301</int>
+								<int key="NSvFlags">4397</int>
 								<string key="NSFrameSize">{316, 214}</string>
 								<reference key="NSSuperview" ref="52813598"/>
 								<reference key="NSWindow"/>
@@ -80,9 +80,9 @@
 								<int key="NSMaxNumberOfGridColumns">0</int>
 								<object class="NSArray" key="NSBackgroundColors">
 									<bool key="EncodedWithXMLCoder">YES</bool>
-									<object class="NSColor" id="766554903">
-										<int key="NSColorSpace">1</int>
-										<bytes key="NSRGB">MCAwIDAgMAA</bytes>
+									<object class="NSColor" id="309046567">
+										<int key="NSColorSpace">3</int>
+										<bytes key="NSWhite">MCAwAA</bytes>
 									</object>
 								</object>
 								<bool key="NSSelectable">YES</bool>
@@ -90,33 +90,38 @@
 								<int key="NSDraggingSourceMaskForNonLocal">0</int>
 							</object>
 						</object>
-						<string key="NSFrame">{{1, 1}, {316, 214}}</string>
+						<string key="NSFrameSize">{318, 216}</string>
 						<reference key="NSSuperview" ref="236214384"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="972803657"/>
 						<reference key="NSDocView" ref="972803657"/>
 						<object class="NSColor" key="NSBGColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MCAwIDAgMAA</bytes>
+							<int key="NSColorSpace">6</int>
+							<string key="NSCatalogName">System</string>
+							<string key="NSColorName">knobColor</string>
+							<object class="NSColor" key="NSColor">
+								<int key="NSColorSpace">3</int>
+								<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
+							</object>
 						</object>
-						<int key="NScvFlags">2</int>
+						<int key="NScvFlags">6</int>
 					</object>
 					<object class="NSScroller" id="555227663">
 						<reference key="NSNextResponder" ref="236214384"/>
 						<int key="NSvFlags">256</int>
-						<string key="NSFrame">{{301, 1}, {16, 214}}</string>
+						<string key="NSFrame">{{302, 0}, {16, 216}}</string>
 						<reference key="NSSuperview" ref="236214384"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 						<reference key="NSTarget" ref="236214384"/>
 						<string key="NSAction">_doScroller:</string>
 						<double key="NSPercent">0.4221106</double>
+						<int key="NSKnobStyle">2</int>
 					</object>
 					<object class="NSScroller" id="290874252">
 						<reference key="NSNextResponder" ref="236214384"/>
 						<int key="NSvFlags">256</int>
-						<string key="NSFrame">{{1, 199}, {316, 16}}</string>
+						<string key="NSFrame">{{0, 200}, {318, 16}}</string>
 						<reference key="NSSuperview" ref="236214384"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="555227663"/>
@@ -125,16 +130,18 @@
 						<reference key="NSTarget" ref="236214384"/>
 						<string key="NSAction">_doScroller:</string>
 						<double key="NSPercent">0.27906979999999998</double>
+						<int key="NSKnobStyle">2</int>
 					</object>
 				</object>
 				<string key="NSFrameSize">{318, 216}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="52813598"/>
-				<int key="NSsFlags">133170</int>
+				<int key="NSsFlags">133168</int>
 				<reference key="NSVScroller" ref="555227663"/>
 				<reference key="NSHScroller" ref="290874252"/>
 				<reference key="NSContentView" ref="52813598"/>
+				<int key="NSScrollerKnobStyle">2</int>
 				<double key="NSMinMagnification">0.25</double>
 				<double key="NSMaxMagnification">4</double>
 				<double key="NSMagnification">1</double>
@@ -332,7 +339,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>AlbumCollectionView</string>
-					<reference ref="766554903"/>
+					<reference ref="309046567"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
@@ -412,35 +419,14 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">NSCollectionViewItem</string>
 					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>imageView</string>
-							<string>textField</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>NSImageView</string>
-							<string>NSTextField</string>
-						</object>
+						<string key="NS.key.0">imageView</string>
+						<string key="NS.object.0">NSImageView</string>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>imageView</string>
-							<string>textField</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">imageView</string>
-								<string key="candidateClassName">NSImageView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">textField</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
+						<string key="NS.key.0">imageView</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">imageView</string>
+							<string key="candidateClassName">NSImageView</string>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">

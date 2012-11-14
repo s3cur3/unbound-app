@@ -93,12 +93,8 @@
 // -------------------------------------------------------------------------------
 - (void)awakeFromNib
 {
-    // save this for later when toggling between alternate colors
-    savedAlternateColors = [collectionView backgroundColors];
-    
+
     [self setSortingMode:0];		// icon collection in ascending sort order
-    [self setAlternateColors:NO];	// no alternate background colors (initially use gradient background)
-    
     
     self.images = self.albums;
     return;
@@ -126,102 +122,14 @@
     self.images = tempArray;
     [self.albums makeObjectsPerformSelector:@selector(thumbnailImage)];
     
-    // Determine the content of the collection view by reading in the plist "icons.plist",
-    // and add extra "named" template images with the help of NSImage class.
-    //
-    /*NSBundle		*bundle = [NSBundle mainBundle];
-    NSString		*path = [bundle pathForResource: @"icons" ofType: @"plist"];
-    NSArray			*iconEntries = [NSArray arrayWithContentsOfFile: path];
-    NSMutableArray	*tempArray = [[NSMutableArray alloc] init];
+
     
-    // read the list of icons from disk in 'icons.plist'
-    if (iconEntries != nil)
-    {
-        NSInteger idx;
-        NSInteger count = [iconEntries count];
-        for (idx = 0; idx < count; idx++)
-        {
-            NSDictionary *entry = [iconEntries objectAtIndex:idx];
-            if (entry != nil)
-            {
-                NSString *codeStr = [entry valueForKey: KEY_IMAGE];
-                NSString *iconName = [entry valueForKey: KEY_NAME];
-                
-                OSType code = UTGetOSTypeFromString((__bridge CFStringRef)codeStr);
-                NSImage *picture = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(code)];
-                [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                       picture, KEY_IMAGE,
-                                       iconName, KEY_NAME,
-                                       nil]];
-            }
-        }
-    }
+    [self.collectionView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
     
-    // now add named image templates
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                           [NSImage imageNamed:NSImageNameIconViewTemplate], KEY_IMAGE,
-                           NSImageNameIconViewTemplate, KEY_NAME,
-                           nil]];
+    NSColor * color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
+    [[self.collectionView enclosingScrollView] setBackgroundColor:color];
     
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                           [NSImage imageNamed:NSImageNameBluetoothTemplate], KEY_IMAGE,
-                           NSImageNameBluetoothTemplate, KEY_NAME,
-                           nil]];
     
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                           [NSImage imageNamed:NSImageNameIChatTheaterTemplate], KEY_IMAGE,
-                           NSImageNameIChatTheaterTemplate, KEY_NAME,
-                           nil]];
-    
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                           [NSImage imageNamed:NSImageNameSlideshowTemplate], KEY_IMAGE,
-                           NSImageNameSlideshowTemplate, KEY_NAME,
-                           nil]];
-    
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                           [NSImage imageNamed:NSImageNameActionTemplate], KEY_IMAGE,
-                           NSImageNameActionTemplate, KEY_NAME,
-                           nil]];
-    
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                           [NSImage imageNamed:NSImageNameSmartBadgeTemplate], KEY_IMAGE,
-                           NSImageNameSmartBadgeTemplate, KEY_NAME,
-                           nil]];
-    
-    // Finder icon templates
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                           [NSImage imageNamed:NSImageNameListViewTemplate], KEY_IMAGE,
-                           NSImageNameListViewTemplate, KEY_NAME,
-                           nil]];
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                           [NSImage imageNamed:NSImageNameColumnViewTemplate], KEY_IMAGE,
-                           NSImageNameColumnViewTemplate, KEY_NAME,
-                           nil]];
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                           [NSImage imageNamed:NSImageNameFlowViewTemplate], KEY_IMAGE,
-                           NSImageNameFlowViewTemplate, KEY_NAME,
-                           nil]];
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                           [NSImage imageNamed:NSImageNamePathTemplate], KEY_IMAGE,
-                           NSImageNamePathTemplate, KEY_NAME,
-                           nil]];
-    
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                           [NSImage imageNamed:NSImageNameInvalidDataFreestandingTemplate], KEY_IMAGE,
-                           NSImageNameInvalidDataFreestandingTemplate, KEY_NAME,
-                           nil]];
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                           [NSImage imageNamed:NSImageNameLockLockedTemplate], KEY_IMAGE,
-                           NSImageNameLockLockedTemplate, KEY_NAME,
-                           nil]];
-    [tempArray addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                           [NSImage imageNamed:NSImageNameLockUnlockedTemplate], KEY_IMAGE,
-                           NSImageNameLockUnlockedTemplate, KEY_NAME,
-                           nil]];
-    
-    [self setImages:tempArray];*/
-    
-    [collectionView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
 }
 
 
@@ -246,11 +154,11 @@
     _alternateColors = useAlternateColors;
     if (_alternateColors)
     {
-        [collectionView setBackgroundColors:[NSArray arrayWithObjects:[NSColor gridColor], [NSColor lightGrayColor], nil]];
+        [self.collectionView setBackgroundColors:[NSArray arrayWithObjects:[NSColor gridColor], [NSColor lightGrayColor], nil]];
     }
     else
     {
-        [collectionView setBackgroundColors:savedAlternateColors];
+        [self.collectionView setBackgroundColors:savedAlternateColors];
     }
 }
 
@@ -323,6 +231,6 @@
 -(void)updateContent:(NSMutableArray *)newContent;
 {
     self.albums = newContent;
-    [collectionView setContent:newContent];
+    [self.collectionView setContent:newContent];
 }
 @end
