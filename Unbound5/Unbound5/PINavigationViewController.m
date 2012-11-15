@@ -10,6 +10,7 @@
 #import "PIViewController.h"
 
 #import "AlbumViewController.h"
+#import "PageViewController.h"
 
 @interface PINavigationViewController ()
 
@@ -61,34 +62,21 @@
     [aViewController.view setFrame:self.view.bounds];
     aViewController.navigationViewController = self;
     
-    
-    
-    if(NO )//|| self.viewControllers.count)
-    {
-        [self.view replaceSubview:currentViewController.view with:aViewController.view];
-        currentViewController.navigationViewController = nil;
-        [self.viewControllers removeObject:currentViewController];
-        //[self.view addSubview:aViewController.view];
-    } else {
-        [self.view addSubview:aViewController.view];
-    }
+    [currentViewController.view removeFromSuperview];
+    [self.view addSubview:aViewController.view];
+
     
     [self.viewControllers addObject:aViewController];
-    for (PIViewController *aVC in self.viewControllers)
-    {
-        if (aVC!=aViewController) {
-            [aVC.view setHidden:YES];
-        } else {
-            [aVC.view setHidden:NO];
-        }
-    }
-    
-    
     
     [self checkHideBackButton];
-    //NSWindow *mainWindow = [[NSApplication sharedApplication] mainWindow];
+    /*NSWindow *mainWindow = [[NSApplication sharedApplication] mainWindow];
     //[mainWindow setContentView:aViewController.view];
-    //[mainWindow makeFirstResponder:aViewController.view];
+
+    NSView *aView = [aViewController.view enclosingScrollView];
+    if (aView == nil) {
+        aView = aViewController.view;
+    }
+    [mainWindow makeFirstResponder:aView];*/
 }
 
 -(void)popViewController;
@@ -97,7 +85,7 @@
     [aViewController.view removeFromSuperview];
     aViewController.navigationViewController = nil;
     [self.viewControllers removeLastObject];
-    [[[self.viewControllers lastObject] view] setHidden:NO];
+    [self.view addSubview:[[self.viewControllers lastObject] view]];
     [self checkHideBackButton];
 }
 
