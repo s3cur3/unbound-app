@@ -27,7 +27,7 @@
 		</object>
 		<array class="NSMutableArray" key="IBDocument.RootObjects" id="1000">
 			<object class="NSCustomObject" id="1001">
-				<string key="NSClassName">NSViewController</string>
+				<string key="NSClassName">ImageViewController</string>
 			</object>
 			<object class="NSCustomObject" id="1003">
 				<string key="NSClassName">FirstResponder</string>
@@ -60,7 +60,7 @@
 								<string key="NSFrameSize">{102, 102}</string>
 								<reference key="NSSuperview" ref="254680761"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="228945311"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSImageCell" key="NSCell" id="767146921">
@@ -91,9 +91,10 @@
 					<object class="NSScroller" id="181441033">
 						<reference key="NSNextResponder" ref="873416191"/>
 						<int key="NSvFlags">-2147483392</int>
-						<string key="NSFrame">{{85, 1}, {16, 100}}</string>
+						<string key="NSFrame">{{-100, -100}, {16, 100}}</string>
 						<reference key="NSSuperview" ref="873416191"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="228945311"/>
 						<string key="NSReuseIdentifierKey">_NS:26</string>
 						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 						<reference key="NSTarget" ref="873416191"/>
@@ -104,10 +105,10 @@
 					<object class="NSScroller" id="228945311">
 						<reference key="NSNextResponder" ref="873416191"/>
 						<int key="NSvFlags">-2147483392</int>
-						<string key="NSFrame">{{1, 85}, {100, 16}}</string>
+						<string key="NSFrame">{{-100, -100}, {100, 16}}</string>
 						<reference key="NSSuperview" ref="873416191"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="181441033"/>
+						<reference key="NSNextKeyView" ref="254680761"/>
 						<string key="NSReuseIdentifierKey">_NS:30</string>
 						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 						<int key="NSsFlags">1</int>
@@ -119,9 +120,9 @@
 				<string key="NSFrameSize">{102, 102}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="254680761"/>
+				<reference key="NSNextKeyView" ref="181441033"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
-				<int key="NSsFlags">657968</int>
+				<int key="NSsFlags">678448</int>
 				<reference key="NSVScroller" ref="181441033"/>
 				<reference key="NSHScroller" ref="228945311"/>
 				<reference key="NSContentView" ref="254680761"/>
@@ -139,6 +140,14 @@
 						<reference key="destination" ref="873416191"/>
 					</object>
 					<int key="connectionID">36</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">imageView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="720546738"/>
+					</object>
+					<int key="connectionID">39</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -243,7 +252,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">36</int>
+			<int key="maxID">39</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -253,6 +262,28 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/AutoSizingImageView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">ImageViewController</string>
+					<string key="superclassName">NSViewController</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="imageView">AutoSizingImageView</string>
+						<string key="scrollView">NSScrollView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="imageView">
+							<string key="name">imageView</string>
+							<string key="candidateClassName">AutoSizingImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="scrollView">
+							<string key="name">scrollView</string>
+							<string key="candidateClassName">NSScrollView</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/ImageViewController.h</string>
 					</object>
 				</object>
 			</array>

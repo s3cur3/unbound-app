@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1D1FB36C1620F763002CD358 /* AutoSizingIKImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1FB36B1620F763002CD358 /* AutoSizingIKImageView.m */; };
 		1D1FB39E162117CD002CD358 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1FB39C162117CD002CD358 /* ImageViewController.m */; };
-		1D1FB39F162117CD002CD358 /* ImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D1FB39D162117CD002CD358 /* ImageViewController.xib */; };
 		1D1FB3EB16237174002CD358 /* ImageBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1FB3EA16237174002CD358 /* ImageBrowserCell.m */; };
 		1D1FB3EE162371F0002CD358 /* ImageBrowserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1FB3ED162371F0002CD358 /* ImageBrowserView.m */; };
 		1D3DE757161E8FCF00805174 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3DE756161E8FCF00805174 /* Cocoa.framework */; };
@@ -77,6 +76,7 @@
 		1DEF5A1F1641F68900DDD5D2 /* nophoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DEF5A1D1641F68900DDD5D2 /* nophoto@2x.png */; };
 		1DEF5A201641F68900DDD5D2 /* nophoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DEF5A1E1641F68900DDD5D2 /* nophoto.png */; };
 		1DFAC716162A596000FCF155 /* SimpleProfiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DFAC715162A596000FCF155 /* SimpleProfiler.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C1BA2F616548014006D528E /* PageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C1BA2F516548012006D528E /* PageView.m */; };
 		8CD071F91644498C00F2D703 /* unbound_icon_512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CD071F81644498C00F2D703 /* unbound_icon_512x512.png */; };
 		8CD071FB16444DEC00F2D703 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8CD071FA16444DEC00F2D703 /* icon.icns */; };
 		8CD071FE16444E6500F2D703 /* SquareImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CD071FD16444E6500F2D703 /* SquareImageView.m */; };
@@ -102,7 +102,6 @@
 		1D1FB36B1620F763002CD358 /* AutoSizingIKImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoSizingIKImageView.m; sourceTree = "<group>"; };
 		1D1FB39B162117CD002CD358 /* ImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewController.h; sourceTree = "<group>"; };
 		1D1FB39C162117CD002CD358 /* ImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageViewController.m; sourceTree = "<group>"; };
-		1D1FB39D162117CD002CD358 /* ImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageViewController.xib; sourceTree = "<group>"; };
 		1D1FB3E916237174002CD358 /* ImageBrowserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageBrowserCell.h; sourceTree = "<group>"; };
 		1D1FB3EA16237174002CD358 /* ImageBrowserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageBrowserCell.m; sourceTree = "<group>"; };
 		1D1FB3EC162371F0002CD358 /* ImageBrowserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageBrowserView.h; sourceTree = "<group>"; };
@@ -209,6 +208,8 @@
 		1DFAC70F162A4C4B00FCF155 /* ImageBrowserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageBrowserDelegate.m; sourceTree = "<group>"; };
 		1DFAC714162A596000FCF155 /* SimpleProfiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleProfiler.h; sourceTree = "<group>"; };
 		1DFAC715162A596000FCF155 /* SimpleProfiler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleProfiler.m; sourceTree = "<group>"; };
+		8C1BA2F416548011006D528E /* PageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageView.h; sourceTree = "<group>"; };
+		8C1BA2F516548012006D528E /* PageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageView.m; sourceTree = "<group>"; };
 		8CD071F81644498C00F2D703 /* unbound_icon_512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unbound_icon_512x512.png; sourceTree = "<group>"; };
 		8CD071FA16444DEC00F2D703 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		8CD071FC16444E6500F2D703 /* SquareImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SquareImageView.h; sourceTree = "<group>"; };
@@ -370,10 +371,11 @@
 				1D3DE7C7161F8EB000805174 /* imageview.xib */,
 				1D3DE7B6161F89E800805174 /* PageViewController.h */,
 				1D3DE7B7161F89E800805174 /* PageViewController.m */,
+				8C1BA2F416548011006D528E /* PageView.h */,
+				8C1BA2F516548012006D528E /* PageView.m */,
 				1D3DE7B8161F89E800805174 /* PageViewController.xib */,
 				1D1FB39B162117CD002CD358 /* ImageViewController.h */,
 				1D1FB39C162117CD002CD358 /* ImageViewController.m */,
-				1D1FB39D162117CD002CD358 /* ImageViewController.xib */,
 				1D4B948F1624FC2700C7BE3F /* videoview.xib */,
 				1D4B9491162501ED00C7BE3F /* AutoSizingVideoView.h */,
 				1D4B9492162501ED00C7BE3F /* AutoSizingVideoView.m */,
@@ -578,7 +580,6 @@
 				1D3DE7E8161F951100805174 /* image9.jpg in Resources */,
 				1D3DE7F4161FE6E500805174 /* IKImageViewController.xib in Resources */,
 				1D3DE7F7161FEF6200805174 /* earring.jpg in Resources */,
-				1D1FB39F162117CD002CD358 /* ImageViewController.xib in Resources */,
 				1D4B94901624FC2700C7BE3F /* videoview.xib in Resources */,
 				1D9EE78516276600008E7977 /* Preferences.xib in Resources */,
 				1DEF5A1F1641F68900DDD5D2 /* nophoto@2x.png in Resources */,
@@ -639,6 +640,7 @@
 				1DCE3C05164B2F750037F21A /* PIViewController.m in Sources */,
 				1DCE3C08164B353E0037F21A /* SplitViewController.m in Sources */,
 				1DC00136164C8F4B00AE375B /* SidebarViewController.m in Sources */,
+				8C1BA2F616548014006D528E /* PageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

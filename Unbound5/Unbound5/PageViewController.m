@@ -190,12 +190,7 @@ static NSString *ResolveName(NSString *aName)
 - (void)awakeFromNib
 {
     self.pageController.transitionStyle = NSPageControllerTransitionStyleHorizontalStrip;
-    //TODO: use [NSColor underPageBackgroundColor]
-    /*CALayer *aLayer = [CALayer layer];
-    aLayer.backgroundColor = (__bridge CGColorRef)([NSColor blackColor]);
-    [self.pageController.view setWantsLayer:YES];
-    aLayer.frame = self.pageController.view.bounds;
-    [self.pageController.view.layer addSublayer:aLayer];*/
+
     [self updateData];
 }
 
@@ -215,9 +210,9 @@ static NSString *ResolveName(NSString *aName)
     //NSLog(@"pageController.selectedIndex : %ld", pageController.selectedIndex);
     if (![identifier isEqualToString:@"video"])
     {
-        return [[NSViewController alloc] initWithNibName:@"imageview" bundle:nil];
+        return [[ImageViewController alloc] initWithNibName:@"imageview" bundle:nil];
     } else {
-        NSViewController *videoView = [[NSViewController alloc] initWithNibName:@"videoview" bundle:nil];
+        NSViewController *videoView = [[ImageViewController alloc] initWithNibName:@"videoview" bundle:nil];
         return videoView;
     }
 }
