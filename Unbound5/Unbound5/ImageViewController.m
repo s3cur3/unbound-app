@@ -14,6 +14,13 @@
 
 @implementation ImageViewController
 
+-(void)awakeFromNib
+{
+    
+}
+
+/*
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -39,5 +46,7 @@
 {
     return [super representedObject];
 }
+*/
+
 
 @end

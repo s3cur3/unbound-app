@@ -85,7 +85,10 @@
     [aViewController.view removeFromSuperview];
     aViewController.navigationViewController = nil;
     [self.viewControllers removeLastObject];
-    [self.view addSubview:[[self.viewControllers lastObject] view]];
+    
+    PIViewController * underViewController = [self.viewControllers lastObject];
+    [underViewController.view setFrame:self.view.bounds];
+    [self.view addSubview:[underViewController view]];
     [self checkHideBackButton];
 }
 

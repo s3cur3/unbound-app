@@ -172,7 +172,7 @@ static CGImageRef pinImage()
         
         [layer addSublayer:borderLayer];
 		
-
+        [layer setShouldRasterize:YES];
         
 		return layer;
 	}
@@ -241,6 +241,8 @@ static CGImageRef pinImage()
         
 				
 		[layer addSublayer:photoBackgroundLayer];
+        
+        [layer setShouldRasterize:YES];
 		
 		return layer;
 	}

@@ -9,12 +9,15 @@
 #import <Cocoa/Cocoa.h>
 #import "SearchItem.h"
 
-@interface ImageViewController : NSViewController
+@class AutoSizingImageView;
+
+@interface ImageViewController : NSViewController 
 {
-    IBOutlet NSImageView *_imageView;
+    
 }
 
-@property (nonatomic, strong) IBOutlet SearchItem *searchItem;
-@property (nonatomic, strong) IBOutlet NSImage *image;
+
+@property (nonatomic, strong) IBOutlet NSScrollView * scrollView;
+@property (nonatomic, strong) IBOutlet AutoSizingImageView *imageView;
 
 @end
