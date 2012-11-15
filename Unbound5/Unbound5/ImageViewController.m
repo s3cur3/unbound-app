@@ -14,10 +14,11 @@
 
 @implementation ImageViewController
 
+/*
 -(void)awakeFromNib
 {
     
-}
+}*/
 
 /*
 

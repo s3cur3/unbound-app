@@ -210,9 +210,9 @@ static NSString *ResolveName(NSString *aName)
     //NSLog(@"pageController.selectedIndex : %ld", pageController.selectedIndex);
     if (![identifier isEqualToString:@"video"])
     {
-        return [[ImageViewController alloc] initWithNibName:@"imageview" bundle:nil];
+        return [[NSViewController alloc] initWithNibName:@"imageview" bundle:nil];
     } else {
-        NSViewController *videoView = [[ImageViewController alloc] initWithNibName:@"videoview" bundle:nil];
+        NSViewController *videoView = [[NSViewController alloc] initWithNibName:@"videoview" bundle:nil];
         return videoView;
     }
 }

@@ -96,20 +96,15 @@
 						<reference key="NSNextKeyView" ref="972803657"/>
 						<reference key="NSDocView" ref="972803657"/>
 						<object class="NSColor" key="NSBGColor">
-							<int key="NSColorSpace">6</int>
-							<string key="NSCatalogName">System</string>
-							<string key="NSColorName">knobColor</string>
-							<object class="NSColor" key="NSColor">
-								<int key="NSColorSpace">3</int>
-								<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
-							</object>
+							<int key="NSColorSpace">2</int>
+							<bytes key="NSRGB">MC4wOTgwMzkyMjQ3NCAwLjA4NjI3NDUxMjExIDAuMDI3NDUwOTgyNDgAA</bytes>
 						</object>
 						<int key="NScvFlags">6</int>
 					</object>
 					<object class="NSScroller" id="555227663">
 						<reference key="NSNextResponder" ref="236214384"/>
-						<int key="NSvFlags">256</int>
-						<string key="NSFrame">{{302, 0}, {16, 216}}</string>
+						<int key="NSvFlags">-2147483392</int>
+						<string key="NSFrame">{{-100, -100}, {16, 216}}</string>
 						<reference key="NSSuperview" ref="236214384"/>
 						<reference key="NSWindow"/>
 						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -137,7 +132,7 @@
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="52813598"/>
-				<int key="NSsFlags">133136</int>
+				<int key="NSsFlags">133648</int>
 				<reference key="NSVScroller" ref="555227663"/>
 				<reference key="NSHScroller" ref="290874252"/>
 				<reference key="NSContentView" ref="52813598"/>
