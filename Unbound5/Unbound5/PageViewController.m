@@ -228,26 +228,58 @@ static NSString *ResolveName(NSString *aName)
     
     // Normally, we want to reset the magnification value to 1 as the user swipes to other images. However if the user cancels the swipe, we want to leave the original magnificaiton and scroll position alone.
     
-    /*BOOL isRepreparingOriginalView = (self.initialSelectedObject && self.initialSelectedObject == object) ? YES : NO;
+    BOOL isRepreparingOriginalView = (self.initialSelectedObject && self.initialSelectedObject == object) ? YES : NO;
     if (!isRepreparingOriginalView) {
         [(NSScrollView*)viewController.view setMagnification:1.0];
-    }*/
+        [self makeSelectedViewFirstResponder];
+    }
 
 }
 
 - (void)pageControllerWillStartLiveTransition:(NSPageController *)pageController {
     // Remember the initial selected object so we can determine when a cancel occurred.
-    //self.initialSelectedObject = [pageController.arrangedObjects objectAtIndex:pageController.selectedIndex];
+    self.initialSelectedObject = [pageController.arrangedObjects objectAtIndex:pageController.selectedIndex];
+}
+
+-(void)makeSelectedViewFirstResponder
+{
+    NSWindow *mainWindow = [[NSApplication sharedApplication] mainWindow];
+    //[mainWindow setContentView:aViewController.view];
+    
+    NSView *aView = self.pageController.selectedViewController.view;//
+    //aView = [self.pageController.selectedViewController.view enclosingScrollView];
+    /*if (aView == nil) {
+     aView = aViewController.view;
+     }*/
+    
+    
+    [mainWindow makeFirstResponder:aView];
 }
 
 
 - (void)pageController:(NSPageController *)pageController didTransitionToObject:(id)object
 {
     NSLog(@"didTransitionToObject : %@", object);
+    
+    
+    [self makeSelectedViewFirstResponder];
+    /*dispatch_async(dispatch_get_current_queue(), ^{
+    
+        NSWindow *mainWindow = [[NSApplication sharedApplication] mainWindow];
+        //[mainWindow setContentView:aViewController.view];
+        
+        NSView *aView = self.pageController.selectedViewController.view;//
+        //aView = [self.pageController.selectedViewController.view enclosingScrollView];
+        
+        
+        [mainWindow makeFirstResponder:aView];
+        
+    });*/
 }
 
 - (void)pageControllerDidEndLiveTransition:(NSPageController *)aPageController {
     [aPageController completeTransition];
+    [self makeSelectedViewFirstResponder];
 }
 
 
