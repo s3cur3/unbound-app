@@ -94,7 +94,6 @@
 						<string key="NSFrame">{{85, 1}, {16, 100}}</string>
 						<reference key="NSSuperview" ref="873416191"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:26</string>
 						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 						<reference key="NSTarget" ref="873416191"/>

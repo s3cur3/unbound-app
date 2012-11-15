@@ -31,5 +31,10 @@
 	}
 }
 
+- (id)animationForKey:(NSString *)key
+{
+    return nil;
+}
+
 
 @end

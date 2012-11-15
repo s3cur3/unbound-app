@@ -69,6 +69,9 @@ extern NSString *AlbumDidChangeNotification;
 }
 
 - (void)dealloc {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:_album];
+    
     //self.button = nil;
     //[super dealloc];
 }
@@ -101,10 +104,9 @@ extern NSString *AlbumDidChangeNotification;
 {
     if (newAlbum!=_album)
     {
-        if (_album)
-        {
-            [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:_album];
-        }
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:_album];
+        
         _album = newAlbum;
         if (_album!=nil)
         {

@@ -26,6 +26,9 @@
     
     NSColor * color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
     [[self enclosingScrollView] setBackgroundColor:color];
+    
+    // WARNING, THIS IS A PRIVATE METHOD
+    [self setValue:@(0) forKey:@"_animationDuration"];
 }
 
 
@@ -42,6 +45,11 @@
 {
     [super setSelectionIndexes:indexes];
 
+}
+
+- (id)animationForKey:(NSString *)key
+{
+    return nil;
 }
 
 
