@@ -49,6 +49,7 @@ enum {
 -(void)updatePhotosFromFileSystem;
 -(BOOL)albumExistsWithPhotos;
 -(BOOL)directoryHasUBMetadaFile;
+-(void)removeMetadataAndImageFiles;
 
 -(NSSortDescriptor *) dateLastModifiedSortDescriptor;
 

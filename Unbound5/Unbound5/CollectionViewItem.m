@@ -14,11 +14,18 @@
 
 @implementation CollectionViewItem
 
+-(IBAction)deleteItem:(id)sender
+{
+    DLog(@"Delete Item");
+}
+
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Initialization code here.
+        
     }
     
     return self;
@@ -29,6 +36,18 @@
 	if([self collectionView] && [[self collectionView] delegate] && [[[self collectionView] delegate] respondsToSelector:@selector(doubleClick:)]) {
 		[[[self collectionView] delegate] performSelector:@selector(doubleClick:) withObject:self];
 	}
+}
+
+-(void)rightMouseDown:(NSEvent *)theEvent {
+    NSLog(@"rightMouseDown:%@", theEvent);
+    NSMenu *theMenu = [[NSMenu alloc] initWithTitle:@"Options"];
+    [theMenu insertItemWithTitle:@"Delete" action:@selector(deleteItem:) keyEquivalent:@""atIndex:0];
+    [NSMenu popUpContextMenu:theMenu withEvent:theEvent forView:self.view];
+    //NSMenu *menu = [[NSMenu alloc] initWithTitle:]
+    /*NSMenu *menu = [self.delegate menuForCollectionItemView:self];
+    [menu popUpMenuPositioningItem:[[menu itemArray] objectAtIndex:0]
+                        atLocation:NSZeroPoint
+                            inView:self];*/
 }
 
 - (id)animationForKey:(NSString *)key

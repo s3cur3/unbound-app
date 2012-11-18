@@ -38,9 +38,37 @@
 	if([theEvent clickCount] > 1) {
 		NSLog(@"double click!");
 		if(delegate && [delegate respondsToSelector:@selector(doubleClick:)]) {
-            [delegate performSelector:@selector(doubleClick:) withObject:self];
+            [delegate performSelector:@selector(doubleClick:) withObject:theEvent];
         }
 	}
+    
+    if(( [NSEvent modifierFlags] & NSCommandKeyMask ) != 0 ) {
+        DLog(@"mouseDown with command pressed");
+        if(delegate && [delegate respondsToSelector:@selector(rightMouseDown:)]) {
+            [delegate performSelector:@selector(rightMouseDown:) withObject:theEvent];
+        }
+    } else {
+        DLog(@"mouseDown");
+    }
+}
+
+-(void)rightMouseDown:(NSEvent *)theEvent {
+    DLog(@"rightMouseDown:%@", theEvent);
+    
+    if(delegate && [delegate respondsToSelector:@selector(rightMouseDown:)]) {
+        [delegate performSelector:@selector(rightMouseDown:) withObject:theEvent];
+    }
+}
+
+-(IBAction)deleteItem:(id)sender
+{
+    DLog(@"Delete Item");
+    Album *anAlbum = (Album *)[delegate representedObject];
+    NSCollectionView *collectionView = [delegate collectionView];
+    id collectionViewDelegate = [collectionView delegate];
+    if(collectionViewDelegate && [collectionViewDelegate respondsToSelector:@selector(deleteAlbum:)]) {
+        [collectionViewDelegate performSelector:@selector(deleteAlbum:) withObject:anAlbum];
+    }
 }
 
 @end
@@ -107,6 +135,14 @@
 
     
     
+}
+
+-(IBAction)deleteAlbum:(Album *)anAlbum
+{
+    DLog(@"deleteItem");
+    //[self.albums removeObject:anAlbum];
+    [anAlbum removeMetadataAndImageFiles];
+    [arrayController removeObject:anAlbum];
 }
 
 -(IBAction)createNewAlbum:(id)sender;

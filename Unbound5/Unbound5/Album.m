@@ -34,6 +34,18 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
     return self;
 }
 
+
+-(void)removeMetadataAndImageFiles
+{
+    [self deleteMetadataFile];
+    NSArray *photoFiles = [self children];
+    for (id aPhoto in photoFiles)
+    {
+        DLog(@"deleting photo : %@", aPhoto);
+        [[NSFileManager defaultManager] removeItemAtURL:aPhoto error:nil];
+    }
+}
+
 +(Album *)createAlbumWithName:(NSString *)aName;
 {
     return [self createAlbumAtPath:nil withName:aName];
@@ -82,6 +94,15 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
         return [NSArray array];
     }
     return content;
+}
+
+-(void)deleteMetadataFile
+{
+    NSString *unboundFilePath = [NSString stringWithFormat:@"%@/.unbound", self.filePath];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:unboundFilePath])
+    {
+        [[NSFileManager defaultManager] removeItemAtPath:unboundFilePath error:nil];
+    }
 }
 
 -(void)createOrUpdateUnboundMetadataFile

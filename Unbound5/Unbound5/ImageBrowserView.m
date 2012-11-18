@@ -204,5 +204,15 @@
 	DLog(@"otherMouseDown");
 }
 
+-(void)testAction:(NSEvent *)event;
+{
+    DLog(@"testAction : %@", event);
+}
+
+-(void)getInfo:(NSEvent *)event;
+{
+    DLog(@"getInfo : %@", event);
+}
+
 
 @end

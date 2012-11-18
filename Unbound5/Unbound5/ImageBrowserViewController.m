@@ -136,6 +136,26 @@
     
 }
 
+
+
+- (void) imageBrowser:(IKImageBrowserView *) aBrowser
+cellWasRightClickedAtIndex:(NSUInteger) index withEvent:(NSEvent *)
+event
+{
+    //contextual menu for item index
+    NSMenu*  menu;
+    
+    menu = [[NSMenu alloc] initWithTitle:@"menu"];
+    [menu setAutoenablesItems:NO];
+    
+    [menu addItemWithTitle:[NSString stringWithFormat:@"Open"] action:
+     @selector(testAction:) keyEquivalent:@""];
+    [menu addItemWithTitle:[NSString stringWithFormat:@"Get Info"] action:
+     @selector(getInfo:) keyEquivalent:@""];
+    
+    [NSMenu popUpContextMenu:menu withEvent:event forView:aBrowser];
+}
+
 //
 #pragma mark Browser Drag and Drop Methods
 
