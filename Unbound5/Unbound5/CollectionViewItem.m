@@ -31,6 +31,11 @@
     return self;
 }
 
+-(void)awakeFromNib
+{
+    [self.view setWantsLayer:YES];
+}
+
 - (void)doubleClick:(id)sender {
 	NSLog(@"double click in the collectionItem");
 	if([self collectionView] && [[self collectionView] delegate] && [[[self collectionView] delegate] respondsToSelector:@selector(doubleClick:)]) {

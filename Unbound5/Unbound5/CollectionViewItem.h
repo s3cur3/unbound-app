@@ -15,4 +15,7 @@
 
 - (void)doubleClick:(id)sender;
 
+@property (strong) IBOutlet NSTextField * detailLabel;
+@property (strong) IBOutlet NSImageView * imageCell;
+
 @end

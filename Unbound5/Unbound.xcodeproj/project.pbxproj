@@ -454,12 +454,12 @@
 			children = (
 				1DD45A2A1648A910008A0BBF /* icons.plist */,
 				1DD45A261648A353008A0BBF /* Collection.xib */,
-				1DD45A271648A353008A0BBF /* IconViewPrototype.xib */,
 				1DD45A1616489E05008A0BBF /* AlbumViewController.h */,
 				1DD45A1716489E05008A0BBF /* AlbumViewController.m */,
 				1DD45A1816489E05008A0BBF /* AlbumViewController.xib */,
 				1DD45A5D16498E96008A0BBF /* CollectionViewItem.h */,
 				1DD45A5E16498E96008A0BBF /* CollectionViewItem.m */,
+				1DD45A271648A353008A0BBF /* IconViewPrototype.xib */,
 				1DCE3BF5164AEA820037F21A /* AlbumCollectionView.h */,
 				1DCE3BF6164AEA820037F21A /* AlbumCollectionView.m */,
 			);
