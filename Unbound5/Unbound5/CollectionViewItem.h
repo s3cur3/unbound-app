@@ -16,6 +16,7 @@
 - (void)doubleClick:(id)sender;
 
 @property (strong) IBOutlet NSTextField * detailLabel;
-@property (strong) IBOutlet NSImageView * imageCell;
+@property (strong) IBOutlet NSImageView * albumImageView;
+@property (strong, nonatomic) CALayer * borderLayer;
 
 @end

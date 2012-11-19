@@ -276,7 +276,7 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
     NSImage *result;
     // This code needs to be threadsafe, as it will be called from the background thread.
     // The easiest way to ensure you only use stack variables is to make it a class method.
-    NSNumber *maxPixelSize = [NSNumber numberWithInteger:100];
+    NSNumber *maxPixelSize = [NSNumber numberWithInteger:200];
     NSDictionary *imageOptions = [NSDictionary dictionaryWithObjectsAndKeys:
                                   (id)kCFBooleanTrue,(id)kCGImageSourceCreateThumbnailFromImageIfAbsent,
                                   //(id)kCFBooleanFalse,(id)kCGImageSourceCreateThumbnailFromImageIfAbsent,
@@ -397,7 +397,7 @@ static NSMutableArray *computeThumbnailClientQueue = nil;
     
     if (!self.photos.count)
     {
-        return [NSImage imageNamed:@"nophoto"];
+        return nil;
     }
     
     if (!(_state & ItemStateThumbnailLoaded)) {

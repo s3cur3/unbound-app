@@ -176,22 +176,6 @@
 }
 
 // -------------------------------------------------------------------------------
-//	setAlternateColors:useAlternateColors
-// -------------------------------------------------------------------------------
-- (void)setAlternateColors:(BOOL)useAlternateColors
-{
-    _alternateColors = useAlternateColors;
-    if (_alternateColors)
-    {
-        [self.collectionView setBackgroundColors:[NSArray arrayWithObjects:[NSColor gridColor], [NSColor lightGrayColor], nil]];
-    }
-    else
-    {
-        [self.collectionView setBackgroundColors:savedAlternateColors];
-    }
-}
-
-// -------------------------------------------------------------------------------
 //	setSortingMode:newMode
 // -------------------------------------------------------------------------------
 - (void)setSortingMode:(NSUInteger)newMode

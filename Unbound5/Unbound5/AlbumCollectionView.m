@@ -8,6 +8,8 @@
 
 #import "AlbumCollectionView.h"
 
+
+
 @implementation AlbumCollectionView
 
 - (id)initWithFrame:(NSRect)frame
@@ -36,9 +38,12 @@
 {
     // Drawing code here.
     
-    /*NSColor * color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
+    
+    /*
+    NSColor * color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
     [color setFill];
-    NSRectFill(dirtyRect);*/
+    NSRectFill(dirtyRect);
+    */
 }
 
 - (void)setSelectionIndexes:(NSIndexSet *)indexes

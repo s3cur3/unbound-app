@@ -7,8 +7,12 @@
 //
 
 #import "CollectionViewItem.h"
+#import "Album.h"
 
 @interface CollectionViewItem ()
+{
+    bool isSelected;
+}
 
 @end
 
@@ -33,8 +37,22 @@
 
 -(void)awakeFromNib
 {
-    [self.view setWantsLayer:YES];
+   [self.view setWantsLayer:YES];
 }
+
+-(void)setRepresentedObject:(id)representedObject
+{
+    [super setRepresentedObject:representedObject];
+    
+    
+    CGSize imageSize = [[(Album *)representedObject thumbnailImage] size];
+    
+    CGRect imageFrame = CGRectMake(0, 0, imageSize.width, imageSize.height);
+    
+    [self.borderLayer setFrame:imageFrame];
+    
+}
+
 
 - (void)doubleClick:(id)sender {
 	NSLog(@"double click in the collectionItem");
@@ -53,6 +71,21 @@
     [menu popUpMenuPositioningItem:[[menu itemArray] objectAtIndex:0]
                         atLocation:NSZeroPoint
                             inView:self];*/
+}
+
+-(CALayer *)borderLayer
+{
+    if(_borderLayer != nil) return _borderLayer;
+        
+    _borderLayer = [CALayer layer];
+    
+    _borderLayer.borderColor = [[NSColor whiteColor] CGColor];
+    _borderLayer.borderWidth = 5;
+    
+    
+    [self.view.layer addSublayer:_borderLayer];
+
+    return _borderLayer;
 }
 
 - (id)animationForKey:(NSString *)key
