@@ -7,7 +7,7 @@
 //
 
 #import "AlbumCollectionView.h"
-
+ #import <QuartzCore/QuartzCore.h>
 
 
 @implementation AlbumCollectionView
@@ -30,20 +30,26 @@
     [[self enclosingScrollView] setBackgroundColor:color];
     
     // WARNING, THIS IS A PRIVATE METHOD
-    [self setValue:@(0) forKey:@"_animationDuration"];
+    //[self setValue:@(0) forKey:@"_animationDuration"];
+}
+
+- (void)setContent:(NSArray *)content
+{
+    [CATransaction begin];
+    [CATransaction setValue:(id)kCFBooleanTrue
+                     forKey:kCATransactionDisableActions];
+    
+    [super setContent:content];
+    
+    [CATransaction commit];
+    
 }
 
 
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.
-    
-    
-    /*
-    NSColor * color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
-    [color setFill];
-    NSRectFill(dirtyRect);
-    */
+
 }
 
 - (void)setSelectionIndexes:(NSIndexSet *)indexes
@@ -52,10 +58,7 @@
 
 }
 
-- (id)animationForKey:(NSString *)key
-{
-    return nil;
-}
+
 
 
 

@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class BorderedImageView;
+
 @interface CollectionViewItem : NSCollectionViewItem
 {
     
@@ -16,7 +18,11 @@
 - (void)doubleClick:(id)sender;
 
 @property (strong) IBOutlet NSTextField * detailLabel;
-@property (strong) IBOutlet NSImageView * albumImageView;
-@property (strong, nonatomic) CALayer * borderLayer;
+@property (strong) IBOutlet BorderedImageView * albumImageView;
+
+@property (strong) IBOutlet BorderedImageView * stackPhoto1;
+@property (strong) IBOutlet BorderedImageView * stackPhoto2;
+@property (strong) IBOutlet BorderedImageView * stackPhoto3;
+
 
 @end

@@ -8,6 +8,7 @@
 
 #import "CollectionViewItem.h"
 #import "Album.h"
+#import "BorderedImageView.h"
 
 @interface CollectionViewItem ()
 {
@@ -38,6 +39,26 @@
 -(void)awakeFromNib
 {
    [self.view setWantsLayer:YES];
+    
+    [self.albumImageView setWantsLayer:YES];
+    [self.stackPhoto1 setWantsLayer:YES];
+    [self.stackPhoto2 setWantsLayer:YES];
+    [self.stackPhoto3 setWantsLayer:YES];
+    
+    [self.albumImageView.layer setZPosition:3];
+    [self.stackPhoto1.layer setZPosition:2];
+    [self.stackPhoto2.layer setZPosition:1];
+    [self.stackPhoto3.layer setZPosition:0];
+    
+    
+    
+    self.stackPhoto1.objectValue = [NSImage imageNamed:@"temp"];
+    self.stackPhoto2.objectValue = [NSImage imageNamed:@"temp-portrait"];
+    self.stackPhoto3.objectValue = [NSImage imageNamed:@"temp"];
+    
+    CATransform3D transform = CATransform3DMakeRotation (0.523598776, 0, 0, 1);
+    [self.stackPhoto1.layer setTransform:transform];
+    
 }
 
 -(void)setRepresentedObject:(id)representedObject
@@ -45,12 +66,14 @@
     [super setRepresentedObject:representedObject];
     
     
-    CGSize imageSize = [[(Album *)representedObject thumbnailImage] size];
     
-    CGRect imageFrame = CGRectMake(0, 0, imageSize.width, imageSize.height);
+}
+
+-(void)setSelected:(BOOL)selected
+{
+    [super setSelected:selected];
     
-    [self.borderLayer setFrame:imageFrame];
-    
+    [self.albumImageView setSelected:selected];
 }
 
 
@@ -73,20 +96,7 @@
                             inView:self];*/
 }
 
--(CALayer *)borderLayer
-{
-    if(_borderLayer != nil) return _borderLayer;
-        
-    _borderLayer = [CALayer layer];
-    
-    _borderLayer.borderColor = [[NSColor whiteColor] CGColor];
-    _borderLayer.borderWidth = 5;
-    
-    
-    [self.view.layer addSublayer:_borderLayer];
 
-    return _borderLayer;
-}
 
 - (id)animationForKey:(NSString *)key
 {
