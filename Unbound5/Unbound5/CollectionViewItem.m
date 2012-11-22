@@ -52,12 +52,14 @@
     
     
     
-    self.stackPhoto1.objectValue = [NSImage imageNamed:@"temp"];
-    self.stackPhoto2.objectValue = [NSImage imageNamed:@"temp-portrait"];
-    self.stackPhoto3.objectValue = [NSImage imageNamed:@"temp"];
+    self.stackPhoto1.image = [NSImage imageNamed:@"temp"];
+    self.stackPhoto2.image = [NSImage imageNamed:@"temp-portrait"];
+    self.stackPhoto3.image = [NSImage imageNamed:@"temp"];
     
-    CATransform3D transform = CATransform3DMakeRotation (0.523598776, 0, 0, 1);
-    [self.stackPhoto1.layer setTransform:transform];
+    [self.stackPhoto1 setFrameCenterRotation:2];
+    [self.stackPhoto2 setFrameCenterRotation:5];
+    [self.stackPhoto3 setFrameCenterRotation:-6];
+
     
 }
 

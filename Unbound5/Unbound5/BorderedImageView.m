@@ -28,9 +28,21 @@
     if(self.image == nil)
     {
         self.image = [NSImage imageNamed:@"temp-portrait"];
+        return;
     }
     
-    
+    [self setupBorder];
+        
+}
+
+-(void)setImage:(NSImage *)newImage
+{
+    [super setImage:newImage];
+    [self setupBorder];
+}
+
+-(void)setupBorder
+{
     // calculate the proportional image frame
     CGSize imageSize = [self.image size];
     
@@ -68,10 +80,12 @@
     // do your sublayer rearrangement here
     [self.borderLayer setFrame:imageFrame];
     [self.shadowLayer setFrame:imageFrame];
-    
+    _shadowLayer.contents = self.image;
     
     [CATransaction commit];
     
+    //[self.layer setShouldRasterize:YES];
+
 }
 
 -(void)setSelected:(BOOL)selected
@@ -106,6 +120,14 @@
     return _borderLayer;
 }
 
+
+-(void)drawRect:(NSRect)dirtyRect
+{
+    // do nothing here, everything is drawn using layers
+
+}
+
+
 -(CALayer *)shadowLayer
 {
     if(_shadowLayer != nil) return _shadowLayer;
@@ -125,7 +147,9 @@
     [photoBackgroundLayer setShadowPath:path];
     CGPathRelease(path);*/
     
-    _shadowLayer.zPosition = -1;
+    _shadowLayer.zPosition = 0;
+    
+    
     
     [self setWantsLayer:YES];
     [self.layer addSublayer:_shadowLayer];

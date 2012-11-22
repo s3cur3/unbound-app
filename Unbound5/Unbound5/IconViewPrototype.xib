@@ -55,7 +55,7 @@
 								<string key="NSFrame">{{0, 28}, {200, 23}}</string>
 								<reference key="NSSuperview" ref="687796720"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="204364145"/>
+								<reference key="NSNextKeyView" ref="182075764"/>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSTextFieldCell" key="NSCell" id="354990199">
 									<int key="NSCellFlags">-2080374720</int>
@@ -105,13 +105,13 @@
 								</object>
 								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 							</object>
-							<object class="NSCustomView" id="204364145">
+							<object class="NSCustomView" id="182075764">
 								<reference key="NSNextResponder" ref="687796720"/>
 								<int key="NSvFlags">269</int>
 								<object class="NSMutableArray" key="NSSubviews">
 									<bool key="EncodedWithXMLCoder">YES</bool>
 									<object class="NSImageView" id="551215551">
-										<reference key="NSNextResponder" ref="204364145"/>
+										<reference key="NSNextResponder" ref="182075764"/>
 										<int key="NSvFlags">271</int>
 										<object class="NSMutableSet" key="NSDragTypes">
 											<bool key="EncodedWithXMLCoder">YES</bool>
@@ -126,7 +126,7 @@
 											</object>
 										</object>
 										<string key="NSFrame">{{20, 20}, {140, 130}}</string>
-										<reference key="NSSuperview" ref="204364145"/>
+										<reference key="NSSuperview" ref="182075764"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="418580612"/>
 										<bool key="NSEnabled">YES</bool>
@@ -141,8 +141,8 @@
 										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 										<bool key="NSEditable">YES</bool>
 									</object>
-									<object class="NSImageView" id="472542275">
-										<reference key="NSNextResponder" ref="204364145"/>
+									<object class="NSImageView" id="880899478">
+										<reference key="NSNextResponder" ref="182075764"/>
 										<int key="NSvFlags">271</int>
 										<object class="NSMutableSet" key="NSDragTypes">
 											<bool key="EncodedWithXMLCoder">YES</bool>
@@ -157,10 +157,10 @@
 											</object>
 										</object>
 										<string key="NSFrame">{{20, 20}, {140, 130}}</string>
-										<reference key="NSSuperview" ref="204364145"/>
+										<reference key="NSSuperview" ref="182075764"/>
 										<reference key="NSWindow"/>
 										<bool key="NSEnabled">YES</bool>
-										<object class="NSImageCell" key="NSCell" id="403375177">
+										<object class="NSImageCell" key="NSCell" id="330857503">
 											<int key="NSCellFlags">134217728</int>
 											<int key="NSCellFlags2">33554432</int>
 											<int key="NSAlign">0</int>
@@ -171,8 +171,8 @@
 										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 										<bool key="NSEditable">YES</bool>
 									</object>
-									<object class="NSImageView" id="708709148">
-										<reference key="NSNextResponder" ref="204364145"/>
+									<object class="NSImageView" id="340095030">
+										<reference key="NSNextResponder" ref="182075764"/>
 										<int key="NSvFlags">271</int>
 										<object class="NSMutableSet" key="NSDragTypes">
 											<bool key="EncodedWithXMLCoder">YES</bool>
@@ -187,10 +187,10 @@
 											</object>
 										</object>
 										<string key="NSFrame">{{20, 20}, {140, 130}}</string>
-										<reference key="NSSuperview" ref="204364145"/>
+										<reference key="NSSuperview" ref="182075764"/>
 										<reference key="NSWindow"/>
 										<bool key="NSEnabled">YES</bool>
-										<object class="NSImageCell" key="NSCell" id="29778105">
+										<object class="NSImageCell" key="NSCell" id="476146514">
 											<int key="NSCellFlags">134217728</int>
 											<int key="NSCellFlags2">33554432</int>
 											<int key="NSAlign">0</int>
@@ -201,8 +201,8 @@
 										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 										<bool key="NSEditable">YES</bool>
 									</object>
-									<object class="NSImageView" id="1069379733">
-										<reference key="NSNextResponder" ref="204364145"/>
+									<object class="NSImageView" id="450432213">
+										<reference key="NSNextResponder" ref="182075764"/>
 										<int key="NSvFlags">271</int>
 										<object class="NSMutableSet" key="NSDragTypes">
 											<bool key="EncodedWithXMLCoder">YES</bool>
@@ -217,10 +217,10 @@
 											</object>
 										</object>
 										<string key="NSFrame">{{20, 20}, {140, 130}}</string>
-										<reference key="NSSuperview" ref="204364145"/>
+										<reference key="NSSuperview" ref="182075764"/>
 										<reference key="NSWindow"/>
 										<bool key="NSEnabled">YES</bool>
-										<object class="NSImageCell" key="NSCell" id="247526166">
+										<object class="NSImageCell" key="NSCell" id="422774258">
 											<int key="NSCellFlags">134217728</int>
 											<int key="NSCellFlags2">33554432</int>
 											<int key="NSAlign">0</int>
@@ -325,7 +325,7 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">stackPhoto1</string>
 						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="472542275"/>
+						<reference key="destination" ref="880899478"/>
 					</object>
 					<int key="connectionID">43</int>
 				</object>
@@ -333,7 +333,7 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">stackPhoto2</string>
 						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="708709148"/>
+						<reference key="destination" ref="340095030"/>
 					</object>
 					<int key="connectionID">48</int>
 				</object>
@@ -341,7 +341,7 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">stackPhoto3</string>
 						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="1069379733"/>
+						<reference key="destination" ref="450432213"/>
 					</object>
 					<int key="connectionID">49</int>
 				</object>
@@ -442,7 +442,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="1055722922"/>
 							<reference ref="418580612"/>
-							<reference ref="204364145"/>
+							<reference ref="182075764"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">View</string>
@@ -477,13 +477,13 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">38</int>
-						<reference key="object" ref="204364145"/>
+						<reference key="object" ref="182075764"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="551215551"/>
-							<reference ref="472542275"/>
-							<reference ref="708709148"/>
-							<reference ref="1069379733"/>
+							<reference ref="880899478"/>
+							<reference ref="340095030"/>
+							<reference ref="450432213"/>
 						</object>
 						<reference key="parent" ref="102288131"/>
 					</object>
@@ -494,7 +494,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="63285884"/>
 						</object>
-						<reference key="parent" ref="204364145"/>
+						<reference key="parent" ref="182075764"/>
 						<string key="objectName">Image View</string>
 					</object>
 					<object class="IBObjectRecord">
@@ -504,48 +504,48 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">40</int>
-						<reference key="object" ref="472542275"/>
+						<reference key="object" ref="880899478"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="403375177"/>
+							<reference ref="330857503"/>
 						</object>
-						<reference key="parent" ref="204364145"/>
+						<reference key="parent" ref="182075764"/>
 						<string key="objectName">Image View</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">41</int>
-						<reference key="object" ref="403375177"/>
-						<reference key="parent" ref="472542275"/>
+						<reference key="object" ref="330857503"/>
+						<reference key="parent" ref="880899478"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">44</int>
-						<reference key="object" ref="708709148"/>
+						<reference key="object" ref="340095030"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="29778105"/>
+							<reference ref="476146514"/>
 						</object>
-						<reference key="parent" ref="204364145"/>
+						<reference key="parent" ref="182075764"/>
 						<string key="objectName">Image View</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">45</int>
-						<reference key="object" ref="29778105"/>
-						<reference key="parent" ref="708709148"/>
+						<reference key="object" ref="476146514"/>
+						<reference key="parent" ref="340095030"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">46</int>
-						<reference key="object" ref="1069379733"/>
+						<reference key="object" ref="450432213"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="247526166"/>
+							<reference ref="422774258"/>
 						</object>
-						<reference key="parent" ref="204364145"/>
+						<reference key="parent" ref="182075764"/>
 						<string key="objectName">Image View</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">47</int>
-						<reference key="object" ref="247526166"/>
-						<reference key="parent" ref="1069379733"/>
+						<reference key="object" ref="422774258"/>
+						<reference key="parent" ref="450432213"/>
 					</object>
 				</object>
 			</object>

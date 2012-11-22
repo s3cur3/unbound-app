@@ -128,6 +128,7 @@
     
     
     [self.collectionView setMaxItemSize:NSSizeFromCGSize(CGSizeMake(300, 200))];
+    [self.collectionView setMinItemSize:NSSizeFromCGSize(CGSizeMake(200, 200))];
     
     [self.collectionView setWantsLayer:YES];
     
