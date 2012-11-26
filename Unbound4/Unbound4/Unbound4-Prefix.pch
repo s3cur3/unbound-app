@@ -1,7 +1,0 @@
-//
-// Prefix header for all source files of the 'Unbound4' target in the 'Unbound4' project
-//
-
-#ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
-#endif
