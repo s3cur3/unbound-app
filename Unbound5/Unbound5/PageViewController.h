@@ -36,6 +36,8 @@
 - (IBAction)goBack:sender;
 - (IBAction)editPhoto:sender;
 
+-(void)setDesktopImage:(id)sender;
+
 //-(PageViewController *) initWithURL:(NSURL *)aURL;
 
 @end

@@ -15,8 +15,6 @@ NSString *PhotoDidChangeNotification = @"PhotoDidChangeNotification";
 {
 }
 
-@property (nonatomic, strong) NSURL *filePath;
-
 @end
 
 @implementation Photo

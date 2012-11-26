@@ -10,13 +10,14 @@
 #import "SearchItem.h"
 
 @class AutoSizingImageView;
+@class PageViewController;
 
 @interface ImageViewController : NSViewController 
 {
     
 }
 
-
+@property (nonatomic, assign) PageViewController *pageViewController;
 @property (nonatomic, strong) IBOutlet NSScrollView * scrollView;
 @property (nonatomic, strong) IBOutlet AutoSizingImageView *imageView;
 

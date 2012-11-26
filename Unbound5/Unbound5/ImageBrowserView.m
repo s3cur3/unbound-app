@@ -204,15 +204,63 @@
 	DLog(@"otherMouseDown");
 }
 
--(void)testAction:(NSEvent *)event;
+-(IBAction)testAction:(id)sender;
 {
-    DLog(@"testAction : %@", event);
+    DLog(@"testAction : %@", sender);
 }
 
--(void)getInfo:(NSEvent *)event;
+-(IBAction)getInfo:(id)sender;
 {
-    DLog(@"getInfo : %@", event);
+    DLog(@"getInfo : %@", sender);
+    if(self.delegate && [self.delegate respondsToSelector:@selector(getInfo:)]) {
+        [self.delegate performSelector:@selector(getInfo:) withObject:sender];
+    }
+    
 }
+
+- (IBAction) openInApp:(id)sender
+{
+    if(self.delegate && [self.delegate respondsToSelector:@selector(openInApp:)]) {
+        [self.delegate performSelector:@selector(openInApp:) withObject:sender];
+    }
+}
+
+- (IBAction) revealInFinder:(id)sender
+{
+    if(self.delegate && [self.delegate respondsToSelector:@selector(revealInFinder:)]) {
+        [self.delegate performSelector:@selector(revealInFinder:) withObject:sender];
+    }
+}
+
+- (IBAction) deleteItems:(id)sender
+{
+    if(self.delegate && [self.delegate respondsToSelector:@selector(deleteItems:)]) {
+        [self.delegate performSelector:@selector(deleteItems:) withObject:sender];
+    }
+}
+
+/*-(NSMenu*)defaultMenuForIndex:(NSInteger)index
+{
+    if (index < 0) return nil;
+    
+    NSMenu *theMenu = [[NSMenu alloc]
+                        initWithTitle:@"Model browser context menu"];
+    [theMenu insertItemWithTitle:@"Open"
+                          action:@selector(openInApp:)
+                   keyEquivalent:@""
+                         atIndex:0];
+
+    
+    return theMenu;
+}
+
+-(NSMenu*)menuForEvent:(NSEvent*)evt
+{
+    DLog(@"%@",evt);
+    NSPoint pt = [self convertPoint:[evt locationInWindow] fromView:nil];
+    NSInteger index = 0;
+    return [self defaultMenuForIndex:index];
+}*/
 
 
 @end

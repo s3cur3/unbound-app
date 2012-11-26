@@ -64,11 +64,19 @@
 {
     DLog(@"Delete Item");
     Album *anAlbum = (Album *)[delegate representedObject];
-    NSCollectionView *collectionView = [delegate collectionView];
-    id collectionViewDelegate = [collectionView delegate];
-    if(collectionViewDelegate && [collectionViewDelegate respondsToSelector:@selector(deleteAlbum:)]) {
-        [collectionViewDelegate performSelector:@selector(deleteAlbum:) withObject:anAlbum];
+    if (NSRunCriticalAlertPanel(
+                                [NSString stringWithFormat:@"The album \"%@\" " @"will be deleted immediately.\nAre you sure you want to continue?", [anAlbum title]], @"You cannot undo this action.", @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
+        
+        NSCollectionView *collectionView = [delegate collectionView];
+        id collectionViewDelegate = [collectionView delegate];
+        if(collectionViewDelegate && [collectionViewDelegate respondsToSelector:@selector(deleteAlbum:)]) {
+            [collectionViewDelegate performSelector:@selector(deleteAlbum:) withObject:anAlbum];
+        }
+        
+        //return [self removeFileAtPath:standardizedSource handler:nil];
+    } else { // User clicked cancel, they obviously do not want to delete the file. return NO;
     }
+
 }
 
 @end

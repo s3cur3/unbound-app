@@ -9,6 +9,7 @@
 #import "ImageBrowserViewController.h"
 #import "PageViewController.h"
 #import "PINavigationViewController.h"
+#import "Photo.h"
 
 @interface ImageBrowserViewController ()
 
@@ -92,8 +93,17 @@
  */
 - (void)imageBrowser:(IKImageBrowserView *)view removeItemsAtIndexes:(NSIndexSet *)indexes
 {
-	[self.browserData removeObjectsAtIndexes:indexes];
-    [self.browserView reloadData];
+    NSIndexSet *selectedItems = [self.browserView selectionIndexes];
+    if ([selectedItems count]>1)
+    {
+        //[self.browserData removeObjectsAtIndexes:indexes];
+        //[self.browserView reloadData];
+        NSRunAlertPanel(@"Multiple Deletion", @"Deleting multiple photos is not available yet.", @"OK", nil, nil);
+    } else if ([selectedItems count]==1) {
+        NSUInteger index = [selectedItems lastIndex];
+        [self deleteItems:[self.browserData objectAtIndex:index]];
+    }
+	
 }
 
 /* action called when the zoom slider did change */
@@ -136,12 +146,38 @@
     
 }
 
+// Since IKImageBrowserView doesn't support context menus out of the box, we need to display them manually in
+// the following two delegate methods. Why couldn't Apple take care of this?
 
+- (void) imageBrowser:(IKImageBrowserView*)inView backgroundWasRightClickedWithEvent:(NSEvent*)inEvent
+{
+    if ([[self.browserView selectionIndexes] count])
+    {
+        //NSMenu* menu = [self menuForObject:nil];
+        NSMenu*  menu;
+        
+        menu = [[NSMenu alloc] initWithTitle:@"menu"];
+        [menu setAutoenablesItems:NO];
+        
+        [menu addItemWithTitle:[NSString stringWithFormat:@"Create New Album"] action:
+         @selector(createAlbumWithSelectedPhotos:) keyEquivalent:@""];
+        //[menu addItemWithTitle:[NSString stringWithFormat:@"Delete"] action:
+        //@selector(deleteItems:) keyEquivalent:@""];
+        
+        [[[menu itemArray] lastObject] setTarget:self];
+        
+        [NSMenu popUpContextMenu:menu withEvent:inEvent forView:inView];
+    }
+}
 
 - (void) imageBrowser:(IKImageBrowserView *) aBrowser
-cellWasRightClickedAtIndex:(NSUInteger) index withEvent:(NSEvent *)
+cellWasRightClickedAtIndex:(NSUInteger) inIndex withEvent:(NSEvent *)
 event
 {
+    
+    Photo* object = [self.browserData objectAtIndex:inIndex];
+	//NSMenu* menu = [self menuForObject:object];
+	//[NSMenu popUpContextMenu:menu withEvent:inEvent forView:inView];
     //contextual menu for item index
     NSMenu*  menu;
     
@@ -149,11 +185,97 @@ event
     [menu setAutoenablesItems:NO];
     
     [menu addItemWithTitle:[NSString stringWithFormat:@"Open"] action:
-     @selector(testAction:) keyEquivalent:@""];
+     @selector(openInApp:) keyEquivalent:@""];
+    [menu addItemWithTitle:[NSString stringWithFormat:@"Delete"] action:
+     @selector(deleteItems:) keyEquivalent:@""];
     [menu addItemWithTitle:[NSString stringWithFormat:@"Get Info"] action:
      @selector(getInfo:) keyEquivalent:@""];
+    [menu addItemWithTitle:[NSString stringWithFormat:@"Show In Finder"] action:
+     @selector(revealInFinder:) keyEquivalent:@""];
+    
+    for (NSMenuItem * anItem in [menu itemArray])
+    {
+        [anItem setRepresentedObject:object];
+    }
+    
     
     [NSMenu popUpContextMenu:menu withEvent:event forView:aBrowser];
+}
+
+-(IBAction)getInfo:(id)sender;
+{
+    //NSInteger row = [sender clickedRow];
+    NSIndexSet *idxSet = [self.browserView selectionIndexes];
+    
+    [idxSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        Photo *item = [self.browserData objectAtIndex:idx];
+        if (item) {
+            NSPasteboard *pboard = [NSPasteboard pasteboardWithUniqueName];
+            [pboard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
+            [pboard setString:[item.filePath path]  forType:NSStringPboardType];
+            NSPerformService(@"Finder/Show Info", pboard);
+        }
+    }];
+    
+}
+
+- (IBAction) openInApp:(id)sender
+{
+    NSIndexSet *idxSet = [self.browserView selectionIndexes];
+    [idxSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        Photo *item = [self.browserData objectAtIndex:idx];
+        if (item) {
+            NSString* path = (NSString*)[[item filePath] path];
+            [[NSWorkspace sharedWorkspace] openFile:path];
+        }
+    }];
+	
+}
+
+- (IBAction) revealInFinder:(id)inSender
+{
+	NSString* path = [[(Photo *)[inSender representedObject] filePath] path];
+	NSString* folder = [path stringByDeletingLastPathComponent];
+	[[NSWorkspace sharedWorkspace] selectFile:path inFileViewerRootedAtPath:folder];
+}
+
+- (IBAction) createAlbumWithSelectedPhotos:(id)inSender
+{
+	DLog(@"createAlbumWithSelectedPhotos");
+    NSRunAlertPanel(@"Create Album", @"This feature is not ready yet.", @"OK", nil, nil);
+}
+
+- (IBAction) deleteItems:(id)inSender
+{
+    NSString *path = nil;
+    Photo *aPhoto = nil;
+    if ([inSender class] == [Photo class])
+    {
+        path = [[(Photo*)inSender filePath] path];
+        aPhoto = inSender;
+    } else {
+        path = [[(Photo*)[inSender representedObject] filePath] path];
+        aPhoto = [inSender representedObject];
+    }
+    
+    if (NSRunCriticalAlertPanel(
+                                [NSString stringWithFormat:@"The file \"%@\" " @"will be deleted immediately.\nAre you sure you want to continue?", [path  lastPathComponent]], @"You cannot undo this action.", @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
+        
+        [[NSWorkspace sharedWorkspace]
+         performFileOperation:NSWorkspaceRecycleOperation
+         source:[path stringByDeletingLastPathComponent]
+         destination:@""
+         files:[NSArray arrayWithObject:[path lastPathComponent]]
+         tag:nil];
+        [self.browserData removeObject:aPhoto];
+        [self.browserView reloadData];
+        
+        [self.album updatePhotosFromFileSystem];
+        
+        //return [self removeFileAtPath:standardizedSource handler:nil];
+    } else { // User clicked cancel, they obviously do not want to delete the file. return NO;
+    } 
+
 }
 
 //
@@ -264,5 +386,7 @@ event
     //[self.browserView setAnimates:NO];
 	//[self.browserView reloadData];
 }
+
+
 
 @end

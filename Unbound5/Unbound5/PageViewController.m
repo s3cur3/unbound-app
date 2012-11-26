@@ -13,6 +13,7 @@
 #import "SearchItem.h"
 #import "ImageViewController.h"
 #import "Album.h"
+#import "Photo.h"
 #import "SearchItem.h"
 #import <QTKit/QTKit.h>
 #import <Quartz/Quartz.h>
@@ -194,6 +195,52 @@ static NSString *ResolveName(NSString *aName)
     [self updateData];
 }
 
+-(void)moveToNextPage
+{
+    NSInteger index = [self.pageController selectedIndex];
+    if (index < [[self.pageController arrangedObjects] count])
+    {
+        [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+            [[self.pageController animator] setSelectedIndex:index+1];
+        } completionHandler:^{
+            [self.pageController completeTransition];
+        }];
+    }
+    
+}
+
+-(void)moveToPreviousPage
+{
+    NSInteger index = [self.pageController selectedIndex];
+    if (index > 0)
+    {
+        [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+            [[self.pageController animator] setSelectedIndex:index-1];
+        } completionHandler:^{
+            [self.pageController completeTransition];
+        }];
+    }
+    
+}
+
+-(void)setDesktopImage:(id)sender
+{
+    NSDictionary *screenOptions = [[NSWorkspace sharedWorkspace] desktopImageOptionsForScreen:[NSScreen mainScreen]];
+    NSError *error = nil;
+    
+    Photo *anItem = [self.album.photos objectAtIndex:self.pageController.selectedIndex];
+    NSURL *aURL = [anItem filePath];
+    
+    [[NSWorkspace sharedWorkspace] setDesktopImageURL:aURL
+                                            forScreen:[NSScreen mainScreen]
+                                              options:screenOptions
+                                                error:&error];
+    if (error)
+    {
+        [NSApp presentError:error];
+    }
+}
+
 @end
 
 @implementation PageViewController (NSPageControllerDelegate)
@@ -210,7 +257,10 @@ static NSString *ResolveName(NSString *aName)
     //NSLog(@"pageController.selectedIndex : %ld", pageController.selectedIndex);
     if (![identifier isEqualToString:@"video"])
     {
-        return [[NSViewController alloc] initWithNibName:@"imageview" bundle:nil];
+        //return [[NSViewController alloc] initWithNibName:@"imageview" bundle:nil];
+        ImageViewController *aVC =  [[ImageViewController alloc] initWithNibName:@"imageview" bundle:nil];
+        aVC.pageViewController = self;
+        return aVC;
     } else {
         NSViewController *videoView = [[NSViewController alloc] initWithNibName:@"videoview" bundle:nil];
         return videoView;

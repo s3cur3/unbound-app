@@ -16,6 +16,7 @@ extern NSString *PhotoDidChangeNotification;
 }
 
 @property (nonatomic, strong) NSDate *dateLastModified;
+@property (nonatomic, strong) NSURL *filePath;
 
 -(id)initWithURL:(NSURL *)filePathURL;
 -(id)initWithMetadataItem:(NSMetadataItem *)metadataItem;
