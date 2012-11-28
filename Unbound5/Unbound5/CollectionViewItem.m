@@ -56,12 +56,19 @@
     self.stackPhoto2.image = [NSImage imageNamed:@"temp-portrait"];
     self.stackPhoto3.image = [NSImage imageNamed:@"temp"];
     
-    [self.stackPhoto1 setFrameCenterRotation:2];
-    [self.stackPhoto2 setFrameCenterRotation:5];
-    [self.stackPhoto3 setFrameCenterRotation:-6];
+    [[self.stackPhoto1 superview] setWantsLayer:YES];
+    
+    self.stackPhoto1.layer.anchorPoint = CGPointMake(0.5,0.5);
+    [self.stackPhoto1.layer setTransform:CATransform3DMakeRotation(0.34906585, 0, 1.0, 0)];
+    
+    //[self.stackPhoto1 setFrameCenterRotation:20];
+    /*[self.stackPhoto2 setFrameCenterRotation:5];
+    [self.stackPhoto3 setFrameCenterRotation:-6];*/
 
     
 }
+
+
 
 -(void)setRepresentedObject:(id)representedObject
 {
