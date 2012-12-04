@@ -10,11 +10,10 @@
 
 @implementation SquareImageView
 
-
 - (void)drawRect:(NSRect)rect
 {
     //[super drawRect:rect];
-    NSRect cropRect = self.frame;
+    NSRect cropRect = self.bounds;
     
     
     /*
@@ -24,7 +23,7 @@
               fraction:1];*/
     
     CGSize imageSize = [self.image size];
-    NSRect imageRect = CGRectMake(0, 0, 55, 55);
+    NSRect imageRect = self.bounds;
     
     if(imageSize.width > imageSize.height)
     {

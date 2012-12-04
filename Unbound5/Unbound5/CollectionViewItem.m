@@ -39,11 +39,7 @@
 -(void)awakeFromNib
 {
    [self.view setWantsLayer:YES];
-    
-    [self.albumImageView setWantsLayer:YES];
-    [self.stackPhoto1 setWantsLayer:YES];
-    [self.stackPhoto2 setWantsLayer:YES];
-    [self.stackPhoto3 setWantsLayer:YES];
+
     
     [self.albumImageView.layer setZPosition:3];
     [self.stackPhoto1.layer setZPosition:2];
@@ -56,14 +52,21 @@
     self.stackPhoto2.image = [NSImage imageNamed:@"temp-portrait"];
     self.stackPhoto3.image = [NSImage imageNamed:@"temp"];
     
-    [[self.stackPhoto1 superview] setWantsLayer:YES];
     
-    self.stackPhoto1.layer.anchorPoint = CGPointMake(0.5,0.5);
-    [self.stackPhoto1.layer setTransform:CATransform3DMakeRotation(0.34906585, 0, 1.0, 0)];
+    CGPoint center = CGPointMake(self.stackPhoto1.bounds.size.width/2, self.stackPhoto1.bounds.size.height/2);
+    CGPoint rotatedPoint = CGPointZero;
     
-    //[self.stackPhoto1 setFrameCenterRotation:20];
-    /*[self.stackPhoto2 setFrameCenterRotation:5];
-    [self.stackPhoto3 setFrameCenterRotation:-6];*/
+    /*
+    rotatedPoint = CGPointApplyAffineTransform(center, CGAffineTransformMakeRotation(45));
+    [self.stackPhoto1 setf:NSMakePoint(self.stackPhoto1.frame.origin.x + (rotatedPoint.x-center.x),
+                                                 self.stackPhoto1.frame.origin.y + (rotatedPoint.y-center.y))];*/
+    //[self.stackPhoto1 setFrameCenterRotation:45];
+    
+    
+    
+    
+    //[self.stackPhoto2 setFrameCenterRotation:45];
+    //[self.stackPhoto3 setFrameCenterRotation:-6];*/
 
     
 }

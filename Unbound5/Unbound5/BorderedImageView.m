@@ -21,6 +21,10 @@
 
 @implementation BorderedImageView
 
+
+
+
+
 -(void)setObjectValue:(id<NSCopying>)obj
 {
     [super setObjectValue:obj];
@@ -43,6 +47,10 @@
 
 -(void)setupBorder
 {
+    // make this a layer hosting view, not a layer backed view
+    //self.layer = [CALayer layer];
+    [self setWantsLayer:YES];
+    
     // calculate the proportional image frame
     CGSize imageSize = [self.image size];
     
@@ -85,6 +93,7 @@
     [CATransaction commit];
     
     //[self.layer setShouldRasterize:YES];
+    
 
 }
 
@@ -114,7 +123,7 @@
     _borderLayer.borderWidth = 6;
     _borderLayer.zPosition = 1;
     
-    [self setWantsLayer:YES];
+    //[self setWantsLayer:YES];
     [self.layer addSublayer:_borderLayer];
     
     return _borderLayer;
@@ -149,9 +158,7 @@
     
     _shadowLayer.zPosition = 0;
     
-    
-    
-    [self setWantsLayer:YES];
+    //[self setWantsLayer:YES];
     [self.layer addSublayer:_shadowLayer];
     
     return _shadowLayer;
