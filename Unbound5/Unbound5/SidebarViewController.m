@@ -138,10 +138,6 @@
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(id)item {
     SidebarTableCellView *result = [outlineView makeViewWithIdentifier:@"MainCell" owner:self];
     result.album = (Album *)item;
-    if (item == self.selectedAlbum)
-    {
-        DLog(@"Selected row sky");
-    }
     return result;
 }
 //
