@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class Album;
+
 extern NSString *PhotoDidChangeNotification;
 
 @interface Photo : NSObject
@@ -17,6 +19,8 @@ extern NSString *PhotoDidChangeNotification;
 
 @property (nonatomic, strong) NSDate *dateLastModified;
 @property (nonatomic, strong) NSURL *filePath;
+@property (nonatomic, strong) NSString *fileName;
+@property (nonatomic, weak) Album *album;
 
 -(id)initWithURL:(NSURL *)filePathURL;
 -(id)initWithMetadataItem:(NSMetadataItem *)metadataItem;

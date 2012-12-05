@@ -7,6 +7,7 @@
 //
 
 #import "Photo.h"
+#import "Album.h"
 #import <Quartz/Quartz.h>
 
 NSString *PhotoDidChangeNotification = @"PhotoDidChangeNotification";
@@ -24,21 +25,51 @@ NSString *PhotoDidChangeNotification = @"PhotoDidChangeNotification";
     self = [super init];
     if (self) {
         self.filePath = filePathURL;
+        self.fileName = [filePathURL.pathComponents lastObject];
     }
     return self;
 }
 
--(id)initWithMetadataItem:(NSMetadataItem *)metadataItem;
+/*-(id)initWithMetadataItem:(NSMetadataItem *)metadataItem;
 {
     NSString *aPath = [metadataItem valueForAttribute:(NSString *)kMDItemPath];
     NSURL *aFilePathURL = [NSURL fileURLWithPath:aPath];
     NSAssert(aFilePathURL, @"Photo init called with bad metadataItem");
     return [self initWithURL:aFilePathURL];
+}*/
+
+-(void)setAlbum:(Album *)newAlbum
+{
+    if (_album!=newAlbum)
+    {
+        if (_album!=nil)
+        {
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:@"" object:_album];
+        }
+        _album = newAlbum;
+        if(_album!=nil)
+        {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(albumChanged:) name:AlbumDidChangeNotification object:_album];
+        }
+    }
+}
+
+-(void)albumChanged:(id)sender
+{
+    NSString *aFilePath = [NSString stringWithFormat:@"%@/%@", self.album.filePath, self.fileName];
+    self.filePath = [NSURL fileURLWithPath:aFilePath];
 }
 
 -(void)dumpAttributesToLog;
 {
     DLog(@"%@", self.filePath);
+}
+
+-(void)dealloc
+{
+    if (self.album!=nil) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:_album];
+    }
 }
 
 

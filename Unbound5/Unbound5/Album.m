@@ -34,6 +34,12 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
     return self;
 }
 
+-(void)setFilePath:(NSString *)aPath
+{
+    _filePath = [aPath copy];
+    self.title = [aPath lastPathComponent];
+}
+
 
 -(void)removeMetadataAndImageFiles
 {
@@ -76,7 +82,9 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
 
 -(void)addPhotosObject:(id)object
 {
-    [self.photos addObject:object];
+    Photo *aPhoto = (Photo *)object;
+    aPhoto.album = self;
+    [self.photos addObject:aPhoto];
 }
 
 
@@ -161,6 +169,8 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
     
     [self resetThumbImage];
     [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
+    
+    [self.photos makeObjectsPerformSelector:@selector(setAlbum:) withObject:self];
     
 }
 

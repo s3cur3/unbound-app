@@ -244,5 +244,32 @@
     
 }
 
+- (IBAction)textTitleChanged:(id)sender {
+    DLog(@"textTitleChanged");
+    if ([self.outlineView selectedRow] != -1) {
+        NSTextField *aTextField =(NSTextField *)sender;
+        
+        Album *anAlbum =  [self.outlineView itemAtRow:[self.outlineView selectedRow]];
+        if ([aTextField.stringValue length]==0 || [aTextField.stringValue isEqualToString:anAlbum.title])
+        {
+            return;
+        }
+        NSString *parentFolderPath = [anAlbum.filePath stringByDeletingLastPathComponent];
+        NSString *newFilePath = [parentFolderPath stringByAppendingPathComponent:aTextField.stringValue];
+        
+        
+        NSError *error;
+        BOOL success = [[NSFileManager defaultManager] moveItemAtPath:anAlbum.filePath toPath:newFilePath error:&error];
+        if (!success)
+        {
+            [[NSApplication sharedApplication] presentError:error];
+            //an error occurred when moving so keep the old title
+            aTextField.stringValue = anAlbum.title;
+        } else {
+            anAlbum.filePath = newFilePath;
+            [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:anAlbum];
+        }
+    }
+}
 
 @end

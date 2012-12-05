@@ -12,7 +12,8 @@
 @class SplitViewController;
 
 @interface SidebarViewController : PIViewController <NSOutlineViewDataSource,
-                                                    NSOutlineViewDelegate>
+                                                    NSOutlineViewDelegate,
+                                                    NSTextFieldDelegate>
 
 @property (nonatomic, assign) IBOutlet NSOutlineView *outlineView;
 @property (nonatomic, assign) IBOutlet MainWindowController *mainWindow;
