@@ -37,6 +37,7 @@ enum {
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSMutableArray *photos;
 @property (nonatomic, strong) NSDate *dateLastScanned;
+@property (nonatomic, strong) NSDate *dateMostRecentPhoto;
 @property (nonatomic, strong) NSImage *thumbnailImage;
 
 //@property NSSize imageSize;

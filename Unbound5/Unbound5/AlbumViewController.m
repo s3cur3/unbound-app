@@ -122,7 +122,8 @@
 //#define KEY_NAME	@"name"
 
 #define KEY_IMAGE	@"thumbnailImage"
-#define KEY_NAME	@"title"
+#define KEY_TITLE	@"title"
+#define KEY_DATE    @"dateMostRecentPhoto"
 
 // -------------------------------------------------------------------------------
 //	awakeFromNib
@@ -190,10 +191,14 @@
 - (void)setSortingMode:(NSUInteger)newMode
 {
     _sortingMode = newMode;
-    NSSortDescriptor *sort = [[NSSortDescriptor alloc]
-                               initWithKey:KEY_NAME
+    /*NSSortDescriptor *sort = [[NSSortDescriptor alloc]
+                               initWithKey:KEY_DATE
                                ascending:(_sortingMode == 0)
-                               selector:@selector(caseInsensitiveCompare:)];
+                               selector:@selector(caseInsensitiveCompare:)];*/
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc]
+                              initWithKey:KEY_DATE
+                              ascending:NO
+                              selector:@selector(compare:)];
     [arrayController setSortDescriptors:[NSArray arrayWithObject:sort]];
 }
 
@@ -211,7 +216,7 @@
      {
          NSDictionary *dictionary = [[cv content] objectAtIndex:idx];
          NSImage *image = [dictionary valueForKey:KEY_IMAGE];
-         NSString *name = [dictionary valueForKey:KEY_NAME];
+         NSString *name = [dictionary valueForKey:KEY_TITLE];
          if (image && name)
          {
              NSURL *url = [temporaryDirectoryURL URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.tiff", name]];

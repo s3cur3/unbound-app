@@ -173,6 +173,11 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
             NSDate *modDate;
             [itemURL getResourceValue:&modDate forKey:NSURLContentModificationDateKey error:nil];
             aPhoto.dateLastModified = modDate;
+            if (self.dateMostRecentPhoto == nil ||
+                [modDate isGreaterThanOrEqualTo:self.dateMostRecentPhoto])
+            {
+                self.dateMostRecentPhoto = modDate;
+            }
             //[self addPhotosObject:aPhoto];
             [somePhotos addObject:aPhoto];
         }
