@@ -266,7 +266,8 @@
             //an error occurred when moving so keep the old title
             aTextField.stringValue = anAlbum.title;
         } else {
-            anAlbum.filePath = newFilePath;
+            [anAlbum userSetTitle:aTextField.stringValue];
+            //anAlbum.filePath = newFilePath;
             [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:anAlbum];
         }
     }

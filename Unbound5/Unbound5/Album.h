@@ -58,4 +58,6 @@ enum {
 - (NSImage *)thumbnailImage;
 - (NSString *) imageSubtitle;
 
+-(void)userSetTitle:(NSString *)title;
+
 @end

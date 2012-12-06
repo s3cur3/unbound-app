@@ -14,6 +14,7 @@
 {
     
 }
+@property (weak) IBOutlet NSTextField *mainLabel;
 
 - (void)doubleClick:(id)sender;
 

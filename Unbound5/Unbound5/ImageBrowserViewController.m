@@ -10,6 +10,7 @@
 #import "PageViewController.h"
 #import "PINavigationViewController.h"
 #import "Photo.h"
+#import "AppDelegate.h"
 
 @interface ImageBrowserViewController ()
 
@@ -50,6 +51,14 @@
     return self;
 }
 
+-(NSArray *)browserData
+{
+    if (_browserData == nil) {
+        _browserData = self.album.photos;
+    }
+    return _browserData;
+}
+
 -(void)awakeFromNib
 {
     if (self.browserView)
@@ -58,7 +67,7 @@
         
         NSColor * color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
         [[self.browserView enclosingScrollView] setBackgroundColor:color];
-        self.browserData = self.album.photos;
+        //self.browserData = self.album.photos;
         [self.browserView reloadData];
     }
 }
@@ -93,8 +102,10 @@
  */
 - (void)imageBrowser:(IKImageBrowserView *)view removeItemsAtIndexes:(NSIndexSet *)indexes
 {
-    NSIndexSet *selectedItems = [self.browserView selectionIndexes];
-    if ([selectedItems count]>1)
+    //NSIndexSet *selectedItems = [self.browserView selectionIndexes];
+    NSArray *itemsToDelete = [self.browserData objectsAtIndexes:indexes];
+    [self deleteItems:itemsToDelete];
+    /*if ([selectedItems count]>1)
     {
         //[self.browserData removeObjectsAtIndexes:indexes];
         //[self.browserView reloadData];
@@ -102,7 +113,7 @@
     } else if ([selectedItems count]==1) {
         NSUInteger index = [selectedItems lastIndex];
         [self deleteItems:[self.browserData objectAtIndex:index]];
-    }
+    }*/
 	
 }
 
@@ -245,32 +256,75 @@ event
     NSRunAlertPanel(@"Create Album", @"This feature is not ready yet.", @"OK", nil, nil);
 }
 
-- (IBAction) deleteItems:(id)inSender
+-(void)moveItems:(NSArray *)items
 {
-    NSString *path = nil;
-    Photo *aPhoto = nil;
-    if ([inSender class] == [Photo class])
+    NSMutableArray *undoArray = [NSMutableArray arrayWithCapacity:items.count];
+    for (NSDictionary *aDict in items)
     {
-        path = [[(Photo*)inSender filePath] path];
-        aPhoto = inSender;
-    } else {
-        path = [[(Photo*)[inSender representedObject] filePath] path];
-        aPhoto = [inSender representedObject];
+        NSString *src = [aDict valueForKey:@"source"];
+        NSString *dest = [aDict valueForKey:@"destination"];
+        
+        NSString *undoSrc = [NSString stringWithFormat:@"%@/%@", dest, [src lastPathComponent]];
+        NSString *undoDest = [src stringByDeletingLastPathComponent];
+        
+        [undoArray addObject:@{@"source" : undoSrc, @"destination" : undoDest}];
+                         
+        [[NSWorkspace sharedWorkspace]
+         performFileOperation:NSWorkspaceMoveOperation
+         source: [src stringByDeletingLastPathComponent]
+         destination:dest
+         files:[NSArray arrayWithObject:[src lastPathComponent]]
+         tag:nil];
     }
     
-    if (NSRunCriticalAlertPanel(
-                                [NSString stringWithFormat:@"The file \"%@\" " @"will be deleted immediately.\nAre you sure you want to continue?", [path  lastPathComponent]], @"You cannot undo this action.", @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
+    [self.album updatePhotosFromFileSystem];
+    self.browserData = nil;
+    [self.browserView reloadData];
+    
+    NSUndoManager *undoManager = [[AppDelegate applicationDelegate] undoManager];
+    [undoManager registerUndoWithTarget:self selector:@selector(moveItems:) object:undoArray];
+    
+}
+
+- (IBAction) deleteItems:(NSArray *)inSender
+{
+    NSMutableArray *pathsToDelete = [NSMutableArray arrayWithCapacity:inSender.count];
+    NSString *trashFolder = [[AppDelegate applicationDelegate] trashFolderPath];
+    for (id anItem in (NSArray *)inSender)
+    {
+        NSString *path = nil;
+        //Photo *aPhoto = nil;
+        if ([anItem class] == [Photo class])
+        {
+            path = [[(Photo*)anItem filePath] path];
+            //aPhoto = anItem;
+        } else {
+            path = [[(Photo*)[anItem representedObject] filePath] path];
+            //aPhoto = [anItem representedObject];
+        }
         
-        [[NSWorkspace sharedWorkspace]
+        [pathsToDelete addObject:@{@"source" : path, @"destination" : trashFolder}];
+    }
+
+    
+    if (NSRunCriticalAlertPanel(
+                                [NSString stringWithFormat:@"The file(s) will be deleted immediately.\nAre you sure you want to continue?"], @"You cannot undo this action.", @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
+        
+        /*[[NSWorkspace sharedWorkspace]
          performFileOperation:NSWorkspaceRecycleOperation
          source:[path stringByDeletingLastPathComponent]
          destination:@""
          files:[NSArray arrayWithObject:[path lastPathComponent]]
-         tag:nil];
-        [self.browserData removeObject:aPhoto];
-        [self.browserView reloadData];
+         tag:nil];*/
         
-        [self.album updatePhotosFromFileSystem];
+        
+        [self moveItems:pathsToDelete];
+        
+        
+        //[self.browserData removeObject:aPhoto];
+        
+        
+        
         
         //return [self removeFileAtPath:standardizedSource handler:nil];
     } else { // User clicked cancel, they obviously do not want to delete the file. return NO;

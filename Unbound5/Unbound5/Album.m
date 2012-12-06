@@ -10,6 +10,7 @@
 #import "SearchItem.h"
 #import "Photo.h"
 #import "MainWindowController.h"
+#import "AppDelegate.h"
 
 NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
 
@@ -32,6 +33,24 @@ NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
         self.photos = [NSMutableArray array];
     }
     return self;
+}
+
+
+-(void)userSetTitle:(NSString *)title
+{
+    NSUndoManager *undoManager = [[AppDelegate applicationDelegate] undoManager];
+    /*void (^block)(void) = [^{
+        NSLog(@"hello world");
+    } copy];*/
+    [undoManager registerUndoWithTarget:self selector:@selector(userSetTitle:) object:_title];
+    //[[undoManager prepareWithInvocationTarget:block] performBlock];
+    //[block release];
+    
+    _title = title;
+    
+    _filePath = [NSString stringWithFormat:@"%@/%@",[_filePath stringByDeletingLastPathComponent],_title ];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
 }
 
 -(void)setFilePath:(NSString *)aPath

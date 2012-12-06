@@ -20,7 +20,7 @@
 
 @property (nonatomic, strong) IBOutlet IKImageBrowserView * browserView;
 @property (nonatomic, strong) Album *album;
-@property (readwrite, strong) NSMutableArray * browserData;
+@property (nonatomic, readwrite, strong) NSMutableArray * browserData;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil album:(Album *)anAlbum;
 

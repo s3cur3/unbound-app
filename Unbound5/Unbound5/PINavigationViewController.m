@@ -11,12 +11,14 @@
 
 #import "AlbumViewController.h"
 #import "PageViewController.h"
+#import "AppDelegate.h"
 
 @interface PINavigationViewController ()
 
 @property (strong, nonatomic) NSMutableArray *viewControllers;
 @property (strong) IBOutlet NSView *menuView;
 @property (strong) IBOutlet NSButton *backButton;
+@property (strong) IBOutlet NSButton *trashButton;
 
 
 
@@ -28,6 +30,7 @@
 {
     DLog(@"awakeFromNib");
     //[self.mainWindow setContentView:self.view];
+    self.trashButton.image = [NSImage imageNamed:NSImageNameTrashEmpty];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -105,6 +108,12 @@
     } else {
         [self popViewController];
     }
+}
+
+- (IBAction)trashPressed:(id)sender;
+{
+    NSURL *trashURL = [[AppDelegate applicationDelegate] trashFolderURL];
+	[[NSWorkspace sharedWorkspace] selectFile:nil inFileViewerRootedAtPath:trashURL.path];
 }
 
 @end

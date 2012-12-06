@@ -18,7 +18,7 @@
 #import "SimpleProfiler.h"
 #import "SpotlightFetchController.h"
 #import "FileSystemEventController.h"
-//#import "AppDelegate.h"
+#import "AppDelegate.h"
 #import "SidebarTableCellView.h"
 #import "AlbumViewController.h"
 #import "ImageBrowserViewController.h"
@@ -983,6 +983,13 @@ NSArray * DropBoxDirectory()
         return NSDragOperationMove;
     }
     return [self dropOperationForKeysPressed];*/
+}
+
+// Returns the NSUndoManager for the application. In this case, the manager returned is that of the managed object context for the application.
+- (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window
+{
+    //return [[self managedObjectContext] undoManager];
+    return [[AppDelegate applicationDelegate] undoManager];
 }
 
 @end

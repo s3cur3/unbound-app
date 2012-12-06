@@ -77,11 +77,60 @@
     
     
     DLog(@"Application will finish launching.");
+    
+    
+    [self checkCreateTrashFolder];
+    
     /*if ([[NSUserDefaults standardUserDefaults] valueForKey:@"searchLocationKey"]==nil)
     {
         [(MainWindowController *)[self.window delegate] startLoading];
     }*/
     [(MainWindowController *)[self.window delegate] startLoading];
+}
+
+-(NSURL *)trashFolderURL
+{
+    NSString *trashURL = [[NSUserDefaults standardUserDefaults] valueForKey:@"PI_TRASH_PATH"];
+    if (!trashURL) {
+        [self checkCreateTrashFolder];
+        trashURL = [[NSUserDefaults standardUserDefaults] valueForKey:@"PI_TRASH_PATH"];
+    }
+    return [NSURL fileURLWithPath:trashURL];
+}
+
+-(NSString *)trashFolderPath
+{
+    NSString *trashURL = [[NSUserDefaults standardUserDefaults] valueForKey:@"PI_TRASH_PATH"];
+    if (!trashURL) {
+        [self checkCreateTrashFolder];
+        trashURL = [[NSUserDefaults standardUserDefaults] valueForKey:@"PI_TRASH_PATH"];
+    }
+    return trashURL;
+}
+
+-(void)checkCreateTrashFolder
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSURL *applicationFilesDirectory = [self applicationFilesDirectory];
+    NSURL *trashURL = [applicationFilesDirectory URLByAppendingPathComponent:@"Unbound.trash"];
+    NSError *error = nil;
+    
+    //NSDictionary *properties = [trashURL resourceValuesForKeys:@[NSURLIsDirectoryKey] error:&error];
+    BOOL isDir;
+    if (![fileManager fileExistsAtPath:trashURL.path isDirectory:&isDir]) {
+        BOOL ok = NO;
+        ok = [fileManager createDirectoryAtPath:[trashURL path] withIntermediateDirectories:YES attributes:nil error:&error];
+        if (!ok) {
+            [[NSApplication sharedApplication] presentError:error];
+            return;
+        } /*else {
+            [[NSUserDefaults standardUserDefaults] setValue:trashURL.path forKey:@"PI_TRASH_PATH"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }*/
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setValue:trashURL.path forKey:@"PI_TRASH_PATH"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -199,11 +248,16 @@
     return _managedObjectContext;
 }
 
-// Returns the NSUndoManager for the application. In this case, the manager returned is that of the managed object context for the application.
-- (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window
+- (NSUndoManager *)undoManager
 {
-    return [[self managedObjectContext] undoManager];
+    //return [[self managedObjectContext] undoManager];
+    if (_undoManager == nil) {
+        _undoManager = [[NSUndoManager alloc] init];
+    }
+    return _undoManager;
 }
+
+
 
 // Performs the save action for the application, which is to send the save: message to the application's managed object context. Any encountered errors are presented to the user.
 - (IBAction)saveAction:(id)sender

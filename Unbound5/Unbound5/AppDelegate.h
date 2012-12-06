@@ -16,10 +16,15 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
+@property (strong, nonatomic) NSUndoManager *undoManager;
+
 - (IBAction)saveAction:(id)sender;
 - (IBAction)showPreferences:(id)sender;
 
 +(AppDelegate *)applicationDelegate;
 -(void)updatePhotoSearchURL:(NSURL *)aURL;
+
+-(NSURL *)trashFolderURL;
+-(NSString *)trashFolderPath;
 
 @end

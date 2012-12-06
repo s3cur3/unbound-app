@@ -89,7 +89,7 @@
 }
 
 
-- (void)doubleClick:(id)sender {
+- (void)doubleClick:(NSEvent *)event {
 	NSLog(@"double click in the collectionItem");
 	if([self collectionView] && [[self collectionView] delegate] && [[[self collectionView] delegate] respondsToSelector:@selector(doubleClick:)]) {
 		[[[self collectionView] delegate] performSelector:@selector(doubleClick:) withObject:self];
@@ -113,6 +113,21 @@
 - (id)animationForKey:(NSString *)key
 {
     return nil;
+}
+
+- (IBAction)textTitleChanged:(id)sender {
+    DLog(@"textTitleChanged");
+
+}
+
+- (void)controlTextDidChange:(NSNotification *)aNotification
+{
+    [self.mainLabel setBackgroundColor:[NSColor whiteColor]];
+}
+
+- (void)controlTextDidBeginEditing:(NSNotification *)aNotification
+{
+    [self.mainLabel setBackgroundColor:[NSColor whiteColor]];
 }
 
 
