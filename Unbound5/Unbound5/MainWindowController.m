@@ -60,7 +60,6 @@ NSArray * DropBoxDirectory()
 @property (strong) NSURL *cameraUploadsLocation;
 @property (strong) NSURL *dropboxHome;
 @property (strong) NSString *dropboxHomePath;
-@property (strong) FileSystemEventController *fileSystemEventController;
 
 @end
 

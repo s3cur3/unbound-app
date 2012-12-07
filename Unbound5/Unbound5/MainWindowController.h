@@ -20,6 +20,7 @@
 @class ImageBrowserViewController;
 @class PINavigationViewController;
 @class SplitViewController;
+@class FileSystemEventController;
 
 extern NSString *searchLocationKey;
 extern NSString *dropboxHomeLocationKey;
@@ -63,6 +64,7 @@ extern NSString *dropboxHomeStringKey;
 
 
 @property (strong,nonatomic) IBOutlet PINavigationViewController *navigationViewController;
+@property (strong, nonatomic) FileSystemEventController *fileSystemEventController;
 
 @property IBOutlet NSView *targetView;
 

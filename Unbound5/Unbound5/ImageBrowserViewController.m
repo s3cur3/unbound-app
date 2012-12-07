@@ -11,6 +11,7 @@
 #import "PINavigationViewController.h"
 #import "Photo.h"
 #import "AppDelegate.h"
+#import "PIFileManager.h"
 
 @interface ImageBrowserViewController ()
 
@@ -73,14 +74,32 @@
 }
 
 
+-(void)albumChanged:(NSNotification *)notification
+{
+    //[self.album updatePhotosFromFileSystem];
+    self.browserData = nil;
+    [self.browserView reloadData];
+}
+
 -(void)setAlbum:(Album *)album
 {
+    if (_album!=nil)
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:_album];
+    }
+    if (album!=nil)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(albumChanged:) name:AlbumDidChangeNotification object:_album];
+        
+    }
     _album = album;
     if (self.browserView)
     {
         self.browserData = self.album.photos;
         [self.browserView reloadData];
     }
+    
+    
 }
 
 #pragma mark Browser Data Source Methods
@@ -286,9 +305,14 @@ event
     
 }
 
-- (IBAction) deleteItems:(NSArray *)inSender
+- (IBAction) deleteItems:(id )inSender
 {
-    NSMutableArray *pathsToDelete = [NSMutableArray arrayWithCapacity:inSender.count];
+    if ([[inSender class] isKindOfClass: [NSArray class]])
+    {
+        inSender =  [NSArray arrayWithObject:inSender];
+    }
+    
+    NSMutableArray *pathsToDelete = [NSMutableArray arrayWithCapacity:[inSender count]];
     NSString *trashFolder = [[AppDelegate applicationDelegate] trashFolderPath];
     for (id anItem in (NSArray *)inSender)
     {
@@ -310,16 +334,13 @@ event
     if (NSRunCriticalAlertPanel(
                                 [NSString stringWithFormat:@"The file(s) will be deleted immediately.\nAre you sure you want to continue?"], @"You cannot undo this action.", @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
         
-        /*[[NSWorkspace sharedWorkspace]
-         performFileOperation:NSWorkspaceRecycleOperation
-         source:[path stringByDeletingLastPathComponent]
-         destination:@""
-         files:[NSArray arrayWithObject:[path lastPathComponent]]
-         tag:nil];*/
         
         
-        [self moveItems:pathsToDelete];
-        
+        //[self moveItems:pathsToDelete];
+        [[[AppDelegate applicationDelegate] sharedFileManager] moveFiles:pathsToDelete];
+        /*[self.album updatePhotosFromFileSystem];
+        self.browserData = nil;
+        [self.browserView reloadData];*/
         
         //[self.browserData removeObject:aPhoto];
         

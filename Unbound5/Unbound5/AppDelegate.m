@@ -12,6 +12,7 @@
 #import "Preferences.h"
 #import "Utils.h"
 #import "SimpleProfiler.h"
+#import "PIFileManager.h"
 
 @implementation AppDelegate
 
@@ -19,10 +20,17 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize window = _window;
+@synthesize sharedFileManager = _sharedFileManager;
 
 +(AppDelegate *)applicationDelegate;
 {
     return (AppDelegate *)[[NSApplication sharedApplication] delegate];
+}
+
++(MainWindowController *)mainWindowController
+{
+    MainWindowController *windowController = (MainWindowController *) [[[NSApplication sharedApplication] mainWindow] delegate];
+    return windowController;
 }
 
 // -------------------------------------------------------------------------------
@@ -257,6 +265,15 @@
     return _undoManager;
 }
 
+- (PIFileManager *)sharedFileManager
+{
+    if (_sharedFileManager != nil)
+    {
+        return _sharedFileManager;
+    }
+    _sharedFileManager = [[PIFileManager alloc] init];
+    return _sharedFileManager;
+}
 
 
 // Performs the save action for the application, which is to send the save: message to the application's managed object context. Any encountered errors are presented to the user.

@@ -8,6 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class PIFileManager;
+@class MainWindowController;
+
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
@@ -17,11 +20,13 @@
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @property (strong, nonatomic) NSUndoManager *undoManager;
+@property (readonly, strong, nonatomic) PIFileManager *sharedFileManager;
 
 - (IBAction)saveAction:(id)sender;
 - (IBAction)showPreferences:(id)sender;
 
 +(AppDelegate *)applicationDelegate;
++(MainWindowController *)mainWindowController;
 -(void)updatePhotoSearchURL:(NSURL *)aURL;
 
 -(NSURL *)trashFolderURL;

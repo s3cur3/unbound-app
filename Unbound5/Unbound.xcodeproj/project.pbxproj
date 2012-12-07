@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D0B330016711EC600A0B96E /* PIFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D0B32FF16711EC500A0B96E /* PIFileManager.m */; };
+		1D0B33081671224B00A0B96E /* MoveFileOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D0B33071671224B00A0B96E /* MoveFileOperation.m */; };
 		1D1FB36C1620F763002CD358 /* AutoSizingIKImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1FB36B1620F763002CD358 /* AutoSizingIKImageView.m */; };
 		1D1FB39E162117CD002CD358 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1FB39C162117CD002CD358 /* ImageViewController.m */; };
 		1D1FB3EB16237174002CD358 /* ImageBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1FB3EA16237174002CD358 /* ImageBrowserCell.m */; };
@@ -104,6 +106,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1D0B32FE16711EC500A0B96E /* PIFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIFileManager.h; sourceTree = "<group>"; };
+		1D0B32FF16711EC500A0B96E /* PIFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIFileManager.m; sourceTree = "<group>"; };
+		1D0B33061671224B00A0B96E /* MoveFileOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoveFileOperation.h; sourceTree = "<group>"; };
+		1D0B33071671224B00A0B96E /* MoveFileOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoveFileOperation.m; sourceTree = "<group>"; };
 		1D1FB36A1620F763002CD358 /* AutoSizingIKImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoSizingIKImageView.h; sourceTree = "<group>"; };
 		1D1FB36B1620F763002CD358 /* AutoSizingIKImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoSizingIKImageView.m; sourceTree = "<group>"; };
 		1D1FB39B162117CD002CD358 /* ImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewController.h; sourceTree = "<group>"; };
@@ -464,6 +470,10 @@
 				1D77E613162E077000DB3553 /* Photo.m */,
 				1D77E65C162F541900DB3553 /* FileSystemEventController.h */,
 				1D77E65D162F541A00DB3553 /* FileSystemEventController.m */,
+				1D0B32FE16711EC500A0B96E /* PIFileManager.h */,
+				1D0B32FF16711EC500A0B96E /* PIFileManager.m */,
+				1D0B33061671224B00A0B96E /* MoveFileOperation.h */,
+				1D0B33071671224B00A0B96E /* MoveFileOperation.m */,
 			);
 			name = FileSystem;
 			sourceTree = "<group>";
@@ -667,6 +677,8 @@
 				1DC00136164C8F4B00AE375B /* SidebarViewController.m in Sources */,
 				8C1BA2F616548014006D528E /* PageView.m in Sources */,
 				8CD3E9FF165A120B00A9AD57 /* BorderedImageView.m in Sources */,
+				1D0B330016711EC600A0B96E /* PIFileManager.m in Sources */,
+				1D0B33081671224B00A0B96E /* MoveFileOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
