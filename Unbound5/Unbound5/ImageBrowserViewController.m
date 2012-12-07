@@ -405,19 +405,8 @@ event
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
-    NSFileManager * fileManager = [NSFileManager defaultManager];
 	//Get the files from the drop
 	NSArray * files = [[sender draggingPasteboard] propertyListForType:NSFilenamesPboardType];
-	
-	/*for(id file in files){
-     NSImage * image = [[NSWorkspace sharedWorkspace] iconForFile:file];
-     NSString * imageID = [file lastPathComponent];
-     DLog(@"File dragged abd dropped onto browser : %@", imageID);
-     //IKBBrowserItem * item = [[IKBBrowserItem alloc] initWithImage:image imageID:imageID];
-     //[self.browserData addObject:item];
-     
-     
-     }*/
     
     NSMutableArray *pathsToPaste = [NSMutableArray arrayWithCapacity:[files count]];
     NSString *destPath = self.album.filePath;

@@ -12,6 +12,8 @@
 #import "SplitViewController.h"
 #import "ImageBrowserViewController.h"
 #import "PIViewController.h"
+#import "AppDelegate.h"
+#import "PIFileManager.h"
 
 @interface SidebarViewController ()
 {
@@ -146,66 +148,25 @@
 
 -(BOOL)outlineView:(NSOutlineView *)outlineView acceptDrop:(id < NSDraggingInfo >)info item:(id)item childIndex:(NSInteger)index
 {
-	// get the URLs
-	NSArray * urls = [[info draggingPasteboard] readObjectsForClasses:[NSArray arrayWithObject:[NSURL class]] options:nil];
-    NSFileManager * fileManager = [NSFileManager defaultManager];
     
-    // handle copied files
-    NSError *anError = nil;
-    BOOL refreshSrcDir = NO;
-    NSString *srcpath = nil;
-    for (NSURL * url in urls)
+    //Get the files from the drop
+	NSArray * files = [[info draggingPasteboard] propertyListForType:NSFilenamesPboardType];
+    
+    NSMutableArray *pathsToPaste = [NSMutableArray arrayWithCapacity:[files count]];
+    NSString *destPath = self.dragDropDestination.filePath;
+    for (NSString * path in files)
     {
-        // check if the destination folder is different from the source folder
-        if ([self.dragDropDestination.filePath isEqualToString:[  url.path stringByDeletingLastPathComponent]] || !self.dragDropDestination)
-            continue;
-        
-        NSURL * destinationURL = [NSURL fileURLWithPath:self.dragDropDestination.filePath];
-        
-        NSURL *srcURL = url;//NSURL fileURLWithPath:url];
-        destinationURL = [destinationURL URLByAppendingPathComponent:[url.path lastPathComponent]];
-        
-        
-        if ( [[[info draggingSource] identifier] isEqualToString:@"MyImageBrowserView"]) {
-            //DLog(@"Drag and drop is from browser view - default to move operation");
-            if ([PIViewController optionKeyIsPressed]) {
-                [fileManager copyItemAtURL:srcURL toURL:destinationURL error:&anError];
-            } else {
-                [fileManager moveItemAtPath:srcURL.path toPath:destinationURL.path error:&anError];
-                refreshSrcDir = YES;
-                srcpath = [srcURL.path stringByDeletingLastPathComponent];
-            }
-        } else {
-            //DLog(@"Drag and drop is outside source - default to copy operation");
-            if (![NSEvent modifierFlags] & NSAlternateKeyMask) {
-                [fileManager copyItemAtURL:srcURL toURL:destinationURL error:&anError];
-            } else {
-                [fileManager moveItemAtPath:srcURL.path toPath:destinationURL.path error:&anError];
-                refreshSrcDir = YES;
-                srcpath = [srcURL.path stringByDeletingLastPathComponent];
-            }
-        }
-        
-    }
-    if (anError!=nil)
-    {
-        DLog(@"error copying dragged files : %@", anError);
+        [pathsToPaste addObject:@{@"source" : path, @"destination" : destPath}];
     }
     
-    [self.dragDropDestination updatePhotosFromFileSystem];
-    [self.splitViewController updateViewsForDragDrop];
-	
-	/*if([self.browserData count] > 0) {
-     [self.dragDropDestination updatePhotosFromFileSystem];
-     if (refreshSrcDir && srcpath) {
-     Album *srcAlbum = [self.fileSystemEventController.albumLookupTable valueForKey:srcpath];
-     [srcAlbum updatePhotosFromFileSystem];
-     }
-     [self.browserView reloadData];
-     return YES;
-     }*/
-	
-	return NO;
+    if ([PIViewController optionKeyIsPressed] == NO)
+    {
+        [[[AppDelegate applicationDelegate] sharedFileManager] moveFiles:pathsToPaste];
+    } else {
+        [[[AppDelegate applicationDelegate] sharedFileManager] copyFiles:pathsToPaste];
+    }
+    return YES;
+
     
 }
 

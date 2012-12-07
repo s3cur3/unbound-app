@@ -148,6 +148,7 @@ NSString *dropboxHomeStringKey = @"dropboxHomeStringKey";*/
         NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtURL:self.rootFilePathURL includingPropertiesForKeys:[NSArray arrayWithObjects:NSURLLocalizedNameKey, NSURLEffectiveIconKey, NSURLIsDirectoryKey, NSURLTypeIdentifierKey, nil] options:NSDirectoryEnumerationSkipsHiddenFiles /*| NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsSubdirectoryDescendants*/ errorHandler:^(NSURL *url, NSError *error) {
             // Handle the error.
             DLog(@"error creating enumerator for directory %@ : %@", url.path, error);
+            [[NSApplication sharedApplication] presentError:error];
             // Return YES if the enumeration should continue after the error.
             return YES;
         }];
