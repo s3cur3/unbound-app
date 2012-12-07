@@ -419,8 +419,23 @@ event
      
      }*/
     
+    NSMutableArray *pathsToPaste = [NSMutableArray arrayWithCapacity:[files count]];
+    NSString *destPath = self.album.filePath;
+    for (NSString * path in files)
+    {
+        [pathsToPaste addObject:@{@"source" : path, @"destination" : destPath}];
+    }
+    
+    if ([self optionKeyIsPressed])
+    {
+        [[[AppDelegate applicationDelegate] sharedFileManager] moveFiles:pathsToPaste];
+    } else {
+        [[[AppDelegate applicationDelegate] sharedFileManager] copyFiles:pathsToPaste];
+    }
+    return YES;
+    
     // handle copied files
-    NSError *anError = nil;
+    /*NSError *anError = nil;
     for (NSString * url in files)
     {
         // check if the destination folder is different from the source folder
@@ -453,7 +468,7 @@ event
         return YES;
     }
 	
-	return NO;
+	return NO;*/
 }
 
 - (void)concludeDragOperation:(id < NSDraggingInfo >)sender

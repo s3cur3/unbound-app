@@ -11,5 +11,6 @@
 @interface PIFileManager : NSObject
 
 -(void)moveFiles:(NSArray *)items;
+-(void)copyFiles:(NSArray *)items;
 
 @end

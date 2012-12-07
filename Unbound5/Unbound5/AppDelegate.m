@@ -29,7 +29,7 @@
 
 +(MainWindowController *)mainWindowController
 {
-    MainWindowController *windowController = (MainWindowController *) [[[NSApplication sharedApplication] mainWindow] delegate];
+    MainWindowController *windowController = (MainWindowController *) [[(AppDelegate *)[[NSApplication sharedApplication] delegate] window] delegate];
     return windowController;
 }
 
