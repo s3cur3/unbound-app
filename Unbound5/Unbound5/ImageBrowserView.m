@@ -187,15 +187,24 @@
 	// get the event and the modifiers
 	 NSString * characters = [theEvent charactersIgnoringModifiers];
      unichar event = [characters characterAtIndex:0];
-     
+    
+    NSIndexSet *selectedItems = self.selectionIndexes;
+    
      switch (event)
      {
-     case ' ':
-
-     break;
-     
-     default:
-     [super keyDown:theEvent];
+         case ' ':
+         break;
+             
+         case NSEnterCharacter:
+             
+         case 13: //TODO: use a constant like NSEnterCharacter
+             if (selectedItems.count == 1) {
+                 [[self delegate] imageBrowser:self cellWasDoubleClickedAtIndex:[selectedItems lastIndex]];
+             }
+             break;
+         
+         default:
+         [super keyDown:theEvent];
      }
 }
 

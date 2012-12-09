@@ -164,16 +164,21 @@
 {
     
     NSLog(@"cellWasDoubleClickedAtIndex");
-    
+    [self showPageControllerForIndex:index];
     //MainWindowController *windowController = (MainWindowController *) [[[NSApplication sharedApplication] mainWindow] delegate];
     //[windowController showPageControllerForAlbum:self.album];
     //return;
+    
+    //pageViewController.view.frame = ((NSView*)mainWindow.contentView).bounds;
+    
+}
+
+-(void)showPageControllerForIndex:(NSUInteger)index
+{
     PageViewController *pageViewController = [[PageViewController alloc] initWithNibName:@"PageViewController" bundle:nil];
     pageViewController.album = self.album;
     pageViewController.initialSelectedItem = [self.album.photos objectAtIndex:index];
     [self.navigationViewController pushViewController:pageViewController];
-    //pageViewController.view.frame = ((NSView*)mainWindow.contentView).bounds;
-    
 }
 
 // Since IKImageBrowserView doesn't support context menus out of the box, we need to display them manually in
