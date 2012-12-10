@@ -159,14 +159,29 @@ static CGImageRef pinImage()
         
         
         //set a border color
-		color = CGColorCreateGenericRGB(1.0, 1.0, 1.0, 1.0);
+		
+        
+        if(!self.isSelected)
+        {
+            color = CGColorCreateGenericRGB(1.0, 1.0, 1.0, 1.0);
+            [borderLayer setBorderWidth:5.0];
+            [layer setShadowOpacity:1.0];
+        }
+        
+        else
+        {
+            color = CGColorCreateGenericRGB(0.189, 0.657, 0.859, 1.000); // bluish color
+            [borderLayer setBorderWidth:4.0];
+            [layer setShadowOpacity:0.0];
+        }
+        
 		[borderLayer setBorderColor:color];
-        [borderLayer setBorderWidth:5.0];
+        
 		CFRelease(color);
         
         color = CGColorCreateGenericGray(0.0, 0.0);
         [layer setShadowColor:color];
-        [layer setShadowOpacity:1.0];
+        
         [layer setShadowRadius:5.0];
         CFRelease(color);
         
@@ -191,26 +206,26 @@ static CGImageRef pinImage()
         selectionRect.origin.x += 5;
         selectionRect.origin.y += 5;
         
-        selectionRect = CGRectInset(selectionRect, -3, -3);
+        selectionRect = CGRectInset(selectionRect, -2, -2);
 		
 		CALayer *photoSelectionLayer = [CALayer layer];
 		photoSelectionLayer.frame = selectionRect;
         
         //set a border color
-		color = CGColorCreateGenericRGB(1.0, 1.0, 0.0, 1.0);
+        color = CGColorCreateGenericRGB(0.325, 0.763, 0.999, 1.000);// lighter bluish color
 		[photoSelectionLayer setBorderColor:color];
         [photoSelectionLayer setBorderWidth:6.0];
         [photoSelectionLayer setCornerRadius:4.0];
-		CFRelease(color);
+        CFRelease(color);
         
         color = CGColorCreateGenericGray(0.4, 1.0);
         [photoSelectionLayer setBackgroundColor:color];
-		[photoSelectionLayer setShadowOpacity:0.6];
+		[photoSelectionLayer setShadowOpacity:0.8];
         [photoSelectionLayer setShadowOffset:CGSizeMake(0, -1)];
         CFRelease(color);
         
 		[layer addSublayer:photoSelectionLayer];
-		
+        		
 		return layer;
 	}
 	

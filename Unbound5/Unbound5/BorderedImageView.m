@@ -103,12 +103,16 @@
     
     if(_selected)
     {
-        self.borderLayer.borderColor = [[NSColor yellowColor] CGColor];
+        self.borderLayer.borderColor = CGColorCreateGenericRGB(0.189, 0.657, 0.859, 1.000);
+        self.borderLayer.cornerRadius = 4.0;
+        self.shadowLayer.cornerRadius = 4.0;
     }
     
     else
     {
         self.borderLayer.borderColor = [[NSColor whiteColor] CGColor];
+        self.borderLayer.cornerRadius = 0;
+        self.shadowLayer.cornerRadius = 0;
     }
 }
 
