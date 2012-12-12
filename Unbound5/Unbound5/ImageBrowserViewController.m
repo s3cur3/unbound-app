@@ -69,20 +69,22 @@
         NSColor * color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
         [[self.browserView enclosingScrollView] setBackgroundColor:color];
         //self.browserData = self.album.photos;
+        
+        [self.browserView setAllowsMultipleSelection:YES];
         [self.browserView reloadData];
     }
 }
 
 
 -(void)albumChanged:(NSNotification *)notification
-{
-    //[self.album updatePhotosFromFileSystem];
+{    
     self.browserData = nil;
     [self.browserView reloadData];
 }
 
 -(void)setAlbum:(Album *)album
 {
+    if(_album == album) return;
     if (_album!=nil)
     {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:_album];
@@ -95,7 +97,10 @@
     _album = album;
     if (self.browserView)
     {
-        self.browserData = self.album.photos;
+        self.selectedPhotos = nil;
+        [self.browserView setSelectionIndexes:nil byExtendingSelection:NO];
+        
+        self.browserData = nil;
         [self.browserView reloadData];
     }
     
@@ -153,8 +158,32 @@
 // -------------------------------------------------------------------------------
 - (void)imageBrowserSelectionDidChange:(IKImageBrowserView *)aBrowser
 {
+    // create a new set or selected images by merging the two
+    NSMutableIndexSet * mergedSelection = [self.selectedPhotos mutableCopy];
     
+    [[self.browserView selectionIndexes] enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        if([mergedSelection containsIndex:idx])
+        {
+            [mergedSelection removeIndex:idx];
+        }
+        
+        else
+        {
+            [mergedSelection addIndex:idx];
+        }
+        
+    }];
+    
+    if(self.selectedPhotos)
+    {
+        [self.browserView setSelectionIndexes:mergedSelection byExtendingSelection:NO];
+    }
+    
+    self.selectedPhotos = [self.browserView selectionIndexes];
     NSLog(@"imageBrowserSelectionDidChange");
+    
+    
+    
 }
 
 // -------------------------------------------------------------------------------

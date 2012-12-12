@@ -21,6 +21,7 @@
 @property (nonatomic, strong) IBOutlet IKImageBrowserView * browserView;
 @property (nonatomic, strong) Album *album;
 @property (nonatomic, readwrite, strong) NSMutableArray * browserData;
+@property (nonatomic, readwrite, strong) NSIndexSet * selectedPhotos;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil album:(Album *)anAlbum;
 

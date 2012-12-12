@@ -248,6 +248,12 @@
     }
 }
 
+
+- (void)setSelectionIndexes:(NSIndexSet *)indexes byExtendingSelection:(BOOL)extendSelection
+{
+    [super setSelectionIndexes:indexes byExtendingSelection:YES];
+}
+
 /*-(NSMenu*)defaultMenuForIndex:(NSInteger)index
 {
     if (index < 0) return nil;

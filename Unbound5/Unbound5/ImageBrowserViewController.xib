@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
 		<string key="IBDocument.SystemVersion">12C60</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
+		<string key="IBDocument.InterfaceBuilderVersion">3081</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<dictionary class="NSMutableDictionary" key="IBDocument.PluginVersions">
-			<string key="com.apple.InterfaceBuilder.CocoaPlugin">2844</string>
-			<string key="com.apple.imagekit.ibplugin">1810</string>
+			<string key="com.apple.InterfaceBuilder.CocoaPlugin">3081</string>
+			<string key="com.apple.imagekit.ibplugin">2053</string>
 		</dictionary>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IKImageBrowserView</string>
@@ -41,7 +41,7 @@
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSScrollView" id="129944936">
 						<reference key="NSNextResponder" ref="1005"/>
-						<int key="NSvFlags">286</int>
+						<int key="NSvFlags">274</int>
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="NSClipView" id="258123522">
 								<reference key="NSNextResponder" ref="129944936"/>
@@ -230,7 +230,7 @@
 										<reference key="delegate"/>
 									</object>
 								</array>
-								<string key="NSFrame">{{1, 1}, {576, 379}}</string>
+								<string key="NSFrameSize">{576, 379}</string>
 								<reference key="NSSuperview" ref="129944936"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="507951799"/>
@@ -250,7 +250,7 @@
 							<object class="NSScroller" id="64598344">
 								<reference key="NSNextResponder" ref="129944936"/>
 								<int key="NSvFlags">256</int>
-								<string key="NSFrame">{{561, 1}, {16, 379}}</string>
+								<string key="NSFrame">{{560, 0}, {16, 379}}</string>
 								<reference key="NSSuperview" ref="129944936"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:26</string>
@@ -263,7 +263,7 @@
 							<object class="NSScroller" id="603591844">
 								<reference key="NSNextResponder" ref="129944936"/>
 								<int key="NSvFlags">256</int>
-								<string key="NSFrame">{{1, 364}, {576, 16}}</string>
+								<string key="NSFrame">{{0, 363}, {576, 16}}</string>
 								<reference key="NSSuperview" ref="129944936"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="64598344"/>
@@ -275,12 +275,12 @@
 								<double key="NSPercent">0.50602412223815918</double>
 							</object>
 						</array>
-						<string key="NSFrame">{{-1, -1}, {578, 381}}</string>
+						<string key="NSFrameSize">{576, 379}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="258123522"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<int key="NSsFlags">133170</int>
+						<int key="NSsFlags">133168</int>
 						<reference key="NSVScroller" ref="64598344"/>
 						<reference key="NSHScroller" ref="603591844"/>
 						<reference key="NSContentView" ref="258123522"/>
@@ -443,6 +443,8 @@
 						<string key="_dataSource">id</string>
 						<string key="_delegate">id</string>
 						<string key="_dragDestinationDelegate">id</string>
+						<string key="_horizontalScroller">NSScroller</string>
+						<string key="_verticalScroller">NSScroller</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="_dataSource">
@@ -456,6 +458,14 @@
 						<object class="IBToOneOutletInfo" key="_dragDestinationDelegate">
 							<string key="name">_dragDestinationDelegate</string>
 							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="_horizontalScroller">
+							<string key="name">_horizontalScroller</string>
+							<string key="candidateClassName">NSScroller</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="_verticalScroller">
+							<string key="name">_verticalScroller</string>
+							<string key="candidateClassName">NSScroller</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -475,13 +485,13 @@
 					<string key="className">ImageBrowserViewController</string>
 					<string key="superclassName">PIViewController</string>
 					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">zoomSliderDidChange:</string>
+						<string key="NS.key.0">getInfo:</string>
 						<string key="NS.object.0">id</string>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">zoomSliderDidChange:</string>
+						<string key="NS.key.0">getInfo:</string>
 						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">zoomSliderDidChange:</string>
+							<string key="name">getInfo:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</object>
