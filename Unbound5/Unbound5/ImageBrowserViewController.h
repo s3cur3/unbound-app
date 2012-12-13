@@ -26,6 +26,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil album:(Album *)anAlbum;
 
 -(IBAction)getInfo:(id)sender;
+-(void) deselectItemAtIndex:(UInt)index;
 
 @end
 

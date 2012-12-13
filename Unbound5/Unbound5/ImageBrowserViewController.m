@@ -15,6 +15,8 @@
 
 @interface ImageBrowserViewController ()
 
+@property BOOL justChangedSelection;
+
 @end
 
 @implementation ImageBrowserViewController
@@ -156,6 +158,8 @@
 //
 //	User chose a new image from the image browser.
 // -------------------------------------------------------------------------------
+
+/*
 - (void)imageBrowserSelectionDidChange:(IKImageBrowserView *)aBrowser
 {
     // create a new set or selected images by merging the two
@@ -176,14 +180,34 @@
     
     if(self.selectedPhotos)
     {
-        [self.browserView setSelectionIndexes:mergedSelection byExtendingSelection:NO];
+        [self.browserView setSelectionIndexes:self.selectedPhotos byExtendingSelection:YES];
     }
     
     self.selectedPhotos = [self.browserView selectionIndexes];
     NSLog(@"imageBrowserSelectionDidChange");
     
     
+    self.justChangedSelection = YES;
+}*/
+
+-(void) deselectItemAtIndex:(UInt)index
+{
+  /*
+    if(self.justChangedSelection == YES)
+    {
+        self.justChangedSelection = NO;
+        return;
+    }
     
+     NSMutableIndexSet * mergedSelection = [self.selectedPhotos mutableCopy];
+    [mergedSelection removeIndex:index];
+    self.selectedPhotos = mergedSelection;
+    
+    [self.browserView setSelectionIndexes:mergedSelection byExtendingSelection:NO];
+    
+    [self.browserView setNeedsDisplay:YES];
+    [self.browserView reloadData];
+    */
 }
 
 // -------------------------------------------------------------------------------

@@ -52,6 +52,7 @@
 
 #import "ImageBrowserView.h"
 #import "ImageBrowserCell.h"
+#import "ModifierSwitchedEvent.h"
 
 
 @implementation ImageBrowserView
@@ -211,6 +212,41 @@
 -(void)otherMouseDown:(NSEvent *)theEvent
 {
 	DLog(@"otherMouseDown");
+}
+
+
+-(void)mouseDown:(NSEvent *)theEvent
+{
+    ModifierSwitchedEvent * switchedEvent = [ModifierSwitchedEvent eventWithCGEvent:[theEvent CGEvent]];
+    
+    [super mouseDown:switchedEvent];
+}
+
+-(void)mouseDragged:(NSEvent *)theEvent
+{
+    ModifierSwitchedEvent * switchedEvent = [ModifierSwitchedEvent eventWithCGEvent:[theEvent CGEvent]];
+    
+    [super mouseDragged:switchedEvent];
+}
+
+- (void)mouseUp:(NSEvent *)theEvent
+{
+    
+
+    
+    ModifierSwitchedEvent * switchedEvent = [ModifierSwitchedEvent eventWithCGEvent:[theEvent CGEvent]];
+
+    
+    NSPoint clickPosition = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    NSInteger indexOfItemUnderClick = [self indexOfItemAtPoint: clickPosition];
+    
+    if (indexOfItemUnderClick==NSNotFound)
+        return;
+    ImageBrowserCell *cell = (ImageBrowserCell *) [self cellForItemAtIndex:indexOfItemUnderClick];
+    
+    
+    NSPoint clickPosition = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    [super mouseUp:switchedEvent];
 }
 
 -(IBAction)testAction:(id)sender;
