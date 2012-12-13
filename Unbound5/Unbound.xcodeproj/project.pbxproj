@@ -90,7 +90,6 @@
 		8CD0720916487B4000F2D703 /* dark_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CD0720716487B4000F2D703 /* dark_bg.png */; };
 		8CD0720A16487B4000F2D703 /* dark_bg@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CD0720816487B4000F2D703 /* dark_bg@2X.png */; };
 		8CD3E9FF165A120B00A9AD57 /* BorderedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CD3E9FE165A120900A9AD57 /* BorderedImageView.m */; };
-		8CFF3EA41679674E0013E5C8 /* NSEvent+ControlSwitchingEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CFF3EA31679674E0013E5C8 /* NSEvent+ControlSwitchingEvent.m */; };
 		8CFF3EA716796F160013E5C8 /* ModifierSwitchedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CFF3EA616796F160013E5C8 /* ModifierSwitchedEvent.m */; };
 /* End PBXBuildFile section */
 
@@ -237,8 +236,6 @@
 		8CD0720816487B4000F2D703 /* dark_bg@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_bg@2X.png"; sourceTree = "<group>"; };
 		8CD3E9FD165A120700A9AD57 /* BorderedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BorderedImageView.h; sourceTree = "<group>"; };
 		8CD3E9FE165A120900A9AD57 /* BorderedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BorderedImageView.m; sourceTree = "<group>"; };
-		8CFF3EA21679674D0013E5C8 /* NSEvent+ControlSwitchingEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSEvent+ControlSwitchingEvent.h"; sourceTree = "<group>"; };
-		8CFF3EA31679674E0013E5C8 /* NSEvent+ControlSwitchingEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSEvent+ControlSwitchingEvent.m"; sourceTree = "<group>"; };
 		8CFF3EA516796F150013E5C8 /* ModifierSwitchedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifierSwitchedEvent.h; sourceTree = "<group>"; };
 		8CFF3EA616796F160013E5C8 /* ModifierSwitchedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifierSwitchedEvent.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -515,8 +512,6 @@
 				1DCE3BF9164AFA1A0037F21A /* ImageBrowserViewController.h */,
 				1DCE3BFA164AFA1B0037F21A /* ImageBrowserViewController.m */,
 				1DCE3BFB164AFA1B0037F21A /* ImageBrowserViewController.xib */,
-				8CFF3EA21679674D0013E5C8 /* NSEvent+ControlSwitchingEvent.h */,
-				8CFF3EA31679674E0013E5C8 /* NSEvent+ControlSwitchingEvent.m */,
 				8CFF3EA516796F150013E5C8 /* ModifierSwitchedEvent.h */,
 				8CFF3EA616796F160013E5C8 /* ModifierSwitchedEvent.m */,
 			);
@@ -689,7 +684,6 @@
 				8CD3E9FF165A120B00A9AD57 /* BorderedImageView.m in Sources */,
 				1D0B330016711EC600A0B96E /* PIFileManager.m in Sources */,
 				1D0B33081671224B00A0B96E /* MoveFileOperation.m in Sources */,
-				8CFF3EA41679674E0013E5C8 /* NSEvent+ControlSwitchingEvent.m in Sources */,
 				8CFF3EA716796F160013E5C8 /* ModifierSwitchedEvent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

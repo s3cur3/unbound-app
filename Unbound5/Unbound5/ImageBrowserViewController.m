@@ -159,56 +159,12 @@
 //	User chose a new image from the image browser.
 // -------------------------------------------------------------------------------
 
-/*
+
 - (void)imageBrowserSelectionDidChange:(IKImageBrowserView *)aBrowser
 {
-    // create a new set or selected images by merging the two
-    NSMutableIndexSet * mergedSelection = [self.selectedPhotos mutableCopy];
     
-    [[self.browserView selectionIndexes] enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        if([mergedSelection containsIndex:idx])
-        {
-            [mergedSelection removeIndex:idx];
-        }
-        
-        else
-        {
-            [mergedSelection addIndex:idx];
-        }
-        
-    }];
-    
-    if(self.selectedPhotos)
-    {
-        [self.browserView setSelectionIndexes:self.selectedPhotos byExtendingSelection:YES];
-    }
-    
-    self.selectedPhotos = [self.browserView selectionIndexes];
-    NSLog(@"imageBrowserSelectionDidChange");
-    
-    
-    self.justChangedSelection = YES;
-}*/
-
--(void) deselectItemAtIndex:(UInt)index
-{
-  /*
-    if(self.justChangedSelection == YES)
-    {
-        self.justChangedSelection = NO;
-        return;
-    }
-    
-     NSMutableIndexSet * mergedSelection = [self.selectedPhotos mutableCopy];
-    [mergedSelection removeIndex:index];
-    self.selectedPhotos = mergedSelection;
-    
-    [self.browserView setSelectionIndexes:mergedSelection byExtendingSelection:NO];
-    
-    [self.browserView setNeedsDisplay:YES];
-    [self.browserView reloadData];
-    */
 }
+
 
 // -------------------------------------------------------------------------------
 //  imageBrowser:cellWasDoubleClickedAtIndex:index
@@ -233,6 +189,7 @@
     pageViewController.initialSelectedItem = [self.album.photos objectAtIndex:index];
     [self.navigationViewController pushViewController:pageViewController];
 }
+
 
 // Since IKImageBrowserView doesn't support context menus out of the box, we need to display them manually in
 // the following two delegate methods. Why couldn't Apple take care of this?

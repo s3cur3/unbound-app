@@ -27,6 +27,7 @@
 
 -(IBAction)getInfo:(id)sender;
 -(void) deselectItemAtIndex:(UInt)index;
+-(void) clearSelection;
 
 @end
 
