@@ -22,7 +22,7 @@ enum {
 @interface Album()
 {
     NSInteger _state;
-    NSSize _imageSize;
+    //NSSize _imageSize;
 }
 
 @property (nonatomic, strong) NSSortDescriptor *dateLastModifiedSortDescriptor;
@@ -323,11 +323,11 @@ static NSMutableArray *computeThumbnailClientQueue = nil;
                 CGImageSourceRef imageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)urlForImage, nil);
                 if (imageSource) {
                     // Grab the width/height
-                    NSSize imageSize = [[self class] getImageSizeFromImageSource:imageSource];
+                    /*NSSize imageSize = [[self class] getImageSizeFromImageSource:imageSource];
                     // Signal the main thread
                     [item performSelectorOnMainThread:@selector(mainThreadComputeImageSizeFinished:)
                                            withObject:[NSValue valueWithSize:imageSize]
-                                        waitUntilDone:NO];
+                                        waitUntilDone:NO];*/
                     
                     // Now, compute the thumbnail
                     image = [[self class] makeThumbnailImageFromImageSource:imageSource];
@@ -384,14 +384,14 @@ static NSMutableArray *computeThumbnailClientQueue = nil;
     }
 }
 
-- (void)mainThreadComputeImageSizeFinished:(NSValue *)imageSizeValue {
+/*- (void)mainThreadComputeImageSizeFinished:(NSValue *)imageSizeValue {
     _imageSize = [imageSizeValue sizeValue];
     [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
 }
 
 - (NSSize)imageSize {
     return _imageSize;
-}
+}*/
 
 
 @end
