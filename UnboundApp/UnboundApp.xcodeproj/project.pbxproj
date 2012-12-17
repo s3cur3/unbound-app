@@ -17,6 +17,7 @@
 		1D083520167E7C80003D557A /* PIXPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D08351F167E7C80003D557A /* PIXPageView.m */; };
 		1D083526167E7EEE003D557A /* imageview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D083525167E7EEE003D557A /* imageview.xib */; };
 		1D08352D167E8B2B003D557A /* PIXImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D08352C167E8B2B003D557A /* PIXImageViewController.m */; };
+		1D14199C167FC33C00A8A920 /* ArchDirectoryObserver.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1DB2F872167AC15F008AC0F7 /* ArchDirectoryObserver.framework */; };
 		1D4A1DAE167AD93400C9A895 /* dark_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1D9A167AD93400C9A895 /* dark_bg.png */; };
 		1D4A1DAF167AD93400C9A895 /* dark_bg@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1D9B167AD93400C9A895 /* dark_bg@2X.png */; };
 		1D4A1DB0167AD93400C9A895 /* image1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1D9C167AD93400C9A895 /* image1.jpg */; };
@@ -64,7 +65,6 @@
 		1D4A1E3A167D36E100C9A895 /* PIXSidebarTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E39167D36E100C9A895 /* PIXSidebarTableCellView.m */; };
 		1D4A1E3D167D372600C9A895 /* SquareImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E3C167D372600C9A895 /* SquareImageView.m */; };
 		1D4A1E40167D3C8500C9A895 /* PIXDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E3F167D3C8500C9A895 /* PIXDataSource.m */; };
-		1D4A1E42167D459600C9A895 /* ArchDirectoryObserver.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1D4A1E41167D459500C9A895 /* ArchDirectoryObserver.framework */; };
 		1DB2F84F167ABE87008AC0F7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DB2F84E167ABE87008AC0F7 /* Cocoa.framework */; };
 		1DB2F859167ABE87008AC0F7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F857167ABE87008AC0F7 /* InfoPlist.strings */; };
 		1DB2F85B167ABE87008AC0F7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2F85A167ABE87008AC0F7 /* main.m */; };
@@ -83,7 +83,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1D4A1E42167D459600C9A895 /* ArchDirectoryObserver.framework in CopyFiles */,
+				1D14199C167FC33C00A8A920 /* ArchDirectoryObserver.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,7 +173,6 @@
 		1D4A1E3C167D372600C9A895 /* SquareImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SquareImageView.m; sourceTree = "<group>"; };
 		1D4A1E3E167D3C8400C9A895 /* PIXDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXDataSource.h; sourceTree = "<group>"; };
 		1D4A1E3F167D3C8500C9A895 /* PIXDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXDataSource.m; sourceTree = "<group>"; };
-		1D4A1E41167D459500C9A895 /* ArchDirectoryObserver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ArchDirectoryObserver.framework; sourceTree = "<group>"; };
 		1DB2F84A167ABE87008AC0F7 /* UnboundApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnboundApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DB2F84E167ABE87008AC0F7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		1DB2F851167ABE87008AC0F7 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -239,9 +238,41 @@
 			name = PhotoBrowserView;
 			sourceTree = "<group>";
 		};
+		1D1419A5167FC49100A8A920 /* Windows */ = {
+			isa = PBXGroup;
+			children = (
+				1DB2F863167ABE87008AC0F7 /* MainMenu.xib */,
+				1D4A1DCA167AE1A500C9A895 /* PIXMainWindowController.h */,
+				1D4A1DCB167AE1A500C9A895 /* PIXMainWindowController.m */,
+				1D4A1DC3167ADA2400C9A895 /* PIXMainWindow.xib */,
+				1D4A1DCD167AE22A00C9A895 /* PIXInfoWindowController.h */,
+				1D4A1DCE167AE22A00C9A895 /* PIXInfoWindowController.m */,
+				1D4A1DCF167AE22A00C9A895 /* PIXInfoWindowController.xib */,
+			);
+			name = Windows;
+			sourceTree = "<group>";
+		};
+		1D1419A6167FC50100A8A920 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1D4A1DFE167BEAF200C9A895 /* PIXViewController.h */,
+				1D4A1DFF167BEAF200C9A895 /* PIXViewController.m */,
+				1D4A1E01167BEC1600C9A895 /* PIXNavigationController.h */,
+				1D4A1E02167BEC1700C9A895 /* PIXNavigationController.m */,
+				1D0834FD167D6609003D557A /* PhotoBrowserView */,
+				1D0834F5167D63E5003D557A /* PageView */,
+				1D4A1E32167D361E00C9A895 /* SidebarOutlineView */,
+				1D4A1E2C167D2D2900C9A895 /* SplitView */,
+				1D4A1DC2167AD97B00C9A895 /* AlbumView */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		1D4A1D97167AD90200C9A895 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1DB2F86C167AC07F008AC0F7 /* icon.icns */,
+				1DB2F86D167AC07F008AC0F7 /* unbound_icon_512x512.png */,
 				1D4A1D99167AD93400C9A895 /* images */,
 			);
 			name = Resources;
@@ -345,8 +376,6 @@
 		1DB2F83F167ABE87008AC0F7 = {
 			isa = PBXGroup;
 			children = (
-				1D4A1E41167D459500C9A895 /* ArchDirectoryObserver.framework */,
-				1D4A1E2A167D2A4C00C9A895 /* Quartz.framework */,
 				1DB2F854167ABE87008AC0F7 /* UnboundApp */,
 				1DB2F84D167ABE87008AC0F7 /* Frameworks */,
 				1DB2F84B167ABE87008AC0F7 /* Products */,
@@ -373,6 +402,7 @@
 		1DB2F850167ABE87008AC0F7 /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1D4A1E2A167D2A4C00C9A895 /* Quartz.framework */,
 				1D4A1E07167C056C00C9A895 /* QuartzCore.framework */,
 				1DB2F851167ABE87008AC0F7 /* AppKit.framework */,
 				1DB2F852167ABE87008AC0F7 /* CoreData.framework */,
@@ -385,11 +415,8 @@
 		1DB2F854167ABE87008AC0F7 /* UnboundApp */ = {
 			isa = PBXGroup;
 			children = (
-				1DB2F86C167AC07F008AC0F7 /* icon.icns */,
-				1DB2F86D167AC07F008AC0F7 /* unbound_icon_512x512.png */,
 				1DB2F86B167ABF4F008AC0F7 /* UnboundApp.entitlements */,
 				1DB2F870167AC0A6008AC0F7 /* Sources */,
-				1DB2F863167ABE87008AC0F7 /* MainMenu.xib */,
 				1D4A1D97167AD90200C9A895 /* Resources */,
 				1DB2F855167ABE87008AC0F7 /* Supporting Files */,
 			);
@@ -411,26 +438,13 @@
 		1DB2F870167AC0A6008AC0F7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				1D0834FD167D6609003D557A /* PhotoBrowserView */,
-				1D0834F5167D63E5003D557A /* PageView */,
-				1D4A1E32167D361E00C9A895 /* SidebarOutlineView */,
-				1D4A1E2C167D2D2900C9A895 /* SplitView */,
-				1D4A1DD7167AFB8600C9A895 /* Model */,
-				1D4A1DD5167AEF4A00C9A895 /* Preferences */,
-				1D4A1DC2167AD97B00C9A895 /* AlbumView */,
 				1DB2F860167ABE87008AC0F7 /* PIXAppDelegate.h */,
 				1DB2F861167ABE87008AC0F7 /* PIXAppDelegate.m */,
-				1D4A1DCA167AE1A500C9A895 /* PIXMainWindowController.h */,
-				1D4A1DCB167AE1A500C9A895 /* PIXMainWindowController.m */,
-				1D4A1DC3167ADA2400C9A895 /* PIXMainWindow.xib */,
-				1D4A1DCD167AE22A00C9A895 /* PIXInfoWindowController.h */,
-				1D4A1DCE167AE22A00C9A895 /* PIXInfoWindowController.m */,
-				1D4A1DCF167AE22A00C9A895 /* PIXInfoWindowController.xib */,
 				1D4A1DD6167AF00000C9A895 /* PIXDefines.h */,
-				1D4A1DFE167BEAF200C9A895 /* PIXViewController.h */,
-				1D4A1DFF167BEAF200C9A895 /* PIXViewController.m */,
-				1D4A1E01167BEC1600C9A895 /* PIXNavigationController.h */,
-				1D4A1E02167BEC1700C9A895 /* PIXNavigationController.m */,
+				1D4A1DD7167AFB8600C9A895 /* Model */,
+				1D1419A5167FC49100A8A920 /* Windows */,
+				1D1419A6167FC50100A8A920 /* Views */,
+				1D4A1DD5167AEF4A00C9A895 /* Preferences */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
