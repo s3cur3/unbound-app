@@ -45,6 +45,7 @@
     
     [currentViewController.view removeFromSuperview];
     [self.view addSubview:aViewController.view];
+    [aViewController.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
     
     
     [self.viewControllers addObject:aViewController];
@@ -62,6 +63,7 @@
     PIXViewController * underViewController = [self.viewControllers lastObject];
     [underViewController.view setFrame:self.view.bounds];
     [self.view addSubview:[underViewController view]];
+    [aViewController.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
     [self checkHideBackButton];
 }
 

@@ -48,6 +48,7 @@
         if (anAlbum!=nil)
         {
             self.album = anAlbum;
+            
         }
     }
     
@@ -66,6 +67,8 @@
 {
     if (self.browserView)
     {
+        [self.view addSubview:self.selectionToolbar];
+        
         [self.browserView setDraggingDestinationDelegate:self];
         
         NSColor * color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
@@ -74,6 +77,92 @@
         
         [self.browserView setAllowsMultipleSelection:YES];
         [self.browserView reloadData];
+        
+        
+        self.selectionToolbarHidden = YES;
+    }
+}
+
+-(NSView *)selectionToolbar
+{
+    if(_selectionToolbar != nil) return _selectionToolbar;
+    
+    _selectionToolbar = [[NSView alloc] initWithFrame:NSMakeRect(0, self.view.frame.size.height, self.view.frame.size.width, 44)];
+    
+    [_selectionToolbar setLayer:[CALayer layer]];
+    [_selectionToolbar setWantsLayer:YES];
+    
+    [_selectionToolbar.layer setBackgroundColor:CGColorCreateGenericRGB(0.791, 0.933, 0.997, 1.000)];
+    [_selectionToolbar.layer setBorderColor:CGColorCreateGenericGray(0.0, .3)];
+        
+    [_selectionToolbar setAutoresizingMask:NSViewWidthSizable];
+    
+    return _selectionToolbar;
+}
+
+-(void)setSelectionToolbarHidden:(BOOL)value
+{
+    if(_selectionToolbarHidden == value) return;
+    
+    _selectionToolbarHidden = value;
+    
+    [self.selectionToolbar setFrame:NSMakeRect(0, self.view.frame.size.height-44, self.view.frame.size.width, 44)];
+    [self.selectionToolbar.layer setZPosition:1000];
+    
+    if(_selectionToolbarHidden)
+    {
+        /*
+        [NSAnimationContext beginGrouping];
+        [[NSAnimationContext currentContext] setDuration:0.25f];
+        
+        [[self.selectionToolbar animator] setFrame:NSMakeRect(0, self.view.frame.size.height, self.view.frame.size.width, 44)];
+        
+        [NSAnimationContext endGrouping];
+
+        */
+        [CATransaction setDisableActions:NO];
+        [CATransaction begin];
+        [CATransaction setAnimationDuration:0.25f];
+        
+        
+
+        //[self.selectionToolbar.layer setOpacity:0.0];
+        [self.selectionToolbar.layer setPosition:CGPointMake(0, 44)];
+            
+        [CATransaction commit];
+        
+        //[CATransaction setDisableActions:YES];
+    }
+    
+    else
+    {
+        
+        [CATransaction begin];
+        [CATransaction setAnimationDuration:0.25f];
+        
+        
+
+        
+        //[self.selectionToolbar.layer setOpacity:1.0];
+        [self.selectionToolbar.layer setPosition:CGPointMake(0, 0)];
+        
+        [CATransaction commit];
+        
+        /*
+        [NSAnimationContext beginGrouping];
+        [[NSAnimationContext currentContext] setDuration:0.25f];
+        
+        [[self.selectionToolbar animator] setFrame:NSMakeRect(0, self.view.frame.size.height-44, self.view.frame.size.width, 44)];
+        
+        [NSAnimationContext endGrouping];
+        
+        /*
+        [NSAnimationContext beginGrouping];
+        [[NSAnimationContext currentContext] setDuration:0.25f]; 
+        
+        [[self.selectionToolbar animator] setFrame:NSMakeRect(0, self.view.frame.size.height-44, self.view.frame.size.width, 44)];
+        
+        [NSAnimationContext endGrouping];*/
     }
 }
 
@@ -162,7 +251,15 @@
 
 - (void)imageBrowserSelectionDidChange:(IKImageBrowserView *)aBrowser
 {
+    if([aBrowser.selectionIndexes count] > 0)
+    {
+        self.selectionToolbarHidden = NO;
+    }
     
+    else
+    {
+        self.selectionToolbarHidden = YES;
+    }
 }
 
 
