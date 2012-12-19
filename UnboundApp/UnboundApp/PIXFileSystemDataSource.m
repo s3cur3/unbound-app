@@ -13,6 +13,7 @@
 #import "Album.h"
 #import "PIXDefines.h"
 
+#define ONLY_LOAD_ALBUMS_WITH_IMAGES 1
 
 extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
 
@@ -111,15 +112,94 @@ NSString * DefaultDropBoxPhotosDirectory()
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),^(void){
         
-        NSDictionary *albumsDict = [self albumsDictForURL:[self rootFilePathURL]];
+        //NSDictionary *albumsDict = [self albumsDictForURL:[self rootFilePathURL]];
+        NSMutableDictionary *tmpAlbumLookupTable = [NSMutableDictionary dictionary];
+        for (NSURL *aURL in [self observedDirectories])
+        {
+            NSDictionary *observedDirectoryDict = [self albumsDictForURL:aURL];
+            [tmpAlbumLookupTable addEntriesFromDictionary:observedDirectoryDict];
+        }
         
         dispatch_async(dispatch_get_main_queue(),^(void){
-            self.albumLookupTable = [NSMutableDictionary dictionaryWithDictionary:albumsDict];
+            
+            self.albumLookupTable = tmpAlbumLookupTable;
             [self startObserving];
         });
     });
 }
 
+// -------------------------------------------------------------------------------
+//  isImageFile:filePath
+//
+//  Uses LaunchServices and UTIs to detect if a given file path is an image file.
+// -------------------------------------------------------------------------------
+- (BOOL)fileIsImageFile:(NSURL *)url
+{
+    BOOL isImageFile = NO;
+    
+    NSString *utiValue;
+    [url getResourceValue:&utiValue forKey:NSURLTypeIdentifierKey error:nil];
+    if (utiValue)
+    {
+        isImageFile = UTTypeConformsTo((__bridge CFStringRef)utiValue, kUTTypeImage);
+    }
+    return isImageFile;
+}
+
+- (BOOL)fileIsUnboundMetadataFile:(NSURL *)url
+{
+#if ONLY_LOAD_ALBUMS_WITH_IMAGES
+    return NO;
+#endif
+    
+    BOOL isUnboundMetadataFile = NO;
+    if ([url.path.lastPathComponent isEqualToString:kUnboundAlbumMetadataFileName])
+    {
+        isUnboundMetadataFile = YES;
+    }
+    return isUnboundMetadataFile;
+    
+    //Not using getResourceValue as it can be synchronous
+    /*NSString *utiValue;
+    [url getResourceValue:&utiValue forKey:NSURLTypeIdentifierKey error:nil];
+    if (utiValue)
+    {
+        isUnboundMetadataFile = [utiValue isEqualToString:kUnboundAlbumMetadataFileName];
+    }*/
+    
+}
+
+//-------------------------------------------------------
+// Check if the directory has image files
+// or an existing .unbound file
+//-------------------------------------------------------
+-(BOOL)directoryIsPhotoAlbum:(NSURL *)aDirectoryURL
+{
+    
+    NSArray *propKeys = [NSArray arrayWithObjects:NSURLLocalizedNameKey, NSURLTypeIdentifierKey, NSURLIsDirectoryKey, nil];
+    NSError *error = nil;
+    NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:aDirectoryURL
+                                                               includingPropertiesForKeys:propKeys
+                                                                                  options:NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsSubdirectoryDescendants
+                                                                                    error:&error];
+    
+    if(directoryContents == nil) {
+        [[NSApplication sharedApplication] presentError:error];
+        return NO;
+    }
+    
+    __block BOOL isDirectoryPhotoAlbum = NO;
+    [directoryContents enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+
+        if ([self fileIsUnboundMetadataFile:(NSURL *)obj] || [self fileIsImageFile:(NSURL *)obj]==YES)
+        {
+            isDirectoryPhotoAlbum = YES;
+            *stop = YES;
+        }
+    }];
+    
+    return isDirectoryPhotoAlbum;
+}
 
 -(NSDictionary *)albumsDictForURL:(NSURL *)aURL
 {
@@ -140,7 +220,7 @@ NSString * DefaultDropBoxPhotosDirectory()
             [[NSApplication sharedApplication] presentError:error];
         }
         else if ([isDirectory boolValue]) {
-            if ([newAlbumsDict valueForKey:url.path]==nil)
+            if ([newAlbumsDict valueForKey:url.path]==nil && [self directoryIsPhotoAlbum:url]==YES)
             {
                 Album *anAlbum = [[Album alloc] initWithFilePath:url.path];
                 [anAlbum updatePhotosFromFileSystem];

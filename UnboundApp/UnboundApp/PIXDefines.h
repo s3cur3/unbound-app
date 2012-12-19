@@ -9,6 +9,8 @@
 #ifndef UnboundApp_PIXDefines_h
 #define UnboundApp_PIXDefines_h
 
+static NSString *kUnboundAlbumMetadataFileName = @".unbound";
+
 static const NSString *ALBUM = @"ALBUM";
 static const NSString *PHOTO = @"PHOTO";
 
