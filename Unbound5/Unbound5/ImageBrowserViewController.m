@@ -268,6 +268,12 @@
 // -------------------------------------------------------------------------------
 - (void)imageBrowser:(IKImageBrowserView *)aBrowser cellWasDoubleClickedAtIndex:(NSUInteger)index
 {
+    // deselect all items in the view
+    [self.browserView setSelectionIndexes:nil byExtendingSelection:NO];
+    
+    self.browserData = nil;
+    [self.browserView reloadData];
+    
     
     NSLog(@"cellWasDoubleClickedAtIndex");
     [self showPageControllerForIndex:index];

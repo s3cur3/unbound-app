@@ -8,11 +8,14 @@
 
 #import "PIXNavigationController.h"
 #import "PIXViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface PIXNavigationController ()
 
 @property (strong, nonatomic) NSMutableArray *viewControllers;
-@property (strong) IBOutlet NSButton *backButton;
+
+@property (strong, nonatomic) NSArray * toolbarItems;
+
 
 @end
 
@@ -29,6 +32,8 @@
     
     return self;
 }
+
+
 
 
 - (void)setView:(NSView *)view;
@@ -50,7 +55,7 @@
     
     [self.viewControllers addObject:aViewController];
     
-    [self checkHideBackButton];
+    [self setupToolbar];
 }
 
 -(void)popViewController;
@@ -64,7 +69,7 @@
     [underViewController.view setFrame:self.view.bounds];
     [self.view addSubview:[underViewController view]];
     [aViewController.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-    [self checkHideBackButton];
+    [self setupToolbar];
 }
 
 -(NSArray *)viewControllerArray
@@ -77,19 +82,84 @@
     [self popViewController];
 }
 
--(void)checkHideBackButton
+-(void)setupToolbar
 {
-    if (self.viewControllers.count <=1)
-    {
-        //[self.backButton setTitle:@""];
-        //[self.backButton setImage:[NSImage imageNamed:NSImageNameAddTemplate]];
-        [self.backButton setHidden:YES];
-    } else {
-        [self.backButton setTitle:@"Back"];
-        [self.backButton setImage:nil];
-        [self.backButton setHidden:NO];
-    }
+    
+    [[self.viewControllers lastObject] setupToolbar];
 }
+
+-(void)setToolbarItems:(NSArray *)items
+{
+    [self.mainWindow disableFlushWindow];
+
+    NSDisableScreenUpdates();
+    
+    _toolbarItems = items;
+    
+    // remove all items from the toolbar
+    while([[self.toolbar items] count] > 0)
+    {
+        [self.toolbar removeItemAtIndex:0];
+    }
+    
+    int i = 0;
+    for(NSToolbarItem * item in self.toolbarItems)
+    {
+        [self.toolbar insertItemWithItemIdentifier:[item itemIdentifier] atIndex:i];
+        i++;
+    }
+    
+    NSEnableScreenUpdates();
+    [self.mainWindow enableFlushWindow];
+    
+}
+
+
+- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
+{    
+    for(NSToolbarItem * item in self.toolbarItems)
+    {
+        if([[item itemIdentifier] isEqualToString:itemIdentifier])
+        {
+            return item;
+        }
+    }
+    
+    return nil;
+}
+
+- (NSToolbarItem *)backButton
+{
+    if(_backButton != nil) return _backButton;
+    
+    _backButton = [[NSToolbarItem alloc] initWithItemIdentifier:@"NormalBackButton"];
+    _backButton.image = [NSImage imageNamed:NSImageNameGoLeftTemplate];
+
+    [_backButton setLabel:@"Back"];
+    [_backButton setPaletteLabel:@"Back"];
+    
+    // Set up a reasonable tooltip, and image
+    // you will likely want to localize many of the item's properties
+    [_backButton setToolTip:@"Navigate Back"];
+    
+    // Tell the item what message to send when it is clicked
+    [_backButton setTarget:self];
+    [_backButton setAction:@selector(popViewController)];
+    
+    return _backButton;
+    
+}
+
+- (NSToolbarItem *)middleSpacer
+{
+    if(_middleSpacer != nil) return _middleSpacer;
+    
+    _middleSpacer = [[NSToolbarItem alloc] initWithItemIdentifier:NSToolbarFlexibleSpaceItemIdentifier];
+   
+    
+    return _middleSpacer;
+}
+
 
 -(void)dealloc
 {

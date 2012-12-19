@@ -74,6 +74,7 @@
 		1DB2F86E167AC07F008AC0F7 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F86C167AC07F008AC0F7 /* icon.icns */; };
 		1DB2F86F167AC07F008AC0F7 /* unbound_icon_512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F86D167AC07F008AC0F7 /* unbound_icon_512x512.png */; };
 		1DB2F873167AC15F008AC0F7 /* ArchDirectoryObserver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DB2F872167AC15F008AC0F7 /* ArchDirectoryObserver.framework */; };
+		8C972CB41680FE8B00358913 /* PIXModifierSwitchedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -190,6 +191,8 @@
 		1DB2F86C167AC07F008AC0F7 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = SOURCE_ROOT; };
 		1DB2F86D167AC07F008AC0F7 /* unbound_icon_512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unbound_icon_512x512.png; sourceTree = SOURCE_ROOT; };
 		1DB2F872167AC15F008AC0F7 /* ArchDirectoryObserver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ArchDirectoryObserver.framework; sourceTree = "<group>"; };
+		8C972CB21680FE8A00358913 /* PIXModifierSwitchedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXModifierSwitchedEvent.h; sourceTree = "<group>"; };
+		8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXModifierSwitchedEvent.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,6 +232,8 @@
 			children = (
 				1D083511167D785F003D557A /* PIXImageBrowserView.h */,
 				1D083512167D785F003D557A /* PIXImageBrowserView.m */,
+				8C972CB21680FE8A00358913 /* PIXModifierSwitchedEvent.h */,
+				8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */,
 				1D0834FE167D6678003D557A /* PIXImageBrowserViewController.h */,
 				1D0834FF167D6678003D557A /* PIXImageBrowserViewController.m */,
 				1D083500167D6678003D557A /* PIXImageBrowserViewController.xib */,
@@ -582,6 +587,7 @@
 				1D083519167DCA71003D557A /* AutoSizingImageView.m in Sources */,
 				1D083520167E7C80003D557A /* PIXPageView.m in Sources */,
 				1D08352D167E8B2B003D557A /* PIXImageViewController.m in Sources */,
+				8C972CB41680FE8B00358913 /* PIXModifierSwitchedEvent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

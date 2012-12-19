@@ -10,14 +10,20 @@
 
 @class PIXViewController;
 
-@interface PIXNavigationController : NSViewController
+@interface PIXNavigationController : NSViewController <NSToolbarDelegate>
 
 @property (weak, nonatomic) IBOutlet NSWindow *mainWindow;
+@property (weak, nonatomic) IBOutlet NSToolbar * toolbar;
+
+@property (strong, nonatomic) IBOutlet NSToolbarItem * backButton;
+@property (strong, nonatomic) IBOutlet NSToolbarItem * middleSpacer;
 
 - (IBAction)backPressed:(id)sender;
 
 -(void)pushViewController:(PIXViewController *)aViewController;
 -(void)popViewController;
 -(NSArray *) viewControllerArray;
+
+-(void)setToolbarItems:(NSArray *)items;
 
 @end

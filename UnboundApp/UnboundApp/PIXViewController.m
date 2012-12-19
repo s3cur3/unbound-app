@@ -7,6 +7,7 @@
 //
 
 #import "PIXViewController.h"
+#import "PIXNavigationController.h"
 
 @interface PIXViewController ()
 
@@ -22,6 +23,14 @@
     }
     
     return self;
+}
+
+-(void)setupToolbar
+{
+    NSArray * items = @[self.navigationViewController.backButton];
+    
+    [self.navigationViewController setToolbarItems:items];
+     
 }
 
 @end

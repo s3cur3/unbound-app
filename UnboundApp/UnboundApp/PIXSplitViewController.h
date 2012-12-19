@@ -10,7 +10,7 @@
 
 @class Album;
 
-@interface PIXSplitViewController : PIXViewController
+@interface PIXSplitViewController : PIXViewController <NSSplitViewDelegate>
 
 @property (nonatomic,weak) IBOutlet NSSplitView *splitView;
 @property (nonatomic,weak) IBOutlet NSView *leftPane;

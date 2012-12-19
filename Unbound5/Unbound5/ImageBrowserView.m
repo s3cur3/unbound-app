@@ -217,38 +217,6 @@
 
 -(void)mouseDown:(NSEvent *)theEvent
 {
-    /*
-    if([theEvent clickCount] == 1)
-    {
-        NSPoint clickPosition = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-        NSInteger indexOfItemUnderClick = [self indexOfItemAtPoint: clickPosition];
-        
-        if (indexOfItemUnderClick==NSNotFound)
-        {
-            
-            
-            
-            //double delayInSeconds = 1.0;
-            //dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-            //dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            
-            [self setSelectionIndexes:[NSIndexSet indexSet] byExtendingSelection:NO];
-            [self reloadData];
-            [self setNeedsDisplay:YES];
-            //[self selectionDidChange];
-            
-            DLog(@"Clearing selection because of a click on background");
-            
-            //})
-            [super mouseDown:theEvent];
-            return;
-        }
-        
-        //ImageBrowserCell *cell = (ImageBrowserCell *) [self cellForItemAtIndex:indexOfItemUnderClick];
-        
-        //if([[theEvent window] initialFirstResponder])
-    }*/
-    
     ModifierSwitchedEvent * switchedEvent = (ModifierSwitchedEvent *)[ModifierSwitchedEvent eventWithCGEvent:[theEvent CGEvent]];
     [super mouseDown:switchedEvent];
 }
@@ -261,8 +229,7 @@
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
-    //[super mouseUp:theEvent];
-    //return;
+
     //check to see if this was a single click on the background (this will unselect)
     if([theEvent clickCount] == 1)
     {
@@ -271,23 +238,15 @@
         
         if (indexOfItemUnderClick==NSNotFound)
         {
-            
             // toggle the mouse (to get the view to deselect)
             [super mouseUp:theEvent];
             [super mouseDown:theEvent];
             [super mouseUp:theEvent];
-    
             
             return;
         }
-        
-        //ImageBrowserCell *cell = (ImageBrowserCell *) [self cellForItemAtIndex:indexOfItemUnderClick];
-        
-        //if([[theEvent window] initialFirstResponder])
     }
-    
-    
-                                                                      
+
     ModifierSwitchedEvent * switchedEvent = (ModifierSwitchedEvent *)[ModifierSwitchedEvent eventWithCGEvent:[theEvent CGEvent]];
     [super mouseUp:switchedEvent];
 }

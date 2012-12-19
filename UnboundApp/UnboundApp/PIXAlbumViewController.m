@@ -21,6 +21,7 @@ extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
     
 }
 
+@property (nonatomic, strong) NSToolbarItem * trashbutton;
 
 
 @end
@@ -55,6 +56,41 @@ extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
                                              selector:@selector(albumsChanged:)
                                                  name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM
                                                object:[PIXFileSystemDataSource sharedInstance]];
+}
+
+-(void)setupToolbar
+{
+    NSArray * items = @[self.navigationViewController.middleSpacer, self.trashbutton];
+    
+    [self.navigationViewController setToolbarItems:items];
+    
+}
+                        
+- (NSToolbarItem *)trashbutton
+{
+    if(_trashbutton != nil) return _trashbutton;
+    
+    _trashbutton = [[NSToolbarItem alloc] initWithItemIdentifier:@"TrashButton"];
+    _trashbutton.image = [NSImage imageNamed:NSImageNameTrashEmpty];
+    
+    [_trashbutton setLabel:@"Trash"];
+    [_trashbutton setPaletteLabel:@"Trash"];
+    
+    // Set up a reasonable tooltip, and image
+    // you will likely want to localize many of the item's properties
+    [_trashbutton setToolTip:@"View Trash"];
+    
+    // Tell the item what message to send when it is clicked
+    [_trashbutton setTarget:self];
+    [_trashbutton setAction:@selector(showTrash)];
+    
+    return _trashbutton;
+    
+}
+
+-(void)showTrash
+{
+    
 }
 
 -(NSMutableArray *)albums

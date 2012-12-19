@@ -8,6 +8,7 @@
 
 #import "PIXImageBrowserView.h"
 #import "PIXImageBrowserCell.h"
+#import "PIXModifierSwitchedEvent.h"
 
 @implementation PIXImageBrowserView
 
@@ -66,6 +67,46 @@
 - (IKImageBrowserCell *) newCellForRepresentedItem:(id) cell
 {
 	return [[PIXImageBrowserCell alloc] init];
+}
+
+//---------------------------------------------------------------------------------
+// Intercep mouse events and transform the NSEvent in order to make view act as if ctrl is held down
+//
+//---------------------------------------------------------------------------------
+-(void)mouseDown:(NSEvent *)theEvent
+{
+    PIXModifierSwitchedEvent * switchedEvent = (PIXModifierSwitchedEvent *)[PIXModifierSwitchedEvent eventWithCGEvent:[theEvent CGEvent]];
+    [super mouseDown:switchedEvent];
+}
+
+-(void)mouseDragged:(NSEvent *)theEvent
+{
+    PIXModifierSwitchedEvent * switchedEvent = (PIXModifierSwitchedEvent *)[PIXModifierSwitchedEvent eventWithCGEvent:[theEvent CGEvent]];
+    [super mouseDragged:switchedEvent];
+}
+
+- (void)mouseUp:(NSEvent *)theEvent
+{
+    
+    //check to see if this was a single click on the background (this will unselect)
+    if([theEvent clickCount] == 1)
+    {
+        NSPoint clickPosition = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+        NSInteger indexOfItemUnderClick = [self indexOfItemAtPoint: clickPosition];
+        
+        if (indexOfItemUnderClick==NSNotFound)
+        {
+            // toggle the mouse (to get the view to deselect)
+            [super mouseUp:theEvent];
+            [super mouseDown:theEvent];
+            [super mouseUp:theEvent];
+            
+            return;
+        }
+    }
+    
+    PIXModifierSwitchedEvent * switchedEvent = (PIXModifierSwitchedEvent *)[PIXModifierSwitchedEvent eventWithCGEvent:[theEvent CGEvent]];
+    [super mouseUp:switchedEvent];
 }
 
 

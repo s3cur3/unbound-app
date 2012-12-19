@@ -17,4 +17,6 @@
 
 @property (weak, nonatomic) PIXNavigationController *navigationViewController;
 
+-(void)setupToolbar;
+
 @end

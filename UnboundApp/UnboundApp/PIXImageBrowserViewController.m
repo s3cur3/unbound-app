@@ -54,7 +54,11 @@
     _album = album;
     if (album) {
         [[[PIXAppDelegate sharedAppDelegate] window] setTitle:self.album.title];
-        self.browserData = self.album.photos;
+        
+        // deselect all items in the view
+        [self.browserView setSelectionIndexes:nil byExtendingSelection:NO];
+        
+        self.browserData = nil;
         [self.browserView reloadData];
     }
 }
@@ -136,6 +140,12 @@
     
     DLog(@"cellWasDoubleClickedAtIndex : %ld", index);
     [self showPageControllerForIndex:index];
+    
+    // deselect all items in the view
+    [self.browserView setSelectionIndexes:nil byExtendingSelection:NO];
+    
+    self.browserData = nil;
+    [self.browserView reloadData];
     
 }
 
