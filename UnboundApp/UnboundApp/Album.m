@@ -265,6 +265,8 @@ enum {
             [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
             
             [self.photos makeObjectsPerformSelector:@selector(setAlbum:) withObject:self];
+            
+            [self thumbnailImage];
         });
         
     //});

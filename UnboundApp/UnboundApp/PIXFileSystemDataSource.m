@@ -173,7 +173,6 @@ NSString * DefaultDropBoxPhotosDirectory()
             [self finishedLoadingAlbums];
             [self setAlbumLookupTable:tmpAlbumLookupTable];
             [self performSelector:@selector(startLoadingPhotos) withObject:nil afterDelay:0.1];
-            //[self startObserving];
         });
     });
 }
@@ -221,8 +220,22 @@ NSString * DefaultDropBoxPhotosDirectory()
             
             //Hack to get albums to reorder on new mostRecentPhotoDate
             [self setAlbumLookupTable:self.albumLookupTable];
+            
+            //Tell the app delegate we're done and it's time to start observing file system changes
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUB_PHOTOS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
         });
     });
+    
+}
+
+-(void)loadPhotosForAlbum:(Album *)anAlbum
+{
+    dispatch_queue_t myQueue = dispatch_queue_create("com.pixite.ub.album.photos.update", 0);
+    
+    dispatch_async(myQueue,^(void){
+        [(Album *)anAlbum updatePhotosFromFileSystem];
+    });
+    
     
 }
 
@@ -465,8 +478,7 @@ NSString * DefaultDropBoxPhotosDirectory()
         
         
     } else {
-        [changedAlbum updatePhotosFromFileSystem];
-        
+        [self loadPhotosForAlbum:changedAlbum];
     }
 }
 

@@ -19,7 +19,8 @@ static NSString *AlbumCreatedNotification = @"AlbumCreatedNotification";
 static NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
 static NSString *AlbumDeletedNotification = @"AlbumDeletedNotification";
 
-static const NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM = @"UB_ALBUMS_LOADED_FROM_FILESYSTEM";
+static NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM = @"UB_ALBUMS_LOADED_FROM_FILESYSTEM";
+static NSString *kUB_PHOTOS_LOADED_FROM_FILESYSTEM = @"UB_PHOTOS_LOADED_FROM_FILESYSTEM";
 
 #define FFString(msg, description) NSLocalizedStringFromTableInBundle(msg, @"Unbound", [NSBundle bundleForClass:[PIXMainWindowController class]], description)
 
