@@ -36,7 +36,7 @@ NSString* kAppFirstRun = @"appFirstRun";
     DLog(@"%@", error);
     NSLog(@"%@",[NSThread callStackSymbols]);
 #endif
-    if([[NSThread currentThread] isEqual:[NSThread mainThread]]) {
+    if([[NSThread currentThread] isMainThread]) {
         [[NSApplication sharedApplication] presentError:error];
     } else {
         [[NSApplication sharedApplication] performSelectorOnMainThread:@selector(presentError:) withObject:error waitUntilDone:NO];
@@ -60,7 +60,7 @@ NSString* kAppFirstRun = @"appFirstRun";
             [[NSNotificationCenter defaultCenter] removeObserver:self name:kUB_PHOTOS_LOADED_FROM_FILESYSTEM object:self.dataSource];
 
             //start observing the file system
-            [self.dataSource performSelector:@selector(startObserving) withObject:nil afterDelay:2.0];
+            [self.dataSource performSelector:@selector(startObserving) withObject:nil afterDelay:1.0];
             
         }];
         
@@ -106,6 +106,7 @@ NSString* kAppFirstRun = @"appFirstRun";
 - (void)applicationWillTerminate:(NSNotification *)notification;
 {
     [self.dataSource stopObserving];
+    self.dataSource = nil;
 }
 
 

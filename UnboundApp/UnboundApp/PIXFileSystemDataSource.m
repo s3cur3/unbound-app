@@ -239,24 +239,6 @@ NSString * DefaultDropBoxPhotosDirectory()
     
 }
 
--(void)startLoadingPhotos_old
-{
-    self.startDate = [NSDate date];
-    NSEnumerator *albumEnumerator = [self.albumLookupTable objectEnumerator];
-    id anAlbum;
-    
-    NSOperationQueue *mainQueue = [NSOperationQueue mainQueue];
-    __block NSUInteger count = 0;
-    while ((anAlbum = [albumEnumerator nextObject])) {
-        [(Album *)anAlbum updatePhotosFromFileSystem];
-        [[NSNotificationCenter defaultCenter] addObserverForName:AlbumDidChangeNotification object:anAlbum queue:mainQueue usingBlock:^(NSNotification *note) {
-            count++;
-            DLog(@"Album \"%@\" finished loading photos, total loaded : %ld", [note.object title], count);
-            [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:note.object];
-        }];
-    }
-}
-
 -(void)finishedLoadingPhotos
 {
     self.endDate = [NSDate date];

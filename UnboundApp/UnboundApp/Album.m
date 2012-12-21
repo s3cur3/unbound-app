@@ -206,69 +206,72 @@ enum {
 
 -(void)updatePhotosFromFileSystem
 {
-    
+#ifdef DEBUG
+    NSAssert(![[NSThread currentThread] isMainThread], @"-[Album updatePhotosFromFileSystem] should not be run on main thread");
+#endif
     //dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW,0),^(void){
-        NSEnumerator *content = [self children];
-        NSMutableArray *somePhotos = [NSMutableArray array];
-        NSDate *aDateMostRecentPhoto = nil;
-        NSError *error;
+    
+    NSEnumerator *content = [self children];
+    NSMutableArray *somePhotos = [NSMutableArray array];
+    NSDate *aDateMostRecentPhoto = nil;
+    NSError *error;
+    
+    NSURL *itemURL = nil;
+    while (itemURL = (NSURL*)[content nextObject])
+    {
+        NSString *utiValue;
         
-        NSURL *itemURL = nil;
-        while (itemURL = (NSURL*)[content nextObject])
-        {
-            NSString *utiValue;
-            
-            if (![itemURL getResourceValue:&utiValue forKey:NSURLTypeIdentifierKey error:&error]) {
-                [PIXAppDelegate presentError:error];
+        if (![itemURL getResourceValue:&utiValue forKey:NSURLTypeIdentifierKey error:&error]) {
+            [PIXAppDelegate presentError:error];
+        }
+        if (UTTypeConformsTo((__bridge CFStringRef)(utiValue), kUTTypeImage)) {
+            Photo *aPhoto = [[Photo alloc] initWithURL:itemURL];
+            NSDate *modDate = nil;
+            NSError *error;
+            if (![itemURL getResourceValue:&modDate forKey:NSURLContentModificationDateKey error:&error]) {
+                [[NSApplication sharedApplication] performSelectorOnMainThread:@selector(presentError:) withObject:error waitUntilDone:NO];
+                //Unable to get the dateLastModified - for now just set the modDate to the distantPast as a temporary placeholder for sorting
+                //TODO: find the best way to handle this
+                modDate = [NSDate distantPast];
             }
-            if (UTTypeConformsTo((__bridge CFStringRef)(utiValue), kUTTypeImage)) {
-                Photo *aPhoto = [[Photo alloc] initWithURL:itemURL];
-                NSDate *modDate = nil;
-                NSError *error;
-                if (![itemURL getResourceValue:&modDate forKey:NSURLContentModificationDateKey error:&error]) {
-                    [[NSApplication sharedApplication] performSelectorOnMainThread:@selector(presentError:) withObject:error waitUntilDone:NO];
-                    //Unable to get the dateLastModified - for now just set the modDate to the distantPast as a temporary placeholder for sorting
-                    //TODO: find the best way to handle this
-                    modDate = [NSDate distantPast];
-                }
-                aPhoto.dateLastModified = modDate;
-                if (!aDateMostRecentPhoto || [modDate isGreaterThanOrEqualTo:aDateMostRecentPhoto])
-                {
-                    aDateMostRecentPhoto = modDate;
-                }
-                [somePhotos addObject:aPhoto];
+            aPhoto.dateLastModified = modDate;
+            if (!aDateMostRecentPhoto || [modDate isGreaterThanOrEqualTo:aDateMostRecentPhoto])
+            {
+                aDateMostRecentPhoto = modDate;
+            }
+            [somePhotos addObject:aPhoto];
+        }
+    }
+
+    dispatch_async(dispatch_get_main_queue(),^(void){
+
+        self.photos = somePhotos;
+        if (aDateMostRecentPhoto) {
+            self.dateMostRecentPhoto = aDateMostRecentPhoto;
+        } else {
+            NSDate *folderDate = nil;
+            NSError *error;
+            NSURL *albumURL = [NSURL fileURLWithPath:self.filePath isDirectory:YES];
+            if (![albumURL getResourceValue:&folderDate forKey:NSURLContentModificationDateKey error:&error]) {
+                [[NSApplication sharedApplication] presentError:error];
+            } else {
+                self.dateMostRecentPhoto = folderDate;
             }
         }
-
-        dispatch_async(dispatch_get_main_queue(),^(void){
-
-            self.photos = somePhotos;
-            if (aDateMostRecentPhoto) {
-                self.dateMostRecentPhoto = aDateMostRecentPhoto;
-            } else {
-                NSDate *folderDate = nil;
-                NSError *error;
-                NSURL *albumURL = [NSURL fileURLWithPath:self.filePath isDirectory:YES];
-                if (![albumURL getResourceValue:&folderDate forKey:NSURLContentModificationDateKey error:&error]) {
-                    [[NSApplication sharedApplication] presentError:error];
-                } else {
-                    self.dateMostRecentPhoto = folderDate;
-                }
-            }
-            
-            self.dateLastScanned = [NSDate date];
-            
-            [self createOrUpdateUnboundMetadataFile];
-            
-            [self resetThumbImage];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
-            
-            [self.photos makeObjectsPerformSelector:@selector(setAlbum:) withObject:self];
-            
-            [self thumbnailImage];
-        });
         
+        self.dateLastScanned = [NSDate date];
+        
+        [self createOrUpdateUnboundMetadataFile];
+        
+        [self resetThumbImage];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
+        
+        [self.photos makeObjectsPerformSelector:@selector(setAlbum:) withObject:self];
+        
+        [self thumbnailImage];
+    });
+    
     //});
     
 
