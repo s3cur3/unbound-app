@@ -215,10 +215,13 @@ NSString * DefaultDropBoxPhotosDirectory()
     
     
     dispatch_group_notify(group, myQueue, ^{
-        [self finishedLoadingPhotos];
         
-        //Hack to get albums to reorder on new mostRecentPhotoDate
-        [self setAlbumLookupTable:self.albumLookupTable];
+        dispatch_async(dispatch_get_main_queue(),^(void){
+            [self finishedLoadingPhotos];
+            
+            //Hack to get albums to reorder on new mostRecentPhotoDate
+            [self setAlbumLookupTable:self.albumLookupTable];
+        });
     });
     
 }
