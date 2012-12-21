@@ -27,6 +27,7 @@ enum {
 }
 
 @property (nonatomic, strong) NSSortDescriptor *dateLastModifiedSortDescriptor;
+@property (nonatomic,strong) NSDateFormatter *dateFormatter;
 
 @end
 
@@ -88,6 +89,16 @@ enum {
     return _dateLastModifiedSortDescriptor;
 }
 
+-(NSDateFormatter *)dateFormatter
+{
+    if (_dateFormatter==nil) {
+        self.dateFormatter = [[NSDateFormatter alloc] init];
+        [self.dateFormatter setDateStyle:NSDateFormatterShortStyle];
+        [self.dateFormatter setTimeStyle:NSDateFormatterNoStyle];
+    }
+    return _dateFormatter;
+}
+
 -(void)setPhotos:(NSArray *)newPhotos{
     if (newPhotos == nil) {
         _photos = nil;
@@ -135,23 +146,14 @@ enum {
 {
     if (self.photos.count > 0 && self.dateLastScanned && self.dateMostRecentPhoto)
     {
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateStyle:NSDateFormatterShortStyle];
-        [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
         NSDate *aDate = self.dateMostRecentPhoto;//[[self coverImage] dateLastModified];
         
-        NSString *formattedDateString = [dateFormatter stringFromDate:aDate];
-        //DLog(@"formattedDateString: %@", formattedDateString);
+        NSString *formattedDateString = [self.dateFormatter stringFromDate:aDate];
         return [NSString stringWithFormat:@"%ld items from %@", self.photos.count, formattedDateString];
     } else if (self.photos.count == 0 && self.dateLastScanned && self.dateMostRecentPhoto)
     {
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateStyle:NSDateFormatterShortStyle];
-        [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
         NSDate *aDate = self.dateMostRecentPhoto;//[[self coverImage] dateLastModified];
-        
-        NSString *formattedDateString = [dateFormatter stringFromDate:aDate];
-        //DLog(@"formattedDateString: %@", formattedDateString);
+        NSString *formattedDateString = [self.dateFormatter stringFromDate:aDate];
         return [NSString stringWithFormat:@"%ld items from %@", self.photos.count, formattedDateString];
     } else if (self.photos.count == 0 && self.dateLastScanned) {
         return @"No items";
@@ -239,13 +241,7 @@ enum {
         }
 
         dispatch_async(dispatch_get_main_queue(),^(void){
-            /*if ([somePhotos count]==0)
-            {
-                self.photos = nil;
-            } else {
-                self.photos = somePhotos;
-                //[self createOrUpdateUnboundMetadataFile];
-            }*/
+
             self.photos = somePhotos;
             if (aDateMostRecentPhoto) {
                 self.dateMostRecentPhoto = aDateMostRecentPhoto;
@@ -262,6 +258,8 @@ enum {
             
             self.dateLastScanned = [NSDate date];
             
+            [self createOrUpdateUnboundMetadataFile];
+            
             [self resetThumbImage];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
@@ -274,6 +272,39 @@ enum {
 
     
     
+}
+
+-(void)deleteMetadataFile
+{
+    NSString *unboundFilePath = [NSString stringWithFormat:@"%@/.unbound", self.filePath];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:unboundFilePath])
+    {
+        [[NSFileManager defaultManager] removeItemAtPath:unboundFilePath error:nil];
+    }
+}
+
+-(void)createOrUpdateUnboundMetadataFile
+{
+    NSString *unboundFilePath = [NSString stringWithFormat:@"%@/.unbound", self.filePath];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:unboundFilePath])
+    {
+        NSString *dateLastScannedString = [NSDateFormatter localizedStringFromDate:self.dateLastScanned dateStyle:NSDateFormatterFullStyle timeStyle:NSDateFormatterFullStyle];
+        NSString *dateMostRecentPhotoString = [NSDateFormatter localizedStringFromDate:self.dateMostRecentPhoto dateStyle:NSDateFormatterFullStyle timeStyle:NSDateFormatterFullStyle];
+        NSDictionary *unboundDict = @{ @"version" : @"0.1", @"dateLastScanned" : dateLastScannedString,  @"dateMostRecentPhoto" : dateMostRecentPhotoString};
+        //Plist version
+        //[unboundDict writeToFile:unboundFilePath atomically:YES];
+        
+#ifdef DEBUG
+        NSAssert([NSJSONSerialization isValidJSONObject:unboundDict], @"Unable to write metdata file - invalid JSON format.");
+#endif
+        NSOutputStream *os = [[NSOutputStream alloc] initToFileAtPath:unboundFilePath append:NO];
+        NSError *error;
+        [os open];
+        if (![NSJSONSerialization writeJSONObject:unboundDict toStream:os options:NSJSONWritingPrettyPrinted error:&error]) {
+            [PIXAppDelegate presentError:error];
+        }
+        [os close];
+    }
 }
 
 -(BOOL)albumExists
