@@ -15,11 +15,18 @@
 
 @property (nonatomic,strong) NSString *rootFilePath;
 @property (nonatomic,strong) NSMutableArray *albums;
+@property (nonatomic,strong) NSMutableArray *sortedAlbums;
 @property (nonatomic,strong) NSDictionary *albumLookupTable;
+@property (assign) BOOL finishedLoading;
+@property (nonatomic,strong) NSArray *sortDescriptors;
+@property (nonatomic,strong) NSSortDescriptor *dateMostRecentPhotoDescriptor;
+@property (nonatomic, strong) NSArray *observedDirectories;
 
 -(NSURL *)rootFilePathURL;
 
--(NSArray *) observedDirectories;
+
+
+-(void)loadAllAlbums;
 
 @end
 

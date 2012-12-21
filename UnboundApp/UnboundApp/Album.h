@@ -15,12 +15,14 @@
 
 @property (nonatomic, strong)   NSDate *dateLastScanned;
 @property (nonatomic, strong)   NSDate *dateMostRecentPhoto;
-@property (nonatomic, copy)     NSString *filePath;
+@property (nonatomic, strong)   NSString *filePath;
+@property (nonatomic, strong)   NSURL *filePathURL;
 @property (nonatomic, strong)   NSImage *thumbnailImage;
 @property (nonatomic, copy)     NSString *title;
 
-@property (nonatomic, strong)   NSMutableArray *photos;
+@property (nonatomic, strong)   NSArray *photos;
 
+- (id)initWithFilePathURL:(NSURL *) aURL;
 - (id)initWithFilePath:(NSString *) aPath;
 -(void)updatePhotosFromFileSystem;
 - (NSString *)imageSubtitle;

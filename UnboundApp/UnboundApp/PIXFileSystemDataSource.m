@@ -44,6 +44,19 @@ NSString * DefaultDropBoxPhotosDirectory()
     return dropBoxPhotosHome;
 }
 
+@interface PIXFileSystemDataSource()
+
+@property (nonatomic,strong) NSDate *startDate;
+@property (nonatomic,strong) NSDate *endDate;
+@property (nonatomic,strong) NSDateFormatter *dateFormatter;
+
+-(void)finishedLoadingAlbums;
+
+-(void)startLoadingPhotos;
+-(void)finishedLoadingPhotos;
+
+@end
+
 @implementation PIXFileSystemDataSource
 
 @synthesize albumLookupTable = _albumLookupTable;
@@ -63,10 +76,10 @@ NSString * DefaultDropBoxPhotosDirectory()
     self=[super init];
     if (self)
     {
-        if (self.rootFilePath == nil) {
+        /*if (self.rootFilePath == nil) {
             self.rootFilePath = DefaultDropBoxPhotosDirectory();
             [self loadAllAlbums];
-        }
+        }*/
     }
     return self;
 }
@@ -87,8 +100,11 @@ NSString * DefaultDropBoxPhotosDirectory()
 -(void)setAlbumLookupTable:(NSDictionary *)albumLookupTable
 {
     _albumLookupTable = albumLookupTable;
+    NSMutableArray *tmp = [[albumLookupTable allValues] mutableCopy];
+    [tmp sortUsingDescriptors:self.sortDescriptors];
     [self.albums removeAllObjects];
-    [self.albums addObjectsFromArray:[albumLookupTable allValues]];
+    [self.albums addObjectsFromArray:tmp];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
 
 }
@@ -96,8 +112,6 @@ NSString * DefaultDropBoxPhotosDirectory()
 //TODO: deleteEntity
 
 //TODO: manage .unbound files
-
-
 
 -(NSMutableArray *)albums
 {
@@ -108,24 +122,137 @@ NSString * DefaultDropBoxPhotosDirectory()
     return _albums;
 }
 
+-(NSMutableArray *)sortedAlbums
+{
+    if (_sortedAlbums==nil)
+    {
+        _sortedAlbums = [[self.albums sortedArrayUsingDescriptors:self.sortDescriptors] mutableCopy];
+    }
+    return _sortedAlbums;
+}
+
+-(NSArray *)sortDescriptors {
+    if (_sortDescriptors==nil) {
+        _sortDescriptors = [NSArray arrayWithObject:self.dateMostRecentPhotoDescriptor];
+    }
+    return _sortDescriptors;
+}
+
+-(NSSortDescriptor *)dateMostRecentPhotoDescriptor
+{
+    if (_dateMostRecentPhotoDescriptor==nil) {
+        _dateMostRecentPhotoDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"dateMostRecentPhoto" ascending:NO];
+    }
+    return _dateMostRecentPhotoDescriptor;
+}
+
 -(void)loadAllAlbums
 {
+    self.finishedLoading = NO;
+    self.startDate = [NSDate date];
+    NSLog(@"Started Loading : %@", [self.dateFormatter stringFromDate:self.startDate]);
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),^(void){
         
         //NSDictionary *albumsDict = [self albumsDictForURL:[self rootFilePathURL]];
         NSMutableDictionary *tmpAlbumLookupTable = [NSMutableDictionary dictionary];
         for (NSURL *aURL in [self observedDirectories])
         {
+            //Make sure to add the observed directories themselves if they have photos
+            if ([self directoryIsPhotoAlbum:aURL]==YES) {
+                Album *anAlbum = [[Album alloc] initWithFilePathURL:aURL];
+                [tmpAlbumLookupTable setValue:anAlbum forKey:aURL.path];
+            }
+            //As well as all of their subdirectories
             NSDictionary *observedDirectoryDict = [self albumsDictForURL:aURL];
             [tmpAlbumLookupTable addEntriesFromDictionary:observedDirectoryDict];
         }
         
         dispatch_async(dispatch_get_main_queue(),^(void){
-            
-            self.albumLookupTable = tmpAlbumLookupTable;
-            [self startObserving];
+            _albumLookupTable = tmpAlbumLookupTable;
+            [self finishedLoadingAlbums];
+            [self setAlbumLookupTable:tmpAlbumLookupTable];
+            [self performSelector:@selector(startLoadingPhotos) withObject:nil afterDelay:0.1];
+            //[self startObserving];
         });
     });
+}
+
+-(void)finishedLoadingAlbums
+{
+    self.endDate = [NSDate date];
+    NSLog(@"Finished loading : %@", [self.dateFormatter stringFromDate:self.endDate]);
+    NSArray *albums = [self.albumLookupTable allKeys];
+    NSLog(@"%ld albums found", [albums count]);
+    NSTimeInterval time = [self.endDate timeIntervalSinceDate:self.startDate];
+    NSLog(@"%g seconds elapsed", time);
+    self.startDate = nil;
+    self.endDate = nil;
+}
+
+-(void)startLoadingPhotos
+{
+    dispatch_queue_t myQueue = dispatch_queue_create("com.pixite.ub.photos", 0);
+    dispatch_group_t group = dispatch_group_create();
+    
+    self.startDate = [NSDate date];
+    NSEnumerator *albumEnumerator = [self.albumLookupTable objectEnumerator];
+    
+    
+    
+    dispatch_group_async(group,myQueue,^(void){
+        //NSEnumerator *content = albumEnumerator;
+        //NSMutableArray *somePhotos = [NSMutableArray array];
+        //NSDate *aDateMostRecentPhoto = nil;
+        //NSError *error;
+        id anAlbum = nil;
+        while (anAlbum = [albumEnumerator nextObject])
+        {
+            [(Album *)anAlbum updatePhotosFromFileSystem];
+        }
+        
+    });
+    
+    
+    dispatch_group_notify(group, myQueue, ^{
+        [self finishedLoadingPhotos];
+        
+        //Hack to get albums to reorder on new mostRecentPhotoDate
+        [self setAlbumLookupTable:self.albumLookupTable];
+    });
+    
+}
+
+-(void)startLoadingPhotos_old
+{
+    self.startDate = [NSDate date];
+    NSEnumerator *albumEnumerator = [self.albumLookupTable objectEnumerator];
+    id anAlbum;
+    
+    NSOperationQueue *mainQueue = [NSOperationQueue mainQueue];
+    __block NSUInteger count = 0;
+    while ((anAlbum = [albumEnumerator nextObject])) {
+        [(Album *)anAlbum updatePhotosFromFileSystem];
+        [[NSNotificationCenter defaultCenter] addObserverForName:AlbumDidChangeNotification object:anAlbum queue:mainQueue usingBlock:^(NSNotification *note) {
+            count++;
+            DLog(@"Album \"%@\" finished loading photos, total loaded : %ld", [note.object title], count);
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:note.object];
+        }];
+    }
+}
+
+-(void)finishedLoadingPhotos
+{
+    self.endDate = [NSDate date];
+    NSLog(@"Finished loading photos : %@", [self.dateFormatter stringFromDate:self.endDate]);
+    //NSArray *albums = [self.albumLookupTable allKeys];
+    //NSLog(@"%ld albums found", [albums count]);
+    NSTimeInterval time = [self.endDate timeIntervalSinceDate:self.startDate];
+    NSLog(@"%g seconds elapsed", time);
+    self.startDate = nil;
+    self.endDate = nil;
+    
+    self.finishedLoading = YES;
 }
 
 // -------------------------------------------------------------------------------
@@ -168,15 +295,35 @@ NSString * DefaultDropBoxPhotosDirectory()
     }*/
     
 }
-
-//-------------------------------------------------------
+ //-------------------------------------------------------
 // Check if the directory has image files
 // or an existing .unbound file
 //-------------------------------------------------------
 -(BOOL)directoryIsPhotoAlbum:(NSURL *)aDirectoryURL
 {
+    //NSURLNameKey, NSURLEffectiveIconKey, NSURLIsDirectoryKey, 
+    NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtURL:aDirectoryURL includingPropertiesForKeys:[NSArray arrayWithObjects:NSURLTypeIdentifierKey, nil] options:NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsSubdirectoryDescendants errorHandler:^(NSURL *url, NSError *error) {
+     // Handle the error.
+     DLog(@"error creating enumerator for directory %@ : %@", url.path, error);
+     [[NSApplication sharedApplication] presentError:error];
+     // Return YES if the enumeration should continue after the error.
+     return YES;
+     }];
     
-    NSArray *propKeys = [NSArray arrayWithObjects:NSURLLocalizedNameKey, NSURLTypeIdentifierKey, NSURLIsDirectoryKey, nil];
+    id obj;
+    while (obj = [enumerator nextObject]) {
+        if ([self fileIsUnboundMetadataFile:(NSURL *)obj] || [self fileIsImageFile:(NSURL *)obj]==YES)
+        {
+            return YES;
+        }
+    }
+    return NO;
+
+}
+/*-(BOOL)directoryIsPhotoAlbum_old:(NSURL *)aDirectoryURL
+{
+    
+    NSArray *propKeys = [NSArray arrayWithObjects:NSURLNameKey, NSURLTypeIdentifierKey, NSURLIsDirectoryKey, NSURLEffectiveIconKey, nil];
     NSError *error = nil;
     NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:aDirectoryURL
                                                                includingPropertiesForKeys:propKeys
@@ -199,13 +346,13 @@ NSString * DefaultDropBoxPhotosDirectory()
     }];
     
     return isDirectoryPhotoAlbum;
-}
+}*/
 
 -(NSDictionary *)albumsDictForURL:(NSURL *)aURL
 {
-    NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtURL:aURL includingPropertiesForKeys:[NSArray arrayWithObjects:NSURLLocalizedNameKey, NSURLEffectiveIconKey, NSURLIsDirectoryKey, NSURLTypeIdentifierKey, nil] options:NSDirectoryEnumerationSkipsHiddenFiles /*| NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsSubdirectoryDescendants*/ errorHandler:^(NSURL *url, NSError *error) {
+    NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtURL:aURL includingPropertiesForKeys:[NSArray arrayWithObjects:NSURLIsDirectoryKey, nil] options:NSDirectoryEnumerationSkipsHiddenFiles /*| NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsSubdirectoryDescendants*/ errorHandler:^(NSURL *url, NSError *error) {
         // Handle the error.
-        DLog(@"error creating enumerator for directory %@ : %@", url.path, error);
+        DLog(@"error enumerating directory %@ : %@", url.path, error);
         [[NSApplication sharedApplication] presentError:error];
         // Return YES if the enumeration should continue after the error.
         return YES;
@@ -222,8 +369,8 @@ NSString * DefaultDropBoxPhotosDirectory()
         else if ([isDirectory boolValue]) {
             if ([newAlbumsDict valueForKey:url.path]==nil && [self directoryIsPhotoAlbum:url]==YES)
             {
-                Album *anAlbum = [[Album alloc] initWithFilePath:url.path];
-                [anAlbum updatePhotosFromFileSystem];
+                Album *anAlbum = [[Album alloc] initWithFilePathURL:url];
+                //[anAlbum updatePhotosFromFileSystem];
                 [newAlbumsDict setValue:anAlbum forKey:url.path];
             }
         }
@@ -233,6 +380,23 @@ NSString * DefaultDropBoxPhotosDirectory()
     return newAlbumsDict;
 }
 
+-(NSDateFormatter *)dateFormatter
+{
+    if (_dateFormatter==nil) {
+        self.dateFormatter = [[NSDateFormatter alloc] init];
+        [self.dateFormatter setDateStyle:NSDateFormatterNoStyle];
+        [self.dateFormatter setTimeStyle:NSDateFormatterLongStyle];
+    }
+    return _dateFormatter;
+}
+
+-(NSString *)rootFilePath
+{
+    if (_rootFilePath == nil) {
+        _rootFilePath = DefaultDropBoxPhotosDirectory();
+    }
+    return _rootFilePath;
+}
 
 -(NSURL *)rootFilePathURL
 {
@@ -242,11 +406,14 @@ NSString * DefaultDropBoxPhotosDirectory()
 
 -(NSArray *) observedDirectories;
 {
-    NSURL *rootFilePathURL = [self rootFilePathURL];
-    NSString *dropboxHomePath = DefaultDropBoxDirectory();
-    NSString *aPath = [NSString stringWithFormat:@"%@/Camera Uploads", dropboxHomePath];
-    NSURL *cameraUploadsLocation = [NSURL fileURLWithPath:aPath];
-    return [NSArray arrayWithObjects:rootFilePathURL, cameraUploadsLocation, nil];
+    if (_observedDirectories==nil) {
+        NSURL *rootFilePathURL = [self rootFilePathURL];
+        NSString *dropboxHomePath = DefaultDropBoxDirectory();
+        NSString *aPath = [NSString stringWithFormat:@"%@/Camera Uploads", dropboxHomePath];
+        NSURL *cameraUploadsLocation = [NSURL fileURLWithPath:aPath];
+        _observedDirectories = [NSArray arrayWithObjects:rootFilePathURL, cameraUploadsLocation, nil];
+    }
+    return _observedDirectories;
 }
 
 //possible options are ArchDirectoryObserverResponsive and ArchDirectoryObserverObservesSelf

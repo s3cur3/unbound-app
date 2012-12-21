@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Pixite Apps LLC. All rights reserved.
 //
 
+#import "PIXAppDelegate.h"
 #import "Album.h"
 #import "Photo.h"
 #import "PIXFileSystemDataSource.h"
@@ -31,12 +32,31 @@ enum {
 
 @implementation Album
 
+@synthesize photos = _photos;
+
+- (id)initWithFilePathURL:(NSURL *) aURL;
+{
+#ifdef DEBUG
+    ///PIXFileSystemDataSource *dataSource = [PIXFileSystemDataSource sharedInstance];
+    //Album *existingAlbum = [dataSource.albumLookupTable valueForKey:aURL.path];
+    //NSAssert(existingAlbum==nil, @"Album called with path that already exists..");
+#endif
+    self = [super init];
+    if (self) {
+        self.filePathURL = aURL;
+        self.filePath = aURL.path;
+        self.title = [_filePath lastPathComponent];
+        self.photos = [NSMutableArray array];
+    }
+    return self;
+}
+
 - (id)initWithFilePath:(NSString *) aPath;
 {
 #ifdef DEBUG
-    PIXFileSystemDataSource *dataSource = [PIXFileSystemDataSource sharedInstance];
-    Album *existingAlbum = [dataSource.albumLookupTable valueForKey:aPath];
-    NSAssert(existingAlbum==nil, @"Album called with path that already exists..");
+    //PIXFileSystemDataSource *dataSource = [PIXFileSystemDataSource sharedInstance];
+    //Album *existingAlbum = [dataSource.albumLookupTable valueForKey:aPath];
+    //NSAssert(existingAlbum==nil, @"Album called with path that already exists..");
 #endif
     self = [super init];
     if (self) {
@@ -68,8 +88,20 @@ enum {
     return _dateLastModifiedSortDescriptor;
 }
 
--(NSMutableArray *)photos{
-    [_photos sortUsingDescriptors:[NSArray arrayWithObject:[self dateLastModifiedSortDescriptor]]];
+-(void)setPhotos:(NSArray *)newPhotos{
+    if (newPhotos == nil) {
+        _photos = nil;
+        return;
+    }
+    //NSMutableSet *sortedPhotos = [newPhotos mutableOrderedSetValueForKey:@"dateLastModified"];
+    NSMutableArray *sortedPhotos = [newPhotos mutableCopy];
+    [sortedPhotos sortUsingDescriptors:[NSArray arrayWithObject:[self dateLastModifiedSortDescriptor]]];
+    
+    _photos = [NSArray arrayWithArray:sortedPhotos];
+}
+
+-(NSArray *)photos{
+    //[_photos sortUsingDescriptors:[NSArray arrayWithObject:[self dateLastModifiedSortDescriptor]]];
     return _photos;
 }
 
@@ -84,7 +116,7 @@ enum {
 }
 
 - (NSImage *)thumbnailImage {
-    
+
     if (!self.photos.count)
     {
         return [NSImage imageNamed:@"nophoto"];
@@ -131,7 +163,7 @@ enum {
 
 
 //
--(NSArray *)children
+/*-(NSArray *)children_old
 {
     NSError *error = nil;
     NSURL *myDir = [NSURL fileURLWithPath:self.filePath isDirectory:YES];
@@ -145,60 +177,102 @@ enum {
         return [NSArray array];
     }
     return content;
+}*/
+
+-(NSEnumerator *)children
+{
+    // Create a local file manager instance
+    NSFileManager *localFileManager=[[NSFileManager alloc] init];
+    NSDirectoryEnumerationOptions options = NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsSubdirectoryDescendants;
+    NSDirectoryEnumerator *dirEnumerator = [localFileManager enumeratorAtURL:self.filePathURL
+                                                  includingPropertiesForKeys:[NSArray arrayWithObjects:NSURLNameKey,
+                                                                              NSURLIsDirectoryKey,nil]
+                                                                     options:options
+                                                                errorHandler:^(NSURL *url, NSError *error) {
+                                                                    // Handle the error.
+                                                                    [PIXAppDelegate presentError:error];
+                                                                    // Return YES if the enumeration should continue after the error.
+                                                                    return YES;
+                                                                }];
+    
+    NSAssert(dirEnumerator!=nil, @"Failed to get a directoryEnumerator for an album's URL");
+    return dirEnumerator;
+
+    
+    
 }
 
 -(void)updatePhotosFromFileSystem
 {
-    NSArray *content = [self children];
-    NSMutableArray *somePhotos = [NSMutableArray arrayWithCapacity:content.count];
-    NSDate *aDateMostRecentPhoto = nil;
-    for (NSURL *itemURL in content)
-    {
-        NSString *utiValue;
-        
-        [itemURL getResourceValue:&utiValue forKey:NSURLTypeIdentifierKey error:nil];
-        if (UTTypeConformsTo((__bridge CFStringRef)(utiValue), kUTTypeImage)) {
-            Photo *aPhoto = [[Photo alloc] initWithURL:itemURL];
-            NSDate *modDate;
-            NSError *error;
-            if (![itemURL getResourceValue:&modDate forKey:NSURLContentModificationDateKey error:&error]) {
-                [[NSApplication sharedApplication] presentError:error];
-            }
-            aPhoto.dateLastModified = modDate;
-            if (!aDateMostRecentPhoto || [modDate isGreaterThanOrEqualTo:aDateMostRecentPhoto])
-            {
-                aDateMostRecentPhoto = modDate;
-            }
-            //[self addPhotosObject:aPhoto];
-            [somePhotos addObject:aPhoto];
-        }
-    }
-    if ([somePhotos count]==0)
-    {
-        self.photos = nil;
-    } else {
-        self.photos = somePhotos;
-        //[self createOrUpdateUnboundMetadataFile];
-    }
-    if (aDateMostRecentPhoto) {
-        self.dateMostRecentPhoto = aDateMostRecentPhoto;
-    } else {
-        NSDate *folderDate = nil;
+    
+    //dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW,0),^(void){
+        NSEnumerator *content = [self children];
+        NSMutableArray *somePhotos = [NSMutableArray array];
+        NSDate *aDateMostRecentPhoto = nil;
         NSError *error;
-        NSURL *albumURL = [NSURL fileURLWithPath:self.filePath];
-        if (![albumURL getResourceValue:&folderDate forKey:NSURLContentModificationDateKey error:&error]) {
-            [[NSApplication sharedApplication] presentError:error];
-        } else {
-            self.dateMostRecentPhoto = folderDate;
+        
+        NSURL *itemURL = nil;
+        while (itemURL = (NSURL*)[content nextObject])
+        {
+            NSString *utiValue;
+            
+            if (![itemURL getResourceValue:&utiValue forKey:NSURLTypeIdentifierKey error:&error]) {
+                [PIXAppDelegate presentError:error];
+            }
+            if (UTTypeConformsTo((__bridge CFStringRef)(utiValue), kUTTypeImage)) {
+                Photo *aPhoto = [[Photo alloc] initWithURL:itemURL];
+                NSDate *modDate = nil;
+                NSError *error;
+                if (![itemURL getResourceValue:&modDate forKey:NSURLContentModificationDateKey error:&error]) {
+                    [[NSApplication sharedApplication] performSelectorOnMainThread:@selector(presentError:) withObject:error waitUntilDone:NO];
+                    //Unable to get the dateLastModified - for now just set the modDate to the distantPast as a temporary placeholder for sorting
+                    //TODO: find the best way to handle this
+                    modDate = [NSDate distantPast];
+                }
+                aPhoto.dateLastModified = modDate;
+                if (!aDateMostRecentPhoto || [modDate isGreaterThanOrEqualTo:aDateMostRecentPhoto])
+                {
+                    aDateMostRecentPhoto = modDate;
+                }
+                [somePhotos addObject:aPhoto];
+            }
         }
-    }
-    self.dateLastScanned = [NSDate date];
+
+        dispatch_async(dispatch_get_main_queue(),^(void){
+            /*if ([somePhotos count]==0)
+            {
+                self.photos = nil;
+            } else {
+                self.photos = somePhotos;
+                //[self createOrUpdateUnboundMetadataFile];
+            }*/
+            self.photos = somePhotos;
+            if (aDateMostRecentPhoto) {
+                self.dateMostRecentPhoto = aDateMostRecentPhoto;
+            } else {
+                NSDate *folderDate = nil;
+                NSError *error;
+                NSURL *albumURL = [NSURL fileURLWithPath:self.filePath isDirectory:YES];
+                if (![albumURL getResourceValue:&folderDate forKey:NSURLContentModificationDateKey error:&error]) {
+                    [[NSApplication sharedApplication] presentError:error];
+                } else {
+                    self.dateMostRecentPhoto = folderDate;
+                }
+            }
+            
+            self.dateLastScanned = [NSDate date];
+            
+            [self resetThumbImage];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
+            
+            [self.photos makeObjectsPerformSelector:@selector(setAlbum:) withObject:self];
+        });
+        
+    //});
     
-    [self resetThumbImage];
+
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
-    
-    [self.photos makeObjectsPerformSelector:@selector(setAlbum:) withObject:self];
     
 }
 
@@ -219,7 +293,7 @@ enum {
     BOOL existsWithPhotos = NO;
     if ([self albumExists])
     {
-        NSArray *content = [self children];
+        NSEnumerator *content = [self children];
         for (NSURL *itemURL in content)
         {
             NSString *utiValue;

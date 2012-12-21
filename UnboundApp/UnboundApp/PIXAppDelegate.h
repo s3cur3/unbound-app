@@ -18,6 +18,7 @@
 }
 
 +(PIXAppDelegate *) sharedAppDelegate;
++(void)presentError:(NSError *)error;
 
 - (IBAction)showMainWindow:(id)sender;
 - (IBAction)showIntroWindow:(id)sender;

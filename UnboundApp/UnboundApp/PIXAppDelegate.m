@@ -29,6 +29,19 @@ NSString* kAppFirstRun = @"appFirstRun";
     return (PIXAppDelegate *)[[NSApplication sharedApplication] delegate];
 }
 
++(void)presentError:(NSError *)error
+{
+#ifdef DEBUG
+    DLog(@"%@", error);
+    NSLog(@"%@",[NSThread callStackSymbols]);
+#endif
+    if([[NSThread currentThread] isEqual:[NSThread mainThread]]) {
+        [[NSApplication sharedApplication] presentError:error];
+    } else {
+        [[NSApplication sharedApplication] performSelectorOnMainThread:@selector(presentError:) withObject:error waitUntilDone:NO];
+    }
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
 {
     Preferences * preferences = [Preferences instance];
@@ -40,6 +53,7 @@ NSString* kAppFirstRun = @"appFirstRun";
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kAppFirstRun];
         [[NSUserDefaults standardUserDefaults] synchronize];
     } else {
+        [self.dataSource loadAllAlbums];
         [self showMainWindow:self];
     }
 }
