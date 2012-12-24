@@ -14,10 +14,14 @@
 
 @property (weak, nonatomic) IBOutlet NSWindow *mainWindow;
 
+@property (weak) IBOutlet NSProgressIndicator *activitySpinner;
 - (IBAction)backPressed:(id)sender;
 
 -(void)pushViewController:(PIXViewController *)aViewController;
 -(void)popViewController;
 -(NSArray *) viewControllerArray;
+
+-(void)startSpinner;
+-(void)stopSpinner;
 
 @end

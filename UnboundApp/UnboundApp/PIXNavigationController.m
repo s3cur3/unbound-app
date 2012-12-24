@@ -8,6 +8,8 @@
 
 #import "PIXNavigationController.h"
 #import "PIXViewController.h"
+#import "PIXFileSystemDataSource.h"
+#import "PIXDefines.h"
 
 @interface PIXNavigationController ()
 
@@ -28,6 +30,23 @@
     }
     
     return self;
+}
+
+
+-(void)awakeFromNib
+{
+    //
+    PIXFileSystemDataSource *dataSource = [PIXFileSystemDataSource sharedInstance];
+    if (!dataSource.finishedLoading) {
+        [self startSpinner];
+        PIXFileSystemDataSource *dataSource = [PIXFileSystemDataSource sharedInstance];
+        [[NSNotificationCenter defaultCenter] addObserverForName:kUB_PHOTOS_LOADED_FROM_FILESYSTEM object:dataSource queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+            [self stopSpinner];
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:kUB_PHOTOS_LOADED_FROM_FILESYSTEM object:note.object];
+            
+        }];
+    }
+    //
 }
 
 
@@ -90,6 +109,26 @@
         [self.backButton setHidden:NO];
     }
 }
+
+//TODO: better system of showing activity
+-(void)startSpinner
+{
+    [self updateActivityIndicatorAnimation:YES];
+}
+-(void)stopSpinner
+{
+    [self updateActivityIndicatorAnimation:NO];
+}
+-(void)updateActivityIndicatorAnimation:(BOOL)shouldAnimate
+{
+    if (shouldAnimate) {
+        [self.activitySpinner startAnimation:self];
+    } else {
+        [self.activitySpinner stopAnimation:self];
+    }
+    [self.activitySpinner setNeedsDisplay:YES];
+}
+//
 
 -(void)dealloc
 {

@@ -46,27 +46,33 @@ NSString* kAppFirstRun = @"appFirstRun";
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
 {
     Preferences * preferences = [Preferences instance];
-    assert(preferences);
-    self.dataSource = [PIXFileSystemDataSource sharedInstance]; //[[PIXFileSystemDataSource alloc] init];
+    NSAssert(preferences, @"Failed to create preferences");
+    self.dataSource = [PIXFileSystemDataSource sharedInstance];
+    NSAssert(self.dataSource, @"Failed to create dataSource");
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kAppFirstRun]==YES)
     {
         [self showIntroWindow:self];
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kAppFirstRun];
         [[NSUserDefaults standardUserDefaults] synchronize];
     } else {
-        [self.dataSource loadAllAlbums];
-        //TODO: maybe show a loading/splash/progress window while data is loading?
-        [[NSNotificationCenter defaultCenter] addObserverForName:kUB_PHOTOS_LOADED_FROM_FILESYSTEM object:self.dataSource queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-            [[NSNotificationCenter defaultCenter] removeObserver:self name:kUB_PHOTOS_LOADED_FROM_FILESYSTEM object:self.dataSource];
-
-            //start observing the file system
-            [self.dataSource performSelector:@selector(startObserving) withObject:nil afterDelay:1.0];
-            
-        }];
         
         [self showMainWindow:self];
-        
+        [self performSelector:@selector(startFileSystemLoading) withObject:self afterDelay:0.1];
     }
+}
+
+-(void)startFileSystemLoading
+{
+    [self.dataSource loadAllAlbums];
+    //TODO: maybe show a loading/splash/progress window while data is loading?
+    [[NSNotificationCenter defaultCenter] addObserverForName:kUB_PHOTOS_LOADED_FROM_FILESYSTEM object:self.dataSource queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:kUB_PHOTOS_LOADED_FROM_FILESYSTEM object:self.dataSource];
+        
+        //start observing the file system
+        [self.dataSource performSelector:@selector(startObserving) withObject:nil afterDelay:1.0];
+        
+    }];
 }
 
 // -------------------------------------------------------------------------------
