@@ -54,15 +54,15 @@
     _album = album;
     if (album) {
         [[[PIXAppDelegate sharedAppDelegate] window] setTitle:self.album.title];
-        self.browserData = self.album.photos;
+        self.browserData = [self.album.photos mutableCopy];
         [self.browserView reloadData];
     }
 }
 
--(NSArray *)browserData
+-(NSMutableArray *)browserData
 {
     if (_browserData == nil) {
-        _browserData = self.album.photos;
+        _browserData = [self.album.photos mutableCopy];
     }
     return _browserData;
 }
