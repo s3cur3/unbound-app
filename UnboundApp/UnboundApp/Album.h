@@ -19,13 +19,14 @@
 @property (nonatomic, strong)   NSURL *filePathURL;
 @property (nonatomic, strong)   NSImage *thumbnailImage;
 @property (nonatomic, copy)     NSString *title;
+@property (nonatomic, copy)     NSString *imageSubtitle;
 
 @property (nonatomic, strong)   NSArray *photos;
 
 - (id)initWithFilePathURL:(NSURL *) aURL;
 - (id)initWithFilePath:(NSString *) aPath;
 -(void)updatePhotosFromFileSystem;
-- (NSString *)imageSubtitle;
+//- (NSString *)imageSubtitle;
 
 -(BOOL)albumExistsWithPhotos;
 

@@ -144,23 +144,21 @@ enum {
 
 - (NSString *) imageSubtitle;
 {
-    if (self.photos.count > 0 && self.dateLastScanned && self.dateMostRecentPhoto)
+    if (_imageSubtitle == nil)
     {
-        NSDate *aDate = self.dateMostRecentPhoto;//[[self coverImage] dateLastModified];
+        if (self.dateLastScanned && self.dateMostRecentPhoto && self.photos.count > 0)
+        {
+            NSDate *aDate = self.dateMostRecentPhoto;
+            NSString *formattedDateString = [self.dateFormatter stringFromDate:aDate];
+            _imageSubtitle = [NSString stringWithFormat:@"%ld items from %@", self.photos.count, formattedDateString];
+        } else if (self.photos.count == 0 && self.dateLastScanned) {
+            return @"No items";
+        } else {
+            return @"Loading...";
+        }
         
-        NSString *formattedDateString = [self.dateFormatter stringFromDate:aDate];
-        return [NSString stringWithFormat:@"%ld items from %@", self.photos.count, formattedDateString];
-    } else if (self.photos.count == 0 && self.dateLastScanned && self.dateMostRecentPhoto)
-    {
-        NSDate *aDate = self.dateMostRecentPhoto;//[[self coverImage] dateLastModified];
-        NSString *formattedDateString = [self.dateFormatter stringFromDate:aDate];
-        return [NSString stringWithFormat:@"%ld items from %@", self.photos.count, formattedDateString];
-    } else if (self.photos.count == 0 && self.dateLastScanned) {
-        return @"No items";
-    } else {
-        return @"Loading...";
     }
-    
+    return _imageSubtitle;
 }
 
 
@@ -267,9 +265,10 @@ enum {
         
         [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
         
-        [self.photos makeObjectsPerformSelector:@selector(setAlbum:) withObject:self];
+        //TODO make sure if this is necessary
+        //[self.photos makeObjectsPerformSelector:@selector(setAlbum:) withObject:self];
         
-        [self thumbnailImage];
+        //[self thumbnailImage];
     });
     
     //});
