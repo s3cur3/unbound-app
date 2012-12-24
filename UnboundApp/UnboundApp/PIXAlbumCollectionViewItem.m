@@ -65,9 +65,12 @@
     
 }
 
-
-
 -(void)setRepresentedObject:(id)newRepresentedObject
+{
+    [super setRepresentedObject:newRepresentedObject];
+}
+
+/*-(void)setRepresentedObject_new:(id)newRepresentedObject
 {
     id oldRepresentedObject = [super representedObject];
     if (oldRepresentedObject == newRepresentedObject) {
@@ -86,7 +89,7 @@
         }];
     }
     
-}
+}*/
 
 -(void)setSelected:(BOOL)selected
 {
