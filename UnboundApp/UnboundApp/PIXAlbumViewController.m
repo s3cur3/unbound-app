@@ -14,7 +14,6 @@
 #import "PIXNavigationController.h"
 #import "Album.h"
 
-extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
 
 @interface PIXAlbumViewController ()
 {
@@ -50,11 +49,19 @@ extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
     [self.collectionView setMinItemSize:NSSizeFromCGSize(CGSizeMake(200, 200))];
     
     [self.collectionView setWantsLayer:YES];
+
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(albumsChanged:)
                                                  name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM
                                                object:[PIXFileSystemDataSource sharedInstance]];
+    
+    /*[[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(photosChanged:)
+                                                 name:kUB_PHOTOS_LOADED_FROM_FILESYSTEM
+                                               object:[PIXFileSystemDataSource sharedInstance]];*/
+    
+    
 }
 
 -(NSMutableArray *)albums
@@ -66,6 +73,11 @@ extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
 {
     [arrayController setContent:self.albums];
 }
+
+/*-(void)photosChanged:(NSNotification *)notifcation
+{
+    [arrayController setContent:self.albums];
+}*/
 
 -(void)showPhotosForAlbum:(Album *)anAlbum
 {
