@@ -43,8 +43,6 @@
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     self.albumViewController = [[PIXAlbumViewController alloc] initWithNibName:@"PIXAlbumViewController" bundle:nil];
     [self.navigationViewController pushViewController:self.albumViewController];
-    //[self.albumViewController.view setFrame:[self.window.contentView bounds]];
-    //[self.window.contentView addSubview:self.albumViewController.view];
 }
 
 @end

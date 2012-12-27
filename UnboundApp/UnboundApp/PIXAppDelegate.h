@@ -9,18 +9,22 @@
 #import <Cocoa/Cocoa.h>
 
 @class PIXInfoWindowController;
+@class PIXMainWindowController;
 @class PIXFileSystemDataSource;
 
 @interface PIXAppDelegate : NSObject <NSApplicationDelegate>
 {
-    NSWindowController *mainWindowController;
+    PIXMainWindowController *mainWindowController;
     PIXInfoWindowController *showIntroWindow;
 }
 
 +(PIXAppDelegate *) sharedAppDelegate;
++(void)presentError:(NSError *)error;
 
 - (IBAction)showMainWindow:(id)sender;
 - (IBAction)showIntroWindow:(id)sender;
+
+-(void)startFileSystemLoading;
 
 @property (assign) IBOutlet NSWindow *window;
 

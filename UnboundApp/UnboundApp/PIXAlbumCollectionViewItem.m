@@ -8,6 +8,8 @@
 
 #import "PIXAlbumCollectionViewItem.h"
 #import "PIXBorderedImageView.h"
+#import "Album.h"
+#import "PIXDefines.h"
 
 @interface PIXAlbumCollectionViewItem ()
 {
@@ -63,15 +65,31 @@
     
 }
 
-
-
--(void)setRepresentedObject:(id)representedObject
+-(void)setRepresentedObject:(id)newRepresentedObject
 {
-    [super setRepresentedObject:representedObject];
-    
-    
-    
+    [super setRepresentedObject:newRepresentedObject];
 }
+
+/*-(void)setRepresentedObject_new:(id)newRepresentedObject
+{
+    id oldRepresentedObject = [super representedObject];
+    if (oldRepresentedObject == newRepresentedObject) {
+        return;
+    }
+    if ( oldRepresentedObject!=nil ) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:oldRepresentedObject];
+    }
+    
+    [super setRepresentedObject:newRepresentedObject];
+    [self.detailLabel setStringValue:[newRepresentedObject imageSubtitle]];
+    
+    if (newRepresentedObject!=nil) {
+        [[NSNotificationCenter defaultCenter] addObserverForName:AlbumDidChangeNotification object:newRepresentedObject queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+            [self.detailLabel setStringValue:[note.object imageSubtitle]];
+        }];
+    }
+    
+}*/
 
 -(void)setSelected:(BOOL)selected
 {

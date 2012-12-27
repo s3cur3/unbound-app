@@ -58,7 +58,7 @@
 										<string key="NSFrameSize">{245, 511}</string>
 										<reference key="NSSuperview" ref="169202215"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="320835007"/>
+										<reference key="NSNextKeyView" ref="837853645"/>
 										<string key="NSReuseIdentifierKey">_NS:13</string>
 										<bool key="NSEnabled">YES</bool>
 										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -211,7 +211,7 @@
 						<string key="NSFrameSize">{245, 511}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="169202215"/>
+						<reference key="NSNextKeyView" ref="320835007"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<int key="NSsFlags">215568</int>
 						<reference key="NSVScroller" ref="320835007"/>
@@ -286,6 +286,7 @@
 									</set>
 									<string key="NSFrame">{{5, 3}, {49, 48}}</string>
 									<reference key="NSSuperview" ref="837853645"/>
+									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:11</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSImageCell" key="NSCell" id="308877570">
@@ -339,6 +340,7 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{57, 1}, {174, 23}}</string>
 									<reference key="NSSuperview" ref="837853645"/>
+									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:1535</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="882619164">
@@ -383,6 +385,54 @@
 						<reference key="destination" ref="66269162"/>
 					</object>
 					<int key="connectionID">18</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: album.imageSubtitle</string>
+						<reference key="source" ref="66269162"/>
+						<reference key="destination" ref="837853645"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="66269162"/>
+							<reference key="NSDestination" ref="837853645"/>
+							<string key="NSLabel">value: album.imageSubtitle</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">album.imageSubtitle</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">46</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: album.title</string>
+						<reference key="source" ref="619476237"/>
+						<reference key="destination" ref="837853645"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="619476237"/>
+							<reference key="NSDestination" ref="837853645"/>
+							<string key="NSLabel">value: album.title</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">album.title</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">44</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: album.thumbnailImage</string>
+						<reference key="source" ref="833513937"/>
+						<reference key="destination" ref="837853645"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="833513937"/>
+							<reference key="NSDestination" ref="837853645"/>
+							<string key="NSLabel">value: album.thumbnailImage</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">album.thumbnailImage</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">48</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -526,6 +576,7 @@
 				<string key="15.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<boolean value="YES" key="4.ibExternalAutomaticallyCalculatesRowSizeFromViewHeight"/>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -542,7 +593,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">40</int>
+			<int key="maxID">48</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

@@ -54,7 +54,7 @@
     _album = album;
     if (album) {
         [[[PIXAppDelegate sharedAppDelegate] window] setTitle:self.album.title];
-        
+        self.browserData = [self.album.photos mutableCopy];
         // deselect all items in the view
         [self.browserView setSelectionIndexes:nil byExtendingSelection:NO];
         
@@ -63,10 +63,10 @@
     }
 }
 
--(NSArray *)browserData
+-(NSMutableArray *)browserData
 {
     if (_browserData == nil) {
-        _browserData = self.album.photos;
+        _browserData = [self.album.photos mutableCopy];
     }
     return _browserData;
 }
