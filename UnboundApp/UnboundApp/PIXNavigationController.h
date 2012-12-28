@@ -25,11 +25,7 @@
 -(void)popViewController;
 -(NSArray *) viewControllerArray;
 
-<<<<<<< HEAD
 -(void)setToolbarItems:(NSArray *)items;
-=======
--(void)startSpinner;
--(void)stopSpinner;
->>>>>>> 5032d17966749e7905101d99756417c57c85163a
+
 
 @end
