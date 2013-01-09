@@ -8,12 +8,9 @@
 
 #import "PIXNavigationController.h"
 #import "PIXViewController.h"
-<<<<<<< HEAD
 #import <QuartzCore/QuartzCore.h>
-=======
 #import "PIXFileSystemDataSource.h"
 #import "PIXDefines.h"
->>>>>>> 5032d17966749e7905101d99756417c57c85163a
 
 @interface PIXNavigationController ()
 
@@ -38,9 +35,6 @@
     return self;
 }
 
-
-<<<<<<< HEAD
-=======
 -(void)awakeFromNib
 {
     //
@@ -56,7 +50,6 @@
     }
     //
 }
->>>>>>> 5032d17966749e7905101d99756417c57c85163a
 
 
 - (void)setView:(NSView *)view;
@@ -137,7 +130,6 @@
     
 }
 
-<<<<<<< HEAD
 
 - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
 {    
@@ -184,7 +176,6 @@
     return _middleSpacer;
 }
 
-=======
 //TODO: better system of showing activity
 -(void)startSpinner
 {
@@ -204,7 +195,6 @@
     [self.activitySpinner setNeedsDisplay:YES];
 }
 //
->>>>>>> 5032d17966749e7905101d99756417c57c85163a
 
 -(void)dealloc
 {
