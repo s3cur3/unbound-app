@@ -9,6 +9,7 @@
 #import "PIXImageBrowserViewController.h"
 #import "PIXAppDelegate.h"
 #import "Album.h"
+#import "PIXAlbum.h"
 #import "PIXDefines.h"
 #import "PIXPageViewController.h"
 #import "PIXNavigationController.h"
@@ -49,12 +50,12 @@
     }
 }
 
--(void)setAlbum:(Album *)album
+-(void)setAlbum:(id)album
 {
     _album = album;
     if (album) {
-        [[[PIXAppDelegate sharedAppDelegate] window] setTitle:self.album.title];
-        self.browserData = [self.album.photos mutableCopy];
+        [[[PIXAppDelegate sharedAppDelegate] window] setTitle:[self.album title]];
+        self.browserData = [[[self.album photos] array] mutableCopy];
         // deselect all items in the view
         [self.browserView setSelectionIndexes:nil byExtendingSelection:NO];
         

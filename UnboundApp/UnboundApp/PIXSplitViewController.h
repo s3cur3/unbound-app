@@ -9,6 +9,7 @@
 #import "PIXViewController.h"
 
 @class Album;
+@class PIXAlbum;
 
 @interface PIXSplitViewController : PIXViewController <NSSplitViewDelegate>
 
@@ -16,6 +17,7 @@
 @property (nonatomic,weak) IBOutlet NSView *leftPane;
 @property (nonatomic,weak) IBOutlet NSView *rightPane;
 
-@property (nonatomic, strong) Album* selectedAlbum;
+//@property (nonatomic, strong) Album* selectedAlbum;
+@property (nonatomic, strong) id selectedAlbum;
 
 @end

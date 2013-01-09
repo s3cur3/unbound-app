@@ -10,6 +10,7 @@
 #import "PIXPageViewController.h"
 #import "PIXAppDelegate.h"
 #import "Album.h"
+#import "PIXAlbum.h"
 #import "PIXImageViewController.h"
 
 @interface PIXPageViewController ()
@@ -41,7 +42,7 @@
 
 - (void)updateData {
     
-    self.pagerData = [self.album.photos copy];
+    self.pagerData = [[self.album.photos array] mutableCopy];
     
     
     // set the first image in our list to the main magnifying view
@@ -52,7 +53,7 @@
     }
 }
 
--(void)setAlbum:(Album *)album
+-(void)setAlbum:(PIXAlbum *)album
 {
     _album = album;
 }

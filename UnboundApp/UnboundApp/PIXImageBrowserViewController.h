@@ -10,11 +10,12 @@
 #import "PIXViewController.h"
 
 @class Album;
+@class PIXAlbum;
 
 @interface PIXImageBrowserViewController : PIXViewController
 
 @property (assign) IBOutlet IKImageBrowserView * browserView;
-@property (nonatomic, strong) Album *album;
+@property (nonatomic, strong) PIXAlbum *album;
 @property (nonatomic, readwrite, strong) NSMutableArray * browserData;
 @property (nonatomic, readwrite, strong) NSIndexSet * selectedPhotos;
 

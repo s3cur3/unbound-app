@@ -9,10 +9,11 @@
 #import "PIXViewController.h"
 
 @class Album;
+@class PIXAlbum;
 
 @interface PIXPageViewController : PIXViewController <NSPageControllerDelegate>
 
-@property (nonatomic, strong) IBOutlet Album *album;
+@property (nonatomic, strong) IBOutlet PIXAlbum *album;
 @property (assign) IBOutlet NSPageController *pageController;
 @property (strong) NSMutableArray *pagerData;
 
