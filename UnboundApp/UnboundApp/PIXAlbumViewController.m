@@ -8,6 +8,7 @@
 
 #import "PIXAlbumViewController.h"
 #import "PIXAppDelegate.h"
+#import "PIXAppDelegate+CoreDataUtils.h"
 #import "PIXFileSystemDataSource.h"
 #import "PIXDefines.h"
 #import "PIXSplitViewController.h"
@@ -21,6 +22,7 @@
 }
 
 @property (nonatomic, strong) NSToolbarItem * trashbutton;
+@property (nonatomic, strong) NSToolbarItem * settingsButton;
 
 
 @end
@@ -67,7 +69,7 @@
 
 -(void)setupToolbar
 {
-    NSArray * items = @[self.navigationViewController.middleSpacer, self.trashbutton];
+    NSArray * items = @[self.navigationViewController.middleSpacer, self.trashbutton, self.settingsButton];
     
     [self.navigationViewController setToolbarItems:items];
     
@@ -95,6 +97,28 @@
     
 }
 
+- (NSToolbarItem *)settingsButton
+{
+    if(_settingsButton != nil) return _settingsButton;
+    
+    _settingsButton = [[NSToolbarItem alloc] initWithItemIdentifier:@"SettingsButton"];
+    _settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
+    
+    [_settingsButton setLabel:@"Settings"];
+    [_settingsButton setPaletteLabel:@"Settings"];
+    
+    // Set up a reasonable tooltip, and image
+    // you will likely want to localize many of the item's properties
+    [_settingsButton setToolTip:@"Load Files"];
+    
+    // Tell the item what message to send when it is clicked
+    [_settingsButton setTarget:[PIXAppDelegate sharedAppDelegate]];
+    [_settingsButton setAction:@selector(showLoadingWindow:)];
+    
+    return _settingsButton;
+    
+}
+
 -(void)showTrash
 {
     
@@ -102,7 +126,8 @@
 
 -(NSMutableArray *)albums
 {
-    return [[PIXFileSystemDataSource sharedInstance] albums];
+    //return [[PIXFileSystemDataSource sharedInstance] albums];
+    return [[[PIXAppDelegate sharedAppDelegate] fetchAllAlbums] mutableCopy];
 }
 
 -(void)albumsChanged:(NSNotification *)notifcation
@@ -115,7 +140,7 @@
     [arrayController setContent:self.albums];
 }*/
 
--(void)showPhotosForAlbum:(Album *)anAlbum
+-(void)showPhotosForAlbum:(id)anAlbum
 {
     PIXSplitViewController *aSplitViewController  = [[PIXSplitViewController alloc] initWithNibName:@"PIXSplitViewController" bundle:nil];
     aSplitViewController.selectedAlbum = anAlbum;
@@ -125,7 +150,7 @@
 
 - (void)doubleClick:(id)sender {
 	NSLog(@"Double clicked on icon: %@", [[sender representedObject] valueForKey:@"title"]);
-    Album *anAlbum = [sender representedObject];
+    id anAlbum = [sender representedObject];
     [self showPhotosForAlbum:anAlbum];
     //[[NSNotificationCenter defaultCenter] postNotificationName:@"ShowPhotos" object:[sender representedObject]];
 }

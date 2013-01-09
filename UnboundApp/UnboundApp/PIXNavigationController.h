@@ -26,7 +26,6 @@
 -(NSArray *) viewControllerArray;
 
 -(void)setToolbarItems:(NSArray *)items;
--(void)startSpinner;
--(void)stopSpinner;
+
 
 @end

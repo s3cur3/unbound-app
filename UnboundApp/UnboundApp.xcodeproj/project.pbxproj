@@ -74,6 +74,17 @@
 		1DB2F86E167AC07F008AC0F7 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F86C167AC07F008AC0F7 /* icon.icns */; };
 		1DB2F86F167AC07F008AC0F7 /* unbound_icon_512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F86D167AC07F008AC0F7 /* unbound_icon_512x512.png */; };
 		1DB2F873167AC15F008AC0F7 /* ArchDirectoryObserver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DB2F872167AC15F008AC0F7 /* ArchDirectoryObserver.framework */; };
+		1DDEF823169D2D9F00C0D303 /* PIXDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF81D169D2D9F00C0D303 /* PIXDataModel.xcdatamodeld */; };
+		1DDEF828169D2FE800C0D303 /* PIXThumbnail.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF827169D2FE800C0D303 /* PIXThumbnail.m */; };
+		1DDEF82B169D2FE800C0D303 /* PIXAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF82A169D2FE800C0D303 /* PIXAlbum.m */; };
+		1DDEF82E169D2FE800C0D303 /* PIXPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF82D169D2FE800C0D303 /* PIXPhoto.m */; };
+		1DDEF830169D2FE800C0D303 /* PIXAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF82F169D2FE800C0D303 /* PIXAccount.m */; };
+		1DDEF833169D301200C0D303 /* PIXAppDelegate+CoreDataUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF832169D301200C0D303 /* PIXAppDelegate+CoreDataUtils.m */; };
+		1DDEF839169D34A400C0D303 /* GetPathsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF836169D34A400C0D303 /* GetPathsOperation.m */; };
+		1DDEF83A169D34A400C0D303 /* LoadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF838169D34A400C0D303 /* LoadOperation.m */; };
+		1DDEF83F169D34F100C0D303 /* PIXLoadingWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF83D169D34F100C0D303 /* PIXLoadingWindowController.m */; };
+		1DDEF840169D34F100C0D303 /* PIXLoadingWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDEF83E169D34F100C0D303 /* PIXLoadingWindow.xib */; };
+		1DDEF843169D3CF300C0D303 /* MakeThumbnailOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF842169D3CF300C0D303 /* MakeThumbnailOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8C972CB41680FE8B00358913 /* PIXModifierSwitchedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */; };
 /* End PBXBuildFile section */
 
@@ -191,6 +202,25 @@
 		1DB2F86C167AC07F008AC0F7 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = SOURCE_ROOT; };
 		1DB2F86D167AC07F008AC0F7 /* unbound_icon_512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unbound_icon_512x512.png; sourceTree = SOURCE_ROOT; };
 		1DB2F872167AC15F008AC0F7 /* ArchDirectoryObserver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ArchDirectoryObserver.framework; sourceTree = "<group>"; };
+		1DDEF81E169D2D9F00C0D303 /* PIXDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PIXDataModel.xcdatamodel; sourceTree = "<group>"; };
+		1DDEF826169D2FE800C0D303 /* PIXThumbnail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXThumbnail.h; sourceTree = "<group>"; };
+		1DDEF827169D2FE800C0D303 /* PIXThumbnail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXThumbnail.m; sourceTree = "<group>"; };
+		1DDEF829169D2FE800C0D303 /* PIXAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXAlbum.h; sourceTree = "<group>"; };
+		1DDEF82A169D2FE800C0D303 /* PIXAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXAlbum.m; sourceTree = "<group>"; };
+		1DDEF82C169D2FE800C0D303 /* PIXPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPhoto.h; sourceTree = "<group>"; };
+		1DDEF82D169D2FE800C0D303 /* PIXPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhoto.m; sourceTree = "<group>"; };
+		1DDEF82F169D2FE800C0D303 /* PIXAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXAccount.m; sourceTree = "<group>"; };
+		1DDEF831169D301200C0D303 /* PIXAppDelegate+CoreDataUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PIXAppDelegate+CoreDataUtils.h"; sourceTree = "<group>"; };
+		1DDEF832169D301200C0D303 /* PIXAppDelegate+CoreDataUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PIXAppDelegate+CoreDataUtils.m"; sourceTree = "<group>"; };
+		1DDEF835169D34A400C0D303 /* GetPathsOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetPathsOperation.h; sourceTree = "<group>"; };
+		1DDEF836169D34A400C0D303 /* GetPathsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetPathsOperation.m; sourceTree = "<group>"; };
+		1DDEF837169D34A400C0D303 /* LoadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadOperation.h; sourceTree = "<group>"; };
+		1DDEF838169D34A400C0D303 /* LoadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadOperation.m; sourceTree = "<group>"; };
+		1DDEF83C169D34F100C0D303 /* PIXLoadingWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXLoadingWindowController.h; sourceTree = "<group>"; };
+		1DDEF83D169D34F100C0D303 /* PIXLoadingWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXLoadingWindowController.m; sourceTree = "<group>"; };
+		1DDEF83E169D34F100C0D303 /* PIXLoadingWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXLoadingWindow.xib; sourceTree = "<group>"; };
+		1DDEF841169D3CF300C0D303 /* MakeThumbnailOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakeThumbnailOperation.h; sourceTree = "<group>"; };
+		1DDEF842169D3CF300C0D303 /* MakeThumbnailOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MakeThumbnailOperation.m; sourceTree = "<group>"; };
 		8C972CB21680FE8A00358913 /* PIXModifierSwitchedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXModifierSwitchedEvent.h; sourceTree = "<group>"; };
 		8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXModifierSwitchedEvent.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -246,6 +276,7 @@
 		1D1419A5167FC49100A8A920 /* Windows */ = {
 			isa = PBXGroup;
 			children = (
+				1DDEF83B169D34D100C0D303 /* LoadingWindow */,
 				1DB2F863167ABE87008AC0F7 /* MainMenu.xib */,
 				1D4A1DCA167AE1A500C9A895 /* PIXMainWindowController.h */,
 				1D4A1DCB167AE1A500C9A895 /* PIXMainWindowController.m */,
@@ -340,6 +371,8 @@
 		1D4A1DD7167AFB8600C9A895 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1DDEF834169D348E00C0D303 /* Operations */,
+				1DDEF81B169D2D4A00C0D303 /* CoreData */,
 				1D4A1DD8167AFBD000C9A895 /* PIXObject.h */,
 				1D4A1DD9167AFBD000C9A895 /* PIXObject.m */,
 				1D4A1DDB167AFBF000C9A895 /* Album.h */,
@@ -462,6 +495,46 @@
 			name = 3rdParty;
 			sourceTree = "<group>";
 		};
+		1DDEF81B169D2D4A00C0D303 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				1DDEF81D169D2D9F00C0D303 /* PIXDataModel.xcdatamodeld */,
+				1DDEF831169D301200C0D303 /* PIXAppDelegate+CoreDataUtils.h */,
+				1DDEF832169D301200C0D303 /* PIXAppDelegate+CoreDataUtils.m */,
+				1DDEF82F169D2FE800C0D303 /* PIXAccount.m */,
+				1DDEF82C169D2FE800C0D303 /* PIXPhoto.h */,
+				1DDEF82D169D2FE800C0D303 /* PIXPhoto.m */,
+				1DDEF829169D2FE800C0D303 /* PIXAlbum.h */,
+				1DDEF82A169D2FE800C0D303 /* PIXAlbum.m */,
+				1DDEF826169D2FE800C0D303 /* PIXThumbnail.h */,
+				1DDEF827169D2FE800C0D303 /* PIXThumbnail.m */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
+		1DDEF834169D348E00C0D303 /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				1DDEF841169D3CF300C0D303 /* MakeThumbnailOperation.h */,
+				1DDEF842169D3CF300C0D303 /* MakeThumbnailOperation.m */,
+				1DDEF835169D34A400C0D303 /* GetPathsOperation.h */,
+				1DDEF836169D34A400C0D303 /* GetPathsOperation.m */,
+				1DDEF837169D34A400C0D303 /* LoadOperation.h */,
+				1DDEF838169D34A400C0D303 /* LoadOperation.m */,
+			);
+			name = Operations;
+			sourceTree = "<group>";
+		};
+		1DDEF83B169D34D100C0D303 /* LoadingWindow */ = {
+			isa = PBXGroup;
+			children = (
+				1DDEF83C169D34F100C0D303 /* PIXLoadingWindowController.h */,
+				1DDEF83D169D34F100C0D303 /* PIXLoadingWindowController.m */,
+				1DDEF83E169D34F100C0D303 /* PIXLoadingWindow.xib */,
+			);
+			name = LoadingWindow;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -550,6 +623,7 @@
 				1D0834FC167D6478003D557A /* PIXPageViewController.xib in Resources */,
 				1D083502167D6678003D557A /* PIXImageBrowserViewController.xib in Resources */,
 				1D083526167E7EEE003D557A /* imageview.xib in Resources */,
+				1DDEF840169D34F100C0D303 /* PIXLoadingWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -588,6 +662,16 @@
 				1D083520167E7C80003D557A /* PIXPageView.m in Sources */,
 				1D08352D167E8B2B003D557A /* PIXImageViewController.m in Sources */,
 				8C972CB41680FE8B00358913 /* PIXModifierSwitchedEvent.m in Sources */,
+				1DDEF823169D2D9F00C0D303 /* PIXDataModel.xcdatamodeld in Sources */,
+				1DDEF828169D2FE800C0D303 /* PIXThumbnail.m in Sources */,
+				1DDEF82B169D2FE800C0D303 /* PIXAlbum.m in Sources */,
+				1DDEF82E169D2FE800C0D303 /* PIXPhoto.m in Sources */,
+				1DDEF830169D2FE800C0D303 /* PIXAccount.m in Sources */,
+				1DDEF833169D301200C0D303 /* PIXAppDelegate+CoreDataUtils.m in Sources */,
+				1DDEF839169D34A400C0D303 /* GetPathsOperation.m in Sources */,
+				1DDEF83A169D34A400C0D303 /* LoadOperation.m in Sources */,
+				1DDEF83F169D34F100C0D303 /* PIXLoadingWindowController.m in Sources */,
+				1DDEF843169D3CF300C0D303 /* MakeThumbnailOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -732,6 +816,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		1DDEF81D169D2D9F00C0D303 /* PIXDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1DDEF81E169D2D9F00C0D303 /* PIXDataModel.xcdatamodel */,
+			);
+			currentVersion = 1DDEF81E169D2D9F00C0D303 /* PIXDataModel.xcdatamodel */;
+			path = PIXDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 1DB2F841167ABE87008AC0F7 /* Project object */;
 }

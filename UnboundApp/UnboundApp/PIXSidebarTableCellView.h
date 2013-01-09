@@ -9,10 +9,11 @@
 #import <Cocoa/Cocoa.h>
 
 @class Album;
+@class PIXAlbum;
 
 @interface PIXSidebarTableCellView : NSTableCellView
 
 @property(strong) IBOutlet NSTextField *detailTextLabel;
-@property(nonatomic, strong) IBOutlet Album *album;
+@property(nonatomic, strong) IBOutlet PIXAlbum *album;
 
 @end

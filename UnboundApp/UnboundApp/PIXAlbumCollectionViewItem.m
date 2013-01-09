@@ -8,7 +8,7 @@
 
 #import "PIXAlbumCollectionViewItem.h"
 #import "PIXBorderedImageView.h"
-#import "Album.h"
+//#import "Album.h"
 #import "PIXDefines.h"
 
 @interface PIXAlbumCollectionViewItem ()

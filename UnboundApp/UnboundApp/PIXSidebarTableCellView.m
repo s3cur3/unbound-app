@@ -8,6 +8,7 @@
 
 #import "PIXSidebarTableCellView.h"
 #import "Album.h"
+#import "PIXAlbum.h"
 #import "PIXDefines.h"
 
 @implementation PIXSidebarTableCellView
@@ -55,7 +56,7 @@
     
 }
 
--(void)setAlbum:(Album *)newAlbum
+-(void)setAlbum:(PIXAlbum *)newAlbum
 {
     if (newAlbum!=_album)
     {

@@ -9,8 +9,7 @@
 #import "PIXNavigationController.h"
 #import "PIXViewController.h"
 #import <QuartzCore/QuartzCore.h>
-#import "PIXFileSystemDataSource.h"
-#import "PIXDefines.h"
+
 
 @interface PIXNavigationController ()
 
@@ -35,7 +34,9 @@
     return self;
 }
 
--(void)awakeFromNib
+
+
+/*-(void)awakeFromNib
 {
     //
     PIXFileSystemDataSource *dataSource = [PIXFileSystemDataSource sharedInstance];
@@ -49,7 +50,8 @@
         }];
     }
     //
-}
+}*/
+
 
 
 - (void)setView:(NSView *)view;
@@ -176,25 +178,7 @@
     return _middleSpacer;
 }
 
-//TODO: better system of showing activity
--(void)startSpinner
-{
-    [self updateActivityIndicatorAnimation:YES];
-}
--(void)stopSpinner
-{
-    [self updateActivityIndicatorAnimation:NO];
-}
--(void)updateActivityIndicatorAnimation:(BOOL)shouldAnimate
-{
-    if (shouldAnimate) {
-        [self.activitySpinner startAnimation:self];
-    } else {
-        [self.activitySpinner stopAnimation:self];
-    }
-    [self.activitySpinner setNeedsDisplay:YES];
-}
-//
+
 
 -(void)dealloc
 {

@@ -8,9 +8,12 @@
 
 #import "PIXSidebarViewController.h"
 #import "PIXDataSource.h"
+#import "PIXAppDelegate.h"
+#import "PIXAppDelegate+CoreDataUtils.h"
 #import "PIXSidebarTableCellView.h"
 #import "PIXSplitViewController.h"
 #import "Album.h"
+#import "PIXAlbum.h"
 
 @interface PIXSidebarViewController ()
 
@@ -23,7 +26,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Initialization code here.
-        self.topLevelItems = [[[PIXDataSource fileSystemDataSource] albums] mutableCopy];
+        //self.topLevelItems = [[[PIXDataSource fileSystemDataSource] albums] mutableCopy];
+        self.topLevelItems = [[PIXAppDelegate sharedAppDelegate] fetchAllAlbums];
     }
     
     return self;

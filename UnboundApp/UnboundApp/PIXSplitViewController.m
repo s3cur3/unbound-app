@@ -137,7 +137,7 @@
 }
 
 
--(void)setSelectedAlbum:(Album *)selectedAlbum
+-(void)setSelectedAlbum:(id)selectedAlbum
 {
     if (!selectedAlbum) {
         NSAssert(selectedAlbum!=nil, @"SplitViewController setAlbum called with nil value");
