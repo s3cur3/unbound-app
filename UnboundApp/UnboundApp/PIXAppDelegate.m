@@ -105,7 +105,7 @@ extern NSString *kSearchDidFinishNotification;
         [[NSNotificationCenter defaultCenter] removeObserver:self name:kSearchDidFinishNotification object:nil];
         DLog(@"Finished loading photos");
         [self photosFinishedLoading:note];
-        [self updateAlbumsPhotos];
+        //[self updateAlbumsPhotos];
     }];
     
     //Notification for standard fetches

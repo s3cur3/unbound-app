@@ -10,6 +10,7 @@
 #define UnboundApp_PIXDefines_h
 
 static NSString *kSearchDidFinishNotification = @"kSearchDidFinishNotification";
+static NSString *kCreateThumbDidFinish = @"kCreateThumbDidFinish";
 
 static NSString *kUnboundAlbumMetadataFileName = @".unbound";
 

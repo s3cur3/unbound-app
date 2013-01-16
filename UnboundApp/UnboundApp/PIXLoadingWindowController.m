@@ -514,6 +514,8 @@ extern NSString *kSearchDidFinishNotification;
 // -------------------------------------------------------------------------------
 - (IBAction)startAction:(id)sender
 {
+    NSLog(@"Starting to load");
+    [[PIXAppDelegate sharedAppDelegate] setStartDate:[NSDate date]];
     // schedule our update timer for our UI
     self.timer = [NSTimer scheduledTimerWithTimeInterval:5.0
                                                   target:self

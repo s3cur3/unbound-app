@@ -68,7 +68,7 @@
 //}
 //
 //- (void)addPhotos:(NSSet *)values
-//{    
+//{
 //    [self willChangeValueForKey:@"photos" withSetMutation:NSKeyValueUnionSetMutation usingObjects:values];
 //    [[self primitiveValueForKey:@"photos"] unionSet:values];
 //    [self didChangeValueForKey:@"photos" withSetMutation:NSKeyValueUnionSetMutation usingObjects:values];
@@ -80,5 +80,21 @@
 //    [[self primitiveValueForKey:@"photos"] minusSet:values];
 //    [self didChangeValueForKey:@"photos" withSetMutation:NSKeyValueMinusSetMutation usingObjects:values];
 //}
+
+//NSKeyValueSetSetMutation
+/*-(void)setPhotos:(NSSet *)values
+{
+    [self willChangeValueForKey:@"photos" withSetMutation:NSKeyValueSetSetMutation usingObjects:values];
+    [[self primitiveValueForKey:@"photos"] unionSet:values];
+    [self didChangeValueForKey:@"photos" withSetMutation:NSKeyValueSetSetMutation usingObjects:values];
+}
+
+-(NSOrderedSet *)photos
+{
+    [self willAccessValueForKey:@"photos"];
+    NSOrderedSet *tmpValue = [self primitiveValueForKey:@"photos"];
+    [self didAccessValueForKey:@"photos"];
+    return tmpValue;
+}*/
 
 @end

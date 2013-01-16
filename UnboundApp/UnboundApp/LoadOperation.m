@@ -140,17 +140,18 @@ NSString *kLoadImageDidFinish = @"LoadImageDidFinish";
             NSDate *fileCreationDate;
             [self.loadURL getResourceValue:&fileCreationDate forKey:NSURLCreationDateKey error:nil];
             
-            NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+            /*NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
             [formatter setTimeStyle:NSDateFormatterNoStyle];
             [formatter setDateStyle:NSDateFormatterShortStyle];
-            NSString *modDateStr = [formatter stringFromDate:fileCreationDate];
+            NSString *modDateStr = [formatter stringFromDate:fileCreationDate];*/
             
             NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:
                                   [self.loadURL lastPathComponent], kNameKey,
                                   //[self.loadURL absoluteString], kPathKey,
                                   [self.loadURL path], kPathKey,
                                   [[self.loadURL URLByDeletingLastPathComponent] path] , kDirectoryPathKey,
-                                  modDateStr, kModifiedKey,
+                                  //modDateStr, kModifiedKey,
+                                  fileCreationDate, kModifiedKey,
                                   [NSString stringWithFormat:@"%ld", [fileSize integerValue]], kSizeKey,
                                   [NSNumber numberWithInteger:ourScanCount], kScanCountKey,  // pass back to check if user cancelled/started a new scan
                                   nil];

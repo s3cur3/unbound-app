@@ -34,6 +34,8 @@
 
 -(void)startFileSystemLoading;
 
+@property (nonatomic,strong) NSDate *startDate;
+
 @property (assign) IBOutlet NSWindow *window;
 
 //Core Data

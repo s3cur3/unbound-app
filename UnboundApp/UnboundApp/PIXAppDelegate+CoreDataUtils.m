@@ -9,6 +9,7 @@
 #import "PIXAppDelegate+CoreDataUtils.h"
 #import "PIXPhoto.h"
 #import "PIXAlbum.h"
+#import "PIXDefines.h"
 
 
 static NSString *kPhotoEntityName = @"PIXPhoto";
@@ -16,7 +17,11 @@ static NSString *kAlbumEntityName = @"PIXAlbum";
 
 extern NSString *kDirectoryPathKey;
 
+extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
+
 @implementation PIXAppDelegate (CoreDataUtils)
+
+
 
 -(IBAction)testFetchAllPhotos:(id)sender
 {
@@ -42,8 +47,100 @@ extern NSString *kDirectoryPathKey;
 {
     NSArray *photos = [note.userInfo valueForKey:@"items"];
     self.photoFiles = [photos sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"path" ascending:YES]]];
-    [self loadAlbums];
+    
+    self.fetchDate = [NSDate date];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+        
+        NSLog(@"TESTING");
+        
+        NSManagedObjectContext *context = [[NSManagedObjectContext alloc] init];
+        
+        //-------------------------------------------------------
+        //    Setting the undo manager to nil means that:
+        //
+        //    - You don’t waste effort recording undo actions for changes (such as insertions) that will not be undone;
+        //    - The undo manager doesn’t maintain strong references to changed objects and so prevent them from being deallocated
+        //-------------------------------------------------------
+        [context setUndoManager:nil];
+        
+        
+        //set it to the App Delegates persistant store coordinator
+        PIXAppDelegate *appDelegate = (PIXAppDelegate *)[[NSApplication sharedApplication] delegate];
+        [context setPersistentStoreCoordinator:[appDelegate persistentStoreCoordinator]];
+        
+        // overwrite the database with updates from this context
+        [context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
+        
+        PIXAlbum *lastAlbum = nil;
+        int i = 0;
+        NSMutableArray *lastAlbumsPhotos = [NSMutableArray new];
+        for (NSDictionary *aPhoto in self.photoFiles)
+        {
+            i++;
+            NSString *aPath = [aPhoto valueForKey:@"dirPath"];
+            if (!lastAlbum || ![aPath isEqualToString:lastAlbum.path])
+            {
+                if (lastAlbum) {
+                    lastAlbum.photos = [[NSOrderedSet alloc] initWithArray:lastAlbumsPhotos];
+                    [lastAlbumsPhotos removeAllObjects];
+                }
+                lastAlbum = [self fetchAlbumWithPath:aPath inContext:context];
+                if (lastAlbum==nil)
+                {
+                    lastAlbum = [NSEntityDescription insertNewObjectForEntityForName:@"PIXAlbum" inManagedObjectContext:context];
+                    [lastAlbum setValue:aPath forKey:@"path"];
+                }
+                [lastAlbum setDateLastUpdated:self.fetchDate];
+            }
+            PIXPhoto *dbPhoto = [NSEntityDescription insertNewObjectForEntityForName:@"PIXPhoto" inManagedObjectContext:context];
+            [dbPhoto setDateLastModified:[aPhoto valueForKey:@"modified"]];
+            [dbPhoto setPath:[aPhoto valueForKey:@"path"]];
+            [dbPhoto setDateLastUpdated:self.fetchDate];
+            //[lastAlbum addPhotosObject:dbPhoto];
+            //[dbPhoto setAlbum:lastAlbum];
+            [lastAlbumsPhotos addObject:dbPhoto];
+            if (i%500==0) {
+                [context save:nil];
+            }
+        }
+        lastAlbum.photos = [[NSOrderedSet alloc] initWithArray:lastAlbumsPhotos];
+        [lastAlbumsPhotos removeAllObjects];
+        
+        if (![self deleteObjectsForEntityName:@"PIXAlbum" withUpdateDateBefore:self.fetchDate inContext:context]) {
+            DLog(@"There was a problem trying to delete old objects");
+        }
+        if (![self deleteObjectsForEntityName:@"PIXPhoto" withUpdateDateBefore:self.fetchDate inContext:context]) {
+            DLog(@"There was a problem trying to delete old objects");
+        }
+        
+        [context save:nil];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+
+            [self testFetchAllPhotos:nil];
+            //[[NSNotificationCenter defaultCenter] postNotificationName:@"PhotoLoadingFinished" object:self userInfo:nil];
+
+            [self testFetchAllAlbums:nil];
+            //[[NSNotificationCenter defaultCenter] postNotificationName:@"AlbumLoadingFinished" object:self userInfo:nil];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
+            
+            [self finishedLoadingPrintTime];
+        });
+        
+    });
+    
+    
 }
+
+//-(void)photosFinishedLoading:(NSNotification *)note
+//{
+//    NSArray *photos = [note.userInfo valueForKey:@"items"];
+//    self.photoFiles = [photos sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"path" ascending:YES]]];
+//    [self loadAlbums];
+//}
 
 
 //-(void)loadPhotos:(NSNotification *)note
@@ -85,6 +182,8 @@ extern NSString *kDirectoryPathKey;
     
     
 }
+
+
 
 - (void)findOrCreateInDatabase:(NSDictionary *)itemsDict
 {
@@ -207,6 +306,10 @@ extern NSString *kDirectoryPathKey;
             }
             if (shouldUpdate)
             {
+                if ([entityName isEqualToString:kPhotoEntityName])
+                {
+                    [thisDBItem setDateLastModified:[anItem valueForKey:@"modified"]];
+                }
                 //TODO: update record with latest info
                 //                int last_updated = [[photoset valueForKey:@"date_update"] intValue];
                 //                int db_last_updated = -1;
@@ -327,7 +430,7 @@ extern NSString *kDirectoryPathKey;
 }
 
 
--(IBAction)deleteAllRecords:(id)sender
+-(IBAction)deleteAllPhotos:(id)sender
 {
     NSLog(@"delete all records");
     NSArray *fetchedObjects = [self fetchAllPhotos];
@@ -437,7 +540,7 @@ extern NSString *kDirectoryPathKey;
         // make sure the results are sorted by order. This will cause faster iteration through the loop when the order hasn't changed.
         [fetchRequest setSortDescriptors: [NSArray arrayWithObject:
                                            [[NSSortDescriptor alloc] initWithKey: @"dateLastModified"
-                                                                       ascending:YES]]];
+                                                                       ascending:NO]]];
         
         
         NSArray *itemsFound = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
@@ -447,6 +550,7 @@ extern NSString *kDirectoryPathKey;
         }
         NSOrderedSet *photoSet = [[NSOrderedSet alloc] initWithArray:itemsFound];
         [anAlbum setPhotos:photoSet];
+        
         DLog(@"Updated photos for album '%@' : total photo count %ld",albumPath, anAlbum.photos.count);
         //[itemsFound makeObjectsPerformSelector:@selector(setAlbum:) withObject:self];
     }
@@ -454,6 +558,16 @@ extern NSString *kDirectoryPathKey;
     if (![self.managedObjectContext save:&error]) {
         [PIXAppDelegate presentError:error];
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
+    
+    [self finishedLoadingPrintTime];
+}
+
+-(void)finishedLoadingPrintTime
+{
+    NSTimeInterval time = [[NSDate date] timeIntervalSinceDate:[[PIXAppDelegate sharedAppDelegate] startDate]];
+    NSLog(@"%g seconds elapsed\n", time);
 }
 
 -(IBAction)testFetchAllAlbums:(id)sender
@@ -475,6 +589,25 @@ extern NSString *kDirectoryPathKey;
         return nil;
     }
     return fetchedObjects;
+}
+
+-(PIXAlbum *)fetchAlbumWithPath:(NSString *)aPath inContext:(NSManagedObjectContext *)context
+{
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PIXAlbum" inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"path == %@", aPath];
+    [fetchRequest setPredicate:predicate];
+    [fetchRequest setFetchLimit:1];
+
+    NSError *error = nil;
+    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+    if (fetchedObjects == nil) {
+        //
+    }
+
+    return [fetchedObjects lastObject];
 }
 
 -(IBAction)deleteAllAlbums:(id)sender
@@ -500,6 +633,8 @@ extern NSString *kDirectoryPathKey;
         abort();
     }
     NSLog(@"Deleted %d records", counter);
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
     
 }
 

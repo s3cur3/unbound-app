@@ -10,8 +10,13 @@
 #import <CoreData/CoreData.h>
 
 @class PIXAlbum, PIXThumbnail;
+@class MakeThumbnailOperation;
 
 @interface PIXPhoto : NSManagedObject
+{
+    NSImage *                   _thumbnailImage;
+    BOOL                        _thumbnailImageIsLoading;
+}
 
 @property (nonatomic, retain) NSDate * dateLastModified;
 @property (nonatomic, retain) NSDate * dateLastUpdated;
@@ -20,8 +25,13 @@
 @property (nonatomic, retain) PIXAlbum *album;
 @property (nonatomic, retain) PIXThumbnail *thumbnail;
 
+@property (nonatomic, retain, readonly ) NSImage *thumbnailImage;         // observable, returns a placeholder if the thumbnail isn't available yet.
+
+
 //TODO: get rid of this
 -(NSURL *)filePath;
+
+
 
 @end
 

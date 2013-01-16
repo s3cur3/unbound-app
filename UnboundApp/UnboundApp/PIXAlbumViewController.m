@@ -57,7 +57,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(albumsChanged:)
                                                  name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM
-                                               object:[PIXFileSystemDataSource sharedInstance]];
+                                               object:nil];
     
     /*[[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(photosChanged:)
@@ -90,8 +90,13 @@
     [_trashbutton setToolTip:@"View Trash"];
     
     // Tell the item what message to send when it is clicked
-    [_trashbutton setTarget:self];
-    [_trashbutton setAction:@selector(showTrash)];
+    //[_trashbutton setTarget:self];
+    //[_trashbutton setAction:@selector(showTrash)];
+#ifdef DEBUG
+    // Tell the item what message to send when it is clicked
+    [_trashbutton setTarget:[PIXAppDelegate sharedAppDelegate]];
+    [_trashbutton setAction:@selector(deleteAllAlbums:)];
+#endif
     
     return _trashbutton;
     

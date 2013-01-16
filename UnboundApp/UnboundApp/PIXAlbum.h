@@ -27,7 +27,7 @@
 - (NSString *) imageSubtitle;
 
 //@property (nonatomic, strong)   NSDate *dateLastScanned;
-//@property (nonatomic, strong)   NSDate *dateMostRecentPhoto;
+@property (nonatomic, strong)   NSDate *dateMostRecentPhoto;
 //@property (nonatomic, strong)   NSString *filePath;
 //@property (nonatomic, strong)   NSURL *filePathURL;
 //@property (nonatomic, strong)   NSImage *thumbnailImage;

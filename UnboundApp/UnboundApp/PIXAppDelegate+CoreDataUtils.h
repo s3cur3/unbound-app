@@ -22,9 +22,13 @@
 
 -(NSArray *)fetchAllPhotos;
 
+-(IBAction)deleteAllPhotos:(id)sender;
+
 -(IBAction)testFetchAllAlbums:(id)sender;
 
 -(NSArray *)fetchAllAlbums;
+
+-(IBAction)deleteAllAlbums:(id)sender;
 
 -(BOOL)deleteObjectsForEntityName:(NSString *)entityName withUpdateDateBefore:(NSDate *)lastUpdated inContext:(NSManagedObjectContext *)context;
 
