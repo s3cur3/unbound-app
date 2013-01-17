@@ -8,6 +8,7 @@
         <attribute name="dateLastUpdated" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="path" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="subtitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="thumbnail" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="account" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="PIXAccount" inverseName="albums" inverseEntity="PIXAccount" syncable="YES"/>
         <relationship name="photos" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="PIXPhoto" inverseName="album" inverseEntity="PIXPhoto" syncable="YES"/>
@@ -25,9 +26,9 @@
         <relationship name="photo" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="PIXPhoto" inverseName="thumbnail" inverseEntity="PIXPhoto" syncable="YES"/>
     </entity>
     <elements>
-        <element name="PIXAlbum" positionX="0" positionY="0" width="128" height="135"/>
-        <element name="PIXPhoto" positionX="0" positionY="0" width="128" height="135"/>
         <element name="PIXAccount" positionX="0" positionY="0" width="128" height="75"/>
+        <element name="PIXAlbum" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="PIXPhoto" positionX="0" positionY="0" width="128" height="135"/>
         <element name="PIXThumbnail" positionX="0" positionY="0" width="128" height="75"/>
     </elements>
 </model>

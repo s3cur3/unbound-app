@@ -9,6 +9,9 @@
 #ifndef UnboundApp_PIXDefines_h
 #define UnboundApp_PIXDefines_h
 
+static NSString *kPhotoEntityName = @"PIXPhoto";
+static NSString *kAlbumEntityName = @"PIXAlbum";
+
 static NSString *kSearchDidFinishNotification = @"kSearchDidFinishNotification";
 static NSString *kCreateThumbDidFinish = @"kCreateThumbDidFinish";
 
@@ -16,7 +19,6 @@ static NSString *kUnboundAlbumMetadataFileName = @".unbound";
 
 static const NSString *ALBUM = @"ALBUM";
 static const NSString *PHOTO = @"PHOTO";
-
 
 static NSString *AlbumCreatedNotification = @"AlbumCreatedNotification";
 static NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";

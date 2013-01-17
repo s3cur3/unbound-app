@@ -11,12 +11,15 @@
 @class PIXAlbumViewController;
 @class PIXNavigationController;
 
+@class PIXBCAlbumViewController;
+
 @interface PIXMainWindowController : NSWindowController
 {
     
 }
 
 @property (nonatomic, strong) IBOutlet PIXNavigationController *navigationViewController;
-@property (nonatomic, strong) PIXAlbumViewController *albumViewController;
+//@property (nonatomic, strong) PIXAlbumViewController *albumViewController;
+@property (nonatomic, strong) PIXBCAlbumViewController *albumViewController;
 
 @end

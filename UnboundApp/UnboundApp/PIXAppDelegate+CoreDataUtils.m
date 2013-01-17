@@ -11,10 +11,6 @@
 #import "PIXAlbum.h"
 #import "PIXDefines.h"
 
-
-static NSString *kPhotoEntityName = @"PIXPhoto";
-static NSString *kAlbumEntityName = @"PIXAlbum";
-
 extern NSString *kDirectoryPathKey;
 
 extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
@@ -52,7 +48,7 @@ extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
         
-        NSLog(@"TESTING");
+        //NSLog(@"TESTING");
         
         NSManagedObjectContext *context = [[NSManagedObjectContext alloc] init];
         

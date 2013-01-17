@@ -12,6 +12,12 @@
 @class PIXAccount, PIXPhoto;
 
 @interface PIXAlbum : NSManagedObject
+{
+    @private
+    PIXPhoto *_mostRecentPhoto;
+    NSDate *_dateMostRecentPhoto;
+    NSImage *_thumbnailImage;
+}
 
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * subtitle;
@@ -19,15 +25,17 @@
 @property (nonatomic, retain) NSString * path;
 @property (nonatomic, retain) NSOrderedSet *photos;
 @property (nonatomic, retain) PIXAccount *account;
+@property (nonatomic, retain) NSData * thumbnail;
 
-//non-core data
+//
+@property (nonatomic, strong, readonly) NSDate *dateMostRecentPhoto;
+@property (nonatomic, strong, readonly) PIXPhoto *mostRecentPhoto;
 
-- (NSURL *)filePathURL;
-- (NSImage *)thumbnailImage;
-- (NSString *) imageSubtitle;
+
+//@property (nonatomic, retain, readonly) NSEntityDescription *photoEntityDescription;
+//@property (nonatomic, retain, readonly) NSExpressionDescription *expressionDescription;
 
 //@property (nonatomic, strong)   NSDate *dateLastScanned;
-@property (nonatomic, strong)   NSDate *dateMostRecentPhoto;
 //@property (nonatomic, strong)   NSString *filePath;
 //@property (nonatomic, strong)   NSURL *filePathURL;
 //@property (nonatomic, strong)   NSImage *thumbnailImage;
@@ -46,4 +54,17 @@
 - (void)removePhotosObject:(PIXPhoto *)value;
 - (void)addPhotos:(NSOrderedSet *)values;
 - (void)removePhotos:(NSOrderedSet *)values;
+@end
+
+@interface PIXAlbum(Customizations)
+
+//fetches photo with the most recent dateLastModified
+- (PIXPhoto *)fetchMostRecentPhoto;
+
+//non-core data
+- (NSURL *)filePathURL;
+- (NSImage *)thumbnailImage;
+- (NSString *) imageSubtitle;
+
+
 @end
