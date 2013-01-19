@@ -10,8 +10,8 @@
 
 @class PIXBorderedImageView;
 
-//@interface PIXAlbumCollectionViewItem : NSCollectionViewItem
-@interface PIXAlbumCollectionViewItem : NSViewController
+@interface PIXAlbumCollectionViewItem : NSCollectionViewItem
+//@interface PIXAlbumCollectionViewItem : NSViewController
 
 @property (weak) IBOutlet NSTextField *mainLabel;
 @property (strong) IBOutlet NSTextField * detailLabel;

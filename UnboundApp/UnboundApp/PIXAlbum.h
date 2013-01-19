@@ -13,9 +13,9 @@
 
 @interface PIXAlbum : NSManagedObject
 {
-    @private
-    PIXPhoto *_mostRecentPhoto;
-    NSDate *_dateMostRecentPhoto;
+//    @private
+//    PIXPhoto *_mostRecentPhoto;
+//    NSDate *_dateMostRecentPhoto;
     NSImage *_thumbnailImage;
 }
 
@@ -26,10 +26,16 @@
 @property (nonatomic, retain) NSOrderedSet *photos;
 @property (nonatomic, retain) PIXAccount *account;
 @property (nonatomic, retain) NSData * thumbnail;
+@property (nonatomic, retain) PIXPhoto *coverPhoto;
+@property (nonatomic, retain) NSDate * albumDate;
+
+-(void)setPhotos:(NSOrderedSet *)photos updateCoverImage:(BOOL)shouldUpdateCoverImage;
+
+-(void)cancelThumbnailLoading;
 
 //
-@property (nonatomic, strong, readonly) NSDate *dateMostRecentPhoto;
-@property (nonatomic, strong, readonly) PIXPhoto *mostRecentPhoto;
+//@property (nonatomic, strong, readonly) NSDate *dateMostRecentPhoto;
+//@property (nonatomic, strong, readonly) PIXPhoto *mostRecentPhoto;
 
 
 //@property (nonatomic, retain, readonly) NSEntityDescription *photoEntityDescription;
@@ -59,7 +65,7 @@
 @interface PIXAlbum(Customizations)
 
 //fetches photo with the most recent dateLastModified
-- (PIXPhoto *)fetchMostRecentPhoto;
+//- (PIXPhoto *)fetchMostRecentPhoto;
 
 //non-core data
 - (NSURL *)filePathURL;

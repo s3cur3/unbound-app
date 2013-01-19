@@ -2,15 +2,18 @@
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1811" systemVersion="12C60" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="PIXAccount" representedClassName="PIXAccount" syncable="YES">
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="albums" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PIXAlbum" inverseName="account" inverseEntity="PIXAlbum" syncable="YES"/>
     </entity>
     <entity name="PIXAlbum" representedClassName="PIXAlbum" syncable="YES">
+        <attribute name="albumDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="dateLastUpdated" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="path" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="subtitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="thumbnail" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="account" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="PIXAccount" inverseName="albums" inverseEntity="PIXAccount" syncable="YES"/>
+        <relationship name="coverPhoto" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="PIXPhoto" inverseName="coverPhotoAlbum" inverseEntity="PIXPhoto" syncable="YES"/>
         <relationship name="photos" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="PIXPhoto" inverseName="album" inverseEntity="PIXPhoto" syncable="YES"/>
     </entity>
     <entity name="PIXPhoto" representedClassName="PIXPhoto" syncable="YES">
@@ -18,7 +21,9 @@
         <attribute name="dateLastUpdated" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="path" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="thumbnailData" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <relationship name="album" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="PIXAlbum" inverseName="photos" inverseEntity="PIXAlbum" syncable="YES"/>
+        <relationship name="coverPhotoAlbum" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="PIXAlbum" inverseName="coverPhoto" inverseEntity="PIXAlbum" syncable="YES"/>
         <relationship name="thumbnail" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="PIXThumbnail" inverseName="photo" inverseEntity="PIXThumbnail" syncable="YES"/>
     </entity>
     <entity name="PIXThumbnail" representedClassName="PIXThumbnail" syncable="YES">
@@ -26,9 +31,9 @@
         <relationship name="photo" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="PIXPhoto" inverseName="thumbnail" inverseEntity="PIXPhoto" syncable="YES"/>
     </entity>
     <elements>
-        <element name="PIXAccount" positionX="0" positionY="0" width="128" height="75"/>
-        <element name="PIXAlbum" positionX="0" positionY="0" width="128" height="150"/>
-        <element name="PIXPhoto" positionX="0" positionY="0" width="128" height="135"/>
+        <element name="PIXAccount" positionX="0" positionY="0" width="128" height="90"/>
+        <element name="PIXAlbum" positionX="0" positionY="0" width="128" height="180"/>
+        <element name="PIXPhoto" positionX="0" positionY="0" width="128" height="165"/>
         <element name="PIXThumbnail" positionX="0" positionY="0" width="128" height="75"/>
     </elements>
 </model>

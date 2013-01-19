@@ -9,8 +9,10 @@
 #import "PIXAlbum.h"
 #import "PIXAccount.h"
 #import "PIXPhoto.h"
+#import "PIXThumbnail.h"
 #import "PIXDefines.h"
 
+static NSString *const kItemsKey = @"photos";
 
 @implementation PIXAlbum
 
@@ -21,17 +23,31 @@
 @dynamic title;
 @dynamic subtitle;
 @dynamic thumbnail;
+@dynamic coverPhoto;
+@dynamic albumDate;
 
-@dynamic dateMostRecentPhoto;
+//@dynamic dateMostRecentPhoto;
 
 // invoked after a fetch or after unfaulting (commonly used for computing derived values from the persisted properties)
 -(void)awakeFromFetch
 {
     [super awakeFromFetch];
-//    if (self.photos != nil) {
-//        NSDate *aDate = [self dateMostRecentPhoto];
-//        DLog(@"%@", aDate);
+//    if (self.photos != nil && self.coverPhoto==nil) {
+//        self.coverPhoto = [self.photos lastObject];
+//        //DLog(@"%@", aDate);
 //    }
+    //[[NSNotificationCenter defaultCenter] addObser]
+    [self addObserver:self forKeyPath:@"photos" options:NSKeyValueObservingOptionInitial context:NULL];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"photos"]) {
+        //_thumbnailImage = nil;
+        //DLog(@"photos changed for album : %@", self.title);
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 /* Callback before delete propagation while the object is still alive.  Useful to perform custom propagation before the relationships are torn down or reconfigure KVO observers. */
@@ -47,19 +63,38 @@
 
 - (NSImage *)thumbnailImage
 {
-    if (_thumbnailImage == nil && self.photos != nil)
+    if (_thumbnailImage == nil)
     {
-        PIXPhoto *aPhoto = [self mostRecentPhoto];
-        if (aPhoto!=nil) {
-            if (aPhoto.thumbnailImage)
-            _thumbnailImage = aPhoto.thumbnailImage;
+        NSData *thumbData = self.thumbnail;
+        if (thumbData != nil) {
+            _thumbnailImage = [[NSImage alloc] initWithData:self.thumbnail];
+        } else if (self.coverPhoto.thumbnail.imageData == nil) {
+            [self.coverPhoto thumbnailImage];
+            NSImage *noPhotoImg = [NSImage imageNamed:@"nophoto_200x200"];
+            return noPhotoImg;
+            /*NSURL *aPath = self.coverPhoto.filePath;
+            self.thumbnail = [[NSData alloc] initWithContentsOfMappedFile:aPath.path];
+            _thumbnailImage = [[NSImage alloc] initWithData:self.thumbnail];*/
+        } else if (self.coverPhoto.thumbnail.imageData != nil) {
+            self.thumbnail = self.coverPhoto.thumbnail.imageData;
+            _thumbnailImage = [[NSImage alloc] initWithData:self.thumbnail];
+            /*NSURL *aPath = self.coverPhoto.filePath;
+             self.thumbnail = [[NSData alloc] initWithContentsOfMappedFile:aPath.path];
+             _thumbnailImage = [[NSImage alloc] initWithData:self.thumbnail];*/
+        } else {
+            NSImage *noPhotoImg = [NSImage imageNamed:@"nophoto_200x200"];
+            return noPhotoImg;
         }
-    } else if (self.photos==nil || self.photos.count==0) {
-        return [NSImage imageNamed:@"nophoto"];
     }
     return _thumbnailImage;
-    
 }
+
+-(void)cancelThumbnailLoading;
+{
+    self.coverPhoto.cancelThumbnailLoadOperation = YES;
+}
+
+
 
 - (NSString *) imageSubtitle;
 {
@@ -82,62 +117,74 @@
     [self didChangeValueForKey:@"path"];
 }
 
--(PIXPhoto *)mostRecentPhoto
+-(void)setPhotos:(NSOrderedSet *)photos updateCoverImage:(BOOL)shouldUpdateCoverPhoto;
 {
-    if (_mostRecentPhoto == nil && self.photos != nil)
-    {
-        _mostRecentPhoto = [self fetchMostRecentPhoto];
-    }
-    return _mostRecentPhoto;
-}
-
--(NSDate *)dateMostRecentPhoto
-{
-    if (_dateMostRecentPhoto == nil && self.photos != nil)
-    {
-        PIXPhoto *aPhoto = [self mostRecentPhoto];
-        if (aPhoto!=nil) {
-            _dateMostRecentPhoto = aPhoto.dateLastModified;
+    self.photos = photos;
+    if (shouldUpdateCoverPhoto==YES && photos.count != 0) {
+        self.coverPhoto = [photos objectAtIndex:0];
+        NSData *coverImageThumbData = self.coverPhoto.thumbnail.imageData;
+        if (coverImageThumbData != nil) {
+            self.thumbnail = coverImageThumbData;
         }
     }
-    return _dateMostRecentPhoto;
 }
 
--(PIXPhoto *)fetchMostRecentPhoto
-{
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"PIXPhoto"];
-    
-    fetchRequest.fetchLimit = 1;
-    fetchRequest.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"dateLastModified" ascending:NO]];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"album == %@", self];
-    [fetchRequest setPredicate:predicate];
-    NSError *error = nil;
-    
-    id photo = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error].lastObject;
-    return (PIXPhoto *)photo;
-}
-
--(PIXPhoto *)fetchMostRecentPhotoOld
-{
-    NSExpression *keyPathExpression = [NSExpression expressionForKeyPath:@"dateLastModified"];
-    NSExpression *maxDateExpression = [NSExpression expressionForFunction:@"max:"
-                                                                arguments:[NSArray arrayWithObject:keyPathExpression]];
-    
-    NSExpressionDescription *expressionDescription = [[NSExpressionDescription alloc] init];
-    [expressionDescription setName:@"mostRecent"];
-    [expressionDescription setExpression:maxDateExpression];
-    [expressionDescription setExpressionResultType:NSDateAttributeType];
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:kPhotoEntityName];
-    [request setPropertiesToFetch:[NSArray arrayWithObject:expressionDescription]];
-    NSError *error;
-    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&error];
-    id aResult = [results lastObject];
-    if (aResult==nil) {
-        DLog(@"%@", error);
-        return nil;
-    }
-    return (PIXPhoto *)aResult;
-}
+//-(PIXPhoto *)mostRecentPhoto
+//{
+//    if (_mostRecentPhoto == nil && self.photos != nil)
+//    {
+//        _mostRecentPhoto = [self fetchMostRecentPhoto];
+//    }
+//    return _mostRecentPhoto;
+//}
+//
+//-(NSDate *)dateMostRecentPhoto
+//{
+//    if (_dateMostRecentPhoto == nil && self.photos != nil)
+//    {
+//        PIXPhoto *aPhoto = [self mostRecentPhoto];
+//        if (aPhoto!=nil) {
+//            _dateMostRecentPhoto = aPhoto.dateLastModified;
+//        }
+//    }
+//    return _dateMostRecentPhoto;
+//}
+//
+//-(PIXPhoto *)fetchMostRecentPhoto
+//{
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"PIXPhoto"];
+//    
+//    fetchRequest.fetchLimit = 1;
+//    fetchRequest.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"dateLastModified" ascending:NO]];
+//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"album == %@", self];
+//    [fetchRequest setPredicate:predicate];
+//    NSError *error = nil;
+//    
+//    id photo = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error].lastObject;
+//    return (PIXPhoto *)photo;
+//}
+//
+//-(PIXPhoto *)fetchMostRecentPhotoOld
+//{
+//    NSExpression *keyPathExpression = [NSExpression expressionForKeyPath:@"dateLastModified"];
+//    NSExpression *maxDateExpression = [NSExpression expressionForFunction:@"max:"
+//                                                                arguments:[NSArray arrayWithObject:keyPathExpression]];
+//    
+//    NSExpressionDescription *expressionDescription = [[NSExpressionDescription alloc] init];
+//    [expressionDescription setName:@"mostRecent"];
+//    [expressionDescription setExpression:maxDateExpression];
+//    [expressionDescription setExpressionResultType:NSDateAttributeType];
+//    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:kPhotoEntityName];
+//    [request setPropertiesToFetch:[NSArray arrayWithObject:expressionDescription]];
+//    NSError *error;
+//    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&error];
+//    id aResult = [results lastObject];
+//    if (aResult==nil) {
+//        DLog(@"%@", error);
+//        return nil;
+//    }
+//    return (PIXPhoto *)aResult;
+//}
 
 //TODO: look into NSFetchedPropertyDescription
 //-(NSDate *)fetchDateMostRecentPhoto
@@ -163,38 +210,119 @@
 //    return (NSDate *)[aResult valueForKey:@"dateLastModified"];
 //}
 
-//- (void)addPhotoObject:(PIXPhoto *)value
-//{    
-//    NSSet *changedObjects = [[NSSet alloc] initWithObjects:&value count:1];
-//    [self willChangeValueForKey:@"photos" withSetMutation:NSKeyValueUnionSetMutation usingObjects:changedObjects];
-//    [[self primitiveValueForKey:@"photos"] addObject:value];
-//    [self didChangeValueForKey:@"photos" withSetMutation:NSKeyValueUnionSetMutation usingObjects:changedObjects];
-//}
-//
-//- (void)removePhotoObject:(PIXPhoto *)value
-//{
-//    NSSet *changedObjects = [[NSSet alloc] initWithObjects:&value count:1];
-//    [self willChangeValueForKey:@"photos" withSetMutation:NSKeyValueMinusSetMutation usingObjects:changedObjects];
-//    [[self primitiveValueForKey:@"photos"] removeObject:value];
-//    [self didChangeValueForKey:@"photos" withSetMutation:NSKeyValueMinusSetMutation usingObjects:changedObjects];
-//}
-//
-//- (void)addPhotos:(NSSet *)values
-//{
-//    [self willChangeValueForKey:@"photos" withSetMutation:NSKeyValueUnionSetMutation usingObjects:values];
-//    [[self primitiveValueForKey:@"photos"] unionSet:values];
-//    [self didChangeValueForKey:@"photos" withSetMutation:NSKeyValueUnionSetMutation usingObjects:values];
-//}
-//
-//- (void)removePhotos:(NSSet *)values
-//{
-//    [self willChangeValueForKey:@"photos" withSetMutation:NSKeyValueMinusSetMutation usingObjects:values];
-//    [[self primitiveValueForKey:@"photos"] minusSet:values];
-//    [self didChangeValueForKey:@"photos" withSetMutation:NSKeyValueMinusSetMutation usingObjects:values];
-//}
+
+- (void)insertObject:(PIXPhoto *)value inPhotosAtIndex:(NSUInteger)idx {
+    NSIndexSet* indexes = [NSIndexSet indexSetWithIndex:idx];
+    [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:indexes forKey:kItemsKey];
+    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self mutableOrderedSetValueForKey:kItemsKey]];
+    [tmpOrderedSet insertObject:value atIndex:idx];
+    [self setPrimitiveValue:tmpOrderedSet forKey:kItemsKey];
+    [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indexes forKey:kItemsKey];
+}
+
+- (void)removeObjectFromPhotosAtIndex:(NSUInteger)idx {
+    NSIndexSet* indexes = [NSIndexSet indexSetWithIndex:idx];
+    [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:indexes forKey:kItemsKey];
+    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self mutableOrderedSetValueForKey:kItemsKey]];
+    [tmpOrderedSet removeObjectAtIndex:idx];
+    [self setPrimitiveValue:tmpOrderedSet forKey:kItemsKey];
+    [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:indexes forKey:kItemsKey];
+}
+
+- (void)insertPhotos:(NSArray *)values atIndexes:(NSIndexSet *)indexes {
+    [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:indexes forKey:kItemsKey];
+    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self mutableOrderedSetValueForKey:kItemsKey]];
+    [tmpOrderedSet insertObjects:values atIndexes:indexes];
+    [self setPrimitiveValue:tmpOrderedSet forKey:kItemsKey];
+    [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indexes forKey:kItemsKey];
+}
+
+- (void)removePhotosAtIndexes:(NSIndexSet *)indexes {
+    [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:indexes forKey:kItemsKey];
+    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self mutableOrderedSetValueForKey:kItemsKey]];
+    [tmpOrderedSet removeObjectsAtIndexes:indexes];
+    [self setPrimitiveValue:tmpOrderedSet forKey:kItemsKey];
+    [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:indexes forKey:kItemsKey];
+}
+
+- (void)replaceObjectInPhotosAtIndex:(NSUInteger)idx withObject:(PIXPhoto *)value {
+    NSIndexSet* indexes = [NSIndexSet indexSetWithIndex:idx];
+    [self willChange:NSKeyValueChangeReplacement valuesAtIndexes:indexes forKey:kItemsKey];
+    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self mutableOrderedSetValueForKey:kItemsKey]];
+    [tmpOrderedSet replaceObjectAtIndex:idx withObject:value];
+    [self setPrimitiveValue:tmpOrderedSet forKey:kItemsKey];
+    [self didChange:NSKeyValueChangeReplacement valuesAtIndexes:indexes forKey:kItemsKey];
+}
+
+- (void)replacePhotosAtIndexes:(NSIndexSet *)indexes withSubitems:(NSArray *)values {
+    [self willChange:NSKeyValueChangeReplacement valuesAtIndexes:indexes forKey:kItemsKey];
+    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self mutableOrderedSetValueForKey:kItemsKey]];
+    [tmpOrderedSet replaceObjectsAtIndexes:indexes withObjects:values];
+    [self setPrimitiveValue:tmpOrderedSet forKey:kItemsKey];
+    [self didChange:NSKeyValueChangeReplacement valuesAtIndexes:indexes forKey:kItemsKey];
+}
+
+- (void)addPhotosObject:(PIXPhoto *)value
+{    
+    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self mutableOrderedSetValueForKey:kItemsKey]];
+    NSUInteger idx = [tmpOrderedSet count];
+    NSIndexSet* indexes = [NSIndexSet indexSetWithIndex:idx];
+    [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:indexes forKey:kItemsKey];
+    [tmpOrderedSet addObject:value];
+    [self setPrimitiveValue:tmpOrderedSet forKey:kItemsKey];
+    [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indexes forKey:kItemsKey];
+}
+
+- (void)removePhotosObject:(PIXPhoto *)value
+{
+    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self mutableOrderedSetValueForKey:kItemsKey]];
+    NSUInteger idx = [tmpOrderedSet indexOfObject:value];
+    if (idx != NSNotFound) {
+        NSIndexSet* indexes = [NSIndexSet indexSetWithIndex:idx];
+        [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:indexes forKey:kItemsKey];
+        [tmpOrderedSet removeObject:value];
+        [self setPrimitiveValue:tmpOrderedSet forKey:kItemsKey];
+        [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:indexes forKey:kItemsKey];
+    }
+}
+
+- (void)addPhotos:(NSOrderedSet *)values
+{
+    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self mutableOrderedSetValueForKey:kItemsKey]];
+    NSMutableIndexSet *indexes = [NSMutableIndexSet indexSet];
+    NSUInteger valuesCount = [values count];
+    NSUInteger objectsCount = [tmpOrderedSet count];
+    for (NSUInteger i = 0; i < valuesCount; ++i) {
+        [indexes addIndex:(objectsCount + i)];
+    }
+    if (valuesCount > 0) {
+        [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:indexes forKey:kItemsKey];
+        [tmpOrderedSet addObjectsFromArray:[values array]];
+        [self setPrimitiveValue:tmpOrderedSet forKey:kItemsKey];
+        [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:indexes forKey:kItemsKey];
+    }
+}
+
+- (void)removePhotos:(NSOrderedSet *)values
+{
+    NSMutableOrderedSet *tmpOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:[self mutableOrderedSetValueForKey:kItemsKey]];
+    NSMutableIndexSet *indexes = [NSMutableIndexSet indexSet];
+    for (id value in values) {
+        NSUInteger idx = [tmpOrderedSet indexOfObject:value];
+        if (idx != NSNotFound) {
+            [indexes addIndex:idx];
+        }
+    }
+    if ([indexes count] > 0) {
+        [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:indexes forKey:kItemsKey];
+        [tmpOrderedSet removeObjectsAtIndexes:indexes];
+        [self setPrimitiveValue:tmpOrderedSet forKey:kItemsKey];
+        [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:indexes forKey:kItemsKey];
+    }
+}
 
 //NSKeyValueSetSetMutation
-/*-(void)setPhotos:(NSSet *)values
+/*-(void)setPhotos:(NSOrderedSet *)values
 {
     [self willChangeValueForKey:@"photos" withSetMutation:NSKeyValueSetSetMutation usingObjects:values];
     [[self primitiveValueForKey:@"photos"] unionSet:values];
