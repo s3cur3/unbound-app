@@ -93,7 +93,7 @@
     
 }*/
 
-/*-(void)setSelected:(BOOL)selected
+-(void)setSelected:(BOOL)selected
 {
     [super setSelected:selected];
     
@@ -106,7 +106,7 @@
 	if([self collectionView] && [[self collectionView] delegate] && [[[self collectionView] delegate] respondsToSelector:@selector(doubleClick:)]) {
 		[[[self collectionView] delegate] performSelector:@selector(doubleClick:) withObject:self];
 	}
-}*/
+}
 
 -(void)rightMouseDown:(NSEvent *)theEvent {
     NSLog(@"rightMouseDown:%@", theEvent);

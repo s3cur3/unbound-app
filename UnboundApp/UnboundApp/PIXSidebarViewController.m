@@ -93,14 +93,14 @@
 
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(id)item {
     PIXSidebarTableCellView *result = [outlineView makeViewWithIdentifier:@"MainCell" owner:self];
-    result.album = (Album *)item;
+    result.album = (PIXAlbum *)item;
     return result;
 }
 
 -(void)outlineViewSelectionDidChange:(NSNotification *)notification {
     if ([self.outlineView selectedRow] != -1) {
 
-        Album *anAlbum =  [self.outlineView itemAtRow:[self.outlineView selectedRow]];
+        PIXAlbum *anAlbum =  [self.outlineView itemAtRow:[self.outlineView selectedRow]];
         if (anAlbum!=nil)
         {
             DLog(@"New album selected");

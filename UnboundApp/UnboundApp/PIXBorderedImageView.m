@@ -84,9 +84,6 @@
 -(void)setImage:(NSImage *)newImage
 {
     
-    if(newImage == self.image) return;
-    
-    
     // calculate the proportional image frame
     CGSize imageSize = [newImage size];
     
@@ -96,20 +93,20 @@
     {
         if(imageSize.width / imageSize.height > self.bounds.size.width / self.bounds.size.height)
         {
-            float mulitplier = self.bounds.size.width / imageSize.width;
+            float multiplier = self.bounds.size.width / imageSize.width;
             
-            anImageFrame.size.width = mulitplier * anImageFrame.size.width;
-            anImageFrame.size.height = mulitplier * anImageFrame.size.height;
+            anImageFrame.size.width = multiplier * anImageFrame.size.width;
+            anImageFrame.size.height = multiplier * anImageFrame.size.height;
             
             anImageFrame.origin.y = (self.bounds.size.height - anImageFrame.size.height)/2;
         }
         
         else
         {
-            float mulitplier = self.bounds.size.height / imageSize.height;
+            float multiplier = self.bounds.size.height / imageSize.height;
             
-            anImageFrame.size.width = mulitplier * anImageFrame.size.width;
-            anImageFrame.size.height = mulitplier * anImageFrame.size.height;
+            anImageFrame.size.width = multiplier * anImageFrame.size.width;
+            anImageFrame.size.height = multiplier * anImageFrame.size.height;
             
             anImageFrame.origin.x = (self.bounds.size.width - anImageFrame.size.width)/2;
         }

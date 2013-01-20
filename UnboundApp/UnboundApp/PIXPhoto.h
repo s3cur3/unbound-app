@@ -8,11 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "PIXThumbnailLoadingDelegate.h"
 
 @class PIXAlbum, PIXThumbnail;
 @class MakeThumbnailOperation;
 
-@interface PIXPhoto : NSManagedObject
+@interface PIXPhoto : NSManagedObject <PIXThumbnailLoadingDelegate>
 {
     NSImage *                   _thumbnailImage;
     BOOL                        _thumbnailImageIsLoading;
@@ -23,15 +24,19 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * path;
 @property (nonatomic, retain) PIXAlbum *album;
+@property (nonatomic, retain) PIXAlbum *coverPhotoAlbum;
 @property (nonatomic, retain) PIXThumbnail *thumbnail;
 
-@property (nonatomic, retain, readonly ) NSImage *thumbnailImage;         // observable, returns a placeholder if the thumbnail isn't available yet.
 
+@property (nonatomic, retain, readonly ) NSImage *thumbnailImage;         // observable, returns a placeholder if the thumbnail isn't available yet.
+@property (nonatomic, assign, readwrite) BOOL cancelThumbnailLoadOperation;
 
 //TODO: get rid of this
 -(NSURL *)filePath;
 
-
+//PIXThumbnailLoadingDelegate methods
+-(NSImage *)thumbnailImage;
+-(void)cancelThumbnailLoading;
 
 @end
 

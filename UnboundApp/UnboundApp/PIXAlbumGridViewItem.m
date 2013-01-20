@@ -11,6 +11,7 @@
 #import "PIXAlbum.h"
 #import "PIXBorderedImageView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "PIXDefines.h"
 
 @implementation PIXAlbumGridViewItem
 
@@ -27,7 +28,19 @@
         [self.albumImageView setImage:[_album thumbnailImage]];
         
         [self setNeedsLayout:YES];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(albumChanged:) name:AlbumDidChangeNotification object:_album];
+                                                                                                      
     }
+}
+
+-(void)albumChanged:(NSNotification *)note
+{
+    [self setItemTitle:[self.album title]];
+    [self.albumImageView setImage:[self.album thumbnailImage]];
+    
+    [self setNeedsLayout:YES];
+    [self setNeedsDisplay:YES];
 }
 
 -(void)layout
@@ -73,7 +86,28 @@
     
     
     [self setNeedsDisplay:YES];
+}
+
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
     
+    if (self.album )  {
+        [self.album cancelThumbnailLoading];
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:self.album];
+        self.album = nil; 
+    }
+    
+    
+    
+    
+    self.itemImage = nil;
+    self.itemTitle = @"";
+    self.index = CNItemIndexUndefined;
+    self.selected = NO;
+    self.selectable = YES;
+    self.hovered = NO;
 }
 
 -(PIXBorderedImageView *)albumImageView

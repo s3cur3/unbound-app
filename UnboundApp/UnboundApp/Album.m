@@ -130,7 +130,7 @@ enum {
 
     if (!self.photos.count)
     {
-        return [NSImage imageNamed:@"nophoto"];
+        return nil;
     }
     
     if (!(_state & AlbumStateThumbnailLoaded)) {

@@ -39,6 +39,13 @@ extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
     return fetchedObjects;
 }
 
+-(void)setPhotos:(NSMutableArray *)newPhotos forAlbum:(PIXAlbum *)anAlbum
+{
+    NSOrderedSet *newPhotosSet = [[NSOrderedSet alloc] initWithArray:newPhotos];
+    [anAlbum setPhotos:newPhotosSet updateCoverImage:YES];
+    [newPhotos removeAllObjects];
+}
+
 -(void)photosFinishedLoading:(NSNotification *)note
 {
     NSArray *photos = [note.userInfo valueForKey:@"items"];
@@ -78,7 +85,9 @@ extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
             if (!lastAlbum || ![aPath isEqualToString:lastAlbum.path])
             {
                 if (lastAlbum) {
-                    lastAlbum.photos = [[NSOrderedSet alloc] initWithArray:lastAlbumsPhotos];
+                    DLog(@"lastAlbum.photos.count = %ld", lastAlbum.photos.count);
+                    [self setPhotos:lastAlbumsPhotos forAlbum:lastAlbum];
+                    //lastAlbum.photos = [[NSOrderedSet alloc] initWithArray:lastAlbumsPhotos];
                     [lastAlbumsPhotos removeAllObjects];
                 }
                 lastAlbum = [self fetchAlbumWithPath:aPath inContext:context];
@@ -96,12 +105,14 @@ extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
             //[lastAlbum addPhotosObject:dbPhoto];
             //[dbPhoto setAlbum:lastAlbum];
             [lastAlbumsPhotos addObject:dbPhoto];
+            //[lastAlbum addPhotosObject:dbPhoto];
             if (i%500==0) {
                 [context save:nil];
             }
         }
-        lastAlbum.photos = [[NSOrderedSet alloc] initWithArray:lastAlbumsPhotos];
-        [lastAlbumsPhotos removeAllObjects];
+        //lastAlbum.photos = [[NSOrderedSet alloc] initWithArray:lastAlbumsPhotos];
+        //[lastAlbumsPhotos removeAllObjects];
+        [self setPhotos:lastAlbumsPhotos forAlbum:lastAlbum];
         
         if (![self deleteObjectsForEntityName:@"PIXAlbum" withUpdateDateBefore:self.fetchDate inContext:context]) {
             DLog(@"There was a problem trying to delete old objects");

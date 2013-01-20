@@ -58,6 +58,12 @@
                                                object:nil];
     
     /*[[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(refreshNotification:)
+                                                 name:kCreateThumbDidFinish
+                                               object:nil];*/
+    
+    
+    /*[[NSNotificationCenter defaultCenter] addObserver:self
      selector:@selector(photosChanged:)
      name:kUB_PHOTOS_LOADED_FROM_FILESYSTEM
      object:[PIXFileSystemDataSource sharedInstance]];*/
@@ -69,6 +75,11 @@
 {
     [self.imageContent removeAllObjects];
     [self.imageContent addObjectsFromArray:[self albums]];
+    [self.collectionView reloadDataWithItems:self.imageContent emptyCaches:NO];
+}
+
+-(void)refreshNotification:(NSNotification *)notifcation
+{
     [self.collectionView reloadDataWithItems:self.imageContent emptyCaches:NO];
 }
 
