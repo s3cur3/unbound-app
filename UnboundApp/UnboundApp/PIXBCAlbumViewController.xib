@@ -52,7 +52,7 @@
 										<string key="NSFrameSize">{480, 360}</string>
 										<reference key="NSSuperview" ref="891014582"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="338590774"/>
+										<reference key="NSNextKeyView" ref="857430297"/>
 										<string key="NSClassName">BCCollectionView</string>
 									</object>
 								</array>
@@ -104,7 +104,7 @@
 						<string key="NSFrame">{{0, -44}, {480, 360}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="857430297"/>
+						<reference key="NSNextKeyView" ref="891014582"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<int key="NSsFlags">133648</int>
 						<reference key="NSVScroller" ref="338590774"/>

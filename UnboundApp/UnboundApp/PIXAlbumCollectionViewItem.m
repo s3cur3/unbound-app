@@ -25,6 +25,8 @@
     if (self) {
         // Initialization code here.
         
+        [self.view setLayer:[CALayer layer]];
+        [self.view setWantsLayer:YES];
     }
     
     return self;

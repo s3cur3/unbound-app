@@ -313,7 +313,11 @@
     [self addSubview:[viewController view]];
     if ([selectionIndexes containsIndex:anIndex])
       [self delegateUpdateSelectionForItemAtIndex:anIndex];
+      
+      [self setNeedsDisplayInRect:aRect];
   }
+    
+  
 }
 
 - (void)addMissingGroupHeaders
@@ -565,8 +569,9 @@
       [delegate collectionViewDidScroll:self inDirection:BCCollectionViewScrollDirectionDown];
     else
       [delegate collectionViewDidScroll:self inDirection:BCCollectionViewScrollDirectionUp];
-    previousFrameBounds = [self visibleRect];
   }
+    
+   previousFrameBounds = [self visibleRect];
 }
 
 - (void)viewDidResize

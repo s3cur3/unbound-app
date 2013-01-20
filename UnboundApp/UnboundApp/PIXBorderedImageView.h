@@ -8,8 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface PIXBorderedImageView : NSImageView
+@interface PIXBorderedImageView : NSView
 
+@property (strong, nonatomic) NSImage * image;
 @property (nonatomic) BOOL selected;
 
 @end

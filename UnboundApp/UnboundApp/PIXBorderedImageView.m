@@ -16,15 +16,57 @@
 
 @property (strong, nonatomic) CALayer * borderLayer;
 @property (strong, nonatomic) CALayer * shadowLayer;
-
+@property CGRect imageFrame;
 @end
 
 @implementation PIXBorderedImageView
 
+/*
+-(BOOL)wantsDefaultClipping
+{
+    return NO;
+}*/
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        [self initialSetup];
+    }
+    return self;
+}
 
+- (id)initWithFrame:(NSRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        
+        [self initialSetup];
+    }
+    return self;
+}
 
+- (id)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        [self initialSetup];
+    }
+    return self;
+}
 
+-(void)initialSetup
+{
+    //self.layer = [CALayer layer];
+    //[self setWantsLayer:YES];
+}
+
+-(BOOL)isOpaque
+{
+    return NO;
+}
+
+/*
 -(void)setObjectValue:(id<NSCopying>)obj
 {
     [super setObjectValue:obj];
@@ -35,21 +77,59 @@
         return;
     }
     
-    [self setupBorder];
+    //[self setupBorder];
         
-}
+}*/
 
 -(void)setImage:(NSImage *)newImage
 {
-    [super setImage:newImage];
-    [self setupBorder];
+    
+    if(newImage == self.image) return;
+    
+    
+    // calculate the proportional image frame
+    CGSize imageSize = [newImage size];
+    
+    CGRect anImageFrame = CGRectMake(0, 0, imageSize.width, imageSize.height);
+    
+    if(imageSize.width > 0 && imageSize.height > 0)
+    {
+        if(imageSize.width / imageSize.height > self.bounds.size.width / self.bounds.size.height)
+        {
+            float mulitplier = self.bounds.size.width / imageSize.width;
+            
+            anImageFrame.size.width = mulitplier * anImageFrame.size.width;
+            anImageFrame.size.height = mulitplier * anImageFrame.size.height;
+            
+            anImageFrame.origin.y = (self.bounds.size.height - anImageFrame.size.height)/2;
+        }
+        
+        else
+        {
+            float mulitplier = self.bounds.size.height / imageSize.height;
+            
+            anImageFrame.size.width = mulitplier * anImageFrame.size.width;
+            anImageFrame.size.height = mulitplier * anImageFrame.size.height;
+            
+            anImageFrame.origin.x = (self.bounds.size.width - anImageFrame.size.width)/2;
+        }
+    }
+    
+    self.imageFrame = anImageFrame;
+    
+    _image = newImage;
+    
+    //[super setImage:newImage];
+    [self setNeedsDisplay:YES];
+   
+    //[self setupBorder];
 }
 
 -(void)setupBorder
 {
     // make this a layer hosting view, not a layer backed view
     //self.layer = [CALayer layer];
-    [self setWantsLayer:YES];
+    //[self setWantsLayer:YES];
     
     // calculate the proportional image frame
     CGSize imageSize = [self.image size];
@@ -136,7 +216,41 @@
 
 -(void)drawRect:(NSRect)dirtyRect
 {
-    // do nothing here, everything is drawn using layers
+    
+    //[super drawRect:dirtyRect];
+    
+    
+    
+    CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
+    CGContextSetShadowWithColor(context, CGSizeZero, 4.0, [[NSColor colorWithGenericGamma22White:0.0 alpha:.5] CGColor]);
+    
+   
+    
+    CGRect borderRect = CGRectInset(self.imageFrame, 4, 4);
+    
+    [[NSColor whiteColor] set];
+    [NSBezierPath fillRect:borderRect]; // will give a 2 pixel wide border
+    CGContextSetShadowWithColor(context, CGSizeZero, 4.0, NULL);
+    
+    CGRect imageRect = CGRectInset(self.imageFrame, 10, 10);
+    [self.image drawInRect:imageRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+    
+     
+    
+    /*
+    
+    CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
+    
+    CGContextSetLineWidth(context, 6.0);
+    
+    CGContextSetStrokeColorWithColor(context, [NSColor whiteColor].CGColor);
+    
+    
+    CGContextAddRect(context, self.imageFrame);
+    
+    CGContextStrokePath(context);
+    */
+    
 
 }
 

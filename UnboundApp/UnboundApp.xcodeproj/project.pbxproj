@@ -100,6 +100,14 @@
 		1DDEF83F169D34F100C0D303 /* PIXLoadingWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF83D169D34F100C0D303 /* PIXLoadingWindowController.m */; };
 		1DDEF840169D34F100C0D303 /* PIXLoadingWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDEF83E169D34F100C0D303 /* PIXLoadingWindow.xib */; };
 		1DDEF843169D3CF300C0D303 /* MakeThumbnailOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF842169D3CF300C0D303 /* MakeThumbnailOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C249E6E16AB426A00CB97AF /* PIXCNAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E6D16AB426A00CB97AF /* PIXCNAlbumViewController.m */; };
+		8C249E7D16AB429E00CB97AF /* CNGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7216AB429E00CB97AF /* CNGridView.m */; };
+		8C249E7E16AB429E00CB97AF /* CNGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7616AB429E00CB97AF /* CNGridViewItem.m */; };
+		8C249E7F16AB429E00CB97AF /* CNGridViewItemLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7816AB429E00CB97AF /* CNGridViewItemLayout.m */; };
+		8C249E8016AB429E00CB97AF /* NSColor+CNGridViewPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7A16AB429E00CB97AF /* NSColor+CNGridViewPalette.m */; };
+		8C249E8116AB429E00CB97AF /* NSView+CNGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7C16AB429E00CB97AF /* NSView+CNGridView.m */; };
+		8C249E8616AB467100CB97AF /* PIXAlbumGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E8516AB467100CB97AF /* PIXAlbumGridViewItem.m */; };
+		8C249E8916AB560100CB97AF /* PIXCNAlbumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C249E8816AB560000CB97AF /* PIXCNAlbumViewController.xib */; };
 		8C972CB41680FE8B00358913 /* PIXModifierSwitchedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */; };
 /* End PBXBuildFile section */
 
@@ -265,6 +273,24 @@
 		1DDEF83E169D34F100C0D303 /* PIXLoadingWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXLoadingWindow.xib; sourceTree = "<group>"; };
 		1DDEF841169D3CF300C0D303 /* MakeThumbnailOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakeThumbnailOperation.h; sourceTree = "<group>"; };
 		1DDEF842169D3CF300C0D303 /* MakeThumbnailOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MakeThumbnailOperation.m; sourceTree = "<group>"; };
+		8C249E6C16AB426A00CB97AF /* PIXCNAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXCNAlbumViewController.h; sourceTree = "<group>"; };
+		8C249E6D16AB426A00CB97AF /* PIXCNAlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXCNAlbumViewController.m; sourceTree = "<group>"; };
+		8C249E7116AB429E00CB97AF /* CNGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CNGridView.h; sourceTree = "<group>"; };
+		8C249E7216AB429E00CB97AF /* CNGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CNGridView.m; sourceTree = "<group>"; };
+		8C249E7316AB429E00CB97AF /* CNGridViewDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CNGridViewDefinitions.h; sourceTree = "<group>"; };
+		8C249E7416AB429E00CB97AF /* CNGridViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CNGridViewDelegate.h; sourceTree = "<group>"; };
+		8C249E7516AB429E00CB97AF /* CNGridViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CNGridViewItem.h; sourceTree = "<group>"; };
+		8C249E7616AB429E00CB97AF /* CNGridViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CNGridViewItem.m; sourceTree = "<group>"; };
+		8C249E7716AB429E00CB97AF /* CNGridViewItemLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CNGridViewItemLayout.h; sourceTree = "<group>"; };
+		8C249E7816AB429E00CB97AF /* CNGridViewItemLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CNGridViewItemLayout.m; sourceTree = "<group>"; };
+		8C249E7916AB429E00CB97AF /* NSColor+CNGridViewPalette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+CNGridViewPalette.h"; sourceTree = "<group>"; };
+		8C249E7A16AB429E00CB97AF /* NSColor+CNGridViewPalette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+CNGridViewPalette.m"; sourceTree = "<group>"; };
+		8C249E7B16AB429E00CB97AF /* NSView+CNGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+CNGridView.h"; sourceTree = "<group>"; };
+		8C249E7C16AB429E00CB97AF /* NSView+CNGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+CNGridView.m"; sourceTree = "<group>"; };
+		8C249E8416AB467000CB97AF /* PIXAlbumGridViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXAlbumGridViewItem.h; sourceTree = "<group>"; };
+		8C249E8516AB467100CB97AF /* PIXAlbumGridViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXAlbumGridViewItem.m; sourceTree = "<group>"; };
+		8C249E8716AB4CAB00CB97AF /* CNLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CNLog.h; sourceTree = "<group>"; };
+		8C249E8816AB560000CB97AF /* PIXCNAlbumViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXCNAlbumViewController.xib; sourceTree = "<group>"; };
 		8C972CB21680FE8A00358913 /* PIXModifierSwitchedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXModifierSwitchedEvent.h; sourceTree = "<group>"; };
 		8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXModifierSwitchedEvent.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -400,6 +426,7 @@
 		1D4A1DC2167AD97B00C9A895 /* AlbumView */ = {
 			isa = PBXGroup;
 			children = (
+				8C249E7016AB429E00CB97AF /* CNGridView */,
 				1DC0C94616A6F65F0081F5A5 /* BCCollectionView */,
 				1D4A1E0B167C065000C9A895 /* PIXBorderedImageView.h */,
 				1D4A1E0C167C065000C9A895 /* PIXBorderedImageView.m */,
@@ -415,6 +442,11 @@
 				1D1C179216A7017D006B1D42 /* PIXBCAlbumViewController.h */,
 				1D1C179316A7017D006B1D42 /* PIXBCAlbumViewController.m */,
 				1D1C179416A7017D006B1D42 /* PIXBCAlbumViewController.xib */,
+				8C249E6C16AB426A00CB97AF /* PIXCNAlbumViewController.h */,
+				8C249E6D16AB426A00CB97AF /* PIXCNAlbumViewController.m */,
+				8C249E8816AB560000CB97AF /* PIXCNAlbumViewController.xib */,
+				8C249E8416AB467000CB97AF /* PIXAlbumGridViewItem.h */,
+				8C249E8516AB467100CB97AF /* PIXAlbumGridViewItem.m */,
 			);
 			name = AlbumView;
 			sourceTree = "<group>";
@@ -624,6 +656,26 @@
 			name = LoadingWindow;
 			sourceTree = "<group>";
 		};
+		8C249E7016AB429E00CB97AF /* CNGridView */ = {
+			isa = PBXGroup;
+			children = (
+				8C249E8716AB4CAB00CB97AF /* CNLog.h */,
+				8C249E7116AB429E00CB97AF /* CNGridView.h */,
+				8C249E7216AB429E00CB97AF /* CNGridView.m */,
+				8C249E7316AB429E00CB97AF /* CNGridViewDefinitions.h */,
+				8C249E7416AB429E00CB97AF /* CNGridViewDelegate.h */,
+				8C249E7516AB429E00CB97AF /* CNGridViewItem.h */,
+				8C249E7616AB429E00CB97AF /* CNGridViewItem.m */,
+				8C249E7716AB429E00CB97AF /* CNGridViewItemLayout.h */,
+				8C249E7816AB429E00CB97AF /* CNGridViewItemLayout.m */,
+				8C249E7916AB429E00CB97AF /* NSColor+CNGridViewPalette.h */,
+				8C249E7A16AB429E00CB97AF /* NSColor+CNGridViewPalette.m */,
+				8C249E7B16AB429E00CB97AF /* NSView+CNGridView.h */,
+				8C249E7C16AB429E00CB97AF /* NSView+CNGridView.m */,
+			);
+			path = CNGridView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -716,6 +768,7 @@
 				1DC0C98516A6F7640081F5A5 /* readme.txt in Resources */,
 				1D1C179616A7017D006B1D42 /* PIXBCAlbumViewController.xib in Resources */,
 				1D1C17B016A70CAD006B1D42 /* CellViewController.xib in Resources */,
+				8C249E8916AB560100CB97AF /* PIXCNAlbumViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -776,6 +829,13 @@
 				1D1C179516A7017D006B1D42 /* PIXBCAlbumViewController.m in Sources */,
 				1D1C17AE16A70CAD006B1D42 /* Controller.m in Sources */,
 				1D1C17AF16A70CAD006B1D42 /* CellViewController.m in Sources */,
+				8C249E6E16AB426A00CB97AF /* PIXCNAlbumViewController.m in Sources */,
+				8C249E7D16AB429E00CB97AF /* CNGridView.m in Sources */,
+				8C249E7E16AB429E00CB97AF /* CNGridViewItem.m in Sources */,
+				8C249E7F16AB429E00CB97AF /* CNGridViewItemLayout.m in Sources */,
+				8C249E8016AB429E00CB97AF /* NSColor+CNGridViewPalette.m in Sources */,
+				8C249E8116AB429E00CB97AF /* NSView+CNGridView.m in Sources */,
+				8C249E8616AB467100CB97AF /* PIXAlbumGridViewItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

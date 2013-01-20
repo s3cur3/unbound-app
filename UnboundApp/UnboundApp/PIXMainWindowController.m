@@ -10,7 +10,7 @@
 #import "PIXNavigationController.h"
 #import "PIXAlbumViewController.h"
 
-#import "PIXBCAlbumViewController.h"
+#import "PIXCNAlbumViewController.h"
 
 @interface PIXMainWindowController ()
 
@@ -52,7 +52,10 @@
     [super windowDidLoad];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-    self.albumViewController = [[PIXBCAlbumViewController alloc] initWithNibName:@"PIXBCAlbumViewController" bundle:nil];
+    self.albumViewController = [[PIXCNAlbumViewController alloc] initWithNibName:@"PIXCNAlbumViewController" bundle:nil];
+    
+    [self.albumViewController view];
+    
     [self.navigationViewController pushViewController:self.albumViewController];
 }
 

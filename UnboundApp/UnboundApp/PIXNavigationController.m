@@ -63,13 +63,13 @@
 -(void)pushViewController:(PIXViewController *)aViewController;
 {
     PIXViewController *currentViewController = [self.viewControllers lastObject];
-    [aViewController.view setFrame:self.view.bounds];
-    aViewController.navigationViewController = self;
+    [[currentViewController view] removeFromSuperview];
     
-    [currentViewController.view removeFromSuperview];
+    aViewController.navigationViewController = self;    
     [self.view addSubview:aViewController.view];
-    [aViewController.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
     
+    [aViewController.view setFrame:self.view.bounds];
+    [aViewController.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
     
     [self.viewControllers addObject:aViewController];
     

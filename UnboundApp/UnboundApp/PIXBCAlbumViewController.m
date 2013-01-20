@@ -45,7 +45,9 @@
     //[self.collectionView setMaxItemSize:NSSizeFromCGSize(CGSizeMake(300, 200))];
     //[self.collectionView setMinItemSize:NSSizeFromCGSize(CGSizeMake(200, 200))];
     
+    [self.collectionView setLayer:[CALayer layer]];
     [self.collectionView setWantsLayer:YES];
+    //[[self.collectionView enclosingScrollView] setWantsLayer:YES];
     
     [self.collectionView reloadDataWithItems:self.imageContent emptyCaches:YES];
     
