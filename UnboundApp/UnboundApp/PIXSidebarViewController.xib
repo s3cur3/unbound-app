@@ -58,7 +58,7 @@
 										<string key="NSFrameSize">{245, 511}</string>
 										<reference key="NSSuperview" ref="169202215"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="837853645"/>
+										<reference key="NSNextKeyView" ref="320835007"/>
 										<string key="NSReuseIdentifierKey">_NS:13</string>
 										<bool key="NSEnabled">YES</bool>
 										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -211,7 +211,7 @@
 						<string key="NSFrameSize">{245, 511}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="320835007"/>
+						<reference key="NSNextKeyView" ref="169202215"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<int key="NSsFlags">215568</int>
 						<reference key="NSVScroller" ref="320835007"/>
@@ -286,7 +286,6 @@
 									</set>
 									<string key="NSFrame">{{5, 3}, {49, 48}}</string>
 									<reference key="NSSuperview" ref="837853645"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:11</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSImageCell" key="NSCell" id="308877570">
@@ -340,7 +339,6 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{57, 1}, {174, 23}}</string>
 									<reference key="NSSuperview" ref="837853645"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:1535</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="882619164">
@@ -363,7 +361,6 @@
 							<string key="NSFrameSize">{245, 55}</string>
 							<reference key="NSNextKeyView" ref="833513937"/>
 							<bool key="NSViewIsLayerTreeHost">YES</bool>
-							<bool key="NSViewCanDrawConcurrently">YES</bool>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 						</object>
 						<reference key="destination" ref="833513937"/>
@@ -598,32 +595,24 @@
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
-					<string key="className">Album</string>
-					<string key="superclassName">PIXObject</string>
+					<string key="className">PIXAlbum</string>
+					<string key="superclassName">NSManagedObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/Album.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">PIXObject</string>
-					<string key="superclassName">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/PIXObject.h</string>
+						<string key="minorKey">./Classes/PIXAlbum.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">PIXSidebarTableCellView</string>
 					<string key="superclassName">NSTableCellView</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="album">Album</string>
+						<string key="album">PIXAlbum</string>
 						<string key="detailTextLabel">NSTextField</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="album">
 							<string key="name">album</string>
-							<string key="candidateClassName">Album</string>
+							<string key="candidateClassName">PIXAlbum</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="detailTextLabel">
 							<string key="name">detailTextLabel</string>

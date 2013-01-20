@@ -43,6 +43,11 @@
     [self setNeedsDisplay:YES];
 }
 
+-(BOOL)isOpaque
+{
+    return NO;
+}
+
 -(void)layout
 {
     [super layout];
