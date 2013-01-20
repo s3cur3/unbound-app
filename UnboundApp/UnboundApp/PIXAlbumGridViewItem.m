@@ -50,7 +50,7 @@
 
 -(void)layout
 {
-    [super layout];
+    //[super layout];
     
     CGRect albumFrame = CGRectInset(self.bounds, 15, 25);
     albumFrame.origin.y -= 10;
@@ -90,7 +90,9 @@
     //[self.layer setShouldRasterize:YES];
     
     
-    [self setNeedsDisplay:YES];
+    //[self setNeedsLayout:NO];
+    
+    [super layout];
 }
 
 - (void)prepareForReuse
