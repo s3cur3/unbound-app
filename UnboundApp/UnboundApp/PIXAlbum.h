@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "PIXThumbnailLoadingDelegate.h"
 
 @class PIXAccount, PIXPhoto;
 
-@interface PIXAlbum : NSManagedObject
+@interface PIXAlbum : NSManagedObject <PIXThumbnailLoadingDelegate>
 {
 //    @private
 //    PIXPhoto *_mostRecentPhoto;

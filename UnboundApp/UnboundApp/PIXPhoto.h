@@ -8,11 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "PIXThumbnailLoadingDelegate.h"
 
 @class PIXAlbum, PIXThumbnail;
 @class MakeThumbnailOperation;
 
-@interface PIXPhoto : NSManagedObject
+@interface PIXPhoto : NSManagedObject <PIXThumbnailLoadingDelegate>
 {
     NSImage *                   _thumbnailImage;
     BOOL                        _thumbnailImageIsLoading;
@@ -33,7 +34,9 @@
 //TODO: get rid of this
 -(NSURL *)filePath;
 
-
+//PIXThumbnailLoadingDelegate methods
+-(NSImage *)thumbnailImage;
+-(void)cancelThumbnailLoading;
 
 @end
 

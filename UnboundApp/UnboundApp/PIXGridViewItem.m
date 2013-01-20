@@ -7,10 +7,11 @@
 //
 
 #import "PIXGridViewItem.h"
-#import "PIXAlbum.h"
-#import "PIXPhoto.h"
-#import "PIXThumbnail.h"
+//#import "PIXAlbum.h"
+//#import "PIXPhoto.h"
+//#import "PIXThumbnail.h"
 #import "CNGridViewItemLayout.h"
+#import "PIXThumbnailLoadingDelegate.h"
 
 
 static CGSize kDefaultItemSizeCustomized;
@@ -27,7 +28,7 @@ static CGSize kDefaultItemSizeCustomized;
 
 + (void)initialize
 {
-    kCNDefaultItemIdentifier = @"PIXGridViewItem";
+    kCNDefaultItemIdentifier = @"CNGridViewItem";
     kDefaultItemSizeCustomized         = NSMakeSize(230.0f, 230.0f);
 }
 
@@ -41,8 +42,8 @@ static CGSize kDefaultItemSizeCustomized;
 
 - (void)prepareForReuse
 {
-    if (!self.album.coverPhoto.thumbnail.imageData)  {
-        [self.album cancelThumbnailLoading];
+    if (self.representedObject )  {
+        [self.representedObject cancelThumbnailLoading];
     }
     self.itemImage = nil;
     self.itemTitle = @"";

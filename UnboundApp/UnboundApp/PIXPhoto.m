@@ -41,6 +41,12 @@ const CGFloat kThumbnailSize = 200.0f;
 @synthesize cancelThumbnailLoadOperation;
 
 
+//TODO: make this a real attribute?
+-(NSString *)title
+{
+    return self.name;
+}
+
 //TODO: get rid of this
 -(NSURL *)filePath;
 {
@@ -101,6 +107,11 @@ const CGFloat kThumbnailSize = 200.0f;
     NSNotification *aNotification = [NSNotification notificationWithName:kCreateThumbDidFinish object:self];
     [[NSNotificationQueue defaultQueue] enqueueNotification:aNotification postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnName forModes:nil];
     
+}
+
+-(void)cancelThumbnailLoading;
+{
+    self.cancelThumbnailLoadOperation = YES;
 }
 
 -(NSImage *)thumbnailImage

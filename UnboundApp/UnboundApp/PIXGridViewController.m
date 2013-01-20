@@ -1,18 +1,19 @@
 //
-//  PIXAlbumGridViewController.m
+//  PIXGridViewController.m
 //  UnboundApp
 //
-//  Created by Bob on 1/18/13.
+//  Created by Bob on 1/19/13.
 //  Copyright (c) 2013 Pixite Apps LLC. All rights reserved.
 //
 
-#import "PIXAlbumGridViewController.h"
+#import "PIXGridViewController.h"
 #import "CNGridViewItem.h"
 #import "CNGridViewItemLayout.h"
 #import "PIXAppDelegate.h"
 #import "PIXAppDelegate+CoreDataUtils.h"
 
-#import "PIXAlbum.h"
+//#import "PIXAlbum.h"
+#import "PIXThumbnailLoadingDelegate.h"
 #import "PIXDefines.h"
 #import "PIXGridViewItem.h"
 
@@ -21,7 +22,7 @@
 
 static NSString *kContentTitleKey, *kContentImageKey;
 
-@interface PIXAlbumGridViewController ()
+@interface PIXGridViewController ()
 {
     BOOL startedObserving;
 }
@@ -31,10 +32,9 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 @property (nonatomic, strong) NSToolbarItem * trashbutton;
 @property (nonatomic, strong) NSToolbarItem * settingsButton;
-
 @end
 
-@implementation PIXAlbumGridViewController
+@implementation PIXGridViewController
 
 + (void)initialize
 {
@@ -78,14 +78,14 @@ static NSString *kContentTitleKey, *kContentImageKey;
     [nc addObserver:self selector:@selector(detectedNotification:) name:CNGridViewRightMouseButtonClickedOnItemNotification object:nil];
     
     [nc addObserver:self selector:@selector(refreshNotification:)
-                                                 name:kCreateThumbDidFinish
-                                               object:nil];
+               name:kCreateThumbDidFinish
+             object:nil];
     
-    [nc addObserver:self selector:@selector(reloadAlbums:)
-                                                 name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM
-                                               object:nil];
+//    [nc addObserver:self selector:@selector(reloadItems:)
+//               name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM
+//             object:nil];
     
-    [self performSelector:@selector(reloadAlbums:) withObject:nil afterDelay:0.1];
+    [self performSelector:@selector(reloadItems:) withObject:nil afterDelay:0.1];
 }
 
 -(void)refreshNotification:(NSNotification *)note
@@ -93,9 +93,10 @@ static NSString *kContentTitleKey, *kContentImageKey;
     [self.gridView reloadData];
 }
 
--(NSMutableArray *)albums
+-(NSMutableArray *)fetchItems
 {
-    return [[[PIXAppDelegate sharedAppDelegate] fetchAllAlbums] mutableCopy];
+    NSAssert(NO,@"PXIGridViewController's fetchItems should be implemented in subclass.");
+    return [NSMutableArray array];
 }
 
 -(void)dealloc
@@ -103,11 +104,11 @@ static NSString *kContentTitleKey, *kContentImageKey;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
--(void)reloadAlbums:(NSNotification *)note
+-(void)reloadItems:(NSNotification *)note
 {
     [self.items removeAllObjects];
-    NSArray *albumsArray = [self albums];
-    [self.items addObjectsFromArray:albumsArray];
+    NSArray *itemsArray = [self fetchItems];
+    [self.items addObjectsFromArray:itemsArray];
     [self.gridView reloadData];
 }
 
@@ -194,27 +195,27 @@ static NSString *kContentTitleKey, *kContentImageKey;
     item.hoverLayout = self.hoverLayout;
     item.selectionLayout = self.selectionLayout;
     
-//    NSDictionary *contentDict = [self.items objectAtIndex:index];
-//    item.itemTitle = [NSString stringWithFormat:@"Item: %lu", index];
-//    item.itemImage = [contentDict objectForKey:kContentImageKey];
+    //    NSDictionary *contentDict = [self.items objectAtIndex:index];
+    //    item.itemTitle = [NSString stringWithFormat:@"Item: %lu", index];
+    //    item.itemImage = [contentDict objectForKey:kContentImageKey];
     
-    PIXAlbum *anAlbum = [self.items objectAtIndex:index];
+    id backingObject = [self.items objectAtIndex:index];
     PIXGridViewItem *pixItem = (PIXGridViewItem *)item;
-    pixItem.representedObject = anAlbum;
-    item.itemTitle = anAlbum.title;
-    item.itemImage = [anAlbum thumbnailImage];
-
+    pixItem.representedObject = backingObject;
+    item.itemTitle = [backingObject title];
+    item.itemImage = [backingObject thumbnailImage];
+    
     
     return item;
 }
 
--(void)showPhotosForAlbum:(id)anAlbum
+/*-(void)showPhotosForAlbum:(id)anAlbum
 {
     PIXSplitViewController *aSplitViewController  = [[PIXSplitViewController alloc] initWithNibName:@"PIXSplitViewController" bundle:nil];
     aSplitViewController.selectedAlbum = anAlbum;
     [aSplitViewController.view setFrame:self.view.bounds];
     [self.navigationViewController pushViewController:aSplitViewController];
-}
+}*/
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -222,7 +223,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 - (void)detectedNotification:(NSNotification *)notif
 {
-        //CNLog(@"notification: %@", notif);
+    //CNLog(@"notification: %@", notif);
 }
 
 
@@ -239,8 +240,6 @@ static NSString *kContentTitleKey, *kContentImageKey;
 - (void)gridView:(CNGridView *)gridView didDoubleClickItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
     CNLog(@"didDoubleClickItemAtIndex: %li", index);
-    id anAlbum = [self.items objectAtIndex:index];
-    [self showPhotosForAlbum:anAlbum];
 }
 
 - (void)gridView:(CNGridView *)gridView rightMouseButtonClickedOnItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
@@ -259,4 +258,3 @@ static NSString *kContentTitleKey, *kContentImageKey;
 }
 
 @end
-

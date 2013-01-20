@@ -8,13 +8,15 @@
 
 #import "PIXSplitViewController.h"
 #import "PIXSidebarViewController.h"
-#import "PIXImageBrowserViewController.h"
+//#import "PIXImageBrowserViewController.h"
+#import "PIXPhotoGridViewController.h"
 #import "PIXNavigationController.h"
 
 @interface PIXSplitViewController ()
 
 @property (nonatomic, strong) PIXSidebarViewController *sidebarViewController;
-@property (nonatomic, strong) PIXImageBrowserViewController *imageBrowserViewController;
+@property (nonatomic, strong) PIXPhotoGridViewController *imageBrowserViewController;
+//@property (nonatomic, strong) PIXImageBrowserViewController *imageBrowserViewController;
 @property (nonatomic, strong) NSViewController *mainViewController;
 
 @property (nonatomic, strong) NSToolbarItem * sidebarToggleButton;
@@ -42,7 +44,7 @@
         self.sidebarViewController = [[PIXSidebarViewController alloc] initWithNibName:@"PIXSidebarViewController" bundle:nil];
         self.sidebarViewController.splitViewController = self;
         
-        self.imageBrowserViewController = [[PIXImageBrowserViewController alloc] initWithNibName:@"PIXImageBrowserViewController" bundle:nil];
+        self.imageBrowserViewController = [[PIXPhotoGridViewController alloc] initWithNibName:@"PIXGridViewController" bundle:nil];
     }
     
     return self;

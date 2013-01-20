@@ -8,10 +8,8 @@
 
 #import "CNGridViewItem.h"
 
-@class PIXAlbum;
-
 @interface PIXGridViewItem : CNGridViewItem
 
-@property (nonatomic, weak) PIXAlbum *album;
+@property (nonatomic, weak) id representedObject;
 
 @end
