@@ -50,49 +50,53 @@
 
 -(void)layout
 {
-    //[super layout];
     
     CGRect albumFrame = CGRectInset(self.bounds, 15, 25);
     albumFrame.origin.y -= 10;
     
-    
-    [self addSubview:self.stackPhoto1];
-    [self.stackPhoto1 setFrame:albumFrame];
-    [self addSubview:self.stackPhoto2];
-    [self.stackPhoto2 setFrame:albumFrame];
-    [self addSubview:self.stackPhoto3];
-    [self.stackPhoto3 setFrame:albumFrame];
-    
-    [self.stackPhoto1.layer setZPosition:2];
-    [self.stackPhoto2.layer setZPosition:1];
-    [self.stackPhoto3.layer setZPosition:0];
+    // only layout if the bounds have changed
+    if(!CGRectEqualToRect(albumFrame, self.albumImageView.frame))
+    {
     
     
-    
-    self.stackPhoto1.image = [NSImage imageNamed:@"temp"];
-    self.stackPhoto2.image = [NSImage imageNamed:@"temp-portrait"];
-    self.stackPhoto3.image = [NSImage imageNamed:@"temp"];
-    
-    //[self.stackPhoto1 setFrameCenterRotation:3.0];
-    //[self.stackPhoto2 setFrameCenterRotation:4.0];
-    //[self.stackPhoto3 setFrameCenterRotation:-2.0];
-    
-    
-    [self addSubview:self.albumImageView];
-    [self.albumImageView setFrame:albumFrame];
-    [self.albumImageView setNeedsDisplay:YES];
-    
-    
-    
-    [self.albumImageView.layer setZPosition:3];
+        [self addSubview:self.stackPhoto1];
+        [self.stackPhoto1 setFrame:albumFrame];
+        [self addSubview:self.stackPhoto2];
+        [self.stackPhoto2 setFrame:albumFrame];
+        [self addSubview:self.stackPhoto3];
+        [self.stackPhoto3 setFrame:albumFrame];
+        
+        [self.stackPhoto1.layer setZPosition:2];
+        [self.stackPhoto2.layer setZPosition:1];
+        [self.stackPhoto3.layer setZPosition:0];
+        
+        
+        
+        self.stackPhoto1.image = [NSImage imageNamed:@"temp"];
+        self.stackPhoto2.image = [NSImage imageNamed:@"temp-portrait"];
+        self.stackPhoto3.image = [NSImage imageNamed:@"temp"];
+        
+        //[self.stackPhoto1 setFrameCenterRotation:3.0];
+        //[self.stackPhoto2 setFrameCenterRotation:4.0];
+        //[self.stackPhoto3 setFrameCenterRotation:-2.0];
+        
+        
+        [self addSubview:self.albumImageView];
+        [self.albumImageView setFrame:albumFrame];
+        [self.albumImageView setNeedsDisplay:YES];
+        
+        
+        
+        [self.albumImageView.layer setZPosition:3];
+        
+        
+    }
     
     //[self setWantsLayer:YES];
     //[self.layer setShouldRasterize:YES];
-    
-    
-    //[self setNeedsLayout:NO];
-    
+
     [super layout];
+    [self setNeedsLayout:NO];
 }
 
 - (void)prepareForReuse
