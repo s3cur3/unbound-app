@@ -10,6 +10,8 @@
 #import "PIXAppDelegate.h"
 #import "PIXAppDelegate+CoreDataUtils.h"
 #import "PIXAlbum.h"
+#import "PIXPageViewController.h"
+#import "PIXNavigationController.h"
 
 @interface PIXPhotoGridViewController ()
 
@@ -27,9 +29,37 @@
     return self;
 }
 
+-(void)setAlbum:(id)album
+{
+    BOOL firstLoad = NO;
+    //The first time album is set, no need to reload
+    if (_album==nil && album!=nil)
+    {
+        firstLoad = YES;
+    }
+    _album = album;
+    if (album) {
+        [[[PIXAppDelegate sharedAppDelegate] window] setTitle:[self.album title]];
+        if (firstLoad == NO)
+        {
+            self.items = [self fetchItems];
+            [self.gridView reloadData];
+        }
+    }
+}
+
 -(NSMutableArray *)fetchItems
 {
-    return [[[PIXAppDelegate sharedAppDelegate] fetchAllPhotos] mutableCopy];
+    //return [[[PIXAppDelegate sharedAppDelegate] fetchAllPhotos] mutableCopy];
+    return [NSMutableArray arrayWithArray:[self.album.photos array]];
+}
+
+-(void)showPageControllerForIndex:(NSUInteger)index
+{
+    PIXPageViewController *pageViewController = [[PIXPageViewController alloc] initWithNibName:@"PIXPageViewController" bundle:nil];
+    pageViewController.album = self.album;
+    pageViewController.initialSelectedObject = [self.album.photos objectAtIndex:index];
+    [self.navigationViewController pushViewController:pageViewController];
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -43,6 +73,7 @@
 - (void)gridView:(CNGridView *)gridView didDoubleClickItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
     CNLog(@"didDoubleClickItemAtIndex: %li", index);
+    [self showPageControllerForIndex:index];
 }
 
 //- (void)gridView:(CNGridView *)gridView rightMouseButtonClickedOnItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
