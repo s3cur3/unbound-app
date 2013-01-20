@@ -18,6 +18,8 @@
 
 #import "PIXAlbumGridViewItem.h"
 
+#import "PIXSplitViewController.h"
+
 @interface PIXCNAlbumViewController ()
 {
     
@@ -54,6 +56,7 @@
 -(void)awakeFromNib
 {
     [self.gridView setItemSize:CGSizeMake(190, 180)];
+    [self.gridView setAllowsMultipleSelection:YES];
     [self.gridView reloadData];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -170,6 +173,16 @@
 - (void)gridView:(CNGridView *)gridView didDoubleClickItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
     DLog(@"didDoubleClickItemAtIndex: %li", index);
+    PIXAlbum * album = [self.albums objectAtIndex:index];
+    [self showPhotosForAlbum:album];
+}
+
+-(void)showPhotosForAlbum:(id)anAlbum
+{
+    PIXSplitViewController *aSplitViewController  = [[PIXSplitViewController alloc] initWithNibName:@"PIXSplitViewController" bundle:nil];
+    aSplitViewController.selectedAlbum = anAlbum;
+    [aSplitViewController.view setFrame:self.view.bounds];
+    [self.navigationViewController pushViewController:aSplitViewController];
 }
 
 - (void)gridView:(CNGridView *)gridView rightMouseButtonClickedOnItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
