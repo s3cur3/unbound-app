@@ -96,6 +96,23 @@ static NSString *const kItemsKey = @"photos";
 
 - (NSString *) imageSubtitle;
 {
+    if (self.subtitle == nil)
+    {
+        if (self.dateLastUpdated && self.albumDate)
+        {
+            NSDate *aDate = self.albumDate;
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+            [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+            NSString *formattedDateString = [dateFormatter stringFromDate:aDate];
+            self.subtitle = [NSString stringWithFormat:@"%ld items from %@", self.photos.count, formattedDateString];
+        } else if (self.dateLastUpdated && self.photos.count==0) {
+            return @"No items";
+        } else {
+            return @"Loading...";
+        }
+        
+    }
     return self.subtitle;
 }
 
@@ -127,6 +144,7 @@ static NSString *const kItemsKey = @"photos";
         }
     }
 }
+
 
 //-(PIXPhoto *)mostRecentPhoto
 //{
