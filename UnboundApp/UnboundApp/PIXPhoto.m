@@ -107,6 +107,14 @@ const CGFloat kThumbnailSize = 200.0f;
     NSNotification *aNotification = [NSNotification notificationWithName:kCreateThumbDidFinish object:self];
     [[NSNotificationQueue defaultQueue] enqueueNotification:aNotification postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnName forModes:nil];
     
+    //If this is the coverPhoto of an album send a notification to the album to update it's thumb as well
+    if (self.album.coverPhoto == self) {
+        NSNotification *albumNotification = [NSNotification notificationWithName:AlbumDidChangeNotification object:self.album];
+        [[NSNotificationQueue defaultQueue] enqueueNotification:albumNotification postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnSender forModes:nil];
+        //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self.album];
+    }
+
+    
 }
 
 -(void)cancelThumbnailLoading;

@@ -19,9 +19,16 @@
 
 -(void)setAlbum:(PIXAlbum *)album
 {
+    NSAssert(album!=nil, @"Unexpected setting of album to nil in PIXAlbuGridViewItem.");
+
     // only set it if it's different
     if(_album != album)
     {
+        if (album!=nil)
+        {
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:_album];
+        }
+
         _album = album;
         
         [self setItemTitle:[_album title]];
@@ -137,19 +144,19 @@
     if (self.album )  {
         [self.album cancelThumbnailLoading];
         
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:self.album];
-        self.album = nil; 
+//        [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:self.album];
+//        self.album = nil; 
     }
     
     
     
     
-    self.itemImage = nil;
-    self.itemTitle = @"";
-    self.index = CNItemIndexUndefined;
-    self.selected = NO;
-    self.selectable = YES;
-    self.hovered = NO;
+//    self.itemImage = nil;
+//    self.itemTitle = @"";
+//    self.index = CNItemIndexUndefined;
+//    self.selected = NO;
+//    self.selectable = YES;
+//    self.hovered = NO;
 }
 
 -(PIXBorderedImageView *)albumImageView
