@@ -120,6 +120,7 @@ static NSString *const kItemsKey = @"photos";
     self.photos = photos;
     if (shouldUpdateCoverPhoto==YES && photos.count != 0) {
         self.coverPhoto = [photos objectAtIndex:0];
+        self.albumDate = self.coverPhoto.dateLastModified;
         NSData *coverImageThumbData = self.coverPhoto.thumbnail.imageData;
         if (coverImageThumbData != nil) {
             self.thumbnail = coverImageThumbData;

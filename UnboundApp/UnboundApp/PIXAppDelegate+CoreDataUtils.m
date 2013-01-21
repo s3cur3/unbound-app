@@ -30,6 +30,8 @@ extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kPhotoEntityName];
     [fetchRequest setFetchBatchSize:500];
+    NSSortDescriptor *dateSorter = [[NSSortDescriptor alloc] initWithKey:@"dateLastModified" ascending:NO];
+    [fetchRequest setSortDescriptors:@[dateSorter]];
     NSError *error;
     NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
     if (fetchedObjects == nil) {
@@ -41,6 +43,8 @@ extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
 
 -(void)setPhotos:(NSMutableArray *)newPhotos forAlbum:(PIXAlbum *)anAlbum
 {
+    NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc] initWithKey:@"dateLastModified" ascending:NO];
+    [newPhotos sortUsingDescriptors:@[sortByDate] ];
     NSOrderedSet *newPhotosSet = [[NSOrderedSet alloc] initWithArray:newPhotos];
     [anAlbum setPhotos:newPhotosSet updateCoverImage:YES];
     [newPhotos removeAllObjects];
@@ -590,6 +594,8 @@ extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kAlbumEntityName];
     [fetchRequest setFetchBatchSize:500];
     NSError *error;
+    NSSortDescriptor *dateSorter = [[NSSortDescriptor alloc] initWithKey:@"albumDate" ascending:NO];
+    [fetchRequest setSortDescriptors:@[dateSorter]];
     NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
     if (fetchedObjects == nil) {
         [[NSApplication sharedApplication] presentError:error];
