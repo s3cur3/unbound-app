@@ -779,7 +779,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
 - (void)setFrame:(NSRect)frameRect
 {
-    BOOL animated = (self.frame.size.width == frameRect.size.width ? NO: YES);
+   // BOOL animated = (self.frame.size.width == frameRect.size.width ? NO: YES);
     [super setFrame:frameRect];
     [self refreshGridViewAnimated:NO];
 }

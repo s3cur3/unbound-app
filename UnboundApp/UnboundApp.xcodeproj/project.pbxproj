@@ -452,7 +452,6 @@
 				8C249E8816AB560000CB97AF /* PIXCNAlbumViewController.xib */,
 				8C249E8416AB467000CB97AF /* PIXAlbumGridViewItem.h */,
 				8C249E8516AB467100CB97AF /* PIXAlbumGridViewItem.m */,
-				1D8CD7E716AB4D220072D516 /* PIXGridViewItemLayout.m */,
 				1D4A1E0B167C065000C9A895 /* PIXBorderedImageView.h */,
 				1D4A1E0C167C065000C9A895 /* PIXBorderedImageView.m */,
 			);
@@ -521,6 +520,7 @@
 				1D8CD7EE16AB6EC70072D516 /* PIXGridViewController.xib */,
 				8C249E8F16AB8DF600CB97AF /* PIXGridViewItem.h */,
 				8C249E9016AB8DF600CB97AF /* PIXGridViewItem.m */,
+				1D8CD7E716AB4D220072D516 /* PIXGridViewItemLayout.m */,
 			);
 			name = Shared;
 			sourceTree = "<group>";

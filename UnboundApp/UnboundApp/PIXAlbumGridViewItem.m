@@ -152,8 +152,8 @@
     [textStyle setAlignment: NSCenterTextAlignment];
     
     NSDictionary * attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [NSFont fontWithName:@"Helvetica" size:12], NSFontAttributeName,
-                                textShadow,                                 NSShadowAttributeName,
+                                [NSFont fontWithName:@"Helvetica Bold" size:14], NSFontAttributeName,
+     //                           textShadow,                                 NSShadowAttributeName,
                                 textColor,                                  NSForegroundColorAttributeName,
                                 textStyle,                                  NSParagraphStyleAttributeName,
                                 nil];
