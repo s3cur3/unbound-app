@@ -6,7 +6,7 @@
         <relationship name="albums" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PIXAlbum" inverseName="account" inverseEntity="PIXAlbum" syncable="YES"/>
     </entity>
     <entity name="PIXAlbum" representedClassName="PIXAlbum" syncable="YES">
-        <attribute name="albumDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="albumDate" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="dateLastUpdated" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="path" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="subtitle" optional="YES" attributeType="String" syncable="YES"/>
@@ -17,7 +17,7 @@
         <relationship name="photos" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="PIXPhoto" inverseName="album" inverseEntity="PIXPhoto" syncable="YES"/>
     </entity>
     <entity name="PIXPhoto" representedClassName="PIXPhoto" syncable="YES">
-        <attribute name="dateLastModified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="dateLastModified" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="dateLastUpdated" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="path" attributeType="String" indexed="YES" syncable="YES"/>
