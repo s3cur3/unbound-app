@@ -39,13 +39,12 @@
     [self setItemTitle:[self.album title]];
     [self.albumImageView setImage:[self.album thumbnailImage]];
     
-    [self setNeedsLayout:YES];
     [self setNeedsDisplay:YES];
 }
 
 -(BOOL)isOpaque
 {
-    return NO;
+    return YES;
 }
 
 -(void)layout
@@ -98,6 +97,38 @@
     [super layout];
     [self setNeedsLayout:NO];
 }
+
+- (void)drawRect:(NSRect)rect
+{
+    NSRect bounds = self.bounds;
+    
+    
+    NSBezierPath *contentRectPath = [NSBezierPath bezierPathWithRect:rect];
+    [contentRectPath fill];
+    
+    /// draw selection ring
+    if (self.selected) {
+        
+        NSRect innerbounds = CGRectInset(self.bounds, 6, 6);
+        NSBezierPath *selectionRectPath = [NSBezierPath bezierPathWithRoundedRect:innerbounds xRadius:10 yRadius:10];
+        [[NSColor colorWithCalibratedRed:0.189 green:0.657 blue:0.859 alpha:1.000] setStroke];
+        [selectionRectPath setLineWidth:4];
+        [selectionRectPath stroke];
+    }
+    
+    
+    NSRect srcRect = NSZeroRect;
+    srcRect.size = self.itemImage.size;
+    
+    NSRect textRect = NSMakeRect(bounds.origin.x + 3,
+                          NSHeight(bounds) - 20,
+                          NSWidth(bounds) - 6,
+                          14);
+    
+    [self.itemTitle drawInRect:textRect withAttributes:0];
+
+}
+
 
 - (void)prepareForReuse
 {
