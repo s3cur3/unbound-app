@@ -446,27 +446,15 @@
 		1D4A1DC2167AD97B00C9A895 /* AlbumView */ = {
 			isa = PBXGroup;
 			children = (
-				1DC0C94616A6F65F0081F5A5 /* BCCollectionView */,
-				1D4A1E0B167C065000C9A895 /* PIXBorderedImageView.h */,
-				1D4A1E0C167C065000C9A895 /* PIXBorderedImageView.m */,
-				1D4A1DE1167AFC7100C9A895 /* PIXAlbumViewController.h */,
-				1D4A1DE2167AFC7100C9A895 /* PIXAlbumViewController.m */,
-				1D4A1DE3167AFC7100C9A895 /* PIXAlbumViewController.xib */,
-				1D4A1DF5167B0CD000C9A895 /* PIXAlbumCollectionViewItem.h */,
-				1D4A1DF6167B0CD000C9A895 /* PIXAlbumCollectionViewItem.m */,
-				1D4A1DF7167B0CD000C9A895 /* PIXAlbumCollectionViewItem.xib */,
-				1D4A1E09167C062D00C9A895 /* IconViewPrototype.xib */,
-				1D4A1E04167C050F00C9A895 /* PIXAlbumCollectionView.h */,
-				1D4A1E05167C050F00C9A895 /* PIXAlbumCollectionView.m */,
-				1D1C179216A7017D006B1D42 /* PIXBCAlbumViewController.h */,
-				1D1C179316A7017D006B1D42 /* PIXBCAlbumViewController.m */,
-				1D1C179416A7017D006B1D42 /* PIXBCAlbumViewController.xib */,
+				8C249E9816AD094E00CB97AF /* No Longer Used */,
 				8C249E6C16AB426A00CB97AF /* PIXCNAlbumViewController.h */,
 				8C249E6D16AB426A00CB97AF /* PIXCNAlbumViewController.m */,
 				8C249E8816AB560000CB97AF /* PIXCNAlbumViewController.xib */,
 				8C249E8416AB467000CB97AF /* PIXAlbumGridViewItem.h */,
 				8C249E8516AB467100CB97AF /* PIXAlbumGridViewItem.m */,
 				1D8CD7E716AB4D220072D516 /* PIXGridViewItemLayout.m */,
+				1D4A1E0B167C065000C9A895 /* PIXBorderedImageView.h */,
+				1D4A1E0C167C065000C9A895 /* PIXBorderedImageView.m */,
 			);
 			name = AlbumView;
 			sourceTree = "<group>";
@@ -708,6 +696,26 @@
 				8C249E7C16AB429E00CB97AF /* NSView+CNGridView.m */,
 			);
 			path = CNGridView;
+			sourceTree = "<group>";
+		};
+		8C249E9816AD094E00CB97AF /* No Longer Used */ = {
+			isa = PBXGroup;
+			children = (
+				1DC0C94616A6F65F0081F5A5 /* BCCollectionView */,
+				1D4A1DE1167AFC7100C9A895 /* PIXAlbumViewController.h */,
+				1D4A1DE2167AFC7100C9A895 /* PIXAlbumViewController.m */,
+				1D4A1DE3167AFC7100C9A895 /* PIXAlbumViewController.xib */,
+				1D4A1DF5167B0CD000C9A895 /* PIXAlbumCollectionViewItem.h */,
+				1D4A1DF6167B0CD000C9A895 /* PIXAlbumCollectionViewItem.m */,
+				1D4A1DF7167B0CD000C9A895 /* PIXAlbumCollectionViewItem.xib */,
+				1D4A1E09167C062D00C9A895 /* IconViewPrototype.xib */,
+				1D4A1E04167C050F00C9A895 /* PIXAlbumCollectionView.h */,
+				1D4A1E05167C050F00C9A895 /* PIXAlbumCollectionView.m */,
+				1D1C179216A7017D006B1D42 /* PIXBCAlbumViewController.h */,
+				1D1C179316A7017D006B1D42 /* PIXBCAlbumViewController.m */,
+				1D1C179416A7017D006B1D42 /* PIXBCAlbumViewController.xib */,
+			);
+			name = "No Longer Used";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

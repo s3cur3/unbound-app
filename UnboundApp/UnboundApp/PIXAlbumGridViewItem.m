@@ -24,6 +24,8 @@
     // only set it if it's different
     if(_album != album)
     {
+        [self layout];
+        
         if (album!=nil)
         {
             [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:_album];
@@ -32,12 +34,15 @@
         _album = album;
         
         [self setItemTitle:[_album title]];
-        [self.albumImageView setImage:[_album thumbnailImage]];
         
-        [self setNeedsLayout:YES];
+        NSImage * albumThumb = [_album thumbnailImage];
+        
+        [self.albumImageView setImage:albumThumb];
+        
+        [self.albumImageView setNeedsDisplay:YES];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(albumChanged:) name:AlbumDidChangeNotification object:_album];
-                                                                                                      
+                                                                                                    
     }
 }
 
@@ -61,15 +66,16 @@
     albumFrame.origin.y -= 10;
     
     // only layout if the bounds have changed
-    if(!CGRectEqualToRect(albumFrame, self.albumImageView.frame))
+    if(!CGRectEqualToRect(albumFrame, self.albumImageView.frame) && albumFrame.size.width > 0)
     {
     
-    
-        [self addSubview:self.stackPhoto1];
+        
+        
+        //[self addSubview:self.stackPhoto1];
         [self.stackPhoto1 setFrame:albumFrame];
-        [self addSubview:self.stackPhoto2];
+        //[self addSubview:self.stackPhoto2];
         [self.stackPhoto2 setFrame:albumFrame];
-        [self addSubview:self.stackPhoto3];
+        //[self addSubview:self.stackPhoto3];
         [self.stackPhoto3 setFrame:albumFrame];
         
         [self.stackPhoto1.layer setZPosition:2];
@@ -87,8 +93,13 @@
         //[self.stackPhoto3 setFrameCenterRotation:-2.0];
         
         
-        [self addSubview:self.albumImageView];
         [self.albumImageView setFrame:albumFrame];
+        
+        NSImage * albumThumb = [_album thumbnailImage];
+        [self.albumImageView setImage:albumThumb];
+        
+        [self addSubview:self.albumImageView];
+        
         [self.albumImageView setNeedsDisplay:YES];
         
         
@@ -102,7 +113,6 @@
     //[self.layer setShouldRasterize:YES];
 
     [super layout];
-    [self setNeedsLayout:NO];
 }
 
 - (void)drawRect:(NSRect)rect
@@ -111,6 +121,7 @@
     
     
     NSBezierPath *contentRectPath = [NSBezierPath bezierPathWithRect:rect];
+    [[NSColor colorWithCalibratedWhite:0.912 alpha:1.000] setFill];
     [contentRectPath fill];
     
     /// draw selection ring
@@ -128,11 +139,28 @@
     srcRect.size = self.itemImage.size;
     
     NSRect textRect = NSMakeRect(bounds.origin.x + 3,
-                          NSHeight(bounds) - 20,
+                          NSHeight(bounds) - 30,
                           NSWidth(bounds) - 6,
-                          14);
+                          20);
     
-    [self.itemTitle drawInRect:textRect withAttributes:0];
+    NSColor *textColor      = [NSColor colorWithCalibratedWhite:0.0 alpha:0.7];
+    NSShadow *textShadow    = [[NSShadow alloc] init];
+    [textShadow setShadowColor: [NSColor colorWithCalibratedWhite:0.0 alpha:0.5]];
+    [textShadow setShadowOffset: NSMakeSize(0, -1)];
+    
+    NSMutableParagraphStyle *textStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+    [textStyle setAlignment: NSCenterTextAlignment];
+    
+    NSDictionary * attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [NSFont fontWithName:@"Helvetica" size:12], NSFontAttributeName,
+                                textShadow,                                 NSShadowAttributeName,
+                                textColor,                                  NSForegroundColorAttributeName,
+                                textStyle,                                  NSParagraphStyleAttributeName,
+                                nil];
+    
+
+    
+    [self.itemTitle drawInRect:textRect withAttributes:attributes];
 
 }
 
@@ -164,6 +192,7 @@
     if(_albumImageView) return _albumImageView;
     
     _albumImageView = [[PIXBorderedImageView alloc] initWithFrame:NSZeroRect];
+    [self addSubview:_albumImageView];
     
     return _albumImageView;
 }
@@ -173,7 +202,8 @@
     if(_stackPhoto1) return _stackPhoto1;
     
     _stackPhoto1 = [[PIXBorderedImageView alloc] initWithFrame:NSZeroRect];
-    
+    [self addSubview:_stackPhoto1];
+     
     return _stackPhoto1;
 }
 
@@ -182,6 +212,7 @@
     if(_stackPhoto2) return _stackPhoto2;
     
     _stackPhoto2 = [[PIXBorderedImageView alloc] initWithFrame:NSZeroRect];
+    [self addSubview:_stackPhoto2];
     
     return _stackPhoto2;
 }
@@ -191,6 +222,7 @@
     if(_stackPhoto3) return _stackPhoto3;
     
     _stackPhoto3 = [[PIXBorderedImageView alloc] initWithFrame:NSZeroRect];
+    [self addSubview:_stackPhoto3];
     
     return _stackPhoto3;
 }
