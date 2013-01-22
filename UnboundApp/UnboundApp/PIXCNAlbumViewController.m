@@ -198,6 +198,7 @@
 - (void)gridView:(CNGridView *)gridView didSelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
     DLog(@"didSelectItemAtIndex: %li", index);
+    DLog(@"%@",[self.albums objectAtIndex:index]);
 }
 
 - (void)gridView:(CNGridView *)gridView didDeselectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section

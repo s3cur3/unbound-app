@@ -63,7 +63,8 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
     self.hoverLayout.backgroundColor = [[NSColor grayColor] colorWithAlphaComponent:0.42];
     self.selectionLayout.backgroundColor = [NSColor colorWithCalibratedRed:0.542 green:0.699 blue:0.807 alpha:0.420];
-    self.defaultLayout.visibleContentMask = CNGridViewItemVisibleContentImage;
+    //self.defaultLayout.visibleContentMask = CNGridViewItemVisibleContentImage;
+    self.defaultLayout.visibleContentMask = CNGridViewItemVisibleContentImage | CNGridViewItemVisibleContentTitle;
     self.hoverLayout.visibleContentMask = CNGridViewItemVisibleContentImage | CNGridViewItemVisibleContentTitle;
     self.selectionLayout.visibleContentMask = CNGridViewItemVisibleContentImage | CNGridViewItemVisibleContentTitle;
     

@@ -8,6 +8,8 @@
 
 #import "PIXAppDelegate.h"
 
+@class PIXAlbum;
+
 @interface PIXAppDelegate (CoreDataUtils)
 
 -(void)photosFinishedLoading:(NSNotification *)note;
@@ -29,6 +31,8 @@
 -(NSArray *)fetchAllAlbums;
 
 -(IBAction)deleteAllAlbums:(id)sender;
+
+-(PIXAlbum *)fetchAlbumWithPath:(NSString *)aPath inContext:(NSManagedObjectContext *)context;
 
 -(BOOL)deleteObjectsForEntityName:(NSString *)entityName withUpdateDateBefore:(NSDate *)lastUpdated inContext:(NSManagedObjectContext *)context;
 

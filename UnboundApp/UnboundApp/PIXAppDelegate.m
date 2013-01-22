@@ -99,6 +99,8 @@ extern NSString *kSearchDidFinishNotification;
 
     
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photosFinishedLoading:) name:SearchDidFinishNotification object:self.spotLightFetchController];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminate:) name:NSApplicationWillTerminateNotification object:nil];
+    
     
     //Notification for spotlight fetches
     [[NSNotificationCenter defaultCenter] addObserverForName:kSearchDidFinishNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
@@ -132,8 +134,12 @@ extern NSString *kSearchDidFinishNotification;
         NSArray *albums = [self fetchAllAlbums];
         if (!albums.count) {
             [self performSelector:@selector(showLoadingWindow:) withObject:self afterDelay:0.2];
+            //TODO: make sure the loading window starts the file observer when dismissed
+            return;
         }
-        //[self performSelector:@selector(startFileSystemLoading) withObject:self afterDelay:0.1];
+        
+        //Start monitoring the file system for changes...
+        [self performSelector:@selector(startFileSystemLoading) withObject:self afterDelay:2.0];
     }
     
 }
@@ -141,16 +147,19 @@ extern NSString *kSearchDidFinishNotification;
 
 -(void)startFileSystemLoading
 {
-    [self.dataSource loadAllAlbums];
-    //TODO: maybe show a loading/splash/progress window while data is loading?
-    [[NSNotificationCenter defaultCenter] addObserverForName:kUB_PHOTOS_LOADED_FROM_FILESYSTEM object:self.dataSource queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-        
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:kUB_PHOTOS_LOADED_FROM_FILESYSTEM object:self.dataSource];
-        
-        //start observing the file system
-        [self.dataSource performSelector:@selector(startObserving) withObject:nil afterDelay:1.0];
-        
-    }];
+    self.dataSource = [PIXFileSystemDataSource sharedInstance];
+    [self.dataSource performSelector:@selector(startObserving) withObject:nil afterDelay:1.0];
+    
+//    [self.dataSource loadAllAlbums];
+//    //TODO: maybe show a loading/splash/progress window while data is loading?
+//    [[NSNotificationCenter defaultCenter] addObserverForName:kUB_PHOTOS_LOADED_FROM_FILESYSTEM object:self.dataSource queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+//        
+//        [[NSNotificationCenter defaultCenter] removeObserver:self name:kUB_PHOTOS_LOADED_FROM_FILESYSTEM object:self.dataSource];
+//        
+//        //start observing the file system
+//        [self.dataSource performSelector:@selector(startObserving) withObject:nil afterDelay:1.0];
+//        
+//    }];
 }
 
 // -------------------------------------------------------------------------------

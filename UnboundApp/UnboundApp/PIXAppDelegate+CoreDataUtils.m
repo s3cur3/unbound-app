@@ -82,32 +82,57 @@ extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
         PIXAlbum *lastAlbum = nil;
         int i = 0;
         NSMutableArray *lastAlbumsPhotos = [NSMutableArray new];
+        NSMutableArray *lastAlbumsExistingPhotos = [NSMutableArray new];
         for (NSDictionary *aPhoto in self.photoFiles)
         {
             i++;
             NSString *aPath = [aPhoto valueForKey:@"dirPath"];
             if (!lastAlbum || ![aPath isEqualToString:lastAlbum.path])
             {
+                
+                
+                
                 if (lastAlbum) {
                     DLog(@"lastAlbum.photos.count = %ld", lastAlbum.photos.count);
-                    [self setPhotos:lastAlbumsPhotos forAlbum:lastAlbum];
+                    //[self setPhotos:lastAlbumsPhotos forAlbum:lastAlbum];
                     //lastAlbum.photos = [[NSOrderedSet alloc] initWithArray:lastAlbumsPhotos];
-                    [lastAlbumsPhotos removeAllObjects];
                 }
                 lastAlbum = [self fetchAlbumWithPath:aPath inContext:context];
+                DLog(@"lastAlbum %@ has %ld photos", lastAlbum.title, lastAlbum.photos.count);
                 if (lastAlbum==nil)
                 {
                     lastAlbum = [NSEntityDescription insertNewObjectForEntityForName:@"PIXAlbum" inManagedObjectContext:context];
                     [lastAlbum setValue:aPath forKey:@"path"];
                 }
+                [lastAlbumsPhotos removeAllObjects];
                 [lastAlbum setDateLastUpdated:self.fetchDate];
+                lastAlbumsExistingPhotos = [[lastAlbum.photos array] mutableCopy];
             }
-            PIXPhoto *dbPhoto = [NSEntityDescription insertNewObjectForEntityForName:@"PIXPhoto" inManagedObjectContext:context];
+            __block PIXPhoto *dbPhoto = nil;
+            NSUInteger index = [lastAlbumsExistingPhotos indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+                //
+                if ([[obj valueForKey:@"path"] isEqualToString:[aPhoto valueForKey:@"path"]])
+                {
+                    //*stop = YES;
+                    dbPhoto = obj;
+                    return YES;
+                }
+                return NO;
+            }];
+            if (index != NSNotFound) {
+                [lastAlbumsExistingPhotos removeObjectAtIndex:index];
+            }
+            
+            if(dbPhoto==nil)
+            {
+                dbPhoto = [NSEntityDescription insertNewObjectForEntityForName:@"PIXPhoto" inManagedObjectContext:context];
+            }
+            
             [dbPhoto setDateLastModified:[aPhoto valueForKey:@"modified"]];
             [dbPhoto setPath:[aPhoto valueForKey:@"path"]];
             [dbPhoto setDateLastUpdated:self.fetchDate];
             //[lastAlbum addPhotosObject:dbPhoto];
-            //[dbPhoto setAlbum:lastAlbum];
+            [dbPhoto setAlbum:lastAlbum];
             [lastAlbumsPhotos addObject:dbPhoto];
             //[lastAlbum addPhotosObject:dbPhoto];
             if (i%500==0) {
@@ -116,7 +141,7 @@ extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
         }
         //lastAlbum.photos = [[NSOrderedSet alloc] initWithArray:lastAlbumsPhotos];
         //[lastAlbumsPhotos removeAllObjects];
-        [self setPhotos:lastAlbumsPhotos forAlbum:lastAlbum];
+        //[self setPhotos:lastAlbumsPhotos forAlbum:lastAlbum];
         
         if (![self deleteObjectsForEntityName:@"PIXAlbum" withUpdateDateBefore:self.fetchDate inContext:context]) {
             DLog(@"There was a problem trying to delete old objects");
@@ -146,12 +171,12 @@ extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
     
 }
 
-//-(void)photosFinishedLoading:(NSNotification *)note
-//{
-//    NSArray *photos = [note.userInfo valueForKey:@"items"];
-//    self.photoFiles = [photos sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"path" ascending:YES]]];
-//    [self loadAlbums];
-//}
+-(void)photosFinishedLoadingNew:(NSNotification *)note
+{
+    NSArray *photos = [note.userInfo valueForKey:@"items"];
+    self.photoFiles = [photos sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"path" ascending:YES]]];
+    [self loadAlbums];
+}
 
 
 //-(void)loadPhotos:(NSNotification *)note
@@ -411,6 +436,7 @@ extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
                                                                           ascending:YES] ]];
     NSError * anError;
     NSArray *itemsToDelete = [context executeFetchRequest:fetchRequestRemoval error:&anError];
+    DLog(@"Deleting %ld items of entity type %@", itemsToDelete.count, entityName);
     
     if (itemsToDelete==nil) {
         DLog(@"Unresolved error %@, %@", anError, [anError userInfo]);
@@ -560,7 +586,8 @@ extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
             break;
         }
         NSOrderedSet *photoSet = [[NSOrderedSet alloc] initWithArray:itemsFound];
-        [anAlbum setPhotos:photoSet];
+        //[anAlbum setPhotos:photoSet];
+        [self setPhotos:[itemsFound mutableCopy] forAlbum:anAlbum];
         
         DLog(@"Updated photos for album '%@' : total photo count %ld",albumPath, anAlbum.photos.count);
         //[itemsFound makeObjectsPerformSelector:@selector(setAlbum:) withObject:self];

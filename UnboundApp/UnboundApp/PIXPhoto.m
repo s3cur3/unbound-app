@@ -448,7 +448,7 @@ const CGFloat kThumbnailSize = 200.0f;
  */
 - (NSString *) imageSubtitle;
 {
-    return @"";
+    return self.name;
 }
 
 /*!

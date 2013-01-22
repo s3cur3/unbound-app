@@ -11,7 +11,10 @@
 
 #import "PIXFileSystemDataSource.h"
 #import "Album.h"
+#import "PIXAlbum.h"
 #import "PIXDefines.h"
+#import "PIXAppDelegate.h"
+#import "PIXAppDelegate+CoreDataUtils.h"
 
 #define ONLY_LOAD_ALBUMS_WITH_IMAGES 1
 
@@ -49,6 +52,8 @@ NSString * DefaultDropBoxPhotosDirectory()
 @property (nonatomic,strong) NSDate *startDate;
 @property (nonatomic,strong) NSDate *endDate;
 @property (nonatomic,strong) NSDateFormatter *dateFormatter;
+
+//@property(strong) ArchDirectoryObservationResumeToken resumeToken;
 
 -(void)finishedLoadingAlbums;
 
@@ -419,16 +424,31 @@ NSString * DefaultDropBoxPhotosDirectory()
 {
     for (NSURL *aDir in [self observedDirectories])
     {
-        [aDir addDirectoryObserver:self options:0 resumeToken:nil];
+        NSString *tokenKeyString = [NSString stringWithFormat:@"resumeToken-%@", aDir.path];
+        NSData *token = [[NSUserDefaults standardUserDefaults] dataForKey:tokenKeyString];
+        NSData *decodedToken = [NSKeyedUnarchiver unarchiveObjectWithData:token];
+        [aDir addDirectoryObserver:self options:0 resumeToken:decodedToken];
+        //[aDir addDirectoryObserver:self options:0 resumeToken:nil];
+    }
+}
+
+-(void)updateResumeToken:(ArchDirectoryObservationResumeToken)resumeToken forObservedDirectory:(NSURL *)observedURL
+{
+    if (resumeToken!=nil) {
+        NSString *tokenKeyString = [NSString stringWithFormat:@"resumeToken-%@", observedURL.path];
+        NSData *dataObject = [NSKeyedArchiver archivedDataWithRootObject:resumeToken];
+        [[NSUserDefaults standardUserDefaults] setObject:dataObject forKey:tokenKeyString];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }
 
 -(void)stopObserving
 {
-    for (NSURL *aDir in [self observedDirectories])
-    {
-        [aDir removeDirectoryObserver:self];
-    }
+    [NSURL removeObserverForAllDirectories:self];
+//    for (NSURL *aDir in [self observedDirectories])
+//    {
+//        [aDir removeDirectoryObserver:self];
+//    }
 }
 
 // At least one file in the directory indicated by changedURL has changed.  You should examine the directory at changedURL to see which files changed.
@@ -437,32 +457,64 @@ NSString * DefaultDropBoxPhotosDirectory()
 // historical: if YES, the event occured sometime before the observer was added.  If NO, it occurred just now.
 // resumeToken: the resume token to save if you want to pick back up from this event.
 - (void)observedDirectory:(NSURL*)observedURL childrenAtURLDidChange:(NSURL*)changedURL historical:(BOOL)historical resumeToken:(ArchDirectoryObservationResumeToken)resumeToken {
+    
+    
+    DLog(@"\r\n*******\nobservedDirectory:'%@'\nchildrenAtURLDidChange: %@\nhistorical: %@\r\n*******", observedURL.path, changedURL.path, historical ? @"YES" : @"NO");
+    [self updateResumeToken:resumeToken forObservedDirectory:observedURL];
+    
     if (historical) {
-        DLog(@"Files in %@ have changed, but the changes are historical - ignoring", changedURL.path);
-        return;
+        DLog(@"Files in album '%@' have changed while the app was not active", changedURL.path);
+        //NSAssert(NO, @"Not expecting historical changes in childrenAtURLDidChange");
     }
-    
-    NSLog(@"Files in %@ have changed!", changedURL.path);
-    Album *changedAlbum = [self.albumLookupTable valueForKey:changedURL.path];
-    
-    if (changedAlbum==nil)
-    {
-        DLog(@"Received notification for an album that doesn't exist - creating : %@", changedURL.path);
-        Album *anAlbum = [[Album alloc] initWithFilePath:changedURL.path];
-        if ([anAlbum albumExistsWithPhotos]==YES)
-        {
-            [anAlbum updatePhotosFromFileSystem];
-            if (anAlbum.photos.count!=0)
-            {
-                [self.albumLookupTable setValue:anAlbum forKey:changedURL.path];
-            }
-        }
+    PIXAppDelegate *appDelegate = [PIXAppDelegate sharedAppDelegate];
+    PIXAlbum *dbAlbum = [appDelegate fetchAlbumWithPath:changedURL.path inContext:appDelegate.managedObjectContext];
+    if (dbAlbum!=nil) {
+        NSNotification *albumChangedNotification = [NSNotification notificationWithName:AlbumDidChangeNotification
+                                                                                 object:dbAlbum
+                                                                               userInfo:@{@"changedURL" : changedURL, @"observedURL" : observedURL}];
         
-        
+        [[NSNotificationQueue defaultQueue] enqueueNotification:albumChangedNotification postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnSender forModes:nil];
     } else {
-        [self loadPhotosForAlbum:changedAlbum];
+        DLog(@"No album at path %@", changedURL.path);
     }
+    
+//
+//    NSLog(@"Files in %@ have changed!", changedURL.path);
+//    Album *changedAlbum = [self.albumLookupTable valueForKey:changedURL.path];
+//    
+//    if (changedAlbum==nil)
+//    {
+//        DLog(@"Received notification for an album that doesn't exist - creating : %@", changedURL.path);
+//        Album *anAlbum = [[Album alloc] initWithFilePath:changedURL.path];
+//        if ([anAlbum albumExistsWithPhotos]==YES)
+//        {
+//            [anAlbum updatePhotosFromFileSystem];
+//            if (anAlbum.photos.count!=0)
+//            {
+//                [self.albumLookupTable setValue:anAlbum forKey:changedURL.path];
+//            }
+//        }
+//        
+//        
+//    } else {
+//        [self loadPhotosForAlbum:changedAlbum];
+//    }
 }
+
+//typedef enum {
+//    // You added an observer with a nil resume token, so the directory's history is unknown.
+//    ArchDirectoryObserverNoHistoryReason = 0,
+//    // The observation center coalesced events that occurred only a couple seconds apart.
+//    ArchDirectoryObserverCoalescedReason,
+//    // Events came too fast and some were dropped.
+//    ArchDirectoryObserverEventDroppedReason,
+//    // Event ID numbers have wrapped and so the history is not reliable.
+//    ArchDirectoryObserverEventIDsWrappedReason,
+//    // A volume was mounted in a subdirectory.
+//    ArchDirectoryObserverVolumeMountedReason,
+//    // A volume was unmounted in a subdirectory.
+//    ArchDirectoryObserverVolumeUnmountedReason
+//} ArchDirectoryObserverDescendantReason;
 
 // At least one file somewhere inside--but not necessarily directly descended from--changedURL has changed.  You should examine the directory at changedURL and all subdirectories to see which files changed.
 // observedURL: the URL of the dorectory you're observing.
@@ -471,7 +523,20 @@ NSString * DefaultDropBoxPhotosDirectory()
 // historical: if YES, the event occured sometime before the observer was added.  If NO, it occurred just now.
 // resumeToken: the resume token to save if you want to pick back up from this event.
 - (void)observedDirectory:(NSURL*)observedURL descendantsAtURLDidChange:(NSURL*)changedURL reason:(ArchDirectoryObserverDescendantReason)reason historical:(BOOL)historical resumeToken:(ArchDirectoryObservationResumeToken)resumeToken {
-    NSLog(@"Descendents below %@ have changed! Reason : %d", changedURL.path, reason);
+
+    DLog(@"\r\n*******\r\nobservedDirectory:'%@'\r\ndescendantsAtURLDidChange: '%@'\r\nreason: %d\r\nhistorical: %@\r\n*******", observedURL.path, changedURL.path, reason, historical ? @"YES" : @"NO");
+    [self updateResumeToken:resumeToken forObservedDirectory:observedURL];
+    
+    //This seems to be an initial notification that can be safely ignored
+    if (reason == ArchDirectoryObserverNoHistoryReason)
+    {
+        DLog(@"Skipping FSEvent with reason: ArchDirectoryObserverNoHistoryReason");
+        return;
+    } else if (reason == ArchDirectoryObserverCoalescedReason) {
+        DLog(@"FSEvent with reason: ArchDirectoryObserverCoalescedReason");
+    } else {
+        DLog(@"FSEvent with reason: %d", reason);
+    }
 }
 
 // An ancestor of the observedURL has changed, so the entire directory tree you're observing may have vanished. You should ensure it still exists.
@@ -480,7 +545,9 @@ NSString * DefaultDropBoxPhotosDirectory()
 // historical: if YES, the event occured sometime before the observer was added.  If NO, it occurred just now.
 // resumeToken: the resume token to save if you want to pick back up from this event.
 - (void)observedDirectory:(NSURL*)observedURL ancestorAtURLDidChange:(NSURL*)changedURL historical:(BOOL)historical resumeToken:(ArchDirectoryObservationResumeToken)resumeToken {
-    NSLog(@"%@, ancestor of your directory, has changed!", changedURL.path);
+    
+    DLog(@"\r\n*******\r\nobservedDirectory:'%@'\r\nancestorAtURLDidChange: '%@'\r\nhistorical: %@\r\n*******", observedURL.path, changedURL.path, historical ? @"YES" : @"NO");
+    [self updateResumeToken:resumeToken forObservedDirectory:observedURL];
 }
 
 //-------------------------------------------------------
