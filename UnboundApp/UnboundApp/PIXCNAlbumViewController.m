@@ -55,6 +55,9 @@
 
 -(void)awakeFromNib
 {
+    //[self.view setWantsLayer:YES];
+    //[self.gridView setWantsLayer:YES];
+    
     [self.gridView setItemSize:CGSizeMake(190, 180)];
     [self.gridView setAllowsMultipleSelection:YES];
     [self.gridView reloadData];
@@ -63,6 +66,8 @@
                                              selector:@selector(albumsChanged:)
                                                  name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM
                                                object:nil];
+    
+    
 }
 
 

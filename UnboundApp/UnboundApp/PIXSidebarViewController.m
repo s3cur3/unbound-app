@@ -43,6 +43,8 @@
         [self.outlineView scrollRowToVisible:index];
     }*/
     //[self.outlineView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
+    
+    //[self.view setWantsLayer:YES];
 }
 
 -(Album *)currentlySelectedAlbum

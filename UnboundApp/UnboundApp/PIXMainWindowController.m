@@ -51,12 +51,15 @@
 {
     [super windowDidLoad];
     
+    [self.navigationViewController.view setWantsLayer:YES];
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     self.albumViewController = [[PIXCNAlbumViewController alloc] initWithNibName:@"PIXCNAlbumViewController" bundle:nil];
     
     [self.albumViewController view];
 
     [self.navigationViewController pushViewController:self.albumViewController];
+    
+    
 }
 
 //- (void)windowDidLoad

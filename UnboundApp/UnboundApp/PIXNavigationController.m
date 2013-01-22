@@ -35,9 +35,11 @@
 }
 
 
-
-/*-(void)awakeFromNib
+/*
+-(void)awakeFromNib
 {
+    
+    
     //
     PIXFileSystemDataSource *dataSource = [PIXFileSystemDataSource sharedInstance];
     if (!dataSource.finishedLoading) {
@@ -86,6 +88,7 @@
     PIXViewController * underViewController = [self.viewControllers lastObject];
     [underViewController.view setFrame:self.view.bounds];
     [self.view addSubview:[underViewController view]];
+        
     [aViewController.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
     [self setupToolbar];
 }

@@ -58,6 +58,9 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 -(void)awakeFromNib
 {
+    // make this layer backed to improve performance
+    //[self.view setWantsLayer:YES];
+
     self.hoverLayout.backgroundColor = [[NSColor grayColor] colorWithAlphaComponent:0.42];
     self.selectionLayout.backgroundColor = [NSColor colorWithCalibratedRed:0.542 green:0.699 blue:0.807 alpha:0.420];
     self.defaultLayout.visibleContentMask = CNGridViewItemVisibleContentImage;
