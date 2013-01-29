@@ -10,9 +10,14 @@
 #import <ArchDirectoryObserver/ArchDirectoryObserver.h>
 
 @interface PIXFileSystemDataSource : NSObject <ArchDirectoryObserver>
+{
+    NSUInteger scanCount;
+    NSMutableArray *tableRecords;    // the data source for the table
+}
 
 + (PIXFileSystemDataSource *)sharedInstance;
 
+//TODO: remove unused ivars
 @property (nonatomic,strong) NSString *rootFilePath;
 @property (nonatomic,strong) NSMutableArray *albums;
 @property (nonatomic,strong) NSMutableArray *sortedAlbums;
@@ -21,6 +26,14 @@
 @property (nonatomic,strong) NSArray *sortDescriptors;
 @property (nonatomic,strong) NSSortDescriptor *dateMostRecentPhotoDescriptor;
 @property (nonatomic, strong) NSArray *observedDirectories;
+
+
+//New stufff
+//@property (nonatomic,strong) NSMutableDictionary *tableRecords;
+
+
+-(void)startLoadingAllAlbumsAndPhotosInObservedDirectories;
+
 
 -(NSURL *)rootFilePathURL;
 

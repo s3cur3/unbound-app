@@ -37,14 +37,19 @@ static NSString *const kItemsKey = @"photos";
 //        //DLog(@"%@", aDate);
 //    }
     //[[NSNotificationCenter defaultCenter] addObser]
-    [self addObserver:self forKeyPath:@"photos" options:NSKeyValueObservingOptionInitial context:NULL];
+    //[self addObserver:self forKeyPath:@"photos.count" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:NULL];
+    [self addObserver:self forKeyPath:@"photos" options:NSKeyValueObservingOptionNew context:NULL];
+    [self addObserver:self forKeyPath:@"coverImage" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"photos"]) {
-        //_thumbnailImage = nil;
-        //DLog(@"photos changed for album : %@", self.title);
+        _thumbnailImage = nil;
+        self.thumbnail = nil;
+        DLog(@"photos changed for album : %@", self.title);
+        self.subtitle = nil;
+        [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
     } else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
@@ -53,7 +58,15 @@ static NSString *const kItemsKey = @"photos";
 /* Callback before delete propagation while the object is still alive.  Useful to perform custom propagation before the relationships are torn down or reconfigure KVO observers. */
 - (void)prepareForDeletion
 {
+    [self removeObserver:self forKeyPath:@"photos"];
+    [self removeObserver:self forKeyPath:@"coverImage"];
     [super prepareForDeletion];
+}
+
+-(void)dealloc
+{
+    [self removeObserver:self forKeyPath:@"photos"];
+    [self removeObserver:self forKeyPath:@"coverImage"];
 }
 
 - (NSURL *)filePathURL

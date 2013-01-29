@@ -104,7 +104,7 @@ extern NSString *kSearchDidFinishNotification;
     
     //Notification for spotlight fetches
     [[NSNotificationCenter defaultCenter] addObserverForName:kSearchDidFinishNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:kSearchDidFinishNotification object:nil];
+        //[[NSNotificationCenter defaultCenter] removeObserver:self name:kSearchDidFinishNotification object:nil];
         DLog(@"Finished loading photos");
         [self photosFinishedLoading:note];
         //[self updateAlbumsPhotos];
@@ -144,12 +144,27 @@ extern NSString *kSearchDidFinishNotification;
     
 }
 
+-(void)shouldStartFileSystemObservingWhenAlbumsFinishSaving
+{
+    [[NSNotificationCenter defaultCenter] addObserverForName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
+        [self startFileSystemLoading];
+    }];
+}
+
 
 -(void)startFileSystemLoading
 {
-    self.dataSource = [PIXFileSystemDataSource sharedInstance];
-    [self.dataSource performSelector:@selector(startObserving) withObject:nil afterDelay:1.0];
-    
+    if (!self.isObservingFileSystem)
+    {
+        self.isObservingFileSystem = YES;
+        self.dataSource = [PIXFileSystemDataSource sharedInstance];
+        //[self.dataSource startLoadingAllAlbumsAndPhotosInObservedDirectories];
+        //[self.dataSource performSelector:@selector(startLoadingAllAlbumsAndPhotosInObservedDirectories) withObject:nil afterDelay:1.0];
+        [self.dataSource performSelector:@selector(startObserving) withObject:nil afterDelay:1.0];
+    }
+
+
 //    [self.dataSource loadAllAlbums];
 //    //TODO: maybe show a loading/splash/progress window while data is loading?
 //    [[NSNotificationCenter defaultCenter] addObserverForName:kUB_PHOTOS_LOADED_FROM_FILESYSTEM object:self.dataSource queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
@@ -190,6 +205,7 @@ extern NSString *kSearchDidFinishNotification;
         loadingWindow = [[PIXLoadingWindowController alloc] initWithWindowNibName:@"PIXLoadingWindow"];
     }
     [loadingWindow showWindow:self];
+    //[self startFileSystemLoading];
 }
 
 - (NSError *)application:(NSApplication *)application willPresentError:(NSError *)error;
@@ -206,6 +222,7 @@ extern NSString *kSearchDidFinishNotification;
 - (void)applicationWillTerminate:(NSNotification *)notification;
 {
     [self.dataSource stopObserving];
+    self.isObservingFileSystem = NO;
     self.dataSource = nil;
 }
 
@@ -330,8 +347,17 @@ extern NSString *kSearchDidFinishNotification;
     }
     _managedObjectContext = [[NSManagedObjectContext alloc] init];
     [_managedObjectContext setPersistentStoreCoordinator:coordinator];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mergeContext:) name:NSManagedObjectContextDidSaveNotification object:nil];
     return _managedObjectContext;
+}
+
+-(void)mergeContext:(NSNotification *)notification
+{
+    NSManagedObjectContext *postingContext = [notification object];
+    if ([postingContext persistentStoreCoordinator] == [[self managedObjectContext] persistentStoreCoordinator]) {
+        // merge the changes
+        [[self managedObjectContext] performSelectorOnMainThread:@selector(mergeChangesFromContextDidSaveNotification:) withObject:notification waitUntilDone:NO];
+    }
 }
 
 // Returns the NSUndoManager for the application. In this case, the manager returned is that of the managed object context for the application.

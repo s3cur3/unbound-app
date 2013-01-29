@@ -25,4 +25,7 @@
  */
 - (void)gridView:(CNGridView *)gridView rightMouseButtonClickedOnItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section;
 
+
+//-(void)reloadItems:(NSNotification *)note;
+
 @end

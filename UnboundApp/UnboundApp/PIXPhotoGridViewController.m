@@ -12,6 +12,7 @@
 #import "PIXAlbum.h"
 #import "PIXPageViewController.h"
 #import "PIXNavigationController.h"
+#import "PIXDefines.h"
 
 @interface PIXPhotoGridViewController ()
 
@@ -29,6 +30,21 @@
     return self;
 }
 
+-(void)awakeFromNib
+{
+    [super awakeFromNib];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadItems:) name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
+    
+    //
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(albumsChanged:)
+//                                                 name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM
+//                                               object:nil];
+    
+    
+}
+
+
 -(void)setAlbum:(id)album
 {
     BOOL firstLoad = NO;
@@ -44,6 +60,7 @@
         {
             self.items = [self fetchItems];
             [self.gridView reloadData];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadItems:) name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
         }
     }
 }

@@ -14,6 +14,7 @@
 #import "PIXSplitViewController.h"
 #import "Album.h"
 #import "PIXAlbum.h"
+#import "PIXDefines.h"
 
 @interface PIXSidebarViewController ()
 
@@ -33,6 +34,20 @@
     return self;
 }
 
+
+-(void)loadView
+{
+    [super loadView];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(albumsChanged:)
+                                                 name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM
+                                               object:nil];
+}
+
+
+
+
+
 -(void)awakeFromNib
 {
     /*[self.outlineView reloadData];
@@ -45,6 +60,13 @@
     //[self.outlineView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
     
     //[self.view setWantsLayer:YES];
+    
+}
+
+-(void)albumsChanged:(NSNotification *)note
+{
+    //self.albums = nil;
+    [self.outlineView reloadData];
 }
 
 -(Album *)currentlySelectedAlbum
@@ -86,6 +108,7 @@
     self.outlineView.delegate = nil;
     self.outlineView.dataSource = nil;
     self.splitViewController = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
 }
 
 

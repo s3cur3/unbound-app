@@ -66,6 +66,24 @@
     
 }
 
+//-(void)setAlbum:(id)album
+//{
+//    BOOL firstLoad = NO;
+//    //The first time album is set, no need to reload
+//    if (_album==nil && album!=nil)
+//    {
+//        firstLoad = YES;
+//    }
+//    _album = album;
+//    if (album) {
+//        //[[[PIXAppDelegate sharedAppDelegate] window] setTitle:[self.album title]];
+//        if (firstLoad == NO)
+//        {
+//            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAlbumView:) name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:album];
+//        }
+//    }
+//}
+
 // use this to switch text color when highligthed
 - (void)setBackgroundStyle:(NSBackgroundStyle)style
 {

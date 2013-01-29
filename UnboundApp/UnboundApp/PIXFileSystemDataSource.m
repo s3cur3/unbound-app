@@ -15,10 +15,17 @@
 #import "PIXDefines.h"
 #import "PIXAppDelegate.h"
 #import "PIXAppDelegate+CoreDataUtils.h"
+#import "PIXDefines.h"
+#import "PIXGetAlbumPathsOperation.h"
+#import "PIXLoadAlbumOperation.h"
 
 #define ONLY_LOAD_ALBUMS_WITH_IMAGES 1
 
 extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
+extern NSString *kLoadImageDidFinish;
+extern NSString *kLoadAlbumDidFinish;
+extern NSString *kGetPathsOperationDidFinish;
+extern NSString *kScanCountKey;
 
 /*
  * Used to get the home directory of the user, UNIX/C based workaround for sandbox issues
@@ -52,6 +59,8 @@ NSString * DefaultDropBoxPhotosDirectory()
 @property (nonatomic,strong) NSDate *startDate;
 @property (nonatomic,strong) NSDate *endDate;
 @property (nonatomic,strong) NSDateFormatter *dateFormatter;
+@property (nonatomic, strong) NSOperationQueue *loadingQueue;
+
 
 //@property(strong) ArchDirectoryObservationResumeToken resumeToken;
 
@@ -81,12 +90,186 @@ NSString * DefaultDropBoxPhotosDirectory()
     self=[super init];
     if (self)
     {
+        tableRecords = [[NSMutableArray alloc] init];
+        scanCount = 0;
+        self.finishedLoading = YES;
         /*if (self.rootFilePath == nil) {
             self.rootFilePath = DefaultDropBoxPhotosDirectory();
             [self loadAllAlbums];
         }*/
     }
     return self;
+}
+
+-(NSOperationQueue *)loadingQueue;
+{
+    if (_loadingQueue == NULL)
+    {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            _loadingQueue = [[NSOperationQueue alloc] init];
+            [_loadingQueue setName:@"com.pixite.thumbnail.generator"];
+            [_loadingQueue setMaxConcurrentOperationCount:1];
+        });
+        
+    }
+    return _loadingQueue;
+}
+
+-(void)checkIfFinishedLoading
+{
+    //NSAssert(!self.finishedLoading, @"checkIfFinishedLoading called too many times");
+    if (self.finishedLoading == YES) {
+        DLog(@"Should not happen");
+        return;
+    }
+    if (self.loadingQueue.operationCount == 0) {
+        // Do something here when your queue has completed
+        NSLog(@"queue has completed");
+        if ([[self.loadingQueue operations] count] == 0)
+        {
+            self.finishedLoading = YES;
+            [self.loadingQueue removeObserver:self forKeyPath:@"operationCount"];
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:kLoadImageDidFinish object:nil];
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:kLoadAlbumDidFinish object:nil];
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:kGetPathsOperationDidFinish object:nil];
+            //NSAssert([[NSThread currentThread] isMainThread], @"Not on main thread!");
+            [self performSelectorOnMainThread:@selector(finishAndSaveRecords) withObject:nil waitUntilDone:NO];
+        } else {
+            DLog(@"\r\n[[self.loadingQueue operations] count] : %ld", [[self.loadingQueue operations] count]);
+        }
+    } else {
+        DLog(@"checkIfFinishedLoading - operation count : %ld", self.loadingQueue.operationCount);
+    }
+}
+
+- (void)mainThread_handleLoadedImages:(NSNotification *)note
+{
+    // Pending NSNotifications can possibly back up while waiting to be executed,
+	// and if the user stops the queue, we may have left-over pending
+	// notifications to process.
+	//
+	// So make sure we have "active" running NSOperations in the queue
+	// if we are to continuously add found image files to the table view.
+	// Otherwise, we let any remaining notifications drain out.
+	//
+	NSDictionary *notifData = [note userInfo];
+    
+    NSNumber *loadScanCountNum = [notifData valueForKey:kScanCountKey];
+    NSInteger loadScanCount = [loadScanCountNum integerValue];
+    
+    if (YES)//[myStopButton isEnabled])
+    {
+        // make sure the current scan matches the scan of our loaded image
+        if (scanCount == loadScanCount)
+        {
+            [tableRecords addObject:notifData];
+        } else {
+            DLog(@"here is the problem, scanCount: %ld, loadScanCount = %ld ", scanCount, loadScanCount);
+        }
+    }
+    if (self.finishedLoading == NO) {
+        [self performSelector:@selector(checkIfFinishedLoading) withObject:nil afterDelay:0.0f];
+    }
+}
+
+-(void)anyThread_handleLoadedImages:(NSNotification *)note
+{
+    [self performSelectorOnMainThread:@selector(mainThread_handleLoadedImages:) withObject:note waitUntilDone:NO];
+    NSLog(@"\r\n\t\timage loaded : %@", [note.userInfo valueForKey:@"path"]);
+}
+
+-(void)anyThread_handleLoadedAlbums:(NSNotification *)note
+{
+    //[self performSelectorOnMainThread:@selector(mainThread_handleLoadedImages:) withObject:note waitUntilDone:NO];
+    NSLog(@"\r\n\talbum loaded : %@", [note.userInfo valueForKey:@"path"]);
+    [self performSelectorOnMainThread:@selector(checkIfFinishedLoading) withObject:nil waitUntilDone:NO];
+}
+
+-(void)anyThread_handleLoadedPaths:(NSNotification *)note
+{
+    //[self performSelectorOnMainThread:@selector(mainThread_handleLoadedImages:) withObject:note waitUntilDone:NO];
+    NSLog(@"\r\npath loaded : %@", [note.userInfo valueForKey:@"path"]);
+    [self performSelectorOnMainThread:@selector(checkIfFinishedLoading) withObject:nil waitUntilDone:NO];
+}
+
+-(void)startLoadingAllAlbumsAndPhotosInObservedDirectories
+{
+    self.finishedLoading = NO;
+    scanCount++;
+    // register for the notification when an image file has been loaded by the NSOperation: "LoadOperation"
+	[[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(anyThread_handleLoadedImages:)
+                                                 name:kLoadImageDidFinish
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(anyThread_handleLoadedAlbums:)
+                                                 name:kLoadAlbumDidFinish
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(anyThread_handleLoadedPaths:)
+                                                 name:kGetPathsOperationDidFinish
+                                               object:nil];
+    
+
+    [tableRecords removeAllObjects];
+    NSArray *photoDirs = [self observedDirectories];
+    for (NSURL *aURL in photoDirs)
+    {
+        PIXLoadAlbumOperation *loadTopLevelOperation = [[PIXLoadAlbumOperation alloc] initWithRootURL:aURL queue:self.loadingQueue scanCount:scanCount];
+        [loadTopLevelOperation setQueuePriority:NSOperationQueuePriorityVeryLow];
+        [self.loadingQueue addOperation:loadTopLevelOperation];	// this will start the "GetPathsOperation"
+    }
+    
+
+    for (NSURL *aURL in photoDirs)
+    {
+        PIXGetAlbumPathsOperation *getPathsOp = [[PIXGetAlbumPathsOperation alloc] initWithRootURL:aURL queue:self.loadingQueue scanCount:scanCount];
+        [getPathsOp setQueuePriority:NSOperationQueuePriorityLow];
+        [self.loadingQueue addOperation:getPathsOp];	// this will start the "GetPathsOperation"
+    }
+    
+    [self.loadingQueue addObserver:self forKeyPath:@"operationCount" options:0 context:NULL];
+}
+
+- (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object
+                         change:(NSDictionary *)change context:(void *)context
+{
+    if (object == self.loadingQueue && [keyPath isEqualToString:@"operationCount"]) {
+        if (self.loadingQueue.operationCount == 0) {
+            // Do something here when your queue has completed
+            NSLog(@"queue has completed");
+            if ([[self.loadingQueue operations] count] == 0)
+            {
+                //NSAssert([[NSThread currentThread] isMainThread], @"Not on main thread!");
+                [self performSelectorOnMainThread:@selector(checkIfFinishedLoading) withObject:nil waitUntilDone:NO];
+            } else {
+                DLog(@"\r\n[[self.loadingQueue operations] count] : %ld", [[self.loadingQueue operations] count]);
+            }
+        }
+    }
+    else {
+        [super observeValueForKeyPath:keyPath ofObject:object
+                               change:change context:context];
+    }
+}
+
+-(void)finishAndSaveRecords
+{
+    /*PhotoLoadOperation *op = [[PhotoLoadOperation alloc] initWithData:tableRecords];
+     NSOperationQueue *saveQueue = [[NSOperationQueue alloc] init];
+     [saveQueue addOperation:op];*/
+    //PIXAppDelegate *appDelegate = (PIXAppDelegate *)[[NSApplication sharedApplication] delegate];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSearchDidFinishNotification object:self userInfo:@{@"items" : [tableRecords copy]}];
+    //[appDelegate addItemToList:[tableRecords copy]];
+    //[self fetchRecords];
+    //[saveQueue waitUntilAllOperationsAreFinished];
+    //NSLog(@"DONE SAVING DATA");
+    //[queue setSuspended:NO];
+    //NSString *resultStr = [NSString stringWithFormat:@"DONE LOADING!\nImages found: %ld", [tableRecords count]];
+    //[self setResultsString: resultStr];
 }
 
 -(NSArray *)executeFetchRequest:(NSFetchRequest *)fetchRequest
@@ -422,6 +605,7 @@ NSString * DefaultDropBoxPhotosDirectory()
 //possible options are ArchDirectoryObserverResponsive and ArchDirectoryObserverObservesSelf
 -(void)startObserving
 {
+    DLog(@"** STARTING FILE SYSTEM OBSERVATION **");
     for (NSURL *aDir in [self observedDirectories])
     {
         NSString *tokenKeyString = [NSString stringWithFormat:@"resumeToken-%@", aDir.path];
@@ -466,7 +650,7 @@ NSString * DefaultDropBoxPhotosDirectory()
         DLog(@"Files in album '%@' have changed while the app was not active", changedURL.path);
         //NSAssert(NO, @"Not expecting historical changes in childrenAtURLDidChange");
     }
-    PIXAppDelegate *appDelegate = [PIXAppDelegate sharedAppDelegate];
+    /*PIXAppDelegate *appDelegate = [PIXAppDelegate sharedAppDelegate];
     PIXAlbum *dbAlbum = [appDelegate fetchAlbumWithPath:changedURL.path inContext:appDelegate.managedObjectContext];
     if (dbAlbum!=nil) {
         NSNotification *albumChangedNotification = [NSNotification notificationWithName:AlbumDidChangeNotification
@@ -476,6 +660,10 @@ NSString * DefaultDropBoxPhotosDirectory()
         [[NSNotificationQueue defaultQueue] enqueueNotification:albumChangedNotification postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnSender forModes:nil];
     } else {
         DLog(@"No album at path %@", changedURL.path);
+    }*/
+    
+    if (self.finishedLoading) {
+        [self startLoadingAllAlbumsAndPhotosInObservedDirectories];
     }
     
 //
