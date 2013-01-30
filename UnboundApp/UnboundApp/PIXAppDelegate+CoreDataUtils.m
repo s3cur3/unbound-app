@@ -94,7 +94,8 @@ extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
                 
                 if (lastAlbum) {
                     DLog(@"lastAlbum.photos.count = %ld", lastAlbum.photos.count);
-                    //[self setPhotos:lastAlbumsPhotos forAlbum:lastAlbum];
+                    [lastAlbumsPhotos addObjectsFromArray:lastAlbumsExistingPhotos];
+                    [self setPhotos:lastAlbumsPhotos forAlbum:lastAlbum];
                     //lastAlbum.photos = [[NSOrderedSet alloc] initWithArray:lastAlbumsPhotos];
                 }
                 lastAlbum = [self fetchAlbumWithPath:aPath inContext:context];
@@ -133,6 +134,10 @@ extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
             [dbPhoto setDateLastUpdated:self.fetchDate];
             //[lastAlbum addPhotosObject:dbPhoto];
             [dbPhoto setAlbum:lastAlbum];
+            if (!lastAlbum.albumDate  || [lastAlbum.albumDate isLessThan:dbPhoto.dateLastModified]) {
+                lastAlbum.coverPhoto = dbPhoto;
+                lastAlbum.albumDate = dbPhoto.dateLastModified;
+            }
             [lastAlbumsPhotos addObject:dbPhoto];
             //[lastAlbum addPhotosObject:dbPhoto];
             if (i%500==0) {
@@ -141,7 +146,8 @@ extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
         }
         //lastAlbum.photos = [[NSOrderedSet alloc] initWithArray:lastAlbumsPhotos];
         //[lastAlbumsPhotos removeAllObjects];
-        //[self setPhotos:lastAlbumsPhotos forAlbum:lastAlbum];
+        [lastAlbumsPhotos addObjectsFromArray:lastAlbumsExistingPhotos];
+        [self setPhotos:lastAlbumsPhotos  forAlbum:lastAlbum];
         
         if (![self deleteObjectsForEntityName:@"PIXAlbum" withUpdateDateBefore:self.fetchDate inContext:context]) {
             DLog(@"There was a problem trying to delete old objects");
@@ -155,10 +161,10 @@ extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
         dispatch_async(dispatch_get_main_queue(), ^{
             
 
-            [self testFetchAllPhotos:nil];
+            //[self testFetchAllPhotos:nil];
             //[[NSNotificationCenter defaultCenter] postNotificationName:@"PhotoLoadingFinished" object:self userInfo:nil];
 
-            [self testFetchAllAlbums:nil];
+            //[self testFetchAllAlbums:nil];
             //[[NSNotificationCenter defaultCenter] postNotificationName:@"AlbumLoadingFinished" object:self userInfo:nil];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];

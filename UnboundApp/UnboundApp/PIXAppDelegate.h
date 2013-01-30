@@ -33,6 +33,8 @@
 - (IBAction)showLoadingWindow:(id)sender;
 
 -(void)startFileSystemLoading;
+-(void)shouldStartFileSystemObservingWhenAlbumsFinishSaving;
+@property (assign) BOOL isObservingFileSystem;
 
 @property (nonatomic,strong) NSDate *startDate;
 

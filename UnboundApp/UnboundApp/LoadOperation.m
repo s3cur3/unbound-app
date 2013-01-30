@@ -47,6 +47,7 @@
  */
 
 #import "LoadOperation.h"
+#import "PIXAppDelegate.h"
 
 // key for obtaining the current scan count
 NSString *kScanCountKey = @"scanCount";
@@ -108,7 +109,11 @@ NSString *kLoadImageDidFinish = @"LoadImageDidFinish";
     BOOL isImageFile = NO;
     
     NSString *utiValue;
-    [url getResourceValue:&utiValue forKey:NSURLTypeIdentifierKey error:nil];
+    NSError *error;
+    if (![url getResourceValue:&utiValue forKey:NSURLTypeIdentifierKey error:&error])
+    {
+        [PIXAppDelegate presentError:error];
+    }
     if (utiValue)
     {
         isImageFile = UTTypeConformsTo((__bridge CFStringRef)utiValue, kUTTypeImage);
@@ -127,11 +132,14 @@ NSString *kLoadImageDidFinish = @"LoadImageDidFinish";
 // -------------------------------------------------------------------------------
 - (void)main
 {
+    
 	if (![self isCancelled])
 	{
+        DLog(@"Checking if file is photo '%@'",[loadURL.path lastPathComponent]);
 		// test to see if it's an image file
 		if ([self isImageFile:loadURL])
 		{
+            DLog(@"Loading photo '%@'",loadURL.path);
 			// in this example, we just get the file's info (mod date, file size) and report it to the table view
 			//
 			NSNumber *fileSize;

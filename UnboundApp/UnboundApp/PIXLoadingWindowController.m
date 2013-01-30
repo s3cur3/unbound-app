@@ -289,7 +289,9 @@ extern NSString *kSearchDidFinishNotification;
     [saveQueue addOperation:op];*/
     //PIXAppDelegate *appDelegate = (PIXAppDelegate *)[[NSApplication sharedApplication] delegate];
     [[NSNotificationCenter defaultCenter] postNotificationName:kSearchDidFinishNotification object:self userInfo:@{@"items" : [tableRecords copy]}];
+    [[PIXAppDelegate sharedAppDelegate] shouldStartFileSystemObservingWhenAlbumsFinishSaving];
     [self.window close];
+    
     //[appDelegate addItemToList:[tableRecords copy]];
     //[self fetchRecords];
     //[saveQueue waitUntilAllOperationsAreFinished];
