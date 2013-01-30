@@ -461,8 +461,6 @@
 				8C249E8816AB560000CB97AF /* PIXCNAlbumViewController.xib */,
 				8C249E8416AB467000CB97AF /* PIXAlbumGridViewItem.h */,
 				8C249E8516AB467100CB97AF /* PIXAlbumGridViewItem.m */,
-				1D4A1E0B167C065000C9A895 /* PIXBorderedImageView.h */,
-				1D4A1E0C167C065000C9A895 /* PIXBorderedImageView.m */,
 			);
 			name = AlbumView;
 			sourceTree = "<group>";
@@ -716,6 +714,8 @@
 		8C249E9816AD094E00CB97AF /* No Longer Used */ = {
 			isa = PBXGroup;
 			children = (
+				1D4A1E0B167C065000C9A895 /* PIXBorderedImageView.h */,
+				1D4A1E0C167C065000C9A895 /* PIXBorderedImageView.m */,
 				1DC0C94616A6F65F0081F5A5 /* BCCollectionView */,
 				1D4A1DE1167AFC7100C9A895 /* PIXAlbumViewController.h */,
 				1D4A1DE2167AFC7100C9A895 /* PIXAlbumViewController.m */,

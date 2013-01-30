@@ -11,6 +11,7 @@
 #import "PIXBorderedImageView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "PIXDefines.h"
+#include <stdlib.h>
 
 @interface PIXAlbumGridViewItem()
 
@@ -23,6 +24,9 @@
 @property (strong, nonatomic) NSImage * stackThumb2;
 @property (strong, nonatomic) NSImage * stackThumb3;
 
+@property CGFloat stackThumb1Rotate;
+@property CGFloat stackThumb2Rotate;
+
 @end
 
 @implementation PIXAlbumGridViewItem
@@ -34,6 +38,12 @@
         
         self.stackThumb1 = [NSImage imageNamed:@"temp"];
         self.stackThumb2 = [NSImage imageNamed:@"temp-portrait"];
+        
+        // randomly rotate the first between -.05 and .05
+        self.stackThumb1Rotate = (CGFloat)(arc4random() % 1000)/10000 - .05;
+        
+        // the second needs to be the difference so that we rotate the object back
+        self.stackThumb2Rotate = (CGFloat)(arc4random() % 1000)/10000 - .05 - self.stackThumb1Rotate;
     }
     return self;
 }
@@ -141,12 +151,23 @@
     // draw the stack of imagess
     
     CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
-    //CGContextSaveGState(context);
-    //CGContextRotateCTM(context, .4);
+    
+    CGContextSaveGState(context);
+    
+    CGContextTranslateCTM(context, self.bounds.size.width/2, self.bounds.size.height/2);
+    CGContextRotateCTM(context, self.stackThumb1Rotate);
+    CGContextTranslateCTM(context, -self.bounds.size.width/2, -self.bounds.size.height/2);
+    
     [self drawBorderedPhoto:self.stackThumb1 inRect:albumFrame];
-    //CGContextRestoreGState(context);
+    
+    CGContextTranslateCTM(context, self.bounds.size.width/2, self.bounds.size.height/2);
+    CGContextRotateCTM(context, self.stackThumb2Rotate);
+    CGContextTranslateCTM(context, -self.bounds.size.width/2, -self.bounds.size.height/2);
+    
     [self drawBorderedPhoto:self.stackThumb2 inRect:albumFrame];
-    //[self drawBorderedPhoto:self.stackThumb3 inRect:albumFrame];
+    
+    CGContextRestoreGState(context);
+    
     
     // draw the top image
     [self drawBorderedPhoto:self.albumThumb inRect:albumFrame];

@@ -91,7 +91,7 @@ static CGSize kDefaultItemSizeCustomized;
     
     
     CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
-    CGContextSetShadowWithColor(context, CGSizeMake(0, -1), 6.0, [[NSColor colorWithGenericGamma22White:0.0 alpha:.5] CGColor]);
+    CGContextSetShadowWithColor(context, CGSizeMake(0, -1), 6.0, [[NSColor colorWithGenericGamma22White:0.0 alpha:.4] CGColor]);
     
     
     
