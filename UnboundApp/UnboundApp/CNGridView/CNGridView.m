@@ -755,6 +755,8 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 {
     NSUInteger topLeftItemIndex = [self indexForItemAtLocationNoSpace:[self convertPoint:NSMakePoint(NSMinX(selectionFrame), NSMinY(selectionFrame)) toView:nil]];
     NSUInteger bottomRightItemIndex = [self indexForItemAtLocationNoSpace:[self convertPoint:NSMakePoint(NSMaxX(selectionFrame), NSMaxY(selectionFrame)) toView:nil]];
+    
+    if(topLeftItemIndex == NSNotFound || bottomRightItemIndex == NSNotFound) return;
 
     CNItemPoint topLeftItemPoint = [self locationForItemAtIndex:topLeftItemIndex];
     CNItemPoint bottomRightItemPoint = [self locationForItemAtIndex:bottomRightItemIndex];
@@ -793,16 +795,20 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
     /// update all items that needs to be selected
     NSUInteger columnsInGridView = [self columnsInGridView];
-    for (NSUInteger row = topLeftItemPoint.row; row <= bottomRightItemPoint.row; row++) {
-        for (NSUInteger col = topLeftItemPoint.column; col <= bottomRightItemPoint.column; col++) {
-            NSUInteger itemIndex = ((row -1) * columnsInGridView + col) -1;
-            CNGridViewItem *selectedItem = [selectedItems objectForKey:[NSNumber numberWithInteger:itemIndex]];
-            CNGridViewItem *itemToSelect = [keyedVisibleItems objectForKey:[NSNumber numberWithInteger:itemIndex]];
-            [selectedItemsBySelectionFrame setObject:itemToSelect forKey:[NSNumber numberWithInteger:itemToSelect.index]];
-            if (modifierFlags & NSCommandKeyMask) {
-                itemToSelect.selected = ([itemToSelect isEqual:selectedItem] ? NO : YES);
-            } else {
-                itemToSelect.selected = YES;
+    
+    if(topLeftItemPoint.row != NSNotFound && bottomRightItemPoint.row != NSNotFound)
+    {
+        for (NSUInteger row = topLeftItemPoint.row; row <= bottomRightItemPoint.row; row++) {
+            for (NSUInteger col = topLeftItemPoint.column; col <= bottomRightItemPoint.column; col++) {
+                NSUInteger itemIndex = ((row -1) * columnsInGridView + col) -1;
+                CNGridViewItem *selectedItem = [selectedItems objectForKey:[NSNumber numberWithInteger:itemIndex]];
+                CNGridViewItem *itemToSelect = [keyedVisibleItems objectForKey:[NSNumber numberWithInteger:itemIndex]];
+                [selectedItemsBySelectionFrame setObject:itemToSelect forKey:[NSNumber numberWithInteger:itemToSelect.index]];
+                if (modifierFlags & NSCommandKeyMask) {
+                    itemToSelect.selected = ([itemToSelect isEqual:selectedItem] ? NO : YES);
+                } else {
+                    itemToSelect.selected = YES;
+                }
             }
         }
     }
