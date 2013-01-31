@@ -373,6 +373,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     return rangeForVisibleRect;
 }
 
+// this method was modified by scott to support stretching row layout
 - (NSRect)rectForItemAtIndex:(NSUInteger)index
 {
     NSUInteger columns = [self columnsInGridView];
@@ -380,10 +381,9 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     NSUInteger column = (index % columns);
     CGFloat xpos = column  * self.itemSize.width;
     
-    CGFloat space = self.frame.size.width - (columns * self.itemSize.width);
+    CGFloat space = (self.frame.size.width - (columns * self.itemSize.width)) / (columns + 1);
     
-    space = space/ (columns + 1);
-    
+
     xpos = xpos + (space * (column+1));
     
     NSRect itemRect = NSMakeRect(xpos,
@@ -392,6 +392,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
                                  self.itemSize.height);
     return itemRect;
 }
+
 
 - (NSUInteger)columnsInGridView
 {
@@ -419,19 +420,20 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     return [[[self enclosingScrollView] contentView] bounds];
 }
 
+// this method was modified by scott to support stretching row layout
 - (NSUInteger)indexForItemAtLocation:(NSPoint)location
 {
     NSPoint point = [self convertPoint:location fromView:nil];
     NSUInteger indexForItemAtLocation;
-    if (point.x > (self.itemSize.width * [self columnsInGridView])) {
-        indexForItemAtLocation = NSNotFound;
-
-    } else {
-        NSUInteger currentColumn = floor(point.x / self.itemSize.width);
-        NSUInteger currentRow = floor(point.y / self.itemSize.height);
-        indexForItemAtLocation = currentRow * [self columnsInGridView] + currentColumn;
-        indexForItemAtLocation = (indexForItemAtLocation > (numberOfItems - 1) ? NSNotFound : indexForItemAtLocation);
-    }
+    
+    NSUInteger columns = [self columnsInGridView];
+    CGFloat space = (self.frame.size.width - (columns * self.itemSize.width)) / (columns + 1);
+    
+    NSUInteger currentColumn = floor(point.x / (self.itemSize.width+space));
+    NSUInteger currentRow = floor(point.y / self.itemSize.height);
+    indexForItemAtLocation = currentRow * [self columnsInGridView] + currentColumn;
+    indexForItemAtLocation = (indexForItemAtLocation > (numberOfItems - 1) ? NSNotFound : indexForItemAtLocation);
+    
     return indexForItemAtLocation;
 }
 
