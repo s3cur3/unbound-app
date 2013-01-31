@@ -171,6 +171,8 @@
     
     // draw the top image
     [self drawBorderedPhoto:self.albumThumb inRect:albumFrame];
+    
+    self.contentFrame = albumFrame;
 
 }
 

@@ -35,6 +35,8 @@
 @property (nonatomic, strong) NSToolbarItem * trashbutton;
 @property (nonatomic, strong) NSToolbarItem * settingsButton;
 
+@property (nonatomic, strong) PIXSplitViewController *aSplitViewController;
+
 @end
 
 @implementation PIXCNAlbumViewController
@@ -61,6 +63,7 @@
     [self.gridView setItemSize:CGSizeMake(190, 180)];
     [self.gridView setAllowsMultipleSelection:YES];
     [self.gridView reloadData];
+    [self.gridView setUseHover:NO];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(albumsChanged:)
@@ -177,7 +180,7 @@
 
 - (void)gridView:(CNGridView *)gridView didDoubleClickItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
-    [gridView deselectAllItems];
+    //[gridView deselectAllItems];
     
     DLog(@"didDoubleClickItemAtIndex: %li", index);
     PIXAlbum * album = [self.albums objectAtIndex:index];
@@ -186,10 +189,8 @@
 
 -(void)showPhotosForAlbum:(id)anAlbum
 {
-    PIXSplitViewController *aSplitViewController  = [[PIXSplitViewController alloc] initWithNibName:@"PIXSplitViewController" bundle:nil];
-    aSplitViewController.selectedAlbum = anAlbum;
-    [aSplitViewController.view setFrame:self.view.bounds];
-    [self.navigationViewController pushViewController:aSplitViewController];
+    self.aSplitViewController.selectedAlbum = anAlbum;
+    [self.navigationViewController pushViewController:self.aSplitViewController];
 }
 
 - (void)gridView:(CNGridView *)gridView rightMouseButtonClickedOnItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
@@ -222,6 +223,16 @@
     _albums = [[[PIXAppDelegate sharedAppDelegate] fetchAllAlbums] mutableCopy];
     
     return _albums;
+}
+
+-(PIXSplitViewController *) aSplitViewController
+{
+    if(_aSplitViewController != nil) return _aSplitViewController;
+    
+    _aSplitViewController = [[PIXSplitViewController alloc] initWithNibName:@"PIXSplitViewController" bundle:nil];
+    
+    return _aSplitViewController;
+
 }
 
 

@@ -51,6 +51,8 @@ static NSString *kContentTitleKey, *kContentImageKey;
         _defaultLayout = [CNGridViewItemLayout defaultLayout];
         _hoverLayout = [CNGridViewItemLayout defaultLayout];
         _selectionLayout = [CNGridViewItemLayout defaultLayout];
+        
+        [self.gridView setAllowsMultipleSelection:YES];
     }
     
     return self;
@@ -69,6 +71,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
     self.selectionLayout.visibleContentMask = CNGridViewItemVisibleContentImage | CNGridViewItemVisibleContentTitle;
     
     [self.gridView setItemSize:CGSizeMake(200, 200)];
+    [self.gridView setAllowsMultipleSelection:YES];
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(detectedNotification:) name:CNGridViewWillHoverItemNotification object:nil];
