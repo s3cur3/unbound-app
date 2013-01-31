@@ -113,7 +113,7 @@
 {
     [self.mainWindow disableFlushWindow];
 
-    NSDisableScreenUpdates();
+    //NSDisableScreenUpdates();
     
     _toolbarItems = items;
     
@@ -130,7 +130,7 @@
         i++;
     }
     
-    NSEnableScreenUpdates();
+    //NSEnableScreenUpdates();
     [self.mainWindow enableFlushWindow];
     
 }

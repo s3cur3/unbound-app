@@ -268,4 +268,9 @@ extern NSString *CNGridViewDeSelectAllItemsNotification;
     self.currentLayout = _defaultLayout;
 }
 
+-(void)dealloc // added by scott to fix crash
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 @end

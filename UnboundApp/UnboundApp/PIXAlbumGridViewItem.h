@@ -7,20 +7,21 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "CNGridViewItem.h"
+#import "PIXGridViewItem.h"
 
 @class PIXAlbum, PIXBorderedImageView;
 
-@interface PIXAlbumGridViewItem : CNGridViewItem
+@interface PIXAlbumGridViewItem : PIXGridViewItem
 
 @property (strong, nonatomic) PIXAlbum * album;
 
-@property (strong, nonatomic) IBOutlet NSTextField *mainLabel;
-@property (strong, nonatomic) IBOutlet NSTextField * detailLabel;
+
+/*
 @property (strong, nonatomic) IBOutlet PIXBorderedImageView * albumImageView;
 
 @property (strong, nonatomic) IBOutlet PIXBorderedImageView * stackPhoto1;
 @property (strong, nonatomic) IBOutlet PIXBorderedImageView * stackPhoto2;
 @property (strong, nonatomic) IBOutlet PIXBorderedImageView * stackPhoto3;
+ */
 
 @end

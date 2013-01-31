@@ -15,7 +15,7 @@
 //#import "PIXAlbum.h"
 #import "PIXThumbnailLoadingDelegate.h"
 #import "PIXDefines.h"
-#import "PIXGridViewItem.h"
+#import "PIXPhotoGridViewItem.h"
 
 #import "PIXNavigationController.h"
 #import "PIXSplitViewController.h"
@@ -51,6 +51,8 @@ static NSString *kContentTitleKey, *kContentImageKey;
         _defaultLayout = [CNGridViewItemLayout defaultLayout];
         _hoverLayout = [CNGridViewItemLayout defaultLayout];
         _selectionLayout = [CNGridViewItemLayout defaultLayout];
+        
+        [self.gridView setAllowsMultipleSelection:YES];
     }
     
     return self;
@@ -68,7 +70,8 @@ static NSString *kContentTitleKey, *kContentImageKey;
     self.hoverLayout.visibleContentMask = CNGridViewItemVisibleContentImage | CNGridViewItemVisibleContentTitle;
     self.selectionLayout.visibleContentMask = CNGridViewItemVisibleContentImage | CNGridViewItemVisibleContentTitle;
     
-    [self.gridView setItemSize:[PIXGridViewItem defaultItemSize]];
+    [self.gridView setItemSize:CGSizeMake(200, 200)];
+    [self.gridView setAllowsMultipleSelection:YES];
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(detectedNotification:) name:CNGridViewWillHoverItemNotification object:nil];
@@ -194,7 +197,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
     
     CNGridViewItem *item = [gridView dequeueReusableItemWithIdentifier:reuseIdentifier];
     if (item == nil) {
-        item = [[PIXGridViewItem alloc] initWithLayout:self.defaultLayout reuseIdentifier:reuseIdentifier];
+        item = [[PIXPhotoGridViewItem alloc] initWithLayout:self.defaultLayout reuseIdentifier:reuseIdentifier];
     }
     item.hoverLayout = self.hoverLayout;
     item.selectionLayout = self.selectionLayout;

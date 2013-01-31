@@ -49,7 +49,8 @@ __unused static NSString *kCNGridViewItemClearSelectionNotification;
  */
 - (id)initWithLayout:(CNGridViewItemLayout *)layout reuseIdentifier:(NSString *)reuseIdentifier;
 
-
+// added by scott to support clicking outside of content
+@property CGRect contentFrame;
 
 #pragma mark - Reusing Grid View Items
 /** @name Reusing Grid View Items */

@@ -373,6 +373,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     return rangeForVisibleRect;
 }
 
+// this method was modified by scott to support stretching row layout
 - (NSRect)rectForItemAtIndex:(NSUInteger)index
 {
     NSUInteger columns = [self columnsInGridView];
@@ -380,10 +381,9 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     NSUInteger column = (index % columns);
     CGFloat xpos = column  * self.itemSize.width;
     
-    CGFloat space = self.frame.size.width - (columns * self.itemSize.width);
+    CGFloat space = (self.frame.size.width - (columns * self.itemSize.width)) / (columns + 1);
     
-    space = space/ (columns + 1);
-    
+
     xpos = xpos + (space * (column+1));
     
     NSRect itemRect = NSMakeRect(xpos,
@@ -392,6 +392,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
                                  self.itemSize.height);
     return itemRect;
 }
+
 
 - (NSUInteger)columnsInGridView
 {
@@ -419,19 +420,59 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     return [[[self enclosingScrollView] contentView] bounds];
 }
 
+// this method was modified by scott to support stretching row layout
 - (NSUInteger)indexForItemAtLocation:(NSPoint)location
 {
     NSPoint point = [self convertPoint:location fromView:nil];
     NSUInteger indexForItemAtLocation;
-    if (point.x > (self.itemSize.width * [self columnsInGridView])) {
-        indexForItemAtLocation = NSNotFound;
+    
+    NSUInteger columns = [self columnsInGridView];
+    CGFloat space = (self.frame.size.width - (columns * self.itemSize.width)) / (columns + 1);
+    
+    NSUInteger currentColumn = floor(point.x / (self.itemSize.width+space));
+    NSUInteger currentRow = floor(point.y / self.itemSize.height);
+    indexForItemAtLocation = currentRow * [self columnsInGridView] + currentColumn;
+    indexForItemAtLocation = (indexForItemAtLocation > (numberOfItems - 1) ? NSNotFound : indexForItemAtLocation);
+    
+    // now check that we're inside of the contentFrame rect    
+    if (indexForItemAtLocation != NSNotFound)
+    {
+        CNGridViewItem *gridViewItem = [keyedVisibleItems objectForKey:[NSNumber numberWithInteger:indexForItemAtLocation]];
+        
+        NSPoint pointInItemView = [gridViewItem convertPoint:location fromView:nil];
+        
+        if(CGRectContainsPoint(gridViewItem.contentFrame, pointInItemView))
+        {
+            return indexForItemAtLocation;
+        }
+    
+        
+    }
+    
+    return NSNotFound;
+}
 
+// this is used by the drag select -- added by scott
+- (NSUInteger)indexForItemAtLocationNoSpace:(NSPoint)location
+{
+    NSPoint point = [self convertPoint:location fromView:nil];
+    NSUInteger indexForItemAtLocation;
+    
+    NSUInteger columns = [self columnsInGridView];
+    CGFloat space = (self.frame.size.width - (columns * self.itemSize.width)) / (columns + 1);
+    
+    if (point.x > ((self.itemSize.width+space) * [self columnsInGridView])) {
+        indexForItemAtLocation = NSNotFound;
+        
     } else {
-        NSUInteger currentColumn = floor(point.x / self.itemSize.width);
+    
+        NSUInteger currentColumn = floor(point.x / (self.itemSize.width+space));
         NSUInteger currentRow = floor(point.y / self.itemSize.height);
         indexForItemAtLocation = currentRow * [self columnsInGridView] + currentColumn;
         indexForItemAtLocation = (indexForItemAtLocation > (numberOfItems - 1) ? NSNotFound : indexForItemAtLocation);
     }
+    
+    
     return indexForItemAtLocation;
 }
 
@@ -509,7 +550,10 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 - (void)selectItemAtIndex:(NSUInteger)selectedItemIndex usingModifierFlags:(NSUInteger)modifierFlags
 {
     if (selectedItemIndex == NSNotFound)
+    {
         return;
+    }
+        
 
     CNGridViewItem *gridViewItem = nil;
 
@@ -524,9 +568,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
             if (!gridViewItem.selected) {
                 [self selectItem:gridViewItem];
             } else {
-                if (modifierFlags & NSCommandKeyMask) {
-                    [self deSelectItem:gridViewItem];
-                }
+                [self deSelectItem:gridViewItem];
             }
 
         } else {
@@ -551,14 +593,13 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         CNGridViewItem *item = [self gridView:self itemAtIndex:idx inSection:0];
         item.selected = YES;
         item.index = idx;
-//        [item setNeedsDisplay:YES];
         [selectedItems setObject:item forKey:[NSNumber numberWithInteger:item.index]];
     };
 }
 
 - (void)deselectAllItems
 {
-    if (selectedItems.count > 0 && !self.allowsMultipleSelection) {
+    if (selectedItems.count > 0) {
         /// inform the delegate
         [self gridView:self willDeselectAllItems:[self selectedItems]];
 
@@ -667,6 +708,12 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 {
     if (selectedItemIndex == NSNotFound)
         return;
+    
+    [self deselectAllItems];
+    
+    [self selectItemAtIndex:selectedItemIndex usingModifierFlags:[NSEvent modifierFlags]];
+    
+    
 
     /// inform the delegate
     [self gridView:self didDoubleClickItemAtIndex:selectedItemIndex inSection:0];
@@ -705,8 +752,10 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
 - (void)selectItemsCoveredBySelectionFrame:(NSRect)selectionFrame usingModifierFlags:(NSUInteger)modifierFlags
 {
-    NSUInteger topLeftItemIndex = [self indexForItemAtLocation:[self convertPoint:NSMakePoint(NSMinX(selectionFrame), NSMinY(selectionFrame)) toView:nil]];
-    NSUInteger bottomRightItemIndex = [self indexForItemAtLocation:[self convertPoint:NSMakePoint(NSMaxX(selectionFrame), NSMaxY(selectionFrame)) toView:nil]];
+    NSUInteger topLeftItemIndex = [self indexForItemAtLocationNoSpace:[self convertPoint:NSMakePoint(NSMinX(selectionFrame), NSMinY(selectionFrame)) toView:nil]];
+    NSUInteger bottomRightItemIndex = [self indexForItemAtLocationNoSpace:[self convertPoint:NSMakePoint(NSMaxX(selectionFrame), NSMaxY(selectionFrame)) toView:nil]];
+    
+    if(topLeftItemIndex == NSNotFound || bottomRightItemIndex == NSNotFound) return;
 
     CNItemPoint topLeftItemPoint = [self locationForItemAtIndex:topLeftItemIndex];
     CNItemPoint bottomRightItemPoint = [self locationForItemAtIndex:bottomRightItemIndex];
@@ -745,16 +794,20 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
     /// update all items that needs to be selected
     NSUInteger columnsInGridView = [self columnsInGridView];
-    for (NSUInteger row = topLeftItemPoint.row; row <= bottomRightItemPoint.row; row++) {
-        for (NSUInteger col = topLeftItemPoint.column; col <= bottomRightItemPoint.column; col++) {
-            NSUInteger itemIndex = ((row -1) * columnsInGridView + col) -1;
-            CNGridViewItem *selectedItem = [selectedItems objectForKey:[NSNumber numberWithInteger:itemIndex]];
-            CNGridViewItem *itemToSelect = [keyedVisibleItems objectForKey:[NSNumber numberWithInteger:itemIndex]];
-            [selectedItemsBySelectionFrame setObject:itemToSelect forKey:[NSNumber numberWithInteger:itemToSelect.index]];
-            if (modifierFlags & NSCommandKeyMask) {
-                itemToSelect.selected = ([itemToSelect isEqual:selectedItem] ? NO : YES);
-            } else {
-                itemToSelect.selected = YES;
+    
+    if(topLeftItemPoint.row != NSNotFound && bottomRightItemPoint.row != NSNotFound)
+    {
+        for (NSUInteger row = topLeftItemPoint.row; row <= bottomRightItemPoint.row; row++) {
+            for (NSUInteger col = topLeftItemPoint.column; col <= bottomRightItemPoint.column; col++) {
+                NSUInteger itemIndex = ((row -1) * columnsInGridView + col) -1;
+                CNGridViewItem *selectedItem = [selectedItems objectForKey:[NSNumber numberWithInteger:itemIndex]];
+                CNGridViewItem *itemToSelect = [keyedVisibleItems objectForKey:[NSNumber numberWithInteger:itemIndex]];
+                [selectedItemsBySelectionFrame setObject:itemToSelect forKey:[NSNumber numberWithInteger:itemToSelect.index]];
+                if (modifierFlags & NSCommandKeyMask) {
+                    itemToSelect.selected = ([itemToSelect isEqual:selectedItem] ? NO : YES);
+                } else {
+                    itemToSelect.selected = YES;
+                }
             }
         }
     }
@@ -870,9 +923,36 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
     /// otherwise it was a real click on an item
     else {
+        
+        // if we're clicking up while not on any item then deselect all -- scott
+        NSPoint location = [theEvent locationInWindow];
+        NSInteger index = [self indexForItemAtLocation:location];
+        if(index == NSNotFound)
+        {
+            [self deselectAllItems];
+            return;
+        }
+        
+        // check for a double click right at mouse down to make this react faster -- scott
+        if([clickEvents count] >= 1)
+        {
+            NSUInteger indexClick1 = [self indexForItemAtLocation:[[clickEvents objectAtIndex:0] locationInWindow]];
+            if (indexClick1 == index) {
+                [self handleDoubleClickForItemAtIndex:indexClick1];
+                
+                [clickEvents removeAllObjects];
+                [clickTimer invalidate];
+                clickTimer = nil;
+                return;
+            }
+        }
+        
+        // otherwise start the click event timer -- scott
         [clickEvents addObject:theEvent];
         clickTimer = nil;
         clickTimer = [NSTimer scheduledTimerWithTimeInterval:[NSEvent doubleClickInterval] target:self selector:@selector(handleClicks:) userInfo:nil repeats:NO];
+        
+        
     }
 }
 
@@ -882,7 +962,26 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         return;
 
     NSPoint location = [theEvent locationInWindow];
-    [self selectItemAtIndex:[self indexForItemAtLocation:location] usingModifierFlags:theEvent.modifierFlags];
+    NSUInteger index = [self indexForItemAtLocation:location];
+    
+    // if this is a double-click intercept it early
+    if([clickEvents count] >= 1)
+    {
+        NSUInteger indexClick1 = [self indexForItemAtLocation:[[clickEvents objectAtIndex:0] locationInWindow]];
+        if (indexClick1 == index) {
+            [self handleDoubleClickForItemAtIndex:indexClick1];
+            
+            [clickEvents removeAllObjects];
+            [clickTimer invalidate];
+            clickTimer = nil;
+            return;
+        }
+    }
+    
+    // else deslect
+    [self selectItemAtIndex:index usingModifierFlags:theEvent.modifierFlags];
+    
+    
 }
 
 - (void)rightMouseDown:(NSEvent *)theEvent

@@ -7,15 +7,46 @@
 //
 
 #import "PIXAlbumGridViewItem.h"
-#import "CNGridViewItem.h"
 #import "PIXAlbum.h"
 #import "PIXBorderedImageView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "PIXDefines.h"
+#include <stdlib.h>
+
+@interface PIXAlbumGridViewItem()
+
+@property (strong, nonatomic) IBOutlet NSTextField *mainLabel;
+@property (strong, nonatomic) IBOutlet NSTextField * detailLabel;
+
+@property (strong, nonatomic) NSImage * albumThumb;
+
+@property (strong, nonatomic) NSImage * stackThumb1;
+@property (strong, nonatomic) NSImage * stackThumb2;
+@property (strong, nonatomic) NSImage * stackThumb3;
+
+@property CGFloat stackThumb1Rotate;
+@property CGFloat stackThumb2Rotate;
+
+@end
 
 @implementation PIXAlbumGridViewItem
 
-
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        
+        self.stackThumb1 = [NSImage imageNamed:@"temp"];
+        self.stackThumb2 = [NSImage imageNamed:@"temp-portrait"];
+        
+        // randomly rotate the first between -.05 and .05
+        self.stackThumb1Rotate = (CGFloat)(arc4random() % 1000)/10000 - .05;
+        
+        // the second needs to be the difference so that we rotate the object back
+        self.stackThumb2Rotate = (CGFloat)(arc4random() % 1000)/10000 - .05 - self.stackThumb1Rotate;
+    }
+    return self;
+}
 
 -(void)setAlbum:(PIXAlbum *)album
 {
@@ -35,11 +66,14 @@
         
         [self setItemTitle:[_album title]];
         
-        NSImage * albumThumb = [_album thumbnailImage];
         
-        [self.albumImageView setImage:albumThumb];
+        self.albumThumb = [_album thumbnailImage];
         
-        [self.albumImageView setNeedsDisplay:YES];
+        if(self.albumThumb == nil)
+        {
+            self.albumThumb = [NSImage imageNamed:@"temp"];
+        }
+
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(albumChanged:) name:AlbumDidChangeNotification object:_album];
                                                                                                     
@@ -49,7 +83,8 @@
 -(void)albumChanged:(NSNotification *)note
 {
     [self setItemTitle:[self.album title]];
-    [self.albumImageView setImage:[self.album thumbnailImage]];
+    //[self.albumImageView setImage:[self.album thumbnailImage]];
+    self.albumThumb = [_album thumbnailImage];
     
     [self setNeedsDisplay:YES];
 }
@@ -59,65 +94,12 @@
     return YES;
 }
 
--(void)layout
-{
-    
-    CGRect albumFrame = CGRectInset(self.bounds, 15, 25);
-    albumFrame.origin.y -= 10;
-    
-    // only layout if the bounds have changed
-    if(!CGRectEqualToRect(albumFrame, self.albumImageView.frame) && albumFrame.size.width > 0)
-    {
-    
-        
-        
-        //[self addSubview:self.stackPhoto1];
-        [self.stackPhoto1 setFrame:albumFrame];
-        //[self addSubview:self.stackPhoto2];
-        [self.stackPhoto2 setFrame:albumFrame];
-        //[self addSubview:self.stackPhoto3];
-        [self.stackPhoto3 setFrame:albumFrame];
-        
-        [self.stackPhoto1.layer setZPosition:2];
-        [self.stackPhoto2.layer setZPosition:1];
-        [self.stackPhoto3.layer setZPosition:0];
-        
-        
-        
-        self.stackPhoto1.image = [NSImage imageNamed:@"temp"];
-        self.stackPhoto2.image = [NSImage imageNamed:@"temp-portrait"];
-        self.stackPhoto3.image = [NSImage imageNamed:@"temp"];
-        
-        //[self.stackPhoto1 setFrameCenterRotation:3.0];
-        //[self.stackPhoto2 setFrameCenterRotation:4.0];
-        //[self.stackPhoto3 setFrameCenterRotation:-2.0];
-        
-        
-        [self.albumImageView setFrame:albumFrame];
-        
-        NSImage * albumThumb = [_album thumbnailImage];
-        [self.albumImageView setImage:albumThumb];
-        
-        [self addSubview:self.albumImageView];
-        
-        [self.albumImageView setNeedsDisplay:YES];
-        
-        
-        
-        [self.albumImageView.layer setZPosition:3];
-        
-        
-    }
-    
-    //[self setWantsLayer:YES];
-    //[self.layer setShouldRasterize:YES];
-
-    [super layout];
-}
 
 - (void)drawRect:(NSRect)rect
 {
     NSRect bounds = self.bounds;
+    
+    
     
     
     NSBezierPath *contentRectPath = [NSBezierPath bezierPathWithRect:rect];
@@ -161,6 +143,36 @@
 
     
     [self.itemTitle drawInRect:textRect withAttributes:attributes];
+    
+    
+    CGRect albumFrame = CGRectInset(self.bounds, 15, 25);
+    albumFrame.origin.y -= 10;
+    
+    // draw the stack of imagess
+    
+    CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
+    
+    CGContextSaveGState(context);
+    
+    CGContextTranslateCTM(context, self.bounds.size.width/2, self.bounds.size.height/2);
+    CGContextRotateCTM(context, self.stackThumb1Rotate);
+    CGContextTranslateCTM(context, -self.bounds.size.width/2, -self.bounds.size.height/2);
+    
+    [self drawBorderedPhoto:self.stackThumb1 inRect:albumFrame];
+    
+    CGContextTranslateCTM(context, self.bounds.size.width/2, self.bounds.size.height/2);
+    CGContextRotateCTM(context, self.stackThumb2Rotate);
+    CGContextTranslateCTM(context, -self.bounds.size.width/2, -self.bounds.size.height/2);
+    
+    [self drawBorderedPhoto:self.stackThumb2 inRect:albumFrame];
+    
+    CGContextRestoreGState(context);
+    
+    
+    // draw the top image
+    [self drawBorderedPhoto:self.albumThumb inRect:albumFrame];
+    
+    self.contentFrame = albumFrame;
 
 }
 
@@ -172,21 +184,17 @@
     if (self.album )  {
         [self.album cancelThumbnailLoading];
         
-//        [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:self.album];
-//        self.album = nil; 
+        //[[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:self.album];
+        //self.album = nil;
     }
     
-    
-    
-    
-//    self.itemImage = nil;
-//    self.itemTitle = @"";
-//    self.index = CNItemIndexUndefined;
-//    self.selected = NO;
-//    self.selectable = YES;
-//    self.hovered = NO;
+    self.stackThumb1 = [NSImage imageNamed:@"temp"];
+    self.stackThumb2 = [NSImage imageNamed:@"temp-portrait"];
+    self.stackThumb3 = [NSImage imageNamed:@"temp"];
+
 }
 
+/*
 -(PIXBorderedImageView *)albumImageView
 {
     if(_albumImageView) return _albumImageView;
@@ -225,7 +233,7 @@
     [self addSubview:_stackPhoto3];
     
     return _stackPhoto3;
-}
+}*/
 
 
 -(void)dealloc

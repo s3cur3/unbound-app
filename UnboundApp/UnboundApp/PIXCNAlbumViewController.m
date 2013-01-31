@@ -27,6 +27,7 @@
 }
 
 @property(nonatomic,strong) NSMutableArray * albums;
+@property(nonatomic,strong) NSArray * searchedAlbums;
 
 @property (strong) CNGridViewItemLayout *defaultLayout;
 @property (strong) CNGridViewItemLayout *hoverLayout;
@@ -34,6 +35,12 @@
 
 @property (nonatomic, strong) NSToolbarItem * trashbutton;
 @property (nonatomic, strong) NSToolbarItem * settingsButton;
+@property (nonatomic, strong) NSToolbarItem * searchBar;
+
+@property (nonatomic, strong) NSSearchField * searchField;
+@property (nonatomic, strong) NSString * lastSearch;
+
+@property (nonatomic, strong) PIXSplitViewController *aSplitViewController;
 
 @end
 
@@ -61,6 +68,7 @@
     [self.gridView setItemSize:CGSizeMake(190, 180)];
     [self.gridView setAllowsMultipleSelection:YES];
     [self.gridView reloadData];
+    [self.gridView setUseHover:NO];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(albumsChanged:)
@@ -75,7 +83,7 @@
 
 -(void)setupToolbar
 {
-    NSArray * items = @[self.navigationViewController.middleSpacer, self.trashbutton, self.settingsButton];
+    NSArray * items = @[self.navigationViewController.middleSpacer, self.trashbutton, self.settingsButton, self.searchBar];
     
     [self.navigationViewController setToolbarItems:items];
     
@@ -130,6 +138,69 @@
     
 }
 
+- (NSToolbarItem *)searchBar
+{
+    if(_searchBar != nil) return _searchBar;
+    
+    self.searchField = [[NSSearchField alloc] initWithFrame:CGRectMake(0, 0, 150, 55)];
+    //[searchField setFont:[NSFont systemFontOfSize:18]];
+    
+    [self.searchField setFocusRingType:NSFocusRingTypeNone];
+    self.searchField.delegate = self;
+    
+    _searchBar = [[NSToolbarItem alloc] initWithItemIdentifier:@"SearchBar"];
+    
+    [_searchBar setView:self.searchField];
+    
+    [_searchBar setLabel:@"Search"];
+    [_searchBar setPaletteLabel:@"Search"];
+    
+    return _searchBar;
+}
+
+- (void)controlTextDidChange:(NSNotification *)aNotification
+{
+    [self updateSearch];
+}
+
+-(void)updateSearch
+{
+	
+    NSString * searchText = [self.searchField stringValue];
+    if(searchText != nil && [searchText length] > 0)
+    {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.title CONTAINS[cd] %@", searchText];
+        
+        if([self.albums count] > 0)
+        {
+            // if this search is more narrow than the last filter then re-filter based on the last set
+            // (this happens while typing)
+            
+            if(self.lastSearch != nil && [searchText rangeOfString:self.lastSearch].length != 0)
+            {
+                self.searchedAlbums = [self.searchedAlbums filteredArrayUsingPredicate:predicate];
+            }
+            
+            else
+            {
+                self.searchedAlbums = [self.albums filteredArrayUsingPredicate:predicate];
+            }
+            
+            self.lastSearch = searchText;
+        }        
+    }
+    
+    else
+    {
+        self.searchedAlbums = nil;
+        self.lastSearch = nil;
+    }
+    
+    [self.gridView reloadData];
+	
+}
+
+
 -(void)showTrash
 {
     
@@ -140,6 +211,11 @@
 
 - (NSUInteger)gridView:(CNGridView *)gridView numberOfItemsInSection:(NSInteger)section
 {
+    if(self.searchedAlbums)
+    {
+        return self.searchedAlbums.count;
+    }
+    
     return self.albums.count;
 }
 
@@ -154,7 +230,19 @@
     item.hoverLayout = self.hoverLayout;
     item.selectionLayout = self.selectionLayout;
     
-    PIXAlbum * album  = [self.albums objectAtIndex:index];
+    
+    PIXAlbum * album = nil;
+    if(self.searchedAlbums)
+    {
+        album = [self.searchedAlbums objectAtIndex:index];
+    }
+    
+    else
+    {
+        album = [self.albums objectAtIndex:index];
+    }
+    
+    
     item.album = album;
     
     return item;
@@ -177,6 +265,8 @@
 
 - (void)gridView:(CNGridView *)gridView didDoubleClickItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
+    //[gridView deselectAllItems];
+    
     DLog(@"didDoubleClickItemAtIndex: %li", index);
     PIXAlbum * album = [self.albums objectAtIndex:index];
     [self showPhotosForAlbum:album];
@@ -184,10 +274,8 @@
 
 -(void)showPhotosForAlbum:(id)anAlbum
 {
-    PIXSplitViewController *aSplitViewController  = [[PIXSplitViewController alloc] initWithNibName:@"PIXSplitViewController" bundle:nil];
-    aSplitViewController.selectedAlbum = anAlbum;
-    [aSplitViewController.view setFrame:self.view.bounds];
-    [self.navigationViewController pushViewController:aSplitViewController];
+    self.aSplitViewController.selectedAlbum = anAlbum;
+    [self.navigationViewController pushViewController:self.aSplitViewController];
 }
 
 - (void)gridView:(CNGridView *)gridView rightMouseButtonClickedOnItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
@@ -220,6 +308,16 @@
     _albums = [[[PIXAppDelegate sharedAppDelegate] fetchAllAlbums] mutableCopy];
     
     return _albums;
+}
+
+-(PIXSplitViewController *) aSplitViewController
+{
+    if(_aSplitViewController != nil) return _aSplitViewController;
+    
+    _aSplitViewController = [[PIXSplitViewController alloc] initWithNibName:@"PIXSplitViewController" bundle:nil];
+    
+    return _aSplitViewController;
+
 }
 
 

@@ -56,74 +56,58 @@ static CGSize kDefaultItemSizeCustomized;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - ViewDrawing
 
-//- (void)drawRect:(NSRect)rect
-//{
-//    NSRect dirtyRect = self.bounds;
-//    
-//    // decide which layout we have to use
-//    /// contentRect is the rect respecting the value of layout.contentInset
-//    NSRect contentRect = NSMakeRect(dirtyRect.origin.x + self.currentLayout.contentInset,
-//                                    dirtyRect.origin.y + self.currentLayout.contentInset,
-//                                    dirtyRect.size.width - self.currentLayout.contentInset * 2,
-//                                    dirtyRect.size.height - self.currentLayout.contentInset * 2);
-//    
-//    NSBezierPath *contentRectPath = [NSBezierPath bezierPathWithRoundedRect:contentRect
-//                                                                    xRadius:self.currentLayout.itemBorderRadius
-//                                                                    yRadius:self.currentLayout.itemBorderRadius];
-//    [self.currentLayout.backgroundColor setFill];
-//    [contentRectPath fill];
-//    
-//    /// draw selection ring
-//    if (self.selected) {
-//        [self.currentLayout.selectionRingColor setStroke];
-//        [contentRectPath setLineWidth:self.currentLayout.selectionRingLineWidth];
-//        [contentRectPath stroke];
-//    }
-//    
-//    
-//    NSRect srcRect = NSZeroRect;
-//    srcRect.size = self.itemImage.size;
-//    NSRect imageRect = NSZeroRect;
-//    NSRect textRect = NSZeroRect;
-//    
-//    if (self.currentLayout.visibleContentMask & (CNGridViewItemVisibleContentImage | CNGridViewItemVisibleContentTitle)) {
-//        imageRect = NSMakeRect(((NSWidth(contentRect) - self.itemImage.size.width) / 2) + self.currentLayout.contentInset,
-//                               self.currentLayout.contentInset + 10,
-//                               self.itemImage.size.width,
-//                               self.itemImage.size.height);
-//        [self.itemImage drawInRect:imageRect fromRect:srcRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];
-//        
-//        textRect = NSMakeRect(contentRect.origin.x + 3,
-//                              NSHeight(contentRect) - 20,
-//                              NSWidth(contentRect) - 6,
-//                              14);
-//        [self.itemTitle drawInRect:textRect withAttributes:self.currentLayout.itemTitleTextAttributes];
-//    }
-//    
-//    else if (self.currentLayout.visibleContentMask & CNGridViewItemVisibleContentImage) {
-//        imageRect = NSMakeRect(((NSWidth(contentRect) - self.itemImage.size.width) / 2) + self.currentLayout.contentInset,
-//                               ((NSHeight(contentRect) - self.itemImage.size.height) / 2) + self.currentLayout.contentInset,
-//                               self.itemImage.size.width,
-//                               self.itemImage.size.height);
-//    }
-//    
-//    else if (self.currentLayout.visibleContentMask & CNGridViewItemVisibleContentTitle) {
-//    }
-//    
-//}
-
-
-
-//- (id)initWithFrame:(NSRect)frame
-//{
-//    self = [super initWithFrame:frame];
-//    if (self) {
-//        // Initialization code here.
-//    }
-//    
-//    return self;
-//}
-//
+// draws an image with a border in the rect. Returns the rect where the photo was drawn (using aspect ratio)
+- (CGRect)drawBorderedPhoto:(NSImage *)photo inRect:(NSRect)rect
+{
+    // calculate the proportional image frame
+    CGSize imageSize = [photo size];
+    
+    CGRect imageFrame = CGRectMake(0, 0, imageSize.width, imageSize.height);
+    
+    if(imageSize.width > 0 && imageSize.height > 0)
+    {
+        if(imageSize.width / imageSize.height > rect.size.width / rect.size.height)
+        {
+            float mulitplier = rect.size.width / imageSize.width;
+            
+            imageFrame.size.width = mulitplier * imageFrame.size.width;
+            imageFrame.size.height = mulitplier * imageFrame.size.height;
+            
+            imageFrame.origin.x = rect.origin.x;
+            imageFrame.origin.y = (rect.size.height - imageFrame.size.height)/2 + rect.origin.y;
+        }
+        
+        else
+        {
+            float mulitplier = rect.size.height / imageSize.height;
+            
+            imageFrame.size.width = mulitplier * imageFrame.size.width;
+            imageFrame.size.height = mulitplier * imageFrame.size.height;
+            
+            imageFrame.origin.y = rect.origin.y;
+            imageFrame.origin.x = (rect.size.width - imageFrame.size.width)/2 + rect.origin.x;
+        }
+    }
+    
+    
+    
+    CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
+    CGContextSetShadowWithColor(context, CGSizeMake(0, -1), 6.0, [[NSColor colorWithGenericGamma22White:0.0 alpha:.4] CGColor]);
+    
+    
+    
+    
+    [[NSColor whiteColor] set];
+    [NSBezierPath fillRect:imageFrame]; // will give a 6 pixel wide border
+    CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
+    
+    CGRect imageRect = CGRectInset(imageFrame, 6, 6);
+    //[photo drawInRect:imageRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+    
+    [photo drawInRect:imageRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];
+    
+    return imageFrame;
+}
 
 
 @end
