@@ -62,8 +62,8 @@ const CGFloat kThumbnailSize = 200.0f;
                                   (id)kCFBooleanTrue,(id)kCGImageSourceCreateThumbnailFromImageIfAbsent,
                                   //(id)kCFBooleanFalse,(id)kCGImageSourceCreateThumbnailFromImageIfAbsent,
                                   maxPixelSize, (id)kCGImageSourceThumbnailMaxPixelSize,
-                                  kCFBooleanFalse, (id)kCGImageSourceCreateThumbnailWithTransform,
-                                  //kCFBooleanTrue, (id)kCGImageSourceCreateThumbnailWithTransform,
+                                  //kCFBooleanFalse, (id)kCGImageSourceCreateThumbnailWithTransform,
+                                  kCFBooleanTrue, (id)kCGImageSourceCreateThumbnailWithTransform,
                                   nil];
     CGImageRef imageRef = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, (__bridge CFDictionaryRef)imageOptions);
     if (imageRef != NULL) {

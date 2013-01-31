@@ -526,9 +526,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
             if (!gridViewItem.selected) {
                 [self selectItem:gridViewItem];
             } else {
-                if (modifierFlags & NSCommandKeyMask) {
-                    [self deSelectItem:gridViewItem];
-                }
+                [self deSelectItem:gridViewItem];
             }
 
         } else {
@@ -560,7 +558,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
 - (void)deselectAllItems
 {
-    if (selectedItems.count > 0 && !self.allowsMultipleSelection) {
+    if (selectedItems.count > 0) {
         /// inform the delegate
         [self gridView:self willDeselectAllItems:[self selectedItems]];
 

@@ -39,6 +39,7 @@
 
     // draw the  image
     [self drawBorderedPhoto:self.itemImage inRect:albumFrame];
+    self.contentFrame = albumFrame;
     
 }
 

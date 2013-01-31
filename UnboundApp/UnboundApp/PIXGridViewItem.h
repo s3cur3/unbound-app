@@ -12,6 +12,5 @@
 
 @property (nonatomic, weak) id representedObject;
 
-- (void)drawBorderedPhoto:(NSImage *)photo inRect:(NSRect)rect;
-
+- (CGRect)drawBorderedPhoto:(NSImage *)photo inRect:(NSRect)rect;
 @end

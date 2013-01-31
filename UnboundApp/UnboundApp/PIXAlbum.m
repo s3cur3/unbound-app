@@ -116,7 +116,7 @@ static NSString *const kItemsKey = @"photos";
             NSDate *aDate = self.albumDate;
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setDateStyle:NSDateFormatterShortStyle];
-            [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+            [dateFormatter setTimeStyle:NSDateFormatterNoStyle]; // no time on albums
             NSString *formattedDateString = [dateFormatter stringFromDate:aDate];
             self.subtitle = [NSString stringWithFormat:@"%ld items from %@", self.photos.count, formattedDateString];
         } else if (self.dateLastUpdated && self.photos.count==0) {

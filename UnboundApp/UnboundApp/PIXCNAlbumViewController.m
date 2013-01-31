@@ -177,6 +177,8 @@
 
 - (void)gridView:(CNGridView *)gridView didDoubleClickItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
+    [gridView deselectAllItems];
+    
     DLog(@"didDoubleClickItemAtIndex: %li", index);
     PIXAlbum * album = [self.albums objectAtIndex:index];
     [self showPhotosForAlbum:album];
