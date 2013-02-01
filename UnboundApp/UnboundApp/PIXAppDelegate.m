@@ -17,6 +17,10 @@
 #import "PIXDefines.h"
 
 
+#import "MASPreferencesWindowController.h"
+#import "GeneralPreferencesViewController.h"
+#import "AdvancedPreferencesViewController.h"
+
 
 NSString* kAppFirstRun = @"appFirstRun";
 
@@ -186,6 +190,46 @@ extern NSString *kSearchDidFinishNotification;
         showIntroWindow = [[PIXInfoWindowController alloc] initWithWindowNibName:@"PIXInfoWindowController"];
     [showIntroWindow showWindow:self];
 }
+
+#pragma mark - MASPreferences Class methods:
+
+- (IBAction)openPreferences:(id)sender
+{
+    NSWindowController * prefWindow = self.preferencesWindowController;
+    [prefWindow showWindow:sender];
+    
+    
+}
+
+- (NSWindowController *)preferencesWindowController
+{
+    if (_preferencesWindowController == nil)
+    {
+        NSViewController *generalViewController = [[GeneralPreferencesViewController alloc] init];
+        NSViewController *advancedViewController = [[AdvancedPreferencesViewController alloc] init];
+        NSArray *controllers = [[NSArray alloc] initWithObjects:[NSNull null], generalViewController, advancedViewController, [NSNull null], nil];
+        
+        // To add a flexible space between General and Advanced preference panes insert [NSNull null]:
+        //     NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, [NSNull null], advancedViewController, nil];
+        
+        NSString *title = NSLocalizedString(@"Preferences", @"Common title for Preferences window");
+        _preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:controllers title:title];
+    }
+    return _preferencesWindowController;
+}
+
+NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
+
+- (NSInteger)focusedAdvancedControlIndex
+{
+    return [[NSUserDefaults standardUserDefaults] integerForKey:kFocusedAdvancedControlIndex];
+}
+
+- (void)setFocusedAdvancedControlIndex:(NSInteger)focusedAdvancedControlIndex
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:focusedAdvancedControlIndex forKey:kFocusedAdvancedControlIndex];
+}
+
 
 // -------------------------------------------------------------------------------
 //	showMainWindow:sender

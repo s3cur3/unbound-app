@@ -117,7 +117,13 @@
 		8C249E9116AB8DF600CB97AF /* PIXGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E9016AB8DF600CB97AF /* PIXGridViewItem.m */; };
 		8C249E9716AB8ED700CB97AF /* PIXCNAlbumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C249E8816AB560000CB97AF /* PIXCNAlbumViewController.xib */; };
 		8C4B80E816B9D9FD00C7E8F4 /* PIXPhotoGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B80E716B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.m */; };
+		8C4B80FB16BB3D8A00C7E8F4 /* GeneralPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B80F616BB3D8A00C7E8F4 /* GeneralPreferencesViewController.m */; };
+		8C4B80FC16BB3D8A00C7E8F4 /* GeneralPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4B80F716BB3D8A00C7E8F4 /* GeneralPreferencesView.xib */; };
+		8C4B80FD16BB3D8A00C7E8F4 /* AdvancedPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B80F916BB3D8A00C7E8F4 /* AdvancedPreferencesViewController.m */; };
+		8C4B80FE16BB3D8A00C7E8F4 /* AdvancedPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4B80FA16BB3D8A00C7E8F4 /* AdvancedPreferencesView.xib */; };
 		8C972CB41680FE8B00358913 /* PIXModifierSwitchedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */; };
+		8CF2C5E316BB458900F906F1 /* MASPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CF2C5DF16BB458900F906F1 /* MASPreferencesWindow.xib */; };
+		8CF2C5E416BB458900F906F1 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CF2C5E216BB458900F906F1 /* MASPreferencesWindowController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -316,8 +322,18 @@
 		8C249E9016AB8DF600CB97AF /* PIXGridViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXGridViewItem.m; sourceTree = "<group>"; };
 		8C4B80E616B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPhotoGridViewItem.h; sourceTree = "<group>"; };
 		8C4B80E716B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhotoGridViewItem.m; sourceTree = "<group>"; };
+		8C4B80F516BB3D8900C7E8F4 /* GeneralPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralPreferencesViewController.h; sourceTree = "<group>"; };
+		8C4B80F616BB3D8A00C7E8F4 /* GeneralPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralPreferencesViewController.m; sourceTree = "<group>"; };
+		8C4B80F716BB3D8A00C7E8F4 /* GeneralPreferencesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GeneralPreferencesView.xib; sourceTree = "<group>"; };
+		8C4B80F816BB3D8A00C7E8F4 /* AdvancedPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvancedPreferencesViewController.h; sourceTree = "<group>"; };
+		8C4B80F916BB3D8A00C7E8F4 /* AdvancedPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvancedPreferencesViewController.m; sourceTree = "<group>"; };
+		8C4B80FA16BB3D8A00C7E8F4 /* AdvancedPreferencesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AdvancedPreferencesView.xib; sourceTree = "<group>"; };
 		8C972CB21680FE8A00358913 /* PIXModifierSwitchedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXModifierSwitchedEvent.h; sourceTree = "<group>"; };
 		8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXModifierSwitchedEvent.m; sourceTree = "<group>"; };
+		8CF2C5DF16BB458900F906F1 /* MASPreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MASPreferencesWindow.xib; sourceTree = "<group>"; };
+		8CF2C5E016BB458900F906F1 /* MASPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASPreferencesViewController.h; sourceTree = "<group>"; };
+		8CF2C5E116BB458900F906F1 /* MASPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASPreferencesWindowController.h; sourceTree = "<group>"; };
+		8CF2C5E216BB458900F906F1 /* MASPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASPreferencesWindowController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -468,8 +484,15 @@
 		1D4A1DD5167AEF4A00C9A895 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
+				8C4B80F416BB3D5000C7E8F4 /* MASPreferences */,
 				1D4A1DD2167AEEDE00C9A895 /* Preferences.h */,
 				1D4A1DD3167AEEDE00C9A895 /* Preferences.m */,
+				8C4B80F516BB3D8900C7E8F4 /* GeneralPreferencesViewController.h */,
+				8C4B80F616BB3D8A00C7E8F4 /* GeneralPreferencesViewController.m */,
+				8C4B80F716BB3D8A00C7E8F4 /* GeneralPreferencesView.xib */,
+				8C4B80F816BB3D8A00C7E8F4 /* AdvancedPreferencesViewController.h */,
+				8C4B80F916BB3D8A00C7E8F4 /* AdvancedPreferencesViewController.m */,
+				8C4B80FA16BB3D8A00C7E8F4 /* AdvancedPreferencesView.xib */,
 			);
 			name = Preferences;
 			sourceTree = "<group>";
@@ -733,6 +756,17 @@
 			name = "No Longer Used";
 			sourceTree = "<group>";
 		};
+		8C4B80F416BB3D5000C7E8F4 /* MASPreferences */ = {
+			isa = PBXGroup;
+			children = (
+				8CF2C5DF16BB458900F906F1 /* MASPreferencesWindow.xib */,
+				8CF2C5E016BB458900F906F1 /* MASPreferencesViewController.h */,
+				8CF2C5E116BB458900F906F1 /* MASPreferencesWindowController.h */,
+				8CF2C5E216BB458900F906F1 /* MASPreferencesWindowController.m */,
+			);
+			name = MASPreferences;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -828,6 +862,9 @@
 				1DA66CB016AA2ED10060D796 /* nophoto_200x200.jpg in Resources */,
 				1D8CD7F016AB6EC70072D516 /* PIXGridViewController.xib in Resources */,
 				8C249E9716AB8ED700CB97AF /* PIXCNAlbumViewController.xib in Resources */,
+				8C4B80FC16BB3D8A00C7E8F4 /* GeneralPreferencesView.xib in Resources */,
+				8C4B80FE16BB3D8A00C7E8F4 /* AdvancedPreferencesView.xib in Resources */,
+				8CF2C5E316BB458900F906F1 /* MASPreferencesWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -902,6 +939,9 @@
 				8C4B80E816B9D9FD00C7E8F4 /* PIXPhotoGridViewItem.m in Sources */,
 				1D5F9D5B16AEF4A3008F8C80 /* PIXLoadAlbumOperation.m in Sources */,
 				1D5F9D5F16AEF815008F8C80 /* PIXGetAlbumPathsOperation.m in Sources */,
+				8C4B80FB16BB3D8A00C7E8F4 /* GeneralPreferencesViewController.m in Sources */,
+				8C4B80FD16BB3D8A00C7E8F4 /* AdvancedPreferencesViewController.m in Sources */,
+				8CF2C5E416BB458900F906F1 /* MASPreferencesWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -32,6 +32,13 @@
 - (IBAction)showIntroWindow:(id)sender;
 - (IBAction)showLoadingWindow:(id)sender;
 
+
+// for MASPreferences class:
+@property (nonatomic, strong) NSWindowController *preferencesWindowController;
+@property (nonatomic) NSInteger focusedAdvancedControlIndex;
+- (IBAction)openPreferences:(id)sender;
+
+
 -(void)startFileSystemLoading;
 -(void)shouldStartFileSystemObservingWhenAlbumsFinishSaving;
 @property (assign) BOOL isObservingFileSystem;
