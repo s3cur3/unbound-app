@@ -65,7 +65,7 @@
     //[self.view setWantsLayer:YES];
     //[self.gridView setWantsLayer:YES];
     
-    [self.gridView setItemSize:CGSizeMake(190, 180)];
+    [self.gridView setItemSize:CGSizeMake(190, 190)];
     [self.gridView setAllowsMultipleSelection:YES];
     [self.gridView reloadData];
     [self.gridView setUseHover:NO];
@@ -75,6 +75,42 @@
                                                  name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(defaultThemeChanged:)
+                                                 name:@"backgroundThemeChanged"
+                                               object:nil];
+    
+    [self setBGColor];
+    
+}
+
+-(void)defaultThemeChanged:(NSNotification *)note
+{
+    [self setBGColor];
+    [self.gridView setNeedsDisplay:YES];
+    
+    for(NSView * item in self.gridView.subviews)
+    {
+        [item setNeedsDisplay:YES];
+    }
+    
+}
+
+-(void)setBGColor
+{
+    NSColor * color = nil;
+    if([[NSUserDefaults standardUserDefaults] integerForKey:@"backgroundTheme"] == 0)
+    {
+        color = [NSColor colorWithCalibratedWhite:0.912 alpha:1.000];
+    }
+    
+    else
+    {
+        color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
+        //[[self enclosingScrollView] setBackgroundColor:color];
+    }
+    
+    [self.gridView setBackgroundColor:color];
     
 }
 

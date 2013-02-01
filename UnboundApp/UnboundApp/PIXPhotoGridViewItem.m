@@ -19,7 +19,21 @@
 {
     
     NSBezierPath *contentRectPath = [NSBezierPath bezierPathWithRect:rect];
-    [[NSColor colorWithCalibratedWhite:0.912 alpha:1.000] setFill];
+    
+    
+    if([[NSUserDefaults standardUserDefaults] integerForKey:@"backgroundTheme"] == 0)
+    {
+        [[NSColor colorWithCalibratedWhite:0.912 alpha:1.000] setFill];
+    }
+    
+    else
+    {
+        NSColor * color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
+        //[[self enclosingScrollView] setBackgroundColor:color];
+        [color setFill];
+    }
+    
+    
     [contentRectPath fill];
     
     /// draw selection ring

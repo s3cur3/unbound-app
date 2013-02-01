@@ -93,6 +93,42 @@ static NSString *kContentTitleKey, *kContentImageKey;
 //             object:nil];
     
     [self performSelector:@selector(reloadItems:) withObject:nil afterDelay:0.1];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(defaultThemeChanged:)
+                                                 name:@"backgroundThemeChanged"
+                                               object:nil];
+    [self setBGColor];
+}
+
+-(void)defaultThemeChanged:(NSNotification *)note
+{
+    [self setBGColor];
+    [self.gridView setNeedsDisplay:YES];
+    
+    for(NSView * item in self.gridView.subviews)
+    {
+        [item setNeedsDisplay:YES];
+    }
+    
+}
+
+-(void)setBGColor
+{
+    NSColor * color = nil;
+    if([[NSUserDefaults standardUserDefaults] integerForKey:@"backgroundTheme"] == 0)
+    {
+        color = [NSColor colorWithCalibratedWhite:0.912 alpha:1.000];
+    }
+    
+    else
+    {
+        color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
+        //[[self enclosingScrollView] setBackgroundColor:color];
+    }
+    
+    [self.gridView setBackgroundColor:color];
+    
 }
 
 -(void)refreshNotification:(NSNotification *)note

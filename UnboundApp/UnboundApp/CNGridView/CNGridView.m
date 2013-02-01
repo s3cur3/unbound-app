@@ -386,8 +386,8 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
     xpos = xpos + (space * (column+1));
     
-    NSRect itemRect = NSMakeRect(xpos,
-                                 ((index - (index % columns)) / columns) * self.itemSize.height,
+    NSRect itemRect = NSMakeRect(rint(xpos),
+                                 rint(((index - (index % columns)) / columns) * self.itemSize.height),
                                  self.itemSize.width,
                                  self.itemSize.height);
     return itemRect;

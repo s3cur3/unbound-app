@@ -103,7 +103,26 @@
     
     
     NSBezierPath *contentRectPath = [NSBezierPath bezierPathWithRect:rect];
-    [[NSColor colorWithCalibratedWhite:0.912 alpha:1.000] setFill];
+    
+    NSColor * textColor = nil;
+    NSColor * subtitleColor = nil;
+    NSColor * bgColor = nil;
+    
+    if([[NSUserDefaults standardUserDefaults] integerForKey:@"backgroundTheme"] == 0)
+    {
+        bgColor = [NSColor colorWithCalibratedWhite:0.912 alpha:1.000];
+        textColor = [NSColor colorWithCalibratedWhite:0.10 alpha:1.0];
+        subtitleColor = [NSColor colorWithCalibratedWhite:0.35 alpha:1.0];
+    }
+    
+    else
+    {
+        bgColor = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
+        textColor = [NSColor colorWithCalibratedWhite:0.9 alpha:1.0];
+        subtitleColor = [NSColor colorWithCalibratedWhite:0.55 alpha:1.0];
+    }
+    
+    [bgColor setFill];
     [contentRectPath fill];
     
     /// draw selection ring
@@ -121,11 +140,15 @@
     srcRect.size = self.itemImage.size;
     
     NSRect textRect = NSMakeRect(bounds.origin.x + 3,
-                          NSHeight(bounds) - 30,
+                          NSHeight(bounds) - 50,
                           NSWidth(bounds) - 6,
                           20);
     
-    NSColor *textColor      = [NSColor colorWithCalibratedWhite:0.0 alpha:0.7];
+    NSRect subTitleRect = NSMakeRect(bounds.origin.x + 3,
+                                 NSHeight(bounds) - 28,
+                                 NSWidth(bounds) - 6,
+                                 20);
+    
     NSShadow *textShadow    = [[NSShadow alloc] init];
     [textShadow setShadowColor: [NSColor colorWithCalibratedWhite:0.0 alpha:0.5]];
     [textShadow setShadowOffset: NSMakeSize(0, -1)];
@@ -134,8 +157,9 @@
     [textStyle setAlignment: NSCenterTextAlignment];
     
     NSDictionary * attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [NSFont fontWithName:@"Helvetica Bold" size:14], NSFontAttributeName,
+                                [NSFont fontWithName:@"Helvetica Neue Bold" size:14], NSFontAttributeName,
      //                           textShadow,                                 NSShadowAttributeName,
+     //                           bgColor,                                    NSBackgroundColorAttributeName,
                                 textColor,                                  NSForegroundColorAttributeName,
                                 textStyle,                                  NSParagraphStyleAttributeName,
                                 nil];
@@ -144,9 +168,21 @@
     
     [self.itemTitle drawInRect:textRect withAttributes:attributes];
     
+    attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                  [NSFont fontWithName:@"Helvetica Neue" size:11], NSFontAttributeName,
+                  //                           textShadow,                                 NSShadowAttributeName,
+                  //                           bgColor,                                    NSBackgroundColorAttributeName,
+                  subtitleColor,                                  NSForegroundColorAttributeName,
+                  textStyle,                                  NSParagraphStyleAttributeName,
+                  nil];
     
-    CGRect albumFrame = CGRectInset(self.bounds, 15, 25);
-    albumFrame.origin.y -= 10;
+    NSString * itemSubtitle = self.album.imageSubtitle;
+    
+    [itemSubtitle drawInRect:subTitleRect withAttributes:attributes];
+    
+    
+    CGRect albumFrame = CGRectInset(self.bounds, 15, 35);
+    albumFrame.origin.y -= 20;
     
     // draw the stack of imagess
     

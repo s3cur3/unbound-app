@@ -28,13 +28,17 @@ static Preferences * instance = nil;
 
 	// initialize the default parameters for the application
 	// first step : create objects for complex parameters
-	NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:[NSColor blackColor]];
 
 	// second step : create the dictionary containing the parameters' keys and values
 	NSMutableDictionary * defaults = [NSMutableDictionary dictionary];
-	[defaults setValue:colorData forKey:@"backgroundColor"];
+    
+    
+    // 0 for light, 1 for dark
+    [defaults setValue:[NSNumber numberWithInt:0] forKey:@"backgroundTheme"];
+    
+    
 	[defaults setValue:[NSNumber numberWithFloat:0.38f] forKey:@"thumbnailSize"];
-	[defaults setValue:[NSNumber numberWithFloat:8.0f] forKey:@"thumbnailMargin"];
+	
 	[defaults setValue:[NSNumber numberWithBool:NO] forKey:@"showTitles"];
 	[defaults setValue:[NSNumber numberWithBool:NO] forKey:@"permanentlyDeleteFiles"];
 	[defaults setValue:[NSNumber numberWithFloat:3.0f] forKey:@"slideshowInterval"];
