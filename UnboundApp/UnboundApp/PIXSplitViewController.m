@@ -19,7 +19,7 @@
 //@property (nonatomic, strong) PIXImageBrowserViewController *imageBrowserViewController;
 @property (nonatomic, strong) NSViewController *mainViewController;
 
-@property (nonatomic, strong) NSToolbarItem * sidebarToggleButton;
+@property (nonatomic, strong) NSToolbarItem * backButtonSegmentItem;
 @property float lastSplitviewWidth;
 
 @end
@@ -63,13 +63,51 @@
 
 -(void)setupToolbar
 {
+    
+    [self.backButtonSegment setSelected:NO forSegment:0];
+    
+    // set the toggle to the correct view
+    [self.backButtonSegment setSelected:![self.splitView isSubviewCollapsed:self.leftPane]
+                             forSegment:1];
+    
 
-    NSArray * items = @[self.navigationViewController.backButton, self.sidebarToggleButton];
+    NSArray * items = @[self.backButtonSegmentItem];
     
     [self.navigationViewController setToolbarItems:items];
     
 }
 
+- (NSToolbarItem *)backButtonSegmentItem
+{
+    if(_backButtonSegmentItem != nil) return _backButtonSegmentItem;
+    
+    _backButtonSegmentItem = [[NSToolbarItem alloc] initWithItemIdentifier:@"backButtonAndSideBarToggle"];
+    //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
+    
+    
+    // set the toggle to the correct view
+    [self.backButtonSegment setSelected:![self.splitView isSubviewCollapsed:self.leftPane]
+                             forSegment:1];
+
+    
+    _backButtonSegmentItem.view = self.backButtonSegment;
+    
+    [_backButtonSegmentItem setLabel:@"Back"];
+    [_backButtonSegmentItem setPaletteLabel:@"Back"];
+    
+    // Set up a reasonable tooltip, and image
+    // you will likely want to localize many of the item's properties
+    [_backButtonSegmentItem setToolTip:@"Back to Albums"];
+    
+    // Tell the item what message to send when it is clicked
+    
+    
+    
+    
+    return _backButtonSegmentItem;
+}
+
+/*
 - (NSToolbarItem *)sidebarToggleButton
 {
     if(_sidebarToggleButton != nil) return _sidebarToggleButton;
@@ -90,6 +128,24 @@
     
     return _sidebarToggleButton;
     
+}
+*/
+
+-(IBAction)backBarSegmentChanged:(id)sender
+{
+    if([sender selectedSegment] == 0)
+    {
+        [self.navigationViewController popViewController];
+    }
+    
+    if([sender selectedSegment] == 1)
+    {
+        [self toggleSidebar];
+        
+        // set the toggle to the correct view
+        [self.backButtonSegment setSelected:![self.splitView isSubviewCollapsed:self.leftPane]
+                                 forSegment:1];
+    }
 }
 
 -(void)toggleSidebar

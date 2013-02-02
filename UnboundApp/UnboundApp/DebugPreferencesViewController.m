@@ -1,7 +1,7 @@
 
-#import "GeneralPreferencesViewController.h"
+#import "DebugPrefrencesViewController.h"
 
-@implementation GeneralPreferencesViewController
+@implementation DebugPrefrencesViewController
 
 - (id)init
 {
@@ -13,7 +13,7 @@
 
 - (NSString *)identifier
 {
-    return @"GeneralPreferences";
+    return @"DebugPrefrences";
 }
 
 - (NSImage *)toolbarItemImage
@@ -23,7 +23,7 @@
 
 - (NSString *)toolbarItemLabel
 {
-    return NSLocalizedString(@"General", @"General Unbound Preferences");
+    return NSLocalizedString(@"Debug", @"Unbound Debug Preferences");
 }
 
 -(IBAction)themeChanged:(id)sender

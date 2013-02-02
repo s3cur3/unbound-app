@@ -130,7 +130,16 @@
     if(_trashbutton != nil) return _trashbutton;
     
     _trashbutton = [[NSToolbarItem alloc] initWithItemIdentifier:@"TrashButton"];
-    _trashbutton.image = [NSImage imageNamed:NSImageNameTrashEmpty];
+    //_trashbutton.image = [NSImage imageNamed:NSImageNameTrashEmpty];
+    
+    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
+    buttonView.image = [NSImage imageNamed:NSImageNameTrashEmpty];
+    [buttonView setImagePosition:NSImageOnly];
+    [buttonView setBordered:NO];
+    [buttonView.cell setImageScaling:NSImageScaleProportionallyDown];
+    [buttonView.cell setHighlightsBy:NSPushInCellMask];
+    
+    _trashbutton.view = buttonView;
     
     [_trashbutton setLabel:@"Trash"];
     [_trashbutton setPaletteLabel:@"Trash"];
@@ -144,9 +153,14 @@
     //[_trashbutton setAction:@selector(showTrash)];
 #ifdef DEBUG
     // Tell the item what message to send when it is clicked
-    [_trashbutton setTarget:[PIXAppDelegate sharedAppDelegate]];
-    [_trashbutton setAction:@selector(deleteAllAlbums:)];
+    //[_trashbutton setTarget:[PIXAppDelegate sharedAppDelegate]];
+    //[_trashbutton setAction:@selector(deleteAllAlbums:)];
+    
+    [buttonView setTarget:[PIXAppDelegate sharedAppDelegate]];
+    [buttonView setAction:@selector(deleteAllAlbums:)];
+    
 #endif
+    
     
     return _trashbutton;
     
@@ -157,7 +171,16 @@
     if(_settingsButton != nil) return _settingsButton;
     
     _settingsButton = [[NSToolbarItem alloc] initWithItemIdentifier:@"SettingsButton"];
-    _settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
+    //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
+    
+    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
+    buttonView.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
+    [buttonView setImagePosition:NSImageOnly];
+    [buttonView setBordered:NO];
+    [buttonView.cell setImageScaling:NSImageScaleProportionallyDown];
+    [buttonView.cell setHighlightsBy:NSPushInCellMask];
+    
+    _settingsButton.view = buttonView;
     
     [_settingsButton setLabel:@"Settings"];
     [_settingsButton setPaletteLabel:@"Settings"];
@@ -167,8 +190,8 @@
     [_settingsButton setToolTip:@"Load Files"];
     
     // Tell the item what message to send when it is clicked
-    [_settingsButton setTarget:[PIXAppDelegate sharedAppDelegate]];
-    [_settingsButton setAction:@selector(showLoadingWindow:)];
+    [buttonView setTarget:[PIXAppDelegate sharedAppDelegate]];
+    [buttonView setAction:@selector(showLoadingWindow:)];
     
     return _settingsButton;
     
@@ -180,7 +203,7 @@
     
     self.searchField = [[NSSearchField alloc] initWithFrame:CGRectMake(0, 0, 150, 55)];
     //[searchField setFont:[NSFont systemFontOfSize:18]];
-    
+        
     [self.searchField setFocusRingType:NSFocusRingTypeNone];
     self.searchField.delegate = self;
     

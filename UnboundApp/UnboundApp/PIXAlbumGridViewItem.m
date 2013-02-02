@@ -111,7 +111,7 @@
     if([[NSUserDefaults standardUserDefaults] integerForKey:@"backgroundTheme"] == 0)
     {
         bgColor = [NSColor colorWithCalibratedWhite:0.912 alpha:1.000];
-        textColor = [NSColor colorWithCalibratedWhite:0.10 alpha:1.0];
+        textColor = [NSColor colorWithCalibratedWhite:0.15 alpha:1.0];
         subtitleColor = [NSColor colorWithCalibratedWhite:0.35 alpha:1.0];
     }
     

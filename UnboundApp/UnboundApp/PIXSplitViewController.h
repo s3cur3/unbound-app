@@ -17,7 +17,11 @@
 @property (nonatomic,weak) IBOutlet NSView *leftPane;
 @property (nonatomic,weak) IBOutlet NSView *rightPane;
 
+@property (nonatomic,weak) IBOutlet NSSegmentedControl *backButtonSegment;
+
 //@property (nonatomic, strong) Album* selectedAlbum;
 @property (nonatomic, strong) id selectedAlbum;
+
+-(IBAction)backBarSegmentChanged:(id)sender;
 
 @end

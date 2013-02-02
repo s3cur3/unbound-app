@@ -42,7 +42,7 @@
 			</object>
 			<object class="NSCustomView" id="1005">
 				<reference key="NSNextResponder"/>
-				<int key="NSvFlags">286</int>
+				<int key="NSvFlags">274</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSScrollView" id="1062908350">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -58,7 +58,7 @@
 										<string key="NSFrameSize">{245, 511}</string>
 										<reference key="NSSuperview" ref="169202215"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="837853645"/>
+										<reference key="NSNextKeyView" ref="320835007"/>
 										<string key="NSReuseIdentifierKey">_NS:13</string>
 										<bool key="NSEnabled">YES</bool>
 										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -211,7 +211,7 @@
 						<string key="NSFrameSize">{245, 511}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="320835007"/>
+						<reference key="NSNextKeyView" ref="169202215"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<int key="NSsFlags">215568</int>
 						<reference key="NSVScroller" ref="320835007"/>
@@ -286,7 +286,6 @@
 									</set>
 									<string key="NSFrame">{{5, 3}, {49, 48}}</string>
 									<reference key="NSSuperview" ref="837853645"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:11</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSImageCell" key="NSCell" id="308877570">
@@ -340,7 +339,6 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{57, 1}, {174, 23}}</string>
 									<reference key="NSSuperview" ref="837853645"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:1535</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="882619164">
