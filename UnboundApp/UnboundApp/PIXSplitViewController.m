@@ -158,15 +158,23 @@
     
     if([self.splitView isSubviewCollapsed:self.leftPane])
     {
+
         [self.splitView setPosition:230 ofDividerAtIndex:0];
+        
     }
     
     else
     {
+        
         [self.splitView setPosition:-1 ofDividerAtIndex:0];
     }
     
+    
+    [self.splitView adjustSubviews];
     [self.navigationViewController.mainWindow enableFlushWindow];
+    
+    [self.splitView setNeedsDisplay:YES];
+    [self.leftPane setNeedsDisplay:YES];
 }
 
 -(void)setNavigationViewController:(PIXNavigationController *)navigationViewController

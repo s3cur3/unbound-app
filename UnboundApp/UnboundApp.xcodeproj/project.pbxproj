@@ -122,9 +122,8 @@
 		8C4B80FD16BB3D8A00C7E8F4 /* AdvancedPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B80F916BB3D8A00C7E8F4 /* AdvancedPreferencesViewController.m */; };
 		8C4B80FE16BB3D8A00C7E8F4 /* AdvancedPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4B80FA16BB3D8A00C7E8F4 /* AdvancedPreferencesView.xib */; };
 		8C972CB41680FE8B00358913 /* PIXModifierSwitchedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */; };
-		8CE8F61B16BCC32000DC6014 /* DebugPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CE8F61A16BCC32000DC6014 /* DebugPreferencesView.xib */; };
-		8CE8F61D16BCC33000DC6014 /* DebugPreferencesViewController.m in Resources */ = {isa = PBXBuildFile; fileRef = 8CE8F61C16BCC32F00DC6014 /* DebugPreferencesViewController.m */; };
-		8CE8F61F16BCC34400DC6014 /* DebugPrefrencesViewController.h in Resources */ = {isa = PBXBuildFile; fileRef = 8CE8F61E16BCC34400DC6014 /* DebugPrefrencesViewController.h */; };
+		8CE8F62516BD8C9E00DC6014 /* DebugPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CE8F62216BD8C9E00DC6014 /* DebugPreferencesView.xib */; };
+		8CE8F62616BD8C9E00DC6014 /* DebugPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE8F62316BD8C9E00DC6014 /* DebugPreferencesViewController.m */; };
 		8CF2C5E316BB458900F906F1 /* MASPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CF2C5DF16BB458900F906F1 /* MASPreferencesWindow.xib */; };
 		8CF2C5E416BB458900F906F1 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CF2C5E216BB458900F906F1 /* MASPreferencesWindowController.m */; };
 /* End PBXBuildFile section */
@@ -333,9 +332,9 @@
 		8C4B80FA16BB3D8A00C7E8F4 /* AdvancedPreferencesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AdvancedPreferencesView.xib; sourceTree = "<group>"; };
 		8C972CB21680FE8A00358913 /* PIXModifierSwitchedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXModifierSwitchedEvent.h; sourceTree = "<group>"; };
 		8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXModifierSwitchedEvent.m; sourceTree = "<group>"; };
-		8CE8F61A16BCC32000DC6014 /* DebugPreferencesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DebugPreferencesView.xib; sourceTree = "<group>"; };
-		8CE8F61C16BCC32F00DC6014 /* DebugPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugPreferencesViewController.m; sourceTree = "<group>"; };
-		8CE8F61E16BCC34400DC6014 /* DebugPrefrencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugPrefrencesViewController.h; sourceTree = "<group>"; };
+		8CE8F62216BD8C9E00DC6014 /* DebugPreferencesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DebugPreferencesView.xib; sourceTree = "<group>"; };
+		8CE8F62316BD8C9E00DC6014 /* DebugPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugPreferencesViewController.m; sourceTree = "<group>"; };
+		8CE8F62416BD8C9E00DC6014 /* DebugPrefrencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugPrefrencesViewController.h; sourceTree = "<group>"; };
 		8CF2C5DF16BB458900F906F1 /* MASPreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MASPreferencesWindow.xib; sourceTree = "<group>"; };
 		8CF2C5E016BB458900F906F1 /* MASPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASPreferencesViewController.h; sourceTree = "<group>"; };
 		8CF2C5E116BB458900F906F1 /* MASPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASPreferencesWindowController.h; sourceTree = "<group>"; };
@@ -499,9 +498,9 @@
 				8C4B80F816BB3D8A00C7E8F4 /* AdvancedPreferencesViewController.h */,
 				8C4B80F916BB3D8A00C7E8F4 /* AdvancedPreferencesViewController.m */,
 				8C4B80FA16BB3D8A00C7E8F4 /* AdvancedPreferencesView.xib */,
-				8CE8F61E16BCC34400DC6014 /* DebugPrefrencesViewController.h */,
-				8CE8F61C16BCC32F00DC6014 /* DebugPreferencesViewController.m */,
-				8CE8F61A16BCC32000DC6014 /* DebugPreferencesView.xib */,
+				8CE8F62216BD8C9E00DC6014 /* DebugPreferencesView.xib */,
+				8CE8F62316BD8C9E00DC6014 /* DebugPreferencesViewController.m */,
+				8CE8F62416BD8C9E00DC6014 /* DebugPrefrencesViewController.h */,
 			);
 			name = Preferences;
 			sourceTree = "<group>";
@@ -874,9 +873,7 @@
 				8C4B80FC16BB3D8A00C7E8F4 /* GeneralPreferencesView.xib in Resources */,
 				8C4B80FE16BB3D8A00C7E8F4 /* AdvancedPreferencesView.xib in Resources */,
 				8CF2C5E316BB458900F906F1 /* MASPreferencesWindow.xib in Resources */,
-				8CE8F61B16BCC32000DC6014 /* DebugPreferencesView.xib in Resources */,
-				8CE8F61D16BCC33000DC6014 /* DebugPreferencesViewController.m in Resources */,
-				8CE8F61F16BCC34400DC6014 /* DebugPrefrencesViewController.h in Resources */,
+				8CE8F62516BD8C9E00DC6014 /* DebugPreferencesView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -954,6 +951,7 @@
 				8C4B80FB16BB3D8A00C7E8F4 /* GeneralPreferencesViewController.m in Sources */,
 				8C4B80FD16BB3D8A00C7E8F4 /* AdvancedPreferencesViewController.m in Sources */,
 				8CF2C5E416BB458900F906F1 /* MASPreferencesWindowController.m in Sources */,
+				8CE8F62616BD8C9E00DC6014 /* DebugPreferencesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

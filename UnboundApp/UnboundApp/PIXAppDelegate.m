@@ -20,6 +20,7 @@
 #import "MASPreferencesWindowController.h"
 #import "GeneralPreferencesViewController.h"
 #import "AdvancedPreferencesViewController.h"
+#import "DebugPrefrencesViewController.h"
 
 
 NSString* kAppFirstRun = @"appFirstRun";
@@ -207,7 +208,17 @@ extern NSString *kSearchDidFinishNotification;
     {
         NSViewController *generalViewController = [[GeneralPreferencesViewController alloc] init];
         NSViewController *advancedViewController = [[AdvancedPreferencesViewController alloc] init];
+        
+
         NSArray *controllers = [[NSArray alloc] initWithObjects:[NSNull null], generalViewController, advancedViewController, [NSNull null], nil];
+        
+        // add the debug preferences pane if we're on a debug build
+#ifdef DEBUG
+        NSViewController *debugController = [[DebugPrefrencesViewController alloc] init];
+        controllers = [controllers arrayByAddingObject:debugController];
+        
+#endif
+        
         
         // To add a flexible space between General and Advanced preference panes insert [NSNull null]:
         //     NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, [NSNull null], advancedViewController, nil];

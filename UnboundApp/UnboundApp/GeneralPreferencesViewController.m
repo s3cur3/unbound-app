@@ -28,19 +28,8 @@
 
 -(IBAction)themeChanged:(id)sender
 {
-    
-    if([[sender selectedCell] tag] == 0)
-    {
-        [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"backgroundTheme"];
-    }
-    
-    else
-    {
-        [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"backgroundTheme"];
-    }
-    
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
+    // the user default (@"backgroundTheme") is changed through a binding. We just need to send out the notification
+
     [[NSNotificationCenter defaultCenter] postNotificationName:@"backgroundThemeChanged" object:nil];
     
 

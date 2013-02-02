@@ -6,5 +6,8 @@
 #import "MASPreferencesViewController.h"
 
 @interface DebugPrefrencesViewController : NSViewController <MASPreferencesViewController>
+{
+
+}
 
 @end
