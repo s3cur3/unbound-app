@@ -13,7 +13,7 @@
 
 extern NSString *kDirectoryPathKey;
 
-extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
+//extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
 
 @implementation PIXAppDelegate (CoreDataUtils)
 

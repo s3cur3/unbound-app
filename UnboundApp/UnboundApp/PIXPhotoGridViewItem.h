@@ -8,8 +8,9 @@
 
 #import "PIXGridViewItem.h"
 
+@class PIXPhoto;
+
 @interface PIXPhotoGridViewItem : PIXGridViewItem
 
-
-
+@property (strong, nonatomic) PIXPhoto * photo;
 @end

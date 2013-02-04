@@ -9,23 +9,25 @@
 #ifndef UnboundApp_PIXDefines_h
 #define UnboundApp_PIXDefines_h
 
-static NSString *kPhotoEntityName = @"PIXPhoto";
-static NSString *kAlbumEntityName = @"PIXAlbum";
+#define kPhotoEntityName @"PIXPhoto"
+#define kAlbumEntityName @"PIXAlbum"
 
-static NSString *kSearchDidFinishNotification = @"kSearchDidFinishNotification";
-static NSString *kCreateThumbDidFinish = @"kCreateThumbDidFinish";
+#define kSearchDidFinishNotification @"kSearchDidFinishNotification"
+#define kCreateThumbDidFinish @"kCreateThumbDidFinish"
 
-static NSString *kUnboundAlbumMetadataFileName = @".unbound";
+#define kUnboundAlbumMetadataFileName @".unbound"
 
-static const NSString *ALBUM = @"ALBUM";
-static const NSString *PHOTO = @"PHOTO";
+#define ALBUM @"ALBUM"
+#define PHOTO @"PHOTO"
 
-static NSString *AlbumCreatedNotification = @"AlbumCreatedNotification";
-static NSString *AlbumDidChangeNotification = @"AlbumDidChangeNotification";
-static NSString *AlbumDeletedNotification = @"AlbumDeletedNotification";
+#define AlbumCreatedNotification @"AlbumCreatedNotification"
+#define AlbumDidChangeNotification @"AlbumDidChangeNotification"
+#define AlbumDeletedNotification @"AlbumDeletedNotification"
 
-static NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM = @"UB_ALBUMS_LOADED_FROM_FILESYSTEM";
-static NSString *kUB_PHOTOS_LOADED_FROM_FILESYSTEM = @"UB_PHOTOS_LOADED_FROM_FILESYSTEM";
+#define PhotoThumbDidChangeNotification @"PhotoThumbDidChangeNotification"
+
+#define kUB_ALBUMS_LOADED_FROM_FILESYSTEM @"UB_ALBUMS_LOADED_FROM_FILESYSTEM"
+#define kUB_PHOTOS_LOADED_FROM_FILESYSTEM @"UB_PHOTOS_LOADED_FROM_FILESYSTEM"
 
 #define FFString(msg, description) NSLocalizedStringFromTableInBundle(msg, @"Unbound", [NSBundle bundleForClass:[PIXMainWindowController class]], description)
 

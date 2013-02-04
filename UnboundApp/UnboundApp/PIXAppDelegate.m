@@ -26,7 +26,7 @@
 NSString* kAppFirstRun = @"appFirstRun";
 
 extern NSString *kLoadImageDidFinish;
-extern NSString *kSearchDidFinishNotification;
+//extern NSString *kSearchDidFinishNotification;
 
 @interface PIXAppDelegate()
 

@@ -21,7 +21,7 @@
 
 #define ONLY_LOAD_ALBUMS_WITH_IMAGES 1
 
-extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
+//extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
 extern NSString *kLoadImageDidFinish;
 extern NSString *kLoadAlbumDidFinish;
 extern NSString *kGetPathsOperationDidFinish;

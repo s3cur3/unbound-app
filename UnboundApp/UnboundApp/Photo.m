@@ -46,6 +46,8 @@
     self.filePath = [NSURL fileURLWithPath:aFilePath];
 }
 
+
+
 -(void)dealloc
 {
     if (self.album!=nil) {

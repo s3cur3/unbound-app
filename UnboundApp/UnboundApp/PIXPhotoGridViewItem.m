@@ -7,12 +7,57 @@
 //
 
 #import "PIXPhotoGridViewItem.h"
+#import "PIXPhoto.h"
+#import "PIXDefines.h"
 
 @implementation PIXPhotoGridViewItem
 
 -(BOOL)isOpaque
 {
     return YES;
+}
+
+-(void)setPhoto:(PIXPhoto *)newPhoto
+{
+    if(_photo != newPhoto)
+    {
+        if (_photo!=nil)
+        {
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:PhotoThumbDidChangeNotification object:_photo];
+        }
+        
+        _photo = newPhoto;
+        [self photoChanged:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photoChanged:) name:PhotoThumbDidChangeNotification object:_photo];
+    }
+}
+
+
+-(void)photoChanged:(NSNotification *)note
+{
+    self.itemImage = [self.photo thumbnailImage];
+    
+    if(self.itemImage == nil)
+    {
+        self.itemImage = [NSImage imageNamed:@"temp"];
+    }
+    
+    [self setNeedsDisplay:YES];
+}
+
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+    
+    if (self.photo )  {
+        [self.photo cancelThumbnailLoading];
+        
+        //[[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:self.album];
+        self.photo = nil;
+    }
+    
+    
 }
 
 - (void)drawRect:(NSRect)rect

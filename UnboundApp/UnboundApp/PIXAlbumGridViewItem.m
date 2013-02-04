@@ -54,9 +54,7 @@
 
     // only set it if it's different
     if(_album != album)
-    {
-        [self layout];
-        
+    {        
         if (album!=nil)
         {
             [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:_album];
@@ -64,15 +62,7 @@
 
         _album = album;
         
-        [self setItemTitle:[_album title]];
-        
-        
-        self.albumThumb = [_album thumbnailImage];
-        
-        if(self.albumThumb == nil)
-        {
-            self.albumThumb = [NSImage imageNamed:@"temp"];
-        }
+        [self albumChanged:nil];
 
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(albumChanged:) name:AlbumDidChangeNotification object:_album];
@@ -85,6 +75,11 @@
     [self setItemTitle:[self.album title]];
     //[self.albumImageView setImage:[self.album thumbnailImage]];
     self.albumThumb = [_album thumbnailImage];
+    
+    if(self.albumThumb == nil)
+    {
+        self.albumThumb = [NSImage imageNamed:@"temp"];
+    }
     
     [self setNeedsDisplay:YES];
 }

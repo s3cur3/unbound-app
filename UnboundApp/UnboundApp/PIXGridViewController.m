@@ -20,6 +20,8 @@
 #import "PIXNavigationController.h"
 #import "PIXSplitViewController.h"
 
+#import "PIXPhoto.h"
+
 static NSString *kContentTitleKey, *kContentImageKey;
 
 @interface PIXGridViewController ()
@@ -231,7 +233,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
 {
     static NSString *reuseIdentifier = @"CNGridViewItem";
     
-    CNGridViewItem *item = [gridView dequeueReusableItemWithIdentifier:reuseIdentifier];
+    PIXPhotoGridViewItem *item = [gridView dequeueReusableItemWithIdentifier:reuseIdentifier];
     if (item == nil) {
         item = [[PIXPhotoGridViewItem alloc] initWithLayout:self.defaultLayout reuseIdentifier:reuseIdentifier];
     }
@@ -242,13 +244,8 @@ static NSString *kContentTitleKey, *kContentImageKey;
     //    item.itemTitle = [NSString stringWithFormat:@"Item: %lu", index];
     //    item.itemImage = [contentDict objectForKey:kContentImageKey];
     
-    id backingObject = [self.items objectAtIndex:index];
-    PIXGridViewItem *pixItem = (PIXGridViewItem *)item;
-    pixItem.representedObject = backingObject;
-    item.itemTitle = [backingObject title];
-    item.itemImage = [backingObject thumbnailImage];
-    
-    
+    PIXPhoto * photo = [self.items objectAtIndex:index];
+    [item setPhoto:photo];
     return item;
 }
 

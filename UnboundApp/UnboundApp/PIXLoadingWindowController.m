@@ -84,7 +84,7 @@ NSString * GetDefaultDropBoxPhotosDirectory()
     return dropBoxPhotosHome;
 }
 
-extern NSString *kSearchDidFinishNotification;
+//extern NSString *kSearchDidFinishNotification;
 
 @interface PIXLoadingWindowController ()
 {

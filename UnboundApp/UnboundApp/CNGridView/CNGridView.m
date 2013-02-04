@@ -741,8 +741,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         return;
     
     [self deselectAllItems];
-    
-    [self selectItemAtIndexMouseUp:selectedItemIndex usingModifierFlags:[NSEvent modifierFlags]];
+    [self selectItemAtIndexMouseDown:selectedItemIndex usingModifierFlags:[NSEvent modifierFlags]];
     
     
 
