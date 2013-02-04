@@ -74,8 +74,9 @@ static NSString *const kItemsKey = @"photos";
     return [NSURL fileURLWithPath:self.path isDirectory:YES];
 }
 
-- (NSImage *)thumbnailImage
+- (NSImage *)thumbnailImageivar
 {
+    return [self.coverPhoto thumbnailImage];
     if (_thumbnailImage == nil)
     {
         NSData *thumbData = self.thumbnail;
@@ -98,6 +99,34 @@ static NSString *const kItemsKey = @"photos";
         }
     }
     return _thumbnailImage;
+}
+
+- (NSImage *)thumbnailImage
+{
+    return [self.coverPhoto thumbnailImage];
+//    _thumbnailImage = nil;
+//    if (YES)//_thumbnailImage == nil)
+//    {
+//        NSData *thumbData = self.thumbnail;
+//        if (thumbData != nil) {
+//            _thumbnailImage = [[NSImage alloc] initWithData:self.thumbnail];
+//        } else if (self.coverPhoto.thumbnail.imageData == nil) {
+//            [self.coverPhoto thumbnailImage];
+//            return nil;
+//            /*NSURL *aPath = self.coverPhoto.filePath;
+//             self.thumbnail = [[NSData alloc] initWithContentsOfMappedFile:aPath.path];
+//             _thumbnailImage = [[NSImage alloc] initWithData:self.thumbnail];*/
+//        } else if (self.coverPhoto.thumbnail.imageData != nil) {
+//            self.thumbnail = self.coverPhoto.thumbnail.imageData;
+//            _thumbnailImage = [[NSImage alloc] initWithData:self.thumbnail];
+//            /*NSURL *aPath = self.coverPhoto.filePath;
+//             self.thumbnail = [[NSData alloc] initWithContentsOfMappedFile:aPath.path];
+//             _thumbnailImage = [[NSImage alloc] initWithData:self.thumbnail];*/
+//        } else {
+//            return nil;
+//        }
+//    }
+//    return _thumbnailImage;
 }
 
 -(void)cancelThumbnailLoading;
@@ -145,6 +174,11 @@ static NSString *const kItemsKey = @"photos";
     [self didChangeValueForKey:@"path"];
 }
 
+-(void)updateCoverPhoto
+{
+    self.coverPhoto = [self.photos objectAtIndex:0];
+}
+
 -(void)setPhotos:(NSOrderedSet *)photos updateCoverImage:(BOOL)shouldUpdateCoverPhoto;
 {
     self.photos = photos;
@@ -156,6 +190,31 @@ static NSString *const kItemsKey = @"photos";
             self.thumbnail = coverImageThumbData;
         }
     }
+}
+
+
+- (PIXPhoto *)coverPhoto
+{
+    [self willAccessValueForKey:@"coverPhoto"];
+    PIXPhoto *tmpValue = [self primitiveValueForKey:@"coverPhoto"];
+    [self didAccessValueForKey:@"coverPhoto"];
+    return tmpValue;
+}
+
+- (void)setCoverPhoto:(PIXPhoto *)value
+{
+    [self willChangeValueForKey:@"coverPhoto"];
+    [self setPrimitiveValue:value forKey:@"coverPhoto"];
+    self.albumDate = value.dateLastModified;
+    self.thumbnail = value.thumbnail.imageData;
+    _thumbnailImage = nil;
+    self.subtitle = nil;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //
+        [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
+    });
+    
+    [self didChangeValueForKey:@"coverPhoto"];
 }
 
 

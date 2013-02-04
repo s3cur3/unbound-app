@@ -34,6 +34,8 @@
 
 -(void)cancelThumbnailLoading;
 
+-(void)updateCoverPhoto;
+
 //
 //@property (nonatomic, strong, readonly) NSDate *dateMostRecentPhoto;
 //@property (nonatomic, strong, readonly) PIXPhoto *mostRecentPhoto;

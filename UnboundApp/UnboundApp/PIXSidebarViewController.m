@@ -63,10 +63,21 @@
     
 }
 
+-(void)scrollToSelectedAlbum
+{
+    if ([self currentlySelectedAlbum] != nil)
+    {
+        NSUInteger index = [self.topLevelItems indexOfObject:[self currentlySelectedAlbum]];
+        [self.outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
+        [self.outlineView scrollRowToVisible:index];
+    }
+}
+
 -(void)albumsChanged:(NSNotification *)note
 {
     //self.albums = nil;
     [self.outlineView reloadData];
+    [self scrollToSelectedAlbum];
 }
 
 -(Album *)currentlySelectedAlbum

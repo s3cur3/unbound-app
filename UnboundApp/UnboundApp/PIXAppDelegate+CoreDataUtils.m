@@ -133,11 +133,11 @@ extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
             [dbPhoto setPath:[aPhoto valueForKey:@"path"]];
             [dbPhoto setDateLastUpdated:self.fetchDate];
             //[lastAlbum addPhotosObject:dbPhoto];
-            [dbPhoto setAlbum:lastAlbum];
-            if (!lastAlbum.albumDate  || [lastAlbum.albumDate isLessThan:dbPhoto.dateLastModified]) {
-                lastAlbum.coverPhoto = dbPhoto;
-                lastAlbum.albumDate = dbPhoto.dateLastModified;
-            }
+//            [dbPhoto setAlbum:lastAlbum];
+//            if (!lastAlbum.albumDate  || [lastAlbum.albumDate isLessThan:dbPhoto.dateLastModified]) {
+//                lastAlbum.coverPhoto = dbPhoto;
+//                lastAlbum.albumDate = dbPhoto.dateLastModified;
+//            }
             [lastAlbumsPhotos addObject:dbPhoto];
             //[lastAlbum addPhotosObject:dbPhoto];
             if (i%500==0) {
@@ -431,6 +431,11 @@ extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
 
 -(BOOL)deleteObjectsForEntityName:(NSString *)entityName withUpdateDateBefore:(NSDate *)lastUpdated inContext:(NSManagedObjectContext *)context
 {
+    BOOL isPhotoEntity = NO;
+    if ([entityName isEqualToString:kPhotoEntityName])
+    {
+        isPhotoEntity = YES;
+    }
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dateLastUpdated == NULL || dateLastUpdated < %@", self.fetchDate, nil];
     
     
@@ -455,12 +460,27 @@ extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
     
     if ([itemsToDelete count]>0) {
         DLog(@"Deleting %ld items that are no longer in the feed", [itemsToDelete count]);
-        
+        NSMutableSet *albumsChanged = [NSMutableSet set];
         // delete any albums that are no longer in the feed
         for (id anItemToDelete in itemsToDelete)
         {
             DLog(@"Deleting item %@ with a dateLastUpdated of %@ which should be after %@", anItemToDelete, [anItemToDelete dateLastUpdated], self.fetchDate);
+            if (isPhotoEntity) {
+                PIXPhoto *aPhoto = (PIXPhoto *)anItemToDelete;
+                if (aPhoto.album == nil) {
+                    //NSAssert(aPhoto.album, @"Photo should not have album already");
+                    DLog(@"Photo should have album");
+                    continue;
+                }
+                [albumsChanged addObject:aPhoto.album];
+            }
             [context deleteObject:anItemToDelete];
+        }
+        if (isPhotoEntity) {
+            for (PIXAlbum *anAlbum in albumsChanged)
+            {
+                [anAlbum updateCoverPhoto];
+            }
         }
         anError = nil;
         if (![context save:&anError]) {
@@ -686,8 +706,5 @@ extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
 
 #pragma mark -
 
-- (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)sender {
-    return [[self managedObjectContext] undoManager];
-}
 
 @end
