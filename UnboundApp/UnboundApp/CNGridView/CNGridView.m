@@ -100,8 +100,10 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     NSTimer *clickTimer;
     NSInteger lastHoveredIndex;
     NSInteger lastSelectedItemIndex;
+    NSInteger shouldDeselectOnMouseUpIndex;
     NSInteger numberOfItems;
     CGPoint selectionFrameInitialPoint;
+    BOOL mouseDragSelectMode;
     BOOL isInitialCall;
     BOOL mouseHasDragged;
     BOOL abortSelection;
@@ -547,7 +549,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     item.hovered = NO;
 }
 
-- (void)selectItemAtIndex:(NSUInteger)selectedItemIndex usingModifierFlags:(NSUInteger)modifierFlags
+- (void)selectItemAtIndexMouseDown:(NSUInteger)selectedItemIndex usingModifierFlags:(NSUInteger)modifierFlags
 {
     if (selectedItemIndex == NSNotFound)
     {
@@ -564,26 +566,54 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
     gridViewItem = [keyedVisibleItems objectForKey:[NSNumber numberWithInteger:selectedItemIndex]];
     if (gridViewItem) {
-        if (self.allowsMultipleSelection) {
+        
+        // if we're in multiselect mode or the user is holding down command (same action)
+        if (self.allowsMultipleSelection || modifierFlags & NSCommandKeyMask) {
             if (!gridViewItem.selected) {
                 [self selectItem:gridViewItem];
+                shouldDeselectOnMouseUpIndex = -1;
             } else {
-                [self deSelectItem:gridViewItem];
+                
+                // dont deselect items on mouse down. Instead deselect on mouse up (more fluid user experience)
+                shouldDeselectOnMouseUpIndex = selectedItemIndex;
             }
 
         } else {
-            if (modifierFlags & NSCommandKeyMask) {
-                if (gridViewItem.selected) {
-                    [self deSelectItem:gridViewItem];
-                } else {
-                    [self selectItem:gridViewItem];
-                }
-            } else {
-                [self selectItem:gridViewItem];
-            }
+            
+            [self selectItem:gridViewItem];
+            
         }
+        
         lastSelectedItemIndex = (self.allowsMultipleSelection ? NSNotFound : selectedItemIndex);
     }
+}
+
+- (void)selectItemAtIndexMouseUp:(NSUInteger)selectedItemIndex usingModifierFlags:(NSUInteger)modifierFlags
+{
+    if (selectedItemIndex == NSNotFound)
+    {
+        return;
+    }
+    
+    
+    CNGridViewItem *gridViewItem = nil;
+    
+    if (lastSelectedItemIndex != NSNotFound && lastSelectedItemIndex != selectedItemIndex) {
+        gridViewItem = [keyedVisibleItems objectForKey:[NSNumber numberWithInteger:lastSelectedItemIndex]];
+        [self deSelectItem:gridViewItem];
+    }
+    
+    gridViewItem = [keyedVisibleItems objectForKey:[NSNumber numberWithInteger:selectedItemIndex]];
+    
+    // if we're in multiselect mode or the user is holding down command (same action)
+    if (self.allowsMultipleSelection || modifierFlags & NSCommandKeyMask) {
+        if (shouldDeselectOnMouseUpIndex == selectedItemIndex) {
+            [self deSelectItem:gridViewItem];
+        }
+    }
+    
+    // clear this flag out so we don't deslect again
+    shouldDeselectOnMouseUpIndex = -1;
 }
 
 - (void)selectAllItems
@@ -706,12 +736,13 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
 - (void)handleDoubleClickForItemAtIndex:(NSUInteger)selectedItemIndex
 {
+    shouldDeselectOnMouseUpIndex = -1;
     if (selectedItemIndex == NSNotFound)
         return;
     
     [self deselectAllItems];
     
-    [self selectItemAtIndex:selectedItemIndex usingModifierFlags:[NSEvent modifierFlags]];
+    [self selectItemAtIndexMouseUp:selectedItemIndex usingModifierFlags:[NSEvent modifierFlags]];
     
     
 
@@ -752,65 +783,43 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
 - (void)selectItemsCoveredBySelectionFrame:(NSRect)selectionFrame usingModifierFlags:(NSUInteger)modifierFlags
 {
-    NSUInteger topLeftItemIndex = [self indexForItemAtLocationNoSpace:[self convertPoint:NSMakePoint(NSMinX(selectionFrame), NSMinY(selectionFrame)) toView:nil]];
-    NSUInteger bottomRightItemIndex = [self indexForItemAtLocationNoSpace:[self convertPoint:NSMakePoint(NSMaxX(selectionFrame), NSMaxY(selectionFrame)) toView:nil]];
-    
-    if(topLeftItemIndex == NSNotFound || bottomRightItemIndex == NSNotFound) return;
-
-    CNItemPoint topLeftItemPoint = [self locationForItemAtIndex:topLeftItemIndex];
-    CNItemPoint bottomRightItemPoint = [self locationForItemAtIndex:bottomRightItemIndex];
-
-    /// handle all "by selection frame" selected items beeing now outside
-    /// the selection frame
+    // loop through all items on the screen
     [[self indexesForVisibleItems] enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        CNGridViewItem *selectedItem = [selectedItems objectForKey:[NSNumber numberWithInteger:idx]];
-        CNGridViewItem *selectionFrameItem = [selectedItemsBySelectionFrame objectForKey:[NSNumber numberWithInteger:idx]];
-        if (selectionFrameItem) {
-            CNItemPoint itemPoint = [self locationForItemAtIndex:selectionFrameItem.index];
+        CNGridViewItem *selectedItem = [keyedVisibleItems objectForKey:[NSNumber numberWithInteger:idx]];
+                
+        if (selectedItem) {
 
-            /// handle all 'out of selection frame range' items
-            if ((itemPoint.row < topLeftItemPoint.row)              ||  /// top edge out of range
-                (itemPoint.column > bottomRightItemPoint.column)    ||  /// right edge out of range
-                (itemPoint.row > bottomRightItemPoint.row)          ||  /// bottom edge out of range
-                (itemPoint.column < topLeftItemPoint.column))           /// left edge out of range
+            // if the content rect of the item intersects the selection frame then mark it as selected
+            
+            CGRect contentFrameInMainView = [self convertRect:selectedItem.contentFrame fromView:selectedItem];
+            
+            if (CGRectIntersectsRect(contentFrameInMainView, selectionFrame))
             {
-                /// ok. before we deselect this item, lets take a look into our `keyedVisibleItems`
-                /// if it there is selected too. If it so, keep it untouched!
-
-                /// so, the current item wasn't selected, we can restore its old state (to unselected)
-                if (![selectionFrameItem isEqual:selectedItem]) {
-                    selectionFrameItem.selected = NO;
-                    [selectedItemsBySelectionFrame removeObjectForKey:[NSNumber numberWithInteger:selectionFrameItem.index]];
+                selectedItem.selected = YES;
+                [selectedItemsBySelectionFrame setObject:selectedItem forKey:[NSNumber numberWithInteger:selectedItem.index]];
+                
+            }
+            
+            
+            // if the item is out of the list remove it from the selected item list
+            else
+            {
+                // check if this item was previously selected
+                if([selectedItems objectForKey:[NSNumber numberWithInteger:idx]] != nil)
+                {
+                    selectedItem.selected = YES;
                 }
-
-                /// the current item already was selected, so reselect it.
-                else {
-                    selectionFrameItem.selected = YES;
-                    [selectedItemsBySelectionFrame setObject:selectionFrameItem forKey:[NSNumber numberWithInteger:selectionFrameItem.index]];
+                
+                else
+                {
+                    selectedItem.selected = NO;
                 }
+                
+                [selectedItemsBySelectionFrame removeObjectForKey:[NSNumber numberWithInteger:selectedItem.index]];
             }
         }
     }];
 
-    /// update all items that needs to be selected
-    NSUInteger columnsInGridView = [self columnsInGridView];
-    
-    if(topLeftItemPoint.row != NSNotFound && bottomRightItemPoint.row != NSNotFound)
-    {
-        for (NSUInteger row = topLeftItemPoint.row; row <= bottomRightItemPoint.row; row++) {
-            for (NSUInteger col = topLeftItemPoint.column; col <= bottomRightItemPoint.column; col++) {
-                NSUInteger itemIndex = ((row -1) * columnsInGridView + col) -1;
-                CNGridViewItem *selectedItem = [selectedItems objectForKey:[NSNumber numberWithInteger:itemIndex]];
-                CNGridViewItem *itemToSelect = [keyedVisibleItems objectForKey:[NSNumber numberWithInteger:itemIndex]];
-                [selectedItemsBySelectionFrame setObject:itemToSelect forKey:[NSNumber numberWithInteger:itemToSelect.index]];
-                if (modifierFlags & NSCommandKeyMask) {
-                    itemToSelect.selected = ([itemToSelect isEqual:selectedItem] ? NO : YES);
-                } else {
-                    itemToSelect.selected = YES;
-                }
-            }
-        }
-    }
 }
 
 
@@ -887,10 +896,17 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     mouseHasDragged = YES;
     [NSCursor closedHandCursor];
 
-    if (!abortSelection) {
+    // if we're dragging a selection (Drag started off a content rect)
+    if (!abortSelection && mouseDragSelectMode) {
         NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
         [self drawSelectionFrameForMousePointerAtLocation:location];
         [self selectItemsCoveredBySelectionFrame:selectionFrameView.frame usingModifierFlags:theEvent.modifierFlags];
+    }
+    
+    // if we're dragging for drag and drop (Drag started over a content rect)
+    if(!mouseDragSelectMode)
+    {
+        
     }
 }
 
@@ -933,26 +949,14 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
             return;
         }
         
-        // check for a double click right at mouse down to make this react faster -- scott
-        if([clickEvents count] >= 1)
-        {
-            NSUInteger indexClick1 = [self indexForItemAtLocation:[[clickEvents objectAtIndex:0] locationInWindow]];
-            if (indexClick1 == index) {
-                [self handleDoubleClickForItemAtIndex:indexClick1];
-                
-                [clickEvents removeAllObjects];
-                [clickTimer invalidate];
-                clickTimer = nil;
-                return;
-            }
-        }
+        // if we're clicking up while on a selected item
+        // else if this was not selected then deselect --scott
+        [self selectItemAtIndexMouseUp:index usingModifierFlags:theEvent.modifierFlags];
         
-        // otherwise start the click event timer -- scott
+        //  start the click event timer -- scott
         [clickEvents addObject:theEvent];
         clickTimer = nil;
-        clickTimer = [NSTimer scheduledTimerWithTimeInterval:[NSEvent doubleClickInterval] target:self selector:@selector(handleClicks:) userInfo:nil repeats:NO];
-        
-        
+        clickTimer = [NSTimer scheduledTimerWithTimeInterval:[NSEvent doubleClickInterval] target:self selector:@selector(handleClicks:) userInfo:nil repeats:NO]; 
     }
 }
 
@@ -964,23 +968,40 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     NSPoint location = [theEvent locationInWindow];
     NSUInteger index = [self indexForItemAtLocation:location];
     
-    // if this is a double-click intercept it early
-    if([clickEvents count] >= 1)
+     // if we're clicking on a contect rect then handl selection stuff
+    if(index != NSNotFound)
     {
-        NSUInteger indexClick1 = [self indexForItemAtLocation:[[clickEvents objectAtIndex:0] locationInWindow]];
-        if (indexClick1 == index) {
-            [self handleDoubleClickForItemAtIndex:indexClick1];
-            
-            [clickEvents removeAllObjects];
-            [clickTimer invalidate];
-            clickTimer = nil;
-            return;
+        // any drags that start with this click down will be for drag and drop, not selection box
+        mouseDragSelectMode = NO;
+        
+        
+        // check for a double click right at mouse down to make this react faster -- scott
+        if([clickEvents count] >= 1)
+        {
+            NSUInteger indexClick1 = [self indexForItemAtLocation:[[clickEvents objectAtIndex:0] locationInWindow]];
+            if (indexClick1 == index) {
+                [self handleDoubleClickForItemAtIndex:indexClick1];
+                
+                [clickEvents removeAllObjects];
+                [clickTimer invalidate];
+                clickTimer = nil;
+                
+                
+                return;
+            }
         }
+        
+        
+        // else if this was not selected then select (will deselect on mouseup instead of mousedown
+        [self selectItemAtIndexMouseDown:index usingModifierFlags:theEvent.modifierFlags];
     }
     
-    // else deslect
-    [self selectItemAtIndex:index usingModifierFlags:theEvent.modifierFlags];
-    
+    else
+    {
+        // any drags that start with this click down will be for a selection box
+        mouseDragSelectMode = YES;
+    }
+
     
 }
 
