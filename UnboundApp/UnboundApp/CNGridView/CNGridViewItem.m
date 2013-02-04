@@ -252,9 +252,12 @@ extern NSString *CNGridViewDeSelectAllItemsNotification;
 
 - (void)setSelected:(BOOL)selected
 {
-    _selected = selected;
-    _currentLayout = (_selected ? _selectionLayout : _defaultLayout);
-    [self setNeedsDisplay:YES];
+    if(_selected != selected)
+    {
+        _selected = selected;
+        _currentLayout = (_selected ? _selectionLayout : _defaultLayout);
+        [self setNeedsDisplay:YES];
+    }
 }
 
 - (BOOL)isReuseable
