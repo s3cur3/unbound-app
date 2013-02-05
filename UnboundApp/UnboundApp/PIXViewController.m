@@ -33,4 +33,14 @@
      
 }
 
+-(void)willShowPIXView
+{
+    
+}
+
+-(void)willHidePIXView
+{
+    
+} 
+
 @end

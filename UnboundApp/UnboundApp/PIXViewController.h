@@ -19,4 +19,8 @@
 
 -(void)setupToolbar;
 
+-(void)willShowPIXView;
+
+-(void)willHidePIXView;
+
 @end

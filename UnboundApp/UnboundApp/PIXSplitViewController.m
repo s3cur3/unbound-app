@@ -62,6 +62,18 @@
     
 }
 
+-(void)willShowPIXView
+{
+    [self.sidebarViewController willShowPIXView];
+    [self.imageBrowserViewController willShowPIXView];
+}
+
+-(void)willHidePIXView
+{
+    [self.sidebarViewController willHidePIXView];
+    [self.imageBrowserViewController willHidePIXView];
+}
+
 -(void)setupToolbar
 {
     

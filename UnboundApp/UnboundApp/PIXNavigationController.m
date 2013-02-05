@@ -65,6 +65,7 @@
 -(void)pushViewController:(PIXViewController *)aViewController;
 {
     PIXViewController *currentViewController = [self.viewControllers lastObject];
+    [currentViewController willHidePIXView];
     [[currentViewController view] removeFromSuperview];
     
     aViewController.navigationViewController = self;    
@@ -72,7 +73,7 @@
     
     [aViewController.view setFrame:self.view.bounds];
     [aViewController.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-    
+    [aViewController willShowPIXView];
     [self.viewControllers addObject:aViewController];
     
     [self setupToolbar];
@@ -81,12 +82,14 @@
 -(void)popViewController;
 {
     PIXViewController *aViewController = [self.viewControllers lastObject];
+    [aViewController willHidePIXView];
     [aViewController.view removeFromSuperview];
     aViewController.navigationViewController = nil;
     [self.viewControllers removeLastObject];
     
     PIXViewController * underViewController = [self.viewControllers lastObject];
     [underViewController.view setFrame:self.view.bounds];
+    [underViewController willShowPIXView];
     [self.view addSubview:[underViewController view]];
         
     [aViewController.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
