@@ -233,9 +233,9 @@ static NSString *kContentTitleKey, *kContentImageKey;
 {
     static NSString *reuseIdentifier = @"CNGridViewItem";
     
-    PIXPhotoGridViewItem *item = [gridView dequeueReusableItemWithIdentifier:reuseIdentifier];
+    CNGridViewItem *item = [gridView dequeueReusableItemWithIdentifier:reuseIdentifier];
     if (item == nil) {
-        item = [[PIXPhotoGridViewItem alloc] initWithLayout:self.defaultLayout reuseIdentifier:reuseIdentifier];
+        item = [[CNGridViewItem alloc] initWithLayout:self.defaultLayout reuseIdentifier:reuseIdentifier];
     }
     item.hoverLayout = self.hoverLayout;
     item.selectionLayout = self.selectionLayout;
@@ -244,8 +244,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
     //    item.itemTitle = [NSString stringWithFormat:@"Item: %lu", index];
     //    item.itemImage = [contentDict objectForKey:kContentImageKey];
     
-    PIXPhoto * photo = [self.items objectAtIndex:index];
-    [item setPhoto:photo];
+//    id itemObject = [self.items objectAtIndex:index];
     return item;
 }
 

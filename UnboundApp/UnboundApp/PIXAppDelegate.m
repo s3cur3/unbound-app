@@ -147,6 +147,12 @@ extern NSString *kLoadImageDidFinish;
         [self performSelector:@selector(startFileSystemLoading) withObject:self afterDelay:2.0];
     }
     
+    
+    // show constraint debug info if debuging
+#ifdef DEBUG
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
+#endif
+    
 }
 
 -(void)shouldStartFileSystemObservingWhenAlbumsFinishSaving

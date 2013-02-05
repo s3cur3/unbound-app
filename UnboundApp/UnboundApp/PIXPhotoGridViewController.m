@@ -13,6 +13,7 @@
 #import "PIXPageViewController.h"
 #import "PIXNavigationController.h"
 #import "PIXDefines.h"
+#import "PIXPhotoGridViewItem.h"
 
 @interface PIXPhotoGridViewController ()
 
@@ -69,6 +70,24 @@
 {
     //return [[[PIXAppDelegate sharedAppDelegate] fetchAllPhotos] mutableCopy];
     return [NSMutableArray arrayWithArray:[self.album.photos array]];
+}
+
+- (CNGridViewItem *)gridView:(CNGridView *)gridView itemAtIndex:(NSInteger)index inSection:(NSInteger)section
+{
+    static NSString *reuseIdentifier = @"CNGridViewItem";
+    
+    PIXPhotoGridViewItem *item = [gridView dequeueReusableItemWithIdentifier:reuseIdentifier];
+    if (item == nil) {
+        item = [[PIXPhotoGridViewItem alloc] initWithLayout:nil reuseIdentifier:reuseIdentifier];
+    }
+    
+    //    NSDictionary *contentDict = [self.items objectAtIndex:index];
+    //    item.itemTitle = [NSString stringWithFormat:@"Item: %lu", index];
+    //    item.itemImage = [contentDict objectForKey:kContentImageKey];
+    
+    PIXPhoto * photo = [self.items objectAtIndex:index];
+    [item setPhoto:photo];
+    return item;
 }
 
 -(void)showPageControllerForIndex:(NSUInteger)index

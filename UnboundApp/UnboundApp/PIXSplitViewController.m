@@ -54,10 +54,11 @@
 {
     [self setupSidebar];
     [self setupBrowser];
-    
+    /*
     // set the holding priority for the sidebar to high, so it doesn't resize with the window
     [self.splitView setHoldingPriority:NSLayoutPriorityDefaultHigh forSubviewAtIndex:0];
     [self.splitView setHoldingPriority:NSLayoutPriorityDefaultLow forSubviewAtIndex:1];
+     */
     
 }
 
@@ -153,28 +154,36 @@
     // disable window flushing to keep views from rendering half way
     [self.navigationViewController.mainWindow disableFlushWindow];
     
-    [self.splitView adjustSubviews];
+    //[self.splitView adjustSubviews];
     
     
     if([self.splitView isSubviewCollapsed:self.leftPane])
     {
-
-        [self.splitView setPosition:230 ofDividerAtIndex:0];
+        float lastPosition = [[NSUserDefaults standardUserDefaults] floatForKey:@"albumSideBarToggleWidth"];
+        
+        // set this to 230 so if a mouse closes it will re-open to that
+        [[NSUserDefaults standardUserDefaults] setFloat:300 forKey:@"albumSideBarToggleWidth"];
+        
+        [self.splitView setPosition:lastPosition ofDividerAtIndex:0];
         
     }
     
     else
     {
-        
-        [self.splitView setPosition:-1 ofDividerAtIndex:0];
+        float currentPosition = self.leftPane.frame.size.width;
+        [[NSUserDefaults standardUserDefaults] setFloat:currentPosition forKey:@"albumSideBarToggleWidth"];
+        [self.splitView setPosition:0 ofDividerAtIndex:0];
     }
     
     
     [self.splitView adjustSubviews];
     [self.navigationViewController.mainWindow enableFlushWindow];
     
+    /*
     [self.splitView setNeedsDisplay:YES];
     [self.leftPane setNeedsDisplay:YES];
+     */
+    
 }
 
 -(void)setNavigationViewController:(PIXNavigationController *)navigationViewController
@@ -214,7 +223,7 @@
     _selectedAlbum = selectedAlbum;
     [self.imageBrowserViewController setAlbum:self.selectedAlbum];
 }
-
+/*
 // constrain the positions that the split can be dragged to
 - (CGFloat)splitView:(NSSplitView *)splitView constrainMinCoordinate:(CGFloat)proposedMinimumPosition ofSubviewAt:(NSInteger)dividerIndex
 {
@@ -246,7 +255,8 @@
     
     self.lastSplitviewWidth = proposedMaximumPosition;
     return proposedMaximumPosition;
-}
+}*/
+
 
 - (BOOL)splitView:(NSSplitView *)splitView canCollapseSubview:(NSView *)subview
 {
@@ -282,21 +292,23 @@
 {
     //if([splitView )
 }*/
-        
+
+
 - (BOOL)splitView:(NSSplitView *)splitView shouldCollapseSubview:(NSView *)subview forDoubleClickOnDividerAtIndex:(NSInteger)dividerIndex
 {
     return YES;
 }
 
 
+
 - (BOOL)splitView:(NSSplitView *)splitView shouldHideDividerAtIndex:(NSInteger)dividerIndex
 {
-    if(dividerIndex == 0 && [self.splitView isSubviewCollapsed:self.leftPane]) return YES;
+    [self.backButtonSegment setSelected:![self.splitView isSubviewCollapsed:self.leftPane] forSegment:1];
     
-    return NO;
+    return YES;
 }
 
-
+/*
 -(void)splitView:(NSSplitView *)splitView resizeSubviewsWithOldSize:(NSSize)oldSize
 {
     // if the size isn't changing then there is no need to mess with this
@@ -329,7 +341,7 @@
     
 }
 
-
+*/
 
 -(void)dealloc
 {

@@ -387,6 +387,8 @@
 				1D083515167D78AD003D557A /* PIXImageBrowserCell.m */,
 				1D8CD7F216AB76E20072D516 /* PIXPhotoGridViewController.h */,
 				1D8CD7F316AB76E20072D516 /* PIXPhotoGridViewController.m */,
+				8C4B80E616B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.h */,
+				8C4B80E716B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.m */,
 			);
 			name = PhotoBrowserView;
 			sourceTree = "<group>";
@@ -559,8 +561,6 @@
 				8C249E8F16AB8DF600CB97AF /* PIXGridViewItem.h */,
 				8C249E9016AB8DF600CB97AF /* PIXGridViewItem.m */,
 				1D8CD7E716AB4D220072D516 /* PIXGridViewItemLayout.m */,
-				8C4B80E616B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.h */,
-				8C4B80E716B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.m */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
