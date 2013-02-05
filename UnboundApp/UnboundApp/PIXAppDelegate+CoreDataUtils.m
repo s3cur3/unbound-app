@@ -611,7 +611,7 @@ extern NSString *kDirectoryPathKey;
             [PIXAppDelegate presentError:error];
             break;
         }
-        NSOrderedSet *photoSet = [[NSOrderedSet alloc] initWithArray:itemsFound];
+        //NSOrderedSet *photoSet = [[NSOrderedSet alloc] initWithArray:itemsFound];
         //[anAlbum setPhotos:photoSet];
         [self setPhotos:[itemsFound mutableCopy] forAlbum:anAlbum];
         

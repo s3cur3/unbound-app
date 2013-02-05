@@ -125,7 +125,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 - (CNItemPoint)locationForItemAtIndex:(NSUInteger)itemIndex;
 - (void)hoverItemAtIndex:(NSInteger)index;
 - (void)unHoverItemAtIndex:(NSInteger)index;
-- (void)selectItemAtIndex:(NSUInteger)selectedItemIndex usingModifierFlags:(NSUInteger)modifierFlags;
+//- (void)selectItemAtIndex:(NSUInteger)selectedItemIndex usingModifierFlags:(NSUInteger)modifierFlags;
 - (void)handleClicks:(NSTimer *)theTimer;
 - (void)handleSingleClickForItemAtIndex:(NSUInteger)selectedItemIndex;
 - (void)handleDoubleClickForItemAtIndex:(NSUInteger)selectedItemIndex;

@@ -8,7 +8,6 @@
 
 #import "PIXAlbumGridViewItem.h"
 #import "PIXAlbum.h"
-#import "PIXBorderedImageView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "PIXDefines.h"
 #include <stdlib.h>

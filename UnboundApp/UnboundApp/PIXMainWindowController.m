@@ -8,7 +8,6 @@
 
 #import "PIXMainWindowController.h"
 #import "PIXNavigationController.h"
-#import "PIXAlbumViewController.h"
 #import "PIXCNAlbumViewController.h"
 
 
