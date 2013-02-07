@@ -28,6 +28,7 @@
 @property (nonatomic, retain) PIXAccount *account;
 @property (nonatomic, retain) NSData * thumbnail;
 @property (nonatomic, retain) PIXPhoto *coverPhoto;
+@property (nonatomic, retain) NSArray *stackPhotos;
 @property (nonatomic, retain) NSDate * albumDate;
 
 -(void)setPhotos:(NSOrderedSet *)photos updateCoverImage:(BOOL)shouldUpdateCoverImage;
@@ -35,6 +36,7 @@
 -(void)cancelThumbnailLoading;
 
 -(void)updateCoverPhoto;
+-(void)updateAlbumBecausePhotosDidChange;
 
 //
 //@property (nonatomic, strong, readonly) NSDate *dateMostRecentPhoto;

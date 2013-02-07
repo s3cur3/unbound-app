@@ -25,6 +25,7 @@
 @property (nonatomic, retain) NSString * path;
 @property (nonatomic, retain) PIXAlbum *album;
 @property (nonatomic, retain) PIXAlbum *coverPhotoAlbum;
+@property (nonatomic, retain) PIXAlbum *stackPhotoAlbum;
 @property (nonatomic, retain) PIXThumbnail *thumbnail;
 
 

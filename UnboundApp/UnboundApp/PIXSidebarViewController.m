@@ -34,14 +34,33 @@
     return self;
 }
 
-
--(void)loadView
+-(NSArray *)topLevelItems
 {
-    [super loadView];
+    //[self.outlineView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
+    if(_topLevelItems != nil) {return _topLevelItems;}
+    
+    //[self.view setWantsLayer:YES];
+    _topLevelItems = [[PIXAppDelegate sharedAppDelegate] fetchAllAlbums];
+    
+    return _topLevelItems;
+}
+
+//-(void)loadView
+//{
+//    [super loadView];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(albumsChanged:)
+//                                                 name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM
+//                                               object:nil];
+//}
+
+-(void)willShowPIXView
+{
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(albumsChanged:)
-                                                 name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM
-                                               object:nil];
+                                                   selector:@selector(albumsChanged:)
+                                                       name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM
+                                                     object:nil];
+    [self scrollToSelectedAlbum];
 }
 
 
@@ -50,6 +69,7 @@
 
 -(void)awakeFromNib
 {
+    [super awakeFromNib];
     /*[self.outlineView reloadData];
     if ([self currentlySelectedAlbum] != nil)
     {
@@ -75,7 +95,7 @@
 
 -(void)albumsChanged:(NSNotification *)note
 {
-    //self.albums = nil;
+    _topLevelItems = nil;
     [self.outlineView reloadData];
     [self scrollToSelectedAlbum];
 }

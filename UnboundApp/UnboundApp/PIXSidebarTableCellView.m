@@ -56,15 +56,51 @@
     
 }
 
+-(void)updateSubtitle
+{
+    
+    if ([self.detailTextLabel.stringValue isEqualToString:[_album imageSubtitle]]==NO) {
+        DLog(@"Update subtitle for view with album : %@", self.album.title);
+        [self.detailTextLabel setStringValue:[self.album imageSubtitle]];
+        [self setNeedsDisplay:YES];
+    }
+}
+
+-(void)updateAlbumView:(NSNotification *)note
+{
+    if (note.object == self.album) {
+        [self.imageView setImage:[_album thumbnailImage]];
+        [self updateSubtitle];
+        [self setNeedsDisplay:YES];
+    } else {
+        DLog(@"Received a notification for incorrect album : %@", note.object);
+    }
+}
+
+
 -(void)setAlbum:(PIXAlbum *)newAlbum
 {
     if (newAlbum!=_album)
     {
-        
+        if (_album != nil) {
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:_album];
+        }
         _album = newAlbum;
+        if (_album != nil) {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAlbumView:) name:AlbumDidChangeNotification object:_album];
+            //            [[NSNotificationCenter defaultCenter] addObserverForName:AlbumPhotoCountDidChangeNotification object:self queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+            //                [self.detailTextLabel setStringValue:[_album imageSubtitle]];
+            //            }];
+        }
+        
+
     }
+//    else {
+//        [self updateSubtitle];
+//    }
     
 }
+
 
 //-(void)setAlbum:(id)album
 //{
