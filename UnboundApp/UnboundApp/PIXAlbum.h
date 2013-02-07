@@ -2,7 +2,7 @@
 //  PIXAlbum.h
 //  UnboundApp
 //
-//  Created by Bob on 1/8/13.
+//  Created by Scott Sykora on 2/7/13.
 //  Copyright (c) 2013 Pixite Apps LLC. All rights reserved.
 //
 
@@ -12,45 +12,24 @@
 
 @class PIXAccount, PIXPhoto;
 
-@interface PIXAlbum : NSManagedObject <PIXThumbnailLoadingDelegate>
+@interface PIXAlbum : NSManagedObject<PIXThumbnailLoadingDelegate>
 {
-//    @private
-//    PIXPhoto *_mostRecentPhoto;
-//    NSDate *_dateMostRecentPhoto;
+    //    @private
+    //    PIXPhoto *_mostRecentPhoto;
+    //    NSDate *_dateMostRecentPhoto;
     NSImage *_thumbnailImage;
 }
 
-@property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) NSString * subtitle;
+@property (nonatomic, retain) NSDate * albumDate;
 @property (nonatomic, retain) NSDate * dateLastUpdated;
 @property (nonatomic, retain) NSString * path;
-@property (nonatomic, retain) NSOrderedSet *photos;
-@property (nonatomic, retain) PIXAccount *account;
+@property (nonatomic, retain) NSString * subtitle;
 @property (nonatomic, retain) NSData * thumbnail;
+@property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) PIXAccount *account;
 @property (nonatomic, retain) PIXPhoto *coverPhoto;
-@property (nonatomic, retain) NSArray *stackPhotos;
-@property (nonatomic, retain) NSDate * albumDate;
-
--(void)setPhotos:(NSOrderedSet *)photos updateCoverImage:(BOOL)shouldUpdateCoverImage;
-
--(void)cancelThumbnailLoading;
-
--(void)updateCoverPhoto;
--(void)updateAlbumBecausePhotosDidChange;
-
-//
-//@property (nonatomic, strong, readonly) NSDate *dateMostRecentPhoto;
-//@property (nonatomic, strong, readonly) PIXPhoto *mostRecentPhoto;
-
-
-//@property (nonatomic, retain, readonly) NSEntityDescription *photoEntityDescription;
-//@property (nonatomic, retain, readonly) NSExpressionDescription *expressionDescription;
-
-//@property (nonatomic, strong)   NSDate *dateLastScanned;
-//@property (nonatomic, strong)   NSString *filePath;
-//@property (nonatomic, strong)   NSURL *filePathURL;
-//@property (nonatomic, strong)   NSImage *thumbnailImage;
-
+@property (nonatomic, retain) NSOrderedSet *photos;
+@property (nonatomic, retain) NSOrderedSet *stackPhotos;
 @end
 
 @interface PIXAlbum (CoreDataGeneratedAccessors)
@@ -65,12 +44,30 @@
 - (void)removePhotosObject:(PIXPhoto *)value;
 - (void)addPhotos:(NSOrderedSet *)values;
 - (void)removePhotos:(NSOrderedSet *)values;
+- (void)insertObject:(PIXPhoto *)value inStackPhotosAtIndex:(NSUInteger)idx;
+- (void)removeObjectFromStackPhotosAtIndex:(NSUInteger)idx;
+- (void)insertStackPhotos:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
+- (void)removeStackPhotosAtIndexes:(NSIndexSet *)indexes;
+- (void)replaceObjectInStackPhotosAtIndex:(NSUInteger)idx withObject:(PIXPhoto *)value;
+- (void)replaceStackPhotosAtIndexes:(NSIndexSet *)indexes withStackPhotos:(NSArray *)values;
+- (void)addStackPhotosObject:(PIXPhoto *)value;
+- (void)removeStackPhotosObject:(PIXPhoto *)value;
+- (void)addStackPhotos:(NSOrderedSet *)values;
+- (void)removeStackPhotos:(NSOrderedSet *)values;
 @end
+
 
 @interface PIXAlbum(Customizations)
 
 //fetches photo with the most recent dateLastModified
 //- (PIXPhoto *)fetchMostRecentPhoto;
+
+-(void)setPhotos:(NSOrderedSet *)photos updateCoverImage:(BOOL)shouldUpdateCoverImage;
+
+-(void)cancelThumbnailLoading;
+
+-(void)updateCoverPhoto;
+-(void)updateAlbumBecausePhotosDidChange;
 
 //non-core data
 - (NSURL *)filePathURL;

@@ -15,7 +15,7 @@
         <relationship name="account" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="PIXAccount" inverseName="albums" inverseEntity="PIXAccount" syncable="YES"/>
         <relationship name="coverPhoto" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="PIXPhoto" inverseName="coverPhotoAlbum" inverseEntity="PIXPhoto" syncable="YES"/>
         <relationship name="photos" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="PIXPhoto" inverseName="album" inverseEntity="PIXPhoto" syncable="YES"/>
-        <relationship name="stackPhotos" optional="YES" toMany="YES" maxCount="3" deletionRule="Nullify" destinationEntity="PIXPhoto" inverseName="stackPhotoAlbum" inverseEntity="PIXPhoto" syncable="YES"/>
+        <relationship name="stackPhotos" optional="YES" toMany="YES" maxCount="3" deletionRule="Nullify" ordered="YES" destinationEntity="PIXPhoto" inverseName="stackPhotoAlbum" inverseEntity="PIXPhoto" syncable="YES"/>
     </entity>
     <entity name="PIXPhoto" representedClassName="PIXPhoto" syncable="YES">
         <attribute name="dateLastModified" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>

@@ -108,8 +108,9 @@
 
 -(void)setupToolbar
 {
-    
     [[self.viewControllers lastObject] setupToolbar];
+    
+    [[self.view window] viewsNeedDisplay];
 }
 
 -(void)setToolbarItems:(NSArray *)items

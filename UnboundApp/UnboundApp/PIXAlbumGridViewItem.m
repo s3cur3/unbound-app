@@ -8,6 +8,7 @@
 
 #import "PIXAlbumGridViewItem.h"
 #import "PIXAlbum.h"
+#import "PIXPhoto.h"
 #import <QuartzCore/QuartzCore.h>
 #import "PIXDefines.h"
 #include <stdlib.h>
@@ -39,10 +40,10 @@
         self.stackThumb2 = [NSImage imageNamed:@"temp-portrait"];
         
         // randomly rotate the first between -.05 and .05
-        self.stackThumb1Rotate = (CGFloat)(arc4random() % 1000)/10000 - .05;
+        self.stackThumb1Rotate = (CGFloat)(arc4random() % 1400)/10000 - .07;
         
         // the second needs to be the difference so that we rotate the object back
-        self.stackThumb2Rotate = (CGFloat)(arc4random() % 1000)/10000 - .05 - self.stackThumb1Rotate;
+        self.stackThumb2Rotate = (CGFloat)(arc4random() % 1400)/10000 - .07 - self.stackThumb1Rotate;
     }
     return self;
 }
@@ -79,6 +80,57 @@
     {
         self.albumThumb = [NSImage imageNamed:@"temp"];
     }
+    
+    // if we've got one stack photo
+    if([[self.album stackPhotos] count] > 0)
+    {
+        
+        self.albumThumb = [(PIXPhoto *)[[self.album stackPhotos] objectAtIndex:0] thumbnailImage];
+        
+        // we'll check for a nil photo outside of this if because albums with no photos should still have one placeholder thumb
+        
+        
+        // if we have two stack photos get both
+        if([[self.album stackPhotos] count] > 1)
+        {
+            self.stackThumb1 = [(PIXPhoto *)[[self.album stackPhotos] objectAtIndex:1] thumbnailImage];
+            
+            if(self.stackThumb1 == nil)
+            {
+                self.stackThumb1 = [NSImage imageNamed:@"temp-portrait"];
+            }
+            
+            // if we have three stack photos get all three
+            if([[self.album stackPhotos] count] > 2)
+            {
+                self.stackThumb2 = [(PIXPhoto *)[[self.album stackPhotos] objectAtIndex:2] thumbnailImage];
+                
+                if(self.stackThumb2 == nil)
+                {
+                    self.stackThumb2 = [NSImage imageNamed:@"temp"];
+                }
+            }
+            
+            else
+            {
+                self.stackThumb2 = nil; // we don't have three photos, don't draw the third
+            }
+            
+            
+        }
+        
+        else
+        {
+            self.stackThumb1 = nil; // we don't have two photos, don't draw the second or third
+            self.stackThumb2 = nil; 
+        }
+    }
+    
+    if(self.albumThumb == nil)
+    {
+        self.albumThumb = [NSImage imageNamed:@"temp"];
+    }
+    
     
     [self setNeedsDisplay:YES];
 }

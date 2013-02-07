@@ -118,6 +118,11 @@ const CGFloat kThumbnailSize = 200.0f;
         //[[NSNotificationQueue defaultQueue] enqueueNotification:albumNotification postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnSender forModes:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self.album];
     }
+    
+    if(self.stackPhotoAlbum)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self.album];
+    }
 
     
 }
