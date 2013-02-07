@@ -47,11 +47,7 @@
     
     return _albums;
 }
--(void)setSearchString:(NSString *)searchString
-{
-    [self.searchField setStringValue:searchString];
-    [self updateSearch];
-}
+
 
 - (void)controlTextDidChange:(NSNotification *)aNotification
 {
@@ -107,7 +103,16 @@
                                                      object:nil];
     
     NSString * searchString = [[NSUserDefaults standardUserDefaults] objectForKey:@"PIX_AlbumSearchString"];
-    [self.searchField setStringValue:searchString];
+    
+    if(searchString != nil)
+    {
+        [self.searchField setStringValue:searchString];
+    }
+    
+    else
+    {
+        [self.searchField setStringValue:@""];
+    }
     
     [self updateSearch];
     

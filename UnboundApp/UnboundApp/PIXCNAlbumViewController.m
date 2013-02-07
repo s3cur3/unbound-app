@@ -87,7 +87,16 @@
 -(void)willShowPIXView
 {
     NSString * searchString = [[NSUserDefaults standardUserDefaults] objectForKey:@"PIX_AlbumSearchString"];
-    [self.searchField setStringValue:searchString];
+    
+    if(searchString != nil)
+    {
+        [self.searchField setStringValue:searchString];
+    }
+    
+    else
+    {
+        [self.searchField setStringValue:@""];
+    }
     
     [self updateSearch];
 }
@@ -339,7 +348,18 @@
     //[gridView deselectAllItems];
     
     DLog(@"didDoubleClickItemAtIndex: %li", index);
-    PIXAlbum * album = [self.albums objectAtIndex:index];
+    PIXAlbum * album = nil;
+    
+    if(self.searchedAlbums)
+    {
+        album = [self.searchedAlbums objectAtIndex:index];
+    }
+    
+    else
+    {
+        album = [self.albums objectAtIndex:index];
+    }
+    
     [self showPhotosForAlbum:album];
 }
 
