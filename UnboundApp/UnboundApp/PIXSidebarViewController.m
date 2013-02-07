@@ -32,12 +32,21 @@
     if (self) {
         // Initialization code here.
         //self.topLevelItems = [[[PIXDataSource fileSystemDataSource] albums] mutableCopy];
-        self.albums = [[PIXAppDelegate sharedAppDelegate] fetchAllAlbums];
     }
     
     return self;
 }
 
+-(NSArray *)albums
+{
+    //[self.outlineView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
+    if(_albums != nil) {return _albums;}
+    
+    //[self.view setWantsLayer:YES];
+    _albums = [[PIXAppDelegate sharedAppDelegate] fetchAllAlbums];
+    
+    return _albums;
+}
 -(void)setSearchString:(NSString *)searchString
 {
     [self.searchField setStringValue:searchString];
@@ -83,33 +92,67 @@
     }
     
     [self.outlineView reloadData];
+    [self scrollToSelectedAlbum];
 	
 }
 
 
--(void)loadView
+-(void)willShowPIXView
 {
-    [super loadView];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(albumsChanged:)
-                                                 name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM
-                                               object:nil];
+                                                   selector:@selector(albumsChanged:)
+                                                       name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM
+                                                     object:nil];
+    [self scrollToSelectedAlbum];
 }
 
+
+
+
+
+-(void)awakeFromNib
+{
+    [super awakeFromNib];
+    /*[self.outlineView reloadData];
+    if ([self currentlySelectedAlbum] != nil)
+    {
+        NSUInteger index = [self.topLevelItems indexOfObject:[self currentlySelectedAlbum]];
+        [self.outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
+        [self.outlineView scrollRowToVisible:index];
+    }*/
+    //[self.outlineView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
+    
+    //[self.view setWantsLayer:YES];
+    
+}
 
 -(void)scrollToSelectedAlbum
 {
     if ([self currentlySelectedAlbum] != nil)
     {
-        NSUInteger index = [self.albums indexOfObject:[self currentlySelectedAlbum]];
-        [self.outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
-        [self.outlineView scrollRowToVisible:index];
+        NSUInteger index = NSNotFound;
+        
+        if(self.searchedAlbums)
+        {
+            index = [self.searchedAlbums indexOfObject:[self currentlySelectedAlbum]];
+        }
+        
+        else
+        {
+            index = [self.albums indexOfObject:[self currentlySelectedAlbum]];
+        }
+        
+        if(index != NSNotFound)
+        {
+            [self.outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
+            [self.outlineView scrollRowToVisible:index];
+        }
     }
 }
 
 -(void)albumsChanged:(NSNotification *)note
 {
-    //self.albums = nil;
+    self.albums = nil;
     [self.outlineView reloadData];
     [self scrollToSelectedAlbum];
 }

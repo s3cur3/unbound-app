@@ -37,6 +37,7 @@ const CGFloat kThumbnailSize = 200.0f;
 @dynamic album;
 @dynamic thumbnail;
 @dynamic coverPhotoAlbum;
+@dynamic stackPhotoAlbum;
 
 @synthesize cancelThumbnailLoadOperation;
 

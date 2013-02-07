@@ -142,6 +142,9 @@ extern NSString *kDirectoryPathKey;
             //[lastAlbum addPhotosObject:dbPhoto];
             if (i%500==0) {
                 [context save:nil];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
+                });
             }
         }
         //lastAlbum.photos = [[NSOrderedSet alloc] initWithArray:lastAlbumsPhotos];
@@ -159,17 +162,7 @@ extern NSString *kDirectoryPathKey;
         [context save:nil];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            
-
-            //[self testFetchAllPhotos:nil];
-            //[[NSNotificationCenter defaultCenter] postNotificationName:@"PhotoLoadingFinished" object:self userInfo:nil];
-
-            //[self testFetchAllAlbums:nil];
-            //[[NSNotificationCenter defaultCenter] postNotificationName:@"AlbumLoadingFinished" object:self userInfo:nil];
-            
             [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
-            
-            [self finishedLoadingPrintTime];
         });
         
     });
@@ -479,7 +472,7 @@ extern NSString *kDirectoryPathKey;
         if (isPhotoEntity) {
             for (PIXAlbum *anAlbum in albumsChanged)
             {
-                [anAlbum updateCoverPhoto];
+                [anAlbum updateAlbumBecausePhotosDidChange];
             }
         }
         anError = nil;

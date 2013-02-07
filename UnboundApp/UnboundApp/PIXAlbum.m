@@ -24,6 +24,7 @@ static NSString *const kItemsKey = @"photos";
 @dynamic subtitle;
 @dynamic thumbnail;
 @dynamic coverPhoto;
+@dynamic stackPhotos;
 @dynamic albumDate;
 
 //@dynamic dateMostRecentPhoto;
@@ -174,21 +175,52 @@ static NSString *const kItemsKey = @"photos";
     [self didChangeValueForKey:@"path"];
 }
 
+-(void)updateAlbumBecausePhotosDidChange
+{
+    self.subtitle = nil;
+    [self updateCoverPhoto];
+    [self updateStackPhotos];
+}
+
 -(void)updateCoverPhoto
 {
-    self.coverPhoto = [self.photos objectAtIndex:0];
+    if (self.photos.count)
+    {
+        PIXPhoto *newCoverPhoto = [self.photos objectAtIndex:0];
+        if (newCoverPhoto != self.coverPhoto) {
+            self.coverPhoto = [self.photos objectAtIndex:0];
+            self.albumDate = self.coverPhoto.dateLastModified;
+            self.subtitle = nil;
+            NSData *coverImageThumbData = self.coverPhoto.thumbnail.imageData;
+            if (coverImageThumbData != nil) {
+                self.thumbnail = coverImageThumbData;
+            }
+        }
+    }
 }
 
 -(void)setPhotos:(NSOrderedSet *)photos updateCoverImage:(BOOL)shouldUpdateCoverPhoto;
 {
+    if (photos.count != self.photos.count)
+    {
+        self.subtitle = nil;
+    }
+
     self.photos = photos;
     if (shouldUpdateCoverPhoto==YES && photos.count != 0) {
-        self.coverPhoto = [photos objectAtIndex:0];
-        self.albumDate = self.coverPhoto.dateLastModified;
-        NSData *coverImageThumbData = self.coverPhoto.thumbnail.imageData;
-        if (coverImageThumbData != nil) {
-            self.thumbnail = coverImageThumbData;
-        }
+        [self updateAlbumBecausePhotosDidChange];
+    }
+}
+
+-(void)updateStackPhotos
+{
+    NSUInteger photoCount = self.photos.count;
+    if (photoCount > 0) {
+        NSUInteger stackRange = photoCount>=3 ? 3 : photoCount;
+        NSRange indexRange = NSMakeRange(0, stackRange);
+        NSIndexSet *stackSet = [NSIndexSet indexSetWithIndexesInRange:indexRange];
+        NSArray *stackArray = [self.photos objectsAtIndexes:stackSet];
+        self.stackPhotos = [NSMutableSet setWithArray:stackArray];
     }
 }
 
