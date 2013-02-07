@@ -18,6 +18,10 @@
 
 @interface PIXSidebarViewController ()
 
+@property (nonatomic, strong) NSArray * searchedAlbums;
+@property (nonatomic, strong) IBOutlet NSSearchField * searchField;
+@property (nonatomic, strong) NSString * lastSearch;
+
 @end
 
 @implementation PIXSidebarViewController
@@ -28,10 +32,58 @@
     if (self) {
         // Initialization code here.
         //self.topLevelItems = [[[PIXDataSource fileSystemDataSource] albums] mutableCopy];
-        self.topLevelItems = [[PIXAppDelegate sharedAppDelegate] fetchAllAlbums];
+        self.albums = [[PIXAppDelegate sharedAppDelegate] fetchAllAlbums];
     }
     
     return self;
+}
+
+-(void)setSearchString:(NSString *)searchString
+{
+    [self.searchField setStringValue:searchString];
+    [self updateSearch];
+}
+
+- (void)controlTextDidChange:(NSNotification *)aNotification
+{
+    [self updateSearch];
+}
+
+-(void)updateSearch
+{
+	
+    NSString * searchText = [self.searchField stringValue];
+    if(searchText != nil && [searchText length] > 0)
+    {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.title CONTAINS[cd] %@", searchText];
+        
+        if([self.albums count] > 0)
+        {
+            // if this search is more narrow than the last filter then re-filter based on the last set
+            // (this happens while typing)
+            
+            if(self.lastSearch != nil && [searchText rangeOfString:self.lastSearch].length != 0)
+            {
+                self.searchedAlbums = [self.searchedAlbums filteredArrayUsingPredicate:predicate];
+            }
+            
+            else
+            {
+                self.searchedAlbums = [self.albums filteredArrayUsingPredicate:predicate];
+            }
+            
+            self.lastSearch = searchText;
+        }
+    }
+    
+    else
+    {
+        self.searchedAlbums = nil;
+        self.lastSearch = nil;
+    }
+    
+    [self.outlineView reloadData];
+	
 }
 
 
@@ -45,29 +97,11 @@
 }
 
 
-
-
-
--(void)awakeFromNib
-{
-    /*[self.outlineView reloadData];
-    if ([self currentlySelectedAlbum] != nil)
-    {
-        NSUInteger index = [self.topLevelItems indexOfObject:[self currentlySelectedAlbum]];
-        [self.outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
-        [self.outlineView scrollRowToVisible:index];
-    }*/
-    //[self.outlineView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
-    
-    //[self.view setWantsLayer:YES];
-    
-}
-
 -(void)scrollToSelectedAlbum
 {
     if ([self currentlySelectedAlbum] != nil)
     {
-        NSUInteger index = [self.topLevelItems indexOfObject:[self currentlySelectedAlbum]];
+        NSUInteger index = [self.albums indexOfObject:[self currentlySelectedAlbum]];
         [self.outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
         [self.outlineView scrollRowToVisible:index];
     }
@@ -156,22 +190,43 @@
 @implementation PIXSidebarViewController(NSOutlineViewDataSource)
 
 - (NSInteger) outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item {
-    return [self.topLevelItems count];
+    
+    if(self.searchedAlbums != nil)
+    {
+        return [self.searchedAlbums count];
+    }
+    
+    return [self.albums count];
 }
 
 
 - (NSArray *)_childrenForItem:(id)item {
-    NSArray *children;
+
     if (item == nil) {
-        children = self.topLevelItems;
-    } else {
-        children = [NSArray arrayWithObject:[self.topLevelItems lastObject]];
+        
+        if(self.searchedAlbums != nil)
+        {
+            return self.searchedAlbums;
+        }
+        
+        return self.albums;
     }
-    return children;
+    
+    return nil;
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item {
-    return [self.topLevelItems objectAtIndex:index];
+    if(item == nil)
+    {
+        if(self.searchedAlbums != nil)
+        {
+            return [self.searchedAlbums objectAtIndex:index];
+        }
+        
+        return [self.albums objectAtIndex:index];
+    }
+    
+    return nil;
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item {

@@ -14,7 +14,7 @@
 
 //@property (nonatomic, strong) Album* selectedAlbum;
 @property (nonatomic, weak) PIXSplitViewController *splitViewController;
-@property (nonatomic, strong) NSArray* topLevelItems;
+@property (nonatomic, strong) NSArray* albums;
 @property (nonatomic, assign) IBOutlet NSOutlineView *outlineView;
 
 @end

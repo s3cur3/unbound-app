@@ -87,6 +87,7 @@
 		8C4B80FC16BB3D8A00C7E8F4 /* GeneralPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4B80F716BB3D8A00C7E8F4 /* GeneralPreferencesView.xib */; };
 		8C4B80FD16BB3D8A00C7E8F4 /* AdvancedPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B80F916BB3D8A00C7E8F4 /* AdvancedPreferencesViewController.m */; };
 		8C4B80FE16BB3D8A00C7E8F4 /* AdvancedPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4B80FA16BB3D8A00C7E8F4 /* AdvancedPreferencesView.xib */; };
+		8C7ABBBE16C42A3D00784BDA /* PIXGradientBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7ABBBD16C42A3D00784BDA /* PIXGradientBarView.m */; };
 		8C972CB41680FE8B00358913 /* PIXModifierSwitchedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */; };
 		8CE8F62516BD8C9E00DC6014 /* DebugPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CE8F62216BD8C9E00DC6014 /* DebugPreferencesView.xib */; };
 		8CE8F62616BD8C9E00DC6014 /* DebugPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE8F62316BD8C9E00DC6014 /* DebugPreferencesViewController.m */; };
@@ -244,6 +245,8 @@
 		8C4B80F816BB3D8A00C7E8F4 /* AdvancedPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvancedPreferencesViewController.h; sourceTree = "<group>"; };
 		8C4B80F916BB3D8A00C7E8F4 /* AdvancedPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvancedPreferencesViewController.m; sourceTree = "<group>"; };
 		8C4B80FA16BB3D8A00C7E8F4 /* AdvancedPreferencesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AdvancedPreferencesView.xib; sourceTree = "<group>"; };
+		8C7ABBBC16C42A3D00784BDA /* PIXGradientBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXGradientBarView.h; sourceTree = "<group>"; };
+		8C7ABBBD16C42A3D00784BDA /* PIXGradientBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXGradientBarView.m; sourceTree = "<group>"; };
 		8C972CB21680FE8A00358913 /* PIXModifierSwitchedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXModifierSwitchedEvent.h; sourceTree = "<group>"; };
 		8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXModifierSwitchedEvent.m; sourceTree = "<group>"; };
 		8CE8F62216BD8C9E00DC6014 /* DebugPreferencesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DebugPreferencesView.xib; sourceTree = "<group>"; };
@@ -450,6 +453,8 @@
 				8C249E8F16AB8DF600CB97AF /* PIXGridViewItem.h */,
 				8C249E9016AB8DF600CB97AF /* PIXGridViewItem.m */,
 				1D8CD7E716AB4D220072D516 /* PIXGridViewItemLayout.m */,
+				8C7ABBBC16C42A3D00784BDA /* PIXGradientBarView.h */,
+				8C7ABBBD16C42A3D00784BDA /* PIXGradientBarView.m */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -756,6 +761,7 @@
 				8C4B80FD16BB3D8A00C7E8F4 /* AdvancedPreferencesViewController.m in Sources */,
 				8CF2C5E416BB458900F906F1 /* MASPreferencesWindowController.m in Sources */,
 				8CE8F62616BD8C9E00DC6014 /* DebugPreferencesViewController.m in Sources */,
+				8C7ABBBE16C42A3D00784BDA /* PIXGradientBarView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

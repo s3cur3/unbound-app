@@ -912,6 +912,18 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 - (void)mouseUp:(NSEvent *)theEvent
 {
     [NSCursor arrowCursor];
+    
+    // get the index clicked up in
+    NSPoint location = [theEvent locationInWindow];
+    NSInteger index = [self indexForItemAtLocation:location];
+    
+    // this will only deselect the same object we clicked down in, so we're save to do this first
+    if(index != NSNotFound)
+    {
+        // if we're clicking up while on a selected item
+        // else if this was not selected then deselect --scott
+        [self selectItemAtIndexMouseUp:index usingModifierFlags:theEvent.modifierFlags];
+    }
 
     abortSelection = NO;
 
@@ -940,17 +952,13 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     else {
         
         // if we're clicking up while not on any item then deselect all -- scott
-        NSPoint location = [theEvent locationInWindow];
-        NSInteger index = [self indexForItemAtLocation:location];
+        
         if(index == NSNotFound)
         {
             [self deselectAllItems];
             return;
         }
         
-        // if we're clicking up while on a selected item
-        // else if this was not selected then deselect --scott
-        [self selectItemAtIndexMouseUp:index usingModifierFlags:theEvent.modifierFlags];
         
         //  start the click event timer -- scott
         [clickEvents addObject:theEvent];

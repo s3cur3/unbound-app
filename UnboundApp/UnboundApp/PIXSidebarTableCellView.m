@@ -22,25 +22,29 @@
     [self.imageView setImage:anImage];
     [self.imageView setImageScaling:NSImageScaleNone];
     //[self.imageView setImageFrameStyle:NSImagef:]
-    [self.detailTextLabel setStringValue:@"Loading"];
-    
+    [self.detailTextLabel setStringValue:@"Loading..."];
     
     [self.imageView setWantsLayer:YES];
     
     
+    
+    //[self.imageView.layer setShadowOffset:CGSizeMake(0, -1)];
+}
+
+-(void)updateLayer
+{
     [self.imageView.layer setBorderColor:[[NSColor colorWithCalibratedWhite:0.0 alpha:0.4] CGColor]];
     [self.imageView.layer setBorderWidth:1.0];
     [self.imageView.layer setCornerRadius:2.5];
     
+    /*
     
     CGColorRef color = CGColorCreateGenericGray(1.0, 1.0);
     [self.imageView.layer setBackgroundColor:color];
     [self.imageView.layer setShadowOpacity:1.0];
     [self.imageView.layer setShadowRadius:2.0];
     [self.imageView.layer setShadowColor:[NSColor blackColor].CGColor];
-    //[self.imageView.layer setShadowOffset:CGSizeMake(0, -1)];
-    
-    
+    [self.imageView.layer setShadowOffset:CGSizeMake(0, -1)];*/
 }
 
 - (void)dealloc {
@@ -84,25 +88,32 @@
 //    }
 //}
 
+
+
 // use this to switch text color when highligthed
 - (void)setBackgroundStyle:(NSBackgroundStyle)style
 {
-    [super setBackgroundStyle:style];
-    
-    // If the cell's text color is black, this sets it to white
-    [((NSCell *)self.detailTextLabel.cell) setBackgroundStyle:style];
-    
-    // Otherwise you need to change the color manually
-    switch (style) {
-        case NSBackgroundStyleLight:
-            [self.detailTextLabel setTextColor:[NSColor colorWithCalibratedWhite:0.4 alpha:1.0]];
-            break;
-            
-        case NSBackgroundStyleDark:
-        default:
-            [self.detailTextLabel setTextColor:[NSColor colorWithCalibratedWhite:1.0 alpha:1.0]];
-            break;
-    }
+
+        [super setBackgroundStyle:style];
+        
+        // If the cell's text color is black, this sets it to white
+        //[((NSCell *)self.detailTextLabel.cell) setBackgroundStyle:style];
+        
+        // Otherwise you need to change the color manually
+        switch (style) {
+            case NSBackgroundStyleLight:
+                [self.textField setTextColor:[NSColor blackColor]];
+                [self.detailTextLabel setTextColor:[NSColor colorWithCalibratedWhite:0.4 alpha:1.0]];
+                break;
+                
+            case NSBackgroundStyleDark:
+            default:
+                [self.textField setTextColor:[NSColor whiteColor]];
+                [self.detailTextLabel setTextColor:[NSColor colorWithCalibratedWhite:1.0 alpha:1.0]];
+                break;
+        }
+
 }
+
 
 @end
