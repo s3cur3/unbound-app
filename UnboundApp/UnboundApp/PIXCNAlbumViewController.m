@@ -84,6 +84,14 @@
     
 }
 
+-(void)willShowPIXView
+{
+    NSString * searchString = [[NSUserDefaults standardUserDefaults] objectForKey:@"PIX_AlbumSearchString"];
+    [self.searchField setStringValue:searchString];
+    
+    [self updateSearch];
+}
+
 -(void)defaultThemeChanged:(NSNotification *)note
 {
     [self setBGColor];
@@ -256,6 +264,8 @@
         self.searchedAlbums = nil;
         self.lastSearch = nil;
     }
+    
+    [[NSUserDefaults standardUserDefaults] setObject:searchText forKey:@"PIX_AlbumSearchString"];
     
     [self.gridView reloadData];
 	

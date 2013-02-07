@@ -59,7 +59,7 @@
 -(void)willShowPIXView
 {
     [self.sidebarViewController willShowPIXView];
-    [self.imageBrowserViewController willShowPIXView];
+    [self.imageBrowserViewController willShowPIXView];    
 }
 
 -(void)willHidePIXView

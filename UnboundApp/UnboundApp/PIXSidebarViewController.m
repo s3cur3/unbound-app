@@ -91,6 +91,8 @@
         self.lastSearch = nil;
     }
     
+    [[NSUserDefaults standardUserDefaults] setObject:searchText forKey:@"PIX_AlbumSearchString"];
+        
     [self.outlineView reloadData];
     [self scrollToSelectedAlbum];
 	
@@ -103,7 +105,14 @@
                                                    selector:@selector(albumsChanged:)
                                                        name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM
                                                      object:nil];
-    [self scrollToSelectedAlbum];
+    
+    NSString * searchString = [[NSUserDefaults standardUserDefaults] objectForKey:@"PIX_AlbumSearchString"];
+    [self.searchField setStringValue:searchString];
+    
+    [self updateSearch];
+    
+    // this will be called by updateSearch so no need to call  it here
+    //[self scrollToSelectedAlbum];
 }
 
 
