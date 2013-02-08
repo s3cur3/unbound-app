@@ -68,11 +68,18 @@
     [currentViewController willHidePIXView];
     [[currentViewController view] removeFromSuperview];
     
-    aViewController.navigationViewController = self;    
+    aViewController.navigationViewController = self;
+        
+    [aViewController.view setFrame:self.view.bounds];
+    
+    
+    
+    
     [self.view addSubview:aViewController.view];
     
-    [aViewController.view setFrame:self.view.bounds];
-    [aViewController.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+    
+    
+    //[aViewController.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
     [aViewController willShowPIXView];
     [self.viewControllers addObject:aViewController];
     
@@ -91,8 +98,10 @@
     [underViewController.view setFrame:self.view.bounds];
     [underViewController willShowPIXView];
     [self.view addSubview:[underViewController view]];
+    
+    
         
-    [aViewController.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+    //[aViewController.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
     [self setupToolbar];
 }
 
@@ -117,7 +126,7 @@
 {
     [self.mainWindow disableFlushWindow];
 
-    //NSDisableScreenUpdates();
+    NSDisableScreenUpdates();
     
     _toolbarItems = items;
     
@@ -134,7 +143,7 @@
         i++;
     }
     
-    //NSEnableScreenUpdates();
+    NSEnableScreenUpdates();
     [self.mainWindow enableFlushWindow];
     
 }
