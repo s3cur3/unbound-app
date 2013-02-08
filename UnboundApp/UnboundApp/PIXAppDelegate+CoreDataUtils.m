@@ -43,7 +43,7 @@
 
 -(void)setPhotos:(NSMutableArray *)newPhotos forAlbum:(PIXAlbum *)anAlbum
 {
-    NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc] initWithKey:@"dateLastModified" ascending:NO];
+    NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc] initWithKey:@"dateLastModified" ascending:YES];
     [newPhotos sortUsingDescriptors:@[sortByDate] ];
     NSOrderedSet *newPhotosSet = [[NSOrderedSet alloc] initWithArray:newPhotos];
     [anAlbum setPhotos:newPhotosSet updateCoverImage:YES];
