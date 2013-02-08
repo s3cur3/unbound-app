@@ -74,5 +74,7 @@
 - (NSImage *)thumbnailImage;
 - (NSString *) imageSubtitle;
 
+-(void) flush;
+
 
 @end

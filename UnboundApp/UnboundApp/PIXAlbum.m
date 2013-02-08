@@ -181,6 +181,14 @@ static NSString *const kItemsKey = @"photos";
     }
 }
 
+-(void)flush
+{
+    if(self.managedObjectContext != nil && ![self isDeleted])
+    {
+        self.subtitle = nil;
+    }
+}
+
 //
 //- (PIXPhoto *)coverPhoto
 //{

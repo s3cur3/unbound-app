@@ -98,6 +98,9 @@
         // They will be removed from this array as they're matched
         NSMutableArray *lastAlbumsExistingPhotos = [NSMutableArray new];
         
+        // editedAlbumObjectIDs will store objectID's of albums we've edited so we can loop through and flush them on the main thread later
+        NSMutableSet * editedAlbumObjectIDs = [NSMutableSet new];
+        
         // loop through the array of photo filesystem dictionaries
         for (NSDictionary *aPhoto in photos)
         {
@@ -127,6 +130,9 @@
                     lastAlbum = [NSEntityDescription insertNewObjectForEntityForName:@"PIXAlbum" inManagedObjectContext:context];
                     [lastAlbum setValue:aPath forKey:@"path"];
                 }
+                
+                // store the objectID's of any albums we touch so we can go through and update them on the main thread later
+                [editedAlbumObjectIDs addObject:[lastAlbum objectID]];
                 
                 // we're starting a freshly found/created album so clear this array
                 [lastAlbumsPhotos removeAllObjects];
@@ -176,6 +182,16 @@
             if (i%500==0) {
                 [context save:nil];
                 dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    // flush the main-thread info of any albums that we've touched
+                    [self flushAlbumsWithIDS:editedAlbumObjectIDs];
+                    
+                    // we've flushed these already so clear them out
+                    [editedAlbumObjectIDs removeAllObjects];
+                    
+                    // add the last one back in because we're still working with it
+                    [editedAlbumObjectIDs addObject:[lastAlbum objectID]];
+                    
                     [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
                 });
             }
@@ -200,10 +216,35 @@
         
         // update the UI with a notification
         dispatch_async(dispatch_get_main_queue(), ^{
+            
+            // flush the main-thread info of any albums that we've touched
+            [self flushAlbumsWithIDS:editedAlbumObjectIDs];
+            
+            // we've flushed these already so clear them out
+            [editedAlbumObjectIDs removeAllObjects];
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
         });
         
     });
+    
+    
+}
+
+// this shoudl always be called on the main thread
+-(void)flushAlbumsWithIDS:(NSSet *)albumIDs
+{
+    // fetch any the albums with these ids
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kAlbumEntityName];
+    [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(self IN %@)", [albumIDs allObjects]]];
+    
+    NSError * error;
+    NSArray * editedAlbums = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    for(PIXAlbum * album in editedAlbums)
+    {
+        [album flush];
+    }
     
     
 }
@@ -384,7 +425,7 @@
 //                {
 //                    [thisDBItem setDateLastModified:[anItem valueForKey:@"modified"]];
 //                }
-//                //TODO: update record with latest info
+//                //TODO/: update record with latest info
 //                //                int last_updated = [[photoset valueForKey:@"date_update"] intValue];
 //                //                int db_last_updated = -1;
 //                //                if ([thisDBAlbum dateSetup]!=nil) {
