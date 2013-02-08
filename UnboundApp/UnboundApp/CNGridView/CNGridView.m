@@ -658,6 +658,11 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         /// inform the delegate
         [self gridView:self didSelectItemAtIndex:theItem.index inSection:0];
     }
+    
+    else
+    {
+        theItem.selected = YES;
+    }
 }
 
 - (void)deSelectItem:(CNGridViewItem *)theItem

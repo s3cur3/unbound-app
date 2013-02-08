@@ -227,7 +227,7 @@
     [itemSubtitle drawInRect:subTitleRect withAttributes:attributes];
     
     
-    CGRect albumFrame = CGRectInset(self.bounds, 15, 35);
+    CGRect albumFrame = CGRectInset(self.bounds, 18, 35);
     albumFrame.origin.y -= 20;
     
     // draw the stack of imagess

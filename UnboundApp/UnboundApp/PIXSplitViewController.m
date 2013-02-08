@@ -44,6 +44,8 @@
         self.sidebarViewController.splitViewController = self;
         
         self.imageBrowserViewController = [[PIXPhotoGridViewController alloc] initWithNibName:@"PIXGridViewController" bundle:nil];
+        
+        [self.splitView adjustSubviews];
     }
     
     return self;
@@ -53,13 +55,12 @@
 {
     [self setupSidebar];
     [self setupBrowser];
-    
 }
 
 -(void)willShowPIXView
 {
     [self.sidebarViewController willShowPIXView];
-    [self.imageBrowserViewController willShowPIXView];    
+    [self.imageBrowserViewController willShowPIXView];
 }
 
 -(void)willHidePIXView
