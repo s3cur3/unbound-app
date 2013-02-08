@@ -65,7 +65,7 @@
     //[self.view setWantsLayer:YES];
     //[self.gridView setWantsLayer:YES];
     
-    [self.gridView setItemSize:CGSizeMake(190, 190)];
+    [self.gridView setItemSize:CGSizeMake(190, 210)];
     [self.gridView setAllowsMultipleSelection:YES];
     [self.gridView reloadData];
     [self.gridView setUseHover:NO];
