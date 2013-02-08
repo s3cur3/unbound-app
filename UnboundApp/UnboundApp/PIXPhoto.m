@@ -139,9 +139,14 @@ const CGFloat kThumbnailSize = 200.0f;
     {
         NSData *imgData = self.thumbnail.imageData;
         if (imgData != nil) {
+            
+            
+            _thumbnailImage = [[NSImage alloc] initWithData:imgData];
+            
+            /*
             _thumbnailImageIsLoading = YES;
             __weak PIXPhoto *weakSelf = self;
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                 weakSelf.thumbnailImage = [[NSImage alloc] initWithData:imgData];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
@@ -152,7 +157,7 @@ const CGFloat kThumbnailSize = 200.0f;
                     }
                     
                 });
-            });
+            });*/
             
         } else {
             self.cancelThumbnailLoadOperation = NO;
