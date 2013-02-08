@@ -136,11 +136,11 @@
     
 	if (![self isCancelled])
 	{
-        DLog(@"Checking if file is photo '%@'",[loadURL.path lastPathComponent]);
+        //DLog(@"Checking if file is photo '%@'",[loadURL.path lastPathComponent]);
 		// test to see if it's an image file
 		if ([self isImageFile:loadURL])
 		{
-            DLog(@"Loading photo '%@'",loadURL.path);
+            //DLog(@"Loading photo '%@'",loadURL.path);
 			// in this example, we just get the file's info (mod date, file size) and report it to the table view
 			//
 			NSNumber *fileSize;

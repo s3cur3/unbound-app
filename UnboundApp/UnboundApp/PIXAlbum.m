@@ -186,6 +186,9 @@ static NSString *const kItemsKey = @"photos";
     if(self.managedObjectContext != nil && ![self isDeleted])
     {
         self.subtitle = nil;
+        
+        // not sure if we need to send this. the all albums refresh is always sent after this
+        [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
     }
 }
 
