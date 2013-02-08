@@ -115,6 +115,7 @@ NSString* kAppFirstRun = @"appFirstRun";
         //[self updateAlbumsPhotos];
     }];
     
+    /*
     //Notification for standard fetches
     [[NSNotificationCenter defaultCenter] addObserverForName:@"PhotoLoadingFinished" object:self queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"PhotoLoadingFinished" object:self];
@@ -127,7 +128,7 @@ NSString* kAppFirstRun = @"appFirstRun";
     [[NSNotificationCenter defaultCenter] addObserverForName:@"AlbumLoadingFinished" object:self queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AlbumLoadingFinished" object:self];
         [self loadPhotos];
-    }];
+    }];*/
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kAppFirstRun]==YES)
     {

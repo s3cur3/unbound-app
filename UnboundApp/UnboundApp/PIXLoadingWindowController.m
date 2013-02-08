@@ -310,14 +310,14 @@ NSString * GetDefaultDropBoxPhotosDirectory()
     [self finishAndSaveRecords];
 }
 
--(void)fetchRecords
-{
-    NSLog(@"DONE SAVING DATA");
-    //[queue setSuspended:NO];
-    NSString *resultStr = [NSString stringWithFormat:@"DONE LOADING!\nImages found: %ld", [tableRecords count]];
-    [self setResultsString: resultStr];
-    [(PIXAppDelegate *)[[NSApplication sharedApplication] delegate] testFetchAllPhotos:nil];
-}
+//-(void)fetchRecords
+//{
+//    NSLog(@"DONE SAVING DATA");
+//    //[queue setSuspended:NO];
+//    NSString *resultStr = [NSString stringWithFormat:@"DONE LOADING!\nImages found: %ld", [tableRecords count]];
+//    [self setResultsString: resultStr];
+//    [(PIXAppDelegate *)[[NSApplication sharedApplication] delegate] testFetchAllPhotos:nil];
+//}
 
 // -------------------------------------------------------------------------------
 //	anyThread_handleLoadedImages:note

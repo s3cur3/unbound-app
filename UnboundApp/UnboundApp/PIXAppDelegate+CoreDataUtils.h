@@ -17,13 +17,13 @@
 
 -(void)photosFinishedLoading:(NSNotification *)note;
 
--(void)loadPhotos;
-
--(void)loadAlbums;
-
--(void)updateAlbumsPhotos;
-
--(IBAction)testFetchAllPhotos:(id)sender;
+//-(void)loadPhotos;
+//
+//-(void)loadAlbums;
+//
+//-(void)updateAlbumsPhotos;
+//
+//-(IBAction)testFetchAllPhotos:(id)sender;
 
 -(NSArray *)fetchAllPhotos;
 
