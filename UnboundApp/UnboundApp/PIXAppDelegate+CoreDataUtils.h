@@ -12,6 +12,9 @@
 
 @interface PIXAppDelegate (CoreDataUtils)
 
+//-(void)parsePhotos:(NSArray *)photos;
+-(void)parsePhotos:(NSArray *)photos withPath:(NSString *)path;
+
 -(void)photosFinishedLoading:(NSNotification *)note;
 
 -(void)loadPhotos;

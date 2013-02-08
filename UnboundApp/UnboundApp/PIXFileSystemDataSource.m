@@ -22,10 +22,10 @@
 #define ONLY_LOAD_ALBUMS_WITH_IMAGES 1
 
 //extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
-extern NSString *kLoadImageDidFinish;
+//extern NSString *kLoadImageDidFinish;
 extern NSString *kLoadAlbumDidFinish;
 extern NSString *kGetPathsOperationDidFinish;
-extern NSString *kScanCountKey;
+//extern NSString *kScanCountKey;
 
 /*
  * Used to get the home directory of the user, UNIX/C based workaround for sandbox issues
@@ -61,6 +61,8 @@ NSString * DefaultDropBoxPhotosDirectory()
 @property (nonatomic,strong) NSDateFormatter *dateFormatter;
 @property (nonatomic, strong) NSOperationQueue *loadingQueue;
 
+@property (nonatomic, strong) NSMutableDictionary *loadingAlbumsDict;
+
 
 //@property(strong) ArchDirectoryObservationResumeToken resumeToken;
 
@@ -93,6 +95,7 @@ NSString * DefaultDropBoxPhotosDirectory()
         tableRecords = [[NSMutableArray alloc] init];
         scanCount = 0;
         self.finishedLoading = YES;
+        self.loadingAlbumsDict = [[NSMutableDictionary alloc] init];
         /*if (self.rootFilePath == nil) {
             self.rootFilePath = DefaultDropBoxPhotosDirectory();
             [self loadAllAlbums];
@@ -185,6 +188,7 @@ NSString * DefaultDropBoxPhotosDirectory()
     NSLog(@"\r\n\talbum loaded : %@", [note.userInfo valueForKey:@"path"]);
     [self performSelectorOnMainThread:@selector(checkIfFinishedLoading) withObject:nil waitUntilDone:NO];
 }
+
 
 -(void)anyThread_handleLoadedPaths:(NSNotification *)note
 {
@@ -635,6 +639,7 @@ NSString * DefaultDropBoxPhotosDirectory()
 //    }
 }
 
+
 // At least one file in the directory indicated by changedURL has changed.  You should examine the directory at changedURL to see which files changed.
 // observedURL: the URL of the dorectory you're observing.
 // changedURL: the URL of the actual directory that changed. This could be a subdirectory.
@@ -650,26 +655,64 @@ NSString * DefaultDropBoxPhotosDirectory()
         DLog(@"Files in album '%@' have changed while the app was not active", changedURL.path);
         //NSAssert(NO, @"Not expecting historical changes in childrenAtURLDidChange");
     }
-    /*PIXAppDelegate *appDelegate = [PIXAppDelegate sharedAppDelegate];
-    PIXAlbum *dbAlbum = [appDelegate fetchAlbumWithPath:changedURL.path inContext:appDelegate.managedObjectContext];
-    if (dbAlbum!=nil) {
-        NSNotification *albumChangedNotification = [NSNotification notificationWithName:AlbumDidChangeNotification
-                                                                                 object:dbAlbum
-                                                                               userInfo:@{@"changedURL" : changedURL, @"observedURL" : observedURL}];
-        
-        [[NSNotificationQueue defaultQueue] enqueueNotification:albumChangedNotification postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnSender forModes:nil];
-    } else {
-        DLog(@"No album at path %@", changedURL.path);
-    }*/
     
-    if (self.finishedLoading) {
-        [self startLoadingAllAlbumsAndPhotosInObservedDirectories];
+    //[tableRecords removeAllObjects];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(anyThread_handleLoadedImages:)
+//                                                 name:kLoadAlbumDidFinish
+//                                               object:nil];
+    
+    
+    if ([self.loadingAlbumsDict objectForKey:changedURL.path]==nil) {
+        [self.loadingAlbumsDict setObject:changedURL forKey:changedURL.path];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            //
+            NSArray *photoFiles = [self getFilesAtURL:changedURL];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[PIXAppDelegate sharedAppDelegate] parsePhotos:photoFiles withPath:changedURL.path];
+                [self.loadingAlbumsDict removeObjectForKey:changedURL.path];
+            });
+
+        });
+        
     }
+    
+    //TODO: check for deleted albums
+    
+    
+//    scanCount++;
+//    
+//    PIXLoadAlbumOperation *op = [[PIXLoadAlbumOperation alloc] initWithRootURL:changedURL queue:self.loadingQueue scanCount:0];
+//    
+//    [op setQueuePriority:NSOperationQueuePriorityVeryLow];
+//    [self.loadingQueue addOperation:op];
+//    
+//    [self.loadingQueue addObserver:self forKeyPath:@"operationCount" options:0 context:NULL];
+    
+
+//    if (self.finishedLoading) {
+//        [self startLoadingAllAlbumsAndPhotosInObservedDirectories];
+//    }
+    
+    
+    // this will start the "GetPathsOperation"
+    /*PIXAppDelegate *appDelegate = [PIXAppDelegate sharedAppDelegate];
+     PIXAlbum *dbAlbum = [appDelegate fetchAlbumWithPath:changedURL.path inContext:appDelegate.managedObjectContext];
+     if (dbAlbum!=nil) {
+     NSNotification *albumChangedNotification = [NSNotification notificationWithName:AlbumDidChangeNotification
+     object:dbAlbum
+     userInfo:@{@"changedURL" : changedURL, @"observedURL" : observedURL}];
+     
+     [[NSNotificationQueue defaultQueue] enqueueNotification:albumChangedNotification postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnSender forModes:nil];
+     } else {
+     DLog(@"No album at path %@", changedURL.path);
+     }*/
+    
     
 //
 //    NSLog(@"Files in %@ have changed!", changedURL.path);
 //    Album *changedAlbum = [self.albumLookupTable valueForKey:changedURL.path];
-//    
+//
 //    if (changedAlbum==nil)
 //    {
 //        DLog(@"Received notification for an album that doesn't exist - creating : %@", changedURL.path);
@@ -737,6 +780,56 @@ NSString * DefaultDropBoxPhotosDirectory()
     DLog(@"\r\n*******\r\nobservedDirectory:'%@'\r\nancestorAtURLDidChange: '%@'\r\nhistorical: %@\r\n*******", observedURL.path, changedURL.path, historical ? @"YES" : @"NO");
     [self updateResumeToken:resumeToken forObservedDirectory:observedURL];
 }
+
+
+-(NSArray *)getFilesAtURL:(NSURL *)url
+{
+    NSMutableArray *photoFiles = [NSMutableArray new];
+    NSFileManager *localFileManager=[[NSFileManager alloc] init];
+    NSDirectoryEnumerationOptions options = NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsSubdirectoryDescendants;
+    NSDirectoryEnumerator *dirEnumerator = [localFileManager enumeratorAtURL:url
+                                                  includingPropertiesForKeys:[NSArray arrayWithObjects:NSURLNameKey,
+                                                                              NSURLIsDirectoryKey,NSURLTypeIdentifierKey,NSURLCreationDateKey,nil]
+                                                                     options:options
+                                                                errorHandler:^(NSURL *url, NSError *error) {
+                                                                    // Handle the error.
+                                                                    [PIXAppDelegate presentError:error];
+                                                                    // Return YES if the enumeration should continue after the error.
+                                                                    return YES;
+                                                                }];
+    id obj;
+    while (obj = [dirEnumerator nextObject]) {
+        if ([self fileIsImageFile:(NSURL *)obj]==YES)
+        {
+            NSDate *fileCreationDate;
+            NSURL *aURL = (NSURL *)obj;
+            [aURL getResourceValue:&fileCreationDate forKey:NSURLCreationDateKey error:nil];
+            
+            /*NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+             [formatter setTimeStyle:NSDateFormatterNoStyle];
+             [formatter setDateStyle:NSDateFormatterShortStyle];
+             NSString *modDateStr = [formatter stringFromDate:fileCreationDate];*/
+            
+            NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  [aURL lastPathComponent], kNameKey,
+                                  //[self.loadURL absoluteString], kPathKey,
+                                  [aURL path], kPathKey,
+                                  [[aURL URLByDeletingLastPathComponent] path] , kDirectoryPathKey,
+                                  //modDateStr, kModifiedKey,
+                                  fileCreationDate, kCreatedKey,
+                                  //[NSString stringWithFormat:@"%ld", [fileSize integerValue]], kSizeKey,
+                                  //[NSNumber numberWithInteger:ourScanCount], kScanCountKey,  // pass back to check if user cancelled/started a new scan
+                                  nil];
+            [photoFiles addObject:info];
+            
+        }
+    }
+    
+    return photoFiles;
+
+}
+
+
 
 //-------------------------------------------------------
 //  This'll cause a very specific crash if my shared instance is ever deallocated due to a bug.

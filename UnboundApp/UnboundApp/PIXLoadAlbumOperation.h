@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-// key for obtaining the current scan count
-extern NSString *kScanCountKey;
-
-// key for obtaining the path of an image
-extern NSString *kPathKey;
+//// key for obtaining the current scan count
+//extern NSString *kScanCountKey;
+//
+//// key for obtaining the path of an image
+//extern NSString *kPathKey;
 
 // NSNotification name to tell the Window controller an image file as found
 extern NSString *kLoadAlbumDidFinish;

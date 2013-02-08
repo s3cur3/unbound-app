@@ -181,30 +181,25 @@ static NSString *const kItemsKey = @"photos";
     }
 }
 
-
-- (PIXPhoto *)coverPhoto
-{
-    [self willAccessValueForKey:@"coverPhoto"];
-    PIXPhoto *tmpValue = [self primitiveValueForKey:@"coverPhoto"];
-    [self didAccessValueForKey:@"coverPhoto"];
-    return tmpValue;
-}
-
-- (void)setCoverPhoto:(PIXPhoto *)value
-{
-    [self willChangeValueForKey:@"coverPhoto"];
-    [self setPrimitiveValue:value forKey:@"coverPhoto"];
-    self.albumDate = value.dateLastModified;
-    self.thumbnail = value.thumbnail.imageData;
-    _thumbnailImage = nil;
-    self.subtitle = nil;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        //
-        [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
-    });
-    
-    [self didChangeValueForKey:@"coverPhoto"];
-}
+//
+//- (PIXPhoto *)coverPhoto
+//{
+//    [self willAccessValueForKey:@"coverPhoto"];
+//    PIXPhoto *tmpValue = [self primitiveValueForKey:@"coverPhoto"];
+//    [self didAccessValueForKey:@"coverPhoto"];
+//    return tmpValue;
+//}
+//
+//- (void)setCoverPhoto:(PIXPhoto *)value
+//{
+//    [self willChangeValueForKey:@"coverPhoto"];
+//    [self setPrimitiveValue:value forKey:@"coverPhoto"];
+//    self.albumDate = value.dateLastModified;
+//    self.thumbnail = value.thumbnail.imageData;
+//    _thumbnailImage = nil;
+//    self.subtitle = nil;    
+//    [self didChangeValueForKey:@"coverPhoto"];
+//}
 
 
 

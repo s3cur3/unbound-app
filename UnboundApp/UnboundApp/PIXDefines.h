@@ -29,6 +29,30 @@
 #define kUB_ALBUMS_LOADED_FROM_FILESYSTEM @"UB_ALBUMS_LOADED_FROM_FILESYSTEM"
 #define kUB_PHOTOS_LOADED_FROM_FILESYSTEM @"UB_PHOTOS_LOADED_FROM_FILESYSTEM"
 
+
+// key for obtaining the current scan count
+#define kScanCountKey @"scanCount"
+
+// key for obtaining the path of an image field
+#define kPathKey @"path"
+
+// key for obtaining the directory containing an image field
+#define kDirectoryPathKey @"dirPath"
+
+// key for obtaining the size of an image file
+#define kSizeKey @"size"
+
+// key for obtaining the name of an image file
+#define kNameKey @"name"
+
+// key for obtaining the mod date of an image file
+#define kModifiedKey @"modified"
+
+#define kCreatedKey @"modified"
+
+// NSNotification name to tell the Window controller an image file as found
+#define kLoadImageDidFinish @"LoadImageDidFinish"
+
 #define FFString(msg, description) NSLocalizedStringFromTableInBundle(msg, @"Unbound", [NSBundle bundleForClass:[PIXMainWindowController class]], description)
 
 // ===========================

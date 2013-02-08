@@ -49,7 +49,7 @@
 #import <Cocoa/Cocoa.h>
 
 // key for obtaining the current scan count
-extern NSString *kScanCountKey;
+//extern NSString *kScanCountKey;
 
 // key for obtaining the path of an image
 extern NSString *kPathKey;

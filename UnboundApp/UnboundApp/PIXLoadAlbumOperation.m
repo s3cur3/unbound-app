@@ -9,6 +9,7 @@
 #import "PIXLoadAlbumOperation.h"
 #import "LoadOperation.h"
 #import "PIXAppDelegate.h"
+#import "PIXDefines.h"
 
 //// key for obtaining the current scan count
 //NSString *kScanCountKey = @"scanCount";

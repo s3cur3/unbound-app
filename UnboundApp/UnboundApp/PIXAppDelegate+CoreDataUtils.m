@@ -11,7 +11,7 @@
 #import "PIXAlbum.h"
 #import "PIXDefines.h"
 
-extern NSString *kDirectoryPathKey;
+//extern NSString *kDirectoryPathKey;
 
 //extern NSString *kUB_ALBUMS_LOADED_FROM_FILESYSTEM;
 
@@ -50,9 +50,14 @@ extern NSString *kDirectoryPathKey;
     [newPhotos removeAllObjects];
 }
 
--(void)photosFinishedLoading:(NSNotification *)note
-{
+-(void)photosFinishedLoading:(NSNotification *)note {
     NSArray *photos = [note.userInfo valueForKey:@"items"];
+    [self parsePhotos:photos withPath:nil];
+}
+
+-(void)parsePhotos:(NSArray *)photos withPath:(NSString *)path
+{
+    //NSArray *photos = [note.userInfo valueForKey:@"items"];
     self.photoFiles = [photos sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"path" ascending:YES]]];
     
     self.fetchDate = [NSDate date];
@@ -152,10 +157,10 @@ extern NSString *kDirectoryPathKey;
         [lastAlbumsPhotos addObjectsFromArray:lastAlbumsExistingPhotos];
         [self setPhotos:lastAlbumsPhotos  forAlbum:lastAlbum];
         
-        if (![self deleteObjectsForEntityName:@"PIXAlbum" withUpdateDateBefore:self.fetchDate inContext:context]) {
+        if (![self deleteObjectsForEntityName:@"PIXAlbum" withUpdateDateBefore:self.fetchDate inContext:context withPath:path]) {
             DLog(@"There was a problem trying to delete old objects");
         }
-        if (![self deleteObjectsForEntityName:@"PIXPhoto" withUpdateDateBefore:self.fetchDate inContext:context]) {
+        if (![self deleteObjectsForEntityName:@"PIXPhoto" withUpdateDateBefore:self.fetchDate inContext:context withPath:path]) {
             DLog(@"There was a problem trying to delete old objects");
         }
         
@@ -421,8 +426,12 @@ extern NSString *kDirectoryPathKey;
 }
 
 
-
 -(BOOL)deleteObjectsForEntityName:(NSString *)entityName withUpdateDateBefore:(NSDate *)lastUpdated inContext:(NSManagedObjectContext *)context
+{
+    return [self deleteObjectsForEntityName:entityName withUpdateDateBefore:lastUpdated inContext:context withPath:nil];
+}
+
+-(BOOL)deleteObjectsForEntityName:(NSString *)entityName withUpdateDateBefore:(NSDate *)lastUpdated inContext:(NSManagedObjectContext *)context withPath:(NSString *)path
 {
     BOOL isPhotoEntity = NO;
     if ([entityName isEqualToString:kPhotoEntityName])
@@ -430,6 +439,13 @@ extern NSString *kDirectoryPathKey;
         isPhotoEntity = YES;
     }
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dateLastUpdated == NULL || dateLastUpdated < %@", self.fetchDate, nil];
+    if (path!=nil) {
+        if (isPhotoEntity) {
+            predicate = [NSPredicate predicateWithFormat:@"album.path == %@ && (dateLastUpdated == NULL || dateLastUpdated < %@)",path, self.fetchDate, nil];
+        } else {
+            predicate = [NSPredicate predicateWithFormat:@"path == %@ && (dateLastUpdated == NULL || dateLastUpdated < %@)", path, self.fetchDate, nil];
+        }
+    }
     
     
     NSFetchRequest *fetchRequestRemoval = [[NSFetchRequest alloc] initWithEntityName:entityName];
