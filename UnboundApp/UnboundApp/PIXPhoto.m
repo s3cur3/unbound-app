@@ -40,6 +40,7 @@ const CGFloat kThumbnailSize = 200.0f;
 @dynamic stackPhotoAlbum;
 
 @synthesize cancelThumbnailLoadOperation;
+@synthesize thumbnailImage = _thumbnailImage;
 
 
 //TODO: make this a real attribute?
@@ -134,11 +135,25 @@ const CGFloat kThumbnailSize = 200.0f;
 
 -(NSImage *)thumbnailImage
 {
-    if (_thumbnailImage ==nil)
+    if (_thumbnailImage == nil)
     {
         NSData *imgData = self.thumbnail.imageData;
         if (imgData != nil) {
-            _thumbnailImage = [[NSImage alloc] initWithData:imgData];
+            _thumbnailImageIsLoading = YES;
+            __weak PIXPhoto *weakSelf = self;
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                weakSelf.thumbnailImage = [[NSImage alloc] initWithData:imgData];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:PhotoThumbDidChangeNotification object:weakSelf];
+                    
+                    if(weakSelf.stackPhotoAlbum) {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:weakSelf.album];
+                    }
+                    
+                });
+            });
+            
         } else {
             self.cancelThumbnailLoadOperation = NO;
             [self loadThumbnailImage];

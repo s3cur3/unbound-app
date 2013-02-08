@@ -15,7 +15,6 @@
 
 @interface PIXPhoto : NSManagedObject <PIXThumbnailLoadingDelegate>
 {
-    NSImage *                   _thumbnailImage;
     BOOL                        _thumbnailImageIsLoading;
 }
 
@@ -29,7 +28,7 @@
 @property (nonatomic, retain) PIXThumbnail *thumbnail;
 
 
-@property (nonatomic, retain, readonly ) NSImage *thumbnailImage;         // observable, returns a placeholder if the thumbnail isn't available yet.
+@property (nonatomic, strong) NSImage *thumbnailImage;
 @property (nonatomic, assign, readwrite) BOOL cancelThumbnailLoadOperation;
 
 //TODO: get rid of this
