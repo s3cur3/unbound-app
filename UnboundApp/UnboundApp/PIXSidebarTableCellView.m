@@ -72,13 +72,19 @@
 
 -(void)updateAlbumView:(NSNotification *)note
 {
-    if (note.object == self.album) {
+    //if (note.object == self.album) {
         [self.imageView setImage:[_album thumbnailImage]];
+        
+        if(self.imageView.image == nil)
+        {
+            [self.imageView setImage:[NSImage imageNamed:@"nophoto"]];
+        }
+        
         [self updateSubtitle];
         [self setNeedsDisplay:YES];
-    } else {
+    /*} else {
         DLog(@"Received a notification for incorrect album : %@", note.object);
-    }
+    }*/
 }
 
 
@@ -95,7 +101,10 @@
             //            [[NSNotificationCenter defaultCenter] addObserverForName:AlbumPhotoCountDidChangeNotification object:self queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
             //                [self.detailTextLabel setStringValue:[_album imageSubtitle]];
             //            }];
+            
+            [self updateAlbumView:nil];
         }
+        
         
 
     }

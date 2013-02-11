@@ -236,7 +236,7 @@
 {
     // fetch any the albums with these ids
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kAlbumEntityName];
-    [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(self IN %@)", [albumIDs allObjects]]];
+    [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(self IN %@)", albumIDs]];
     
     NSError * error;
     NSArray * editedAlbums = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];

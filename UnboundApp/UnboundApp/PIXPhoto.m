@@ -162,7 +162,7 @@ const CGFloat kThumbnailSize = 200.0f;
         } else {
             self.cancelThumbnailLoadOperation = NO;
             [self loadThumbnailImage];
-            return [NSImage imageNamed:@"nophoto"];
+            return nil;
         }
     }
     return _thumbnailImage;
@@ -243,7 +243,7 @@ const CGFloat kThumbnailSize = 200.0f;
                     return;
                 }
                 
-                [weakSelf performSelectorOnMainThread:@selector(mainThreadComputePreviewThumbnailFinished:) withObject:data waitUntilDone:YES];
+                [weakSelf performSelectorOnMainThread:@selector(mainThreadComputePreviewThumbnailFinished:) withObject:data waitUntilDone:NO];
                 
                 CFRelease(imageSource);
             }

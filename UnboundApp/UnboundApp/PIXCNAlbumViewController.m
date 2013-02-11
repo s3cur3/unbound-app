@@ -276,7 +276,35 @@
     
     [[NSUserDefaults standardUserDefaults] setObject:searchText forKey:@"PIX_AlbumSearchString"];
     
+    
+    // get the old selected albums
+    NSMutableSet * selectedAlbums = [NSMutableSet setWithArray:[[self.gridView selectedItems] valueForKey:@"album"]];
+    NSMutableIndexSet * newSelectedIndexes = [NSMutableIndexSet new];
+    
     [self.gridView reloadData];
+    
+    /*
+    // get the new albums being displayed
+    NSArray * newArray = self.albums;
+    
+    if(self.searchedAlbums)
+    {
+        newArray = self.searchedAlbums;
+    }
+    
+    // find any albums that were selected and still in the list
+    for(PIXAlbum * album in selectedAlbums)
+    {
+        NSUInteger index = [newArray indexOfObject:album];
+        if(index != NSNotFound)
+        {
+            [newSelectedIndexes addIndex:index];
+        }
+    }
+    
+    // now set these as selected in the grid view
+    */
+    
 	
 }
 
