@@ -42,8 +42,8 @@
     
     if ([[self window] isMainWindow]) {
         
-        aGradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.826 alpha:1.000]
-                                                  endingColor:[NSColor colorWithCalibratedWhite:0.683 alpha:1.000]];
+        aGradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.9 alpha:1.000]
+                                                  endingColor:[NSColor colorWithCalibratedWhite:0.85 alpha:1.000]];
     }
     
     else
@@ -55,11 +55,11 @@
     [aGradient drawInRect:[self bounds] angle:270];
     
     
-    [[NSColor colorWithCalibratedWhite:0.164 alpha:1.000] setStroke];
+    [[NSColor colorWithCalibratedWhite:0.3 alpha:1.000] drawSwatchInRect:NSMakeRect(0, 1, self.bounds.size.width, 1)];
     
     
     
-    [NSBezierPath strokeLineFromPoint:NSMakePoint(0, 1) toPoint:NSMakePoint(self.bounds.size.width, 1)];
+    //[NSBezierPath strokeLineFromPoint:NSMakePoint(0, 1) toPoint:NSMakePoint(self.bounds.size.width, 1)];
     
 }
 

@@ -8,24 +8,18 @@
 
 #import "PIXViewController.h"
 #import "CNGridView.h"
+#import "PIXGradientBarView.h"
 
 @interface PIXGridViewController : PIXViewController <CNGridViewDataSource, CNGridViewDelegate>
 
 @property (strong) IBOutlet CNGridView *gridView;
 @property (strong) NSMutableArray *items;
 
+@property (strong) IBOutlet PIXGradientBarView * toolbar;
+@property (strong) IBOutlet NSTextField * toolbarTitle;
+@property (strong) IBOutlet NSScrollView * scrollView;
 
-/**
- ...
- */
-- (void)gridView:(CNGridView *)gridView didDoubleClickItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section;
-
-/**
- ...
- */
-- (void)gridView:(CNGridView *)gridView rightMouseButtonClickedOnItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section;
-
-
-//-(void)reloadItems:(NSNotification *)note;
+-(void)showToolbar:(BOOL)animated;
+-(void)hideToolbar:(BOOL)animated;
 
 @end

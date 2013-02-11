@@ -80,7 +80,6 @@
 		8C249E8116AB429E00CB97AF /* NSView+CNGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7C16AB429E00CB97AF /* NSView+CNGridView.m */; };
 		8C249E8616AB467100CB97AF /* PIXAlbumGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E8516AB467100CB97AF /* PIXAlbumGridViewItem.m */; };
 		8C249E9116AB8DF600CB97AF /* PIXGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E9016AB8DF600CB97AF /* PIXGridViewItem.m */; };
-		8C249E9716AB8ED700CB97AF /* PIXCNAlbumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C249E8816AB560000CB97AF /* PIXCNAlbumViewController.xib */; };
 		8C4B80E816B9D9FD00C7E8F4 /* PIXPhotoGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B80E716B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.m */; };
 		8C4B80FB16BB3D8A00C7E8F4 /* GeneralPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B80F616BB3D8A00C7E8F4 /* GeneralPreferencesViewController.m */; };
 		8C4B80FC16BB3D8A00C7E8F4 /* GeneralPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4B80F716BB3D8A00C7E8F4 /* GeneralPreferencesView.xib */; };
@@ -232,7 +231,6 @@
 		8C249E8416AB467000CB97AF /* PIXAlbumGridViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXAlbumGridViewItem.h; sourceTree = "<group>"; };
 		8C249E8516AB467100CB97AF /* PIXAlbumGridViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXAlbumGridViewItem.m; sourceTree = "<group>"; };
 		8C249E8716AB4CAB00CB97AF /* CNLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CNLog.h; sourceTree = "<group>"; };
-		8C249E8816AB560000CB97AF /* PIXCNAlbumViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXCNAlbumViewController.xib; sourceTree = "<group>"; };
 		8C249E8F16AB8DF600CB97AF /* PIXGridViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXGridViewItem.h; sourceTree = "<group>"; };
 		8C249E9016AB8DF600CB97AF /* PIXGridViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXGridViewItem.m; sourceTree = "<group>"; };
 		8C4B80E616B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPhotoGridViewItem.h; sourceTree = "<group>"; };
@@ -373,7 +371,6 @@
 			children = (
 				8C249E6C16AB426A00CB97AF /* PIXCNAlbumViewController.h */,
 				8C249E6D16AB426A00CB97AF /* PIXCNAlbumViewController.m */,
-				8C249E8816AB560000CB97AF /* PIXCNAlbumViewController.xib */,
 				8C249E8416AB467000CB97AF /* PIXAlbumGridViewItem.h */,
 				8C249E8516AB467100CB97AF /* PIXAlbumGridViewItem.m */,
 			);
@@ -694,7 +691,6 @@
 				1DDEF840169D34F100C0D303 /* PIXLoadingWindow.xib in Resources */,
 				1DA66CB016AA2ED10060D796 /* nophoto_200x200.jpg in Resources */,
 				1D8CD7F016AB6EC70072D516 /* PIXGridViewController.xib in Resources */,
-				8C249E9716AB8ED700CB97AF /* PIXCNAlbumViewController.xib in Resources */,
 				8C4B80FC16BB3D8A00C7E8F4 /* GeneralPreferencesView.xib in Resources */,
 				8C4B80FE16BB3D8A00C7E8F4 /* AdvancedPreferencesView.xib in Resources */,
 				8CF2C5E316BB458900F906F1 /* MASPreferencesWindow.xib in Resources */,

@@ -26,12 +26,9 @@
     
 }
 
-@property(nonatomic,strong) NSMutableArray * albums;
+@property(nonatomic,strong) NSArray * albums;
 @property(nonatomic,strong) NSArray * searchedAlbums;
-
-@property (strong) CNGridViewItemLayout *defaultLayout;
-@property (strong) CNGridViewItemLayout *hoverLayout;
-@property (strong) CNGridViewItemLayout *selectionLayout;
+@property(nonatomic,strong) NSMutableArray * selectedAlbums;
 
 @property (nonatomic, strong) NSToolbarItem * trashbutton;
 @property (nonatomic, strong) NSToolbarItem * settingsButton;
@@ -51,9 +48,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Initialization code here.
-        _defaultLayout = [CNGridViewItemLayout defaultLayout];
-        _hoverLayout = [CNGridViewItemLayout defaultLayout];
-        _selectionLayout = [CNGridViewItemLayout defaultLayout];
+
         
     }
     
@@ -62,8 +57,7 @@
 
 -(void)awakeFromNib
 {
-    //[self.view setWantsLayer:YES];
-    //[self.gridView setWantsLayer:YES];
+    [super awakeFromNib];
     
     [self.gridView setItemSize:CGSizeMake(190, 210)];
     [self.gridView setAllowsMultipleSelection:YES];
@@ -277,34 +271,29 @@
     [[NSUserDefaults standardUserDefaults] setObject:searchText forKey:@"PIX_AlbumSearchString"];
     
     
-    // get the old selected albums
-    NSMutableSet * selectedAlbums = [NSMutableSet setWithArray:[[self.gridView selectedItems] valueForKey:@"album"]];
-    NSMutableIndexSet * newSelectedIndexes = [NSMutableIndexSet new];
     
-    [self.gridView reloadData];
-    
-    /*
-    // get the new albums being displayed
-    NSArray * newArray = self.albums;
+    NSArray * visibleArray = self.albums;
     
     if(self.searchedAlbums)
     {
-        newArray = self.searchedAlbums;
+        visibleArray = self.searchedAlbums;
     }
     
-    // find any albums that were selected and still in the list
-    for(PIXAlbum * album in selectedAlbums)
+    NSArray * selectedCopy = [self.selectedAlbums copy];
+    
+    // find any albums that were selected and no longer in the list
+    for(PIXAlbum * album in selectedCopy)
     {
-        NSUInteger index = [newArray indexOfObject:album];
-        if(index != NSNotFound)
+        NSUInteger index = [visibleArray indexOfObject:album];
+        if(index == NSNotFound)
         {
-            [newSelectedIndexes addIndex:index];
+            [self.selectedAlbums removeObject:album];
         }
     }
     
-    // now set these as selected in the grid view
-    */
     
+    [self updateToolbar];
+    [self.gridView reloadData];
 	
 }
 
@@ -333,12 +322,22 @@
     
     PIXAlbumGridViewItem *item = [gridView dequeueReusableItemWithIdentifier:reuseIdentifier];
     if (item == nil) {
-        item = [[PIXAlbumGridViewItem alloc] initWithLayout:self.defaultLayout reuseIdentifier:reuseIdentifier];
+        item = [[PIXAlbumGridViewItem alloc] initWithLayout:nil reuseIdentifier:reuseIdentifier];
     }
-    item.hoverLayout = self.hoverLayout;
-    item.selectionLayout = self.selectionLayout;
     
+    item.album = [self albumForIndex:index];
     
+    return item;
+}
+
+- (BOOL)gridView:(CNGridView *)gridView itemIsSelectedAtIndex:(NSInteger)index inSection:(NSInteger)section
+{
+    return [self.selectedAlbums containsObject:[self albumForIndex:index]];
+}
+
+
+-(PIXAlbum *)albumForIndex:(NSInteger)index
+{
     PIXAlbum * album = nil;
     if(self.searchedAlbums)
     {
@@ -350,10 +349,7 @@
         album = [self.albums objectAtIndex:index];
     }
     
-    
-    item.album = album;
-    
-    return item;
+    return album;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -404,14 +400,48 @@
 
 - (void)gridView:(CNGridView *)gridView didSelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
-    DLog(@"didSelectItemAtIndex: %li", index);
-    DLog(@"%@",[self.albums objectAtIndex:index]);
+    [self.selectedAlbums addObject:[self albumForIndex:index]];
+    
+    [self updateToolbar];
 }
 
 - (void)gridView:(CNGridView *)gridView didDeselectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
-    DLog(@"didDeselectItemAtIndex: %li", index);
+    [self.selectedAlbums removeObject:[self albumForIndex:index]];
+    
+    [self updateToolbar];
 }
+
+- (void)gridViewDidDeselectAllItems:(CNGridView *)gridView
+{
+    [self.selectedAlbums removeAllObjects];
+    [self updateToolbar];
+}
+
+
+-(void)updateToolbar
+{
+    if([self.selectedAlbums count] > 0)
+    {
+        if([self.selectedAlbums count] > 1)
+        {
+            [self.toolbarTitle setStringValue:[NSString stringWithFormat:@"%ld albums selected", (unsigned long)[self.selectedAlbums count]]];
+        }
+        
+        else
+        {
+            [self.toolbarTitle setStringValue:@"1 album selected"];
+        }
+        
+        [self showToolbar:YES];
+    }
+    
+    else
+    {
+        [self hideToolbar:YES];
+    }
+}
+
 
 
 -(void)albumsChanged:(NSNotification *)note
@@ -420,13 +450,22 @@
     [self.gridView reloadData];
 }
 
--(NSMutableArray *)albums
+-(NSArray *)albums
 {
     if(_albums != nil) return _albums;
     
-    _albums = [[[PIXAppDelegate sharedAppDelegate] fetchAllAlbums] mutableCopy];
+    _albums = [[PIXAppDelegate sharedAppDelegate] fetchAllAlbums];
     
     return _albums;
+}
+
+-(NSMutableArray *)selectedAlbums
+{
+    if(_selectedAlbums != nil) return _selectedAlbums;
+    
+    _selectedAlbums = [NSMutableArray new];
+    
+    return _selectedAlbums;
 }
 
 -(PIXSplitViewController *) aSplitViewController

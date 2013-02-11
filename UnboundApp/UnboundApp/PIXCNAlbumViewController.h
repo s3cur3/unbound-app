@@ -8,10 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "PIXViewController.h"
-#import "CNGridView.h"
+#import "PIXGridViewController.h"
 
-@interface PIXCNAlbumViewController : PIXViewController <CNGridViewDataSource, CNGridViewDelegate, NSTextFieldDelegate>
-
-@property(nonatomic,strong) IBOutlet CNGridView * gridView;
+@interface PIXCNAlbumViewController : PIXGridViewController <NSTextFieldDelegate>
 
 @end

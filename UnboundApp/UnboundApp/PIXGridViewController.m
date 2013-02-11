@@ -22,6 +22,8 @@
 
 #import "PIXPhoto.h"
 
+#import <Quartz/Quartz.h>
+
 static NSString *kContentTitleKey, *kContentImageKey;
 
 @interface PIXGridViewController ()
@@ -32,8 +34,8 @@ static NSString *kContentTitleKey, *kContentImageKey;
 @property (strong) CNGridViewItemLayout *hoverLayout;
 @property (strong) CNGridViewItemLayout *selectionLayout;
 
-@property (nonatomic, strong) NSToolbarItem * trashbutton;
-@property (nonatomic, strong) NSToolbarItem * settingsButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *toolbarPosition;
+
 @end
 
 @implementation PIXGridViewController
@@ -49,7 +51,6 @@ static NSString *kContentTitleKey, *kContentImageKey;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Initialization code here.
-        _items = [[NSMutableArray alloc] init];
         _defaultLayout = [CNGridViewItemLayout defaultLayout];
         _hoverLayout = [CNGridViewItemLayout defaultLayout];
         _selectionLayout = [CNGridViewItemLayout defaultLayout];
@@ -62,37 +63,8 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 -(void)awakeFromNib
 {
-    // make this layer backed to improve performance
-    //[self.view setWantsLayer:YES];
-
-    self.hoverLayout.backgroundColor = [[NSColor grayColor] colorWithAlphaComponent:0.42];
-    self.selectionLayout.backgroundColor = [NSColor colorWithCalibratedRed:0.542 green:0.699 blue:0.807 alpha:0.420];
-    //self.defaultLayout.visibleContentMask = CNGridViewItemVisibleContentImage;
-    self.defaultLayout.visibleContentMask = CNGridViewItemVisibleContentImage | CNGridViewItemVisibleContentTitle;
-    self.hoverLayout.visibleContentMask = CNGridViewItemVisibleContentImage | CNGridViewItemVisibleContentTitle;
-    self.selectionLayout.visibleContentMask = CNGridViewItemVisibleContentImage | CNGridViewItemVisibleContentTitle;
-    
     [self.gridView setItemSize:CGSizeMake(200, 200)];
     [self.gridView setAllowsMultipleSelection:YES];
-    
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(detectedNotification:) name:CNGridViewWillHoverItemNotification object:nil];
-    [nc addObserver:self selector:@selector(detectedNotification:) name:CNGridViewWillUnhoverItemNotification object:nil];
-    [nc addObserver:self selector:@selector(detectedNotification:) name:CNGridViewWillSelectItemNotification object:nil];
-    [nc addObserver:self selector:@selector(detectedNotification:) name:CNGridViewDidSelectItemNotification object:nil];
-    [nc addObserver:self selector:@selector(detectedNotification:) name:CNGridViewWillDeselectItemNotification object:nil];
-    [nc addObserver:self selector:@selector(detectedNotification:) name:CNGridViewDidDeselectItemNotification object:nil];
-    [nc addObserver:self selector:@selector(detectedNotification:) name:CNGridViewDidClickItemNotification object:nil];
-    [nc addObserver:self selector:@selector(detectedNotification:) name:CNGridViewDidDoubleClickItemNotification object:nil];
-    [nc addObserver:self selector:@selector(detectedNotification:) name:CNGridViewRightMouseButtonClickedOnItemNotification object:nil];
-    
-    [nc addObserver:self selector:@selector(refreshNotification:)
-               name:kCreateThumbDidFinish
-             object:nil];
-    
-//    [nc addObserver:self selector:@selector(reloadItems:)
-//               name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM
-//             object:nil];
     
     [self performSelector:@selector(reloadItems:) withObject:nil afterDelay:0.1];
     
@@ -101,6 +73,43 @@ static NSString *kContentTitleKey, *kContentImageKey;
                                                  name:@"backgroundThemeChanged"
                                                object:nil];
     [self setBGColor];
+    
+    
+    // make the toolbar animate a little faster than default
+    CABasicAnimation * toolBarAnim = [CABasicAnimation animation];
+    toolBarAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    toolBarAnim.duration = 0.1;
+    self.toolbarPosition.animations = [NSDictionary dictionaryWithObject:toolBarAnim forKey:@"constant"];
+    
+    // make the toolbar animate a little faster than default
+    CABasicAnimation * scrollAnim = [CABasicAnimation animation];
+    scrollAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    scrollAnim.duration = 0.1;
+    self.gridView.superview.animations = [NSDictionary dictionaryWithObject:scrollAnim forKey:@"bounds"];
+    
+}
+
+-(void)showToolbar:(BOOL)animated
+{
+
+    CGPoint origin = self.scrollView.bounds.origin;
+    origin.y += 35;
+
+    
+    //NSClipView *clipView = (NSClipView *)[self.gridView superview];
+    
+    
+    [NSAnimationContext beginGrouping];
+    [self.toolbarPosition.animator setConstant:0];
+    //[[clipView animator] setBoundsOrigin:origin];
+    [NSAnimationContext endGrouping];
+    
+}
+
+-(void)hideToolbar:(BOOL)animated
+{
+    [self.toolbarPosition.animator setConstant:-self.toolbar.frame.size.height];
+    //[self.view updateConstraintsForSubtreeIfNeeded];
 }
 
 -(void)defaultThemeChanged:(NSNotification *)note
@@ -156,69 +165,6 @@ static NSString *kContentTitleKey, *kContentImageKey;
     [self.items addObjectsFromArray:itemsArray];
     [self.gridView reloadData];
 }
-
--(void)setupToolbar
-{
-    NSArray * items = @[self.navigationViewController.middleSpacer, self.trashbutton, self.settingsButton];
-    
-    [self.navigationViewController setToolbarItems:items];
-    
-}
-
-- (NSToolbarItem *)trashbutton
-{
-    if(_trashbutton != nil) return _trashbutton;
-    
-    _trashbutton = [[NSToolbarItem alloc] initWithItemIdentifier:@"TrashButton"];
-    _trashbutton.image = [NSImage imageNamed:NSImageNameTrashEmpty];
-    
-    [_trashbutton setLabel:@"Trash"];
-    [_trashbutton setPaletteLabel:@"Trash"];
-    
-    // Set up a reasonable tooltip, and image
-    // you will likely want to localize many of the item's properties
-    [_trashbutton setToolTip:@"View Trash"];
-    
-    // Tell the item what message to send when it is clicked
-    //[_trashbutton setTarget:self];
-    //[_trashbutton setAction:@selector(showTrash)];
-#ifdef DEBUG
-    // Tell the item what message to send when it is clicked
-    [_trashbutton setTarget:[PIXAppDelegate sharedAppDelegate]];
-    [_trashbutton setAction:@selector(deleteAllAlbums:)];
-#endif
-    
-    return _trashbutton;
-    
-}
-
-- (NSToolbarItem *)settingsButton
-{
-    if(_settingsButton != nil) return _settingsButton;
-    
-    _settingsButton = [[NSToolbarItem alloc] initWithItemIdentifier:@"SettingsButton"];
-    _settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
-    
-    [_settingsButton setLabel:@"Settings"];
-    [_settingsButton setPaletteLabel:@"Settings"];
-    
-    // Set up a reasonable tooltip, and image
-    // you will likely want to localize many of the item's properties
-    [_settingsButton setToolTip:@"Load Files"];
-    
-    // Tell the item what message to send when it is clicked
-    [_settingsButton setTarget:[PIXAppDelegate sharedAppDelegate]];
-    [_settingsButton setAction:@selector(showLoadingWindow:)];
-    
-    return _settingsButton;
-    
-}
-
--(void)showTrash
-{
-    
-}
-
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

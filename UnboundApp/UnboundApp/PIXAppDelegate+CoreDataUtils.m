@@ -211,6 +211,15 @@
             DLog(@"There was a problem trying to delete old objects");
         }
         
+        /// if the path isn't nil then we should also check that all subfolders exist (deletion just give a notification that the parent folder changed)
+        if(path)
+        {
+            if (![self checkSubfoldersExistanceInContext:context withPath:path])
+            {
+                 DLog(@"There was a problem trying to delete subfolder");
+            }
+        }
+        
         // save the context
         [context save:nil];
         
@@ -518,6 +527,7 @@
         if (isPhotoEntity) {
             predicate = [NSPredicate predicateWithFormat:@"album.path == %@ && (dateLastUpdated == NULL || dateLastUpdated < %@)",path, self.fetchDate, nil];
         } else {
+            
             predicate = [NSPredicate predicateWithFormat:@"path == %@ && (dateLastUpdated == NULL || dateLastUpdated < %@)", path, self.fetchDate, nil];
         }
     }
@@ -574,6 +584,37 @@
     }
     
     return YES;
+}
+
+-(BOOL)checkSubfoldersExistanceInContext:(NSManagedObjectContext *)context withPath:(NSString *)path
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"path CONTAINS %@", path, nil];
+   
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kAlbumEntityName];
+    // make sure the results are sorted as well
+    [fetchRequest setPredicate:predicate];
+    
+    NSError * anError;
+    NSArray *albumsToCheck = [context executeFetchRequest:fetchRequest error:&anError];
+    
+    
+    for(PIXAlbum * anAlbum in albumsToCheck)
+    {
+        if([[NSFileManager defaultManager] fileExistsAtPath:anAlbum.path] == NO)
+        {
+            [context deleteObject:anAlbum];
+        }
+            
+    }
+    
+    anError = nil;
+    if (![context save:&anError]) {
+        DLog(@"Unresolved error %@, %@", anError, [anError userInfo]);
+        return NO;
+    }
+    
+    return YES;
+    
 }
 
 

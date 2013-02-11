@@ -615,7 +615,7 @@ NSString * DefaultDropBoxPhotosDirectory()
         NSString *tokenKeyString = [NSString stringWithFormat:@"resumeToken-%@", aDir.path];
         NSData *token = [[NSUserDefaults standardUserDefaults] dataForKey:tokenKeyString];
         NSData *decodedToken = [NSKeyedUnarchiver unarchiveObjectWithData:token];
-        [aDir addDirectoryObserver:self options:0 resumeToken:decodedToken];
+        [aDir addDirectoryObserver:self options:ArchDirectoryObserverResponsive resumeToken:decodedToken];
         //[aDir addDirectoryObserver:self options:0 resumeToken:nil];
     }
 }

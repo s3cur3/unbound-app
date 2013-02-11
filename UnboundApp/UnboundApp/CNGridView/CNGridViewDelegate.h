@@ -80,6 +80,7 @@
  */
 - (void)gridViewDidDeselectAllItems:(CNGridView *)gridView;
 
+
 /**
  ...
  */
@@ -116,7 +117,15 @@
 - (CNGridViewItem *)gridView:(CNGridView *)gridView itemAtIndex:(NSInteger)index inSection:(NSInteger)section;
 
 
+
+
 @optional
+
+/**
+ ...
+ */
+- (BOOL)gridView:(CNGridView *)gridView itemIsSelectedAtIndex:(NSInteger)index inSection:(NSInteger)section;
+
 /**
  ...
  */

@@ -165,27 +165,8 @@
 /**
 
  */
-- (void)selectAllItems;
+- (void)reloadSelection;
 
-/**
- ...
- */
-- (void)deselectAllItems;
-
-/**
- ...
- */
-- (void)selectItem:(CNGridViewItem *)theItem;
-
-/**
- ...
- */
-- (void)deSelectItem:(CNGridViewItem *)theItem;
-
-/**
- ...
- */
-- (NSArray *)selectedItems;
 
 
 
