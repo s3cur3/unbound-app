@@ -839,13 +839,15 @@ NSString * DefaultDropBoxPhotosDirectory()
                 }
             }
             
-            // now go through the directories left over and start shallow scans on them
-            for(NSString * path in directories)
-            {
-                [self shallowScanURL:[NSURL fileURLWithPath:path]];
-            }
+            
             
             dispatch_async(dispatch_get_main_queue(), ^{
+                
+                // now go through the directories left over and start shallow scans on them
+                for(NSString * path in directories)
+                {
+                    [self shallowScanURL:[NSURL fileURLWithPath:path]];
+                }
                 
                 [self.loadingAlbumsDict removeObjectForKey:url.path];
             });
