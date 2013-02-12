@@ -60,6 +60,7 @@
 		1DB2F865167ABE87008AC0F7 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F863167ABE87008AC0F7 /* MainMenu.xib */; };
 		1DB2F86E167AC07F008AC0F7 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F86C167AC07F008AC0F7 /* icon.icns */; };
 		1DB2F86F167AC07F008AC0F7 /* unbound_icon_512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F86D167AC07F008AC0F7 /* unbound_icon_512x512.png */; };
+		1DBFD55716CAE415001944A9 /* PIXFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DBFD55516CAE415001944A9 /* PIXFileManager.m */; };
 		1DDEF823169D2D9F00C0D303 /* PIXDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF81D169D2D9F00C0D303 /* PIXDataModel.xcdatamodeld */; };
 		1DDEF828169D2FE800C0D303 /* PIXThumbnail.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF827169D2FE800C0D303 /* PIXThumbnail.m */; };
 		1DDEF82E169D2FE800C0D303 /* PIXPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF82D169D2FE800C0D303 /* PIXPhoto.m */; };
@@ -195,6 +196,8 @@
 		1DB2F86B167ABF4F008AC0F7 /* UnboundApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = UnboundApp.entitlements; sourceTree = "<group>"; };
 		1DB2F86C167AC07F008AC0F7 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = SOURCE_ROOT; };
 		1DB2F86D167AC07F008AC0F7 /* unbound_icon_512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unbound_icon_512x512.png; sourceTree = SOURCE_ROOT; };
+		1DBFD55516CAE415001944A9 /* PIXFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXFileManager.m; sourceTree = "<group>"; };
+		1DBFD55616CAE415001944A9 /* PIXFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXFileManager.h; sourceTree = "<group>"; };
 		1DDEF81E169D2D9F00C0D303 /* PIXDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PIXDataModel.xcdatamodel; sourceTree = "<group>"; };
 		1DDEF826169D2FE800C0D303 /* PIXThumbnail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXThumbnail.h; sourceTree = "<group>"; };
 		1DDEF827169D2FE800C0D303 /* PIXThumbnail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXThumbnail.m; sourceTree = "<group>"; };
@@ -402,6 +405,8 @@
 		1D4A1DD7167AFB8600C9A895 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1DBFD55516CAE415001944A9 /* PIXFileManager.m */,
+				1DBFD55616CAE415001944A9 /* PIXFileManager.h */,
 				1DDEF834169D348E00C0D303 /* Operations */,
 				1DDEF81B169D2D4A00C0D303 /* CoreData */,
 				1D4A1DD8167AFBD000C9A895 /* PIXObject.h */,
@@ -784,6 +789,7 @@
 				8C8EE92B16C46AB800F16C49 /* PIXAlbum.m in Sources */,
 				8C8EE93416CACA7900F16C49 /* ArchDirectoryObservationCenter.m in Sources */,
 				8C8EE93516CACA7900F16C49 /* NSURL+DirectoryObserver.m in Sources */,
+				1DBFD55716CAE415001944A9 /* PIXFileManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

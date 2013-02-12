@@ -428,6 +428,15 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     return [[self managedObjectContext] undoManager];
 }
 
+- (NSUndoManager *)undoManager
+{
+    //return [[self managedObjectContext] undoManager];
+    if (_undoManager == nil) {
+        _undoManager = [[NSUndoManager alloc] init];
+    }
+    return _undoManager;
+}
+
 // Performs the save action for the application, which is to send the save: message to the application's managed object context. Any encountered errors are presented to the user.
 - (IBAction)saveAction:(id)sender
 {

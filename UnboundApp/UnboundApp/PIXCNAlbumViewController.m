@@ -398,6 +398,8 @@
 - (void)gridView:(CNGridView *)gridView rightMouseButtonClickedOnItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section andEvent:(NSEvent *)event
 {
     PIXAlbum * albumClicked = [self albumForIndex:index];
+    NSMenu *contextMenu = [self menuForObject:albumClicked];
+    [NSMenu popUpContextMenu:contextMenu withEvent:event forView:self.view];
     
     // can use this and the self.selectedAlbum array to build a right click menu here
     
