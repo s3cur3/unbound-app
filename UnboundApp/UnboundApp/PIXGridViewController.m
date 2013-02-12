@@ -149,8 +149,8 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 -(NSMutableArray *)fetchItems
 {
-    NSAssert(NO,@"PXIGridViewController's fetchItems should be implemented in subclass.");
-    return [NSMutableArray array];
+    //NSAssert(NO,@"PXIGridViewController's fetchItems should be implemented in subclass.");
+    return nil;
 }
 
 -(void)dealloc
