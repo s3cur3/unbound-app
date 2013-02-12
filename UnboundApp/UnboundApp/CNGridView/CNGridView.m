@@ -267,7 +267,13 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 {
     NSRect scrollRect = [self frame];
     scrollRect.size.width = scrollRect.size.width;
-    scrollRect.size.height = [self allOverRowsInGridView] * self.itemSize.height;
+    scrollRect.size.height = ([self allOverRowsInGridView] * self.itemSize.height) + self.headerSpace;
+    
+    if(scrollRect.size.height < self.superview.frame.size.height)
+    {
+        scrollRect.size.height = self.superview.frame.size.height;
+    }
+    
     [super setFrame:scrollRect];
 
     [self updateReuseableItems];
@@ -391,7 +397,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     xpos = xpos + (space * (column+1));
     
     NSRect itemRect = NSMakeRect(rint(xpos),
-                                 rint(((index - (index % columns)) / columns) * self.itemSize.height),
+                                 rint((((index - (index % columns)) / columns) * self.itemSize.height)+self.headerSpace),
                                  self.itemSize.width,
                                  self.itemSize.height);
     return itemRect;
@@ -434,7 +440,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     CGFloat space = (self.frame.size.width - (columns * self.itemSize.width)) / (columns + 1);
     
     NSUInteger currentColumn = floor(point.x / (self.itemSize.width+space));
-    NSUInteger currentRow = floor(point.y / self.itemSize.height);
+    NSUInteger currentRow = floor((point.y+self.headerSpace) / self.itemSize.height);
     indexForItemAtLocation = currentRow * [self columnsInGridView] + currentColumn;
     indexForItemAtLocation = (indexForItemAtLocation > (numberOfItems - 1) ? NSNotFound : indexForItemAtLocation);
     

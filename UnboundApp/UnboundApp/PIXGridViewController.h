@@ -17,6 +17,7 @@
 
 @property (strong) IBOutlet PIXGradientBarView * toolbar;
 @property (strong) IBOutlet NSTextField * toolbarTitle;
+@property (strong) IBOutlet NSTextField * gridViewTitle;
 @property (strong) IBOutlet NSScrollView * scrollView;
 
 -(NSMenu *)menuForObject:(id)object;

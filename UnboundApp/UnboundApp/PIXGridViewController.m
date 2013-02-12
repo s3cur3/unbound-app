@@ -67,6 +67,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 -(void)awakeFromNib
 {
+    [self.gridView setHeaderSpace:35];
     [self.gridView setItemSize:CGSizeMake(200, 200)];
     [self.gridView setAllowsMultipleSelection:YES];
     

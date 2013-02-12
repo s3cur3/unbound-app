@@ -259,13 +259,16 @@
             }
             
             self.lastSearch = searchText;
-        }        
+        }
+        
+        [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%ld Albums Match Search", [self.searchedAlbums count]]];
     }
     
     else
     {
         self.searchedAlbums = nil;
         self.lastSearch = nil;
+        [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%ld Albums", [self.albums count]]];
     }
     
     [[NSUserDefaults standardUserDefaults] setObject:searchText forKey:@"PIX_AlbumSearchString"];

@@ -105,6 +105,8 @@
  */
 @property (nonatomic, assign) NSSize itemSize;
 
+@property (nonatomic, assign) CGFloat headerSpace;
+
 
 
 #pragma mark - Creating GridView Items
