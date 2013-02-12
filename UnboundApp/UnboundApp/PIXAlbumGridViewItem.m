@@ -276,6 +276,10 @@
 
 }
 
+-(id)representedObject
+{
+    return self.album;
+}
 /*
 -(PIXBorderedImageView *)albumImageView
 {

@@ -999,7 +999,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 {
     NSPoint location = [theEvent locationInWindow];
     /// inform the delegate
-    [self gridView:self rightMouseButtonClickedOnItemAtIndex:[self indexForItemAtLocation:location] inSection:0];
+    [self gridView:self rightMouseButtonClickedOnItemAtIndex:[self indexForItemAtLocation:location] inSection:0 andEvent:theEvent];
 }
 
 - (void)keyDown:(NSEvent *)theEvent
@@ -1118,13 +1118,13 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     }
 }
 
-- (void)gridView:(CNGridView *)gridView rightMouseButtonClickedOnItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
+- (void)gridView:(CNGridView *)gridView rightMouseButtonClickedOnItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section andEvent:(NSEvent *)event
 {
     [nc postNotificationName:CNGridViewRightMouseButtonClickedOnItemNotification
                       object:gridView
                     userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInteger:index] forKey:CNGridViewItemIndexKey]];
     if ([self.delegate respondsToSelector:_cmd]) {
-        [self.delegate gridView:gridView rightMouseButtonClickedOnItemAtIndex:index inSection:section];
+        [self.delegate gridView:gridView rightMouseButtonClickedOnItemAtIndex:index inSection:section andEvent:event];
     }
 }
 

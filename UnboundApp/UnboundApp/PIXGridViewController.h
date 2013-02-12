@@ -19,6 +19,8 @@
 @property (strong) IBOutlet NSTextField * toolbarTitle;
 @property (strong) IBOutlet NSScrollView * scrollView;
 
+-(NSMenu *)menuForObject:(id)object;
+
 -(void)showToolbar:(BOOL)animated;
 -(void)hideToolbar:(BOOL)animated;
 

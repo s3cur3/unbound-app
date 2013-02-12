@@ -17,7 +17,6 @@
 		1D083520167E7C80003D557A /* PIXPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D08351F167E7C80003D557A /* PIXPageView.m */; };
 		1D083526167E7EEE003D557A /* imageview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D083525167E7EEE003D557A /* imageview.xib */; };
 		1D08352D167E8B2B003D557A /* PIXImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D08352C167E8B2B003D557A /* PIXImageViewController.m */; };
-		1D14199C167FC33C00A8A920 /* ArchDirectoryObserver.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1DB2F872167AC15F008AC0F7 /* ArchDirectoryObserver.framework */; };
 		1D4A1DAE167AD93400C9A895 /* dark_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1D9A167AD93400C9A895 /* dark_bg.png */; };
 		1D4A1DAF167AD93400C9A895 /* dark_bg@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1D9B167AD93400C9A895 /* dark_bg@2X.png */; };
 		1D4A1DBC167AD93400C9A895 /* nophoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DA8167AD93400C9A895 /* nophoto.png */; };
@@ -61,7 +60,6 @@
 		1DB2F865167ABE87008AC0F7 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F863167ABE87008AC0F7 /* MainMenu.xib */; };
 		1DB2F86E167AC07F008AC0F7 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F86C167AC07F008AC0F7 /* icon.icns */; };
 		1DB2F86F167AC07F008AC0F7 /* unbound_icon_512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F86D167AC07F008AC0F7 /* unbound_icon_512x512.png */; };
-		1DB2F873167AC15F008AC0F7 /* ArchDirectoryObserver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DB2F872167AC15F008AC0F7 /* ArchDirectoryObserver.framework */; };
 		1DDEF823169D2D9F00C0D303 /* PIXDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF81D169D2D9F00C0D303 /* PIXDataModel.xcdatamodeld */; };
 		1DDEF828169D2FE800C0D303 /* PIXThumbnail.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF827169D2FE800C0D303 /* PIXThumbnail.m */; };
 		1DDEF82E169D2FE800C0D303 /* PIXPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF82D169D2FE800C0D303 /* PIXPhoto.m */; };
@@ -87,6 +85,8 @@
 		8C4B80FE16BB3D8A00C7E8F4 /* AdvancedPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4B80FA16BB3D8A00C7E8F4 /* AdvancedPreferencesView.xib */; };
 		8C7ABBBE16C42A3D00784BDA /* PIXGradientBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7ABBBD16C42A3D00784BDA /* PIXGradientBarView.m */; };
 		8C8EE92B16C46AB800F16C49 /* PIXAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE92A16C46AB800F16C49 /* PIXAlbum.m */; };
+		8C8EE93416CACA7900F16C49 /* ArchDirectoryObservationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE92F16CACA7900F16C49 /* ArchDirectoryObservationCenter.m */; };
+		8C8EE93516CACA7900F16C49 /* NSURL+DirectoryObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE93316CACA7900F16C49 /* NSURL+DirectoryObserver.m */; };
 		8C972CB41680FE8B00358913 /* PIXModifierSwitchedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */; };
 		8CE8F62516BD8C9E00DC6014 /* DebugPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CE8F62216BD8C9E00DC6014 /* DebugPreferencesView.xib */; };
 		8CE8F62616BD8C9E00DC6014 /* DebugPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE8F62316BD8C9E00DC6014 /* DebugPreferencesViewController.m */; };
@@ -101,7 +101,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1D14199C167FC33C00A8A920 /* ArchDirectoryObserver.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,7 +195,6 @@
 		1DB2F86B167ABF4F008AC0F7 /* UnboundApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = UnboundApp.entitlements; sourceTree = "<group>"; };
 		1DB2F86C167AC07F008AC0F7 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = SOURCE_ROOT; };
 		1DB2F86D167AC07F008AC0F7 /* unbound_icon_512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unbound_icon_512x512.png; sourceTree = SOURCE_ROOT; };
-		1DB2F872167AC15F008AC0F7 /* ArchDirectoryObserver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ArchDirectoryObserver.framework; sourceTree = "<group>"; };
 		1DDEF81E169D2D9F00C0D303 /* PIXDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PIXDataModel.xcdatamodel; sourceTree = "<group>"; };
 		1DDEF826169D2FE800C0D303 /* PIXThumbnail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXThumbnail.h; sourceTree = "<group>"; };
 		1DDEF827169D2FE800C0D303 /* PIXThumbnail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXThumbnail.m; sourceTree = "<group>"; };
@@ -245,6 +243,12 @@
 		8C7ABBBD16C42A3D00784BDA /* PIXGradientBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXGradientBarView.m; sourceTree = "<group>"; };
 		8C8EE92916C46AB800F16C49 /* PIXAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXAlbum.h; sourceTree = "<group>"; };
 		8C8EE92A16C46AB800F16C49 /* PIXAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXAlbum.m; sourceTree = "<group>"; };
+		8C8EE92E16CACA7900F16C49 /* ArchDirectoryObservationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArchDirectoryObservationCenter.h; sourceTree = "<group>"; };
+		8C8EE92F16CACA7900F16C49 /* ArchDirectoryObservationCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArchDirectoryObservationCenter.m; sourceTree = "<group>"; };
+		8C8EE93016CACA7900F16C49 /* ArchDirectoryObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArchDirectoryObserver.h; sourceTree = "<group>"; };
+		8C8EE93116CACA7900F16C49 /* ArchDirectoryObserverTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArchDirectoryObserverTypes.h; sourceTree = "<group>"; };
+		8C8EE93216CACA7900F16C49 /* NSURL+DirectoryObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+DirectoryObserver.h"; sourceTree = "<group>"; };
+		8C8EE93316CACA7900F16C49 /* NSURL+DirectoryObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+DirectoryObserver.m"; sourceTree = "<group>"; };
 		8C972CB21680FE8A00358913 /* PIXModifierSwitchedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXModifierSwitchedEvent.h; sourceTree = "<group>"; };
 		8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXModifierSwitchedEvent.m; sourceTree = "<group>"; };
 		8CE8F62216BD8C9E00DC6014 /* DebugPreferencesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DebugPreferencesView.xib; sourceTree = "<group>"; };
@@ -263,7 +267,6 @@
 			files = (
 				1D4A1E2B167D2A4D00C9A895 /* Quartz.framework in Frameworks */,
 				1D4A1E08167C056D00C9A895 /* QuartzCore.framework in Frameworks */,
-				1DB2F873167AC15F008AC0F7 /* ArchDirectoryObserver.framework in Frameworks */,
 				1DB2F84F167ABE87008AC0F7 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -521,6 +524,7 @@
 		1DB2F870167AC0A6008AC0F7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				8C8EE92C16CACA6700F16C49 /* third party */,
 				1DB2F860167ABE87008AC0F7 /* PIXAppDelegate.h */,
 				1DB2F861167ABE87008AC0F7 /* PIXAppDelegate.m */,
 				1D4A1DD6167AF00000C9A895 /* PIXDefines.h */,
@@ -535,7 +539,6 @@
 		1DB2F871167AC0DF008AC0F7 /* 3rdParty */ = {
 			isa = PBXGroup;
 			children = (
-				1DB2F872167AC15F008AC0F7 /* ArchDirectoryObserver.framework */,
 			);
 			name = 3rdParty;
 			sourceTree = "<group>";
@@ -613,6 +616,27 @@
 				8CF2C5E216BB458900F906F1 /* MASPreferencesWindowController.m */,
 			);
 			name = MASPreferences;
+			sourceTree = "<group>";
+		};
+		8C8EE92C16CACA6700F16C49 /* third party */ = {
+			isa = PBXGroup;
+			children = (
+				8C8EE92D16CACA7900F16C49 /* ArchDirectoryObserver */,
+			);
+			name = "third party";
+			sourceTree = "<group>";
+		};
+		8C8EE92D16CACA7900F16C49 /* ArchDirectoryObserver */ = {
+			isa = PBXGroup;
+			children = (
+				8C8EE92E16CACA7900F16C49 /* ArchDirectoryObservationCenter.h */,
+				8C8EE92F16CACA7900F16C49 /* ArchDirectoryObservationCenter.m */,
+				8C8EE93016CACA7900F16C49 /* ArchDirectoryObserver.h */,
+				8C8EE93116CACA7900F16C49 /* ArchDirectoryObserverTypes.h */,
+				8C8EE93216CACA7900F16C49 /* NSURL+DirectoryObserver.h */,
+				8C8EE93316CACA7900F16C49 /* NSURL+DirectoryObserver.m */,
+			);
+			path = ArchDirectoryObserver;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -758,6 +782,8 @@
 				8CE8F62616BD8C9E00DC6014 /* DebugPreferencesViewController.m in Sources */,
 				8C7ABBBE16C42A3D00784BDA /* PIXGradientBarView.m in Sources */,
 				8C8EE92B16C46AB800F16C49 /* PIXAlbum.m in Sources */,
+				8C8EE93416CACA7900F16C49 /* ArchDirectoryObservationCenter.m in Sources */,
+				8C8EE93516CACA7900F16C49 /* NSURL+DirectoryObserver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

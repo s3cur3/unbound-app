@@ -777,7 +777,7 @@ NSString * DefaultDropBoxPhotosDirectory()
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             //
             
-            DLog(@"Doing a shallow scan of: %@", url.path);
+            //DLog(@"Doing a shallow scan of: %@", url.path);
             
             NSDirectoryEnumerator *dirEnumerator = [self nonRecursiveEnumeratorForURL:url];
             NSMutableArray *photoFiles = [NSMutableArray new];
@@ -857,6 +857,7 @@ NSString * DefaultDropBoxPhotosDirectory()
 
 -(NSDirectoryEnumerator *)nonRecursiveEnumeratorForURL:(NSURL *)url
 {
+    if(![[NSFileManager defaultManager] fileExistsAtPath:url.path]) return nil;
     
     NSFileManager *localFileManager=[[NSFileManager alloc] init];
     NSDirectoryEnumerationOptions options = NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsSubdirectoryDescendants;
@@ -866,9 +867,9 @@ NSString * DefaultDropBoxPhotosDirectory()
                                                                      options:options
                                                                 errorHandler:^(NSURL *url, NSError *error) {
                                                                     // Handle the error.
-                                                                    [PIXAppDelegate presentError:error];
+                                                                    //[PIXAppDelegate presentError:error];
                                                                     // Return YES if the enumeration should continue after the error.
-                                                                    return YES;
+                                                                    return NO;
                                                                 }];
     
     return dirEnumerator;

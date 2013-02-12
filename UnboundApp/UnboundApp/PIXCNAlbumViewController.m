@@ -323,6 +323,8 @@
     PIXAlbumGridViewItem *item = [gridView dequeueReusableItemWithIdentifier:reuseIdentifier];
     if (item == nil) {
         item = [[PIXAlbumGridViewItem alloc] initWithLayout:nil reuseIdentifier:reuseIdentifier];
+        /*NSMenu *menu = [self menuForObject:item];
+        [item setMenu:menu];*/
     }
     
     item.album = [self albumForIndex:index];
@@ -393,8 +395,12 @@
     [self.navigationViewController pushViewController:self.aSplitViewController];
 }
 
-- (void)gridView:(CNGridView *)gridView rightMouseButtonClickedOnItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
+- (void)gridView:(CNGridView *)gridView rightMouseButtonClickedOnItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section andEvent:(NSEvent *)event
 {
+    PIXAlbum * albumClicked = [self albumForIndex:index];
+    
+    // can use this and the self.selectedAlbum array to build a right click menu here
+    
     DLog(@"rightMouseButtonClickedOnItemAtIndex: %li", index);
 }
 

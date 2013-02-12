@@ -34,6 +34,8 @@
 -(void)awakeFromNib
 {
     [super awakeFromNib];
+    [self performSelector:@selector(reloadItems:) withObject:nil afterDelay:0.1];
+
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadItems:) name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
     
     //

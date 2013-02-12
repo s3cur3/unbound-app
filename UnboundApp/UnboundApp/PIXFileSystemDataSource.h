@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <ArchDirectoryObserver/ArchDirectoryObserver.h>
+#import "ArchDirectoryObserver.h"
 
 @interface PIXFileSystemDataSource : NSObject <ArchDirectoryObserver>
 {

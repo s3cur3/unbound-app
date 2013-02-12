@@ -7,26 +7,30 @@
 //
 
 #import "PIXGridViewController.h"
+#import "PIXGridViewItem.h"
 #import "CNGridViewItem.h"
 #import "CNGridViewItemLayout.h"
 #import "PIXAppDelegate.h"
 #import "PIXAppDelegate+CoreDataUtils.h"
+#import "PIXPhotoGridViewItem.h"
+#import "PIXAlbumGridViewItem.h"
 
 //#import "PIXAlbum.h"
 #import "PIXThumbnailLoadingDelegate.h"
 #import "PIXDefines.h"
-#import "PIXPhotoGridViewItem.h"
+
 
 #import "PIXNavigationController.h"
 #import "PIXSplitViewController.h"
 
 #import "PIXPhoto.h"
 
+
 #import <Quartz/Quartz.h>
 
 static NSString *kContentTitleKey, *kContentImageKey;
 
-@interface PIXGridViewController ()
+@interface PIXGridViewController () <NSMenuDelegate>
 {
     BOOL startedObserving;
 }
@@ -65,8 +69,6 @@ static NSString *kContentTitleKey, *kContentImageKey;
 {
     [self.gridView setItemSize:CGSizeMake(200, 200)];
     [self.gridView setAllowsMultipleSelection:YES];
-    
-    [self performSelector:@selector(reloadItems:) withObject:nil afterDelay:0.1];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(defaultThemeChanged:)
@@ -166,6 +168,58 @@ static NSString *kContentTitleKey, *kContentImageKey;
     [self.gridView reloadData];
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Context Menu Support
+
+- (IBAction) revealInFinder:(id)inSender
+{
+    id gridViewItem = [inSender representedObject];
+    id representedObject = nil;
+    if ([gridViewItem class] == [PIXAlbumGridViewItem class]) {
+        representedObject = [gridViewItem album];
+    } else if ([gridViewItem class] == [PIXPhotoGridViewItem class]) {
+        representedObject = [gridViewItem photo];
+    } else {
+        return;
+    }
+    
+	NSString* path = [representedObject path];
+	NSString* folder = [path stringByDeletingLastPathComponent];
+	[[NSWorkspace sharedWorkspace] selectFile:path inFileViewerRootedAtPath:folder];
+}
+
+-(NSMenu *)menuForObject:(id)object
+{
+    NSMenu*  menu = nil;
+    //TODO: see why isKindOfClass is returning NO
+    //if ([[object class] isKindOfClass: [PIXGridViewItem class]])
+    if ([object class] == [PIXAlbumGridViewItem class] ||
+        [object class] == [PIXPhotoGridViewItem class])
+    {
+        
+        menu = [[NSMenu alloc] initWithTitle:@"menu"];
+        [menu setAutoenablesItems:NO];
+        
+        //    [menu addItemWithTitle:[NSString stringWithFormat:@"Open"] action:
+        //     @selector(openInApp:) keyEquivalent:@""];
+        //    [menu addItemWithTitle:[NSString stringWithFormat:@"Delete"] action:
+        //     @selector(deleteItems:) keyEquivalent:@""];
+        //    [menu addItemWithTitle:[NSString stringWithFormat:@"Get Info"] action:
+        //     @selector(getInfo:) keyEquivalent:@""];
+        [menu addItemWithTitle:[NSString stringWithFormat:@"Show In Finder"] action:
+         @selector(revealInFinder:) keyEquivalent:@""];
+        
+        for (NSMenuItem * anItem in [menu itemArray])
+        {
+            [anItem setRepresentedObject:object];
+            [anItem setTarget:self];
+        }
+        menu.delegate = self;
+        
+    }
+    return menu;
+}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - CNGridView DataSource
@@ -227,7 +281,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
     CNLog(@"didDoubleClickItemAtIndex: %li", index);
 }
 
-- (void)gridView:(CNGridView *)gridView rightMouseButtonClickedOnItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
+- (void)gridView:(CNGridView *)gridView rightMouseButtonClickedOnItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section andEvent:(NSEvent *)event
 {
     CNLog(@"rightMouseButtonClickedOnItemAtIndex: %li", index);
 }
