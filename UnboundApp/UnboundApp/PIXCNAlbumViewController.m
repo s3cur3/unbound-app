@@ -323,6 +323,8 @@
     PIXAlbumGridViewItem *item = [gridView dequeueReusableItemWithIdentifier:reuseIdentifier];
     if (item == nil) {
         item = [[PIXAlbumGridViewItem alloc] initWithLayout:nil reuseIdentifier:reuseIdentifier];
+        NSMenu *menu = [self menuForObject:item];
+        [item setMenu:menu];
     }
     
     item.album = [self albumForIndex:index];
