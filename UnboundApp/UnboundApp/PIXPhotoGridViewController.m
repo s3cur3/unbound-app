@@ -108,10 +108,21 @@
 //    CNLog(@"didClickItemAtIndex: %li", index);
 //}
 
-- (void)gridView:(CNGridView *)gridView didDoubleClickItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
+//- (void)gridView:(CNGridView *)gridView didDoubleClickItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
+//{
+//    CNLog(@"didDoubleClickItemAtIndex: %li", index);
+//    [self showPageControllerForIndex:index];
+//}
+
+- (void)gridView:(CNGridView *)gridView rightMouseButtonClickedOnItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section andEvent:(NSEvent *)event
 {
-    CNLog(@"didDoubleClickItemAtIndex: %li", index);
-    [self showPageControllerForIndex:index];
+    PIXPhoto * itemClicked = [self.items objectAtIndex:index];
+    NSMenu *contextMenu = [self menuForObject:itemClicked];
+    [NSMenu popUpContextMenu:contextMenu withEvent:event forView:self.view];
+    
+    // can use this and the self.selectedAlbum array to build a right click menu here
+    
+    DLog(@"rightMouseButtonClickedOnItemAtIndex: %li", index);
 }
 
 //- (void)gridView:(CNGridView *)gridView rightMouseButtonClickedOnItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section

@@ -24,6 +24,9 @@
 #import "PIXSplitViewController.h"
 
 #import "PIXPhoto.h"
+#import "PIXAlbum.h"
+
+#import "PIXFileManager.h"
 
 
 #import <Quartz/Quartz.h>
@@ -174,15 +177,15 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 - (IBAction) revealInFinder:(id)inSender
 {
-    id gridViewItem = [inSender representedObject];
-    id representedObject = nil;
-    if ([gridViewItem class] == [PIXAlbumGridViewItem class]) {
-        representedObject = [gridViewItem album];
-    } else if ([gridViewItem class] == [PIXPhotoGridViewItem class]) {
-        representedObject = [gridViewItem photo];
-    } else {
-        return;
-    }
+    id representedObject = [inSender representedObject];
+//    id representedObject = nil;
+//    if ([gridViewItem class] == [PIXAlbumGridViewItem class]) {
+//        representedObject = [gridViewItem album];
+//    } else if ([gridViewItem class] == [PIXPhotoGridViewItem class]) {
+//        representedObject = [gridViewItem photo];
+//    } else {
+//        return;
+//    }
     
 	NSString* path = [representedObject path];
 	NSString* folder = [path stringByDeletingLastPathComponent];
@@ -194,8 +197,8 @@ static NSString *kContentTitleKey, *kContentImageKey;
     NSMenu*  menu = nil;
     //TODO: see why isKindOfClass is returning NO
     //if ([[object class] isKindOfClass: [PIXGridViewItem class]])
-    if ([object class] == [PIXAlbumGridViewItem class] ||
-        [object class] == [PIXPhotoGridViewItem class])
+    if ([object class] == [PIXAlbum class] ||
+        [object class] == [PIXPhoto class])
     {
         
         menu = [[NSMenu alloc] initWithTitle:@"menu"];
@@ -218,6 +221,11 @@ static NSString *kContentTitleKey, *kContentImageKey;
         menu.delegate = self;
         
     }
+    NSMenu *openWithMenu = [[PIXFileManager sharedInstance] openWithMenuItemForFile:[object path]];
+    NSMenuItem *openWithMenuItem = [[NSMenuItem alloc] init];
+    [openWithMenuItem setTitle:@"Open With"];
+    [openWithMenuItem setSubmenu:openWithMenu];
+    [menu addItem:openWithMenuItem];
     return menu;
 }
 

@@ -55,6 +55,8 @@
 //The old fileManager loading system
 @property (nonatomic, strong) PIXFileSystemDataSource *dataSource;
 
+@property (strong, nonatomic) NSUndoManager *undoManager;
+
 
 //find or create helpers
 @property (nonatomic, retain) NSArray *photoFiles;
