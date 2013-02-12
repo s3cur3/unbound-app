@@ -450,18 +450,7 @@ NSString * DefaultDropBoxPhotosDirectory()
 //
 //  Uses LaunchServices and UTIs to detect if a given file path is an image file.
 // -------------------------------------------------------------------------------
-- (BOOL)fileIsImageFile:(NSURL *)url
-{
-    BOOL isImageFile = NO;
-    
-    NSString *utiValue;
-    [url getResourceValue:&utiValue forKey:NSURLTypeIdentifierKey error:nil];
-    if (utiValue)
-    {
-        isImageFile = UTTypeConformsTo((__bridge CFStringRef)utiValue, kUTTypeImage);
-    }
-    return isImageFile;
-}
+
 
 - (BOOL)fileIsUnboundMetadataFile:(NSURL *)url
 {
@@ -615,7 +604,7 @@ NSString * DefaultDropBoxPhotosDirectory()
         NSString *tokenKeyString = [NSString stringWithFormat:@"resumeToken-%@", aDir.path];
         NSData *token = [[NSUserDefaults standardUserDefaults] dataForKey:tokenKeyString];
         NSData *decodedToken = [NSKeyedUnarchiver unarchiveObjectWithData:token];
-        [aDir addDirectoryObserver:self options:ArchDirectoryObserverResponsive resumeToken:decodedToken];
+        [aDir addDirectoryObserver:self options:ArchDirectoryObserverResponsive | ArchDirectoryObserverObservesSelf resumeToken:decodedToken];
         //[aDir addDirectoryObserver:self options:0 resumeToken:nil];
     }
 }
@@ -663,19 +652,8 @@ NSString * DefaultDropBoxPhotosDirectory()
 //                                               object:nil];
     
     
-    if ([self.loadingAlbumsDict objectForKey:changedURL.path]==nil) {
-        [self.loadingAlbumsDict setObject:changedURL forKey:changedURL.path];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            //
-            NSArray *photoFiles = [self getFilesAtURL:changedURL];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [[PIXAppDelegate sharedAppDelegate] parsePhotos:photoFiles withPath:changedURL.path];
-                [self.loadingAlbumsDict removeObjectForKey:changedURL.path];
-            });
-
-        });
-        
-    }
+    [self shallowScanURL:changedURL];
+    
     
     //TODO: check for deleted albums
     
@@ -732,6 +710,9 @@ NSString * DefaultDropBoxPhotosDirectory()
 //    }
 }
 
+
+
+
 //typedef enum {
 //    // You added an observer with a nil resume token, so the directory's history is unknown.
 //    ArchDirectoryObserverNoHistoryReason = 0,
@@ -782,14 +763,106 @@ NSString * DefaultDropBoxPhotosDirectory()
 }
 
 
--(NSArray *)getFilesAtURL:(NSURL *)url
+//-------------------------------------------------------
+//  This method sill scan a specific path in a shallow manner.
+//  It will recurse to subdirectories only if it find's subdirectories
+//  that arent already in the database structure. It will also track
+//  current scans so new ones arent started
+//-------------------------------------------------------
+- (void)shallowScanURL:(NSURL *)url
 {
-    NSMutableArray *photoFiles = [NSMutableArray new];
+    // if this path isn't already being scanned:
+    if (url.path != nil && [self.loadingAlbumsDict objectForKey:url.path]==nil) {
+        [self.loadingAlbumsDict setObject:url forKey:url.path];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            //
+            
+            DLog(@"Doing a shallow scan of: %@", url.path);
+            
+            NSDirectoryEnumerator *dirEnumerator = [self nonRecursiveEnumeratorForURL:url];
+            NSMutableArray *photoFiles = [NSMutableArray new];
+            NSMutableArray *directories = [NSMutableArray new];
+            NSURL *aURL;
+            while (aURL = [dirEnumerator nextObject]) {
+                
+                // if this is an image add it to the photofiles array to be parsed
+                if ([self fileIsImageFile:aURL]==YES)
+                {
+                    NSDate *fileCreationDate;
+                    [aURL getResourceValue:&fileCreationDate forKey:NSURLCreationDateKey error:nil];
+                    
+                    NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:
+                                          [aURL lastPathComponent], kNameKey,
+                                          [aURL path], kPathKey,
+                                          [[aURL URLByDeletingLastPathComponent] path] , kDirectoryPathKey,
+                                          fileCreationDate, kCreatedKey,
+                                          nil];
+                    
+                    [photoFiles addObject:info];
+                    
+                }
+                
+                // if this is a directory then add it to the directories array to be checked for recursion
+                else
+                {
+                    NSNumber * isDirectoryValue;
+                    [aURL getResourceValue:&isDirectoryValue forKey:NSURLIsDirectoryKey error:nil];
+                    
+                    if([isDirectoryValue boolValue])
+                    {
+                        // add the path string value to the mutable array
+                        [directories addObject:[aURL path]];
+                    }
+                    
+                }
+            }
+            
+            // start parsing photos we've found (this will dispatch to another bg thread)
+            [[PIXAppDelegate sharedAppDelegate] parsePhotos:photoFiles withPath:url.path];
+            
+            
+            // go through the directories we found and see if any are not already in the db
+            NSArray * existingAlbums = [self albumsWithPaths:directories];
+            
+            // for each directory we found, remove it from the list
+            for(NSDictionary * anAlbumDict in existingAlbums)
+            {
+                NSString * thisAlbumPath = [anAlbumDict objectForKey:@"path"];
+                
+                NSUInteger index = [directories indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+                    return [thisAlbumPath isEqualToString:(NSString *)obj];
+                }];
+                
+                if(index != NSNotFound)
+                {
+                    [directories removeObjectAtIndex:index];
+                }
+            }
+            
+            // now go through the directories left over and start shallow scans on them
+            for(NSString * path in directories)
+            {
+                [self shallowScanURL:[NSURL fileURLWithPath:path]];
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [self.loadingAlbumsDict removeObjectForKey:url.path];
+            });
+        });
+        
+    }
+
+}
+
+-(NSDirectoryEnumerator *)nonRecursiveEnumeratorForURL:(NSURL *)url
+{
+    
     NSFileManager *localFileManager=[[NSFileManager alloc] init];
     NSDirectoryEnumerationOptions options = NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsSubdirectoryDescendants;
     NSDirectoryEnumerator *dirEnumerator = [localFileManager enumeratorAtURL:url
                                                   includingPropertiesForKeys:[NSArray arrayWithObjects:NSURLNameKey,
-                                                                              NSURLIsDirectoryKey,NSURLTypeIdentifierKey,NSURLCreationDateKey,nil]
+                                                                              NSURLIsDirectoryKey,NSURLTypeIdentifierKey,NSURLCreationDateKey, NSURLAttributeModificationDateKey,nil]
                                                                      options:options
                                                                 errorHandler:^(NSURL *url, NSError *error) {
                                                                     // Handle the error.
@@ -797,37 +870,52 @@ NSString * DefaultDropBoxPhotosDirectory()
                                                                     // Return YES if the enumeration should continue after the error.
                                                                     return YES;
                                                                 }];
-    id obj;
-    while (obj = [dirEnumerator nextObject]) {
-        if ([self fileIsImageFile:(NSURL *)obj]==YES)
-        {
-            NSDate *fileCreationDate;
-            NSURL *aURL = (NSURL *)obj;
-            [aURL getResourceValue:&fileCreationDate forKey:NSURLCreationDateKey error:nil];
-            
-            /*NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-             [formatter setTimeStyle:NSDateFormatterNoStyle];
-             [formatter setDateStyle:NSDateFormatterShortStyle];
-             NSString *modDateStr = [formatter stringFromDate:fileCreationDate];*/
-            
-            NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:
-                                  [aURL lastPathComponent], kNameKey,
-                                  //[self.loadURL absoluteString], kPathKey,
-                                  [aURL path], kPathKey,
-                                  [[aURL URLByDeletingLastPathComponent] path] , kDirectoryPathKey,
-                                  //modDateStr, kModifiedKey,
-                                  fileCreationDate, kCreatedKey,
-                                  //[NSString stringWithFormat:@"%ld", [fileSize integerValue]], kSizeKey,
-                                  //[NSNumber numberWithInteger:ourScanCount], kScanCountKey,  // pass back to check if user cancelled/started a new scan
-                                  nil];
-            [photoFiles addObject:info];
-            
-        }
-    }
     
-    return photoFiles;
-
+    return dirEnumerator;
 }
+
+// this will fetch albums matching the nstring paths in the paths array
+-(NSArray *)albumsWithPaths:(NSArray *)paths
+{
+    
+    // create a thread-safe context (may want to make this a child context down the road)
+    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] init];
+    [context setUndoManager:nil];
+    
+    //set it to the App Delegates persistant store coordinator
+    [context setPersistentStoreCoordinator:[[PIXAppDelegate sharedAppDelegate] persistentStoreCoordinator]];
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PIXAlbum" inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    
+    [fetchRequest setPropertiesToFetch:@[@"path"]];
+    [fetchRequest setResultType:NSDictionaryResultType];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"path in %@", paths];
+    [fetchRequest setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+    
+    return fetchedObjects;
+    
+}
+
+
+- (BOOL)fileIsImageFile:(NSURL *)url
+{
+    BOOL isImageFile = NO;
+    
+    NSString *utiValue;
+    [url getResourceValue:&utiValue forKey:NSURLTypeIdentifierKey error:nil];
+    if (utiValue)
+    {
+        isImageFile = UTTypeConformsTo((__bridge CFStringRef)utiValue, kUTTypeImage);
+    }
+    return isImageFile;
+}
+
 
 
 

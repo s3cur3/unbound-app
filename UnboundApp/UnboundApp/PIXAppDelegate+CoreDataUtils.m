@@ -61,7 +61,7 @@
     //self.photoFiles = [photos sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"path" ascending:YES]]];
     
     // recored an initial fetch date to use when deleting items that weren't found
-    self.fetchDate = [NSDate date];
+    __block NSDate * fetchDate = [NSDate date];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
         
@@ -138,7 +138,7 @@
                 [lastAlbumsPhotos removeAllObjects];
                 
                 // set the date last Updated so this album is marked to not be deleted
-                [lastAlbum setDateLastUpdated:self.fetchDate];
+                [lastAlbum setDateLastUpdated:fetchDate];
                 
                 // sethi the existing photos array to the current photos in the album
                 lastAlbumsExistingPhotos = [[lastAlbum.photos array] mutableCopy];
@@ -173,7 +173,7 @@
             [dbPhoto setPath:[aPhoto valueForKey:@"path"]];
             
             // set this date so this photo won't be deleted
-            [dbPhoto setDateLastUpdated:self.fetchDate];
+            [dbPhoto setDateLastUpdated:fetchDate];
 
             // add the photos to the array of found photos for this album
             [lastAlbumsPhotos addObject:dbPhoto];
@@ -204,10 +204,10 @@
         // go through and delete any photos/albums that weren't updated and should have been
         
         // be sure to delete albums first so there are less photos to iterate through in the second delete
-        if (![self deleteObjectsForEntityName:@"PIXAlbum" withUpdateDateBefore:self.fetchDate inContext:context withPath:path]) {
+        if (![self deleteObjectsForEntityName:@"PIXAlbum" withUpdateDateBefore:fetchDate inContext:context withPath:path]) {
             DLog(@"There was a problem trying to delete old objects");
         }
-        if (![self deleteObjectsForEntityName:@"PIXPhoto" withUpdateDateBefore:self.fetchDate inContext:context withPath:path]) {
+        if (![self deleteObjectsForEntityName:@"PIXPhoto" withUpdateDateBefore:fetchDate inContext:context withPath:path]) {
             DLog(@"There was a problem trying to delete old objects");
         }
         
@@ -522,13 +522,13 @@
     {
         isPhotoEntity = YES;
     }
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dateLastUpdated == NULL || dateLastUpdated < %@", self.fetchDate, nil];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dateLastUpdated == NULL || dateLastUpdated < %@", lastUpdated, nil];
     if (path!=nil) {
         if (isPhotoEntity) {
-            predicate = [NSPredicate predicateWithFormat:@"album.path == %@ && (dateLastUpdated == NULL || dateLastUpdated < %@)",path, self.fetchDate, nil];
+            predicate = [NSPredicate predicateWithFormat:@"album.path == %@ && (dateLastUpdated == NULL || dateLastUpdated < %@)",path, lastUpdated, nil];
         } else {
             
-            predicate = [NSPredicate predicateWithFormat:@"path == %@ && (dateLastUpdated == NULL || dateLastUpdated < %@)", path, self.fetchDate, nil];
+            predicate = [NSPredicate predicateWithFormat:@"path == %@ && (dateLastUpdated == NULL || dateLastUpdated < %@)", path, lastUpdated, nil];
         }
     }
     
@@ -558,7 +558,7 @@
         // delete any albums that are no longer in the feed
         for (id anItemToDelete in itemsToDelete)
         {
-            DLog(@"Deleting item %@ with a dateLastUpdated of %@ which should be after %@", anItemToDelete, [anItemToDelete dateLastUpdated], self.fetchDate);
+            DLog(@"Deleting item %@ with a dateLastUpdated of %@ which should be after %@", anItemToDelete, [anItemToDelete dateLastUpdated], lastUpdated);
             if (isPhotoEntity) {
                 PIXPhoto *aPhoto = (PIXPhoto *)anItemToDelete;
                 if (aPhoto.album == nil) {
