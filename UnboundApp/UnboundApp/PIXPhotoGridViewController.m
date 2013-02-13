@@ -19,6 +19,8 @@
 
 @property(nonatomic,strong) NSMutableArray * selectedItems;
 
+@property(nonatomic,strong) NSDateFormatter * titleDateFormatter;
+
 @end
 
 @implementation PIXPhotoGridViewController
@@ -28,6 +30,12 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Initialization code here.
+        
+        
+        self.titleDateFormatter = [[NSDateFormatter alloc] init];
+        [self.titleDateFormatter setDateStyle:NSDateFormatterLongStyle];
+        [self.titleDateFormatter setTimeStyle:NSDateFormatterNoStyle];
+        
     }
     
     return self;
@@ -77,7 +85,7 @@
 {
     self.items = [self fetchItems];
     [self.gridView reloadData];
-    [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%ld photos", [self.items count]]];
+    [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%ld photos from %@", [self.items count], [self.titleDateFormatter stringFromDate:self.album.albumDate]]];
     
 }
 
