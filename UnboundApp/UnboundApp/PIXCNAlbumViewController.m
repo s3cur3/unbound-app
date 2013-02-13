@@ -260,15 +260,12 @@
             
             self.lastSearch = searchText;
         }
-        
-        [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%ld Albums Match Search", [self.searchedAlbums count]]];
     }
     
     else
     {
         self.searchedAlbums = nil;
         self.lastSearch = nil;
-        [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%ld Albums", [self.albums count]]];
     }
     
     [[NSUserDefaults standardUserDefaults] setObject:searchText forKey:@"PIX_AlbumSearchString"];
@@ -296,14 +293,21 @@
     
     
     [self updateToolbar];
+    [self updateGridTitle];
     [self.gridView reloadData];
 	
 }
 
-
--(void)showTrash
+-(void)updateGridTitle
 {
-    
+    if(self.searchedAlbums)
+    {
+        [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%ld albums matched search", [self.searchedAlbums count]]];
+    }
+    else
+    {
+        [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%ld albums", [self.albums count]]];
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

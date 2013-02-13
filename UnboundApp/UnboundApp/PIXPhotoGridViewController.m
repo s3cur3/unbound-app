@@ -17,6 +17,8 @@
 
 @interface PIXPhotoGridViewController ()
 
+@property(nonatomic,strong) NSMutableArray * selectedItems;
+
 @end
 
 @implementation PIXPhotoGridViewController
@@ -34,7 +36,7 @@
 -(void)awakeFromNib
 {
     [super awakeFromNib];
-    [self performSelector:@selector(reloadItems:) withObject:nil afterDelay:0.1];
+    [self performSelector:@selector(updateAlbum) withObject:nil afterDelay:0.1];
 
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadItems:) name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
     
@@ -44,28 +46,31 @@
 //                                                 name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM
 //                                               object:nil];
     
-    
 }
 
 
 -(void)setAlbum:(id)album
 {
-    BOOL firstLoad = NO;
-    //The first time album is set, no need to reload
-    if (_album==nil && album!=nil)
+  
+    
+    if (album != _album)
     {
-        firstLoad = YES;
-    }
-    _album = album;
-    if (album) {
+        _album = album;
         [[[PIXAppDelegate sharedAppDelegate] window] setTitle:[self.album title]];
-        if (firstLoad == NO)
-        {
-            self.items = [self fetchItems];
-            [self.gridView reloadData];
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadItems:) name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
-        }
+        
+        [self updateAlbum];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAlbum) name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
+        
     }
+}
+
+-(void)updateAlbum
+{
+    self.items = [self fetchItems];
+    [self.gridView reloadData];
+    [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%ld photos", [self.items count]]];
+    
 }
 
 -(NSMutableArray *)fetchItems
@@ -139,5 +144,60 @@
 //{
 //    CNLog(@"didDeselectItemAtIndex: %li", index);
 //}
+
+
+
+- (void)gridView:(CNGridView *)gridView didSelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
+{
+    [self.selectedItems addObject:[self.items objectAtIndex:index]];
+    
+    [self updateToolbar];
+}
+
+- (void)gridView:(CNGridView *)gridView didDeselectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
+{
+    [self.selectedItems removeObject:[self.items objectAtIndex:index]];
+    
+    [self updateToolbar];
+}
+
+- (void)gridViewDidDeselectAllItems:(CNGridView *)gridView
+{
+    [self.selectedItems removeAllObjects];
+    [self updateToolbar];
+}
+
+
+-(void)updateToolbar
+{
+    if([self.selectedItems count] > 0)
+    {
+        if([self.selectedItems count] > 1)
+        {
+            [self.toolbarTitle setStringValue:[NSString stringWithFormat:@"%ld photos selected", (unsigned long)[self.selectedItems count]]];
+        }
+        
+        else
+        {
+            [self.toolbarTitle setStringValue:@"1 photo selected"];
+        }
+        
+        [self showToolbar:YES];
+    }
+    
+    else
+    {
+        [self hideToolbar:YES];
+    }
+}
+
+-(NSMutableArray *)selectedItems
+{
+    if(_selectedItems != nil) return _selectedItems;
+    
+    _selectedItems = [NSMutableArray new];
+    
+    return _selectedItems;
+}
 
 @end

@@ -10,17 +10,27 @@
 
 @implementation SquareImageView
 
+/*
+-(void)updateLayer
+{
+    [self.layer setBorderColor:[[NSColor colorWithCalibratedWhite:0.0 alpha:0.4] CGColor]];
+    [self.layer setBorderWidth:1.0];
+    [self.layer setCornerRadius:2.5];
+    
+    
+     
+     CGColorRef color = CGColorCreateGenericGray(1.0, 1.0);
+     [self.layer setBackgroundColor:color];
+     [self.layer setShadowOpacity:1.0];
+     [self.layer setShadowRadius:2.0];
+     [self.layer setShadowColor:[NSColor blackColor].CGColor];
+     [self.layer setShadowOffset:CGSizeMake(0, -1)];
+}*/
+
 - (void)drawRect:(NSRect)rect
 {
     //[super drawRect:rect];
     NSRect cropRect = self.bounds;
-    
-    
-    /*
-    [self.image drawAtPoint:NSZeroPoint
-              fromRect:cropRect
-             operation:NSCompositeCopy
-              fraction:1];*/
     
     CGSize imageSize = [self.image size];
     NSRect imageRect = self.bounds;

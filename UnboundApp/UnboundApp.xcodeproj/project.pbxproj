@@ -297,15 +297,7 @@
 		1D0834FD167D6609003D557A /* PhotoBrowserView */ = {
 			isa = PBXGroup;
 			children = (
-				1D083511167D785F003D557A /* PIXImageBrowserView.h */,
-				1D083512167D785F003D557A /* PIXImageBrowserView.m */,
-				8C972CB21680FE8A00358913 /* PIXModifierSwitchedEvent.h */,
-				8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */,
-				1D0834FE167D6678003D557A /* PIXImageBrowserViewController.h */,
-				1D0834FF167D6678003D557A /* PIXImageBrowserViewController.m */,
-				1D083500167D6678003D557A /* PIXImageBrowserViewController.xib */,
-				1D083514167D78AD003D557A /* PIXImageBrowserCell.h */,
-				1D083515167D78AD003D557A /* PIXImageBrowserCell.m */,
+				8C8EE93616CB0FEC00F16C49 /* no longer used */,
 				1D8CD7F216AB76E20072D516 /* PIXPhotoGridViewController.h */,
 				1D8CD7F316AB76E20072D516 /* PIXPhotoGridViewController.m */,
 				8C4B80E616B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.h */,
@@ -333,15 +325,11 @@
 			isa = PBXGroup;
 			children = (
 				1D8CD7EA16AB6D310072D516 /* Shared */,
-				1D4A1DFE167BEAF200C9A895 /* PIXViewController.h */,
-				1D4A1DFF167BEAF200C9A895 /* PIXViewController.m */,
-				1D4A1E01167BEC1600C9A895 /* PIXNavigationController.h */,
-				1D4A1E02167BEC1700C9A895 /* PIXNavigationController.m */,
+				1D4A1DC2167AD97B00C9A895 /* AlbumView */,
+				1D4A1E2C167D2D2900C9A895 /* SplitView */,
+				1D4A1E32167D361E00C9A895 /* SidebarOutlineView */,
 				1D0834FD167D6609003D557A /* PhotoBrowserView */,
 				1D0834F5167D63E5003D557A /* PageView */,
-				1D4A1E32167D361E00C9A895 /* SidebarOutlineView */,
-				1D4A1E2C167D2D2900C9A895 /* SplitView */,
-				1D4A1DC2167AD97B00C9A895 /* AlbumView */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -451,6 +439,10 @@
 		1D8CD7EA16AB6D310072D516 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				1D4A1DFE167BEAF200C9A895 /* PIXViewController.h */,
+				1D4A1DFF167BEAF200C9A895 /* PIXViewController.m */,
+				1D4A1E01167BEC1600C9A895 /* PIXNavigationController.h */,
+				1D4A1E02167BEC1700C9A895 /* PIXNavigationController.m */,
 				8C249E7016AB429E00CB97AF /* CNGridView */,
 				1D8CD7EC16AB6EC70072D516 /* PIXGridViewController.h */,
 				1D8CD7ED16AB6EC70072D516 /* PIXGridViewController.m */,
@@ -642,6 +634,22 @@
 				8C8EE93316CACA7900F16C49 /* NSURL+DirectoryObserver.m */,
 			);
 			path = ArchDirectoryObserver;
+			sourceTree = "<group>";
+		};
+		8C8EE93616CB0FEC00F16C49 /* no longer used */ = {
+			isa = PBXGroup;
+			children = (
+				1D083511167D785F003D557A /* PIXImageBrowserView.h */,
+				1D083512167D785F003D557A /* PIXImageBrowserView.m */,
+				8C972CB21680FE8A00358913 /* PIXModifierSwitchedEvent.h */,
+				8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */,
+				1D0834FE167D6678003D557A /* PIXImageBrowserViewController.h */,
+				1D0834FF167D6678003D557A /* PIXImageBrowserViewController.m */,
+				1D083500167D6678003D557A /* PIXImageBrowserViewController.xib */,
+				1D083514167D78AD003D557A /* PIXImageBrowserCell.h */,
+				1D083515167D78AD003D557A /* PIXImageBrowserCell.m */,
+			);
+			name = "no longer used";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
