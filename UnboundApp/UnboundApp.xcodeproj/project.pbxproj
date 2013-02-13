@@ -89,6 +89,11 @@
 		8C8EE93416CACA7900F16C49 /* ArchDirectoryObservationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE92F16CACA7900F16C49 /* ArchDirectoryObservationCenter.m */; };
 		8C8EE93516CACA7900F16C49 /* NSURL+DirectoryObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE93316CACA7900F16C49 /* NSURL+DirectoryObserver.m */; };
 		8C972CB41680FE8B00358913 /* PIXModifierSwitchedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */; };
+		8CE460DB16CB650600CDFA04 /* btn-roundrect-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D716CB650600CDFA04 /* btn-roundrect-down.png */; };
+		8CE460DC16CB650600CDFA04 /* btn-roundrect-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D816CB650600CDFA04 /* btn-roundrect-down@2x.png */; };
+		8CE460DD16CB650600CDFA04 /* btn-roundrect-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D916CB650600CDFA04 /* btn-roundrect-up.png */; };
+		8CE460DE16CB650600CDFA04 /* btn-roundrect-up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460DA16CB650600CDFA04 /* btn-roundrect-up@2x.png */; };
+		8CE460E116CB674700CDFA04 /* PIXGradientBarButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE460E016CB674700CDFA04 /* PIXGradientBarButtonCell.m */; };
 		8CE8F62516BD8C9E00DC6014 /* DebugPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CE8F62216BD8C9E00DC6014 /* DebugPreferencesView.xib */; };
 		8CE8F62616BD8C9E00DC6014 /* DebugPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE8F62316BD8C9E00DC6014 /* DebugPreferencesViewController.m */; };
 		8CF2C5E316BB458900F906F1 /* MASPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CF2C5DF16BB458900F906F1 /* MASPreferencesWindow.xib */; };
@@ -254,6 +259,12 @@
 		8C8EE93316CACA7900F16C49 /* NSURL+DirectoryObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+DirectoryObserver.m"; sourceTree = "<group>"; };
 		8C972CB21680FE8A00358913 /* PIXModifierSwitchedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXModifierSwitchedEvent.h; sourceTree = "<group>"; };
 		8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXModifierSwitchedEvent.m; sourceTree = "<group>"; };
+		8CE460D716CB650600CDFA04 /* btn-roundrect-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-roundrect-down.png"; sourceTree = "<group>"; };
+		8CE460D816CB650600CDFA04 /* btn-roundrect-down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-roundrect-down@2x.png"; sourceTree = "<group>"; };
+		8CE460D916CB650600CDFA04 /* btn-roundrect-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-roundrect-up.png"; sourceTree = "<group>"; };
+		8CE460DA16CB650600CDFA04 /* btn-roundrect-up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-roundrect-up@2x.png"; sourceTree = "<group>"; };
+		8CE460DF16CB674700CDFA04 /* PIXGradientBarButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXGradientBarButtonCell.h; sourceTree = "<group>"; };
+		8CE460E016CB674700CDFA04 /* PIXGradientBarButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXGradientBarButtonCell.m; sourceTree = "<group>"; };
 		8CE8F62216BD8C9E00DC6014 /* DebugPreferencesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DebugPreferencesView.xib; sourceTree = "<group>"; };
 		8CE8F62316BD8C9E00DC6014 /* DebugPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugPreferencesViewController.m; sourceTree = "<group>"; };
 		8CE8F62416BD8C9E00DC6014 /* DebugPrefrencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugPrefrencesViewController.h; sourceTree = "<group>"; };
@@ -347,6 +358,10 @@
 		1D4A1D99167AD93400C9A895 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				8CE460D716CB650600CDFA04 /* btn-roundrect-down.png */,
+				8CE460D816CB650600CDFA04 /* btn-roundrect-down@2x.png */,
+				8CE460D916CB650600CDFA04 /* btn-roundrect-up.png */,
+				8CE460DA16CB650600CDFA04 /* btn-roundrect-up@2x.png */,
 				1DA66CAF16AA2ED00060D796 /* nophoto_200x200.jpg */,
 				1D4A1D9A167AD93400C9A895 /* dark_bg.png */,
 				1D4A1D9B167AD93400C9A895 /* dark_bg@2X.png */,
@@ -452,6 +467,8 @@
 				1D8CD7E716AB4D220072D516 /* PIXGridViewItemLayout.m */,
 				8C7ABBBC16C42A3D00784BDA /* PIXGradientBarView.h */,
 				8C7ABBBD16C42A3D00784BDA /* PIXGradientBarView.m */,
+				8CE460DF16CB674700CDFA04 /* PIXGradientBarButtonCell.h */,
+				8CE460E016CB674700CDFA04 /* PIXGradientBarButtonCell.m */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -732,6 +749,10 @@
 				8C4B80FE16BB3D8A00C7E8F4 /* AdvancedPreferencesView.xib in Resources */,
 				8CF2C5E316BB458900F906F1 /* MASPreferencesWindow.xib in Resources */,
 				8CE8F62516BD8C9E00DC6014 /* DebugPreferencesView.xib in Resources */,
+				8CE460DB16CB650600CDFA04 /* btn-roundrect-down.png in Resources */,
+				8CE460DC16CB650600CDFA04 /* btn-roundrect-down@2x.png in Resources */,
+				8CE460DD16CB650600CDFA04 /* btn-roundrect-up.png in Resources */,
+				8CE460DE16CB650600CDFA04 /* btn-roundrect-up@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -798,6 +819,7 @@
 				8C8EE93416CACA7900F16C49 /* ArchDirectoryObservationCenter.m in Sources */,
 				8C8EE93516CACA7900F16C49 /* NSURL+DirectoryObserver.m in Sources */,
 				1DBFD55716CAE415001944A9 /* PIXFileManager.m in Sources */,
+				8CE460E116CB674700CDFA04 /* PIXGradientBarButtonCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

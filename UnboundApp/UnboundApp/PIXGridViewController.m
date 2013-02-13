@@ -320,7 +320,11 @@ static NSString *kContentTitleKey, *kContentImageKey;
 {
     [self.selectedItems removeAllObjects];
     [self.gridView reloadSelection];
-    [self updateToolbar];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self updateToolbar];
+    });
+    
 }
 
 -(void)toggleSelection:(id)sender
