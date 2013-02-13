@@ -28,7 +28,6 @@
 
 @property(nonatomic,strong) NSArray * albums;
 @property(nonatomic,strong) NSArray * searchedAlbums;
-@property(nonatomic,strong) NSMutableArray * selectedAlbums;
 
 @property (nonatomic, strong) NSToolbarItem * trashbutton;
 @property (nonatomic, strong) NSToolbarItem * settingsButton;
@@ -48,7 +47,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Initialization code here.
-
+        self.selectedItemsName = @"album";
         
     }
     
@@ -281,7 +280,7 @@
         visibleArray = self.searchedAlbums;
     }
     
-    NSArray * selectedCopy = [self.selectedAlbums copy];
+    NSArray * selectedCopy = [self.selectedItems copy];
     
     // find any albums that were selected and no longer in the list
     for(PIXAlbum * album in selectedCopy)
@@ -289,7 +288,7 @@
         NSUInteger index = [visibleArray indexOfObject:album];
         if(index == NSNotFound)
         {
-            [self.selectedAlbums removeObject:album];
+            [self.selectedItems removeObject:album];
         }
     }
     
@@ -359,7 +358,7 @@
 
 - (BOOL)gridView:(CNGridView *)gridView itemIsSelectedAtIndex:(NSInteger)index inSection:(NSInteger)section
 {
-    return [self.selectedAlbums containsObject:[self albumForIndex:index]];
+    return [self.selectedItems containsObject:[self albumForIndex:index]];
 }
 
 
@@ -415,7 +414,11 @@
         album = [self.albums objectAtIndex:index];
     }
     
-    [self showPhotosForAlbum:album];
+    
+    //dispatch_async(dispatch_get_main_queue(), ^{
+        [self showPhotosForAlbum:album];
+    //});
+    
 }
 
 -(void)showPhotosForAlbum:(id)anAlbum
@@ -431,11 +434,11 @@
     // we don't handle clicks off of an album right now
     if(albumClicked == nil) return;
     
-    // if this album isn't in the selection than re-select only this
-    if(albumClicked != nil && ![self.selectedAlbums containsObject:albumClicked])
+    // if this album isn't in the selection than re-select only this one
+    if(albumClicked != nil && ![self.selectedItems containsObject:albumClicked])
     {
-        [self.selectedAlbums removeAllObjects];
-        [self.selectedAlbums addObject:albumClicked];
+        [self.selectedItems removeAllObjects];
+        [self.selectedItems addObject:albumClicked];
         [self.gridView reloadSelection];
         [self updateToolbar];
     }
@@ -446,55 +449,65 @@
     NSMenu *contextMenu = [self menuForObject:albumClicked];
     [NSMenu popUpContextMenu:contextMenu withEvent:event forView:self.view];
     
-    // can use this and the self.selectedAlbum array to build a right click menu here
     
     DLog(@"rightMouseButtonClickedOnItemAtIndex: %li", index);
 }
 
 - (void)gridView:(CNGridView *)gridView didSelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
-    [self.selectedAlbums addObject:[self albumForIndex:index]];
+    [self.selectedItems addObject:[self albumForIndex:index]];
     
     [self updateToolbar];
 }
 
 - (void)gridView:(CNGridView *)gridView didDeselectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
-    [self.selectedAlbums removeObject:[self albumForIndex:index]];
+    [self.selectedItems removeObject:[self albumForIndex:index]];
     
     [self updateToolbar];
 }
 
 - (void)gridViewDidDeselectAllItems:(CNGridView *)gridView
 {
-    [self.selectedAlbums removeAllObjects];
+    [self.selectedItems removeAllObjects];
     [self updateToolbar];
 }
 
-
--(void)updateToolbar
+-(void)selectAll:(id)sender
 {
-    if([self.selectedAlbums count] > 0)
+    if(self.searchedAlbums)
     {
-        if([self.selectedAlbums count] > 1)
-        {
-            [self.toolbarTitle setStringValue:[NSString stringWithFormat:@"%ld albums selected", (unsigned long)[self.selectedAlbums count]]];
-        }
-        
-        else
-        {
-            [self.toolbarTitle setStringValue:@"1 album selected"];
-        }
-        
-        [self showToolbar:YES];
+        self.selectedItems = [self.searchedAlbums mutableCopy];
     }
     
     else
     {
-        [self hideToolbar:YES];
+        self.selectedItems = [self.albums mutableCopy];
     }
+    
+    [self.gridView reloadSelection];
+    [self updateToolbar];
 }
 
+-(void)toggleSelection:(id)sender
+{
+    NSMutableArray * visibleItems = [self.albums mutableCopy];
+    
+    if(self.searchedAlbums)
+    {
+        visibleItems = [self.searchedAlbums mutableCopy];
+    }
+    
+    
+    // now remove items from the list that are already selected
+    [visibleItems removeObjectsInArray:self.selectedItems];
+    
+    self.selectedItems = visibleItems;
+    
+    [self.gridView reloadSelection];
+    [self updateToolbar];
+    
+}
 
 
 -(void)albumsChanged:(NSNotification *)note
@@ -512,15 +525,6 @@
     _albums = [[PIXAppDelegate sharedAppDelegate] fetchAllAlbums];
     
     return _albums;
-}
-
--(NSMutableArray *)selectedAlbums
-{
-    if(_selectedAlbums != nil) return _selectedAlbums;
-    
-    _selectedAlbums = [NSMutableArray new];
-    
-    return _selectedAlbums;
 }
 
 -(PIXSplitViewController *) aSplitViewController

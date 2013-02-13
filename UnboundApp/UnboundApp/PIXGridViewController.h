@@ -13,7 +13,10 @@
 @interface PIXGridViewController : PIXViewController <CNGridViewDataSource, CNGridViewDelegate>
 
 @property (strong) IBOutlet CNGridView *gridView;
+
 @property (strong) NSMutableArray *items;
+@property (nonatomic,strong) NSMutableArray * selectedItems;
+@property (strong) NSString * selectedItemsName;
 
 @property (strong) IBOutlet PIXGradientBarView * toolbar;
 @property (strong) IBOutlet NSTextField * toolbarTitle;
@@ -24,5 +27,10 @@
 
 -(void)showToolbar:(BOOL)animated;
 -(void)hideToolbar:(BOOL)animated;
+-(void)updateToolbar;
+
+-(IBAction)selectAll:(id)sender;
+-(IBAction)selectNone:(id)sender;
+-(IBAction)toggleSelection:(id)sender;
 
 @end

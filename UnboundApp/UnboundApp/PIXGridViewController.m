@@ -93,6 +93,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
     scrollAnim.duration = 0.1;
     self.gridView.superview.animations = [NSDictionary dictionaryWithObject:scrollAnim forKey:@"bounds"];
     
+    [self updateToolbar];
 }
 
 -(void)showToolbar:(BOOL)animated
@@ -275,34 +276,88 @@ static NSString *kContentTitleKey, *kContentImageKey;
 }
 
 
+-(NSMutableArray *)selectedItems
+{
+    if(_selectedItems != nil) return _selectedItems;
+    
+    _selectedItems = [NSMutableArray new];
+    
+    return _selectedItems;
+}
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - CNGridView Delegate
-
-- (void)gridView:(CNGridView *)gridView didClickItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
-{
-    CNLog(@"didClickItemAtIndex: %li", index);
-}
-
-- (void)gridView:(CNGridView *)gridView didDoubleClickItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
-{
-    CNLog(@"didDoubleClickItemAtIndex: %li", index);
-}
-
-- (void)gridView:(CNGridView *)gridView rightMouseButtonClickedOnItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section andEvent:(NSEvent *)event
-{
-    CNLog(@"rightMouseButtonClickedOnItemAtIndex: %li", index);
-}
+#pragma mark - CNGridView Delegate Selection Methods
 
 - (void)gridView:(CNGridView *)gridView didSelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
-    CNLog(@"didSelectItemAtIndex: %li", index);
+    [self.selectedItems addObject:[self.items objectAtIndex:index]];
+    [self updateToolbar];
 }
 
 - (void)gridView:(CNGridView *)gridView didDeselectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
-    CNLog(@"didDeselectItemAtIndex: %li", index);
+    [self.selectedItems removeObject:[self.items objectAtIndex:index]];
+    [self updateToolbar];
+}
+
+- (void)gridViewDidDeselectAllItems:(CNGridView *)gridView
+{
+    [self.selectedItems removeAllObjects];
+    [self updateToolbar];
+}
+
+
+-(void)selectAll:(id)sender
+{
+    self.selectedItems = [self.items mutableCopy];
+    
+    [self.gridView reloadSelection];
+    [self updateToolbar];
+}
+
+-(void)selectNone:(id)sender
+{
+    [self.selectedItems removeAllObjects];
+    [self.gridView reloadSelection];
+    [self updateToolbar];
+}
+
+-(void)toggleSelection:(id)sender
+{
+    NSMutableArray * mutableItems = [self.items mutableCopy];
+    
+    // now remove items from the list that are already selected
+    [mutableItems removeObjectsInArray:self.selectedItems];
+    
+    self.selectedItems = mutableItems;
+    
+    [self.gridView reloadSelection];
+    [self updateToolbar];
+}
+
+
+-(void)updateToolbar
+{
+    if([self.selectedItems count] > 0)
+    {
+        if([self.selectedItems count] > 1)
+        {
+            [self.toolbarTitle setStringValue:[NSString stringWithFormat:@"%ld %@s selected", (unsigned long)[self.selectedItems count], self.selectedItemsName]];
+        }
+        
+        else
+        {
+            [self.toolbarTitle setStringValue:[NSString stringWithFormat:@"1 %@ selected", self.selectedItemsName]];
+        }
+        
+        [self showToolbar:YES];
+    }
+    
+    else
+    {
+        [self hideToolbar:YES];
+    }
 }
 
 @end

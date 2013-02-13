@@ -17,8 +17,6 @@
 
 @interface PIXPhotoGridViewController ()
 
-@property(nonatomic,strong) NSMutableArray * selectedItems;
-
 @property(nonatomic,strong) NSDateFormatter * titleDateFormatter;
 
 @end
@@ -35,6 +33,7 @@
         self.titleDateFormatter = [[NSDateFormatter alloc] init];
         [self.titleDateFormatter setDateStyle:NSDateFormatterLongStyle];
         [self.titleDateFormatter setTimeStyle:NSDateFormatterNoStyle];
+        self.selectedItemsName = @"photo";
         
     }
     
@@ -131,6 +130,8 @@
     
 }
 
+
+
 -(void)showPageControllerForIndex:(NSUInteger)index
 {
     PIXPageViewController *pageViewController = [[PIXPageViewController alloc] initWithNibName:@"PIXPageViewController" bundle:nil];
@@ -184,74 +185,11 @@
     DLog(@"rightMouseButtonClickedOnItemAtIndex: %li", index);
 }
 
-//- (void)gridView:(CNGridView *)gridView rightMouseButtonClickedOnItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
-//{
-//    CNLog(@"rightMouseButtonClickedOnItemAtIndex: %li", index);
-//}
-//
-//- (void)gridView:(CNGridView *)gridView didSelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
-//{
-//    CNLog(@"didSelectItemAtIndex: %li", index);
-//}
-//
-//- (void)gridView:(CNGridView *)gridView didDeselectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
-//{
-//    CNLog(@"didDeselectItemAtIndex: %li", index);
-//}
 
 
 
-- (void)gridView:(CNGridView *)gridView didSelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
-{
-    [self.selectedItems addObject:[self.items objectAtIndex:index]];
-    
-    [self updateToolbar];
-}
-
-- (void)gridView:(CNGridView *)gridView didDeselectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
-{
-    [self.selectedItems removeObject:[self.items objectAtIndex:index]];
-    
-    [self updateToolbar];
-}
-
-- (void)gridViewDidDeselectAllItems:(CNGridView *)gridView
-{
-    [self.selectedItems removeAllObjects];
-    [self updateToolbar];
-}
 
 
--(void)updateToolbar
-{
-    if([self.selectedItems count] > 0)
-    {
-        if([self.selectedItems count] > 1)
-        {
-            [self.toolbarTitle setStringValue:[NSString stringWithFormat:@"%ld photos selected", (unsigned long)[self.selectedItems count]]];
-        }
-        
-        else
-        {
-            [self.toolbarTitle setStringValue:@"1 photo selected"];
-        }
-        
-        [self showToolbar:YES];
-    }
-    
-    else
-    {
-        [self hideToolbar:YES];
-    }
-}
 
--(NSMutableArray *)selectedItems
-{
-    if(_selectedItems != nil) return _selectedItems;
-    
-    _selectedItems = [NSMutableArray new];
-    
-    return _selectedItems;
-}
 
 @end
