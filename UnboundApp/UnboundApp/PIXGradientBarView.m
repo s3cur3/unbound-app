@@ -29,6 +29,10 @@
     [self setNeedsDisplay:YES];
 }
 
+-(BOOL)isOpaque
+{
+    return YES;
+}
 
 - (void)drawRect:(NSRect)dirtyRect
 {

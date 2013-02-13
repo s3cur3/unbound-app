@@ -1256,7 +1256,7 @@
 				<string key="15.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="NO" key="3.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<array key="387.IBNSViewMetadataConstraints">
+				<array class="NSMutableArray" key="387.IBNSViewMetadataConstraints">
 					<reference ref="730653173"/>
 					<reference ref="283648490"/>
 					<reference ref="485722430"/>
@@ -1325,7 +1325,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">554</int>
+			<int key="maxID">558</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
