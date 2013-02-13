@@ -440,7 +440,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     CGFloat space = (self.frame.size.width - (columns * self.itemSize.width)) / (columns + 1);
     
     NSUInteger currentColumn = floor(point.x / (self.itemSize.width+space));
-    NSUInteger currentRow = floor((point.y+self.headerSpace) / self.itemSize.height);
+    NSUInteger currentRow = floor((point.y-self.headerSpace) / self.itemSize.height);
     indexForItemAtLocation = currentRow * [self columnsInGridView] + currentColumn;
     indexForItemAtLocation = (indexForItemAtLocation > (numberOfItems - 1) ? NSNotFound : indexForItemAtLocation);
     

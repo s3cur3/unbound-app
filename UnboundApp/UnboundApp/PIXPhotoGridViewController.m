@@ -48,6 +48,14 @@
     
 }
 
+-(void)willShowPIXView
+{
+    [super willShowPIXView];
+    
+    [self.gridView reloadSelection];
+    
+}
+
 
 -(void)setAlbum:(id)album
 {
@@ -113,11 +121,11 @@
 //    CNLog(@"didClickItemAtIndex: %li", index);
 //}
 
-//- (void)gridView:(CNGridView *)gridView didDoubleClickItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
-//{
-//    CNLog(@"didDoubleClickItemAtIndex: %li", index);
-//    [self showPageControllerForIndex:index];
-//}
+- (void)gridView:(CNGridView *)gridView didDoubleClickItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
+{
+    CNLog(@"didDoubleClickItemAtIndex: %li", index);
+    [self showPageControllerForIndex:index];
+}
 
 - (void)gridView:(CNGridView *)gridView rightMouseButtonClickedOnItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section andEvent:(NSEvent *)event
 {
