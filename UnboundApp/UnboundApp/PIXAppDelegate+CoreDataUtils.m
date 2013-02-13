@@ -184,7 +184,7 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
                     // flush the main-thread info of any albums that we've touched
-                    [self flushAlbumsWithIDS:editedAlbumObjectIDs];
+                    [self flushAlbumsWithIDS:[editedAlbumObjectIDs copy]];
                     
                     // we've flushed these already so clear them out
                     [editedAlbumObjectIDs removeAllObjects];
@@ -227,7 +227,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             
             // flush the main-thread info of any albums that we've touched
-            [self flushAlbumsWithIDS:editedAlbumObjectIDs];
+            [self flushAlbumsWithIDS:[editedAlbumObjectIDs copy]];
             
             // we've flushed these already so clear them out
             [editedAlbumObjectIDs removeAllObjects];

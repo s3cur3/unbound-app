@@ -80,6 +80,8 @@
 
 -(void)willShowPIXView
 {
+    [[self.view window] setTitle:@"Unbound"];
+    
     NSString * searchString = [[NSUserDefaults standardUserDefaults] objectForKey:@"PIX_AlbumSearchString"];
     
     if(searchString != nil)
@@ -302,11 +304,27 @@
 {
     if(self.searchedAlbums)
     {
-        [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%ld albums matched search", [self.searchedAlbums count]]];
+        NSUInteger count = [self.searchedAlbums count];
+        
+        if(count == 1)
+        {
+            [self.gridViewTitle setStringValue:@"1 album matched search"];
+        }
+        
+        else
+        {
+            [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%ld albums matched search", count]];
+        }
     }
     else
     {
-        [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%ld albums", [self.albums count]]];
+        NSFetchRequest * fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kPhotoEntityName];
+        
+        NSUInteger numPhotos = [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] countForFetchRequest:fetchRequest error:nil];
+        
+        
+        
+        [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%ld albums containing %ld photos", [self.albums count], numPhotos]];
     }
 }
 
@@ -463,6 +481,8 @@
 {
     self.albums = nil;
     [self.gridView reloadData];
+    [self updateGridTitle];
+    [self updateSearch];
 }
 
 -(NSArray *)albums

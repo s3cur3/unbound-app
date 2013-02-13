@@ -159,7 +159,11 @@ const CGFloat kThumbnailSize = 200.0f;
                 });
             });*/
             
-        } else {
+        }
+        
+        // if this is still nil (the image load may have failed)
+        if (_thumbnailImage == nil)
+        {
             self.cancelThumbnailLoadOperation = NO;
             [self loadThumbnailImage];
             return nil;
