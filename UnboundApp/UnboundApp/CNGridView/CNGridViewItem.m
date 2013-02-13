@@ -262,7 +262,7 @@ extern NSString *CNGridViewDeSelectAllItemsNotification;
 
 - (BOOL)isReuseable
 {
-    return (_selected ? NO : YES);
+    return YES; //(_selected ? NO : YES);
 }
 
 - (void)setDefaultLayout:(CNGridViewItemLayout *)defaultLayout
