@@ -74,7 +74,11 @@
         _album = album;
         [[[PIXAppDelegate sharedAppDelegate] window] setTitle:[self.album title]];
         
+        [self.selectedItems removeAllObjects];
+        [self updateToolbar];
         [self updateAlbum];
+        
+        [self.gridView scrollPoint:NSZeroPoint];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAlbum) name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
         
