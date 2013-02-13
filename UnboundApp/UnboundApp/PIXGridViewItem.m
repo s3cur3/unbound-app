@@ -57,7 +57,7 @@ static CGSize kDefaultItemSizeCustomized;
 #pragma mark - ViewDrawing
 
 // draws an image with a border in the rect. Returns the rect where the photo was drawn (using aspect ratio)
-- (CGRect)drawBorderedPhoto:(NSImage *)photo inRect:(NSRect)rect
++ (CGRect)drawBorderedPhoto:(NSImage *)photo inRect:(NSRect)rect
 {
     // calculate the proportional image frame
     CGSize imageSize = [photo size];

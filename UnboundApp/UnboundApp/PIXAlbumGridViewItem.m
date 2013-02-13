@@ -240,19 +240,19 @@
     CGContextRotateCTM(context, self.stackThumb1Rotate);
     CGContextTranslateCTM(context, -self.bounds.size.width/2, -self.bounds.size.height/2);
     
-    [self drawBorderedPhoto:self.stackThumb1 inRect:albumFrame];
+    [[self class] drawBorderedPhoto:self.stackThumb1 inRect:albumFrame];
     
     CGContextTranslateCTM(context, self.bounds.size.width/2, self.bounds.size.height/2);
     CGContextRotateCTM(context, self.stackThumb2Rotate);
     CGContextTranslateCTM(context, -self.bounds.size.width/2, -self.bounds.size.height/2);
     
-    [self drawBorderedPhoto:self.stackThumb2 inRect:albumFrame];
+    [[self class] drawBorderedPhoto:self.stackThumb2 inRect:albumFrame];
     
     CGContextRestoreGState(context);
     
     
     // draw the top image
-    [self drawBorderedPhoto:self.albumThumb inRect:albumFrame];
+    [[self class] drawBorderedPhoto:self.albumThumb inRect:albumFrame];
     
     self.contentFrame = albumFrame;
 

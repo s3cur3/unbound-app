@@ -97,7 +97,7 @@
     CGRect albumFrame = CGRectInset(self.bounds, 15, 15);
 
     // draw the  image
-    CGRect photoFrame = [self drawBorderedPhoto:self.itemImage inRect:albumFrame];
+    CGRect photoFrame = [[self class] drawBorderedPhoto:self.itemImage inRect:albumFrame];
     self.contentFrame = photoFrame;
     
 }

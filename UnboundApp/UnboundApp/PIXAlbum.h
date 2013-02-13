@@ -12,7 +12,7 @@
 
 @class PIXAccount, PIXPhoto;
 
-@interface PIXAlbum : NSManagedObject<PIXThumbnailLoadingDelegate>
+@interface PIXAlbum : NSManagedObject<PIXThumbnailLoadingDelegate, NSPasteboardWriting>
 {
     //    @private
     //    PIXPhoto *_mostRecentPhoto;

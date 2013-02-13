@@ -56,36 +56,53 @@ const CGFloat kThumbnailSize = 200.0f;
 }
 
 + (NSImage *)makeThumbnailImageFromImageSource:(CGImageSourceRef)imageSource {
-    NSImage *result;
-    // This code needs to be threadsafe, as it will be called from the background thread.
-    // The easiest way to ensure you only use stack variables is to make it a class method.
-    NSNumber *maxPixelSize = [NSNumber numberWithInteger:kThumbnailSize];
-    NSDictionary *imageOptions = [NSDictionary dictionaryWithObjectsAndKeys:
-                                  (id)kCFBooleanTrue,(id)kCGImageSourceCreateThumbnailFromImageIfAbsent,
-                                  //(id)kCFBooleanFalse,(id)kCGImageSourceCreateThumbnailFromImageIfAbsent,
-                                  maxPixelSize, (id)kCGImageSourceThumbnailMaxPixelSize,
-                                  //kCFBooleanFalse, (id)kCGImageSourceCreateThumbnailWithTransform,
-                                  kCFBooleanTrue, (id)kCGImageSourceCreateThumbnailWithTransform,
-                                  nil];
-    CGImageRef imageRef = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, (__bridge CFDictionaryRef)imageOptions);
-    if (imageRef != NULL) {
-        CGRect rect;
-        rect.origin.x = 0;
-        rect.origin.y = 0;
-        rect.size.width = CGImageGetWidth(imageRef);
-        rect.size.height = CGImageGetHeight(imageRef);
-        result = [[NSImage alloc] init];
-        //[result setFlipped:YES];
-        [result setSize:NSMakeSize(rect.size.width, rect.size.height)];
-        [result lockFocus];
-        CGContextDrawImage((CGContextRef)[[NSGraphicsContext currentContext] graphicsPort], rect, imageRef);
+    
+    NSImage *result = nil;
+    // i'm putting this in a try/catch block because I kept getting non-fatal exceptions
+   // @try {
         
-        [result unlockFocus];
-        CFRelease(imageRef);
-    } else {
-        result = nil;
+        // This code needs to be threadsafe, as it will be called from the background thread.
+        // The easiest way to ensure you only use stack variables is to make it a class method.
+        NSNumber *maxPixelSize = [NSNumber numberWithInteger:kThumbnailSize];
+        NSDictionary *imageOptions = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      (id)kCFBooleanTrue,(id)kCGImageSourceCreateThumbnailFromImageIfAbsent,
+                                      //(id)kCFBooleanFalse,(id)kCGImageSourceCreateThumbnailFromImageIfAbsent,
+                                      maxPixelSize, (id)kCGImageSourceThumbnailMaxPixelSize,
+                                      //kCFBooleanFalse, (id)kCGImageSourceCreateThumbnailWithTransform,
+                                      kCFBooleanTrue, (id)kCGImageSourceCreateThumbnailWithTransform,
+                                      nil];
+        CGImageRef imageRef = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, (__bridge CFDictionaryRef)imageOptions);
+    
+        if (imageRef != NULL) {
+            CGRect rect;
+            rect.origin.x = 0;
+            rect.origin.y = 0;
+            rect.size.width = CGImageGetWidth(imageRef);
+            rect.size.height = CGImageGetHeight(imageRef);
+            result = [[NSImage alloc] init];
+            //[result setFlipped:YES];
+            [result setSize:NSMakeSize(rect.size.width, rect.size.height)];
+            [result lockFocus];
+            CGContextDrawImage((CGContextRef)[[NSGraphicsContext currentContext] graphicsPort], rect, imageRef);
+            
+            [result unlockFocus];
+            CFRelease(imageRef);
+        }
+    
+        return result;
+        
+    /*}
+
+
+    @catch (NSException * e) {
+        NSLog(@"Exception: %@", e);
+        
+        
     }
-    return result;
+    @finally {
+        return result;
+    }*/
+    
 }
 
 
@@ -133,6 +150,7 @@ const CGFloat kThumbnailSize = 200.0f;
     self.cancelThumbnailLoadOperation = YES;
 }
 
+
 -(NSImage *)thumbnailImage
 {
     if (_thumbnailImage == nil)
@@ -172,89 +190,81 @@ const CGFloat kThumbnailSize = 200.0f;
     return _thumbnailImage;
 }
 
+
 -(void)loadThumbnailImage
 {
     if (_thumbnailImageIsLoading == YES) {
         return;
     }
 
-    if (self.thumbnail == nil) {
+    _thumbnailImageIsLoading = YES;
+    
+    NSString *aPath = self.path;
+    __weak PIXPhoto *weakSelf = self;
+    
+   
+    
+    PIXAppDelegate *appDelegate = (PIXAppDelegate *)[[NSApplication sharedApplication] delegate];
+    NSOperationQueue *globalQueue = [appDelegate globalBackgroundSaveQueue];
+    [globalQueue addOperationWithBlock:^{
         
-        if (self.cancelThumbnailLoadOperation ==YES) {
-            DLog(@"0)thumbnail operation was canceled - return");
-            self.cancelThumbnailLoadOperation = NO;
+        if (weakSelf == nil || aPath==nil) {
+            DLog(@"thumbnail operation completed after object was dealloced - return");
+            _thumbnailImageIsLoading = NO;
+            weakSelf.cancelThumbnailLoadOperation = NO;
             return;
         }
-        _thumbnailImageIsLoading = YES;
         
+        if (weakSelf.cancelThumbnailLoadOperation==YES) {
+            DLog(@"1)thumbnail operation was canceled - return");
+            _thumbnailImageIsLoading = NO;
+            weakSelf.cancelThumbnailLoadOperation = NO;
+            return;
+        }
         
-        PIXAppDelegate *appDelegate = (PIXAppDelegate *)[[NSApplication sharedApplication] delegate];
-        NSOperationQueue *globalQueue = [appDelegate globalBackgroundSaveQueue];
-        
-        NSString *aPath = self.path;
-        __weak PIXPhoto *weakSelf = self;
-        [globalQueue addOperationWithBlock:^{
-            
-            if (weakSelf == nil || aPath==nil) {
-                DLog(@"thumbnail operation completed after object was dealloced - return");
-                _thumbnailImageIsLoading = NO;
-                weakSelf.cancelThumbnailLoadOperation = NO;
-                return;
-            }
+        //NSLog(@"Loading thumbnail");
+        NSImage *image = nil;
+        NSURL *urlForImage = [NSURL fileURLWithPath:aPath];
+        CGImageSourceRef imageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)urlForImage, nil);
+        if (imageSource) {
             
             if (weakSelf.cancelThumbnailLoadOperation==YES) {
-                DLog(@"1)thumbnail operation was canceled - return");
+                DLog(@"2)thumbnail operation was canceled - return");
+                CFRelease(imageSource);
                 _thumbnailImageIsLoading = NO;
                 weakSelf.cancelThumbnailLoadOperation = NO;
                 return;
             }
             
-            //NSLog(@"Loading thumbnail");
-            NSImage *image = nil;
-            NSURL *urlForImage = [NSURL fileURLWithPath:aPath];
-            CGImageSourceRef imageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)urlForImage, nil);
-            if (imageSource) {
-                
-                if (weakSelf.cancelThumbnailLoadOperation==YES) {
-                    DLog(@"2)thumbnail operation was canceled - return");
-                    CFRelease(imageSource);
-                    _thumbnailImageIsLoading = NO;
-                    weakSelf.cancelThumbnailLoadOperation = NO;
-                    return;
-                }
-                
-                // Now, compute the thumbnail
-                image = [[weakSelf class] makeThumbnailImageFromImageSource:imageSource];
-                //NSBitmapImageRep *rep = [[image representations] objectAtIndex: 0];
-                
-                //NSData *data = [rep representationUsingType: NSJPEGFileType properties: nil];
-                
-                if (weakSelf.cancelThumbnailLoadOperation==YES) {
-                    DLog(@"3)thumbnail operation was canceled - return");
-                    CFRelease(imageSource);
-                    _thumbnailImageIsLoading = NO;
-                    weakSelf.cancelThumbnailLoadOperation = NO;
-                    return;
-                }
-                
-                NSData *data = [image TIFFRepresentation];
-                
-                if (weakSelf.cancelThumbnailLoadOperation==YES) {
-                    DLog(@"4)thumbnail operation was canceled - return");
-                    CFRelease(imageSource);
-                    _thumbnailImageIsLoading = NO;
-                    weakSelf.cancelThumbnailLoadOperation = NO;
-                    return;
-                }
-                
-                [weakSelf performSelectorOnMainThread:@selector(mainThreadComputePreviewThumbnailFinished:) withObject:data waitUntilDone:NO];
-                
+            // Now, compute the thumbnail
+            image = [[weakSelf class] makeThumbnailImageFromImageSource:imageSource];
+            //NSBitmapImageRep *rep = [[image representations] objectAtIndex: 0];
+            
+            //NSData *data = [rep representationUsingType: NSJPEGFileType properties: nil];
+            
+            if (weakSelf.cancelThumbnailLoadOperation==YES) {
+                DLog(@"3)thumbnail operation was canceled - return");
                 CFRelease(imageSource);
+                _thumbnailImageIsLoading = NO;
+                weakSelf.cancelThumbnailLoadOperation = NO;
+                return;
             }
-        }];
-        
-    }
-    
+            
+            NSData *data = [image TIFFRepresentation];
+            
+            if (weakSelf.cancelThumbnailLoadOperation==YES) {
+                DLog(@"4)thumbnail operation was canceled - return");
+                CFRelease(imageSource);
+                _thumbnailImageIsLoading = NO;
+                weakSelf.cancelThumbnailLoadOperation = NO;
+                return;
+            }
+            
+            [weakSelf performSelectorOnMainThread:@selector(mainThreadComputePreviewThumbnailFinished:) withObject:data waitUntilDone:NO];
+            
+            CFRelease(imageSource);
+        }
+    }];
 }
 
 

@@ -894,7 +894,8 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     // if we're dragging for drag and drop (Drag started over a content rect)
     if(!mouseDragSelectMode)
     {
-        
+        NSUInteger itemIndex = [self indexForItemAtLocation:theEvent.locationInWindow];
+        [self gridView:self dragDidBeginAtIndex:itemIndex inSection:0 andEvent:theEvent];
     }
 }
 
@@ -1131,6 +1132,16 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
                     userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInteger:index] forKey:CNGridViewItemIndexKey]];
     if ([self.delegate respondsToSelector:_cmd]) {
         [self.delegate gridView:gridView rightMouseButtonClickedOnItemAtIndex:index inSection:section andEvent:event];
+    }
+}
+
+- (void)gridView:(CNGridView *)gridView dragDidBeginAtIndex:(NSUInteger)index inSection:(NSUInteger)section andEvent:(NSEvent *)event;
+{
+    /*[nc postNotificationName:CNGridViewDragDidBeginNotification
+                      object:gridView
+                    userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInteger:index] forKey:CNGridViewItemIndexKey]];*/
+    if ([self.delegate respondsToSelector:_cmd]) {
+        [self.delegate gridView:gridView dragDidBeginAtIndex:index inSection:section andEvent:event];
     }
 }
 

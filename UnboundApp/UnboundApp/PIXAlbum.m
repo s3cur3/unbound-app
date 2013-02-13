@@ -327,5 +327,7 @@ static NSString *const kItemsKey = @"photos";
 }
 */
 
+#pragma mark - Pastboard Dragging Methods
+
 
 @end

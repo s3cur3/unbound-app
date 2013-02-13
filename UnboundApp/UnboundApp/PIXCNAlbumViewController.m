@@ -453,6 +453,8 @@
     DLog(@"rightMouseButtonClickedOnItemAtIndex: %li", index);
 }
 
+#pragma mark - Selection Operations
+
 - (void)gridView:(CNGridView *)gridView didSelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
     [self.selectedItems addObject:[self albumForIndex:index]];
@@ -506,6 +508,30 @@
     
     [self.gridView reloadSelection];
     [self updateToolbar];
+    
+}
+
+#pragma mark - Drag Operations
+
+- (void)gridView:(CNGridView *)gridView dragDidBeginAtIndex:(NSUInteger)index inSection:(NSUInteger)section andEvent:(NSEvent *)event
+{
+    
+    NSPasteboard *dragPBoard = [NSPasteboard pasteboardWithName:NSDragPboard];
+    [dragPBoard declareTypes:[NSArray arrayWithObject:NSFilenamesPboardType] owner:nil];
+    
+    NSMutableArray * filenames = [[NSMutableArray alloc] initWithCapacity:[self.selectedItems count]];
+    
+    for(PIXAlbum * anAlbum in self.selectedItems)
+    {
+        [filenames addObject:anAlbum.path];
+        //[dragPBoard setString:anAlbum.path forType:NSFilenamesPboardType];
+        
+    }
+    
+    [dragPBoard setPropertyList:filenames
+                        forType:NSFilenamesPboardType];
+    NSPoint location = [self.gridView convertPoint:[event locationInWindow] fromView:nil];
+    [self.gridView dragImage:[NSImage imageNamed:@"nophoto"] at:location offset:NSZeroSize event:event pasteboard:dragPBoard source:self slideBack:YES];
     
 }
 

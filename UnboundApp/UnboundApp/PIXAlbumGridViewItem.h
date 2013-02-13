@@ -16,12 +16,7 @@
 @property (strong, nonatomic) PIXAlbum * album;
 
 
-/*
-@property (strong, nonatomic) IBOutlet PIXBorderedImageView * albumImageView;
-
-@property (strong, nonatomic) IBOutlet PIXBorderedImageView * stackPhoto1;
-@property (strong, nonatomic) IBOutlet PIXBorderedImageView * stackPhoto2;
-@property (strong, nonatomic) IBOutlet PIXBorderedImageView * stackPhoto3;
- */
+// this is used when dragging an array of albums out of the album view
++ (NSImage *)dragImageForAlbums:(NSArray *)albumArray size:(NSSize)size;
 
 @end
