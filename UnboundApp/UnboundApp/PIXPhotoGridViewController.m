@@ -117,6 +117,20 @@
     return item;
 }
 
+- (BOOL)gridView:(CNGridView *)gridView itemIsSelectedAtIndex:(NSInteger)index inSection:(NSInteger)section
+{
+    PIXPhoto * photo = nil;
+    
+    if(index < [self.items count])
+    {
+        photo = [self.items objectAtIndex:index];
+        return [self.selectedItems containsObject:photo];
+    }
+    
+    return NO;
+    
+}
+
 -(void)showPageControllerForIndex:(NSUInteger)index
 {
     PIXPageViewController *pageViewController = [[PIXPageViewController alloc] initWithNibName:@"PIXPageViewController" bundle:nil];
@@ -141,7 +155,27 @@
 
 - (void)gridView:(CNGridView *)gridView rightMouseButtonClickedOnItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section andEvent:(NSEvent *)event
 {
-    PIXPhoto * itemClicked = [self.items objectAtIndex:index];
+    PIXPhoto * itemClicked = nil;
+    
+    if(index < [self.items count])
+    {
+        itemClicked = [self.items objectAtIndex:index];
+    }
+    
+    // we don't handle clicks off of an album right now
+    if(itemClicked == nil) return;
+    
+    // if this photo isn't in the selection than re-select only this
+    if(itemClicked != nil && ![self.selectedItems containsObject:itemClicked])
+    {
+        [self.selectedItems removeAllObjects];
+        [self.selectedItems addObject:itemClicked];
+        [self.gridView reloadSelection];
+        
+        [self updateToolbar];
+    }
+    
+    
     NSMenu *contextMenu = [self menuForObject:itemClicked];
     [NSMenu popUpContextMenu:contextMenu withEvent:event forView:self.view];
     

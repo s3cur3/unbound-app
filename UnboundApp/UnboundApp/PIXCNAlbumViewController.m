@@ -368,11 +368,15 @@
     PIXAlbum * album = nil;
     if(self.searchedAlbums)
     {
+        if(index > [self.searchedAlbums count]) return nil;
+        
         album = [self.searchedAlbums objectAtIndex:index];
     }
     
     else
     {
+        if(index > [self.albums count]) return nil;
+        
         album = [self.albums objectAtIndex:index];
     }
     
@@ -423,6 +427,22 @@
 - (void)gridView:(CNGridView *)gridView rightMouseButtonClickedOnItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section andEvent:(NSEvent *)event
 {
     PIXAlbum * albumClicked = [self albumForIndex:index];
+    
+    // we don't handle clicks off of an album right now
+    if(albumClicked == nil) return;
+    
+    // if this album isn't in the selection than re-select only this
+    if(albumClicked != nil && ![self.selectedAlbums containsObject:albumClicked])
+    {
+        [self.selectedAlbums removeAllObjects];
+        [self.selectedAlbums addObject:albumClicked];
+        [self.gridView reloadSelection];
+        [self updateToolbar];
+    }
+    
+    // otherwise we're doing an operation on the whole selected list
+    
+    
     NSMenu *contextMenu = [self menuForObject:albumClicked];
     [NSMenu popUpContextMenu:contextMenu withEvent:event forView:self.view];
     
