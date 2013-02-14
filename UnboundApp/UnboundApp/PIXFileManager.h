@@ -19,6 +19,7 @@
 
 //-(NSString *)trashFolderPath;
 
+- (NSString *)defaultAppNameForOpeningFileWithPath:(NSString *)filePath;
 - (NSMenu *)openWithMenuItemForFile:(NSString *)filePath;
 
 @end
