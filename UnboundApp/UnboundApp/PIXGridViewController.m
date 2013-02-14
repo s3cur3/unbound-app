@@ -202,6 +202,15 @@ static NSString *kContentTitleKey, *kContentImageKey;
 - (IBAction) openInApp:(id)sender
 {
     NSSet *aSet = [self.selectedItems copy];
+    NSManagedObject *mObj = [aSet anyObject];
+    if ([mObj.entity.name isEqualToString:kPhotoEntityName]) {
+        NSString *defaultAppPath = [[PIXFileManager sharedInstance] defaultAppPathForOpeningFileWithPath:[(PIXPhoto *)mObj path]];
+        if ([[defaultAppPath lastPathComponent] isEqualToString:@"Preview.app"]) {
+            NSString* albumPath = [[(PIXPhoto *)mObj path] stringByDeletingLastPathComponent];
+            [[PIXFileManager sharedInstance] openFileWithPath:albumPath withApplication:defaultAppPath];
+            return;
+        }
+    }
     [aSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
         
         NSString* path = [obj path];

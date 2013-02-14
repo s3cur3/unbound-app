@@ -104,6 +104,14 @@
 
 -(NSString *)defaultAppNameForOpeningFileWithPath:(NSString *)filePath
 {
+    NSString *defaultAppPath = [self defaultAppPathForOpeningFileWithPath:filePath];
+    //NSString *defaultAppName = [[[defaultAppPath lastPathComponent] stringByDeletingPathExtension] stringByAppendingString:@" (default)"];
+    NSString *defaultAppName = [[defaultAppPath lastPathComponent] stringByDeletingPathExtension];
+    return defaultAppName;
+}
+
+-(NSString *)defaultAppPathForOpeningFileWithPath:(NSString *)filePath
+{
     NSURL *fileURL = [NSURL fileURLWithPath:filePath];
     //get and add default app
     CFURLRef defaultApp;
@@ -113,9 +121,7 @@
         return nil;
     }
     NSString *defaultAppPath = [(__bridge NSURL *)defaultApp path];
-    //NSString *defaultAppName = [[[defaultAppPath lastPathComponent] stringByDeletingPathExtension] stringByAppendingString:@" (default)"];
-    NSString *defaultAppName = [[defaultAppPath lastPathComponent] stringByDeletingPathExtension];
-    return defaultAppName;
+    return defaultAppPath;
 }
 
 /// this method return open with menu for specified file
