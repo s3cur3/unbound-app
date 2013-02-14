@@ -493,16 +493,16 @@
 
 -(void)toggleSelection:(id)sender
 {
-    NSMutableArray * visibleItems = [self.albums mutableCopy];
+    NSMutableSet * visibleItems = [NSMutableSet setWithArray:self.albums];
     
     if(self.searchedAlbums)
     {
-        visibleItems = [self.searchedAlbums mutableCopy];
+        visibleItems = [NSMutableSet setWithArray:self.searchedAlbums];
     }
     
     
     // now remove items from the list that are already selected
-    [visibleItems removeObjectsInArray:self.selectedItems];
+    [visibleItems minusSet:self.selectedItems];
     
     self.selectedItems = visibleItems;
     
@@ -517,20 +517,22 @@
 {
     // move the item we just selected to the front (so it will show up correctly in the drag image)
     PIXAlbum * topAlbum = [self albumForIndex:index];
-        
+    
+    NSMutableArray * selectedArray = [[self.selectedItems allObjects] mutableCopy];
+    
     if(topAlbum)
     {
-        [self.selectedItems removeObject:topAlbum];
-        [self.selectedItems insertObject:topAlbum atIndex:0];
+        [selectedArray removeObject:topAlbum];
+        [selectedArray insertObject:topAlbum atIndex:0];
     }
-    
+ 
     
     NSPasteboard *dragPBoard = [NSPasteboard pasteboardWithName:NSDragPboard];
     [dragPBoard declareTypes:[NSArray arrayWithObject:NSFilenamesPboardType] owner:nil];
     
-    NSMutableArray * filenames = [[NSMutableArray alloc] initWithCapacity:[self.selectedItems count]];
+    NSMutableArray * filenames = [[NSMutableArray alloc] initWithCapacity:[selectedArray count]];
     
-    for(PIXAlbum * anAlbum in self.selectedItems)
+    for(PIXAlbum * anAlbum in selectedArray)
     {
         [filenames addObject:anAlbum.path];
         //[dragPBoard setString:anAlbum.path forType:NSFilenamesPboardType];
@@ -542,9 +544,7 @@
     location.x -= 90;
     location.y += 90;
     
-    
-    
-    NSImage * dragImage = [PIXAlbumGridViewItem dragImageForAlbums:self.selectedItems size:NSMakeSize(180, 180)];
+    NSImage * dragImage = [PIXAlbumGridViewItem dragImageForAlbums:selectedArray size:NSMakeSize(180, 180)];
     [self.gridView dragImage:dragImage at:location offset:NSZeroSize event:event pasteboard:dragPBoard source:self slideBack:YES];
     
 }

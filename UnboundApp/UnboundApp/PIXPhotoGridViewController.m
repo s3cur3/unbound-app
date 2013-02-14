@@ -193,10 +193,12 @@
     // move the item we just selected to the front (so it will show up correctly in the drag image)
     PIXPhoto * topPhoto = [self.items objectAtIndex:index];
     
+    NSMutableArray * selectedArray = [[self.selectedItems allObjects] mutableCopy];
+    
     if(topPhoto)
     {
-        [self.selectedItems removeObject:topPhoto];
-        [self.selectedItems insertObject:topPhoto atIndex:0];
+        [selectedArray removeObject:topPhoto];
+        [selectedArray insertObject:topPhoto atIndex:0];
     }
     
     
@@ -205,7 +207,7 @@
     
     NSMutableArray * filenames = [[NSMutableArray alloc] initWithCapacity:[self.selectedItems count]];
     
-    for(PIXPhoto * aPhoto in self.selectedItems)
+    for(PIXPhoto * aPhoto in selectedArray)
     {
         [filenames addObject:aPhoto.path];
         //[dragPBoard setString:anAlbum.path forType:NSFilenamesPboardType];
@@ -219,7 +221,7 @@
     
     
     
-    NSImage * dragImage = [PIXPhotoGridViewItem dragImageForPhotos:self.selectedItems size:NSMakeSize(180, 180)];
+    NSImage * dragImage = [PIXPhotoGridViewItem dragImageForPhotos:selectedArray size:NSMakeSize(180, 180)];
     [self.gridView dragImage:dragImage at:location offset:NSZeroSize event:event pasteboard:dragPBoard source:self slideBack:YES];
     
 }

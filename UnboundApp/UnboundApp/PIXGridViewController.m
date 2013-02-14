@@ -181,7 +181,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
 {
     
     NSMutableArray *itemsToDelete = [self.selectedItems mutableCopy];
-    NSSet *selectedSet = [NSSet setWithArray:self.selectedItems];
+    NSSet *selectedSet = self.selectedItems;
     if (self.selectedItems.count != selectedSet.count)
     {
         DLog(@"selectedItems contains duplicates : %@", self.selectedItems);
@@ -290,11 +290,11 @@ static NSString *kContentTitleKey, *kContentImageKey;
 }
 
 
--(NSMutableArray *)selectedItems
+-(NSMutableSet *)selectedItems
 {
     if(_selectedItems != nil) return _selectedItems;
     
-    _selectedItems = [NSMutableArray new];
+    _selectedItems = [NSMutableSet new];
     
     return _selectedItems;
 }
@@ -343,10 +343,10 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 -(void)toggleSelection:(id)sender
 {
-    NSMutableArray * mutableItems = [self.items mutableCopy];
+    NSMutableSet * mutableItems = [NSMutableSet setWithArray:self.items];
     
     // now remove items from the list that are already selected
-    [mutableItems removeObjectsInArray:self.selectedItems];
+    [mutableItems minusSet:self.selectedItems];
     
     self.selectedItems = mutableItems;
     

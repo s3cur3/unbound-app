@@ -894,8 +894,18 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     // if we're dragging for drag and drop (Drag started over a content rect)
     if(!mouseDragSelectMode)
     {
-        NSUInteger itemIndex = [self indexForItemAtLocation:theEvent.locationInWindow];
-        [self gridView:self dragDidBeginAtIndex:itemIndex inSection:0 andEvent:theEvent];
+        // if the location has moved at least 10 pixels from the initial mousedown point
+        CGPoint location = [theEvent locationInWindow];
+        
+        CGFloat dx = abs(location.x - selectionFrameInitialPoint.x);
+        CGFloat dy = abs(location.y - selectionFrameInitialPoint.y);
+        
+        if(dx > 10 || dy > 10)
+        {
+            NSUInteger itemIndex = [self indexForItemAtLocation:theEvent.locationInWindow];
+            [self gridView:self dragDidBeginAtIndex:itemIndex inSection:0 andEvent:theEvent];
+        }
+            
     }
 }
 
@@ -970,7 +980,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     {
         // any drags that start with this click down will be for drag and drop, not selection box
         mouseDragSelectMode = NO;
-        
+        selectionFrameInitialPoint = location;
         
         // check for a double click right at mouse down to make this react faster -- scott
         if([clickEvents count] >= 1)

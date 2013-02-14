@@ -15,7 +15,7 @@
 @property (strong) IBOutlet CNGridView *gridView;
 
 @property (strong) NSMutableArray *items;
-@property (nonatomic,strong) NSMutableArray * selectedItems;
+@property (nonatomic,strong) NSMutableSet * selectedItems;
 @property (strong) NSString * selectedItemsName;
 
 @property (strong) IBOutlet PIXGradientBarView * toolbar;
