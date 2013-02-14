@@ -74,7 +74,7 @@
         title = [NSString stringWithFormat:@"%ld Photos", [photoArray count]];
     }
     
-    return [self dragStackForImages:imageArray size:size title:title];
+    return [self dragStackForImages:imageArray size:size title:title andBadgeCount:[photoArray count]];
 }
 
 

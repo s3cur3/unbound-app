@@ -14,6 +14,6 @@
 
 + (CGRect)drawBorderedPhoto:(NSImage *)photo inRect:(NSRect)rect;
 
-+(NSImage *)dragStackForImages:(NSArray *)threeImages size:(NSSize)size title:(NSString *)title;
++(NSImage *)dragStackForImages:(NSArray *)threeImages size:(NSSize)size title:(NSString *)title andBadgeCount:(NSUInteger)count;
 
 @end

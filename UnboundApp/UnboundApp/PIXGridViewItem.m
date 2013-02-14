@@ -111,7 +111,7 @@ static CGSize kDefaultItemSizeCustomized;
 
 
 
-+(NSImage *)dragStackForImages:(NSArray *)threeImages size:(NSSize)size title:(NSString *)title
++(NSImage *)dragStackForImages:(NSArray *)threeImages size:(NSSize)size title:(NSString *)title andBadgeCount:(NSUInteger)count
 {
     // set up the images
     NSImage * image1 = nil;
