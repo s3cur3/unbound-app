@@ -30,6 +30,7 @@
     return [PIXCustomButtonCell class];
 }
 
+
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.

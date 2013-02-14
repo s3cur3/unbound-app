@@ -19,6 +19,7 @@
 #import "PIXAlbumGridViewItem.h"
 
 #import "PIXSplitViewController.h"
+#import "PIXCustomButton.h"
 
 @interface PIXCNAlbumViewController ()
 {
@@ -327,6 +328,37 @@
     }
 }
 
+-(void)updateToolbar
+{
+    [super updateToolbar];
+    
+    PIXCustomButton * deleteButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
+    [deleteButton setTitle:@"Delete"];
+    [deleteButton setTarget:self];
+    [deleteButton setAction:@selector(deleteItems:)];
+    
+    PIXCustomButton * shareButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
+    [shareButton setTitle:@"Share"];
+    [shareButton setTarget:self];
+    //[deleteButton setAction:@selector(deleteItems:)];
+    
+    PIXCustomButton * mergeButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
+    [mergeButton setTitle:@"Merge Albums"];
+    [mergeButton setTarget:self];
+    //[deleteButton setAction:@selector(deleteItems:)];
+    
+    if([self.selectedItems count] > 1)
+    {
+        [self.toolbar setButtons:@[deleteButton, shareButton, mergeButton]];
+    }
+    
+    else
+    {
+        [self.toolbar setButtons:@[deleteButton, shareButton]];
+    }
+    
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - CNGridView DataSource
 
@@ -479,12 +511,12 @@
 {
     if(self.searchedAlbums)
     {
-        self.selectedItems = [self.searchedAlbums mutableCopy];
+        self.selectedItems = [NSMutableSet setWithArray:self.searchedAlbums];
     }
     
     else
     {
-        self.selectedItems = [self.albums mutableCopy];
+        self.selectedItems = [NSMutableSet setWithArray:self.albums];
     }
     
     [self.gridView reloadSelection];

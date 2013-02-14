@@ -73,6 +73,16 @@
     [self drawImage:self.image withFrame:cellFrame inView:controlView];
 }
 
+- (NSSize)cellSize
+{
+    NSSize smallSize = [super cellSize];
+    
+    smallSize.width += 20;
+    smallSize.height = 25;
+    
+    return  smallSize;
+}
+
 - (void)drawBezelWithFrame:(NSRect)frame inView:(NSView *)controlView
 {
     

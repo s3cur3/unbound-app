@@ -240,11 +240,17 @@
 {
     [super updateToolbar];
     
-    PIXCustomButton * button = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
+    PIXCustomButton * deleteButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
+    [deleteButton setTitle:@"Delete"];
+    [deleteButton setTarget:self];
+    [deleteButton setAction:@selector(deleteItems:)];
     
-    [button setTitle:@"Delete"];
+    PIXCustomButton * shareButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
+    [shareButton setTitle:@"Share"];
+    [shareButton setTarget:self];
+    //[deleteButton setAction:@selector(deleteItems:)];
     
-    [self.toolbar setButtons:@[button]];
+    [self.toolbar setButtons:@[deleteButton, shareButton]];
     
 }
 

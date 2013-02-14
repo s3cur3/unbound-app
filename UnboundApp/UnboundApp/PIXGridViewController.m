@@ -371,7 +371,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 -(IBAction)selectAll:(id)sender
 {
-    self.selectedItems = [self.items mutableCopy];
+    self.selectedItems = [NSMutableSet setWithArray:self.items];
     
     [self.gridView reloadSelection];
     [self updateToolbar];
