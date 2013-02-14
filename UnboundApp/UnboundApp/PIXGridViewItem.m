@@ -172,7 +172,7 @@ static CGSize kDefaultItemSizeCustomized;
     
     
     NSRect textRect = NSMakeRect(imgRect.origin.x + 3,
-                                 24,
+                                 0,
                                  NSWidth(imgRect) - 6,
                                  24);
     
@@ -198,18 +198,18 @@ static CGSize kDefaultItemSizeCustomized;
     [title drawInRect:textRect withAttributes:attributes];
     
     
-    CGRect albumFrame = CGRectInset(imgRect, 18, 35);
-    albumFrame.origin.y += 20;
+    CGRect albumFrame = CGRectInset(imgRect, 18, 20);
+    albumFrame.origin.y += 10;
     
     // draw the stack of imagess
     
     CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
     
     // randomly rotate the first between -.05 and .05
-    float rotate1 = (CGFloat)(arc4random() % 1400)/10000 - .07;
+    float rotate1 = (CGFloat)(arc4random() % 2000)/10000 - .1;
     
     // the second needs to be the difference so that we rotate the object back
-    float rotate2= (CGFloat)(arc4random() % 1400)/10000 - .07 - rotate1;
+    float rotate2= (CGFloat)(arc4random() % 2000)/10000 - .1 - rotate1;
     
     CGContextSaveGState(context);
     

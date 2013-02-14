@@ -27,6 +27,8 @@
 @property CGFloat stackThumb1Rotate;
 @property CGFloat stackThumb2Rotate;
 
+@property BOOL isDraggingOver;
+
 @end
 
 @implementation PIXAlbumGridViewItem
@@ -98,8 +100,46 @@
         
         // the second needs to be the difference so that we rotate the object back
         self.stackThumb2Rotate = (CGFloat)(arc4random() % 1400)/10000 - .07 - self.stackThumb1Rotate;
+        
+        
+        [self registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
     }
     return self;
+}
+
+- (NSDragOperation)draggingEntered:(id < NSDraggingInfo >)sender
+{
+    NSPasteboard * pasteBoard = [sender draggingPasteboard];
+    
+    
+    NSArray * pathArray = [pasteBoard propertyListForType:NSFilenamesPboardType];
+    
+    for(NSString * path in pathArray)
+    {        
+        if([path isEqualToString:[self.album path]])
+        {
+            return NSDragOperationNone;
+        }
+    }
+    
+    
+    self.isDraggingOver = YES;
+    [self setNeedsDisplay:YES];
+    
+    
+    return NSDragOperationMove;
+}
+
+- (void)draggingExited:(id < NSDraggingInfo >)sender
+{
+    self.isDraggingOver = NO;
+    [self setNeedsDisplay:YES];
+}
+
+- (void)draggingEnded:(id < NSDraggingInfo >)sender
+{
+    self.isDraggingOver = NO;
+    [self setNeedsDisplay:YES];
 }
 
 -(void)setAlbum:(PIXAlbum *)album
@@ -225,6 +265,16 @@
     
     [bgColor setFill];
     [contentRectPath fill];
+    
+    // draw dragging hover state
+    if (self.isDraggingOver) {
+        
+        NSRect innerbounds = CGRectInset(self.bounds, 6, 6);
+        NSBezierPath *selectionRectPath = [NSBezierPath bezierPathWithRoundedRect:innerbounds xRadius:10 yRadius:10];
+        [[NSColor colorWithCalibratedWhite:.5 alpha:.2] setFill];
+        [selectionRectPath fill];
+    }
+    
     
     /// draw selection ring
     if (self.selected) {
