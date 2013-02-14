@@ -200,7 +200,8 @@
     
     //[[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
     NSUndoManager *undoManager = [[[PIXAppDelegate sharedAppDelegate] window] undoManager];
-    [undoManager performSelector:@selector(removeAllActionsWithTarget:) withObject:self afterDelay:0.1f];
+    //TODO: find a better way of dealing with the 'redo' action for recycled items
+    [undoManager performSelector:@selector(removeAllActions) withObject:nil afterDelay:0.1f];
 }
 
 -(void)recyclePhotos:(NSArray *)items
@@ -264,6 +265,7 @@
     DLog(@"Completed file deletion");
 }
 
+//TODO: background thread these operations
 -(void)moveFiles:(NSArray *)items
 {
     NSMutableArray *undoArray = [NSMutableArray arrayWithCapacity:items.count];
@@ -292,17 +294,18 @@
     //[[[PIXAppDelegate sharedAppDelegate] dataSource] startLoadingAllAlbumsAndPhotosInObservedDirectories];
     //    MainWindowController *mainWindowController = [AppDelegate mainWindowController] ;
     //    FileSystemEventController *fileSystemEventController = mainWindowController.fileSystemEventController;
-    //    for (NSString *aPath in albumPaths)
-    //    {
-    //        PIXAlbum *anAlbum = [[fileSystemEventController albumLookupTable] valueForKey:aPath];
-    //        if (anAlbum!=nil) {
-    //            [anAlbum updatePhotosFromFileSystem];
-    //        }
-    //    }
+    for (NSString *albumPath in albumPaths)
+    {
+        if (![albumPath isEqualToString:[self trashFolderPath]]) {
+            [[PIXFileSystemDataSource sharedInstance] shallowScanURL:[NSURL fileURLWithPath:albumPath isDirectory:YES]];
+        }
+    }
     
-    NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
+    NSUndoManager *undoManager = [[[PIXAppDelegate sharedAppDelegate] window] undoManager];
     [undoManager registerUndoWithTarget:self selector:@selector(moveFiles:) object:undoArray];
 }
+
+//TODO: background thread these operations
 -(void)copyFiles:(NSArray *)items;
 {
     NSString *trashFolder = [[PIXFileManager sharedInstance] trashFolderPath];
@@ -329,18 +332,14 @@
          tag:nil];
     }
     
-    [[[PIXAppDelegate sharedAppDelegate] dataSource] startLoadingAllAlbumsAndPhotosInObservedDirectories];
-//    MainWindowController *mainWindowController = [AppDelegate mainWindowController] ;
-//    FileSystemEventController *fileSystemEventController = mainWindowController.fileSystemEventController;
-//    for (NSString *aPath in albumPaths)
-//    {
-//        PIXAlbum *anAlbum = [[fileSystemEventController albumLookupTable] valueForKey:aPath];
-//        if (anAlbum!=nil) {
-//            [anAlbum updatePhotosFromFileSystem];
-//        }
-//    }
+    for (NSString *albumPath in albumPaths)
+    {
+        if (![albumPath isEqualToString:trashFolder]) {
+            [[PIXFileSystemDataSource sharedInstance] shallowScanURL:[NSURL fileURLWithPath:albumPath isDirectory:YES]];
+        }
+    }
     
-    NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
+    NSUndoManager *undoManager = [[[PIXAppDelegate sharedAppDelegate] window] undoManager];
     [undoManager registerUndoWithTarget:self selector:@selector(moveFiles:) object:undoArray];
 }
 

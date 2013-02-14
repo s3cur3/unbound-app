@@ -221,8 +221,11 @@ static NSString *kContentTitleKey, *kContentImageKey;
         
         //    [menu addItemWithTitle:[NSString stringWithFormat:@"Open"] action:
         //     @selector(openInApp:) keyEquivalent:@""];
-        [menu addItemWithTitle:[NSString stringWithFormat:@"Delete"] action:
-         @selector(deleteItems:) keyEquivalent:@""];
+        
+        //TODO: make delete work on albums, just works with photos right now
+        if ([object class] == [PIXPhoto class]) {
+            [menu addItemWithTitle:[NSString stringWithFormat:@"Delete"] action:@selector(deleteItems:) keyEquivalent:@""];
+        }
         //    [menu addItemWithTitle:[NSString stringWithFormat:@"Get Info"] action:
         //     @selector(getInfo:) keyEquivalent:@""];
         [menu addItemWithTitle:[NSString stringWithFormat:@"Show In Finder"] action:
