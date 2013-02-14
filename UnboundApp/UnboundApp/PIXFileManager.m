@@ -339,6 +339,7 @@
 //TODO: background thread these operations
 -(void)moveFiles:(NSArray *)items
 {
+    DLog(@"moving %ld files...", items.count);
     NSMutableArray *undoArray = [NSMutableArray arrayWithCapacity:items.count];
     NSMutableSet *albumPaths = [[NSMutableSet alloc] init];
     for (id aDict in items)
@@ -379,6 +380,7 @@
 //TODO: background thread these operations
 -(void)copyFiles:(NSArray *)items;
 {
+    DLog(@"copying %ld files...", items.count);
     NSString *trashFolder = [[PIXFileManager sharedInstance] trashFolderPath];
     NSMutableArray *undoArray = [NSMutableArray arrayWithCapacity:items.count];
     NSMutableSet *albumPaths = [[NSMutableSet alloc] init];
