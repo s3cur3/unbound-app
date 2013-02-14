@@ -95,6 +95,8 @@
 		8CE460DE16CB650600CDFA04 /* btn-roundrect-up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460DA16CB650600CDFA04 /* btn-roundrect-up@2x.png */; };
 		8CE460E116CB674700CDFA04 /* PIXCustomButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE460E016CB674700CDFA04 /* PIXCustomButtonCell.m */; };
 		8CE460E416CD5A3900CDFA04 /* PIXCustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE460E316CD5A3000CDFA04 /* PIXCustomButton.m */; };
+		8CE460E816CD7BB400CDFA04 /* PIXCustomShareSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE460E616CD7BB300CDFA04 /* PIXCustomShareSheetViewController.m */; };
+		8CE460E916CD7BB400CDFA04 /* PIXCustomShareSheetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460E716CD7BB300CDFA04 /* PIXCustomShareSheetViewController.xib */; };
 		8CE8F62516BD8C9E00DC6014 /* DebugPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CE8F62216BD8C9E00DC6014 /* DebugPreferencesView.xib */; };
 		8CE8F62616BD8C9E00DC6014 /* DebugPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE8F62316BD8C9E00DC6014 /* DebugPreferencesViewController.m */; };
 		8CF2C5E316BB458900F906F1 /* MASPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CF2C5DF16BB458900F906F1 /* MASPreferencesWindow.xib */; };
@@ -268,6 +270,9 @@
 		8CE460E016CB674700CDFA04 /* PIXCustomButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXCustomButtonCell.m; sourceTree = "<group>"; };
 		8CE460E216CD5A2B00CDFA04 /* PIXCustomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXCustomButton.h; sourceTree = "<group>"; };
 		8CE460E316CD5A3000CDFA04 /* PIXCustomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXCustomButton.m; sourceTree = "<group>"; };
+		8CE460E516CD7BB300CDFA04 /* PIXCustomShareSheetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXCustomShareSheetViewController.h; sourceTree = "<group>"; };
+		8CE460E616CD7BB300CDFA04 /* PIXCustomShareSheetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXCustomShareSheetViewController.m; sourceTree = "<group>"; };
+		8CE460E716CD7BB300CDFA04 /* PIXCustomShareSheetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXCustomShareSheetViewController.xib; sourceTree = "<group>"; };
 		8CE8F62216BD8C9E00DC6014 /* DebugPreferencesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DebugPreferencesView.xib; sourceTree = "<group>"; };
 		8CE8F62316BD8C9E00DC6014 /* DebugPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugPreferencesViewController.m; sourceTree = "<group>"; };
 		8CE8F62416BD8C9E00DC6014 /* DebugPrefrencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugPrefrencesViewController.h; sourceTree = "<group>"; };
@@ -316,6 +321,9 @@
 				1D8CD7F316AB76E20072D516 /* PIXPhotoGridViewController.m */,
 				8C4B80E616B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.h */,
 				8C4B80E716B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.m */,
+				8CE460E516CD7BB300CDFA04 /* PIXCustomShareSheetViewController.h */,
+				8CE460E616CD7BB300CDFA04 /* PIXCustomShareSheetViewController.m */,
+				8CE460E716CD7BB300CDFA04 /* PIXCustomShareSheetViewController.xib */,
 			);
 			name = PhotoBrowserView;
 			sourceTree = "<group>";
@@ -758,6 +766,7 @@
 				8CE460DC16CB650600CDFA04 /* btn-roundrect-down@2x.png in Resources */,
 				8CE460DD16CB650600CDFA04 /* btn-roundrect-up.png in Resources */,
 				8CE460DE16CB650600CDFA04 /* btn-roundrect-up@2x.png in Resources */,
+				8CE460E916CD7BB400CDFA04 /* PIXCustomShareSheetViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -826,6 +835,7 @@
 				1DBFD55716CAE415001944A9 /* PIXFileManager.m in Sources */,
 				8CE460E116CB674700CDFA04 /* PIXCustomButtonCell.m in Sources */,
 				8CE460E416CD5A3900CDFA04 /* PIXCustomButton.m in Sources */,
+				8CE460E816CD7BB400CDFA04 /* PIXCustomShareSheetViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
