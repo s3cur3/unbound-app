@@ -13,4 +13,7 @@
 @interface PIXPhotoGridViewItem : PIXGridViewItem
 
 @property (strong, nonatomic) PIXPhoto * photo;
+
++(NSImage *)dragImageForPhotos:(NSArray *)photoArray size:(NSSize)size;
+
 @end

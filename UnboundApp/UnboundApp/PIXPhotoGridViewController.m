@@ -14,6 +14,7 @@
 #import "PIXNavigationController.h"
 #import "PIXDefines.h"
 #import "PIXPhotoGridViewItem.h"
+#import "PIXPhoto.h"
 
 @interface PIXPhotoGridViewController ()
 
@@ -183,6 +184,44 @@
     // can use this and the self.selectedAlbum array to build a right click menu here
     
     DLog(@"rightMouseButtonClickedOnItemAtIndex: %li", index);
+}
+
+#pragma mark - Drag Operations
+
+- (void)gridView:(CNGridView *)gridView dragDidBeginAtIndex:(NSUInteger)index inSection:(NSUInteger)section andEvent:(NSEvent *)event
+{
+    // move the item we just selected to the front (so it will show up correctly in the drag image)
+    PIXPhoto * topPhoto = [self.items objectAtIndex:index];
+    
+    if(topPhoto)
+    {
+        [self.selectedItems removeObject:topPhoto];
+        [self.selectedItems insertObject:topPhoto atIndex:0];
+    }
+    
+    
+    NSPasteboard *dragPBoard = [NSPasteboard pasteboardWithName:NSDragPboard];
+    [dragPBoard declareTypes:[NSArray arrayWithObject:NSFilenamesPboardType] owner:nil];
+    
+    NSMutableArray * filenames = [[NSMutableArray alloc] initWithCapacity:[self.selectedItems count]];
+    
+    for(PIXPhoto * aPhoto in self.selectedItems)
+    {
+        [filenames addObject:aPhoto.path];
+        //[dragPBoard setString:anAlbum.path forType:NSFilenamesPboardType];
+    }
+    
+    [dragPBoard setPropertyList:filenames
+                        forType:NSFilenamesPboardType];
+    NSPoint location = [self.gridView convertPoint:[event locationInWindow] fromView:nil];
+    location.x -= 90;
+    location.y += 90;
+    
+    
+    
+    NSImage * dragImage = [PIXPhotoGridViewItem dragImageForPhotos:self.selectedItems size:NSMakeSize(180, 180)];
+    [self.gridView dragImage:dragImage at:location offset:NSZeroSize event:event pasteboard:dragPBoard source:self slideBack:YES];
+    
 }
 
 

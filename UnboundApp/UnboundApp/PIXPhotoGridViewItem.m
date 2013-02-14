@@ -12,6 +12,72 @@
 
 @implementation PIXPhotoGridViewItem
 
++(NSImage *)dragImageForPhotos:(NSArray *)photoArray size:(NSSize)size
+{
+    if([photoArray count] == 0) return [NSImage imageNamed:@"nophoto"];
+        
+    
+    // set up the images
+    NSImage * image1 = nil;
+    NSImage * image2 = nil;
+    NSImage * image3 = nil;
+    
+    NSMutableArray * imageArray = [NSMutableArray new];
+    
+    if([photoArray count])
+    {
+        image1 = [[photoArray objectAtIndex:0] thumbnailImage];
+        
+        if(image1 == nil)
+        {
+            image1 =[NSImage imageNamed:@"temp"];
+        }
+        
+        [imageArray addObject:image1];
+        
+        if([photoArray count] > 1)
+        {
+            image2 = [[photoArray objectAtIndex:1] thumbnailImage];
+            
+            if(image2 == nil)
+            {
+                image2 =[NSImage imageNamed:@"temp-portrait"];
+            }
+            
+            [imageArray addObject:image2];
+            
+            if([photoArray count] > 2)
+            {
+                image3 = [[photoArray objectAtIndex:2] thumbnailImage];
+                
+                if(image3 == nil)
+                {
+                    image3 =[NSImage imageNamed:@"temp"];
+                }
+                
+                [imageArray addObject:image3];
+            }
+        }
+        
+        
+    }
+    
+    
+    
+    
+    
+    NSString * title = @"1 Photo";
+    
+    // set up the title
+    if([photoArray count] > 1)
+    {
+        title = [NSString stringWithFormat:@"%ld Photos", [photoArray count]];
+    }
+    
+    return [self dragStackForImages:imageArray size:size title:title];
+}
+
+
 -(BOOL)isOpaque
 {
     return YES;
