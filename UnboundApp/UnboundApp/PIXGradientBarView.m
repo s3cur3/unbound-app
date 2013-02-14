@@ -26,12 +26,47 @@
 
 -(void)setButtons:(NSArray *)buttonArray
 {
+    // remove all subviews
+    for(NSView * subview in [self.buttonHolder subviews])
+    {
+        [subview removeFromSuperview];
+    }
+    
+    
+    NSMutableDictionary * views = [NSMutableDictionary new];
+    NSMutableString * horizontalConstraints = [@"|-6-" mutableCopy];
+    
+    
+    int i = 0;
     for(NSButton * button in buttonArray)
     {
-     //   [self.buttonHolder addSubview:button];
+        [self.buttonHolder addSubview:button];
+        
+        NSString * buttonName = [NSString stringWithFormat:@"button%d", i];
+        [views setObject:button forKey:buttonName];
+        
+        [horizontalConstraints appendString:[NSString stringWithFormat:@"[%@]-6-", buttonName]];
+        
+        //[button setAutoresizingMask:NSViewWidthSizable];
+        
+        i++;
     }
     
     //NSArray *constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"[_buttonHolder]-0-[_contentView]-0-[_buttonHolder]" options:0 metrics:nil views:viewsDictionary];
+    
+    [horizontalConstraints appendString:@"|"];
+    
+    //[self.buttonHolder removeConstraints:[self.buttonHolder constraints]];
+    [self.buttonHolder addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:horizontalConstraints
+                                                                 options:NSLayoutFormatAlignAllCenterY
+                                                                 metrics:nil
+                                                                   views:views]];
+    
+    [self layoutSubtreeIfNeeded];
+    /*[self.buttonHolder addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[button]-55-|"
+                                                                 options:0
+                                                                 metrics:nil
+                                                                   views:views]];*/
 
 }
 

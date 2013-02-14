@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Pixite Apps LLC. All rights reserved.
 //
 
-#import "PIXGradientBarButtonCell.h"
+#import "PIXCustomButtonCell.h"
 
-@implementation PIXGradientBarButtonCell
+@implementation PIXCustomButtonCell
 
 - (id)init
 {
@@ -43,6 +43,34 @@
     self.upStateBGImage = [NSImage imageNamed:@"btn-roundrect-up"];
     self.downStateBGImage = [NSImage imageNamed:@"btn-roundrect-down"];
     self.capSize = 20;
+    
+    self.backgroundColor = [NSColor clearColor];
+    self.font = [NSFont fontWithName:@"Helvetica" size:12];
+    
+    [self setBezeled:YES];
+}
+
+-(BOOL)isOpaque
+{
+    return NO;
+}
+
+/*
+- (NSRect)drawTitle:(NSAttributedString *)title withFrame:(NSRect)frame inView:(NSView *)controlView
+{
+    return frame;
+}
+
+- (void)drawImage:(NSImage *)image withFrame:(NSRect)frame inView:(NSView *)controlView
+{
+   
+}*/
+
+// for some reason this was drawing a background color above the bezel. I've overridden it, but maybe there is a better way
+- (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
+{
+    [self drawTitle:self.attributedTitle withFrame:cellFrame inView:controlView];
+    [self drawImage:self.image withFrame:cellFrame inView:controlView];
 }
 
 - (void)drawBezelWithFrame:(NSRect)frame inView:(NSView *)controlView
@@ -79,5 +107,6 @@
                           operation:NSCompositeSourceOver
                            fraction:1 respectFlipped:YES hints:nil];
 }
+
 
 @end

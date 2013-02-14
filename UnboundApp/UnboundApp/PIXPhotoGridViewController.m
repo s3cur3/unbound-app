@@ -16,6 +16,7 @@
 #import "PIXPhotoGridViewItem.h"
 #import "PIXPhoto.h"
 #import "PIXGradientBarView.h"
+#import "PIXCustomButton.h"
 
 @interface PIXPhotoGridViewController ()
 
@@ -239,7 +240,7 @@
 {
     [super updateToolbar];
     
-    NSButton * button = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
+    PIXCustomButton * button = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
     
     [button setTitle:@"Delete"];
     

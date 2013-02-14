@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface PIXGradientBarButtonCell : NSButtonCell
+@interface PIXCustomButtonCell : NSButtonCell
 
 @property (strong) NSImage * upStateBGImage;
 @property (strong) NSImage * downStateBGImage;
