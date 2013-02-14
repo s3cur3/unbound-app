@@ -18,6 +18,12 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import "PIXDefines.h"
 
+@interface PIXFileManager()
+
+@property (nonatomic, strong) NSArray *selectedFilePaths;
+
+@end
+
 @implementation PIXFileManager
 
 + (PIXFileManager *)sharedInstance
@@ -39,7 +45,17 @@
 - (void)openFileWithPath:(NSString *)filePath withApplication:(NSString *)appPath
 {
     //NSString *filePath = <get file path, e.g. from selected table row>
-    [[NSWorkspace sharedWorkspace] openFile:filePath withApplication:appPath];
+    //[[NSWorkspace sharedWorkspace] openFile:filePath withApplication:appPath];
+    return [self openFileWithPaths:@[filePath] withApplication:appPath];
+}
+
+- (void)openFileWithPaths:(NSArray *)filePaths withApplication:(NSString *)appPath
+{
+    //NSString *filePath = <get file path, e.g. from selected table row>
+    for (NSString *filePath in filePaths) {
+        [[NSWorkspace sharedWorkspace] openFile:filePath withApplication:appPath];
+    }
+    
 }
 
 /// menu item action
@@ -53,17 +69,22 @@
     NSMenuItem *menuItem = (NSMenuItem *)sender;
     NSDictionary *pathsDict = [menuItem representedObject];
     NSString *appPath = [pathsDict valueForKey:@"appPath"]; //[menuItem representedObject];
-    NSString *filePath = [pathsDict valueForKey:@"filePath"];
+    NSArray *filePaths = [pathsDict valueForKey:@"filePaths"];
     if (!appPath) {
         NSLog(@"Could get app path from nsmenuitem represented object");
         return;
     }
-    [self openFileWithPath:filePath withApplication:appPath];
+    [self openFileWithPaths:filePaths withApplication:appPath];
     //[self openSelectedFileWithApplication:appPath];
 }
 
 - (void)openWithApplicationOtherSelected:(id)sender
 {
+    
+    NSDictionary *infoDict = [sender representedObject];
+    NSArray *filePathsArray = [infoDict objectForKey:@"filePaths"];
+    self.selectedFilePaths = filePathsArray;
+    
     NSOpenPanel *panel = [NSOpenPanel openPanel];
     
     [panel setAllowsMultipleSelection:NO];
@@ -81,21 +102,25 @@
 
 - (void)chooseAppSheetClosed:(NSOpenPanel *)panel returnCode:(int)code contextInfo:(NSNumber *)useOptions
 {
+    NSArray *someFilePaths = [self.selectedFilePaths copy];
+    self.selectedFilePaths = nil;
     if (code == NSOKButton)
     {
 		[panel close];
-        [self openSelectedFileWithApplication:[panel filename]];
+        
+        [self openFileWithPaths:someFilePaths withApplication:[panel filename]];
+        //[self openSelectedFileWithApplication:[panel filename]];
     }
 }
 
 /// construct menu item for app
-- (NSMenuItem *)menuItemForOpenWithForApplication:(NSString *)appName appPath:(NSString *)appPath filePath:(NSString *)filePath
+- (NSMenuItem *)menuItemForOpenWithForApplication:(NSString *)appName appPath:(NSString *)appPath filePaths:(NSArray *)filePaths
 {
     NSMenuItem *newAppItem = [[NSMenuItem alloc] init];
     [newAppItem setTitle:appName];
     [newAppItem setTarget:self];
     [newAppItem setAction:@selector(openWithApplicationSelected:)];
-    NSDictionary *pathsDict = @{@"appPath" : appPath, @"filePath": filePath};
+    NSDictionary *pathsDict = @{@"appPath" : appPath, @"filePaths": filePaths};
     [newAppItem setRepresentedObject:pathsDict];
     //[newAppItem setRepresentedObject:appPath];
     [newAppItem setImage:[[NSWorkspace sharedWorkspace] iconForFile:appPath]];
@@ -127,7 +152,17 @@
 /// this method return open with menu for specified file
 - (NSMenu *)openWithMenuItemForFile:(NSString *)filePath
 {
+    return [self openWithMenuItemForFiles:@[filePath]];
+}
+
+/// this method return open with menu for specified files
+- (NSMenu *)openWithMenuItemForFiles:(NSArray *)filePaths
+{
     NSMenu *subMenu = [[NSMenu alloc] init];
+    NSString *filePath = [filePaths lastObject];
+    if (filePath==nil) {
+        return nil;
+    }
     NSURL *fileURL = [NSURL fileURLWithPath:filePath];
     CFArrayRef cfArrayOfApps = LSCopyApplicationURLsForURL((__bridge CFURLRef)fileURL, kLSRolesAll);
     CFIndex maxCount = 10;
@@ -152,7 +187,7 @@
         else {
             NSString *defaultAppPath = [(__bridge NSURL *)defaultApp path];
             NSString *defaultAppName = [[[defaultAppPath lastPathComponent] stringByDeletingPathExtension] stringByAppendingString:@" (default)"];
-            NSMenuItem *newAppItem = [self menuItemForOpenWithForApplication:defaultAppName appPath:defaultAppPath filePath:filePath];
+            NSMenuItem *newAppItem = [self menuItemForOpenWithForApplication:defaultAppName appPath:defaultAppPath filePaths:filePaths];
             [subMenu addItem:newAppItem];
             [subMenu addItem:[NSMenuItem separatorItem]];
             if (count != 0) {
@@ -165,7 +200,7 @@
                         if ([alreadyAdded containsObject:appName]) {
                             appName = [appName stringByAppendingFormat:@" (%@)", [[[NSBundle bundleWithPath:defaultAppPath] infoDictionary] valueForKey:@"CFBundleVersion"]];
                         }
-                        NSMenuItem *newAppItem = [self menuItemForOpenWithForApplication:appName appPath:[appURL path] filePath:filePath];
+                        NSMenuItem *newAppItem = [self menuItemForOpenWithForApplication:appName appPath:[appURL path] filePaths:filePaths];
                         [alreadyAdded addObject:appName];
                         [subMenu addItem:newAppItem];
                     }
@@ -178,6 +213,8 @@
         [otherAppItem setTitle:@"Other…"];
         [otherAppItem setTarget:self];
         [otherAppItem setAction:@selector(openWithApplicationOtherSelected:)];
+        NSDictionary *pathsDict = @{@"filePaths": filePaths};
+        [otherAppItem setRepresentedObject:pathsDict];
         [subMenu addItem:otherAppItem];
         
         CFRelease(cfArrayOfApps);

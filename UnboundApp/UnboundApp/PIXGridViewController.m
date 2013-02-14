@@ -201,22 +201,43 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 - (IBAction) openInApp:(id)sender
 {
-    NSSet *aSet = [self.selectedItems copy];
-    NSManagedObject *mObj = [aSet anyObject];
-    if ([mObj.entity.name isEqualToString:kPhotoEntityName]) {
+    NSArray *itemsToOpen = [self.selectedItems allObjects];
+    NSManagedObject *mObj = [itemsToOpen lastObject];
+    //if ([mObj.entity.name isEqualToString:kPhotoEntityName]) {
+    if ([mObj.entity.name isEqualToString:kAlbumEntityName]) {
         NSString *defaultAppPath = [[PIXFileManager sharedInstance] defaultAppPathForOpeningFileWithPath:[(PIXPhoto *)mObj path]];
         if ([[defaultAppPath lastPathComponent] isEqualToString:@"Preview.app"]) {
-            NSString* albumPath = [[(PIXPhoto *)mObj path] stringByDeletingLastPathComponent];
+            
+//            NSArray *photoPaths = [itemsToOpen valueForKey:@"path"];
+//            NSMutableArray *photoURLs = [NSMutableArray arrayWithCapacity:photoPaths.count];
+//            for (NSString *aPath in photoPaths)
+//            {
+//                NSURL *aURL = [NSURL fileURLWithPath:aPath isDirectory:NO];
+//                [photoURLs addObject:aURL];
+//            }
+//            if (![[NSWorkspace sharedWorkspace] openURLs:photoURLs withAppBundleIdentifier:@"com.apple.Preview" options:NSWorkspaceLaunchAllowingClassicStartup additionalEventParamDescriptor:nil launchIdentifiers:NULL])
+//            {
+//                NSString *failureDescription = [NSString stringWithFormat:@"Failed to open selected photos in Preview."];
+//                NSLog(@"%@", failureDescription);
+//                NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//                [dict setValue:failureDescription forKey:NSLocalizedDescriptionKey];
+//                NSError *error = [NSError errorWithDomain:@"com.pixite.unbound" code:042 userInfo:dict];
+//                
+//                [[NSApplication sharedApplication] presentError:error];
+//            }
+            
+            //NSString* albumPath = [[(PIXPhoto *)mObj path] stringByDeletingLastPathComponent];
+            NSString* albumPath = [(PIXAlbum *)mObj path];
             [[PIXFileManager sharedInstance] openFileWithPath:albumPath withApplication:defaultAppPath];
             return;
         }
     }
-    [aSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+    for (id obj in itemsToOpen) {
         
         NSString* path = [obj path];
         [[NSWorkspace sharedWorkspace] openFile:path];
         
-    }];	
+    }
 }
 
 - (IBAction) revealInFinder:(id)inSender
@@ -283,7 +304,9 @@ static NSString *kContentTitleKey, *kContentImageKey;
         menu.delegate = self;
         
     }
-    NSMenu *openWithMenu = [[PIXFileManager sharedInstance] openWithMenuItemForFile:[object path]];
+    //NSMenu *openWithMenu = [[PIXFileManager sharedInstance] openWithMenuItemForFile:[object path]];
+    NSArray *filePaths = [[self.selectedItems allObjects] valueForKey:@"path"];
+    NSMenu *openWithMenu = [[PIXFileManager sharedInstance] openWithMenuItemForFiles:filePaths];
     NSMenuItem *openWithMenuItem = [[NSMenuItem alloc] init];
     [openWithMenuItem setTitle:@"Open With"];
     [openWithMenuItem setSubmenu:openWithMenu];
