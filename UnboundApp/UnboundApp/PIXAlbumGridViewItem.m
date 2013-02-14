@@ -31,6 +31,184 @@
 
 @implementation PIXAlbumGridViewItem
 
++(NSImage *)dragImageForAlbums:(NSArray *)albumArray size:(NSSize)size
+{
+    if([albumArray count] == 0) return [NSImage imageNamed:@"nophoto"];
+    
+    PIXAlbum * topAlbum = [albumArray objectAtIndex:0];
+    
+    
+    // set up the images
+    NSImage * image1 = nil;
+    NSImage * image2 = nil;
+    NSImage * image3 = nil;
+    
+    if([[topAlbum stackPhotos] count])
+    {
+        image1 = [[[topAlbum stackPhotos] objectAtIndex:0] thumbnailImage];
+        
+        if([[topAlbum stackPhotos] count] > 1)
+        {
+            image2 = [[[topAlbum stackPhotos] objectAtIndex:1] thumbnailImage];
+            
+            if([[topAlbum stackPhotos] count] > 2)
+            {
+                image3 = [[[topAlbum stackPhotos] objectAtIndex:2] thumbnailImage];
+            }
+        }
+    }
+    
+    if(image1 == nil)
+    {
+        image1 =[NSImage imageNamed:@"temp"];
+    }
+    
+    if(image2 == nil)
+    {
+        image2 =[NSImage imageNamed:@"temp-portrait"];
+    }
+    
+    if(image3 == nil)
+    {
+        image3 =[NSImage imageNamed:@"temp"];
+    }
+    
+    NSString * title = [topAlbum title];
+    
+    // set up the title
+    if([albumArray count] > 1)
+    {
+        title = [NSString stringWithFormat:@"%ld Albums", [albumArray count]];
+    }
+    
+    
+    
+    NSRect imgRect = NSMakeRect(0.0, 0.0, size.width, size.height);
+    
+    // create a bitmap representation
+    NSBitmapImageRep *offscreenRep = [[NSBitmapImageRep alloc]
+                                       initWithBitmapDataPlanes:NULL
+                                       pixelsWide:size.width
+                                       pixelsHigh:size.height
+                                       bitsPerSample:8
+                                       samplesPerPixel:4
+                                       hasAlpha:YES
+                                       isPlanar:NO
+                                       colorSpaceName:NSDeviceRGBColorSpace
+                                       bitmapFormat:NSAlphaFirstBitmapFormat
+                                       bytesPerRow:0
+                                       bitsPerPixel:0];
+    
+    // set offscreen context
+    NSGraphicsContext *g = [NSGraphicsContext graphicsContextWithBitmapImageRep:offscreenRep];
+    [NSGraphicsContext saveGraphicsState];
+    [NSGraphicsContext setCurrentContext:g];
+    
+    
+    // draw the albums stack
+    
+    NSColor * textColor = nil;
+    NSColor * subtitleColor = nil;
+    NSColor * bgColor = nil;
+    
+    
+    bgColor = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
+    textColor = [NSColor colorWithCalibratedWhite:0.9 alpha:1.0];
+    
+    
+    
+    
+
+    
+    NSRect textRect = NSMakeRect(imgRect.origin.x + 3,
+                                 24,
+                                 NSWidth(imgRect) - 6,
+                                 24);
+    
+    
+    NSShadow *textShadow    = [[NSShadow alloc] init];
+    [textShadow setShadowColor: [NSColor colorWithCalibratedWhite:0.0 alpha:1.3]];
+    [textShadow setShadowOffset: NSMakeSize(0, -1)];
+    [textShadow setShadowBlurRadius:3.0];
+    
+    NSMutableParagraphStyle *textStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+    [textStyle setAlignment: NSCenterTextAlignment];
+    
+    NSDictionary * attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 [NSFont fontWithName:@"Helvetica Neue Bold" size:14], NSFontAttributeName,
+                                 textShadow,                                 NSShadowAttributeName,
+                                 //bgColor,                                    NSBackgroundColorAttributeName,
+                                 textColor,                                  NSForegroundColorAttributeName,
+                                 textStyle,                                  NSParagraphStyleAttributeName,
+                                 nil];
+    
+    
+    
+    [title drawInRect:textRect withAttributes:attributes];
+    
+    
+    CGRect albumFrame = CGRectInset(imgRect, 18, 35);
+    albumFrame.origin.y += 20;
+    
+    // draw the stack of imagess
+    
+    CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
+    
+    // randomly rotate the first between -.05 and .05
+    float rotate1 = (CGFloat)(arc4random() % 1400)/10000 - .07;
+    
+    // the second needs to be the difference so that we rotate the object back
+    float rotate2= (CGFloat)(arc4random() % 1400)/10000 - .07 - rotate1;
+    
+    CGContextSaveGState(context);
+    
+    CGContextTranslateCTM(context, imgRect.size.width/2, imgRect.size.height/2);
+    CGContextRotateCTM(context, rotate1);
+    CGContextTranslateCTM(context, -imgRect.size.width/2, -imgRect.size.height/2);
+    
+    [[self class] drawBorderedPhoto:image3 inRect:albumFrame];
+    
+    CGContextTranslateCTM(context, imgRect.size.width/2, imgRect.size.height/2);
+    CGContextRotateCTM(context, rotate2);
+    CGContextTranslateCTM(context, -imgRect.size.width/2, -imgRect.size.height/2);
+    
+    [[self class] drawBorderedPhoto:image2 inRect:albumFrame];
+    
+    CGContextRestoreGState(context);
+    
+    
+    // draw the top image
+    [[self class] drawBorderedPhoto:image1 inRect:albumFrame];
+    
+    /*
+    
+    // draw first stroke with Cocoa
+    NSPoint p1 = NSMakePoint(NSMaxX(imgRect), NSMinY(imgRect));
+    NSPoint p2 = NSMakePoint(NSMinX(imgRect), NSMaxY(imgRect));
+    [NSBezierPath strokeLineFromPoint:p1 toPoint:p2];
+    
+    // draw second stroke with Core Graphics
+    CGContextRef ctx = [g graphicsPort];
+    CGContextBeginPath(ctx);
+    CGContextMoveToPoint(ctx, 0.0, 0.0);
+    CGContextAddLineToPoint(ctx, size.width, size.height);
+    CGContextClosePath(ctx);
+    CGContextStrokePath(ctx);
+     
+     */
+    
+    // done drawing, so set the current context back to what it was
+    [NSGraphicsContext restoreGraphicsState];
+    
+    // create an NSImage and add the rep to it    
+    NSImage *img = [[NSImage alloc] initWithSize:size];
+    [img addRepresentation:offscreenRep];
+    
+    return img;
+}
+
+
+
 - (id)init
 {
     self = [super init];
@@ -257,6 +435,8 @@
     self.contentFrame = albumFrame;
 
 }
+
+
 
 
 - (void)prepareForReuse

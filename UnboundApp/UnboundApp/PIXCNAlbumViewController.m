@@ -515,6 +515,15 @@
 
 - (void)gridView:(CNGridView *)gridView dragDidBeginAtIndex:(NSUInteger)index inSection:(NSUInteger)section andEvent:(NSEvent *)event
 {
+    // move the item we just selected to the front (so it will show up correctly in the drag image)
+    PIXAlbum * topAlbum = [self albumForIndex:index];
+        
+    if(topAlbum)
+    {
+        [self.selectedItems removeObject:topAlbum];
+        [self.selectedItems insertObject:topAlbum atIndex:0];
+    }
+    
     
     NSPasteboard *dragPBoard = [NSPasteboard pasteboardWithName:NSDragPboard];
     [dragPBoard declareTypes:[NSArray arrayWithObject:NSFilenamesPboardType] owner:nil];
@@ -525,13 +534,18 @@
     {
         [filenames addObject:anAlbum.path];
         //[dragPBoard setString:anAlbum.path forType:NSFilenamesPboardType];
-        
     }
-    
+        
     [dragPBoard setPropertyList:filenames
                         forType:NSFilenamesPboardType];
     NSPoint location = [self.gridView convertPoint:[event locationInWindow] fromView:nil];
-    [self.gridView dragImage:[NSImage imageNamed:@"nophoto"] at:location offset:NSZeroSize event:event pasteboard:dragPBoard source:self slideBack:YES];
+    location.x -= 90;
+    location.y += 90;
+    
+    
+    
+    NSImage * dragImage = [PIXAlbumGridViewItem dragImageForAlbums:self.selectedItems size:NSMakeSize(180, 180)];
+    [self.gridView dragImage:dragImage at:location offset:NSZeroSize event:event pasteboard:dragPBoard source:self slideBack:YES];
     
 }
 
