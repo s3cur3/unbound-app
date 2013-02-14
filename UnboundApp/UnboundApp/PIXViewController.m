@@ -15,6 +15,16 @@
 
 @implementation PIXViewController
 
++(BOOL)optionKeyIsPressed
+{
+    if(( [NSEvent modifierFlags] & NSAlternateKeyMask ) != 0 ) {
+        return YES;
+    } else {
+        return NO;
+    }
+    
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];

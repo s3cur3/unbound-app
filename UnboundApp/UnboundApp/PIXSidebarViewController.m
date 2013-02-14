@@ -9,10 +9,12 @@
 #import "PIXSidebarViewController.h"
 #import "PIXDataSource.h"
 #import "PIXAppDelegate.h"
+#import "PIXFileManager.h"
 #import "PIXAppDelegate+CoreDataUtils.h"
 #import "PIXSidebarTableCellView.h"
 #import "PIXSplitViewController.h"
-#import "Album.h"
+#import "PIXPhotoGridViewController.h"
+//#import "Album.h"
 #import "PIXAlbum.h"
 #import "PIXDefines.h"
 
@@ -127,17 +129,8 @@
 -(void)awakeFromNib
 {
     [super awakeFromNib];
-    /*[self.outlineView reloadData];
-    if ([self currentlySelectedAlbum] != nil)
-    {
-        NSUInteger index = [self.topLevelItems indexOfObject:[self currentlySelectedAlbum]];
-        [self.outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
-        [self.outlineView scrollRowToVisible:index];
-    }*/
-    //[self.outlineView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
-    
-    //[self.view setWantsLayer:YES];
-    
+
+    [self.outlineView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
 }
 
 -(void)scrollToSelectedAlbum
@@ -204,6 +197,99 @@
 {
     [self setSelectedAlbum:anAlbum shouldEdit:YES];
 }*/
+
+//Drag and Drop Support
+
+-(BOOL)outlineView:(NSOutlineView *)outlineView acceptDrop:(id < NSDraggingInfo >)info item:(id)item childIndex:(NSInteger)index
+{
+    
+    //Get the files from the drop
+	NSArray * files = [[info draggingPasteboard] propertyListForType:NSFilenamesPboardType];
+    DLog(@"Sidebar acccepting droppped files : %@, option key presssed : %@", files, ([PIXViewController optionKeyIsPressed] ? @"YES" : @"NO"));
+    NSMutableArray *pathsToPaste = [NSMutableArray arrayWithCapacity:[files count]];
+    NSString *destPath = self.dragDropDestination.path;
+    for (NSString * path in files)
+    {
+        [pathsToPaste addObject:@{@"source" : path, @"destination" : destPath}];
+    }
+    //TODO: find out why this doesn't work
+    if ([PIXViewController optionKeyIsPressed] == NO)
+    {
+        [[PIXFileManager sharedInstance] moveFiles:pathsToPaste];
+    } else {
+        [[PIXFileManager sharedInstance] copyFiles:pathsToPaste];
+    }
+    return YES;
+    
+    
+}
+
+
+
+-(NSDragOperation)outlineView:(NSOutlineView *)outlineView validateDrop:(id < NSDraggingInfo >)info proposedItem:(id)item proposedChildIndex:(NSInteger)index
+{
+    if (index != -1)
+    {
+        return NSDragOperationNone;
+    }
+    
+    self.dragDropDestination = item;
+    
+    DLog(@"Sidebar validating drop with source : %@, option key presssed : %@", [info draggingSource], ([PIXViewController optionKeyIsPressed] ? @"YES" : @"NO"));
+    
+    if ( [[info draggingSource] class] == [PIXPhotoGridViewController class])
+    {
+		
+        if ([PIXViewController optionKeyIsPressed]) {
+            DLog(@"Drag and drop is from browser WITH alt key pressed - copy operation");
+            return NSDragOperationCopy;
+        } else {
+            DLog(@"Drag and drop is from browser - move operation");
+            return NSDragOperationMove;
+        }
+	} else {
+        
+        if (![PIXViewController optionKeyIsPressed])
+        {
+            DLog(@"Drag and drop is outside source - default to copy operation");
+            return NSDragOperationCopy;
+        } else {
+            DLog(@"Drag and drop is outside source with alt pressed - use move operation");
+            return NSDragOperationMove;
+        }
+	}
+    
+}
+
+- (IBAction)textTitleChanged:(id)sender {
+    DLog(@"textTitleChanged");
+    if ([self.outlineView selectedRow] != -1) {
+        //        NSTextField *aTextField =(NSTextField *)sender;
+        //
+        //        Album *anAlbum =  [self.outlineView itemAtRow:[self.outlineView selectedRow]];
+        //        if ([aTextField.stringValue length]==0 || [aTextField.stringValue isEqualToString:anAlbum.title])
+        //        {
+        //            return;
+        //        }
+        //        NSString *parentFolderPath = [anAlbum.filePath stringByDeletingLastPathComponent];
+        //        NSString *newFilePath = [parentFolderPath stringByAppendingPathComponent:aTextField.stringValue];
+        //
+        //
+        //        NSError *error;
+        //        BOOL success = [[NSFileManager defaultManager] moveItemAtPath:anAlbum.filePath toPath:newFilePath error:&error];
+        //        if (!success)
+        //        {
+        //            [[NSApplication sharedApplication] presentError:error];
+        //            //an error occurred when moving so keep the old title
+        //            aTextField.stringValue = anAlbum.title;
+        //        } else {
+        //            [anAlbum userSetTitle:aTextField.stringValue];
+        //            //anAlbum.filePath = newFilePath;
+        //            [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:anAlbum];
+        //        }
+    }
+}
+
 
 -(void)dealloc
 {

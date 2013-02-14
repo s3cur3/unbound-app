@@ -519,7 +519,7 @@ NSString * GetDefaultDropBoxPhotosDirectory()
     NSLog(@"Starting to load");
     [[PIXAppDelegate sharedAppDelegate] setStartDate:[NSDate date]];
     // schedule our update timer for our UI
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:5.0
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f
                                                   target:self
                                                 selector:@selector(updateProgress:)
                                                 userInfo:nil

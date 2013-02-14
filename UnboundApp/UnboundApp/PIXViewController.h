@@ -17,6 +17,8 @@
 
 @property (weak, nonatomic) PIXNavigationController *navigationViewController;
 
++(BOOL)optionKeyIsPressed;
+
 -(void)setupToolbar;
 
 -(void)willShowPIXView;

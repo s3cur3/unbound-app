@@ -9,6 +9,7 @@
 #import "PIXViewController.h"
 
 @class PIXSplitViewController;
+@class PIXAlbum;
 
 @interface PIXSidebarViewController : PIXViewController <NSOutlineViewDataSource,NSOutlineViewDelegate,NSTextFieldDelegate>
 
@@ -16,6 +17,8 @@
 @property (nonatomic, weak) PIXSplitViewController *splitViewController;
 @property (nonatomic, strong) NSArray* albums;
 @property (nonatomic, assign) IBOutlet NSOutlineView *outlineView;
+
+@property (nonatomic, strong) PIXAlbum *dragDropDestination;
 
 @end
 
