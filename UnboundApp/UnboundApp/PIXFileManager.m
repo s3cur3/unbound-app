@@ -102,6 +102,28 @@
     return newAppItem;
 }
 
+-(NSString *)defaultAppNameForOpeningFileWithPath:(NSString *)filePath
+{
+    NSString *defaultAppPath = [self defaultAppPathForOpeningFileWithPath:filePath];
+    //NSString *defaultAppName = [[[defaultAppPath lastPathComponent] stringByDeletingPathExtension] stringByAppendingString:@" (default)"];
+    NSString *defaultAppName = [[defaultAppPath lastPathComponent] stringByDeletingPathExtension];
+    return defaultAppName;
+}
+
+-(NSString *)defaultAppPathForOpeningFileWithPath:(NSString *)filePath
+{
+    NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+    //get and add default app
+    CFURLRef defaultApp;
+    LSGetApplicationForURL((__bridge CFURLRef)fileURL, kLSRolesAll, NULL, &defaultApp);
+    if (!defaultApp) {
+        NSLog(@"There is no default App for %@", filePath);
+        return nil;
+    }
+    NSString *defaultAppPath = [(__bridge NSURL *)defaultApp path];
+    return defaultAppPath;
+}
+
 /// this method return open with menu for specified file
 - (NSMenu *)openWithMenuItemForFile:(NSString *)filePath
 {

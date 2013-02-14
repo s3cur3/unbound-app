@@ -199,12 +199,50 @@ static NSString *kContentTitleKey, *kContentImageKey;
     
 }
 
+- (IBAction) openInApp:(id)sender
+{
+    NSSet *aSet = [self.selectedItems copy];
+    NSManagedObject *mObj = [aSet anyObject];
+    if ([mObj.entity.name isEqualToString:kPhotoEntityName]) {
+        NSString *defaultAppPath = [[PIXFileManager sharedInstance] defaultAppPathForOpeningFileWithPath:[(PIXPhoto *)mObj path]];
+        if ([[defaultAppPath lastPathComponent] isEqualToString:@"Preview.app"]) {
+            NSString* albumPath = [[(PIXPhoto *)mObj path] stringByDeletingLastPathComponent];
+            [[PIXFileManager sharedInstance] openFileWithPath:albumPath withApplication:defaultAppPath];
+            return;
+        }
+    }
+    [aSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        
+        NSString* path = [obj path];
+        [[NSWorkspace sharedWorkspace] openFile:path];
+        
+    }];	
+}
+
 - (IBAction) revealInFinder:(id)inSender
 {
-    id representedObject = [inSender representedObject];
-	NSString* path = [representedObject path];
-	NSString* folder = [path stringByDeletingLastPathComponent];
-	[[NSWorkspace sharedWorkspace] selectFile:path inFileViewerRootedAtPath:folder];
+    NSSet *aSet = [self.selectedItems copy];
+    [aSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        
+        NSString* path = [obj path];
+        NSString* folder = [path stringByDeletingLastPathComponent];
+        [[NSWorkspace sharedWorkspace] selectFile:path inFileViewerRootedAtPath:folder];
+        
+    }];
+}
+
+-(IBAction)getInfo:(id)sender;
+{
+    NSSet *aSet = [self.selectedItems copy];
+    [aSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+
+        NSPasteboard *pboard = [NSPasteboard pasteboardWithUniqueName];
+        [pboard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
+        [pboard setString:[obj path]  forType:NSStringPboardType];
+        NSPerformService(@"Finder/Show Info", pboard);
+
+    }];
+    
 }
 
 -(NSMenu *)menuForObject:(id)object
@@ -218,18 +256,24 @@ static NSString *kContentTitleKey, *kContentImageKey;
         
         menu = [[NSMenu alloc] initWithTitle:@"menu"];
         [menu setAutoenablesItems:NO];
-        
-        //    [menu addItemWithTitle:[NSString stringWithFormat:@"Open"] action:
-        //     @selector(openInApp:) keyEquivalent:@""];
+        NSString *defaultAppName = [[PIXFileManager sharedInstance] defaultAppNameForOpeningFileWithPath:[object path]];
+        if (defaultAppName!=nil && ([defaultAppName isEqualToString:@"Finder"]==NO)) {
+            [menu addItemWithTitle:[NSString stringWithFormat:@"Open with %@", defaultAppName] action:
+             @selector(openInApp:) keyEquivalent:@""];
+        }
+        [menu addItemWithTitle:[NSString stringWithFormat:@"Get Info"] action:
+         @selector(getInfo:) keyEquivalent:@""];
+        [menu addItemWithTitle:[NSString stringWithFormat:@"Show In Finder"] action:
+         @selector(revealInFinder:) keyEquivalent:@""];
+        [menu addItemWithTitle:[NSString stringWithFormat:@"Select All"] action:
+         @selector(selectAll:) keyEquivalent:@""];
+        [menu addItemWithTitle:[NSString stringWithFormat:@"Select None"] action:
+         @selector(selectNone:) keyEquivalent:@""];
         
         //TODO: make delete work on albums, just works with photos right now
         if ([object class] == [PIXPhoto class]) {
             [menu addItemWithTitle:[NSString stringWithFormat:@"Delete"] action:@selector(deleteItems:) keyEquivalent:@""];
         }
-        //    [menu addItemWithTitle:[NSString stringWithFormat:@"Get Info"] action:
-        //     @selector(getInfo:) keyEquivalent:@""];
-        [menu addItemWithTitle:[NSString stringWithFormat:@"Show In Finder"] action:
-         @selector(revealInFinder:) keyEquivalent:@""];
         
         for (NSMenuItem * anItem in [menu itemArray])
         {
@@ -325,7 +369,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
 }
 
 
--(void)selectAll:(id)sender
+-(IBAction)selectAll:(id)sender
 {
     self.selectedItems = [self.items mutableCopy];
     
@@ -333,7 +377,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
     [self updateToolbar];
 }
 
--(void)selectNone:(id)sender
+-(IBAction)selectNone:(id)sender
 {
     [self.selectedItems removeAllObjects];
     [self.gridView reloadSelection];
