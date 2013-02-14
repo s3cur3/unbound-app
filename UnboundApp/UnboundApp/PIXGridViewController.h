@@ -33,4 +33,6 @@
 -(IBAction)selectNone:(id)sender;
 -(IBAction)toggleSelection:(id)sender;
 
+- (IBAction) deleteItems:(id )inSender;
+
 @end

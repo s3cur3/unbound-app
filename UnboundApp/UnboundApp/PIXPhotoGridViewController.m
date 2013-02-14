@@ -16,6 +16,8 @@
 #import "PIXPhotoGridViewItem.h"
 #import "PIXPhoto.h"
 #import "PIXGradientBarView.h"
+#import "PIXCustomButton.h"
+#import "PIXCustomShareSheetViewController.h"
 
 @interface PIXPhotoGridViewController ()
 
@@ -239,11 +241,30 @@
 {
     [super updateToolbar];
     
-    NSButton * button = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
+    PIXCustomButton * deleteButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
+    [deleteButton setTitle:@"Delete"];
+    [deleteButton setTarget:self];
+    [deleteButton setAction:@selector(deleteItems:)];
     
-    [button setTitle:@"Delete"];
+    PIXCustomButton * shareButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
+    [shareButton setTitle:@"Share"];
+    [shareButton setTarget:self];
+    [shareButton setAction:@selector(share:)];
     
-    [self.toolbar setButtons:@[button]];
+    [self.toolbar setButtons:@[deleteButton, shareButton]];
+    
+}
+
+
+-(void)share:(id)sender
+{
+    PIXCustomShareSheetViewController *controller = [[PIXCustomShareSheetViewController alloc] initWithNibName:@"PIXCustomShareSheetViewController"     bundle:nil];
+    NSPopover *popover = [[NSPopover alloc] init];
+    [popover setContentSize:NSMakeSize(280.0f, 100.0f)];
+    [popover setContentViewController:controller];
+    [popover setAnimates:YES];
+    [popover setBehavior:NSPopoverBehaviorTransient];
+    [popover showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMaxYEdge];
     
 }
 

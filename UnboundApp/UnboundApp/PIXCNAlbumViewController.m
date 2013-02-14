@@ -19,6 +19,9 @@
 #import "PIXAlbumGridViewItem.h"
 
 #import "PIXSplitViewController.h"
+#import "PIXCustomButton.h"
+
+#import "PIXCustomShareSheetViewController.h"
 
 @interface PIXCNAlbumViewController ()
 {
@@ -327,6 +330,49 @@
     }
 }
 
+-(void)updateToolbar
+{
+    [super updateToolbar];
+    
+    PIXCustomButton * deleteButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
+    [deleteButton setTitle:@"Delete"];
+    [deleteButton setTarget:self];
+    [deleteButton setAction:@selector(deleteItems:)];
+    
+    PIXCustomButton * shareButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
+    [shareButton setTitle:@"Share"];
+    [shareButton setTarget:self];
+    [shareButton setAction:@selector(share:)];
+    
+    PIXCustomButton * mergeButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
+    [mergeButton setTitle:@"Merge Albums"];
+    [mergeButton setTarget:self];
+    //[deleteButton setAction:@selector(deleteItems:)];
+    
+    if([self.selectedItems count] > 1)
+    {
+        [self.toolbar setButtons:@[deleteButton, shareButton, mergeButton]];
+    }
+    
+    else
+    {
+        [self.toolbar setButtons:@[deleteButton, shareButton]];
+    }
+    
+}
+
+-(void)share:(id)sender
+{
+    PIXCustomShareSheetViewController *controller = [[PIXCustomShareSheetViewController alloc] initWithNibName:@"PIXCustomShareSheetViewController"     bundle:nil];
+    NSPopover *popover = [[NSPopover alloc] init];
+    [popover setContentSize:NSMakeSize(280.0f, 100.0f)];
+    [popover setContentViewController:controller];
+    [popover setAnimates:YES];
+    [popover setBehavior:NSPopoverBehaviorTransient];
+    [popover showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMaxYEdge];
+    
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - CNGridView DataSource
 
@@ -479,12 +525,12 @@
 {
     if(self.searchedAlbums)
     {
-        self.selectedItems = [self.searchedAlbums mutableCopy];
+        self.selectedItems = [NSMutableSet setWithArray:self.searchedAlbums];
     }
     
     else
     {
-        self.selectedItems = [self.albums mutableCopy];
+        self.selectedItems = [NSMutableSet setWithArray:self.albums];
     }
     
     [self.gridView reloadSelection];

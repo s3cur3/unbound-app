@@ -59,7 +59,7 @@ const CGFloat kThumbnailSize = 200.0f;
     
     NSImage *result = nil;
     // i'm putting this in a try/catch block because I kept getting non-fatal exceptions
-   // @try {
+    //@try {
         
         // This code needs to be threadsafe, as it will be called from the background thread.
         // The easiest way to ensure you only use stack variables is to make it a class method.
@@ -90,8 +90,8 @@ const CGFloat kThumbnailSize = 200.0f;
         }
     
         return result;
-        
-    /*}
+    /*
+    }
 
 
     @catch (NSException * e) {
