@@ -11,9 +11,12 @@
 #import "PIXAppDelegate+CoreDataUtils.h"
 //#import "MainWindowController.h"
 //#import "FileSystemEventController.h"
-#import "Album.h"
+//#import "Album.h"
+#import "PIXAlbum.h"
+#import "PIXPhoto.h"
 #import "PIXFileSystemDataSource.h"
 #import <CoreFoundation/CoreFoundation.h>
+#import "PIXDefines.h"
 
 @implementation PIXFileManager
 
@@ -160,6 +163,107 @@
     return subMenu;
 }
 
+
+-(void)undoRecyclePhotos:(NSDictionary *)newURLs
+{
+    //NSWorkspaceDidPerformFileOperationNotification
+    NSMutableSet *albumPaths = [NSMutableSet set];
+    NSURL *restorePathURL = nil;
+    for (restorePathURL in [newURLs allKeys])
+    {
+        NSURL *recyclerPathURL = [newURLs objectForKey:restorePathURL];
+        NSString *restorePath = [restorePathURL.path stringByDeletingLastPathComponent];
+        NSString *recyclerPath = [recyclerPathURL.path stringByDeletingLastPathComponent];
+        NSString *fileName = [recyclerPathURL.path lastPathComponent];
+        
+        DLog(@"Restoring file to '%@'", restorePath);
+        if (![[NSWorkspace sharedWorkspace]
+         performFileOperation:NSWorkspaceMoveOperation
+         source: recyclerPath
+         destination:restorePath
+         files:[NSArray arrayWithObject:fileName]
+         tag:nil])
+        {
+            DLog(@"Unable to restore from Trash");
+            continue;
+        }
+        
+        [albumPaths addObject:restorePath];
+        
+        DLog(@"Restored file from '%@'", recyclerPath);
+    }
+    
+    for (NSString *albumPath in albumPaths)
+    {
+        [[PIXFileSystemDataSource sharedInstance] shallowScanURL:[NSURL fileURLWithPath:albumPath isDirectory:YES]];
+    }
+    
+    //[[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
+    NSUndoManager *undoManager = [[[PIXAppDelegate sharedAppDelegate] window] undoManager];
+    [undoManager performSelector:@selector(removeAllActionsWithTarget:) withObject:self afterDelay:0.1f];
+}
+
+-(void)recyclePhotos:(NSArray *)items
+{
+    NSMutableArray *urlsToDelete = [NSMutableArray arrayWithCapacity:[items count]];
+
+    for (id anItem in items)
+    {
+        NSString *path = [anItem path];
+        NSURL *deleteURL = [NSURL fileURLWithPath:path isDirectory:NO];
+        [urlsToDelete addObject:deleteURL];
+    }
+    
+    DLog(@"About to recycle the following items : %@", urlsToDelete);
+    [[NSWorkspace sharedWorkspace] recycleURLs:urlsToDelete completionHandler:^(NSDictionary *newURLs, NSError *error) {
+        //
+        if (nil==error) {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                NSMutableSet *albumsToUpdate = [[NSMutableSet alloc] init];
+                
+                for (PIXPhoto *anItem in items)
+                {
+                    [albumsToUpdate addObject:[(PIXPhoto *)anItem album]];
+                    [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] deleteObject:anItem];
+                }
+                
+                [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] save:nil];
+                
+                for (PIXAlbum *anAlbum in albumsToUpdate)
+                {
+                    [anAlbum updateAlbumBecausePhotosDidChange];
+                    [anAlbum flush];
+                }
+                
+                [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] save:nil];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
+                
+                NSUndoManager *undoManager = [[[PIXAppDelegate sharedAppDelegate] window] undoManager];
+
+                [undoManager registerUndoWithTarget:[PIXFileManager sharedInstance] selector:@selector(undoRecyclePhotos:) object:newURLs];
+                [undoManager setActionIsDiscardable:YES];
+            });
+
+
+
+        } else {
+            [[NSApplication sharedApplication] presentError:error];
+            NSArray *sucessfullyDeletedItems = [newURLs allKeys];
+            //TODO: handle this error properly
+            for (id anItem in sucessfullyDeletedItems)
+            {
+                DLog(@"Item at '%@' was recycled", anItem);
+            }
+        }
+        
+    }];
+    
+    DLog(@"Completed file deletion");
+}
+
 -(void)moveFiles:(NSArray *)items
 {
     NSMutableArray *undoArray = [NSMutableArray arrayWithCapacity:items.count];
@@ -201,7 +305,7 @@
 }
 -(void)copyFiles:(NSArray *)items;
 {
-    NSString *trashFolder = @"~/.Trash";//[[PIXAppDelegate sharedAppDelegate] trashFolderPath];
+    NSString *trashFolder = [[PIXFileManager sharedInstance] trashFolderPath];
     NSMutableArray *undoArray = [NSMutableArray arrayWithCapacity:items.count];
     NSMutableSet *albumPaths = [[NSMutableSet alloc] init];
     for (id aDict in items)
@@ -238,6 +342,14 @@
     
     NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
     [undoManager registerUndoWithTarget:self selector:@selector(moveFiles:) object:undoArray];
+}
+
+NSString * UserHomeDirectory();
+
+-(NSString *)trashFolderPath;
+{
+    NSString *trashFolderPathString = [NSString stringWithFormat:@"%@/.Trash", UserHomeDirectory()];
+    return trashFolderPathString;
 }
 
 @end

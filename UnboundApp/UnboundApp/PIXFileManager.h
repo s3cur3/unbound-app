@@ -15,6 +15,10 @@
 -(void)moveFiles:(NSArray *)items;
 -(void)copyFiles:(NSArray *)items;
 
+-(void)recyclePhotos:(NSArray *)photos;
+
+//-(NSString *)trashFolderPath;
+
 - (NSMenu *)openWithMenuItemForFile:(NSString *)filePath;
 
 @end

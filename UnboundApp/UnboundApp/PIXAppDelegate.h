@@ -13,7 +13,7 @@
 @class PIXLoadingWindowController;
 @class PIXFileSystemDataSource;
 
-@interface PIXAppDelegate : NSObject <NSApplicationDelegate>
+@interface PIXAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate>
 {
     //Used to indiciate that core data loading should cease
     BOOL loadingWasCanceled;
@@ -66,6 +66,9 @@
 
 //Used to load/save thumbs and other things in background
 -(NSOperationQueue *) globalBackgroundSaveQueue;
+
+//NSWindowDelegate methods
+- (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window;
 
 
 

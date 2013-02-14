@@ -176,18 +176,32 @@ static NSString *kContentTitleKey, *kContentImageKey;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Context Menu Support
 
+//TODO: Only for use with photos right now, fix to handle albums
+- (IBAction) deleteItems:(id )inSender
+{
+    
+    NSMutableArray *itemsToDelete = [self.selectedItems mutableCopy];
+    NSSet *selectedSet = [NSSet setWithArray:self.selectedItems];
+    if (self.selectedItems.count != selectedSet.count)
+    {
+        DLog(@"selectedItems contains duplicates : %@", self.selectedItems);
+        itemsToDelete = [[selectedSet allObjects] mutableCopy];
+    }
+    
+    NSString *warningMessage = [NSString stringWithFormat:@"The file(s) will be deleted immediately.\nAre you sure you want to continue?"];
+    if (NSRunCriticalAlertPanel(warningMessage, @"You cannot undo this action.", @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
+        
+        [[PIXFileManager sharedInstance] recyclePhotos:itemsToDelete];
+        
+    } else {
+        // User clicked cancel, they do not want to delete the files
+    }
+    
+}
+
 - (IBAction) revealInFinder:(id)inSender
 {
     id representedObject = [inSender representedObject];
-//    id representedObject = nil;
-//    if ([gridViewItem class] == [PIXAlbumGridViewItem class]) {
-//        representedObject = [gridViewItem album];
-//    } else if ([gridViewItem class] == [PIXPhotoGridViewItem class]) {
-//        representedObject = [gridViewItem photo];
-//    } else {
-//        return;
-//    }
-    
 	NSString* path = [representedObject path];
 	NSString* folder = [path stringByDeletingLastPathComponent];
 	[[NSWorkspace sharedWorkspace] selectFile:path inFileViewerRootedAtPath:folder];
@@ -207,8 +221,8 @@ static NSString *kContentTitleKey, *kContentImageKey;
         
         //    [menu addItemWithTitle:[NSString stringWithFormat:@"Open"] action:
         //     @selector(openInApp:) keyEquivalent:@""];
-        //    [menu addItemWithTitle:[NSString stringWithFormat:@"Delete"] action:
-        //     @selector(deleteItems:) keyEquivalent:@""];
+        [menu addItemWithTitle:[NSString stringWithFormat:@"Delete"] action:
+         @selector(deleteItems:) keyEquivalent:@""];
         //    [menu addItemWithTitle:[NSString stringWithFormat:@"Get Info"] action:
         //     @selector(getInfo:) keyEquivalent:@""];
         [menu addItemWithTitle:[NSString stringWithFormat:@"Show In Finder"] action:

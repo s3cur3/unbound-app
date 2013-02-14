@@ -95,7 +95,7 @@ NSString* kAppFirstRun = @"appFirstRun";
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
-    
+    self.window.delegate = self;
     
     Preferences * preferences = [Preferences instance];
     NSAssert(preferences, @"Failed to create preferences");
@@ -258,6 +258,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
         mainWindowController = [[PIXMainWindowController alloc] initWithWindowNibName:@"PIXMainWindow"];
         //mainWindowController = (PIXMainWindowController *)[self.window windowController];
     }
+    mainWindowController.window.delegate = self;
     [mainWindowController showWindow:self];
 }
 
@@ -425,7 +426,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 // Returns the NSUndoManager for the application. In this case, the manager returned is that of the managed object context for the application.
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window
 {
-    return [[self managedObjectContext] undoManager];
+    return [self undoManager];
 }
 
 - (NSUndoManager *)undoManager
