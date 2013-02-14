@@ -85,7 +85,7 @@
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="985564159"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1680, 1028}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<int key="NSWindowCollectionBehavior">128</int>
 				<bool key="NSWindowIsRestorable">YES</bool>
@@ -116,6 +116,14 @@
 						<reference key="destination" ref="1042850901"/>
 					</object>
 					<int key="connectionID">186</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="1005"/>
+						<reference key="destination" ref="759964966"/>
+					</object>
+					<int key="connectionID">229</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -340,7 +348,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">228</int>
+			<int key="maxID">229</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -363,7 +371,6 @@
 						<string key="showLoadingWindow:">id</string>
 						<string key="showMainWindow:">id</string>
 						<string key="testFetchAllAlbums:">id</string>
-						<string key="testFetchAllPhotos:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="deleteAllAlbums:">
@@ -392,10 +399,6 @@
 						</object>
 						<object class="IBActionInfo" key="testFetchAllAlbums:">
 							<string key="name">testFetchAllAlbums:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="testFetchAllPhotos:">
-							<string key="name">testFetchAllPhotos:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>

@@ -41,6 +41,9 @@
 
 -(void)loadAllAlbums;
 
+
+- (void)shallowScanURL:(NSURL *)url;
+
 @end
 
 @interface PIXFileSystemDataSource(ArchDirectoryObserver)
