@@ -757,7 +757,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         posY = (posY < NSMinY(clippedRect) ? NSMinY(clippedRect) : posY);
         
         CGFloat width = (location.x > selectionFrameInitialPoint.x ? location.x - selectionFrameInitialPoint.x : selectionFrameInitialPoint.x - posX);
-        width = (posX + width >= (columnsInGridView * self.itemSize.width) ? (columnsInGridView * self.itemSize.width) - posX - 1 : width);
+        width = (posX + width >= (columnsInGridView * self.itemSize.width) ? (self.bounds.size.width) - posX - 1 : width);
 
         CGFloat height = (location.y > selectionFrameInitialPoint.y ? location.y - selectionFrameInitialPoint.y : selectionFrameInitialPoint.y - posY);
         height = (posY + height > NSMaxY(clippedRect) ? NSMaxY(clippedRect) - posY : height);

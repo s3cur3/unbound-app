@@ -310,12 +310,12 @@
         
         if(count == 1)
         {
-            [self.gridViewTitle setStringValue:@"1 album matched search"];
+            [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"1 album matched \"%@\"", self.lastSearch]];
         }
         
         else
         {
-            [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%ld albums matched search", count]];
+            [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%ld albums matched \"%@\"", count, self.lastSearch]];
         }
     }
     else
