@@ -324,6 +324,18 @@
     DLog(@"Completed file deletion");
 }
 
+-(BOOL)directoryIsSubpathOfObservedDirectories:(NSString *)aDirectoryPath
+{
+    NSArray *observedDirectories = [[[PIXFileSystemDataSource sharedInstance] observedDirectories] valueForKey:@"path"];
+    for (NSString *observedPath in observedDirectories)
+    {
+        if ([aDirectoryPath hasPrefix:observedPath]==YES) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 //TODO: background thread these operations
 -(void)moveFiles:(NSArray *)items
 {
@@ -355,7 +367,7 @@
     //    FileSystemEventController *fileSystemEventController = mainWindowController.fileSystemEventController;
     for (NSString *albumPath in albumPaths)
     {
-        if (![albumPath isEqualToString:[self trashFolderPath]]) {
+        if (![albumPath isEqualToString:[self trashFolderPath]] && [self directoryIsSubpathOfObservedDirectories:albumPath]) {
             [[PIXFileSystemDataSource sharedInstance] shallowScanURL:[NSURL fileURLWithPath:albumPath isDirectory:YES]];
         }
     }
@@ -393,7 +405,7 @@
     
     for (NSString *albumPath in albumPaths)
     {
-        if (![albumPath isEqualToString:trashFolder]) {
+        if (![albumPath isEqualToString:trashFolder] && [self directoryIsSubpathOfObservedDirectories:albumPath]) {
             [[PIXFileSystemDataSource sharedInstance] shallowScanURL:[NSURL fileURLWithPath:albumPath isDirectory:YES]];
         }
     }
