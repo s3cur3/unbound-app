@@ -83,7 +83,7 @@
         title = [NSString stringWithFormat:@"%ld Albums", [albumArray count]];
     }
  
-    return [self dragStackForImages:@[image1, image2, image3] size:size title:title];
+    return [self dragStackForImages:@[image1, image2, image3] size:size title:title andBadgeCount:[albumArray count]];
 }
     
 
@@ -126,6 +126,10 @@
     self.isDraggingOver = YES;
     [self setNeedsDisplay:YES];
     
+    if([sender draggingSource] == nil)
+    {
+        return NSDragOperationCopy;
+    }
     
     return NSDragOperationMove;
 }

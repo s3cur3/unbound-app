@@ -24,6 +24,18 @@
 }
 
 
+-(void)setButtons:(NSArray *)buttonArray
+{
+    for(NSButton * button in buttonArray)
+    {
+     //   [self.buttonHolder addSubview:button];
+    }
+    
+    //NSArray *constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"[_buttonHolder]-0-[_contentView]-0-[_buttonHolder]" options:0 metrics:nil views:viewsDictionary];
+
+}
+
+
 -(void)keyWindowChanged
 {
     [self setNeedsDisplay:YES];
@@ -71,5 +83,7 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
+
 
 @end

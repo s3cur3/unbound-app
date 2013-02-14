@@ -10,4 +10,8 @@
 
 @interface PIXGradientBarView : NSView
 
+@property (strong) IBOutlet NSView * buttonHolder;
+
+-(void)setButtons:(NSArray *)buttonArray;
+
 @end

@@ -15,6 +15,7 @@
 #import "PIXDefines.h"
 #import "PIXPhotoGridViewItem.h"
 #import "PIXPhoto.h"
+#import "PIXGradientBarView.h"
 
 @interface PIXPhotoGridViewController ()
 
@@ -88,6 +89,11 @@
 -(void)updateAlbum
 {
     self.items = [self fetchItems];
+    
+    // remove any items that are no lon
+    [self.selectedItems intersectSet:[NSSet setWithArray:self.items]];
+    
+    
     [self.gridView reloadData];
     [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%ld photos from %@", [self.items count], [self.titleDateFormatter stringFromDate:self.album.albumDate]]];
     
@@ -190,6 +196,8 @@
 
 - (void)gridView:(CNGridView *)gridView dragDidBeginAtIndex:(NSUInteger)index inSection:(NSUInteger)section andEvent:(NSEvent *)event
 {
+    if(index == NSNotFound) return;
+    
     // move the item we just selected to the front (so it will show up correctly in the drag image)
     PIXPhoto * topPhoto = [self.items objectAtIndex:index];
     
@@ -226,6 +234,18 @@
     
 }
 
+
+-(void)updateToolbar
+{
+    [super updateToolbar];
+    
+    NSButton * button = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
+    
+    [button setTitle:@"Delete"];
+    
+    [self.toolbar setButtons:@[button]];
+    
+}
 
 
 
