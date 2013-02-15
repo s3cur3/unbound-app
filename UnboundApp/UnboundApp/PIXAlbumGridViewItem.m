@@ -321,7 +321,7 @@
     
 
     
-    [self.itemTitle drawInRect:textRect withAttributes:attributes];
+    [[self.album title] drawInRect:textRect withAttributes:attributes];
     
     attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                   [NSFont fontWithName:@"Helvetica Neue" size:11], NSFontAttributeName,

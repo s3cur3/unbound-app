@@ -236,7 +236,7 @@ A</bytes>
 								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 							</object>
 						</array>
-						<string key="NSFrame">{{0, 364}, {637, 35}}</string>
+						<string key="NSFrame">{{0, 399}, {637, 35}}</string>
 						<reference key="NSSuperview" ref="188159124"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="227528308"/>
@@ -280,7 +280,7 @@ A</bytes>
 													<reference key="NSBackgroundColor" ref="69744917"/>
 													<object class="NSColor" key="NSTextColor">
 														<int key="NSColorSpace">1</int>
-														<bytes key="NSRGB">MC4zMTM4Nzk5MjUzIDAuMzEzODc5OTI1MyAwLjMxMzg3OTkyNTMgMC44NAA</bytes>
+														<bytes key="NSRGB">MC40ODgwNjg5NTM4IDAuNDg4MDY4OTUzOCAwLjQ4ODA2ODk1MzgAA</bytes>
 													</object>
 												</object>
 												<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -400,7 +400,7 @@ A</bytes>
 							<int key="secondAttribute">3</int>
 							<float key="multiplier">1</float>
 							<object class="IBLayoutConstant" key="constant">
-								<double key="value">0.0</double>
+								<double key="value">-35</double>
 							</object>
 							<float key="priority">1000</float>
 							<reference key="containingView" ref="188159124"/>
@@ -479,7 +479,7 @@ A</bytes>
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">toolbarWidth</string>
 						<reference key="source" ref="870606621"/>
-						<object class="IBNSLayoutConstraint" key="destination" id="493605957">
+						<object class="IBNSLayoutConstraint" key="destination" id="1071866852">
 							<reference key="firstItem" ref="681858164"/>
 							<int key="firstAttribute">7</int>
 							<int key="relation">0</int>
@@ -667,7 +667,7 @@ A</bytes>
 						<int key="objectID">32</int>
 						<reference key="object" ref="870606621"/>
 						<array class="NSMutableArray" key="children">
-							<object class="IBNSLayoutConstraint" id="582093132">
+							<object class="IBNSLayoutConstraint" id="508046514">
 								<reference key="firstItem" ref="681858164"/>
 								<int key="firstAttribute">3</int>
 								<int key="relation">0</int>
@@ -683,7 +683,7 @@ A</bytes>
 								<float key="scoringTypeFloat">9</float>
 								<int key="contentType">3</int>
 							</object>
-							<object class="IBNSLayoutConstraint" id="931602583">
+							<object class="IBNSLayoutConstraint" id="173982560">
 								<reference key="firstItem" ref="681858164"/>
 								<int key="firstAttribute">10</int>
 								<int key="relation">0</int>
@@ -699,7 +699,7 @@ A</bytes>
 								<float key="scoringTypeFloat">22</float>
 								<int key="contentType">2</int>
 							</object>
-							<object class="IBNSLayoutConstraint" id="528532203">
+							<object class="IBNSLayoutConstraint" id="159315295">
 								<reference key="firstItem" ref="681858164"/>
 								<int key="firstAttribute">3</int>
 								<int key="relation">0</int>
@@ -1323,7 +1323,7 @@ A</bytes>
 						<int key="objectID">354</int>
 						<reference key="object" ref="681858164"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="493605957"/>
+							<reference ref="1071866852"/>
 						</array>
 						<reference key="parent" ref="870606621"/>
 					</object>
@@ -1339,17 +1339,17 @@ A</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">464</int>
-						<reference key="object" ref="528532203"/>
+						<reference key="object" ref="159315295"/>
 						<reference key="parent" ref="870606621"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">465</int>
-						<reference key="object" ref="931602583"/>
+						<reference key="object" ref="173982560"/>
 						<reference key="parent" ref="870606621"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">466</int>
-						<reference key="object" ref="582093132"/>
+						<reference key="object" ref="508046514"/>
 						<reference key="parent" ref="870606621"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -1359,7 +1359,7 @@ A</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">463</int>
-						<reference key="object" ref="493605957"/>
+						<reference key="object" ref="1071866852"/>
 						<reference key="parent" ref="681858164"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -1452,9 +1452,9 @@ A</bytes>
 					<reference ref="826933695"/>
 					<reference ref="512718499"/>
 					<reference ref="622312033"/>
-					<reference ref="528532203"/>
-					<reference ref="931602583"/>
-					<reference ref="582093132"/>
+					<reference ref="159315295"/>
+					<reference ref="173982560"/>
+					<reference ref="508046514"/>
 				</array>
 				<boolean value="NO" key="32.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="32.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1463,7 +1463,7 @@ A</bytes>
 				<string key="323.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="324.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<array key="354.IBNSViewMetadataConstraints">
-					<reference ref="493605957"/>
+					<reference ref="1071866852"/>
 				</array>
 				<boolean value="NO" key="354.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="354.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1502,7 +1502,7 @@ A</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">473</int>
+			<int key="maxID">474</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1571,6 +1571,9 @@ A</bytes>
 					<string key="superclassName">PIXViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="deleteItems:">id</string>
+						<string key="getInfo:">id</string>
+						<string key="openInApp:">id</string>
+						<string key="revealInFinder:">id</string>
 						<string key="selectAll:">id</string>
 						<string key="selectNone:">id</string>
 						<string key="toggleSelection:">id</string>
@@ -1578,6 +1581,18 @@ A</bytes>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="deleteItems:">
 							<string key="name">deleteItems:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="getInfo:">
+							<string key="name">getInfo:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="openInApp:">
+							<string key="name">openInApp:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="revealInFinder:">
+							<string key="name">revealInFinder:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="selectAll:">
