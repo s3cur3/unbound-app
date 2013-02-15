@@ -194,8 +194,29 @@ static CGSize kDefaultItemSizeCustomized;
                                  nil];
     
     
+    NSSize stringSize = [title sizeWithAttributes:attributes];
+    
+    // resize width to be a bit wider than the text
+    CGFloat stringWidth = stringSize.width + 15;
+    
+    // make sure it's not wider than the view
+    if(stringWidth > size.width)
+    {
+        stringWidth = size.width;
+    }
+    
+    // make rect for text bubble
+    NSRect textBubbleRect = NSInsetRect(textRect, (textRect.size.width- stringWidth)/2, 0);
+    
+    
+       
+    NSBezierPath *textBubbleRectPath = [NSBezierPath bezierPathWithRoundedRect:textBubbleRect xRadius:12 yRadius:12];
+    
+    [[NSColor colorWithCalibratedWhite:0 alpha:.7] setFill];
+    [textBubbleRectPath fill];
     
     [title drawInRect:textRect withAttributes:attributes];
+    
     
     
     CGRect albumFrame = CGRectInset(imgRect, 18, 20);
