@@ -229,7 +229,66 @@ static CGSize kDefaultItemSizeCustomized;
     
     
     // draw the top image
-    [[self class] drawBorderedPhoto:image1 inRect:albumFrame];
+    CGRect topImageRect = [[self class] drawBorderedPhoto:image1 inRect:albumFrame];
+    
+    // now draw the number bubble if needed
+    if(count > 1)
+    {
+        attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                      [NSFont fontWithName:@"Helvetica Bold" size:16], NSFontAttributeName,
+                      //textShadow,                                 NSShadowAttributeName,
+                      //bgColor,                                    NSBackgroundColorAttributeName,
+                      [NSColor whiteColor],                                  NSForegroundColorAttributeName,
+                      textStyle,                                  NSParagraphStyleAttributeName,
+                      nil];
+        
+        NSString * countString = [NSString stringWithFormat:@"%ld", count];
+        
+        
+        NSSize stringSize = [countString sizeWithAttributes:attributes];
+        
+        CGFloat stringWidth = stringSize.width + 15;
+        
+        CGRect countBubbleRect;
+        CGRect remainder;
+        
+        float bubbleWidth = 25;
+        
+        if(bubbleWidth < stringWidth)
+        {
+            bubbleWidth = stringWidth;
+        }
+        
+        CGRectDivide(topImageRect, &countBubbleRect, &remainder, bubbleWidth, CGRectMaxXEdge);
+        CGRectDivide(countBubbleRect, &countBubbleRect, &remainder, 25, CGRectMaxYEdge);
+        
+        countBubbleRect.origin.x += 8;
+        countBubbleRect.origin.y += 8;
+        
+        NSBezierPath *countRectPath = [NSBezierPath bezierPathWithRoundedRect:countBubbleRect xRadius:12 yRadius:12];
+        
+        [[NSColor redColor] setFill];
+        
+        NSGradient * aGradient = [[NSGradient alloc] initWithStartingColor:[NSColor redColor]
+                                                  endingColor:[NSColor colorWithCalibratedRed:0.724 green:0.000 blue:0.066 alpha:1.000]];
+        
+        CGContextSetShadowWithColor(context, CGSizeMake(0, -1), 5.0, [[NSColor colorWithGenericGamma22White:0.0 alpha:.4] CGColor]);
+        [countRectPath fill];
+        CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
+        
+        [aGradient  drawInBezierPath:countRectPath angle:270.0];
+        
+        
+        [[NSColor colorWithCalibratedWhite:1.0 alpha:1.0] setStroke];
+        [countRectPath setLineWidth:2];
+        [countRectPath stroke];
+        
+        
+        
+        countBubbleRect.origin.y -= 2;
+        
+        [countString drawInRect:countBubbleRect withAttributes:attributes];
+    }
     
     
     // done drawing, so set the current context back to what it was
