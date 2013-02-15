@@ -53,7 +53,7 @@
 								<string key="NSFrame">{{587, 5}, {50, 25}}</string>
 								<reference key="NSSuperview" ref="870606621"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
+								<reference key="NSNextKeyView" ref="237789261"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<string key="NSHuggingPriority">{1000, 250}</string>
 								<string key="NSAntiCompressionPriority">{1000, 750}</string>
@@ -206,11 +206,11 @@ A</bytes>
 								<reference key="NSNextKeyView" ref="681858164"/>
 								<string key="NSReuseIdentifierKey">_NS:1535</string>
 								<string key="NSHuggingPriority">{252, 750}</string>
-								<string key="NSAntiCompressionPriority">{752, 750}</string>
+								<string key="NSAntiCompressionPriority">{750, 750}</string>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSTextFieldCell" key="NSCell" id="623915126">
-									<int key="NSCellFlags">68157504</int>
-									<int key="NSCellFlags2">306185216</int>
+									<int key="NSCellFlags">67108928</int>
+									<int key="NSCellFlags2">306186240</int>
 									<string key="NSContents">1 Item Selected</string>
 									<object class="NSFont" key="NSSupport">
 										<string key="NSName">Helvetica-Bold</string>
@@ -308,7 +308,7 @@ A</bytes>
 								<string key="NSFrame">{{621, 0}, {16, 399}}</string>
 								<reference key="NSSuperview" ref="237789261"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="870606621"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:26</string>
 								<bool key="NSEnabled">YES</bool>
 								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -349,7 +349,7 @@ A</bytes>
 				<string key="NSFrameSize">{637, 399}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="237789261"/>
+				<reference key="NSNextKeyView" ref="870606621"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<string key="NSClassName">NSView</string>
 			</object>
@@ -789,7 +789,7 @@ A</bytes>
 								<object class="IBLayoutConstant" key="constant">
 									<double key="value">0.0</double>
 								</object>
-								<float key="priority">321</float>
+								<float key="priority">69</float>
 								<reference key="containingView" ref="870606621"/>
 								<int key="scoringType">9</int>
 								<float key="scoringTypeFloat">40</float>
@@ -1437,7 +1437,7 @@ A</bytes>
 				<string key="283.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="302.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="304.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<array key="32.IBNSViewMetadataConstraints">
+				<array class="NSMutableArray" key="32.IBNSViewMetadataConstraints">
 					<reference ref="75186025"/>
 					<reference ref="246765662"/>
 					<reference ref="215395167"/>
@@ -1502,7 +1502,7 @@ A</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">474</int>
+			<int key="maxID">486</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1571,9 +1571,6 @@ A</bytes>
 					<string key="superclassName">PIXViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="deleteItems:">id</string>
-						<string key="getInfo:">id</string>
-						<string key="openInApp:">id</string>
-						<string key="revealInFinder:">id</string>
 						<string key="selectAll:">id</string>
 						<string key="selectNone:">id</string>
 						<string key="toggleSelection:">id</string>
@@ -1581,18 +1578,6 @@ A</bytes>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="deleteItems:">
 							<string key="name">deleteItems:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="getInfo:">
-							<string key="name">getInfo:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="openInApp:">
-							<string key="name">openInApp:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="revealInFinder:">
-							<string key="name">revealInFinder:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="selectAll:">
