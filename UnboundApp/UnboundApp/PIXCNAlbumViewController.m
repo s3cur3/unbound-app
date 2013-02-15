@@ -306,16 +306,19 @@
 {
     if(self.searchedAlbums)
     {
-        NSUInteger count = [self.searchedAlbums count];
+        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+        [numberFormatter setNumberStyle: NSNumberFormatterDecimalStyle];
+        NSString *albumCount = [numberFormatter stringFromNumber:[NSNumber numberWithLong:[self.searchedAlbums count]]];
         
-        if(count == 1)
+        
+        if([self.searchedAlbums count] == 1)
         {
             [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"1 album matched \"%@\"", self.lastSearch]];
         }
         
         else
         {
-            [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%ld albums matched \"%@\"", count, self.lastSearch]];
+            [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%@ albums matched \"%@\"", albumCount, self.lastSearch]];
         }
     }
     else
@@ -324,9 +327,12 @@
         
         NSUInteger numPhotos = [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] countForFetchRequest:fetchRequest error:nil];
         
+        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+        [numberFormatter setNumberStyle: NSNumberFormatterDecimalStyle];
+        NSString *albumCount = [numberFormatter stringFromNumber:[NSNumber numberWithLong:[self.albums count]]];
+         NSString *photosCount = [numberFormatter stringFromNumber:[NSNumber numberWithLong:numPhotos]];
         
-        
-        [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%ld albums containing %ld photos", [self.albums count], numPhotos]];
+        [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%@ albums containing %@ photos", albumCount, photosCount]];
     }
 }
 

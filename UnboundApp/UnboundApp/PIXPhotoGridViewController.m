@@ -97,7 +97,13 @@
     
     
     [self.gridView reloadData];
-    [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%ld photos from %@", [self.items count], [self.titleDateFormatter stringFromDate:self.album.albumDate]]];
+    
+    
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setNumberStyle: NSNumberFormatterDecimalStyle];
+    NSString *photosCount = [numberFormatter stringFromNumber:[NSNumber numberWithLong:[self.items count]]];
+    
+    [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%@ photos from %@", photosCount, [self.titleDateFormatter stringFromDate:self.album.albumDate]]];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self updateToolbar];
