@@ -21,7 +21,8 @@
 
 - (NSString *)defaultAppPathForOpeningFileWithPath:(NSString *)filePath;
 - (NSString *)defaultAppNameForOpeningFileWithPath:(NSString *)filePath;
-- (NSMenu *)openWithMenuItemForFile:(NSString *)filePath;
+//- (NSMenu *)openWithMenuItemForFile:(NSString *)filePath;
+- (NSMenu *)openWithMenuItemForFiles:(NSArray *)filePaths;
 - (void)openFileWithPath:(NSString *)filePath withApplication:(NSString *)appPath;
 
 @end

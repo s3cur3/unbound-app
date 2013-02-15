@@ -206,19 +206,38 @@
     //Get the files from the drop
 	NSArray * files = [[info draggingPasteboard] propertyListForType:NSFilenamesPboardType];
     DLog(@"Sidebar acccepting droppped files : %@, option key presssed : %@", files, ([PIXViewController optionKeyIsPressed] ? @"YES" : @"NO"));
+    DLog(@"Sidebar acccepting droppped files NSDraggingInfo : %@", info);
     NSMutableArray *pathsToPaste = [NSMutableArray arrayWithCapacity:[files count]];
     NSString *destPath = self.dragDropDestination.path;
     for (NSString * path in files)
     {
         [pathsToPaste addObject:@{@"source" : path, @"destination" : destPath}];
     }
+
+    DLog(@"Sidebar acccepting drop with source : %@, option key presssed : %@", [info draggingSource], ([PIXViewController optionKeyIsPressed] ? @"YES" : @"NO"));
     //TODO: find out why this doesn't work
-    if ([PIXViewController optionKeyIsPressed] == NO)
+    if ( [[info draggingSource] class] == [PIXPhotoGridViewController class])
     {
-        [[PIXFileManager sharedInstance] moveFiles:pathsToPaste];
-    } else {
-        [[PIXFileManager sharedInstance] copyFiles:pathsToPaste];
-    }
+        if (![PIXViewController optionKeyIsPressed])
+        {
+            DLog(@"acceptDrop -- Drag and drop is from browser - move operation");
+            [[PIXFileManager sharedInstance] moveFiles:pathsToPaste];
+        } else {
+            DLog(@"acceptDrop -- Drag and drop is from browser WITH alt key pressed - copy operation");
+            [[PIXFileManager sharedInstance] copyFiles:pathsToPaste];
+        }
+	} else {
+        
+        if ([PIXViewController optionKeyIsPressed])
+        {
+            DLog(@"acceptDrop -- Drag and drop is outside source with alt pressed - use move operation");
+            [[PIXFileManager sharedInstance] moveFiles:pathsToPaste];
+        } else {
+            DLog(@"acceptDrop -- Drag and drop is outside source - default to copy operation");
+            [[PIXFileManager sharedInstance] copyFiles:pathsToPaste];
+        }
+	}
+
     return YES;
     
     
