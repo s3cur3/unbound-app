@@ -57,12 +57,12 @@
         
         [button setTranslatesAutoresizingMaskIntoConstraints:NO];
         
-        fullWidth = fullWidth + button.frame.size.width + 6;
+        fullWidth = fullWidth + [button.cell cellSize].width + 6;
         
         i++;
     }
     
-    fullWidth -= 6;
+    fullWidth += 6;
     
     [horizontalConstraints appendString:@"|"];
     
