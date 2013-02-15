@@ -291,7 +291,7 @@ static CGSize kDefaultItemSizeCustomized;
         [[NSColor redColor] setFill];
         
         NSGradient * aGradient = [[NSGradient alloc] initWithStartingColor:[NSColor redColor]
-                                                  endingColor:[NSColor colorWithCalibratedRed:0.724 green:0.000 blue:0.066 alpha:1.000]];
+                                                  endingColor:[NSColor colorWithCalibratedRed:0.580 green:0.039 blue:0.064 alpha:1.000]];
         
         CGContextSetShadowWithColor(context, CGSizeMake(0, -1), 5.0, [[NSColor colorWithGenericGamma22White:0.0 alpha:.4] CGColor]);
         [countRectPath fill];

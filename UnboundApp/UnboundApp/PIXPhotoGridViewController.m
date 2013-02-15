@@ -99,6 +99,11 @@
     [self.gridView reloadData];
     [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%ld photos from %@", [self.items count], [self.titleDateFormatter stringFromDate:self.album.albumDate]]];
     
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self updateToolbar];
+    });
+    
+    
 }
 
 -(NSMutableArray *)fetchItems
