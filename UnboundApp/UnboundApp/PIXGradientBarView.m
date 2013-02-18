@@ -108,23 +108,29 @@
     // from startingColor to endingColor
     
     NSGradient* aGradient = nil;
+    NSColor *edgeColor = nil;
     
     if ([[self window] isMainWindow]) {
         
         aGradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.9 alpha:1.000]
                                                   endingColor:[NSColor colorWithCalibratedWhite:0.85 alpha:1.000]];
+        
+        edgeColor = [NSColor colorWithCalibratedWhite:0.35 alpha:1.000];
+        
     }
     
     else
     {
-        aGradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.956 alpha:1.000]
-                                                  endingColor:[NSColor colorWithCalibratedWhite:0.821 alpha:1.000]];
+        aGradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.95 alpha:1.000]
+                                                  endingColor:[NSColor colorWithCalibratedWhite:0.9 alpha:1.000]];
+        
+        edgeColor = [NSColor colorWithCalibratedWhite:0.5 alpha:1.000];
     }
     
     [aGradient drawInRect:[self bounds] angle:270];
     
     
-    [[NSColor colorWithCalibratedWhite:0.3 alpha:1.000] drawSwatchInRect:NSMakeRect(0, 0, self.bounds.size.width, 1)];
+    [edgeColor drawSwatchInRect:NSMakeRect(0, 0, self.bounds.size.width, 1)];
     
     
     

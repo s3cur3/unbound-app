@@ -154,6 +154,7 @@
             [formatter setDateStyle:NSDateFormatterShortStyle];
             NSString *modDateStr = [formatter stringFromDate:fileCreationDate];*/
             
+            
             NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:
                                   [self.loadURL lastPathComponent], kNameKey,
                                   //[self.loadURL absoluteString], kPathKey,

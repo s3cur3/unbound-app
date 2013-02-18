@@ -20,13 +20,14 @@
 
 @property (nonatomic, retain) NSDate * dateLastModified;
 @property (nonatomic, retain) NSDate * dateLastUpdated;
+@property (nonatomic, retain) NSDate * dateTaken;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * path;
 @property (nonatomic, retain) PIXAlbum *album;
-@property (nonatomic, retain) PIXAlbum *coverPhotoAlbum;
+@property (nonatomic, retain) PIXAlbum *datePhotoAlbum;
 @property (nonatomic, retain) PIXAlbum *stackPhotoAlbum;
 @property (nonatomic, retain) PIXThumbnail *thumbnail;
-
+@property (nonatomic, retain) NSDictionary * exifData;
 
 @property (nonatomic, strong) NSImage *thumbnailImage;
 @property (nonatomic, assign, readwrite) BOOL cancelThumbnailLoadOperation;
@@ -37,6 +38,8 @@
 //PIXThumbnailLoadingDelegate methods
 -(NSImage *)thumbnailImage;
 -(void)cancelThumbnailLoading;
+
+-(NSDate *)getDateTaken;
 
 @end
 

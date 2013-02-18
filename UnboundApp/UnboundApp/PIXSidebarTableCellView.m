@@ -73,15 +73,21 @@
 -(void)updateAlbumView:(NSNotification *)note
 {
     //if (note.object == self.album) {
-        [self.imageView setImage:[_album thumbnailImage]];
+    
+    if([self.album.stackPhotos count] > 0)
+    {
+        NSImage * thumb = [[self.album.stackPhotos objectAtIndex:0] thumbnailImage];
+        [self.imageView setImage:thumb];
+    }
         
-        if(self.imageView.image == nil)
-        {
-            [self.imageView setImage:[NSImage imageNamed:@"nophoto"]];
-        }
         
-        [self updateSubtitle];
-        [self setNeedsDisplay:YES];
+    if(self.imageView.image == nil)
+    {
+        [self.imageView setImage:[NSImage imageNamed:@"nophoto"]];
+    }
+    
+    [self updateSubtitle];
+    [self setNeedsDisplay:YES];
     /*} else {
         DLog(@"Received a notification for incorrect album : %@", note.object);
     }*/

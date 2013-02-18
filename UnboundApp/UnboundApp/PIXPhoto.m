@@ -32,12 +32,14 @@ const CGFloat kThumbnailSize = 200.0f;
 
 @dynamic dateLastModified;
 @dynamic dateLastUpdated;
+@dynamic dateTaken;
 @dynamic name;
 @dynamic path;
 @dynamic album;
 @dynamic thumbnail;
-@dynamic coverPhotoAlbum;
+@dynamic datePhotoAlbum;
 @dynamic stackPhotoAlbum;
+@dynamic exifData;
 
 @synthesize cancelThumbnailLoadOperation;
 @synthesize thumbnailImage = _thumbnailImage;
@@ -131,13 +133,19 @@ const CGFloat kThumbnailSize = 200.0f;
     */
     
     //If this is the coverPhoto of an album send a notification to the album to update it's thumb as well
-    if (self.album.coverPhoto == self) {
+    if (self.album.datePhoto == self) {
         //NSNotification *albumNotification = [NSNotification notificationWithName:AlbumDidChangeNotification object:self.album];
         //[[NSNotificationQueue defaultQueue] enqueueNotification:albumNotification postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnSender forModes:nil];
+        
+        if(self.dateTaken)
+        {
+            [self.album setAlbumDate:self.dateTaken];
+        }
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self.album];
     }
     
-    if(self.stackPhotoAlbum)
+    else if(self.stackPhotoAlbum)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self.album];
     }
@@ -190,6 +198,38 @@ const CGFloat kThumbnailSize = 200.0f;
     return _thumbnailImage;
 }
 
+-(NSDate *)getDateTaken
+{
+    if(self.dateTaken != nil) return self.dateTaken;
+    
+    CGImageSourceRef imageSrc = CGImageSourceCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:self.path], nil);
+    
+    // get the exif data
+    NSDictionary * exif = (__bridge NSDictionary *)(CGImageSourceCopyPropertiesAtIndex(imageSrc, 0, nil));
+    
+    CFRelease(imageSrc);
+    
+    NSDate * thisDateTaken = nil;
+    NSString * dateTakenString = [[exif objectForKey:@"{Exif}"] objectForKey:@"DateTimeOriginal"];
+    
+    if(dateTakenString)
+    {
+        NSDateFormatter* exifFormat = [[NSDateFormatter alloc] init];
+        [exifFormat setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
+        thisDateTaken = [exifFormat dateFromString:dateTakenString];
+    }
+    
+    if(thisDateTaken == nil)
+    {
+        thisDateTaken = self.dateLastModified;
+    }
+    
+    self.dateTaken = thisDateTaken;
+    
+    
+    return self.dateTaken;
+}
+
 
 -(void)loadThumbnailImage
 {
@@ -240,6 +280,19 @@ const CGFloat kThumbnailSize = 200.0f;
             image = [[weakSelf class] makeThumbnailImageFromImageSource:imageSource];
             //NSBitmapImageRep *rep = [[image representations] objectAtIndex: 0];
             
+            // aslo get the exif data
+            NSDictionary * exif = (__bridge NSDictionary *)(CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil));
+            
+            NSDate * dateTaken = nil;
+            NSString * dateTakenString = [[exif objectForKey:@"{Exif}"] objectForKey:@"DateTimeOriginal"];
+            
+            if(dateTakenString)
+            {
+                NSDateFormatter* exifFormat = [[NSDateFormatter alloc] init];
+                [exifFormat setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
+                dateTaken = [exifFormat dateFromString:dateTakenString];                
+            }
+            
             //NSData *data = [rep representationUsingType: NSJPEGFileType properties: nil];
             
             if (weakSelf.cancelThumbnailLoadOperation==YES) {
@@ -259,6 +312,19 @@ const CGFloat kThumbnailSize = 200.0f;
                 weakSelf.cancelThumbnailLoadOperation = NO;
                 return;
             }
+            
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                // set the exif data
+                [weakSelf setExifData:exif];
+                
+                // set the dateTaken
+                [weakSelf setDateTaken:dateTaken];
+                
+                // set the thumbnail data (this will also post a notification to update the UI)
+                //[weakSelf mainThreadComputePreviewThumbnailFinished:data];
+            });
             
             [weakSelf performSelectorOnMainThread:@selector(mainThreadComputePreviewThumbnailFinished:) withObject:data waitUntilDone:NO];
             
@@ -430,79 +496,5 @@ const CGFloat kThumbnailSize = 200.0f;
 //    return didSomething;
 //}
 
-
-@end
-
-@implementation PIXPhoto(IKImageBrowserItem)
-
-
-/*!
- @method imageUID
- @abstract Returns a unique string that identify this data source item (required).
- @discussion The image browser uses this identifier to keep the correspondance between its cache and the data source item
- */
-- (NSString *)  imageUID;  /* required */
-{
-    return self.path;
-}
-
-/*!
- @method imageRepresentationType
- @abstract Returns the representation of the image to display (required).
- @discussion Keys for imageRepresentationType are defined below.
- */
-- (NSString *) imageRepresentationType; /* required */
-{
-    return IKImageBrowserPathRepresentationType;
-}
-
-/*!
- @method imageRepresentation
- @abstract Returns the image to display (required). Can return nil if the item has no image to display.
- */
-- (id) imageRepresentation; /* required */
-{
-    return self.path;
-}
-
-#pragma mark -
-#pragma mark Optional Methods IKImageBrowserItem Informal Protocol
-
-/*!
- @method imageVersion
- @abstract Returns a version of this item. The receiver can return a new version to let the image browser knows that it shouldn't use its cache for this item
- */
-- (NSUInteger) imageVersion;
-{
-    return 1;
-}
-
-/*!
- @method imageTitle
- @abstract Returns the title to display as a NSString. Use setValue:forKey: with IKImageBrowserCellsTitleAttributesKey on the IKImageBrowserView instance to set text attributes.
- */
-- (NSString *) imageTitle;
-{
-    return self.name;
-}
-
-/*!
- @method imageSubtitle
- @abstract Returns the subtitle to display as a NSString. Use setValue:forKey: with IKImageBrowserCellsSubtitleAttributesKey on the IKImageBrowserView instance to set text attributes.
- */
-- (NSString *) imageSubtitle;
-{
-    return self.name;
-}
-
-/*!
- @method isSelectable
- @abstract Returns whether this item is selectable.
- @discussion The receiver can implement this methods to forbid selection of this item by returning NO.
- */
-- (BOOL) isSelectable;
-{
-    return YES;
-}
 
 @end

@@ -17,7 +17,7 @@
     //    @private
     //    PIXPhoto *_mostRecentPhoto;
     //    NSDate *_dateMostRecentPhoto;
-    NSImage *_thumbnailImage;
+
 }
 
 @property (nonatomic, retain) NSDate * albumDate;
@@ -27,7 +27,7 @@
 @property (nonatomic, retain) NSData * thumbnail;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) PIXAccount *account;
-@property (nonatomic, retain) PIXPhoto *coverPhoto;
+@property (nonatomic, retain) PIXPhoto *datePhoto;
 @property (nonatomic, retain) NSOrderedSet *photos;
 @property (nonatomic, retain) NSOrderedSet *stackPhotos;
 @end
@@ -66,12 +66,11 @@
 
 -(void)cancelThumbnailLoading;
 
--(void)updateCoverPhoto;
+-(void)updateDatePhoto;
 -(void)updateAlbumBecausePhotosDidChange;
 
 //non-core data
 - (NSURL *)filePathURL;
-- (NSImage *)thumbnailImage;
 - (NSString *) imageSubtitle;
 
 -(void) flush;

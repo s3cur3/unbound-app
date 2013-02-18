@@ -23,7 +23,7 @@ static NSString *const kItemsKey = @"photos";
 @dynamic thumbnail;
 @dynamic title;
 @dynamic account;
-@dynamic coverPhoto;
+@dynamic datePhoto;
 @dynamic photos;
 @dynamic stackPhotos;
 
@@ -32,64 +32,13 @@ static NSString *const kItemsKey = @"photos";
     return [NSURL fileURLWithPath:self.path isDirectory:YES];
 }
 
-- (NSImage *)thumbnailImageivar
-{
-    return [self.coverPhoto thumbnailImage];
-    if (_thumbnailImage == nil)
-    {
-        NSData *thumbData = self.thumbnail;
-        if (thumbData != nil) {
-            _thumbnailImage = [[NSImage alloc] initWithData:self.thumbnail];
-        } else if (self.coverPhoto.thumbnail.imageData == nil) {
-            [self.coverPhoto thumbnailImage];
-            return nil;
-            /*NSURL *aPath = self.coverPhoto.filePath;
-             self.thumbnail = [[NSData alloc] initWithContentsOfMappedFile:aPath.path];
-             _thumbnailImage = [[NSImage alloc] initWithData:self.thumbnail];*/
-        } else if (self.coverPhoto.thumbnail.imageData != nil) {
-            self.thumbnail = self.coverPhoto.thumbnail.imageData;
-            _thumbnailImage = [[NSImage alloc] initWithData:self.thumbnail];
-            /*NSURL *aPath = self.coverPhoto.filePath;
-             self.thumbnail = [[NSData alloc] initWithContentsOfMappedFile:aPath.path];
-             _thumbnailImage = [[NSImage alloc] initWithData:self.thumbnail];*/
-        } else {
-            return nil;
-        }
-    }
-    return _thumbnailImage;
-}
-
-- (NSImage *)thumbnailImage
-{
-    return [self.coverPhoto thumbnailImage];
-    //    _thumbnailImage = nil;
-    //    if (YES)//_thumbnailImage == nil)
-    //    {
-    //        NSData *thumbData = self.thumbnail;
-    //        if (thumbData != nil) {
-    //            _thumbnailImage = [[NSImage alloc] initWithData:self.thumbnail];
-    //        } else if (self.coverPhoto.thumbnail.imageData == nil) {
-    //            [self.coverPhoto thumbnailImage];
-    //            return nil;
-    //            /*NSURL *aPath = self.coverPhoto.filePath;
-    //             self.thumbnail = [[NSData alloc] initWithContentsOfMappedFile:aPath.path];
-    //             _thumbnailImage = [[NSImage alloc] initWithData:self.thumbnail];*/
-    //        } else if (self.coverPhoto.thumbnail.imageData != nil) {
-    //            self.thumbnail = self.coverPhoto.thumbnail.imageData;
-    //            _thumbnailImage = [[NSImage alloc] initWithData:self.thumbnail];
-    //            /*NSURL *aPath = self.coverPhoto.filePath;
-    //             self.thumbnail = [[NSData alloc] initWithContentsOfMappedFile:aPath.path];
-    //             _thumbnailImage = [[NSImage alloc] initWithData:self.thumbnail];*/
-    //        } else {
-    //            return nil;
-    //        }
-    //    }
-    //    return _thumbnailImage;
-}
 
 -(void)cancelThumbnailLoading;
 {
-    self.coverPhoto.cancelThumbnailLoadOperation = YES;
+    for(PIXPhoto * stackPhoto in self.stackPhotos)
+    {
+        stackPhoto.cancelThumbnailLoadOperation = YES;
+    }
 }
 
 
@@ -135,23 +84,22 @@ static NSString *const kItemsKey = @"photos";
 -(void)updateAlbumBecausePhotosDidChange
 {
     self.subtitle = nil;
-    [self updateCoverPhoto];
+    [self updateDatePhoto];
     [self updateStackPhotos];
 }
 
--(void)updateCoverPhoto
+-(void)updateDatePhoto
 {
     if (self.photos.count)
     {
-        PIXPhoto *newCoverPhoto = [self.photos objectAtIndex:0];
-        if (newCoverPhoto != self.coverPhoto) {
-            self.coverPhoto = [self.photos objectAtIndex:0];
-            self.albumDate = self.coverPhoto.dateLastModified;
+        PIXPhoto *newDatePhoto = [self.photos lastObject];
+        if (newDatePhoto != self.datePhoto) {
+            self.datePhoto = newDatePhoto;
+            
+            self.albumDate = [self.datePhoto getDateTaken];
+            
             self.subtitle = nil;
-            NSData *coverImageThumbData = self.coverPhoto.thumbnail.imageData;
-            if (coverImageThumbData != nil) {
-                self.thumbnail = coverImageThumbData;
-            }
+            
         }
     }
 }

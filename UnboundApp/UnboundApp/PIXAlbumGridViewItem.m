@@ -172,13 +172,7 @@
 -(void)albumChanged:(NSNotification *)note
 {
     [self setItemTitle:[self.album title]];
-    //[self.albumImageView setImage:[self.album thumbnailImage]];
-    self.albumThumb = [_album thumbnailImage];
     
-    if(self.albumThumb == nil)
-    {
-        self.albumThumb = [NSImage imageNamed:@"temp"];
-    }
     
     // if we've got one stack photo
     if([[self.album stackPhotos] count] > 0)
