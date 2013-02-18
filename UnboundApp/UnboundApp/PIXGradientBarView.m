@@ -112,7 +112,7 @@
     if ([[self window] isMainWindow]) {
         
         aGradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.9 alpha:1.000]
-                                                  endingColor:[NSColor colorWithCalibratedWhite:0.80 alpha:1.000]];
+                                                  endingColor:[NSColor colorWithCalibratedWhite:0.85 alpha:1.000]];
     }
     
     else
