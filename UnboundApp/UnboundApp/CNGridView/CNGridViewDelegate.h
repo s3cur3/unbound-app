@@ -63,6 +63,11 @@
 /**
  ...
  */
+- (void)gridView:(CNGridView*)gridView didShiftSelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section;
+
+/**
+ ...
+ */
 - (void)gridView:(CNGridView *)gridView willDeselectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section;
 
 /**

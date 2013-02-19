@@ -578,7 +578,16 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         // if we're in multiselect mode or the user is holding down command (same action)
         if (self.allowsMultipleSelection || modifierFlags & NSCommandKeyMask) {
             if (!gridViewItem.selected) {
-                [self selectItem:gridViewItem];
+                
+                if(modifierFlags & NSShiftKeyMask)
+                {
+                    [self gridView:self didShiftSelectItemAtIndex:selectedItemIndex inSection:0];
+                }
+                
+                else
+                {
+                    [self selectItem:gridViewItem];
+                }
                 shouldDeselectOnMouseUpIndex = -1;
             } else {
                 
@@ -1072,6 +1081,16 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
                     userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInteger:index] forKey:CNGridViewItemIndexKey]];
     if ([self.delegate respondsToSelector:_cmd]) {
         [self.delegate gridView:gridView didSelectItemAtIndex:index inSection:section];
+    }
+}
+
+- (void)gridView:(CNGridView*)gridView didShiftSelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
+{
+    /*[nc postNotificationName:CNGridViewDidSelectItemNotification
+                      object:gridView
+                    userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInteger:index] forKey:CNGridViewItemIndexKey]];*/
+    if ([self.delegate respondsToSelector:_cmd]) {
+        [self.delegate gridView:gridView didShiftSelectItemAtIndex:index inSection:section];
     }
 }
 

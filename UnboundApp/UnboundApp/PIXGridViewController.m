@@ -379,6 +379,53 @@ static NSString *kContentTitleKey, *kContentImageKey;
     [self updateToolbar];
 }
 
+- (void)gridView:(CNGridView *)gridView didShiftSelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
+{
+    
+    if([self.selectedItems count] == 0)
+    {
+        [self.selectedItems addObject:[self.items objectAtIndex:index]];
+    }
+    
+    else
+    {
+        // loop through the current selection and find the index that's closest the the newly clicked index
+        NSUInteger startIndex = NSNotFound;
+        NSUInteger distance = NSUIntegerMax;
+        
+        for(PIXAlbum * aSelectedAlbum in self.selectedItems)
+        {
+            NSUInteger thisIndex = [self.items indexOfObject:aSelectedAlbum];
+            NSUInteger thisDistance = abs((int)(thisIndex-index));
+            
+            if(thisIndex != NSNotFound && thisDistance < distance)
+            {
+                startIndex = thisIndex;
+                distance = thisDistance;
+            }
+        }
+        
+        // prep the indexes we're going to loop through
+        NSUInteger endIndex = index;
+        
+        // flip them so we always go the right rections
+        if(endIndex < startIndex)
+        {
+            endIndex = startIndex;
+            startIndex = index;
+        }
+        
+        // now add all the items between the two indexes to the selection
+        for(NSUInteger i = startIndex; i <= endIndex; i++)
+        {
+            [self.selectedItems addObject:[self.items objectAtIndex:i]];
+        }
+    }
+    
+    [self.gridView reloadSelection];
+    [self updateToolbar];
+}
+
 - (void)gridView:(CNGridView *)gridView didDeselectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
     [self.selectedItems removeObject:[self.items objectAtIndex:index]];
