@@ -202,15 +202,20 @@ const CGFloat kThumbnailSize = 200.0f;
 {
     if(self.dateTaken != nil) return self.dateTaken;
     
+    NSString * dateTakenString = nil;
+    NSDate * thisDateTaken = nil;
+    
     CGImageSourceRef imageSrc = CGImageSourceCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:self.path], nil);
     
+    if (imageSrc!=nil)
+    {
     // get the exif data
-    NSDictionary * exif = (__bridge NSDictionary *)(CGImageSourceCopyPropertiesAtIndex(imageSrc, 0, nil));
-    
-    CFRelease(imageSrc);
-    
-    NSDate * thisDateTaken = nil;
-    NSString * dateTakenString = [[exif objectForKey:@"{Exif}"] objectForKey:@"DateTimeOriginal"];
+        NSDictionary * exif = (__bridge NSDictionary *)(CGImageSourceCopyPropertiesAtIndex(imageSrc, 0, nil));
+        
+        CFRelease(imageSrc);
+        
+        dateTakenString = [[exif objectForKey:@"{Exif}"] objectForKey:@"DateTimeOriginal"];
+    }
     
     if(dateTakenString)
     {
