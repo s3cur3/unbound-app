@@ -119,30 +119,35 @@
         NSDateComponents* startComponents = [calendar components:unitFlags fromDate:startDate];
         NSDateComponents* endComponents = [calendar components:unitFlags fromDate:endDate];
         
-        [self.titleDateFormatter setDateStyle:NSDateFormatterLongStyle];
+        [self.titleDateFormatter setDateFormat:@"MMMM d, YYYY"];
         if([startComponents year] == [endComponents year])
         {
             // don't show the year on the first date if they're the same
-            [self.titleDateFormatter setDateFormat:@"MMMM, d"];
+            [self.titleDateFormatter setDateFormat:@"MMMM d"];
         }
         
         NSString * startDateString = [self.titleDateFormatter stringFromDate:startDate];
         
-        [self.titleDateFormatter setDateStyle:NSDateFormatterLongStyle];
-        NSString * endDateString = [self.titleDateFormatter stringFromDate:endDate];
+        [self.titleDateFormatter setDateFormat:@"MMMM d, YYYY"];
+        
         
         
         // if the date goes multiple days print the span
         if([startComponents day] != [endComponents day])
         {
-        
+            /*// This will remove the second month name if they are the same
+            if([startComponents month] == [endComponents month])
+            {
+                [self.titleDateFormatter setDateFormat:@"d, YYYY"];
+            }*/
             
-            
+            NSString * endDateString = [self.titleDateFormatter stringFromDate:endDate];
             gridTitle = [NSString stringWithFormat:@"%@ photos from %@ to %@", photosCount, startDateString, endDateString];
         }
         
         else
         {
+            NSString * endDateString = [self.titleDateFormatter stringFromDate:endDate];
             gridTitle = [NSString stringWithFormat:@"%@ photos from %@", photosCount, endDateString];
         }
     }
