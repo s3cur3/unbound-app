@@ -119,7 +119,7 @@
         NSDateComponents* startComponents = [calendar components:unitFlags fromDate:startDate];
         NSDateComponents* endComponents = [calendar components:unitFlags fromDate:endDate];
         
-        [self.titleDateFormatter setDateFormat:@"MMMM d, YYYY"];
+        [self.titleDateFormatter setDateFormat:@"MMMM d, yyyy"];
         if([startComponents year] == [endComponents year])
         {
             // don't show the year on the first date if they're the same
@@ -128,7 +128,7 @@
         
         NSString * startDateString = [self.titleDateFormatter stringFromDate:startDate];
         
-        [self.titleDateFormatter setDateFormat:@"MMMM d, YYYY"];
+        [self.titleDateFormatter setDateFormat:@"MMMM d, yyyy"];
         
         
         
