@@ -109,8 +109,8 @@
     // if we've got more than one photo then display the whole date range
     if([self.items count] > 2)
     {
-        NSDate * startDate = [[self.items objectAtIndex:0] dateTaken];
-        NSDate * endDate = [[self.items lastObject] dateTaken];
+        NSDate * startDate = [[self.items objectAtIndex:0] getDateTaken];
+        NSDate * endDate = [[self.items lastObject] getDateTaken];
         
         
         NSCalendar* calendar = [NSCalendar currentCalendar];
@@ -133,7 +133,7 @@
         
         
         // if the date goes multiple days print the span
-        if([startComponents day] != [endComponents day])
+        if([startComponents day] != [endComponents day] && [startDate compare:endDate] == NSOrderedAscending)
         {
             /*// This will remove the second month name if they are the same
             if([startComponents month] == [endComponents month])
