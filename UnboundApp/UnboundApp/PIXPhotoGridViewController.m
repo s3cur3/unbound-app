@@ -103,7 +103,58 @@
     [numberFormatter setNumberStyle: NSNumberFormatterDecimalStyle];
     NSString *photosCount = [numberFormatter stringFromNumber:[NSNumber numberWithLong:[self.items count]]];
     
-    [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%@ photos from %@", photosCount, [self.titleDateFormatter stringFromDate:self.album.albumDate]]];
+    
+    NSString * gridTitle = nil;
+    
+    // if we've got more than one photo then display the whole date range
+    if([self.items count] > 2)
+    {
+        NSDate * startDate = [[self.items objectAtIndex:0] dateTaken];
+        NSDate * endDate = [[self.items lastObject] dateTaken];
+        
+        
+        NSCalendar* calendar = [NSCalendar currentCalendar];
+        
+        unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
+        NSDateComponents* startComponents = [calendar components:unitFlags fromDate:startDate];
+        NSDateComponents* endComponents = [calendar components:unitFlags fromDate:endDate];
+        
+        [self.titleDateFormatter setDateStyle:NSDateFormatterLongStyle];
+        if([startComponents year] == [endComponents year])
+        {
+            // don't show the year on the first date if they're the same
+            [self.titleDateFormatter setDateFormat:@"MMMM, d"];
+        }
+        
+        NSString * startDateString = [self.titleDateFormatter stringFromDate:startDate];
+        
+        [self.titleDateFormatter setDateStyle:NSDateFormatterLongStyle];
+        NSString * endDateString = [self.titleDateFormatter stringFromDate:endDate];
+        
+        
+        // if the date goes multiple days print the span
+        if([startComponents day] != [endComponents day])
+        {
+        
+            
+            
+            gridTitle = [NSString stringWithFormat:@"%@ photos from %@ to %@", photosCount, startDateString, endDateString];
+        }
+        
+        else
+        {
+            gridTitle = [NSString stringWithFormat:@"%@ photos from %@", photosCount, endDateString];
+        }
+    }
+    
+    else
+    {
+        [self.titleDateFormatter setDateStyle:NSDateFormatterLongStyle];
+        
+        gridTitle = [NSString stringWithFormat:@"%@ photo from %@", photosCount, [self.titleDateFormatter stringFromDate:self.album.albumDate]];
+    }
+    
+    [self.gridViewTitle setStringValue:gridTitle];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self updateToolbar];
