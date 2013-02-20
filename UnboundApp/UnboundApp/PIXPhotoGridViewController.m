@@ -65,6 +65,9 @@
     
     [self.gridView reloadSelection];
     
+    // this will allow droping files into the larger grid view
+    [self.gridView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
+    
 }
 
 
@@ -301,6 +304,57 @@
     NSImage * dragImage = [PIXPhotoGridViewItem dragImageForPhotos:selectedArray size:NSMakeSize(180, 180)];
     [self.gridView dragImage:dragImage at:location offset:NSZeroSize event:event pasteboard:dragPBoard source:self slideBack:YES];
     
+}
+
+#pragma mark - Drop Operations
+- (NSDragOperation)dropOperationsForDrag:(id < NSDraggingInfo >)sender
+{
+    // we can check the files here and return NSDragOperationNone if we can't accept them
+    
+    // check the modifier keys and show with operation we support
+    if([NSEvent modifierFlags] & NSAlternateKeyMask)
+    {
+        return NSDragOperationMove;
+    }
+    
+    return NSDragOperationCopy;
+}
+
+- (NSDragOperation)draggingUpdated:(id<NSDraggingInfo>)sender
+{
+    // we can check the files here and return NSDragOperationNone if we can't accept them
+    
+    // check the modifier keys and show with operation we support
+    if([NSEvent modifierFlags] & NSAlternateKeyMask)
+    {
+        return NSDragOperationMove;
+    }
+    
+    return NSDragOperationCopy;
+}
+
+- (BOOL)prepareForDragOperation:(id < NSDraggingInfo >)sender
+{
+    // here we need to return NO if we can't accept the drag
+    
+    return YES;
+}
+
+- (BOOL)performDragOperation:(id < NSDraggingInfo >)sender
+{
+    // here we need perform the operation for the drop. We need to check the modifier keys to decide which we're doing
+    
+    if([NSEvent modifierFlags] & NSAlternateKeyMask)
+    {
+        // perform a move here
+    }
+    
+    else
+    {
+        // perform a copy here
+    }
+    
+    return YES;
 }
 
 

@@ -757,7 +757,6 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
     else {
         NSRect clippedRect = [self clippedRect];
-        NSUInteger columnsInGridView = [self columnsInGridView];
         
         CGFloat posX = ceil((location.x > selectionFrameInitialPoint.x ? selectionFrameInitialPoint.x : location.x));
         posX = (posX < NSMinX(clippedRect) ? NSMinX(clippedRect) : posX);
@@ -1173,6 +1172,57 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         [self.delegate gridView:gridView dragDidBeginAtIndex:index inSection:section andEvent:event];
     }
 }
+
+- (NSDragOperation)draggingEntered:(id < NSDraggingInfo >)sender
+{
+    if([self.delegate respondsToSelector:@selector(dropOperationsForDrag:)])
+    {
+        return [self.delegate dropOperationsForDrag:sender];
+    }
+    
+    return NSDragOperationNone;
+}
+
+- (BOOL)prepareForDragOperation:(id < NSDraggingInfo >)sender
+{
+    if([self.delegate respondsToSelector:@selector(prepareForDragOperation:)])
+    {
+        return [self.delegate prepareForDragOperation:sender];
+    }
+    
+    return NO;
+}
+
+- (BOOL)performDragOperation:(id < NSDraggingInfo >)sender
+{
+    if([self.delegate respondsToSelector:@selector(performDragOperation:)])
+    {
+        return [self.delegate performDragOperation:sender];
+    }
+    
+    return NO;
+}
+
+- (NSDragOperation)draggingUpdated:(id < NSDraggingInfo >)sender
+{
+    if([self.delegate respondsToSelector:@selector(draggingUpdated:)])
+    {
+        return [self.delegate draggingUpdated:sender];
+    }
+    
+    return NSDragOperationNone;
+}
+
+- (void)draggingExited:(id < NSDraggingInfo >)sender
+{
+    ;
+}
+
+- (void)draggingEnded:(id < NSDraggingInfo >)sender
+{
+    ;
+}
+
 
 
 

@@ -97,6 +97,9 @@
     }
     
     [self updateSearch];
+    
+    // this will allow droping files into the larger grid view 
+    [self.gridView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
 }
 
 -(void)defaultThemeChanged:(NSNotification *)note
@@ -657,6 +660,44 @@
     [self.gridView dragImage:dragImage at:location offset:NSZeroSize event:event pasteboard:dragPBoard source:self slideBack:YES];
     
 }
+
+#pragma mark - Drop Operations
+- (NSDragOperation)dropOperationsForDrag:(id < NSDraggingInfo >)sender
+{
+    if([NSEvent modifierFlags] & NSAlternateKeyMask)
+    {
+        return NSDragOperationMove;
+    }
+    
+    return NSDragOperationCopy;
+}
+
+- (NSDragOperation)draggingUpdated:(id<NSDraggingInfo>)sender
+{
+    // here we need to return the kind of drop operation allowed. This is where we decide if its a copy or move
+    if([NSEvent modifierFlags] & NSAlternateKeyMask)
+    {
+        return NSDragOperationMove;
+    }
+    
+    return NSDragOperationCopy;
+}
+
+- (BOOL)prepareForDragOperation:(id < NSDraggingInfo >)sender
+{
+    // here we need to return NO if we can't accept the drag
+    
+    return YES;
+}
+
+- (BOOL)performDragOperation:(id < NSDraggingInfo >)sender
+{
+    // here we need perform the operation for the drop
+    
+    return YES;
+}
+
+
 
 
 -(void)albumsChanged:(NSNotification *)note

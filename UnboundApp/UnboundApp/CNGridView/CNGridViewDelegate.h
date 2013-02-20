@@ -106,6 +106,26 @@
  */
 - (void)gridView:(CNGridView *)gridView dragDidBeginAtIndex:(NSUInteger)index inSection:(NSUInteger)section andEvent:(NSEvent *)event;
 
+/**
+ ...
+ */
+- (NSDragOperation)dropOperationsForDrag:(id < NSDraggingInfo >)sender;
+
+/**
+ ...
+ */
+- (NSDragOperation)draggingUpdated:(id < NSDraggingInfo >)sender;
+
+/**
+ ...
+ */
+- (BOOL)prepareForDragOperation:(id < NSDraggingInfo >)sender;
+
+/**
+ ...
+ */
+- (BOOL)performDragOperation:(id < NSDraggingInfo >)sender;
+
 @end
 
 
