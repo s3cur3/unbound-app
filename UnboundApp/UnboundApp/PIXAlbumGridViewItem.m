@@ -11,6 +11,8 @@
 #import "PIXPhoto.h"
 #import <QuartzCore/QuartzCore.h>
 #import "PIXDefines.h"
+#import "PIXFileManager.h"
+#import "PIXViewController.h"
 #include <stdlib.h>
 
 @interface PIXAlbumGridViewItem()
@@ -144,6 +146,29 @@
 {
     self.isDraggingOver = NO;
     [self setNeedsDisplay:YES];
+}
+
+- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
+{
+	//Get the files from the drop
+	NSArray * files = [[sender draggingPasteboard] propertyListForType:NSFilenamesPboardType];
+    
+    NSMutableArray *pathsToPaste = [NSMutableArray arrayWithCapacity:[files count]];
+    NSString *destPath = self.album.path;
+    for (NSString * path in files)
+    {
+        [pathsToPaste addObject:@{@"source" : path, @"destination" : destPath}];
+    }
+    
+    if ([PIXViewController optionKeyIsPressed])
+    {
+        [[PIXFileManager sharedInstance] moveFiles:pathsToPaste];
+    } else {
+        [[PIXFileManager sharedInstance] copyFiles:pathsToPaste];
+    }
+    return YES;
+    
+
 }
 
 -(void)setAlbum:(PIXAlbum *)album
