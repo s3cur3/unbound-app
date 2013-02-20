@@ -11,7 +11,7 @@
 @class PIXInfoWindowController;
 @class PIXMainWindowController;
 @class PIXLoadingWindowController;
-@class PIXFileSystemDataSource;
+@class PIXFileParser;
 
 @interface PIXAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate>
 {
@@ -52,8 +52,8 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
-//The old fileManager loading system
-@property (nonatomic, strong) PIXFileSystemDataSource *dataSource;
+//The file parsing system (keeps file system in sync)
+@property (nonatomic, strong) PIXFileParser *fileParser;
 
 @property (strong, nonatomic) NSUndoManager *undoManager;
 
@@ -70,6 +70,6 @@
 //NSWindowDelegate methods
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window;
 
-
+- (void)clearDatabase;
 
 @end

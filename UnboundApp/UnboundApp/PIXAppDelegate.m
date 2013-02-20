@@ -13,7 +13,7 @@
 #import "PIXLoadingWindowController.h"
  
 #import "Preferences.h"
-#import "PIXFileSystemDataSource.h"
+#import "PIXFileParser.h"
 #import "PIXDefines.h"
 
 
@@ -170,10 +170,10 @@ NSString* kAppFirstRun = @"appFirstRun";
     if (!self.isObservingFileSystem)
     {
         self.isObservingFileSystem = YES;
-        self.dataSource = [PIXFileSystemDataSource sharedInstance];
+        self.fileParser = [PIXFileParser sharedFileParser];
         //[self.dataSource startLoadingAllAlbumsAndPhotosInObservedDirectories];
         //[self.dataSource performSelector:@selector(startLoadingAllAlbumsAndPhotosInObservedDirectories) withObject:nil afterDelay:1.0];
-        [self.dataSource performSelector:@selector(startObserving) withObject:nil afterDelay:1.0];
+        [self.fileParser performSelector:@selector(startObserving) withObject:nil afterDelay:1.0];
     }
 
 
@@ -284,9 +284,9 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 
 - (void)applicationWillTerminate:(NSNotification *)notification;
 {
-    [self.dataSource stopObserving];
+    [self.fileParser stopObserving];
     self.isObservingFileSystem = NO;
-    self.dataSource = nil;
+    self.fileParser = nil;
 }
 
 // Returns the directory the application uses to store the Core Data store file. This code uses a directory named "com.pixite.UnboundCoreDataUtility" in the user's Application Support directory.
@@ -408,10 +408,26 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
         [[NSApplication sharedApplication] presentError:error];
         return nil;
     }
-    _managedObjectContext = [[NSManagedObjectContext alloc] init];
+    _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     [_managedObjectContext setPersistentStoreCoordinator:coordinator];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mergeContext:) name:NSManagedObjectContextDidSaveNotification object:nil];
     return _managedObjectContext;
+}
+
+- (void)clearDatabase
+{
+    _managedObjectContext = nil;
+    _persistentStoreCoordinator = nil;
+    
+    NSURL *url = [[self applicationFilesDirectory] URLByAppendingPathComponent:@"UnboundApp.sqlite"];
+    
+    NSError * error;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager removeItemAtPath:url.path error:&error]) {
+        NSLog(@"Failed to remove database file: %@", url);
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
 }
 
 -(void)mergeContext:(NSNotification *)notification

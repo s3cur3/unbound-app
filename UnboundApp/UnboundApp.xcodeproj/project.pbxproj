@@ -71,6 +71,7 @@
 		1DDEF83F169D34F100C0D303 /* PIXLoadingWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF83D169D34F100C0D303 /* PIXLoadingWindowController.m */; };
 		1DDEF840169D34F100C0D303 /* PIXLoadingWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDEF83E169D34F100C0D303 /* PIXLoadingWindow.xib */; };
 		1DDEF843169D3CF300C0D303 /* MakeThumbnailOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF842169D3CF300C0D303 /* MakeThumbnailOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C097D2716D57D0700E0E134 /* PIXFileParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C097D2616D57D0700E0E134 /* PIXFileParser.m */; };
 		8C249E6E16AB426A00CB97AF /* PIXCNAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E6D16AB426A00CB97AF /* PIXCNAlbumViewController.m */; };
 		8C249E7D16AB429E00CB97AF /* CNGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7216AB429E00CB97AF /* CNGridView.m */; };
 		8C249E7E16AB429E00CB97AF /* CNGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7616AB429E00CB97AF /* CNGridViewItem.m */; };
@@ -223,6 +224,8 @@
 		1DDEF83E169D34F100C0D303 /* PIXLoadingWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXLoadingWindow.xib; sourceTree = "<group>"; };
 		1DDEF841169D3CF300C0D303 /* MakeThumbnailOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakeThumbnailOperation.h; sourceTree = "<group>"; };
 		1DDEF842169D3CF300C0D303 /* MakeThumbnailOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MakeThumbnailOperation.m; sourceTree = "<group>"; };
+		8C097D2516D57D0700E0E134 /* PIXFileParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXFileParser.h; sourceTree = "<group>"; };
+		8C097D2616D57D0700E0E134 /* PIXFileParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXFileParser.m; sourceTree = "<group>"; };
 		8C249E6C16AB426A00CB97AF /* PIXCNAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXCNAlbumViewController.h; sourceTree = "<group>"; };
 		8C249E6D16AB426A00CB97AF /* PIXCNAlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXCNAlbumViewController.m; sourceTree = "<group>"; };
 		8C249E7116AB429E00CB97AF /* CNGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CNGridView.h; sourceTree = "<group>"; };
@@ -419,8 +422,10 @@
 		1D4A1DD7167AFB8600C9A895 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				1DBFD55516CAE415001944A9 /* PIXFileManager.m */,
+				8C097D2516D57D0700E0E134 /* PIXFileParser.h */,
+				8C097D2616D57D0700E0E134 /* PIXFileParser.m */,
 				1DBFD55616CAE415001944A9 /* PIXFileManager.h */,
+				1DBFD55516CAE415001944A9 /* PIXFileManager.m */,
 				1DDEF834169D348E00C0D303 /* Operations */,
 				1DDEF81B169D2D4A00C0D303 /* CoreData */,
 				1D4A1DD8167AFBD000C9A895 /* PIXObject.h */,
@@ -836,6 +841,7 @@
 				8CE460E116CB674700CDFA04 /* PIXCustomButtonCell.m in Sources */,
 				8CE460E416CD5A3900CDFA04 /* PIXCustomButton.m in Sources */,
 				8CE460E816CD7BB400CDFA04 /* PIXCustomShareSheetViewController.m in Sources */,
+				8C097D2716D57D0700E0E134 /* PIXFileParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

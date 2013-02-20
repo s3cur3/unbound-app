@@ -764,7 +764,7 @@ NSString * DefaultDropBoxPhotosDirectory()
 
 
 //-------------------------------------------------------
-//  This method sill scan a specific path in a shallow manner.
+//  This method will scan a specific path in a shallow manner.
 //  It will recurse to subdirectories only if it find's subdirectories
 //  that arent already in the database structure. It will also track
 //  current scans so new ones arent started

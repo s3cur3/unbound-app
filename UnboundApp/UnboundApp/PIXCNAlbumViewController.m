@@ -175,7 +175,7 @@
     //[_trashbutton setAction:@selector(deleteAllAlbums:)];
     
     [buttonView setTarget:[PIXAppDelegate sharedAppDelegate]];
-    [buttonView setAction:@selector(deleteAllAlbums:)];
+    [buttonView setAction:@selector(clearDatabase)];
     
 #endif
     

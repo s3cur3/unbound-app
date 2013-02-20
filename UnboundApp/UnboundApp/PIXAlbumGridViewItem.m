@@ -97,11 +97,7 @@
         self.stackThumb1 = [NSImage imageNamed:@"temp"];
         self.stackThumb2 = [NSImage imageNamed:@"temp-portrait"];
         
-        // randomly rotate the first between -.05 and .05
-        self.stackThumb1Rotate = (CGFloat)(arc4random() % 1400)/10000 - .07;
         
-        // the second needs to be the difference so that we rotate the object back
-        self.stackThumb2Rotate = (CGFloat)(arc4random() % 1400)/10000 - .07 - self.stackThumb1Rotate;
         
         
         [self registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
@@ -186,6 +182,21 @@
         _album = album;
         
         [self albumChanged:nil];
+        
+        // randomly rotate thumbs based on album name (so it won't change on refresh)
+        int random = 0;
+        
+        // add the value of each character together
+        for (int position=0; position < [album.title length]; position++)
+        {
+            random += (int)[album.title characterAtIndex:position];
+        }
+        
+        // randomly rotate the first between -.05 and .05
+        self.stackThumb1Rotate = (CGFloat)(random % 140)/1000 - .07;
+        
+        // the second needs to be the difference so that we rotate the object back
+        self.stackThumb2Rotate = (CGFloat)(random % 183)/1300 - .07 - self.stackThumb1Rotate;
 
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(albumChanged:) name:AlbumDidChangeNotification object:_album];
