@@ -311,6 +311,12 @@
 {
     // we can check the files here and return NSDragOperationNone if we can't accept them
     
+    // for now don't accept drags from our own app (this will be used for re-ordering photos later)
+    if([sender draggingSource] != nil)
+    {
+        return NSDragOperationNone;
+    }
+    
     // check the modifier keys and show with operation we support
     if([NSEvent modifierFlags] & NSAlternateKeyMask)
     {
@@ -323,6 +329,13 @@
 - (NSDragOperation)draggingUpdated:(id<NSDraggingInfo>)sender
 {
     // we can check the files here and return NSDragOperationNone if we can't accept them
+    
+    // for now don't accept drags from our own app (this will be used for re-ordering photos later)
+    if([sender draggingSource] != nil)
+    {
+        return NSDragOperationNone;
+    }
+    
     
     // check the modifier keys and show with operation we support
     if([NSEvent modifierFlags] & NSAlternateKeyMask)
@@ -337,11 +350,24 @@
 {
     // here we need to return NO if we can't accept the drag
     
+    // for now don't accept drags from our own app (this will be used for re-ordering photos later)
+    if([sender draggingSource] != nil)
+    {
+        return NO;
+    }
+    
     return YES;
 }
 
 - (BOOL)performDragOperation:(id < NSDraggingInfo >)sender
 {
+    
+    // for now don't accept drags from our own app (this will be used for re-ordering photos later)
+    if([sender draggingSource] != nil)
+    {
+        return NO;
+    }
+    
     // here we need perform the operation for the drop. We need to check the modifier keys to decide which we're doing
     
     if([NSEvent modifierFlags] & NSAlternateKeyMask)

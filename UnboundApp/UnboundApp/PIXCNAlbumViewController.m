@@ -664,6 +664,12 @@
 #pragma mark - Drop Operations
 - (NSDragOperation)dropOperationsForDrag:(id < NSDraggingInfo >)sender
 {
+    // for now don't accept drags from our own app
+    if([sender draggingSource] != nil)
+    {
+        return NSDragOperationNone;
+    }
+    
     if([NSEvent modifierFlags] & NSAlternateKeyMask)
     {
         return NSDragOperationMove;
@@ -674,6 +680,12 @@
 
 - (NSDragOperation)draggingUpdated:(id<NSDraggingInfo>)sender
 {
+    // for now don't accept drags from our own app
+    if([sender draggingSource] != nil)
+    {
+        return NSDragOperationNone;
+    }
+    
     // here we need to return the kind of drop operation allowed. This is where we decide if its a copy or move
     if([NSEvent modifierFlags] & NSAlternateKeyMask)
     {
@@ -687,11 +699,25 @@
 {
     // here we need to return NO if we can't accept the drag
     
+    // for now don't accept drags from our own app
+    if([sender draggingSource] != nil)
+    {
+        return NO;
+    }
+    
+    
     return YES;
 }
 
 - (BOOL)performDragOperation:(id < NSDraggingInfo >)sender
 {
+    // for now don't accept drags from our own app
+    if([sender draggingSource] != nil)
+    {
+        return NO;
+    }
+    
+    
     // here we need perform the operation for the drop
     
     return YES;
