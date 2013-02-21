@@ -155,11 +155,16 @@
         }
     }
     
-    else
+    else if ([self.items count] == 1)
     {
         [self.titleDateFormatter setDateStyle:NSDateFormatterLongStyle];
         
         gridTitle = [NSString stringWithFormat:@"%@ photo from %@", photosCount, [self.titleDateFormatter stringFromDate:self.album.albumDate]];
+    }
+    
+    else
+    {
+        gridTitle = @"No Photos";
     }
     
     [self.gridViewTitle setStringValue:gridTitle];

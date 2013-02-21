@@ -139,9 +139,9 @@
 
 -(void)setupToolbar
 {
-    //NSArray * items = @[self.activityIndicator, self.navigationViewController.middleSpacer, self.searchBar];
+    NSArray * items = @[self.activityIndicator, self.navigationViewController.middleSpacer, self.searchBar];
 
-    NSArray * items = @[/*self.activityIndicator,*/ self.navigationViewController.middleSpacer, /*self.trashbutton, self.settingsButton,*/ self.searchBar];
+    //NSArray * items = @[/*self.activityIndicator,*/ self.navigationViewController.middleSpacer, /*self.trashbutton, self.settingsButton,*/ self.searchBar];
     
     [self.navigationViewController setToolbarItems:items];
     
@@ -163,11 +163,12 @@
         
     [indicator setDisplayedWhenStopped:NO];
     
+    [indicator setUsesThreadedAnimation:YES];
+    
     [indicator bind:@"animate"
            toObject:[PIXFileParser sharedFileParser]
         withKeyPath:@"isWorking"
             options: nil]; //@{NSValueTransformerNameBindingOption : NSNegateBooleanTransformerName}];
-    self.progressIndicator = indicator;
     
     _activityIndicator.view = indicator;
     

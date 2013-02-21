@@ -79,6 +79,11 @@
         NSImage * thumb = [[self.album.stackPhotos objectAtIndex:0] thumbnailImage];
         [self.imageView setImage:thumb];
     }
+    
+    else
+    {
+        self.imageView.image = nil;
+    }
         
         
     if(self.imageView.image == nil)
