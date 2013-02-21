@@ -45,6 +45,9 @@
 // key for obtaining the name of an image file
 #define kNameKey @"name"
 
+// key for obtaining the name of an image file
+#define kIsUnboundFileKey @"isUnboundFile"
+
 // key for obtaining the mod date of an image file
 #define kModifiedKey @"modified"
 

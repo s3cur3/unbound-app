@@ -321,7 +321,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
             
             item.selected = [self gridView:self itemIsSelectedAtIndex:idx inSection:0];
             
-            [self addSubview:item];
+            [self addSubview:item];            
         }
     }];
 }
@@ -526,12 +526,15 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
 - (void)reloadDataAnimated:(BOOL)animated
 {
-    //[[self window] disableFlushWindow];
+     //[[self window ] disableScreenUpdatesUntilFlush];
         
     numberOfItems = [self gridView:self numberOfItemsInSection:0];
     [keyedVisibleItems enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-        [(CNGridViewItem *)obj removeFromSuperview];
+        
+        CNGridViewItem * item = (CNGridViewItem *)obj;
+        [item removeFromSuperview];
     }];
+    
     [keyedVisibleItems removeAllObjects];
     [reuseableItems removeAllObjects];
     [self refreshGridViewAnimated:animated];

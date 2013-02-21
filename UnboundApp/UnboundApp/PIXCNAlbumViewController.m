@@ -139,7 +139,9 @@
 
 -(void)setupToolbar
 {
-    NSArray * items = @[/*self.activityIndicator, */self.navigationViewController.middleSpacer, /*self.trashbutton, self.settingsButton,*/ self.searchBar];
+    //NSArray * items = @[self.activityIndicator, self.navigationViewController.middleSpacer, self.searchBar];
+
+    NSArray * items = @[/*self.activityIndicator,*/ self.navigationViewController.middleSpacer, /*self.trashbutton, self.settingsButton,*/ self.searchBar];
     
     [self.navigationViewController setToolbarItems:items];
     
@@ -152,10 +154,12 @@
     _activityIndicator = [[NSToolbarItem alloc] initWithItemIdentifier:@"activityIndicator"];
     //_trashbutton.image = [NSImage imageNamed:NSImageNameTrashEmpty];
     
-    NSProgressIndicator * indicator = [[NSProgressIndicator alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-    [indicator setStyle:NSProgressIndicatorBarStyle];
+    NSProgressIndicator * indicator = [[NSProgressIndicator alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
+    [indicator setStyle:NSProgressIndicatorSpinningStyle];
     [indicator setIndeterminate:YES];
-    [indicator setControlSize:NSRegularControlSize];
+    
+    [indicator setControlSize:NSSmallControlSize];
+    [indicator sizeToFit];
         
     [indicator setDisplayedWhenStopped:NO];
     
@@ -163,12 +167,7 @@
            toObject:[PIXFileParser sharedFileParser]
         withKeyPath:@"isWorking"
             options: nil]; //@{NSValueTransformerNameBindingOption : NSNegateBooleanTransformerName}];
-    
-    [indicator setBezeled:NO];
-    
-    //[indicator setCanDrawConcurrently:YES];
-    
-    [indicator setWantsLayer:NO];
+    self.progressIndicator = indicator;
     
     _activityIndicator.view = indicator;
     
@@ -449,6 +448,8 @@
     }
     
     item.album = [self albumForIndex:index];
+    
+    [item setNeedsDisplay:YES];
     
     return item;
 }

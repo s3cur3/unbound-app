@@ -169,12 +169,12 @@
 
 -(void)setAlbum:(PIXAlbum *)album
 {
-    NSAssert(album!=nil, @"Unexpected setting of album to nil in PIXAlbuGridViewItem.");
+    //NSAssert(album!=nil, @"Unexpected setting of album to nil in PIXAlbuGridViewItem.");
 
     // only set it if it's different
     if(_album != album)
     {        
-        if (album!=nil)
+        if (_album != nil)
         {
             [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:_album];
         }
@@ -200,7 +200,7 @@
 
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(albumChanged:) name:AlbumDidChangeNotification object:_album];
-                                                                                                    
+        
     }
 }
 
@@ -209,6 +209,7 @@
 {
     [self setItemTitle:[self.album title]];
     
+    self.albumThumb = nil;
     
     // if we've got one stack photo
     if([[self.album stackPhotos] count] > 0)
@@ -253,6 +254,12 @@
             self.stackThumb1 = nil; // we don't have two photos, don't draw the second or third
             self.stackThumb2 = nil; 
         }
+    }
+    
+    else
+    {
+        self.stackThumb1 = nil; // we don't have two photos, don't draw the second or third
+        self.stackThumb2 = nil;
     }
     
     if(self.albumThumb == nil)
@@ -407,8 +414,8 @@
     if (self.album )  {
         [self.album cancelThumbnailLoading];
         
-        //[[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:self.album];
-        //self.album = nil;
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:self.album];
+        _album = nil;
     }
     
     self.stackThumb1 = [NSImage imageNamed:@"temp"];
@@ -421,46 +428,7 @@
 {
     return self.album;
 }
-/*
--(PIXBorderedImageView *)albumImageView
-{
-    if(_albumImageView) return _albumImageView;
-    
-    _albumImageView = [[PIXBorderedImageView alloc] initWithFrame:NSZeroRect];
-    [self addSubview:_albumImageView];
-    
-    return _albumImageView;
-}
 
--(PIXBorderedImageView *)stackPhoto1
-{
-    if(_stackPhoto1) return _stackPhoto1;
-    
-    _stackPhoto1 = [[PIXBorderedImageView alloc] initWithFrame:NSZeroRect];
-    [self addSubview:_stackPhoto1];
-     
-    return _stackPhoto1;
-}
-
--(PIXBorderedImageView *)stackPhoto2
-{
-    if(_stackPhoto2) return _stackPhoto2;
-    
-    _stackPhoto2 = [[PIXBorderedImageView alloc] initWithFrame:NSZeroRect];
-    [self addSubview:_stackPhoto2];
-    
-    return _stackPhoto2;
-}
-
--(PIXBorderedImageView *)stackPhoto3
-{
-    if(_stackPhoto3) return _stackPhoto3;
-    
-    _stackPhoto3 = [[PIXBorderedImageView alloc] initWithFrame:NSZeroRect];
-    [self addSubview:_stackPhoto3];
-    
-    return _stackPhoto3;
-}*/
 
 
 -(void)dealloc

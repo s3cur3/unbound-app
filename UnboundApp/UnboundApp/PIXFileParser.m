@@ -135,15 +135,28 @@ NSDictionary * dictionaryForURL(NSURL * url)
         NSDate *fileCreationDate;
         [url getResourceValue:&fileCreationDate forKey:NSURLCreationDateKey error:nil];
         
-        NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:
-                              [url lastPathComponent], kNameKey,
-                              [url path], kPathKey,
-                              [[url URLByDeletingLastPathComponent] path] , kDirectoryPathKey,
-                              fileCreationDate, kCreatedKey,
-                              nil];
+        NSDictionary *info = @{kNameKey : [url lastPathComponent],
+                               kPathKey : [url path],
+                               kDirectoryPathKey : [[url URLByDeletingLastPathComponent] path],
+                               kCreatedKey : fileCreationDate};
+
         
         return info;
         
+    }
+    
+    else if([[url lastPathComponent] isEqualToString:@".unbound"])
+    {
+        NSDate *fileCreationDate;
+        [url getResourceValue:&fileCreationDate forKey:NSURLCreationDateKey error:nil];
+        
+        NSDictionary *info = @{kIsUnboundFileKey : [NSNumber numberWithBool:YES],
+                               kNameKey : [url lastPathComponent],
+                               kPathKey : [url path],
+                               kDirectoryPathKey : [[url URLByDeletingLastPathComponent] path],
+                               kCreatedKey : fileCreationDate};
+        
+        return info;
     }
     
     return nil;
@@ -452,7 +465,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
         {
         
             NSFileManager *localFileManager=[[NSFileManager alloc] init];
-            NSDirectoryEnumerationOptions options = NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsPackageDescendants;
+            NSDirectoryEnumerationOptions options = /*NSDirectoryEnumerationSkipsHiddenFiles | */NSDirectoryEnumerationSkipsPackageDescendants;
             NSDirectoryEnumerator *dirEnumerator = [localFileManager enumeratorAtURL:aURL
                                                           includingPropertiesForKeys:[NSArray arrayWithObjects:NSURLNameKey,
                                                                                       NSURLIsDirectoryKey,NSURLTypeIdentifierKey,NSURLCreationDateKey, NSURLAttributeModificationDateKey,nil]
@@ -621,53 +634,67 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 lastAlbumsExistingPhotos = [[lastAlbum.photos array] mutableCopy];
             }
             
-            // now iterate throuhg the album's existing photos and see if this phot is already in core data
-            __block PIXPhoto *dbPhoto = nil;
-            NSUInteger index = [lastAlbumsExistingPhotos indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-                //
-                if ([[obj valueForKey:@"path"] isEqualToString:[aPhoto valueForKey:@"path"]])
-                {
-                    // we found the photo
-                    dbPhoto = obj;
-                    return YES;
-                }
-                return NO;
-            }];
-            
-            // if we didn't find the photo we'll need to create a new entity
-            if(dbPhoto==nil)
+            // if this is a .unbound file than no need to create a photo object
+            if([aPhoto objectForKey:kIsUnboundFileKey] != nil)
             {
-                dbPhoto = [NSEntityDescription insertNewObjectForEntityForName:@"PIXPhoto" inManagedObjectContext:context];
+                //set the album date to to the creation date of the unbound file if needed
+                if([lastAlbum albumDate] == nil)
+                {
+                    [lastAlbum setAlbumDate:[aPhoto objectForKey:kCreatedKey]];
+                }
             }
             
-            // if we found the photo, remove it from the album's existing photos
-            if (index != NSNotFound) {
-                [lastAlbumsExistingPhotos removeObjectAtIndex:index];
-            }
-            
-            // set some basic attributes on the photo
-            [dbPhoto setDateLastModified:[aPhoto valueForKey:@"modified"]];
-            [dbPhoto setPath:[aPhoto valueForKey:@"path"]];
-            
-            // set this date so this photo won't be deleted
-            [dbPhoto setDateLastUpdated:fetchDate];
-            
-            // add the photos to the array of found photos for this album
-            [lastAlbumsPhotos addObject:dbPhoto];
-            
-            // save the context and send a UI update notification every 500 loops
-            if (i%500==0) {
-                [context save:nil];
+            // this is a photo. Create the object in the db
+            else
+            {
+                // now iterate throuhg the album's existing photos and see if this photo is already in core data
+                __block PIXPhoto *dbPhoto = nil;
+                NSUInteger index = [lastAlbumsExistingPhotos indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+                    //
+                    if ([[obj valueForKey:@"path"] isEqualToString:[aPhoto valueForKey:@"path"]])
+                    {
+                        // we found the photo
+                        dbPhoto = obj;
+                        return YES;
+                    }
+                    return NO;
+                }];
                 
-                // update flush albums and the UI with a notification
-                // use performSelector instead of dispatch async because it's faster
-                [self performSelectorOnMainThread:@selector(flushAlbumsWithIDS:) withObject:[editedAlbumObjectIDs copy] waitUntilDone:NO];
+                // if we didn't find the photo we'll need to create a new entity
+                if(dbPhoto==nil)
+                {
+                    dbPhoto = [NSEntityDescription insertNewObjectForEntityForName:@"PIXPhoto" inManagedObjectContext:context];
+                }
                 
-                // we've flushed these already so clear them out
-                [editedAlbumObjectIDs removeAllObjects];
+                // if we found the photo, remove it from the album's existing photos
+                if (index != NSNotFound) {
+                    [lastAlbumsExistingPhotos removeObjectAtIndex:index];
+                }
                 
-                // add the last one back in because we're still working with it
-                [editedAlbumObjectIDs addObject:[lastAlbum objectID]];
+                // set some basic attributes on the photo
+                [dbPhoto setDateLastModified:[aPhoto valueForKey:@"modified"]];
+                [dbPhoto setPath:[aPhoto valueForKey:@"path"]];
+                
+                // set this date so this photo won't be deleted
+                [dbPhoto setDateLastUpdated:fetchDate];
+                
+                // add the photos to the array of found photos for this album
+                [lastAlbumsPhotos addObject:dbPhoto];
+                
+                // save the context and send a UI update notification every 500 loops
+                if (i%1000==0) {
+                    [context save:nil];
+                    
+                    // update flush albums and the UI with a notification
+                    // use performSelector instead of dispatch async because it's faster
+                    [self performSelectorOnMainThread:@selector(flushAlbumsWithIDS:) withObject:[editedAlbumObjectIDs copy] waitUntilDone:NO];
+                    
+                    // we've flushed these already so clear them out
+                    [editedAlbumObjectIDs removeAllObjects];
+                    
+                    // add the last one back in because we're still working with it
+                    [editedAlbumObjectIDs addObject:[lastAlbum objectID]];
+                }
             }
         }
         
@@ -740,12 +767,12 @@ NSDictionary * dictionaryForURL(NSURL * url)
         [album flush];
     }
    
-    /*
+    
     NSNotification *albumNotification = [NSNotification notificationWithName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
     [[NSNotificationQueue defaultQueue] enqueueNotification:albumNotification postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnName forModes:nil];
-    */
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
+    
+    //[[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
 }
 
 -(BOOL)deleteObjectsForEntityName:(NSString *)entityName withUpdateDateBefore:(NSDate *)lastUpdated inContext:(NSManagedObjectContext *)context withPath:(NSString *)path
