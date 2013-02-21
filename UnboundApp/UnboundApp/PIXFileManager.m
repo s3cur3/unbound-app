@@ -18,7 +18,20 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import "PIXDefines.h"
 
+enum {
+	PIXFileOverwriteDuplicate,
+	PIXFileRenameDuplicateSequentially,
+	PIXFileSkipDuplicate,
+	PIXFileDuplicateError
+};
+typedef NSUInteger PIXOverwriteStrategy;
+
+
 @interface PIXFileManager()
+{
+    PIXOverwriteStrategy overwriteStrategy;
+    unsigned pathNumbering;
+}
 
 @property (nonatomic, strong) NSArray *selectedFilePaths;
 
@@ -381,28 +394,63 @@
 -(void)copyFiles:(NSArray *)items;
 {
     DLog(@"copying %ld files...", items.count);
+    
+    NSString *aDestinationPath = [[items lastObject] valueForKey:@"destination"];
+    NSURL *destinationURL = [NSURL fileURLWithPath:aDestinationPath isDirectory:YES];
+    //NSArray *srcPaths = [items valueForKey:@"source"];
+//    NSMutableArray *srcFileNames = [NSMutableArray arrayWithCapacity:srcPaths.count];
+//    for (NSString *srcPath in srcPaths)
+//    {
+//        [srcFileNames addObject:[srcPath stringByDeletingLastPathComponent]];
+//    }
+    NSArray *newItems = [self userValidatedFiles:items forDestination:destinationURL];
+    if (newItems.count == 0) {
+        return;
+    } else {//if (newItems.count != items.count) {
+        //Update items based on user's replace preferences
+        DLog(@"\nOld destinations : %@", [items valueForKey:@"destination"]);
+        DLog(@"\nNew destinations : %@", [newItems valueForKey:@"destination"]);
+    }
+    items = newItems;
+
     NSString *trashFolder = [[PIXFileManager sharedInstance] trashFolderPath];
     NSMutableArray *undoArray = [NSMutableArray arrayWithCapacity:items.count];
     NSMutableSet *albumPaths = [[NSMutableSet alloc] init];
     for (id aDict in items)
     {
+        BOOL destintationWasRenamed = NO;
         NSString *src = [aDict valueForKey:@"source"];
         NSString *dest = [aDict valueForKey:@"destination"];
+        NSString *filename = [src lastPathComponent];
+        if ([aDict objectForKey:@"destinationFileName"]!=nil)
+        {
+            destintationWasRenamed = YES;
+            filename = [aDict objectForKey:@"destinationFileName"];
+        }
+        
         
         //[albumPaths addObject:[src stringByDeletingLastPathComponent]];
         [albumPaths addObject:dest];
         
-        NSString *undoSrc = [NSString stringWithFormat:@"%@/%@", dest, [src lastPathComponent]];
+        NSString *undoSrc = [NSString stringWithFormat:@"%@/%@", dest, filename];
         //NSString *undoDest = [src stringByDeletingLastPathComponent];
         
         [undoArray addObject:@{@"source" : undoSrc, @"destination" : trashFolder}];
         
-        [[NSWorkspace sharedWorkspace]
-         performFileOperation:NSWorkspaceCopyOperation
-         source: [src stringByDeletingLastPathComponent]
-         destination:dest
-         files:[NSArray arrayWithObject:[src lastPathComponent]]
-         tag:nil];
+        
+        if (!destintationWasRenamed)
+        {
+            [[NSWorkspace sharedWorkspace]
+             performFileOperation:NSWorkspaceCopyOperation
+             source: [src stringByDeletingLastPathComponent]
+             destination:dest
+             files:[NSArray arrayWithObject:[src lastPathComponent]]
+             tag:nil];
+        } else {
+            NSString *fullDestPath = [NSString stringWithFormat:@"%@/%@", dest, filename];
+            NSError *error = nil;
+            [[NSFileManager defaultManager] copyItemAtPath:src toPath:fullDestPath error:&error];
+        }
     }
     
     for (NSString *albumPath in albumPaths)
@@ -415,6 +463,169 @@
     NSUndoManager *undoManager = [[[PIXAppDelegate sharedAppDelegate] window] undoManager];
     [undoManager registerUndoWithTarget:self selector:@selector(moveFiles:) object:undoArray];
 }
+
+//----------------------------------------------------------------------------------------
+#pragma mark	-
+#pragma mark	Helpers
+
+//- (BOOL)checkOutputPath:(NSString *)finalOutputPath
+//{
+//	if ([[NSFileManager defaultManager] fileExistsAtPath:[self finalOutputPath]]) {
+//		
+//		// Overwrite existing file
+//		if (overwriteStrategy == UCExistingOverwrite)
+//			return YES;
+//		
+//		// Find sequentually numbered unused name
+//		else if (overwriteStrategy == UCExistingNumberSequentially) {
+//			
+//			pathNumbering = 0;
+//			NSString *newPath;
+//			
+//			do {
+//				pathNumbering++;
+//				newPath = [self finalOutputPath];
+//			} while ([[NSFileManager defaultManager] fileExistsAtPath:newPath]);
+//            
+//            // Open choose dialog
+////		} else if (overwriteStrategy == UCExistingChooseNew) {
+////			
+////			return [self chooseNewOutputPath];
+////            
+////            // Display an error
+//		} else if (overwriteStrategy == UCExistingError) {
+//			
+//			NSInteger reply = NSRunAlertPanel(
+//                                              @"Output file already exists.",
+//                                              [NSString stringWithFormat:@"\"%@\" already exists. Do you want to replace it?",
+//                                               [outputPath lastPathComponent]],
+//                                              @"Abort",
+//                                              @"Replace",
+//                                              nil
+//                                              );
+//			
+//			if (reply == NSAlertDefaultReturn)
+//				return NO;
+//		}
+//	}
+//	[self updateOutputPath];
+//	return YES;
+//}
+
+- (NSString*)finalOutputPath:(NSString *)outputPath
+{
+	if (pathNumbering > 0) {
+		
+		NSString *basePath = [outputPath stringByDeletingPathExtension];
+		NSString *extension = [outputPath pathExtension];
+		return [NSString stringWithFormat:@"%@ %u.%@", basePath, pathNumbering, extension];
+        
+	} else
+		return outputPath;
+}
+
+- (NSArray*) userValidatedFiles: (NSArray*) files
+                 forDestination:     (NSURL*)   destinationURL
+{
+    overwriteStrategy = PIXFileDuplicateError;
+	NSMutableArray* validatedFiles = [NSMutableArray array];
+	BOOL yesToAll = NO;
+    
+	for(id file in files)
+	{
+        NSString *sourcePath = [file objectForKey:@"source"];
+//		if (yesToAll)
+//		{
+//			[validatedFiles addObject: item];
+//            
+//			continue;
+//		}
+        
+		NSString* const name = [sourcePath lastPathComponent];
+        NSString *destPath = [[destinationURL path] stringByAppendingPathComponent: name];
+		if ([[NSFileManager defaultManager]
+             fileExistsAtPath: destPath])
+		{
+            
+            if (!yesToAll)
+            {
+                NSAlert* alert = [[NSAlert alloc] init];
+                NSUInteger alertResult;
+                if ([files count] > 1)
+                {
+                    [alert addButtonWithTitle: @"Keep All"];
+                    [alert addButtonWithTitle: @"Stop"];
+                    [alert addButtonWithTitle: @"Skip All"];
+                } else {
+                    [alert addButtonWithTitle: @"Keep Both"];
+                    [alert addButtonWithTitle: @"Stop"];
+                    [alert addButtonWithTitle: @"Skip"];
+                }
+                
+                [alert setMessageText: [NSString stringWithFormat: @"An item named \"%@\" ", name]];
+                //[alert setInformativeText: @"Do you want to replace it?"];
+                [alert setInformativeText:@"already exists in this location. Do you want to replace it with the one you’re moving?"];
+                [alert setAlertStyle: NSWarningAlertStyle];
+                
+                //			alertResult = NSRunAlertPanel(
+                //                                              @"Output file already exists.",
+                //                                              [NSString stringWithFormat:@"\"%@\" already exists. Do you want to replace it?",
+                //                                               name],
+                //                                              @"Cancel All",
+                //                                              @"Yes to All",
+                //                                              nil
+                //                                              );
+                alertResult = [alert runModal];
+                
+                if (alertResult == NSAlertFirstButtonReturn)	// Keep
+                {
+                    overwriteStrategy = PIXFileRenameDuplicateSequentially;
+                    yesToAll = YES;
+
+                }
+                else if (alertResult == NSAlertSecondButtonReturn)		// Cancel All
+                {
+                    return [NSArray array];
+                } else if (alertResult == NSAlertThirdButtonReturn)	// Skip
+                {
+                    overwriteStrategy = PIXFileSkipDuplicate;
+                    yesToAll = YES;
+                    // don't add
+                } 
+            }
+			
+            if (overwriteStrategy == PIXFileRenameDuplicateSequentially) {
+                pathNumbering = 0;
+                NSString *newPath;
+                
+                do {
+                    pathNumbering++;
+                    newPath = [self finalOutputPath:destPath];
+                } while ([[NSFileManager defaultManager] fileExistsAtPath:newPath]);
+                NSMutableDictionary *newFileDict = [NSMutableDictionary dictionaryWithDictionary:file];
+                [newFileDict setObject:[newPath lastPathComponent] forKey:@"destinationFileName"];
+                [validatedFiles addObject:newFileDict];
+            } else if (overwriteStrategy == PIXFileSkipDuplicate) {
+                continue;
+            } else if (overwriteStrategy == PIXFileOverwriteDuplicate) {
+                //TODO: implememnt overwrite strategy
+                DLog(@"No overwrite strategy implemented yet");
+            } else {
+                DLog(@"No overwrite strategy specified!");
+            }
+
+
+            
+		}
+		else
+		{
+			[validatedFiles addObject:file];
+		}
+	}
+    
+	return validatedFiles;
+}
+
 
 NSString * UserHomeDirectory();
 
