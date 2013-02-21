@@ -23,6 +23,8 @@
 @property (strong) IBOutlet NSTextField * gridViewTitle;
 @property (strong) IBOutlet NSScrollView * scrollView;
 
+@property (strong) IBOutlet NSProgressIndicator * progressIndicator;
+
 -(NSMenu *)menuForObject:(id)object;
 
 -(void)showToolbar:(BOOL)animated;

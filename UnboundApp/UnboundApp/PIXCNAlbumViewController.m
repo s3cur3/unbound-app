@@ -22,6 +22,7 @@
 #import "PIXCustomButton.h"
 
 #import "PIXCustomShareSheetViewController.h"
+#import "PIXFileParser.h"
 
 @interface PIXCNAlbumViewController ()
 {
@@ -32,6 +33,7 @@
 @property(nonatomic,strong) NSArray * albums;
 @property(nonatomic,strong) NSArray * searchedAlbums;
 
+@property (nonatomic, strong) NSToolbarItem * activityIndicator;
 @property (nonatomic, strong) NSToolbarItem * trashbutton;
 @property (nonatomic, strong) NSToolbarItem * settingsButton;
 @property (nonatomic, strong) NSToolbarItem * searchBar;
@@ -137,9 +139,49 @@
 
 -(void)setupToolbar
 {
-    NSArray * items = @[self.navigationViewController.middleSpacer, self.trashbutton, self.settingsButton, self.searchBar];
+    NSArray * items = @[/*self.activityIndicator, */self.navigationViewController.middleSpacer, /*self.trashbutton, self.settingsButton,*/ self.searchBar];
     
     [self.navigationViewController setToolbarItems:items];
+    
+}
+
+- (NSToolbarItem *)activityIndicator
+{
+    if(_activityIndicator != nil) return _activityIndicator;
+    
+    _activityIndicator = [[NSToolbarItem alloc] initWithItemIdentifier:@"activityIndicator"];
+    //_trashbutton.image = [NSImage imageNamed:NSImageNameTrashEmpty];
+    
+    NSProgressIndicator * indicator = [[NSProgressIndicator alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    [indicator setStyle:NSProgressIndicatorBarStyle];
+    [indicator setIndeterminate:YES];
+    [indicator setControlSize:NSRegularControlSize];
+        
+    [indicator setDisplayedWhenStopped:NO];
+    
+    [indicator bind:@"animate"
+           toObject:[PIXFileParser sharedFileParser]
+        withKeyPath:@"isWorking"
+            options: nil]; //@{NSValueTransformerNameBindingOption : NSNegateBooleanTransformerName}];
+    
+    [indicator setBezeled:NO];
+    
+    //[indicator setCanDrawConcurrently:YES];
+    
+    [indicator setWantsLayer:NO];
+    
+    _activityIndicator.view = indicator;
+    
+    [_activityIndicator setLabel:@"Acitivity"];
+    [_activityIndicator setPaletteLabel:@"Activity"];
+    
+    // Set up a reasonable tooltip, and image
+    // you will likely want to localize many of the item's properties
+    [_activityIndicator setToolTip:@"Activity"];
+
+    
+    
+    return _activityIndicator;
     
 }
 

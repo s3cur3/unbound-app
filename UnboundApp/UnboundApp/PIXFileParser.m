@@ -25,10 +25,39 @@
 
 @property BOOL scansCancelledFlag;
 
+@property int isWorkingCounter;
+
 @end
 
 @implementation PIXFileParser
 
+
+-(void)incrementWorking
+{
+    //dispatch_async(dispatch_get_main_queue(), ^{
+        self.isWorkingCounter++;
+        
+        if(self.isWorkingCounter > 0 && self.isWorking == NO)
+        {
+            self.isWorking = YES;
+        }
+    //});
+    
+
+}
+
+-(void)decrementWorking
+{
+    //dispatch_async(dispatch_get_main_queue(), ^{
+        self.isWorkingCounter--;
+        
+        if(self.isWorkingCounter <= 0)
+        {
+            self.isWorkingCounter = 0;
+            self.isWorking = NO;
+        }
+    //});
+}
 
 
 - (dispatch_queue_t)sharedParsingQueue
@@ -204,9 +233,15 @@ NSDictionary * dictionaryForURL(NSURL * url)
 
 - (void)scanFullDirectory
 {
+    [self incrementWorking];
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        if(self.scansCancelledFlag) return;
+        if(self.scansCancelledFlag)
+        {
+            [self decrementWorking];
+            return;
+        }
         
         NSDate * startScanTime = [NSDate date];
         
@@ -234,7 +269,11 @@ NSDictionary * dictionaryForURL(NSURL * url)
             // send it off to the parser to start parsing them at the same time
             if([photoFiles count] > 1500)
             {
-                if(self.scansCancelledFlag) return;
+                if(self.scansCancelledFlag)
+                {
+                    [self decrementWorking];
+                    return;
+                }
                 
                 // start parsing photos we've found (this will dispatch to another bg thread)
                 // pass nil as the deletionblock because we're not ready to delete any files yet
@@ -264,6 +303,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
             
             
         }];
+        
+        [self decrementWorking];
         
         
     });
@@ -296,6 +337,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             //
             
+            [self incrementWorking];
             //DLog(@"Doing a shallow scan of: %@", url.path);
             
             NSDirectoryEnumerator *dirEnumerator = [self nonRecursiveEnumeratorForURL:url];
@@ -329,6 +371,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
             
             if(self.scansCancelledFlag)
             {
+                [self decrementWorking];
                 return;
             }
             
@@ -388,6 +431,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 }
                 
                 [self.loadingAlbumsDict removeObjectForKey:url.path];
+                
+                [self decrementWorking];
             });
         });
         
@@ -480,11 +525,12 @@ NSDictionary * dictionaryForURL(NSURL * url)
 
 -(void)parsePhotos:(NSArray *)photos withDeletionBlock:(void(^)(NSManagedObjectContext * context))deletionBlock
 {
-    // i'm going to disable this sort for now. I think the enumerators give us photos in a reasonable order and the method is robust enough to handle out-of-order arrays. --scott
-    //self.photoFiles = [photos sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"path" ascending:YES]]];
+
     
     // recored an initial fetch date to use when deleting items that weren't found
     __block NSDate * fetchDate = [NSDate date];
+    
+    [self incrementWorking];
     
     //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
     dispatch_async([self sharedParsingQueue], ^(void) {
@@ -644,7 +690,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
         [self performSelectorOnMainThread:@selector(flushAlbumsWithIDS:) withObject:[editedAlbumObjectIDs copy] waitUntilDone:NO];
         
         
-        
+        [self decrementWorking];
         
     });
     
@@ -681,7 +727,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
 
 // this should always be called on the main thread
 -(void)flushAlbumsWithIDS:(NSSet *)albumIDs
-{
+{    
     // fetch any the albums with these ids
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kAlbumEntityName];
     [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(self IN %@)", albumIDs]];
@@ -693,6 +739,11 @@ NSDictionary * dictionaryForURL(NSURL * url)
     {
         [album flush];
     }
+   
+    /*
+    NSNotification *albumNotification = [NSNotification notificationWithName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
+    [[NSNotificationQueue defaultQueue] enqueueNotification:albumNotification postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnName forModes:nil];
+    */
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
 }

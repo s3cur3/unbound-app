@@ -519,11 +519,15 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
 - (void)reloadData
 {
+    
     [self reloadDataAnimated:NO];
+    
 }
 
 - (void)reloadDataAnimated:(BOOL)animated
 {
+    //[[self window] disableFlushWindow];
+        
     numberOfItems = [self gridView:self numberOfItemsInSection:0];
     [keyedVisibleItems enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         [(CNGridViewItem *)obj removeFromSuperview];
@@ -531,6 +535,8 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     [keyedVisibleItems removeAllObjects];
     [reuseableItems removeAllObjects];
     [self refreshGridViewAnimated:animated];
+    
+    //[[self window] enableFlushWindow];
 }
 
 
