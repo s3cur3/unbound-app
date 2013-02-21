@@ -23,6 +23,8 @@
 @property (nonatomic,strong) NSDate *startDate;
 @property (nonatomic, strong) NSMutableDictionary *loadingAlbumsDict;
 
+@property BOOL scansCancelledFlag;
+
 @end
 
 @implementation PIXFileParser
@@ -64,6 +66,44 @@ NSString * aDefaultDropBoxPhotosDirectory()
 {
     NSString *dropBoxPhotosHome =[aDefaultDropBoxDirectory() stringByAppendingPathComponent:@"Photos/"];
     return dropBoxPhotosHome;
+}
+
+
+/*
+ * dictionaryForURL will check if a file is an image or unbound file. If it is it will 
+ * create the correct dictionary for that object for parsing later in the parseFiles 
+ * method. This is written as a c function so it performs a little better in the 
+ * tight loops where it's called
+ */
+ 
+NSDictionary * dictionaryForURL(NSURL * url)
+{
+    
+    BOOL isImageFile = NO;
+    NSString *utiValue;
+    [url getResourceValue:&utiValue forKey:NSURLTypeIdentifierKey error:nil];
+    if (utiValue)
+    {
+        isImageFile = UTTypeConformsTo((__bridge CFStringRef)utiValue, kUTTypeImage);
+    }
+    
+    if(isImageFile)
+    {
+        NSDate *fileCreationDate;
+        [url getResourceValue:&fileCreationDate forKey:NSURLCreationDateKey error:nil];
+        
+        NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [url lastPathComponent], kNameKey,
+                              [url path], kPathKey,
+                              [[url URLByDeletingLastPathComponent] path] , kDirectoryPathKey,
+                              fileCreationDate, kCreatedKey,
+                              nil];
+        
+        return info;
+        
+    }
+    
+    return nil;
 }
 
 #pragma mark - File System Change Oberver Methods
@@ -139,12 +179,86 @@ NSString * aDefaultDropBoxPhotosDirectory()
 
 #pragma mark - Methods for Scanning file system
 
-/**  
+- (void)cancelScans
+{
+    self.scansCancelledFlag = YES;
+}
+
+/**
+ * This method will do a deep scan of the entire directory structure
+ */
+
+- (void)scanFullDirectory
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        
+        if(self.scansCancelledFlag) return;
+        
+        NSDate * startScanTime = [NSDate date];
+        
+        NSMutableArray *photoFiles = [NSMutableArray new];
+        NSArray * enumerators = [self recursiveEnumeratorsForRootDirectories];
+        
+        for(NSDirectoryEnumerator * dirEnumerator in enumerators)
+        {
+            NSURL *aURL = nil;
+            while (aURL = [dirEnumerator nextObject]) {
+                
+                // if this is an parsable file add it to the photofiles array to be parsed
+                NSDictionary * info = dictionaryForURL(aURL);
+                
+                if(info != nil)
+                {
+                    [photoFiles addObject:info];
+                }
+            }
+            
+            
+            if([photoFiles count] > 1500)
+            {
+                if(self.scansCancelledFlag) return;
+                
+                // start parsing photos we've found (this will dispatch to another bg thread)
+                // pass nil as the deletionblock because we're not ready to delete any files yet
+                [self parsePhotos:photoFiles withDeletionBlock:nil];
+                
+                // clear out the list since these have been parsed (don't removeAllObjects because this will mutate the array we sent to the parser)
+                photoFiles = [NSMutableArray new];
+            }
+            
+            
+        }
+        
+        // when we're done do a final parse that also deletes any leftover files
+        
+        // start parsing photos we've found (this will dispatch to another bg thread)
+        [self parsePhotos:photoFiles withDeletionBlock:^(NSManagedObjectContext *context) {
+            
+            // go through and delete any photos/albums that weren't updated and should have been
+            
+            // be sure to delete albums first so there are less photos to iterate through in the second delete
+            if (![self deleteObjectsForEntityName:@"PIXAlbum" withUpdateDateBefore:startScanTime inContext:context withPath:nil]) {
+                DLog(@"There was a problem trying to delete old objects");
+            }
+            if (![self deleteObjectsForEntityName:@"PIXPhoto" withUpdateDateBefore:startScanTime inContext:context withPath:nil]) {
+                DLog(@"There was a problem trying to delete old objects");
+            }
+            
+            
+        }];
+        
+        
+    });
+}
+
+/**
  * This method will scan a specific album for changed files
  * this will not go any deeper than the current album
  */
 - (void)shallowScanAlbum:(PIXAlbum *)url
 {
+    self.scansCancelledFlag = NO;
+    
     // TODO: Implement this
 }
 
@@ -156,6 +270,8 @@ NSString * aDefaultDropBoxPhotosDirectory()
  */
 - (void)scanURLForChanges:(NSURL *)url
 {
+    self.scansCancelledFlag = NO;
+    
     // if this path isn't already being scanned:
     if (url.path != nil && [self.loadingAlbumsDict objectForKey:url.path]==nil) {
         [self.loadingAlbumsDict setObject:url forKey:url.path];
@@ -170,21 +286,12 @@ NSString * aDefaultDropBoxPhotosDirectory()
             NSURL *aURL;
             while (aURL = [dirEnumerator nextObject]) {
                 
-                // if this is an image add it to the photofiles array to be parsed
-                if ([self fileIsImageFile:aURL]==YES)
+                // if this is an parsable file add it to the photofiles array to be parsed
+                NSDictionary * info = dictionaryForURL(aURL);
+                
+                if(info != nil)
                 {
-                    NSDate *fileCreationDate;
-                    [aURL getResourceValue:&fileCreationDate forKey:NSURLCreationDateKey error:nil];
-                    
-                    NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:
-                                          [aURL lastPathComponent], kNameKey,
-                                          [aURL path], kPathKey,
-                                          [[aURL URLByDeletingLastPathComponent] path] , kDirectoryPathKey,
-                                          fileCreationDate, kCreatedKey,
-                                          nil];
-                    
                     [photoFiles addObject:info];
-                    
                 }
                 
                 // if this is a directory then add it to the directories array to be checked for recursion
@@ -202,8 +309,36 @@ NSString * aDefaultDropBoxPhotosDirectory()
                 }
             }
             
+            if(self.scansCancelledFlag)
+            {
+                return;
+            }
+            
+            NSDate * startParseDate = [NSDate date];
+            
+            NSString * path = url.path;
+            
             // start parsing photos we've found (this will dispatch to another bg thread)
-            [self parsePhotos:photoFiles withPath:url.path];
+            [self parsePhotos:photoFiles withDeletionBlock:^(NSManagedObjectContext *context) {
+                
+                // go through and delete any photos/albums that weren't updated and should have been
+                
+                // be sure to delete albums first so there are less photos to iterate through in the second delete
+                if (![self deleteObjectsForEntityName:@"PIXAlbum" withUpdateDateBefore:startParseDate inContext:context withPath:path]) {
+                    DLog(@"There was a problem trying to delete old objects");
+                }
+                if (![self deleteObjectsForEntityName:@"PIXPhoto" withUpdateDateBefore:startParseDate inContext:context withPath:path]) {
+                    DLog(@"There was a problem trying to delete old objects");
+                }
+                
+                /// check that all subfolders exist (deletion just give a notification that the parent folder changed)
+                
+                if (![self checkSubfoldersExistanceInContext:context withPath:path])
+                {
+                    DLog(@"There was a problem trying to delete subfolder");
+                }
+                
+            }];
             
             
             // go through the directories we found and see if any are not already in the db
@@ -240,6 +375,37 @@ NSString * aDefaultDropBoxPhotosDirectory()
         
     }
     
+}
+
+-(NSArray *)recursiveEnumeratorsForRootDirectories
+{
+    NSMutableArray * enumerators = [NSMutableArray new];
+    
+    
+    for(NSURL * aURL in self.observedDirectories)
+    {
+    
+        if([[NSFileManager defaultManager] fileExistsAtPath:aURL.path])
+        {
+        
+            NSFileManager *localFileManager=[[NSFileManager alloc] init];
+            NSDirectoryEnumerationOptions options = NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsPackageDescendants;
+            NSDirectoryEnumerator *dirEnumerator = [localFileManager enumeratorAtURL:aURL
+                                                          includingPropertiesForKeys:[NSArray arrayWithObjects:NSURLNameKey,
+                                                                                      NSURLIsDirectoryKey,NSURLTypeIdentifierKey,NSURLCreationDateKey, NSURLAttributeModificationDateKey,nil]
+                                                                             options:options
+                                                                        errorHandler:^(NSURL *url, NSError *error) {
+                                                                            // Handle the error.
+                                                                            [PIXAppDelegate presentError:error];
+                                                                            // Return YES if the enumeration should continue after the error.
+                                                                            return NO;
+                                                                        }];
+            
+            [enumerators addObject:dirEnumerator];
+        }
+    }
+    
+    return enumerators;
 }
 
 -(NSDirectoryEnumerator *)nonRecursiveEnumeratorForURL:(NSURL *)url
@@ -291,24 +457,10 @@ NSString * aDefaultDropBoxPhotosDirectory()
 }
 
 
-- (BOOL)fileIsImageFile:(NSURL *)url
-{
-    BOOL isImageFile = NO;
-    
-    NSString *utiValue;
-    [url getResourceValue:&utiValue forKey:NSURLTypeIdentifierKey error:nil];
-    if (utiValue)
-    {
-        isImageFile = UTTypeConformsTo((__bridge CFStringRef)utiValue, kUTTypeImage);
-    }
-    return isImageFile;
-}
-
-
 #pragma mark - Methods for Parsing into Core Data
 
 
--(void)parsePhotos:(NSArray *)photos withPath:(NSString *)path
+-(void)parsePhotos:(NSArray *)photos withDeletionBlock:(void(^)(NSManagedObjectContext * context))deletionBlock
 {
     // i'm going to disable this sort for now. I think the enumerators give us photos in a reasonable order and the method is robust enough to handle out-of-order arrays. --scott
     //self.photoFiles = [photos sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"path" ascending:YES]]];
@@ -442,19 +594,16 @@ NSString * aDefaultDropBoxPhotosDirectory()
             // save the context and send a UI update notification every 500 loops
             if (i%500==0) {
                 [context save:nil];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                    // flush the main-thread info of any albums that we've touched
-                    [self flushAlbumsWithIDS:[editedAlbumObjectIDs copy]];
-                    
-                    // we've flushed these already so clear them out
-                    [editedAlbumObjectIDs removeAllObjects];
-                    
-                    // add the last one back in because we're still working with it
-                    [editedAlbumObjectIDs addObject:[lastAlbum objectID]];
-                    
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
-                });
+                
+                // update flush albums and the UI with a notification
+                // use performSelector instead of dispatch async because it's faster
+                [self performSelectorOnMainThread:@selector(flushAlbumsWithIDS:) withObject:[editedAlbumObjectIDs copy] waitUntilDone:NO];
+                
+                // we've flushed these already so clear them out
+                [editedAlbumObjectIDs removeAllObjects];
+                
+                // add the last one back in because we're still working with it
+                [editedAlbumObjectIDs addObject:[lastAlbum objectID]];
             }
         }
         
@@ -462,39 +611,22 @@ NSString * aDefaultDropBoxPhotosDirectory()
         [lastAlbumsPhotos addObjectsFromArray:lastAlbumsExistingPhotos];
         [self setPhotos:lastAlbumsPhotos  forAlbum:lastAlbum];
         
-        // go through and delete any photos/albums that weren't updated and should have been
-        
-        // be sure to delete albums first so there are less photos to iterate through in the second delete
-        if (![self deleteObjectsForEntityName:@"PIXAlbum" withUpdateDateBefore:fetchDate inContext:context withPath:path]) {
-            DLog(@"There was a problem trying to delete old objects");
-        }
-        if (![self deleteObjectsForEntityName:@"PIXPhoto" withUpdateDateBefore:fetchDate inContext:context withPath:path]) {
-            DLog(@"There was a problem trying to delete old objects");
-        }
-        
-        /// if the path isn't nil then we should also check that all subfolders exist (deletion just give a notification that the parent folder changed)
-        if(path)
+        if(deletionBlock)
         {
-            if (![self checkSubfoldersExistanceInContext:context withPath:path])
-            {
-                DLog(@"There was a problem trying to delete subfolder");
-            }
+            deletionBlock(context);
         }
+        
+        
         
         // save the context
         [context save:nil];
         
-        // update the UI with a notification
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            // flush the main-thread info of any albums that we've touched
-            [self flushAlbumsWithIDS:[editedAlbumObjectIDs copy]];
-            
-            // we've flushed these already so clear them out
-            [editedAlbumObjectIDs removeAllObjects];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
-        });
+        // update flush albums and the UI with a notification
+        // use performSelector instead of dispatch async because it's faster
+        [self performSelectorOnMainThread:@selector(flushAlbumsWithIDS:) withObject:[editedAlbumObjectIDs copy] waitUntilDone:NO];
+        
+        
+        
         
     });
     
@@ -543,6 +675,8 @@ NSString * aDefaultDropBoxPhotosDirectory()
     {
         [album flush];
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
 }
 
 -(BOOL)deleteObjectsForEntityName:(NSString *)entityName withUpdateDateBefore:(NSDate *)lastUpdated inContext:(NSManagedObjectContext *)context withPath:(NSString *)path

@@ -1,5 +1,7 @@
 
 #import "DebugPrefrencesViewController.h"
+#import "PIXAppDelegate.h"
+#import "PIXFileParser.h"
 
 
 @interface  DebugPrefrencesViewController()
@@ -28,6 +30,17 @@
 - (NSString *)toolbarItemLabel
 {
     return NSLocalizedString(@"Debug", @"Unbound Debug Preferences");
+}
+
+
+-(IBAction)clearDB:(id)sender
+{
+    [[PIXAppDelegate sharedAppDelegate] clearDatabase];
+}
+
+-(IBAction)scanFullDirectoryStructure:(id)sender
+{
+    [[PIXFileParser sharedFileParser] scanFullDirectory];
 }
 
 

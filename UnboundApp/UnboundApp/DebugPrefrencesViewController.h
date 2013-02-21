@@ -10,4 +10,8 @@
 
 }
 
+-(IBAction)clearDB:(id)sender;
+
+-(IBAction)scanFullDirectoryStructure:(id)sender;
+
 @end

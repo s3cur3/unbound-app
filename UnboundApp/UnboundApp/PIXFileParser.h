@@ -29,6 +29,12 @@
 -(void)stopObserving;
 
 /**
+ * This method will do a deep scan of the entire directory structure
+ */
+
+- (void)scanFullDirectory;
+
+/**
  * This method will scan a specific album for changed files
  * this will not go any deeper than the current album
  */
@@ -41,6 +47,11 @@
  *  current scans so new ones arent started
  */
 - (void)scanURLForChanges:(NSURL *)url;
+
+/**
+ *  cancelScans will cancel any current directory scans and any current parsing threads
+ */
+- (void)cancelScans;
 
 
 @end
