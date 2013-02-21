@@ -29,6 +29,20 @@
 
 @implementation PIXFileParser
 
+
+
+- (dispatch_queue_t)sharedParsingQueue
+{
+    static dispatch_queue_t _sharedParsingQueue = 0;
+    
+    static dispatch_once_t onceTokenParsingQueue;
+    dispatch_once(&onceTokenParsingQueue, ^{
+        _sharedParsingQueue  = dispatch_queue_create("com.pixite.ub.parsingQueue", 0);
+    });
+    
+    return _sharedParsingQueue;
+}
+
 + (PIXFileParser *)sharedFileParser
 {
     static id _sharedInstance = nil;
@@ -190,7 +204,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
 
 - (void)scanFullDirectory
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         if(self.scansCancelledFlag) return;
         
@@ -199,8 +213,11 @@ NSDictionary * dictionaryForURL(NSURL * url)
         NSMutableArray *photoFiles = [NSMutableArray new];
         NSArray * enumerators = [self recursiveEnumeratorsForRootDirectories];
         
+        
+        // loop through each of the enumerators (there can be more than one)
         for(NSDirectoryEnumerator * dirEnumerator in enumerators)
         {
+            // loop through each item in each enumerator
             NSURL *aURL = nil;
             while (aURL = [dirEnumerator nextObject]) {
                 
@@ -213,7 +230,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 }
             }
             
-            
+            // check the photoFiles count. When it goes above a threshhold
+            // send it off to the parser to start parsing them at the same time
             if([photoFiles count] > 1500)
             {
                 if(self.scansCancelledFlag) return;
@@ -468,8 +486,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
     // recored an initial fetch date to use when deleting items that weren't found
     __block NSDate * fetchDate = [NSDate date];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
-        
+    //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+    dispatch_async([self sharedParsingQueue], ^(void) {
         PIXAppDelegate *appDelegate = (PIXAppDelegate *)[[NSApplication sharedApplication] delegate];
         
         // create a thread-safe context (may want to make this a child context down the road)
