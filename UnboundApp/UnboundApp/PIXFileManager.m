@@ -273,7 +273,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     }
     
     //[[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
-    NSUndoManager *undoManager = [[[PIXAppDelegate sharedAppDelegate] window] undoManager];
+    NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
     //TODO: find a better way of dealing with the 'redo' action for recycled items
     [undoManager performSelector:@selector(removeAllActions) withObject:nil afterDelay:0.1f];
 }
@@ -314,7 +314,7 @@ typedef NSUInteger PIXOverwriteStrategy;
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
                 
-                NSUndoManager *undoManager = [[[PIXAppDelegate sharedAppDelegate] window] undoManager];
+                NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
 
                 [undoManager registerUndoWithTarget:[PIXFileManager sharedInstance] selector:@selector(undoRecyclePhotos:) object:newURLs];
                 [undoManager setActionIsDiscardable:YES];
@@ -399,9 +399,50 @@ typedef NSUInteger PIXOverwriteStrategy;
     
 }
 
--(void)undoRecycleAlbums:(NSArray *)items
+-(void)undoRecycleAlbums:(NSDictionary *)newURLs
 {
-    NSRunCriticalAlertPanel(@"Undo deleting albums is under development.", @"Feature Unavailable", @"OK", @"Cancel", nil);
+//    NSRunCriticalAlertPanel(@"Undo deleting albums is under development.", @"Feature Unavailable", @"OK", @"Cancel", nil);
+//    [[[PIXAppDelegate sharedAppDelegate] undoManager] performSelector:@selector(removeAllActions) withObject:nil afterDelay:0.1f];
+//    return;
+    
+    //TODO: Make this undo restore directories, photos, and metadata files that were deleted, possibly using undo groupings.
+    
+    //NSWorkspaceDidPerformFileOperationNotification
+    NSMutableSet *albumPaths = [NSMutableSet set];
+    NSURL *restorePathURL = nil;
+    for (restorePathURL in [newURLs allKeys])
+    {
+        NSURL *recyclerPathURL = [newURLs objectForKey:restorePathURL];
+        NSString *restorePath = [restorePathURL.path stringByDeletingLastPathComponent];
+        NSString *recyclerPath = [recyclerPathURL.path stringByDeletingLastPathComponent];
+        NSString *fileName = [recyclerPathURL.path lastPathComponent];
+        
+        DLog(@"Restoring file to '%@'", restorePath);
+        if (![[NSWorkspace sharedWorkspace]
+              performFileOperation:NSWorkspaceMoveOperation
+              source: recyclerPath
+              destination:restorePath
+              files:[NSArray arrayWithObject:fileName]
+              tag:nil])
+        {
+            DLog(@"Unable to restore from Trash");
+            continue;
+        }
+        
+        [albumPaths addObject:restorePath];
+        
+        DLog(@"Restored file from '%@'", recyclerPath);
+    }
+    
+    for (NSString *albumPath in albumPaths)
+    {
+        [[PIXFileSystemDataSource sharedInstance] shallowScanURL:[NSURL fileURLWithPath:albumPath isDirectory:YES]];
+    }
+    
+    //[[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
+    NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
+    //TODO: find a better way of dealing with the 'redo' action for recycled items
+    [undoManager performSelector:@selector(removeAllActions) withObject:nil afterDelay:0.1f];
 }
 
 -(void)recycleAlbums:(NSArray *)items
@@ -448,7 +489,7 @@ typedef NSUInteger PIXOverwriteStrategy;
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
                 
-                NSUndoManager *undoManager = [[[PIXAppDelegate sharedAppDelegate] window] undoManager];
+                NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
                 
                 [undoManager registerUndoWithTarget:[PIXFileManager sharedInstance] selector:@selector(undoRecycleAlbums:) object:newURLs];
                 [undoManager setActionIsDiscardable:YES];
