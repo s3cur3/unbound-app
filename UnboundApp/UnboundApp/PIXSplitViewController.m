@@ -11,6 +11,8 @@
 //#import "PIXImageBrowserViewController.h"
 #import "PIXPhotoGridViewController.h"
 #import "PIXNavigationController.h"
+#import "PIXAppDelegate.h"
+#import "PIXMainWindowController.h"
 
 @interface PIXSplitViewController ()
 
@@ -192,6 +194,7 @@
     }
     _selectedAlbum = selectedAlbum;
     [self.imageBrowserViewController setAlbum:self.selectedAlbum];
+    [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] setTitle:[self.selectedAlbum title]];
 }
 
 
