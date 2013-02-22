@@ -32,6 +32,10 @@ static NSString *const kItemsKey = @"photos";
     return [NSURL fileURLWithPath:self.path isDirectory:YES];
 }
 
+-(NSImage *)thumbnailImage
+{
+    return nil; // this is just here for the protocol
+}
 
 -(void)cancelThumbnailLoading;
 {

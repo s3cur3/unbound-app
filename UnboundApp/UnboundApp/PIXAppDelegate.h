@@ -20,7 +20,7 @@
     
     @public
     PIXLoadingWindowController *loadingWindow;
-    PIXMainWindowController *mainWindowController;
+    
     PIXInfoWindowController *showIntroWindow;
 
 }
@@ -32,11 +32,15 @@
 - (IBAction)showIntroWindow:(id)sender;
 - (IBAction)showLoadingWindow:(id)sender;
 
-
+@property (nonatomic, strong) IBOutlet NSMenuItem * progressItem;
 // for MASPreferences class:
+@property (nonatomic, strong) PIXMainWindowController *mainWindowController;
+
 @property (nonatomic, strong) NSWindowController *preferencesWindowController;
 @property (nonatomic) NSInteger focusedAdvancedControlIndex;
 - (IBAction)openPreferences:(id)sender;
+
+
 
 
 -(void)startFileSystemLoading;

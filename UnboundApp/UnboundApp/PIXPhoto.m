@@ -110,10 +110,10 @@ const CGFloat kThumbnailSize = 200.0f;
 
 - (void)mainThreadComputePreviewThumbnailFinished:(NSData *)data {
     if (self.cancelThumbnailLoadOperation==YES) {
-        DLog(@"5)thumbnail operation was canceled - return?");
+        //DLog(@"5)thumbnail operation was canceled - return?");
 //        _thumbnailImageIsLoading = NO;
 //        self.cancelThumbnailLoadOperation = NO;
-//        return;
+ //       return;
     }
     if (self.thumbnail == nil ) {
         PIXThumbnail *aThumb = [NSEntityDescription insertNewObjectForEntityForName:@"PIXThumbnail" inManagedObjectContext:self.managedObjectContext];
@@ -261,7 +261,7 @@ const CGFloat kThumbnailSize = 200.0f;
         }
         
         if (weakSelf.cancelThumbnailLoadOperation==YES) {
-            DLog(@"1)thumbnail operation was canceled - return");
+            //DLog(@"1)thumbnail operation was canceled - return");
             _thumbnailImageIsLoading = NO;
             weakSelf.cancelThumbnailLoadOperation = NO;
             return;
@@ -274,7 +274,7 @@ const CGFloat kThumbnailSize = 200.0f;
         if (imageSource) {
             
             if (weakSelf.cancelThumbnailLoadOperation==YES) {
-                DLog(@"2)thumbnail operation was canceled - return");
+                //DLog(@"2)thumbnail operation was canceled - return");
                 CFRelease(imageSource);
                 _thumbnailImageIsLoading = NO;
                 weakSelf.cancelThumbnailLoadOperation = NO;
@@ -301,7 +301,7 @@ const CGFloat kThumbnailSize = 200.0f;
             //NSData *data = [rep representationUsingType: NSJPEGFileType properties: nil];
             
             if (weakSelf.cancelThumbnailLoadOperation==YES) {
-                DLog(@"3)thumbnail operation was canceled - return");
+                //DLog(@"3)thumbnail operation was canceled - return");
                 CFRelease(imageSource);
                 _thumbnailImageIsLoading = NO;
                 weakSelf.cancelThumbnailLoadOperation = NO;
@@ -311,7 +311,7 @@ const CGFloat kThumbnailSize = 200.0f;
             NSData *data = [image TIFFRepresentation];
             
             if (weakSelf.cancelThumbnailLoadOperation==YES) {
-                DLog(@"4)thumbnail operation was canceled - return");
+                //DLog(@"4)thumbnail operation was canceled - return");
                 CFRelease(imageSource);
                 _thumbnailImageIsLoading = NO;
                 weakSelf.cancelThumbnailLoadOperation = NO;

@@ -23,6 +23,7 @@
 
 -(void)pushViewController:(PIXViewController *)aViewController;
 -(void)popViewController;
+-(void)popToRootViewController;
 -(NSArray *) viewControllerArray;
 
 -(void)setToolbarItems:(NSArray *)items;

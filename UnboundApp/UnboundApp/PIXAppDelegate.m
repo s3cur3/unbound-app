@@ -11,11 +11,12 @@
 #import "PIXInfoWindowController.h"
 #import "PIXMainWindowController.h"
 #import "PIXLoadingWindowController.h"
+
+#import "PIXNavigationController.h"
  
 #import "Preferences.h"
 #import "PIXFileParser.h"
 #import "PIXDefines.h"
-
 
 #import "MASPreferencesWindowController.h"
 #import "GeneralPreferencesViewController.h"
@@ -40,6 +41,8 @@ NSString* kAppFirstRun = @"appFirstRun";
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize managedObjectContext = _managedObjectContext;
+
+//static PIXAppDelegate * _sharedAppDelegate = nil;
 
 +(PIXAppDelegate *) sharedAppDelegate;
 {
@@ -94,6 +97,8 @@ NSString* kAppFirstRun = @"appFirstRun";
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    //[(NSApplication *)[aNotification object] setDelegate:self];
+    
     // Insert code here to initialize your application
     self.window.delegate = self;
     
@@ -148,12 +153,38 @@ NSString* kAppFirstRun = @"appFirstRun";
         [self performSelector:@selector(startFileSystemLoading) withObject:self afterDelay:2.0];
     }
     
+    [self setupProgressIndicator];
+    
+    
     
     // show constraint debug info if debuging
 #ifdef DEBUG
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
 #endif
     
+}
+
+
+- (void)setupProgressIndicator
+{
+    NSProgressIndicator * indicator = [[NSProgressIndicator alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
+    [indicator setStyle:NSProgressIndicatorSpinningStyle];
+    [indicator setIndeterminate:YES];
+    
+    [indicator setControlSize:NSSmallControlSize];
+    [indicator sizeToFit];
+    
+    [indicator setDisplayedWhenStopped:YES];
+    
+    [indicator setUsesThreadedAnimation:YES];
+    
+    [indicator bind:@"animate"
+           toObject:[PIXFileParser sharedFileParser]
+        withKeyPath:@"isWorking"
+            options: nil]; //@{NSValueTransformerNameBindingOption : NSNegateBooleanTransformerName}];
+    
+    //[self.progressItem setTitle:@"Hello"];
+    [self.progressItem setView:indicator];
 }
 
 -(void)shouldStartFileSystemObservingWhenAlbumsFinishSaving
@@ -205,8 +236,6 @@ NSString* kAppFirstRun = @"appFirstRun";
 {
     NSWindowController * prefWindow = self.preferencesWindowController;
     [prefWindow showWindow:sender];
-    
-    
 }
 
 - (NSWindowController *)preferencesWindowController
@@ -254,12 +283,12 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 // -------------------------------------------------------------------------------
 - (IBAction)showMainWindow:(id)sender
 {
-    if (mainWindowController == nil) {
-        mainWindowController = [[PIXMainWindowController alloc] initWithWindowNibName:@"PIXMainWindow"];
+    if (self.mainWindowController == nil) {
+        self.mainWindowController = [[PIXMainWindowController alloc] initWithWindowNibName:@"PIXMainWindow"];
         //mainWindowController = (PIXMainWindowController *)[self.window windowController];
     }
-    mainWindowController.window.delegate = self;
-    [mainWindowController showWindow:self];
+    self.mainWindowController.window.delegate = self;
+    [self.mainWindowController showWindow:self];
 }
 
 - (IBAction)showLoadingWindow:(id)sender {
@@ -416,6 +445,9 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 
 - (void)clearDatabase
 {
+    // pop to the root vc
+    [[[self mainWindowController] navigationViewController] popToRootViewController];
+    
     _managedObjectContext = nil;
     _persistentStoreCoordinator = nil;
     

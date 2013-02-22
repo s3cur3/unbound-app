@@ -145,18 +145,34 @@ NSDictionary * dictionaryForURL(NSURL * url)
         
     }
     
-    else if([[url lastPathComponent] isEqualToString:@".unbound"])
+    else
     {
-        NSDate *fileCreationDate;
-        [url getResourceValue:&fileCreationDate forKey:NSURLCreationDateKey error:nil];
+        NSNumber * isDirectoryValue;
+        [url getResourceValue:&isDirectoryValue forKey:NSURLIsDirectoryKey error:nil];
         
-        NSDictionary *info = @{kIsUnboundFileKey : [NSNumber numberWithBool:YES],
-                               kNameKey : [url lastPathComponent],
-                               kPathKey : [url path],
-                               kDirectoryPathKey : [[url URLByDeletingLastPathComponent] path],
-                               kCreatedKey : fileCreationDate};
-        
-        return info;
+        // we found a directory. Check if a .unbound file exists in this dir
+        if([isDirectoryValue boolValue])
+        {
+            NSURL * unboundFileURL = [url URLByAppendingPathComponent:@".unbound"];
+            
+            //if([[NSFileManager defaultManager] fileExistsAtPath:[unboundFileURL path]])
+            //{
+            
+            NSDate *fileCreationDate = nil;
+            [unboundFileURL getResourceValue:&fileCreationDate forKey:NSURLCreationDateKey error:nil];
+            
+            if(fileCreationDate)
+            {
+            
+                NSDictionary *info = @{kIsUnboundFileKey : [NSNumber numberWithBool:YES],
+                                       kNameKey : [unboundFileURL lastPathComponent],
+                                       kPathKey : [unboundFileURL path],
+                                       kDirectoryPathKey : [[unboundFileURL URLByDeletingLastPathComponent] path],
+                                       kCreatedKey : fileCreationDate};
+                
+                return info;
+            }
+        }
     }
     
     return nil;
@@ -465,7 +481,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
         {
         
             NSFileManager *localFileManager=[[NSFileManager alloc] init];
-            NSDirectoryEnumerationOptions options = /*NSDirectoryEnumerationSkipsHiddenFiles | */NSDirectoryEnumerationSkipsPackageDescendants;
+            NSDirectoryEnumerationOptions options = NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsPackageDescendants;
             NSDirectoryEnumerator *dirEnumerator = [localFileManager enumeratorAtURL:aURL
                                                           includingPropertiesForKeys:[NSArray arrayWithObjects:NSURLNameKey,
                                                                                       NSURLIsDirectoryKey,NSURLTypeIdentifierKey,NSURLCreationDateKey, NSURLAttributeModificationDateKey,nil]

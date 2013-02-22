@@ -105,6 +105,35 @@
     [self setupToolbar];
 }
 
+-(void)popToRootViewController
+{
+    // do nothing if we're already at the root
+    if([self.viewControllers count] == 1) return;
+    
+    // remove the top vc
+    PIXViewController *aViewController = [self.viewControllers lastObject];
+    [aViewController willHidePIXView];
+    [aViewController.view removeFromSuperview];
+    aViewController.navigationViewController = nil;
+    [self.viewControllers removeLastObject];
+    
+    // remove all middle vc's
+    while ([self.viewControllers count] > 1) {
+        [self.viewControllers removeLastObject];
+    }
+    
+    // add the bottom vc to the view
+    PIXViewController * underViewController = [self.viewControllers lastObject];
+    [underViewController.view setFrame:self.view.bounds];
+    [underViewController willShowPIXView];
+    [self.view addSubview:[underViewController view]];
+    
+    
+    
+    //[aViewController.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+    [self setupToolbar];
+}
+
 -(NSArray *)viewControllerArray
 {
     return [NSArray arrayWithArray:self.viewControllers];
