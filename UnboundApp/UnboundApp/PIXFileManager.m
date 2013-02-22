@@ -35,6 +35,8 @@ typedef NSUInteger PIXOverwriteStrategy;
 
 @property (nonatomic, strong) NSArray *selectedFilePaths;
 
+- (BOOL)isImageFile:(NSString *)path;
+
 @end
 
 @implementation PIXFileManager
@@ -335,9 +337,134 @@ typedef NSUInteger PIXOverwriteStrategy;
     DLog(@"Completed file deletion");
 }
 
++ (BOOL)fileIsMetadataFile:(NSURL *)url
+{
+#if ONLY_LOAD_ALBUMS_WITH_IMAGES
+    return NO;
+#endif
+    
+    BOOL isUnboundMetadataFile = NO;
+    if ([url.path.lastPathComponent isEqualToString:kUnboundAlbumMetadataFileName] ||
+        [url.path.lastPathComponent isEqualToString:@".DS_Store"])
+    {
+        isUnboundMetadataFile = YES;
+    }
+    return isUnboundMetadataFile;
+    
+}
+
+-(BOOL)shouldDeleteAlbumAtPath:(NSString *)directoryPath
+{
+    NSURL *directoryURL = [NSURL fileURLWithPath:directoryPath isDirectory:YES];
+    NSFileManager *localFileManager=[[NSFileManager alloc] init];
+	NSDirectoryEnumerator *enumerator =
+    [localFileManager enumeratorAtURL:directoryURL
+                                             includingPropertiesForKeys:[NSArray arrayWithObjects:NSURLNameKey,
+                                                                         NSURLIsDirectoryKey,nil]
+                                                                options:(/*NSDirectoryEnumerationSkipsHiddenFiles |*/ NSDirectoryEnumerationSkipsPackageDescendants)
+                                                           errorHandler:^(NSURL *errUrl, NSError *error) {
+                                                               // Handle the error.
+                                                               [PIXAppDelegate presentError:error];
+                                                               // Return YES if the enumeration should continue after the error.
+                                                               return YES;
+                                                           }];
+    
+    
+    NSURL *url;
+    while (url = [enumerator nextObject]) {
+        NSError *error;
+        NSNumber *isDirectory = nil;
+        if (! [url getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error]) {
+            DLog(@"error on getResourceValue for file %@ : %@", url.path, error);
+            [[NSApplication sharedApplication] presentError:error];
+        }
+        
+        if ([PIXFileManager fileIsMetadataFile:url]) {
+            continue;
+        }
+        
+        //if a subdirectory is found, then do not delete
+        if ([isDirectory boolValue] == YES) {
+            DLog(@"found subdirectory at : %@", url.path);
+            return NO;
+        }
+        
+        //If a non-image file is found, do not delete
+        if ([self isImageFile:url.path]==NO)
+        {
+            return NO;
+        }
+    }
+    return YES;
+    
+}
+
+-(void)undoRecycleAlbums:(NSArray *)items
+{
+    NSRunCriticalAlertPanel(@"Undo deleting albums is under development.", @"Feature Unavailable", @"OK", @"Cancel", nil);
+}
+
 -(void)recycleAlbums:(NSArray *)items
 {
-    NSRunCriticalAlertPanel(@"Deleting albums is under development.", @"Feature Unavailable", @"OK", @"Cancel", nil);
+    NSMutableArray *urlsToDelete = [NSMutableArray arrayWithCapacity:[items count]];
+    //NSRunCriticalAlertPanel(@"Deleting albums is under development.", @"Feature Unavailable", @"OK", @"Cancel", nil);
+    for (PIXAlbum * anAlbum in items)
+    {
+        NSString *albumPath = anAlbum.path;
+        if ([self shouldDeleteAlbumAtPath:albumPath]==YES) {
+            NSString *path = [anAlbum path];
+            NSURL *deleteURL = [NSURL fileURLWithPath:path isDirectory:YES];
+            [urlsToDelete addObject:deleteURL];
+        } else {
+            [self recyclePhotos:[anAlbum.photos array]];
+        }
+        //[[PIXAppDelegate sharedAppDelegate] deleteAlbumWithPath:anAlbum.path];
+        [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] deleteObject:anAlbum];
+    }
+    
+    
+    DLog(@"About to recycle the following items : %@", urlsToDelete);
+    [[NSWorkspace sharedWorkspace] recycleURLs:urlsToDelete completionHandler:^(NSDictionary *newURLs, NSError *error) {
+        //
+        if (nil==error) {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+//                NSMutableSet *albumsToUpdate = [[NSMutableSet alloc] init];
+//                
+//                for (PIXPhoto *anItem in items)
+//                {
+//                    [albumsToUpdate addObject:[(PIXPhoto *)anItem album]];
+//                    [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] deleteObject:anItem];
+//                }
+//                
+//                for (PIXAlbum *anAlbum in albumsToUpdate)
+//                {
+//                    [anAlbum updateAlbumBecausePhotosDidChange];
+//                    [anAlbum flush];
+//                }
+                
+                [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] save:nil];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
+                
+                NSUndoManager *undoManager = [[[PIXAppDelegate sharedAppDelegate] window] undoManager];
+                
+                [undoManager registerUndoWithTarget:[PIXFileManager sharedInstance] selector:@selector(undoRecycleAlbums:) object:newURLs];
+                [undoManager setActionIsDiscardable:YES];
+            });
+            
+        } else {
+            [[NSApplication sharedApplication] presentError:error];
+            NSArray *sucessfullyDeletedItems = [newURLs allKeys];
+            //TODO: handle this error properly
+            for (id anItem in sucessfullyDeletedItems)
+            {
+                DLog(@"Item at '%@' was recycled", anItem);
+            }
+        }
+        
+    }];
 }
 
 -(BOOL)directoryIsSubpathOfObservedDirectories:(NSString *)aDirectoryPath
