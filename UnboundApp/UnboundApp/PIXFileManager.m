@@ -335,6 +335,11 @@ typedef NSUInteger PIXOverwriteStrategy;
     DLog(@"Completed file deletion");
 }
 
+-(void)recycleAlbums:(NSArray *)items
+{
+    NSRunCriticalAlertPanel(@"Deleting albums is under development.", @"Feature Unavailable", @"OK", @"Cancel", nil);
+}
+
 -(BOOL)directoryIsSubpathOfObservedDirectories:(NSString *)aDirectoryPath
 {
     NSArray *observedDirectories = [[[PIXFileSystemDataSource sharedInstance] observedDirectories] valueForKey:@"path"];
@@ -677,6 +682,41 @@ typedef NSUInteger PIXOverwriteStrategy;
 	}
     
 	return validatedFiles;
+}
+
+// -------------------------------------------------------------------------------
+//	isImageFile:filePath
+//
+//	Uses LaunchServices and UTIs to detect if a given file path is an image file.
+// -------------------------------------------------------------------------------
+- (BOOL)isImageFile:(NSString *)path
+{
+    NSURL *url = [NSURL fileURLWithPath:path];
+    BOOL isImageFile = NO;
+    
+    NSString *utiValue;
+    [url getResourceValue:&utiValue forKey:NSURLTypeIdentifierKey error:nil];
+    if (utiValue)
+    {
+        isImageFile = UTTypeConformsTo((__bridge CFStringRef)utiValue, kUTTypeImage);
+    }
+    return isImageFile;
+}
+
+-(NSArray *)itemsForDraggingInfo:(id <NSDraggingInfo>) draggingInfo forDestination:(NSString *)destPath
+{
+    //Get the files from the drop
+	NSArray * files = [[draggingInfo draggingPasteboard] propertyListForType:NSFilenamesPboardType];
+    NSMutableArray *pathsToPaste = [NSMutableArray arrayWithCapacity:[files count]];
+    for (NSString * path in files)
+    {
+        if (([[path stringByDeletingLastPathComponent] isEqualToString:destPath] == NO) &&
+        ([self isImageFile:path]==YES))
+        {
+            [pathsToPaste addObject:@{@"source" : path, @"destination" : destPath}];
+        }
+    }
+    return pathsToPaste;
 }
 
 

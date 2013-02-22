@@ -16,6 +16,7 @@
 -(void)copyFiles:(NSArray *)items;
 
 -(void)recyclePhotos:(NSArray *)photos;
+-(void)recycleAlbums:(NSArray *)items;
 
 //-(NSString *)trashFolderPath;
 
@@ -24,5 +25,7 @@
 //- (NSMenu *)openWithMenuItemForFile:(NSString *)filePath;
 - (NSMenu *)openWithMenuItemForFiles:(NSArray *)filePaths;
 - (void)openFileWithPath:(NSString *)filePath withApplication:(NSString *)appPath;
+
+-(NSArray *)itemsForDraggingInfo:(id <NSDraggingInfo>) draggingInfo forDestination:(NSString *)destPath;
 
 @end

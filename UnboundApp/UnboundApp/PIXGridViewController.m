@@ -191,7 +191,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
     NSString *warningMessage = [NSString stringWithFormat:@"The file(s) will be deleted immediately.\nAre you sure you want to continue?"];
     if (NSRunCriticalAlertPanel(warningMessage, @"You cannot undo this action.", @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
         
-        [[PIXFileManager sharedInstance] recyclePhotos:itemsToDelete];
+        [[PIXFileManager sharedInstance] recycleAlbums:itemsToDelete];
         
     } else {
         // User clicked cancel, they do not want to delete the files
