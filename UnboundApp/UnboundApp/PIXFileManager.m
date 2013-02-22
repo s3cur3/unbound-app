@@ -302,8 +302,6 @@ typedef NSUInteger PIXOverwriteStrategy;
                     [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] deleteObject:anItem];
                 }
                 
-                [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] save:nil];
-                
                 for (PIXAlbum *anAlbum in albumsToUpdate)
                 {
                     [anAlbum updateAlbumBecausePhotosDidChange];
@@ -353,27 +351,53 @@ typedef NSUInteger PIXOverwriteStrategy;
 -(void)moveFiles:(NSArray *)items
 {
     DLog(@"moving %ld files...", items.count);
+    NSString *aDestinationPath = [[items lastObject] valueForKey:@"destination"];
+    NSURL *destinationURL = [NSURL fileURLWithPath:aDestinationPath isDirectory:YES];
+    NSArray *newItems = [self userValidatedFiles:items forDestination:destinationURL];
+    if (newItems.count == 0) {
+        return;
+    } else {
+        DLog(@"\nOld destinations : %@", [items valueForKey:@"destination"]);
+        DLog(@"\nNew destinations : %@", [newItems valueForKey:@"destination"]);
+    }
+    items = newItems;
+    
     NSMutableArray *undoArray = [NSMutableArray arrayWithCapacity:items.count];
     NSMutableSet *albumPaths = [[NSMutableSet alloc] init];
     for (id aDict in items)
     {
         NSString *src = [aDict valueForKey:@"source"];
         NSString *dest = [aDict valueForKey:@"destination"];
+        NSString *filename = [src lastPathComponent];
+        BOOL destintationWasRenamed = NO;
+        //There was a conflicting filename at destination, so file will be renamed.
+        if ([aDict objectForKey:@"destinationFileName"]!=nil) {
+            destintationWasRenamed = YES;
+            filename = [aDict objectForKey:@"destinationFileName"];
+        }
         
         [albumPaths addObject:[src stringByDeletingLastPathComponent]];
         [albumPaths addObject:dest];
         
-        NSString *undoSrc = [NSString stringWithFormat:@"%@/%@", dest, [src lastPathComponent]];
+        NSString *undoSrc = [NSString stringWithFormat:@"%@/%@", dest, filename];
         NSString *undoDest = [src stringByDeletingLastPathComponent];
         
         [undoArray addObject:@{@"source" : undoSrc, @"destination" : undoDest}];
         
-        [[NSWorkspace sharedWorkspace]
-         performFileOperation:NSWorkspaceMoveOperation
-         source: [src stringByDeletingLastPathComponent]
-         destination:dest
-         files:[NSArray arrayWithObject:[src lastPathComponent]]
-         tag:nil];
+        NSString *fullDestPath = [NSString stringWithFormat:@"%@/%@", dest, filename];
+        NSError *error = nil;
+        if (![[NSFileManager defaultManager] moveItemAtPath:src toPath:fullDestPath error:&error])
+        {
+            DLog(@"%@", error);
+            [[NSApplication sharedApplication] presentError:error];
+        }
+        
+//        [[NSWorkspace sharedWorkspace]
+//         performFileOperation:NSWorkspaceMoveOperation
+//         source: [src stringByDeletingLastPathComponent]
+//         destination:dest
+//         files:[NSArray arrayWithObject:[src lastPathComponent]]
+//         tag:nil];
     }
     
     //[[[PIXAppDelegate sharedAppDelegate] dataSource] startLoadingAllAlbumsAndPhotosInObservedDirectories];
@@ -524,6 +548,29 @@ typedef NSUInteger PIXOverwriteStrategy;
 		return outputPath;
 }
 
+-(NSUInteger)calculateNumberOfDuplicates:(NSArray *)files
+{
+    NSUInteger dupeCount = 0;
+    NSString *destFolder = [[files lastObject] objectForKey:@"destination"];
+
+    if (destFolder != nil)
+    {
+        //NSURL *destFolderURL = [NSURL fileURLWithPath:destFolder isDirectory:YES];
+        
+        for(id file in files)
+        {
+            NSString *aFileName = [[file objectForKey:@"source"] lastPathComponent];
+            NSString *destPath = [destFolder stringByAppendingPathComponent:aFileName];
+            if ([[NSFileManager defaultManager]
+                 fileExistsAtPath: destPath])
+            {
+                dupeCount++;
+            }
+        }
+    }
+    return dupeCount;
+}
+
 - (NSArray*) userValidatedFiles: (NSArray*) files
                  forDestination:     (NSURL*)   destinationURL
 {
@@ -546,25 +593,31 @@ typedef NSUInteger PIXOverwriteStrategy;
 		if ([[NSFileManager defaultManager]
              fileExistsAtPath: destPath])
 		{
-            
             if (!yesToAll)
             {
+                NSUInteger dupeCount = [self calculateNumberOfDuplicates:files];
                 NSAlert* alert = [[NSAlert alloc] init];
                 NSUInteger alertResult;
-                if ([files count] > 1)
-                {
+                
+                
+                //[alert setInformativeText: @"Do you want to replace it?"];
+                if (dupeCount > 1) {
                     [alert addButtonWithTitle: @"Keep All"];
-                    [alert addButtonWithTitle: @"Stop"];
+                    [alert addButtonWithTitle: @"Cancel"];
                     [alert addButtonWithTitle: @"Skip All"];
+                    
+
+                    [alert setMessageText: [NSString stringWithFormat: @"%ld Duplicate File Names", dupeCount]];
+                    [alert setInformativeText:[NSString stringWithFormat:@"An item named \"%@\" and %ld others already exist in this location. Do you want to replace them with the ones you’re moving?", name, dupeCount-1]];
                 } else {
                     [alert addButtonWithTitle: @"Keep Both"];
-                    [alert addButtonWithTitle: @"Stop"];
+                    [alert addButtonWithTitle: @"Cancel"];
                     [alert addButtonWithTitle: @"Skip"];
+                    
+                    [alert setMessageText: [NSString stringWithFormat: @"An item named \"%@\" ", name]];
+                    [alert setInformativeText:@"already exists in this location. Do you want to replace it with the one you’re moving?"];
                 }
                 
-                [alert setMessageText: [NSString stringWithFormat: @"An item named \"%@\" ", name]];
-                //[alert setInformativeText: @"Do you want to replace it?"];
-                [alert setInformativeText:@"already exists in this location. Do you want to replace it with the one you’re moving?"];
                 [alert setAlertStyle: NSWarningAlertStyle];
                 
                 //			alertResult = NSRunAlertPanel(

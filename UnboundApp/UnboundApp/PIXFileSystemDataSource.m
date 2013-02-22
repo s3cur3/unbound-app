@@ -598,6 +598,9 @@ NSString * DefaultDropBoxPhotosDirectory()
 //possible options are ArchDirectoryObserverResponsive and ArchDirectoryObserverObservesSelf
 -(void)startObserving
 {
+    // remove any observers, we only do this one
+    [NSURL removeObserverForAllDirectories:self];
+    
     DLog(@"** STARTING FILE SYSTEM OBSERVATION **");
     for (NSURL *aDir in [self observedDirectories])
     {
