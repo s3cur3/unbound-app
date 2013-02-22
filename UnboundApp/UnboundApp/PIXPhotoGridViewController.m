@@ -363,7 +363,7 @@
     // here we need to return NO if we can't accept the drag
     
     // for now don't accept drags from our own app (this will be used for re-ordering photos later)
-    if([sender draggingSource] != nil)
+    if([sender draggingSource] != nil || (sender.numberOfValidItemsForDrop == 0))
     {
         return NO;
     }
@@ -375,7 +375,7 @@
 {
     
     // for now don't accept drags from our own app (this will be used for re-ordering photos later)
-    if([sender draggingSource] != nil)
+    if([sender draggingSource] != nil || (sender.numberOfValidItemsForDrop == 0))
     {
         return NO;
     }
