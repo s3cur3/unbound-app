@@ -8,13 +8,12 @@
 
 #import "PIXFileManager.h"
 #import "PIXAppDelegate.h"
-#import "PIXAppDelegate+CoreDataUtils.h"
+#import "PIXFileParser.h"
 //#import "MainWindowController.h"
 //#import "FileSystemEventController.h"
 //#import "Album.h"
 #import "PIXAlbum.h"
 #import "PIXPhoto.h"
-#import "PIXFileSystemDataSource.h"
 #import <CoreFoundation/CoreFoundation.h>
 #import "PIXDefines.h"
 
@@ -267,7 +266,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     
     for (NSString *albumPath in albumPaths)
     {
-        [[PIXFileSystemDataSource sharedInstance] shallowScanURL:[NSURL fileURLWithPath:albumPath isDirectory:YES]];
+        [[PIXFileParser sharedFileParser] shallowScanPath:albumPath];
     }
     
     //[[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
@@ -337,7 +336,7 @@ typedef NSUInteger PIXOverwriteStrategy;
 
 -(BOOL)directoryIsSubpathOfObservedDirectories:(NSString *)aDirectoryPath
 {
-    NSArray *observedDirectories = [[[PIXFileSystemDataSource sharedInstance] observedDirectories] valueForKey:@"path"];
+    NSArray *observedDirectories = [[[PIXFileParser sharedFileParser] observedDirectories] valueForKey:@"path"];
     for (NSString *observedPath in observedDirectories)
     {
         if ([aDirectoryPath hasPrefix:observedPath]==YES) {
@@ -406,7 +405,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     for (NSString *albumPath in albumPaths)
     {
         if (![albumPath isEqualToString:[self trashFolderPath]] && [self directoryIsSubpathOfObservedDirectories:albumPath]) {
-            [[PIXFileSystemDataSource sharedInstance] shallowScanURL:[NSURL fileURLWithPath:albumPath isDirectory:YES]];
+            [[PIXFileParser sharedFileParser] shallowScanPath:albumPath];
         }
     }
     
@@ -480,7 +479,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     for (NSString *albumPath in albumPaths)
     {
         if (![albumPath isEqualToString:trashFolder] && [self directoryIsSubpathOfObservedDirectories:albumPath]) {
-            [[PIXFileSystemDataSource sharedInstance] shallowScanURL:[NSURL fileURLWithPath:albumPath isDirectory:YES]];
+            [[PIXFileParser sharedFileParser] shallowScanPath:albumPath];
         }
     }
     

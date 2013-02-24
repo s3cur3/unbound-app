@@ -155,12 +155,10 @@ NSDictionary * dictionaryForURL(NSURL * url)
         {
             NSURL * unboundFileURL = [url URLByAppendingPathComponent:@".unbound"];
             
-            //if([[NSFileManager defaultManager] fileExistsAtPath:[unboundFileURL path]])
-            //{
-            
             NSDate *fileCreationDate = nil;
             [unboundFileURL getResourceValue:&fileCreationDate forKey:NSURLCreationDateKey error:nil];
             
+            // if the .unbound file exits this won't be nil
             if(fileCreationDate)
             {
             
@@ -223,7 +221,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
     [self updateResumeToken:resumeToken forObservedDirectory:observedURL];
     
     // do a shallow, semi-recursive scan of the directory
-    [self scanURLForChanges:changedURL];
+    [self scanURLForChanges:changedURL semiRecurive:YES];
 }
 
 // At least one file somewhere inside--but not necessarily directly descended from--changedURL has changed.  You should examine the directory at changedURL and all subdirectories to see which files changed.
@@ -343,11 +341,14 @@ NSDictionary * dictionaryForURL(NSURL * url)
  * This method will scan a specific album for changed files
  * this will not go any deeper than the current album
  */
-- (void)shallowScanAlbum:(PIXAlbum *)url
+- (void)shallowScanAlbum:(PIXAlbum *)album
 {
-    self.scansCancelledFlag = NO;
-    
-    // TODO: Implement this
+    [self scanURLForChanges:[NSURL fileURLWithPath:album.path isDirectory:YES] semiRecurive:NO];
+}
+
+- (void)shallowScanPath:(NSString *)path
+{
+    [self scanURLForChanges:[NSURL fileURLWithPath:path isDirectory:YES] semiRecurive:NO];
 }
 
 /** 
@@ -356,7 +357,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
  *  that arent already in the database structure. It will also track
  *  current scans so new ones arent started
  */
-- (void)scanURLForChanges:(NSURL *)url
+- (void)scanURLForChanges:(NSURL *)url semiRecurive:(BOOL)recurse
 {
     self.scansCancelledFlag = NO;
     
@@ -384,7 +385,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 }
                 
                 // if this is a directory then add it to the directories array to be checked for recursion
-                else
+                else if(recurse)
                 {
                     NSNumber * isDirectoryValue;
                     [aURL getResourceValue:&isDirectoryValue forKey:NSURLIsDirectoryKey error:nil];
@@ -430,39 +431,41 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 
             }];
             
-            
-            // go through the directories we found and see if any are not already in the db
-            NSArray * existingAlbums = [self albumsWithPaths:directories];
-            
-            // for each directory we found, remove it from the list
-            for(NSDictionary * anAlbumDict in existingAlbums)
+            if(recurse)
             {
-                NSString * thisAlbumPath = [anAlbumDict objectForKey:@"path"];
+                // go through the directories we found and see if any are not already in the db
+                NSArray * existingAlbums = [self albumsWithPaths:directories];
                 
-                NSUInteger index = [directories indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-                    return [thisAlbumPath isEqualToString:(NSString *)obj];
-                }];
-                
-                if(index != NSNotFound)
+                // for each directory we found, remove it from the list
+                for(NSDictionary * anAlbumDict in existingAlbums)
                 {
-                    [directories removeObjectAtIndex:index];
+                    NSString * thisAlbumPath = [anAlbumDict objectForKey:@"path"];
+                    
+                    NSUInteger index = [directories indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+                        return [thisAlbumPath isEqualToString:(NSString *)obj];
+                    }];
+                    
+                    if(index != NSNotFound)
+                    {
+                        [directories removeObjectAtIndex:index];
+                    }
                 }
+                
+                
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    // now go through the directories left over and start recursive shallow scans on them
+                    for(NSString * path in directories)
+                    {
+                        [self scanURLForChanges:[NSURL fileURLWithPath:path] semiRecurive:YES];
+                    }
+                    
+                    [self.loadingAlbumsDict removeObjectForKey:url.path];
+                    
+                    [self decrementWorking];
+                });
             }
-            
-            
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                // now go through the directories left over and start recursive shallow scans on them
-                for(NSString * path in directories)
-                {
-                    [self scanURLForChanges:[NSURL fileURLWithPath:path]];
-                }
-                
-                [self.loadingAlbumsDict removeObjectForKey:url.path];
-                
-                [self decrementWorking];
-            });
         });
         
     }

@@ -40,7 +40,9 @@
  * This method will scan a specific album for changed files
  * this will not go any deeper than the current album
  */
-- (void)shallowScanAlbum:(PIXAlbum *)url;
+- (void)shallowScanAlbum:(PIXAlbum *)album;
+
+- (void)shallowScanPath:(NSString *)path;
 
 /**
  *  This method will scan a specific path in a shallow manner.
@@ -48,7 +50,7 @@
  *  that arent already in the database structure. It will also track
  *  current scans so new ones arent started
  */
-- (void)scanURLForChanges:(NSURL *)url;
+- (void)scanURLForChanges:(NSURL *)url semiRecurive:(BOOL)recurse;
 
 /**
  *  cancelScans will cancel any current directory scans and any current parsing threads

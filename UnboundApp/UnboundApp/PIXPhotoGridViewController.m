@@ -323,6 +323,9 @@
         return NSDragOperationNone;
     }
     
+    [sender setNumberOfValidItemsForDrop:0];
+    
+    
     // check the modifier keys and show with operation we support
     if([NSEvent modifierFlags] & NSAlternateKeyMask)
     {
