@@ -15,6 +15,16 @@
     return [super initWithNibName:@"DebugPreferencesView" bundle:nil];
 }
 
+- (void) awakeFromNib
+{
+    [super awakeFromNib];
+    
+    [self.workingSpinner bind:@"animate"
+                     toObject:[PIXFileParser sharedFileParser]
+                  withKeyPath:@"isWorking"
+                      options: nil]; //@{NSValueTransformerNameBindingOption : NSNegateBooleanTransformerName}];
+}
+
 #pragma mark - MASPreferencesViewController
 
 - (NSString *)identifier

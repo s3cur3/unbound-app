@@ -435,7 +435,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     
     for (NSString *albumPath in albumPaths)
     {
-        [[PIXFileSystemDataSource sharedInstance] shallowScanURL:[NSURL fileURLWithPath:albumPath isDirectory:YES]];
+        [[PIXFileParser sharedFileParser] shallowScanPath:albumPath];
     }
     
     //[[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];

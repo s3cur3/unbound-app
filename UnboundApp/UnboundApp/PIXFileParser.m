@@ -645,6 +645,9 @@ NSDictionary * dictionaryForURL(NSURL * url)
             }
             
         }];
+                   
+                   
+        [self decrementWorking];
     });
 }
 

@@ -14,4 +14,6 @@
 
 -(IBAction)scanFullDirectoryStructure:(id)sender;
 
+@property (strong) IBOutlet NSProgressIndicator * workingSpinner;
+
 @end
