@@ -180,7 +180,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
 - (IBAction) deleteItems:(id )inSender
 {
     
-    NSMutableArray *itemsToDelete = [self.selectedItems mutableCopy];
+    NSMutableArray *itemsToDelete = [[self.selectedItems allObjects] mutableCopy];
     NSSet *selectedSet = self.selectedItems;
     if (self.selectedItems.count != selectedSet.count)
     {
@@ -191,7 +191,11 @@ static NSString *kContentTitleKey, *kContentImageKey;
     NSString *warningMessage = [NSString stringWithFormat:@"The file(s) will be deleted immediately.\nAre you sure you want to continue?"];
     if (NSRunCriticalAlertPanel(warningMessage, @"You cannot undo this action.", @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
         
-        [[PIXFileManager sharedInstance] recyclePhotos:itemsToDelete];
+        if ([[itemsToDelete lastObject] class] == [PIXAlbum class]) {
+            [[PIXFileManager sharedInstance] recycleAlbums:itemsToDelete];
+        } else {
+            [[PIXFileManager sharedInstance] recyclePhotos:itemsToDelete];
+        }
         
     } else {
         // User clicked cancel, they do not want to delete the files
@@ -292,9 +296,10 @@ static NSString *kContentTitleKey, *kContentImageKey;
          @selector(selectNone:) keyEquivalent:@""];
         
         //TODO: make delete work on albums, just works with photos right now
-        if ([object class] == [PIXPhoto class]) {
-            [menu addItemWithTitle:[NSString stringWithFormat:@"Delete"] action:@selector(deleteItems:) keyEquivalent:@""];
-        }
+//        if ([object class] == [PIXPhoto class]) {
+//            
+//        }
+        [menu addItemWithTitle:[NSString stringWithFormat:@"Delete"] action:@selector(deleteItems:) keyEquivalent:@""];
         
         for (NSMenuItem * anItem in [menu itemArray])
         {

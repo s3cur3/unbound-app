@@ -326,6 +326,12 @@
     {
         return NSDragOperationNone;
     }
+    NSArray *pathsToPaste = [[PIXFileManager sharedInstance] itemsForDraggingInfo:sender forDestination:self.album.path];
+    NSUInteger fileCount = [pathsToPaste count];
+    sender.numberOfValidItemsForDrop = fileCount;
+    if (fileCount==0) {
+        return NSDragOperationNone;
+    }
     
     [sender setNumberOfValidItemsForDrop:0];
     
@@ -364,7 +370,7 @@
     // here we need to return NO if we can't accept the drag
     
     // for now don't accept drags from our own app (this will be used for re-ordering photos later)
-    if([sender draggingSource] != nil)
+    if([sender draggingSource] != nil || (sender.numberOfValidItemsForDrop == 0))
     {
         return NO;
     }
@@ -376,32 +382,26 @@
 {
     
     // for now don't accept drags from our own app (this will be used for re-ordering photos later)
-    if([sender draggingSource] != nil)
+    if([sender draggingSource] != nil || (sender.numberOfValidItemsForDrop == 0))
     {
         return NO;
     }
     
-    // here we need perform the operation for the drop. We need to check the modifier keys to decide which we're doing
-    //Get the files from the drop
-	NSArray * files = [[sender draggingPasteboard] propertyListForType:NSFilenamesPboardType];
+    NSArray *pathsToPaste = [[PIXFileManager sharedInstance] itemsForDraggingInfo:sender forDestination:self.album.path];
     
-    NSMutableArray *pathsToPaste = [NSMutableArray arrayWithCapacity:[files count]];
-    NSString *destPath = self.album.path;
-    for (NSString * path in files)
+    if (pathsToPaste.count > 0)
     {
-        [pathsToPaste addObject:@{@"source" : path, @"destination" : destPath}];
-    }
-    
-    if([NSEvent modifierFlags] & NSAlternateKeyMask)
-    {
-        // perform a move here
-        [[PIXFileManager sharedInstance] moveFiles:pathsToPaste];
-    }
-    
-    else
-    {
-        // perform a copy here
-        [[PIXFileManager sharedInstance] copyFiles:pathsToPaste];
+        if([NSEvent modifierFlags] & NSAlternateKeyMask)
+        {
+            // perform a move here
+            [[PIXFileManager sharedInstance] moveFiles:pathsToPaste];
+        }
+        
+        else
+        {
+            // perform a copy here
+            [[PIXFileManager sharedInstance] copyFiles:pathsToPaste];
+        }
     }
     
     return YES;
