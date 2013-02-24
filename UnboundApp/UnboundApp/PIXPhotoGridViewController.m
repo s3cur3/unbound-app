@@ -19,6 +19,7 @@
 #import "PIXCustomButton.h"
 #import "PIXCustomShareSheetViewController.h"
 #import "PIXFileManager.h"
+#import "PIXFileParser.h"
 
 @interface PIXPhotoGridViewController ()
 
@@ -88,6 +89,9 @@
         [self.gridView scrollPoint:NSZeroPoint];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAlbum) name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
+        
+        // start a date scan for this album
+        [[PIXFileParser sharedFileParser] dateScanAlbum:self.album];
         
     }
 }

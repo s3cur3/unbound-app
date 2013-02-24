@@ -273,12 +273,34 @@ NSDictionary * dictionaryForURL(NSURL * url)
         NSDate * startScanTime = [NSDate date];
         
         NSMutableArray *photoFiles = [NSMutableArray new];
-        NSArray * enumerators = [self recursiveEnumeratorsForRootDirectories];
-        
-        
+                
         // loop through each of the enumerators (there can be more than one)
-        for(NSDirectoryEnumerator * dirEnumerator in enumerators)
+        for(NSURL * aURL in self.observedDirectories)
         {
+            
+            NSDirectoryEnumerator *dirEnumerator = nil;
+            
+            BOOL isDir = NO;
+            if([[NSFileManager defaultManager] fileExistsAtPath:aURL.path isDirectory:&isDir] && isDir)
+            {
+                NSFileManager *localFileManager=[[NSFileManager alloc] init];
+                
+                NSDirectoryEnumerationOptions options = NSDirectoryEnumerationSkipsHiddenFiles |
+                NSDirectoryEnumerationSkipsPackageDescendants;
+                
+                dirEnumerator = [localFileManager enumeratorAtURL:aURL
+                                       includingPropertiesForKeys:@[NSURLNameKey,
+                                                                    NSURLIsDirectoryKey,
+                                                                    NSURLTypeIdentifierKey,
+                                                                    NSURLCreationDateKey,
+                                                                    NSURLAttributeModificationDateKey]
+                                                          options:options
+                                                     errorHandler:^(NSURL *url, NSError *error) {
+                                                         return NO;
+                                                     }];
+            }
+            
+            
             // loop through each item in each enumerator
             NSURL *aURL = nil;
             while (aURL = [dirEnumerator nextObject]) {
@@ -370,7 +392,30 @@ NSDictionary * dictionaryForURL(NSURL * url)
             [self incrementWorking];
             //DLog(@"Doing a shallow scan of: %@", url.path);
             
-            NSDirectoryEnumerator *dirEnumerator = [self nonRecursiveEnumeratorForURL:url];
+            NSDirectoryEnumerator *dirEnumerator = nil;
+            
+            
+            if([[NSFileManager defaultManager] fileExistsAtPath:url.path])
+            {
+                NSFileManager *localFileManager=[[NSFileManager alloc] init];
+                
+                NSDirectoryEnumerationOptions options = NSDirectoryEnumerationSkipsHiddenFiles |
+                                                        NSDirectoryEnumerationSkipsPackageDescendants |
+                                                        NSDirectoryEnumerationSkipsSubdirectoryDescendants;
+                
+                dirEnumerator = [localFileManager enumeratorAtURL:url
+                                       includingPropertiesForKeys:@[NSURLNameKey,
+                                                                    NSURLIsDirectoryKey,
+                                                                    NSURLTypeIdentifierKey,
+                                                                    NSURLCreationDateKey]
+                                                          options:options
+                                                     errorHandler:^(NSURL *url, NSError *error) {
+                                                                                return NO;
+                                                                            }];
+            }
+            
+            
+            
             NSMutableArray *photoFiles = [NSMutableArray new];
             NSMutableArray *directories = [NSMutableArray new];
             NSURL *aURL;
@@ -472,56 +517,137 @@ NSDictionary * dictionaryForURL(NSURL * url)
     
 }
 
--(NSArray *)recursiveEnumeratorsForRootDirectories
+
+- (void)dateScanAlbum:(PIXAlbum *)album
 {
-    NSMutableArray * enumerators = [NSMutableArray new];
+    self.scansCancelledFlag = NO;
     
+    NSURL *url = [NSURL fileURLWithPath:album.path isDirectory:YES];
     
-    for(NSURL * aURL in self.observedDirectories)
-    {
+    [self incrementWorking];
     
-        if([[NSFileManager defaultManager] fileExistsAtPath:aURL.path])
-        {
+    // if this path isn't already being scanned:
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                
+        NSDirectoryEnumerator *dirEnumerator = nil;
         
+        
+        if([[NSFileManager defaultManager] fileExistsAtPath:url.path])
+        {
             NSFileManager *localFileManager=[[NSFileManager alloc] init];
-            NSDirectoryEnumerationOptions options = NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsPackageDescendants;
-            NSDirectoryEnumerator *dirEnumerator = [localFileManager enumeratorAtURL:aURL
-                                                          includingPropertiesForKeys:[NSArray arrayWithObjects:NSURLNameKey,
-                                                                                      NSURLIsDirectoryKey,NSURLTypeIdentifierKey,NSURLCreationDateKey, NSURLAttributeModificationDateKey,nil]
-                                                                             options:options
-                                                                        errorHandler:^(NSURL *url, NSError *error) {
-                                                                            // Handle the error.
-                                                                            [PIXAppDelegate presentError:error];
-                                                                            // Return YES if the enumeration should continue after the error.
-                                                                            return NO;
-                                                                        }];
             
-            [enumerators addObject:dirEnumerator];
+            NSDirectoryEnumerationOptions options = NSDirectoryEnumerationSkipsHiddenFiles |
+            NSDirectoryEnumerationSkipsPackageDescendants |
+            NSDirectoryEnumerationSkipsSubdirectoryDescendants;
+            
+            dirEnumerator = [localFileManager enumeratorAtURL:url
+                                   includingPropertiesForKeys:@[NSURLNameKey,
+                                                                NSURLIsDirectoryKey,
+                                                                NSURLTypeIdentifierKey,
+                                                                NSURLCreationDateKey,
+                                                                NSURLContentModificationDateKey]
+                                                      options:options
+                                                 errorHandler:^(NSURL *url, NSError *error) {
+                                                     return NO;
+                                                 }];
         }
-    }
-    
-    return enumerators;
+        
+        
+        
+        NSMutableArray *photoFiles = [NSMutableArray new];
+        NSURL *aURL;
+        while (aURL = [dirEnumerator nextObject]) {
+            
+            // if this is an parsable file add it to the photofiles array to be parsed
+            NSDictionary * info = dictionaryForURL(aURL);
+            
+            if(info != nil)
+            {
+                
+                
+                // if this is a photo, let's fix the date if needed
+                if([info objectForKey:kIsUnboundFileKey] == nil)
+                {
+                    // get the file creation date
+                    NSDate * fileCreationDate = nil;
+                    [aURL getResourceValue:&fileCreationDate forKey:NSURLCreationDateKey error:nil];
+                    
+                    // get the photo date taken
+                    NSDate * photoDateTaken = nil;
+                    
+                    CGImageSourceRef imageSrc = CGImageSourceCreateWithURL((__bridge CFURLRef)aURL, nil);
+                    if (imageSrc!=nil)
+                    {
+                        NSString * dateTakenString = nil;
+                        
+                        // get the exif data
+                        NSDictionary * exif = (__bridge NSDictionary *)(CGImageSourceCopyPropertiesAtIndex(imageSrc, 0, nil));
+                        CFRelease(imageSrc);
+                        dateTakenString = [[exif objectForKey:@"{Exif}"] objectForKey:@"DateTimeOriginal"];
+                        
+                        // parse the exif date string
+                        if(dateTakenString)
+                        {
+                            NSDateFormatter* exifFormat = [[NSDateFormatter alloc] init];
+                            [exifFormat setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
+                            photoDateTaken = [exifFormat dateFromString:dateTakenString];
+                        }
+                    }
+                    
+                    // if we have a photo date taken and it doesn't equal the creation date then fix the creation date
+                    if(photoDateTaken != nil && [photoDateTaken compare:fileCreationDate] != NSOrderedSame)
+                    {
+                        NSError * error = nil;
+                        [aURL setResourceValue:photoDateTaken forKey:NSURLCreationDateKey error:&error];
+                        
+                        if(error)
+                        {
+                            
+                        }
+                        
+                        
+                        // we've changed the file creation date, re-load the info
+                        info = dictionaryForURL(aURL);
+                    }
+                    
+                    
+                }
+            
+            
+                [photoFiles addObject:info];
+            }
+            
+            
+        }
+        
+        if(self.scansCancelledFlag)
+        {
+            [self decrementWorking];
+            return;
+        }
+                   
+       NSDate * startParseDate = [NSDate date];
+       
+       NSString * path = url.path;
+       
+       // start parsing photos we've found (this will dispatch to another bg thread)
+       [self parsePhotos:photoFiles withDeletionBlock:^(NSManagedObjectContext *context) {
+            
+            // go through and delete any photos/albums that weren't updated and should have been
+            
+            // be sure to delete albums first so there are less photos to iterate through in the second delete
+            if (![self deleteObjectsForEntityName:@"PIXAlbum" withUpdateDateBefore:startParseDate inContext:context withPath:path]) {
+                DLog(@"There was a problem trying to delete old objects");
+            }
+            if (![self deleteObjectsForEntityName:@"PIXPhoto" withUpdateDateBefore:startParseDate inContext:context withPath:path]) {
+                DLog(@"There was a problem trying to delete old objects");
+            }
+            
+        }];
+    });
 }
 
--(NSDirectoryEnumerator *)nonRecursiveEnumeratorForURL:(NSURL *)url
-{
-    if(![[NSFileManager defaultManager] fileExistsAtPath:url.path]) return nil;
-    
-    NSFileManager *localFileManager=[[NSFileManager alloc] init];
-    NSDirectoryEnumerationOptions options = NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsSubdirectoryDescendants;
-    NSDirectoryEnumerator *dirEnumerator = [localFileManager enumeratorAtURL:url
-                                                  includingPropertiesForKeys:[NSArray arrayWithObjects:NSURLNameKey,
-                                                                              NSURLIsDirectoryKey,NSURLTypeIdentifierKey,NSURLCreationDateKey, NSURLAttributeModificationDateKey,nil]
-                                                                     options:options
-                                                                errorHandler:^(NSURL *url, NSError *error) {
-                                                                    // Handle the error.
-                                                                    //[PIXAppDelegate presentError:error];
-                                                                    // Return YES if the enumeration should continue after the error.
-                                                                    return NO;
-                                                                }];
-    
-    return dirEnumerator;
-}
 
 // this will fetch albums matching the nstring paths in the paths array
 -(NSArray *)albumsWithPaths:(NSArray *)paths
