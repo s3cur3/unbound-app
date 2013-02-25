@@ -107,19 +107,17 @@
 
 - (NSDragOperation)draggingEntered:(id < NSDraggingInfo >)sender
 {
-    NSPasteboard * pasteBoard = [sender draggingPasteboard];
-    
-    
-    NSArray * pathArray = [pasteBoard propertyListForType:NSFilenamesPboardType];
-    
-    for(NSString * path in pathArray)
-    {        
-        if([path isEqualToString:[self.album path]])
-        {
-            return NSDragOperationNone;
-        }
+    // for now don't accept drags from our own app (this will be used for merging albums later)
+    if([sender draggingSource] != nil)
+    {
+        return NSDragOperationNone;
     }
-    
+    NSArray *pathsToPaste = [[PIXFileManager sharedInstance] itemsForDraggingInfo:sender forDestination:self.album.path];
+    NSUInteger fileCount = [pathsToPaste count];
+    sender.numberOfValidItemsForDrop = fileCount;
+    if (fileCount==0) {
+        return NSDragOperationNone;
+    }
     
     self.isDraggingOver = YES;
     [self setNeedsDisplay:YES];
@@ -146,15 +144,17 @@
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
-	//Get the files from the drop
-	NSArray * files = [[sender draggingPasteboard] propertyListForType:NSFilenamesPboardType];
-    
-    NSMutableArray *pathsToPaste = [NSMutableArray arrayWithCapacity:[files count]];
-    NSString *destPath = self.album.path;
-    for (NSString * path in files)
+    // for now don't accept drags from our own app (this will be used for re-ordering photos later)
+    if([sender draggingSource] != nil)
     {
-        [pathsToPaste addObject:@{@"source" : path, @"destination" : destPath}];
+        return NO;
     }
+    if(sender.numberOfValidItemsForDrop == 0)
+    {
+        return NO;
+    }
+    
+    NSArray *pathsToPaste = [[PIXFileManager sharedInstance] itemsForDraggingInfo:sender forDestination:self.album.path];
     
     if ([PIXViewController optionKeyIsPressed])
     {
