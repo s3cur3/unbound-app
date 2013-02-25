@@ -18,6 +18,7 @@
         <relationship name="stackPhotos" optional="YES" toMany="YES" maxCount="3" deletionRule="Nullify" ordered="YES" destinationEntity="PIXPhoto" inverseName="stackPhotoAlbum" inverseEntity="PIXPhoto" syncable="YES"/>
     </entity>
     <entity name="PIXPhoto" representedClassName="PIXPhoto" syncable="YES">
+        <attribute name="dateCreated" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="dateLastModified" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="dateLastUpdated" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="dateTaken" optional="YES" attributeType="Date" syncable="YES"/>
@@ -37,7 +38,7 @@
     <elements>
         <element name="PIXAccount" positionX="0" positionY="0" width="128" height="90"/>
         <element name="PIXAlbum" positionX="0" positionY="0" width="128" height="195"/>
-        <element name="PIXPhoto" positionX="0" positionY="0" width="128" height="210"/>
+        <element name="PIXPhoto" positionX="0" positionY="0" width="128" height="225"/>
         <element name="PIXThumbnail" positionX="0" positionY="0" width="128" height="75"/>
     </elements>
 </model>

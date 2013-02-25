@@ -268,6 +268,7 @@
     [self.searchField.cell setPlaceholderString:@"Search Albums"];
     [self.searchField.cell setFont:[NSFont fontWithName:@"Helvetica" size:13]];
     
+    
     _searchBar = [[NSToolbarItem alloc] initWithItemIdentifier:@"SearchBar"];
     
     [_searchBar setView:self.searchField];

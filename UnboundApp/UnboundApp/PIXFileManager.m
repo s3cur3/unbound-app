@@ -179,7 +179,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     }
     NSURL *fileURL = [NSURL fileURLWithPath:filePath];
     CFArrayRef cfArrayOfApps = LSCopyApplicationURLsForURL((__bridge CFURLRef)fileURL, kLSRolesAll);
-    CFIndex maxCount = 10;
+    CFIndex maxCount = 12;
     NSMutableSet *alreadyAdded = [NSMutableSet setWithCapacity:maxCount];
 	if (cfArrayOfApps != nil)
 	{
@@ -659,6 +659,10 @@ typedef NSUInteger PIXOverwriteStrategy;
     NSUndoManager *undoManager = [[[PIXAppDelegate sharedAppDelegate] window] undoManager];
     [undoManager registerUndoWithTarget:self selector:@selector(moveFiles:) object:undoArray];
 }
+
+
+
+
 
 //----------------------------------------------------------------------------------------
 #pragma mark	-

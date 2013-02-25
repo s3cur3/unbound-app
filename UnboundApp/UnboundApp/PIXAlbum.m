@@ -100,7 +100,7 @@ static NSString *const kItemsKey = @"photos";
         if (newDatePhoto != self.datePhoto) {
             self.datePhoto = newDatePhoto;
             
-            self.albumDate = [self.datePhoto getDateTaken];
+            self.albumDate = [self.datePhoto findDateTaken];
             
             self.subtitle = nil;
             

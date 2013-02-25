@@ -31,6 +31,7 @@ const CGFloat kThumbnailSize = 200.0f;
 @implementation PIXPhoto
 
 @dynamic dateLastModified;
+@dynamic dateCreated;
 @dynamic dateLastUpdated;
 @dynamic dateTaken;
 @dynamic name;
@@ -198,7 +199,7 @@ const CGFloat kThumbnailSize = 200.0f;
     return _thumbnailImage;
 }
 
--(NSDate *)getDateTaken
+-(NSDate *)findDateTaken
 {
     if(self.dateTaken != nil) return self.dateTaken;
     
@@ -226,7 +227,7 @@ const CGFloat kThumbnailSize = 200.0f;
     
     if(thisDateTaken == nil)
     {
-        thisDateTaken = self.dateLastModified;
+        thisDateTaken = self.dateCreated;
     }
     
     self.dateTaken = thisDateTaken;

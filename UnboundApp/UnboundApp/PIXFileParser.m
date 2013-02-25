@@ -133,12 +133,16 @@ NSDictionary * dictionaryForURL(NSURL * url)
     if(isImageFile)
     {
         NSDate *fileCreationDate;
+        NSDate *fileModifiedDate;
+        
         [url getResourceValue:&fileCreationDate forKey:NSURLCreationDateKey error:nil];
+        [url getResourceValue:&fileModifiedDate forKey:NSURLContentModificationDateKey error:nil];
         
         NSDictionary *info = @{kNameKey : [url lastPathComponent],
                                kPathKey : [url path],
                                kDirectoryPathKey : [[url URLByDeletingLastPathComponent] path],
-                               kCreatedKey : fileCreationDate};
+                               kCreatedKey : fileCreationDate,
+                               kModifiedKey : fileModifiedDate};
 
         
         return info;
@@ -594,11 +598,20 @@ NSDictionary * dictionaryForURL(NSURL * url)
                     CGImageSourceRef imageSrc = CGImageSourceCreateWithURL((__bridge CFURLRef)aURL, nil);
                     if (imageSrc!=nil)
                     {
-                        NSString * dateTakenString = nil;
+                       
                         
                         // get the exif data
                         NSDictionary * exif = (__bridge NSDictionary *)(CGImageSourceCopyPropertiesAtIndex(imageSrc, 0, nil));
                         CFRelease(imageSrc);
+                        
+                        if(exif != nil)
+                        {
+                            info = [info mutableCopy];
+                            [(NSMutableDictionary *)info setObject:exif forKey:@"exif"];
+                        }
+                        
+                        /*
+                         NSString * dateTakenString = nil;
                         dateTakenString = [[exif objectForKey:@"{Exif}"] objectForKey:@"DateTimeOriginal"];
                         
                         // parse the exif date string
@@ -607,8 +620,10 @@ NSDictionary * dictionaryForURL(NSURL * url)
                             NSDateFormatter* exifFormat = [[NSDateFormatter alloc] init];
                             [exifFormat setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
                             photoDateTaken = [exifFormat dateFromString:dateTakenString];
-                        }
+                        }*/
                     }
+                    
+                    /*
                     
                     // if we have a photo date taken and it doesn't equal the creation date then fix the creation date
                     if(photoDateTaken != nil && [photoDateTaken compare:fileCreationDate] != NSOrderedSame)
@@ -625,7 +640,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                         // we've changed the file creation date, re-load the info
                         info = dictionaryForURL(aURL);
                     }
-
+                    */
                 }
             
             
@@ -841,9 +856,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
                     [lastAlbumsExistingPhotos removeObjectAtIndex:index];
                 }
                 
-                // set some basic attributes on the photo
-                [dbPhoto setDateLastModified:[aPhoto valueForKey:@"modified"]];
-                [dbPhoto setPath:[aPhoto valueForKey:@"path"]];
+                [self setupPhoto:dbPhoto withFileInfo:aPhoto];
+                
                 
                 // set this date so this photo won't be deleted
                 [dbPhoto setDateLastUpdated:fetchDate];
@@ -894,6 +908,52 @@ NSDictionary * dictionaryForURL(NSURL * url)
     
 }
 
+-(void)setupPhoto:(PIXPhoto *)photo withFileInfo:(NSDictionary *)fileInfo
+{
+    // set some basic attributes on the photo
+    [photo setDateCreated:[fileInfo objectForKey:kCreatedKey]];
+    [photo setPath:[fileInfo valueForKey:kPathKey]];
+    [photo setName:[fileInfo valueForKey:kNameKey]];
+    
+    NSDate * dateModified = [fileInfo valueForKey:kModifiedKey];
+    
+    
+    // if this was modified since the last time we looked at it then we need to clear some data
+    if([photo dateLastModified] != nil && [[photo dateLastModified] compare:dateModified] == NSOrderedAscending)
+    {
+        [photo setThumbnail:nil];
+        [photo setExifData:nil];
+    }
+        
+    // set the date modified
+    [photo setDateLastModified:dateModified];
+    
+    
+    // set the exif data if we have it
+    NSDictionary * exif = nil; //[fileInfo objectForKey:@"exif"];
+    
+    if(exif != nil)
+    {
+        [photo setExifData:exif];
+        
+        NSDate * photoDateTaken = nil;
+        NSString * dateTakenString = [[exif objectForKey:@"{Exif}"] objectForKey:@"DateTimeOriginal"];
+
+        // parse the exif date string
+        if(dateTakenString)
+        {
+            NSDateFormatter* exifFormat = [[NSDateFormatter alloc] init];
+            [exifFormat setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
+            photoDateTaken = [exifFormat dateFromString:dateTakenString];
+            
+            if(photoDateTaken)
+            {
+                [photo setDateTaken:photoDateTaken];
+            }
+        }
+    }
+}
+
 -(PIXAlbum *)fetchAlbumWithPath:(NSString *)aPath inContext:(NSManagedObjectContext *)context
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -915,8 +975,9 @@ NSDictionary * dictionaryForURL(NSURL * url)
 
 -(void)setPhotos:(NSMutableArray *)newPhotos forAlbum:(PIXAlbum *)anAlbum
 {
-    NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc] initWithKey:@"dateLastModified" ascending:YES];
-    [newPhotos sortUsingDescriptors:@[sortByDate] ];
+    NSSortDescriptor *sortByDateTaken = [[NSSortDescriptor alloc] initWithKey:@"dateTaken" ascending:YES];
+    NSSortDescriptor *sortByDateCreated = [[NSSortDescriptor alloc] initWithKey:@"dateCreated" ascending:YES];
+    [newPhotos sortUsingDescriptors:@[sortByDateTaken, sortByDateCreated] ];
     NSOrderedSet *newPhotosSet = [[NSOrderedSet alloc] initWithArray:newPhotos];
     [anAlbum setPhotos:newPhotosSet updateCoverImage:YES];
     [newPhotos removeAllObjects];

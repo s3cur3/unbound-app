@@ -277,49 +277,65 @@ static NSString *kContentTitleKey, *kContentImageKey;
 -(NSMenu *)menuForObject:(id)object
 {
     NSMenu*  menu = nil;
-    //TODO: see why isKindOfClass is returning NO
-    //if ([[object class] isKindOfClass: [PIXGridViewItem class]])
-    if ([object class] == [PIXAlbum class] ||
-        [object class] == [PIXPhoto class])
+    
+    menu = [[NSMenu alloc] initWithTitle:@"menu"];
+    [menu setAutoenablesItems:NO];
+    
+    // Get Info
+    [menu addItemWithTitle:[NSString stringWithFormat:@"Get Info"] action:
+     @selector(getInfo:) keyEquivalent:@""];
+    
+    // Show in Finder
+    [menu addItemWithTitle:[NSString stringWithFormat:@"Show In Finder"] action:
+     @selector(revealInFinder:) keyEquivalent:@""];
+    
+    [menu addItem:[NSMenuItem separatorItem]];
+    
+    // only show open with options on Photo objects
+    if([object isKindOfClass:[PIXPhoto class]])
     {
         
-        menu = [[NSMenu alloc] initWithTitle:@"menu"];
-        [menu setAutoenablesItems:NO];
+        
+        // Open with Defualt
         NSString *defaultAppName = [[PIXFileManager sharedInstance] defaultAppNameForOpeningFileWithPath:[object path]];
         if (defaultAppName!=nil && ([defaultAppName isEqualToString:@"Finder"]==NO)) {
             [menu addItemWithTitle:[NSString stringWithFormat:@"Open with %@", defaultAppName] action:
              @selector(openInApp:) keyEquivalent:@""];
         }
-        [menu addItemWithTitle:[NSString stringWithFormat:@"Get Info"] action:
-         @selector(getInfo:) keyEquivalent:@""];
-        [menu addItemWithTitle:[NSString stringWithFormat:@"Show In Finder"] action:
-         @selector(revealInFinder:) keyEquivalent:@""];
-        [menu addItemWithTitle:[NSString stringWithFormat:@"Select All"] action:
-         @selector(selectAll:) keyEquivalent:@""];
-        [menu addItemWithTitle:[NSString stringWithFormat:@"Select None"] action:
-         @selector(selectNone:) keyEquivalent:@""];
         
-        //TODO: make delete work on albums, just works with photos right now
-//        if ([object class] == [PIXPhoto class]) {
-//            
-//        }
-        [menu addItemWithTitle:[NSString stringWithFormat:@"Delete"] action:@selector(deleteItems:) keyEquivalent:@""];
+        // Open with Others
+        NSArray *filePaths = [[self.selectedItems allObjects] valueForKey:@"path"];
+        NSMenu *openWithMenu = [[PIXFileManager sharedInstance] openWithMenuItemForFiles:filePaths];
+        NSMenuItem *openWithMenuItem = [[NSMenuItem alloc] init];
+        [openWithMenuItem setTitle:@"Open With"];
+        [openWithMenuItem setSubmenu:openWithMenu];
+        [menu addItem:openWithMenuItem];
         
-        for (NSMenuItem * anItem in [menu itemArray])
-        {
-            [anItem setRepresentedObject:object];
-            [anItem setTarget:self];
-        }
-        menu.delegate = self;
-        
+        [menu addItem:[NSMenuItem separatorItem]];
     }
+    
+    // Selection Options
+    [menu addItemWithTitle:[NSString stringWithFormat:@"Select All"] action:
+     @selector(selectAll:) keyEquivalent:@""];
+    [menu addItemWithTitle:[NSString stringWithFormat:@"Select None"] action:
+     @selector(selectNone:) keyEquivalent:@""];
+    
+    [menu addItem:[NSMenuItem separatorItem]];
+    
+
+    [menu addItemWithTitle:[NSString stringWithFormat:@"Delete"] action:@selector(deleteItems:) keyEquivalent:@""];
+    
+    for (NSMenuItem * anItem in [menu itemArray])
+    {
+        [anItem setRepresentedObject:object];
+        [anItem setTarget:self];
+    }
+    
+    menu.delegate = self;
+    
+    
     //NSMenu *openWithMenu = [[PIXFileManager sharedInstance] openWithMenuItemForFile:[object path]];
-    NSArray *filePaths = [[self.selectedItems allObjects] valueForKey:@"path"];
-    NSMenu *openWithMenu = [[PIXFileManager sharedInstance] openWithMenuItemForFiles:filePaths];
-    NSMenuItem *openWithMenuItem = [[NSMenuItem alloc] init];
-    [openWithMenuItem setTitle:@"Open With"];
-    [openWithMenuItem setSubmenu:openWithMenu];
-    [menu addItem:openWithMenuItem];
+    
     return menu;
 }
 

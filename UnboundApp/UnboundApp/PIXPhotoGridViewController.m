@@ -117,8 +117,8 @@
     // if we've got more than one photo then display the whole date range
     if([self.items count] > 2)
     {
-        NSDate * startDate = [[self.items objectAtIndex:0] getDateTaken];
-        NSDate * endDate = [[self.items lastObject] getDateTaken];
+        NSDate * startDate = [[self.items objectAtIndex:0] findDateTaken];
+        NSDate * endDate = [[self.items lastObject] findDateTaken];
         
         
         NSCalendar* calendar = [NSCalendar currentCalendar];

@@ -19,6 +19,7 @@
 }
 
 @property (nonatomic, retain) NSDate * dateLastModified;
+@property (nonatomic, retain) NSDate * dateCreated;
 @property (nonatomic, retain) NSDate * dateLastUpdated;
 @property (nonatomic, retain) NSDate * dateTaken;
 @property (nonatomic, retain) NSString * name;
@@ -39,7 +40,7 @@
 -(NSImage *)thumbnailImage;
 -(void)cancelThumbnailLoading;
 
--(NSDate *)getDateTaken;
+-(NSDate *)findDateTaken;
 
 @end
 
