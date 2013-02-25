@@ -22,6 +22,7 @@
 @property (strong) IBOutlet NSTextField * toolbarTitle;
 @property (strong) IBOutlet NSTextField * gridViewTitle;
 @property (strong) IBOutlet NSScrollView * scrollView;
+@property (strong) IBOutlet NSView * layerBackedView;
 
 @property (strong) IBOutlet NSProgressIndicator * progressIndicator;
 

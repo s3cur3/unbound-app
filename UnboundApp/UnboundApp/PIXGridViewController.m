@@ -63,6 +63,8 @@ static NSString *kContentTitleKey, *kContentImageKey;
         _selectionLayout = [CNGridViewItemLayout defaultLayout];
         
         [self.gridView setAllowsMultipleSelection:YES];
+                
+        [self.view setWantsLayer:YES];
     }
     
     return self;
@@ -94,6 +96,8 @@ static NSString *kContentTitleKey, *kContentImageKey;
     self.gridView.superview.animations = [NSDictionary dictionaryWithObject:scrollAnim forKey:@"bounds"];
     
     [self updateToolbar];
+    
+    
 }
 
 -(void)showToolbar:(BOOL)animated

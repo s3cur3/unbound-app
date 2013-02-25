@@ -72,15 +72,12 @@
         
     [aViewController.view setFrame:self.view.bounds];
     
-    
-    
+    [aViewController willShowPIXView];
     
     [self.view addSubview:aViewController.view];
-    
-    
-    
+        
     //[aViewController.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-    [aViewController willShowPIXView];
+    
     [self.viewControllers addObject:aViewController];
     
     [self setupToolbar];
@@ -95,8 +92,11 @@
     [self.viewControllers removeLastObject];
     
     PIXViewController * underViewController = [self.viewControllers lastObject];
+    
     [underViewController.view setFrame:self.view.bounds];
+    
     [underViewController willShowPIXView];
+    
     [self.view addSubview:[underViewController view]];
     
     

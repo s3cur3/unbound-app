@@ -84,6 +84,8 @@
 
 -(void)willShowPIXView
 {
+    [super willShowPIXView];
+    
     [[self.view window] setTitle:@"Unbound"];
     
     NSString * searchString = [[NSUserDefaults standardUserDefaults] objectForKey:@"PIX_AlbumSearchString"];
@@ -99,9 +101,6 @@
     }
     
     [self updateSearch];
-    
-    // this will allow droping files into the larger grid view 
-    [self.gridView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
 }
 
 -(void)defaultThemeChanged:(NSNotification *)note
@@ -139,9 +138,9 @@
 
 -(void)setupToolbar
 {
-    //NSArray * items = @[self.activityIndicator, self.navigationViewController.middleSpacer, self.searchBar];
+    NSArray * items = @[self.activityIndicator, self.navigationViewController.middleSpacer, self.searchBar];
 
-    NSArray * items = @[/*self.activityIndicator,*/ self.navigationViewController.middleSpacer, /*self.trashbutton, self.settingsButton,*/ self.searchBar];
+    //NSArray * items = @[/*self.activityIndicator,*/ self.navigationViewController.middleSpacer, /*self.trashbutton, self.settingsButton,*/ self.searchBar];
     
     [self.navigationViewController setToolbarItems:items];
     

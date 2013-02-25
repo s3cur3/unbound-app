@@ -13,6 +13,7 @@
 
 @interface PIXSidebarTableCellView : NSTableCellView
 
+@property(strong) IBOutlet NSTextField *titleTextLabel;
 @property(strong) IBOutlet NSTextField *detailTextLabel;
 @property(nonatomic, strong) IBOutlet PIXAlbum *album;
 

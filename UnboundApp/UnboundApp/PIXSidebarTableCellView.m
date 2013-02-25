@@ -24,7 +24,7 @@
     //[self.imageView setImageFrameStyle:NSImagef:]
     [self.detailTextLabel setStringValue:@"Loading..."];
     
-    [self.imageView setWantsLayer:YES];
+    //[self setWantsLayer:NO];
     
     
     
@@ -64,7 +64,7 @@
 {
     
     if ([self.detailTextLabel.stringValue isEqualToString:[_album imageSubtitle]]==NO) {
-        DLog(@"Update subtitle for view with album : %@", self.album.title);
+        //DLog(@"Update subtitle for view with album : %@", self.album.title);
         [self.detailTextLabel setStringValue:[self.album imageSubtitle]];
         [self setNeedsDisplay:YES];
     }
@@ -91,6 +91,7 @@
         [self.imageView setImage:[NSImage imageNamed:@"nophoto"]];
     }
     
+    self.titleTextLabel.stringValue = self.album.title;
     [self updateSubtitle];
     [self setNeedsDisplay:YES];
     /*} else {
@@ -153,22 +154,32 @@
         [super setBackgroundStyle:style];
         
         // If the cell's text color is black, this sets it to white
-        //[((NSCell *)self.detailTextLabel.cell) setBackgroundStyle:style];
-        
+        [((NSCell *)self.detailTextLabel.cell) setBackgroundStyle:style];
+        [((NSCell *)self.titleTextLabel.cell) setBackgroundStyle:style];
+    
+    NSShadow *textShadow    = [[NSShadow alloc] init];
+    [textShadow setShadowColor: [NSColor colorWithCalibratedWhite:0.0 alpha:1]];
+    [textShadow setShadowOffset: NSMakeSize(0, 1)];
+    [textShadow setShadowBlurRadius:1.0];
+    
         // Otherwise you need to change the color manually
         switch (style) {
             case NSBackgroundStyleLight:
-                [self.textField setTextColor:[NSColor blackColor]];
+                //[self.titleTextLabel setShadow:nil];
                 [self.detailTextLabel setTextColor:[NSColor colorWithCalibratedWhite:0.4 alpha:1.0]];
                 break;
                 
             case NSBackgroundStyleDark:
             default:
-                [self.textField setTextColor:[NSColor whiteColor]];
+                
+                
+                //[[self.titleTextLabel cell] setBackgroundStyle:NSBackgroundStyleRaised | style];
+                //[self.titleTextLabel setShadow:textShadow];
                 [self.detailTextLabel setTextColor:[NSColor colorWithCalibratedWhite:1.0 alpha:1.0]];
                 break;
         }
-
+        
+    
 }
 
 

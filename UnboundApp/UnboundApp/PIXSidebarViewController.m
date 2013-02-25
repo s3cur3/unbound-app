@@ -39,6 +39,7 @@
     return self;
 }
 
+
 -(NSArray *)albums
 {
     //[self.outlineView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
@@ -131,6 +132,8 @@
     [super awakeFromNib];
 
     [self.outlineView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
+    
+    ///[self.outlineView setWantsLayer:NO];
 }
 
 -(void)scrollToSelectedAlbum
@@ -159,9 +162,15 @@
 
 -(void)albumsChanged:(NSNotification *)note
 {
+    
     self.albums = nil;
+    
+    //[self.outlineView.enclosingScrollView setWantsLayer:NO];
+    
     [self.outlineView reloadData];
     [self scrollToSelectedAlbum];
+    
+    
 }
 
 -(Album *)currentlySelectedAlbum

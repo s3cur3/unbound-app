@@ -265,7 +265,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
 - (void)refreshGridViewAnimated:(BOOL)animated
 {
-    NSRect scrollRect = [self frame];
+    NSRect scrollRect = [self enclosingScrollView].frame;
     scrollRect.size.width = scrollRect.size.width;
     scrollRect.size.height = ([self allOverRowsInGridView] * self.itemSize.height) + self.headerSpace;
     
@@ -391,7 +391,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     NSUInteger column = (index % columns);
     CGFloat xpos = column  * self.itemSize.width;
     
-    CGFloat space = (self.frame.size.width - (columns * self.itemSize.width)) / (columns + 1);
+    CGFloat space = ([self clippedRect].size.width - (columns * self.itemSize.width)) / (columns + 1);
     
 
     xpos = xpos + (space * (column+1));
@@ -844,7 +844,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
 - (void)setFrame:(NSRect)frameRect
 {
-    
+    NSScrollView * scroller = [self enclosingScrollView];
     
    // BOOL animated = (self.frame.size.width == frameRect.size.width ? NO: YES);
     [super setFrame:frameRect];
