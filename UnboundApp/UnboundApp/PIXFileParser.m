@@ -275,20 +275,20 @@ NSDictionary * dictionaryForURL(NSURL * url)
         NSMutableArray *photoFiles = [NSMutableArray new];
                 
         // loop through each of the enumerators (there can be more than one)
-        for(NSURL * aURL in self.observedDirectories)
+        for(NSURL * aTopURL in self.observedDirectories)
         {
             
             NSDirectoryEnumerator *dirEnumerator = nil;
             
             BOOL isDir = NO;
-            if([[NSFileManager defaultManager] fileExistsAtPath:aURL.path isDirectory:&isDir] && isDir)
+            if([[NSFileManager defaultManager] fileExistsAtPath:aTopURL.path isDirectory:&isDir] && isDir)
             {
                 NSFileManager *localFileManager=[[NSFileManager alloc] init];
                 
                 NSDirectoryEnumerationOptions options = NSDirectoryEnumerationSkipsHiddenFiles |
                 NSDirectoryEnumerationSkipsPackageDescendants;
                 
-                dirEnumerator = [localFileManager enumeratorAtURL:aURL
+                dirEnumerator = [localFileManager enumeratorAtURL:aTopURL
                                        includingPropertiesForKeys:@[NSURLNameKey,
                                                                     NSURLIsDirectoryKey,
                                                                     NSURLTypeIdentifierKey,
@@ -312,6 +312,14 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 {
                     [photoFiles addObject:info];
                 }
+            }
+            
+            // add the unbound file of the main directory if it exists
+            NSDictionary * info = dictionaryForURL(aTopURL);
+            
+            if(info != nil)
+            {
+                [photoFiles addObject:info];
             }
             
             // check the photoFiles count. When it goes above a threshhold
@@ -444,6 +452,14 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 }
             }
             
+            // add the unbound file of the main directory if it exists
+            NSDictionary * info = dictionaryForURL(url);
+            
+            if(info != nil)
+            {
+                [photoFiles addObject:info];
+            }
+            
             if(self.scansCancelledFlag)
             {
                 [self decrementWorking];
@@ -538,8 +554,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
             NSFileManager *localFileManager=[[NSFileManager alloc] init];
             
             NSDirectoryEnumerationOptions options = NSDirectoryEnumerationSkipsHiddenFiles |
-            NSDirectoryEnumerationSkipsPackageDescendants |
-            NSDirectoryEnumerationSkipsSubdirectoryDescendants;
+                                                    NSDirectoryEnumerationSkipsPackageDescendants |
+                                                    NSDirectoryEnumerationSkipsSubdirectoryDescendants;
             
             dirEnumerator = [localFileManager enumeratorAtURL:url
                                    includingPropertiesForKeys:@[NSURLNameKey,
@@ -552,7 +568,6 @@ NSDictionary * dictionaryForURL(NSURL * url)
                                                      return NO;
                                                  }];
         }
-        
         
         
         NSMutableArray *photoFiles = [NSMutableArray new];
@@ -610,8 +625,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                         // we've changed the file creation date, re-load the info
                         info = dictionaryForURL(aURL);
                     }
-                    
-                    
+
                 }
             
             
@@ -620,6 +634,14 @@ NSDictionary * dictionaryForURL(NSURL * url)
             
             
         }
+                   
+       // add the unbound file of the main directory if it exists
+        NSDictionary * info = dictionaryForURL(url);
+                   
+        if(info != nil)
+       {
+           [photoFiles addObject:info];
+       }
         
         if(self.scansCancelledFlag)
         {
