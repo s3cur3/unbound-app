@@ -211,17 +211,28 @@
 
 -(BOOL)outlineView:(NSOutlineView *)outlineView acceptDrop:(id < NSDraggingInfo >)info item:(id)item childIndex:(NSInteger)index
 {
-    
+    //DLog(@"drragging info %@", info);
+    DLog(@"1)Dragging Source %@", [info draggingSource]);
+    DLog(@"2)proposedItem %@", item);
     //Get the files from the drop
-	NSArray * files = [[info draggingPasteboard] propertyListForType:NSFilenamesPboardType];
-    DLog(@"Sidebar acccepting droppped files : %@, option key presssed : %@", files, ([PIXViewController optionKeyIsPressed] ? @"YES" : @"NO"));
+	//NSArray * files = [[info draggingPasteboard] propertyListForType:NSFilenamesPboardType];
+    //DLog(@"Sidebar acccepting droppped files : %@, option key presssed : %@", pathsToPaste, ([PIXViewController optionKeyIsPressed] ? @"YES" : @"NO"));
     DLog(@"Sidebar acccepting droppped files NSDraggingInfo : %@", info);
-    NSMutableArray *pathsToPaste = [NSMutableArray arrayWithCapacity:[files count]];
+    //NSMutableArray *pathsToPaste = [NSMutableArray arrayWithCapacity:[files count]];
+    
     NSString *destPath = self.dragDropDestination.path;
-    for (NSString * path in files)
-    {
-        [pathsToPaste addObject:@{@"source" : path, @"destination" : destPath}];
+    NSArray *pathsToPaste = [[PIXFileManager sharedInstance] itemsForDraggingInfo:info forDestination:destPath];
+    NSUInteger fileCount = [pathsToPaste count];
+    info.numberOfValidItemsForDrop = fileCount;
+    if (fileCount==0) {
+        DLog(@"No files to drop after filtering return NO");
+        return NO;
     }
+    
+//    for (NSString * path in files)
+//    {
+//        [pathsToPaste addObject:@{@"source" : path, @"destination" : destPath}];
+//    }
 
     DLog(@"Sidebar acccepting drop with source : %@, option key presssed : %@", [info draggingSource], ([PIXViewController optionKeyIsPressed] ? @"YES" : @"NO"));
     //TODO: find out why this doesn't work
@@ -260,6 +271,18 @@
     {
         return NSDragOperationNone;
     }
+    DLog(@"drragging info %@", info);
+    DLog(@"Dragging Source %@", [info draggingSource]);
+    DLog(@"proposedItem %@", item);
+    PIXAlbum *dropDestAlbum = item;
+    NSArray *pathsToPaste = [[PIXFileManager sharedInstance] itemsForDraggingInfo:info forDestination:dropDestAlbum.path];
+    NSUInteger fileCount = [pathsToPaste count];
+    info.numberOfValidItemsForDrop = fileCount;
+    if (fileCount==0) {
+        return NSDragOperationNone;
+    }
+    
+    [info setNumberOfValidItemsForDrop:fileCount];
     
     self.dragDropDestination = item;
     

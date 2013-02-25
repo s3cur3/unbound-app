@@ -333,7 +333,9 @@
         return NSDragOperationNone;
     }
     
-    [sender setNumberOfValidItemsForDrop:0];
+    [sender setNumberOfValidItemsForDrop:fileCount];
+    
+    
     
     
     // check the modifier keys and show with operation we support

@@ -878,7 +878,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     for (NSString * path in files)
     {
         if (([[path stringByDeletingLastPathComponent] isEqualToString:destPath] == NO) &&
-        ([self isImageFile:path]==YES))
+        ([self isImageFile:path]==YES) && ([path isEqualToString:destPath]==NO))
         {
             [pathsToPaste addObject:@{@"source" : path, @"destination" : destPath}];
         }
