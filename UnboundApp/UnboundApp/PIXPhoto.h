@@ -29,6 +29,7 @@
 @property (nonatomic, retain) PIXAlbum *stackPhotoAlbum;
 @property (nonatomic, retain) PIXThumbnail *thumbnail;
 @property (nonatomic, retain) NSDictionary * exifData;
+@property (nonatomic, retain) NSNumber * fileSize;
 
 @property (nonatomic, strong) NSImage *thumbnailImage;
 @property (nonatomic, assign, readwrite) BOOL cancelThumbnailLoadOperation;

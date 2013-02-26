@@ -41,6 +41,7 @@ const CGFloat kThumbnailSize = 200.0f;
 @dynamic datePhotoAlbum;
 @dynamic stackPhotoAlbum;
 @dynamic exifData;
+@dynamic fileSize;
 
 @synthesize cancelThumbnailLoadOperation;
 @synthesize thumbnailImage = _thumbnailImage;

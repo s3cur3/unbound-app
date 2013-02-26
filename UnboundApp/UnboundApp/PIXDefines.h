@@ -51,6 +51,9 @@
 // key for obtaining the mod date of an image file
 #define kModifiedKey @"modified"
 
+// key for obtaining the mod date of an image file
+#define kFileSizeKey @"fileSize"
+
 #define kCreatedKey @"created"
 
 // NSNotification name to tell the Window controller an image file as found

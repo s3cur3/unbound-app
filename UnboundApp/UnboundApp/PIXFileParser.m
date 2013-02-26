@@ -134,15 +134,18 @@ NSDictionary * dictionaryForURL(NSURL * url)
     {
         NSDate *fileCreationDate;
         NSDate *fileModifiedDate;
+        NSNumber *fileSize;
         
         [url getResourceValue:&fileCreationDate forKey:NSURLCreationDateKey error:nil];
         [url getResourceValue:&fileModifiedDate forKey:NSURLContentModificationDateKey error:nil];
+        [url getResourceValue:&fileSize forKey:NSURLFileSizeKey error:nil];
         
         NSDictionary *info = @{kNameKey : [url lastPathComponent],
                                kPathKey : [url path],
                                kDirectoryPathKey : [[url URLByDeletingLastPathComponent] path],
                                kCreatedKey : fileCreationDate,
-                               kModifiedKey : fileModifiedDate};
+                               kModifiedKey : fileModifiedDate,
+                               kFileSizeKey : fileSize};
 
         
         return info;
@@ -297,7 +300,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
                                                                     NSURLIsDirectoryKey,
                                                                     NSURLTypeIdentifierKey,
                                                                     NSURLCreationDateKey,
-                                                                    NSURLAttributeModificationDateKey]
+                                                                    NSURLAttributeModificationDateKey,
+                                                                    NSURLFileSizeKey]
                                                           options:options
                                                      errorHandler:^(NSURL *url, NSError *error) {
                                                          return NO;
@@ -419,7 +423,9 @@ NSDictionary * dictionaryForURL(NSURL * url)
                                        includingPropertiesForKeys:@[NSURLNameKey,
                                                                     NSURLIsDirectoryKey,
                                                                     NSURLTypeIdentifierKey,
-                                                                    NSURLCreationDateKey]
+                                                                    NSURLCreationDateKey,
+                                                                    NSURLContentModificationDateKey,
+                                                                    NSURLFileSizeKey]
                                                           options:options
                                                      errorHandler:^(NSURL *url, NSError *error) {
                                                                                 return NO;
@@ -566,7 +572,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
                                                                 NSURLIsDirectoryKey,
                                                                 NSURLTypeIdentifierKey,
                                                                 NSURLCreationDateKey,
-                                                                NSURLContentModificationDateKey]
+                                                                NSURLContentModificationDateKey,
+                                                                NSURLFileSizeKey]
                                                       options:options
                                                  errorHandler:^(NSURL *url, NSError *error) {
                                                      return NO;
@@ -593,7 +600,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                     [aURL getResourceValue:&fileCreationDate forKey:NSURLCreationDateKey error:nil];
                     
                     // get the photo date taken
-                    NSDate * photoDateTaken = nil;
+                    //NSDate * photoDateTaken = nil;
                     
                     CGImageSourceRef imageSrc = CGImageSourceCreateWithURL((__bridge CFURLRef)aURL, nil);
                     if (imageSrc!=nil)
@@ -912,10 +919,11 @@ NSDictionary * dictionaryForURL(NSURL * url)
 {
     // set some basic attributes on the photo
     [photo setDateCreated:[fileInfo objectForKey:kCreatedKey]];
-    [photo setPath:[fileInfo valueForKey:kPathKey]];
-    [photo setName:[fileInfo valueForKey:kNameKey]];
+    [photo setPath:[fileInfo objectForKey:kPathKey]];
+    [photo setName:[fileInfo objectForKey:kNameKey]];
+    [photo setFileSize:[fileInfo objectForKey:kFileSizeKey]];
     
-    NSDate * dateModified = [fileInfo valueForKey:kModifiedKey];
+    NSDate * dateModified = [fileInfo objectForKey:kModifiedKey];
     
     
     // if this was modified since the last time we looked at it then we need to clear some data

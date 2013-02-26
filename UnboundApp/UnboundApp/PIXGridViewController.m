@@ -287,16 +287,13 @@ static NSString *kContentTitleKey, *kContentImageKey;
     // only show the mini exif view on photos
     if([object isKindOfClass:[PIXPhoto class]])
     {   
-        
-        
         NSMenuItem * miniExifDisplay = [[NSMenuItem alloc] init];
         
         PIXMiniExifViewController * exifVC = [[PIXMiniExifViewController alloc] initWithNibName:@"PIXMiniExifViewController" bundle:nil];
         
+        exifVC.photo = object;
         
         miniExifDisplay.view = exifVC.view;
-        
-        exifVC.photo = object;
         
         [miniExifDisplay.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
         
@@ -344,8 +341,37 @@ static NSString *kContentTitleKey, *kContentImageKey;
     
     [menu addItem:[NSMenuItem separatorItem]];
     
+    NSString * deleteString = @"Delete";
+    
+    if([object isKindOfClass:[PIXPhoto class]])
+    {
+        if([self.selectedItems count] > 1)
+        {
+            deleteString = [NSString stringWithFormat:@"Delete %ld Photos", [self.selectedItems count]];
+        }
+        
+        else
+        {
+            deleteString = @"Delete Photo";
+        }
+    }
+    
+    else if([object isKindOfClass:[PIXAlbum class]])
+    {
+        if([self.selectedItems count] > 1)
+        {
+            deleteString = [NSString stringWithFormat:@"Delete %ld Albums", [self.selectedItems count]];
+        }
+        
+        else
+        {
+            deleteString = @"Delete Album";
+        }
+    }
+    
+    
 
-    [menu addItemWithTitle:[NSString stringWithFormat:@"Delete"] action:@selector(deleteItems:) keyEquivalent:@""];
+    [menu addItemWithTitle:deleteString action:@selector(deleteItems:) keyEquivalent:@""];
     
     for (NSMenuItem * anItem in [menu itemArray])
     {
