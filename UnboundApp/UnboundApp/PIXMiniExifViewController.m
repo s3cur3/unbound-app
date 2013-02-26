@@ -75,7 +75,7 @@
     
     if(pixelHeight && pixelWidth)
     {
-        resolutionString = [NSString stringWithFormat:@"%@ x %@", pixelHeight, pixelWidth];
+        resolutionString = [NSString stringWithFormat:@"%@ x %@", pixelWidth, pixelHeight];
     }
     
     if(resolutionString == nil) resolutionString = @"";
