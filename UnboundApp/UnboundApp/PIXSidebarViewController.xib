@@ -105,7 +105,7 @@
 													<int key="NSCellFlags">337641536</int>
 													<int key="NSCellFlags2">2048</int>
 													<string key="NSContents">Text Cell</string>
-													<object class="NSFont" key="NSSupport" id="612070087">
+													<object class="NSFont" key="NSSupport">
 														<string key="NSName">LucidaGrande</string>
 														<double key="NSSize">13</double>
 														<int key="NSfFlags">1044</int>
@@ -234,9 +234,13 @@
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSSearchFieldCell" key="NSCell" id="186524885">
 									<int key="NSCellFlags">342884416</int>
-									<int key="NSCellFlags2">268436544</int>
+									<int key="NSCellFlags2">268440640</int>
 									<string key="NSContents"/>
-									<reference key="NSSupport" ref="612070087"/>
+									<object class="NSFont" key="NSSupport">
+										<string key="NSName">Helvetica</string>
+										<double key="NSSize">13</double>
+										<int key="NSfFlags">16</int>
+									</object>
 									<string key="NSPlaceholderString">Search Albums</string>
 									<string key="NSCellIdentifier">_NS:9</string>
 									<reference key="NSControlView" ref="768915359"/>
