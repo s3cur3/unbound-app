@@ -15,6 +15,8 @@
 #import "PIXPhotoGridViewItem.h"
 #import "PIXAlbumGridViewItem.h"
 
+#import "PIXMiniExifViewController.h"
+
 //#import "PIXAlbum.h"
 #import "PIXThumbnailLoadingDelegate.h"
 #import "PIXDefines.h"
@@ -280,6 +282,26 @@ static NSString *kContentTitleKey, *kContentImageKey;
     
     menu = [[NSMenu alloc] initWithTitle:@"menu"];
     [menu setAutoenablesItems:NO];
+    
+    
+    // only show the mini exif view on photos
+    if([object isKindOfClass:[PIXPhoto class]])
+    {   
+        
+        
+        NSMenuItem * miniExifDisplay = [[NSMenuItem alloc] init];
+        
+        PIXMiniExifViewController * exifVC = [[PIXMiniExifViewController alloc] initWithNibName:@"PIXMiniExifViewController" bundle:nil];
+        
+        
+        miniExifDisplay.view = exifVC.view;
+        
+        exifVC.photo = object;
+        
+        [miniExifDisplay.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+        
+        [menu addItem:miniExifDisplay];
+    }
     
     // Get Info
     [menu addItemWithTitle:[NSString stringWithFormat:@"Get Info"] action:

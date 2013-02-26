@@ -87,6 +87,9 @@
 		8C4B80FE16BB3D8A00C7E8F4 /* AdvancedPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4B80FA16BB3D8A00C7E8F4 /* AdvancedPreferencesView.xib */; };
 		8C4B9C9F16DADA2100F6BADD /* PIXSidebarClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B9C9E16DADA2100F6BADD /* PIXSidebarClipView.m */; };
 		8C4B9CA216DADA9500F6BADD /* PIXSidebarScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B9CA116DADA9500F6BADD /* PIXSidebarScrollView.m */; };
+		8C4B9CA616DC30FE00F6BADD /* PIXMiniExifViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B9CA416DC30FB00F6BADD /* PIXMiniExifViewController.m */; };
+		8C4B9CA716DC30FE00F6BADD /* PIXMiniExifViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4B9CA516DC30FD00F6BADD /* PIXMiniExifViewController.xib */; };
+		8C4B9CAA16DC436B00F6BADD /* PIXExifBGView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B9CA916DC436B00F6BADD /* PIXExifBGView.m */; };
 		8C7ABBBE16C42A3D00784BDA /* PIXGradientBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7ABBBD16C42A3D00784BDA /* PIXGradientBarView.m */; };
 		8C8EE92B16C46AB800F16C49 /* PIXAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE92A16C46AB800F16C49 /* PIXAlbum.m */; };
 		8C8EE93416CACA7900F16C49 /* ArchDirectoryObservationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE92F16CACA7900F16C49 /* ArchDirectoryObservationCenter.m */; };
@@ -259,6 +262,11 @@
 		8C4B9C9E16DADA2100F6BADD /* PIXSidebarClipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSidebarClipView.m; sourceTree = "<group>"; };
 		8C4B9CA016DADA9500F6BADD /* PIXSidebarScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXSidebarScrollView.h; sourceTree = "<group>"; };
 		8C4B9CA116DADA9500F6BADD /* PIXSidebarScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSidebarScrollView.m; sourceTree = "<group>"; };
+		8C4B9CA316DC30FB00F6BADD /* PIXMiniExifViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXMiniExifViewController.h; sourceTree = "<group>"; };
+		8C4B9CA416DC30FB00F6BADD /* PIXMiniExifViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXMiniExifViewController.m; sourceTree = "<group>"; };
+		8C4B9CA516DC30FD00F6BADD /* PIXMiniExifViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXMiniExifViewController.xib; sourceTree = "<group>"; };
+		8C4B9CA816DC436A00F6BADD /* PIXExifBGView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXExifBGView.h; sourceTree = "<group>"; };
+		8C4B9CA916DC436B00F6BADD /* PIXExifBGView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXExifBGView.m; sourceTree = "<group>"; };
 		8C7ABBBC16C42A3D00784BDA /* PIXGradientBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXGradientBarView.h; sourceTree = "<group>"; };
 		8C7ABBBD16C42A3D00784BDA /* PIXGradientBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXGradientBarView.m; sourceTree = "<group>"; };
 		8C8EE92916C46AB800F16C49 /* PIXAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXAlbum.h; sourceTree = "<group>"; };
@@ -497,6 +505,11 @@
 				8CE460E316CD5A3000CDFA04 /* PIXCustomButton.m */,
 				8CE460DF16CB674700CDFA04 /* PIXCustomButtonCell.h */,
 				8CE460E016CB674700CDFA04 /* PIXCustomButtonCell.m */,
+				8C4B9CA316DC30FB00F6BADD /* PIXMiniExifViewController.h */,
+				8C4B9CA416DC30FB00F6BADD /* PIXMiniExifViewController.m */,
+				8C4B9CA516DC30FD00F6BADD /* PIXMiniExifViewController.xib */,
+				8C4B9CA816DC436A00F6BADD /* PIXExifBGView.h */,
+				8C4B9CA916DC436B00F6BADD /* PIXExifBGView.m */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -782,6 +795,7 @@
 				8CE460DD16CB650600CDFA04 /* btn-roundrect-up.png in Resources */,
 				8CE460DE16CB650600CDFA04 /* btn-roundrect-up@2x.png in Resources */,
 				8CE460E916CD7BB400CDFA04 /* PIXCustomShareSheetViewController.xib in Resources */,
+				8C4B9CA716DC30FE00F6BADD /* PIXMiniExifViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -854,6 +868,8 @@
 				8C097D2716D57D0700E0E134 /* PIXFileParser.m in Sources */,
 				8C4B9C9F16DADA2100F6BADD /* PIXSidebarClipView.m in Sources */,
 				8C4B9CA216DADA9500F6BADD /* PIXSidebarScrollView.m in Sources */,
+				8C4B9CA616DC30FE00F6BADD /* PIXMiniExifViewController.m in Sources */,
+				8C4B9CAA16DC436B00F6BADD /* PIXExifBGView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
