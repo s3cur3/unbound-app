@@ -228,7 +228,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
     [self updateResumeToken:resumeToken forObservedDirectory:observedURL];
     
     // do a shallow, semi-recursive scan of the directory
-    [self scanURLForChanges:changedURL semiRecurive:YES];
+    [self scanURLForChanges:changedURL withRecursion:PIXFileParserRecursionSemi];
 }
 
 // At least one file somewhere inside--but not necessarily directly descended from--changedURL has changed.  You should examine the directory at changedURL and all subdirectories to see which files changed.
@@ -357,12 +357,13 @@ NSDictionary * dictionaryForURL(NSURL * url)
         [self parsePhotos:photoFiles withDeletionBlock:^(NSManagedObjectContext *context) {
             
             // go through and delete any photos/albums that weren't updated and should have been
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dateLastUpdated == NULL || dateLastUpdated < %@", startScanTime, nil];
             
             // be sure to delete albums first so there are less photos to iterate through in the second delete
-            if (![self deleteObjectsForEntityName:@"PIXAlbum" withUpdateDateBefore:startScanTime inContext:context withPath:nil]) {
+            if (![self deleteObjectsForEntityName:@"PIXAlbum" inContext:context withPredicate:predicate]) {
                 DLog(@"There was a problem trying to delete old objects");
             }
-            if (![self deleteObjectsForEntityName:@"PIXPhoto" withUpdateDateBefore:startScanTime inContext:context withPath:nil]) {
+            if (![self deleteObjectsForEntityName:@"PIXPhoto" inContext:context withPredicate:predicate]) {
                 DLog(@"There was a problem trying to delete old objects");
             }
             
@@ -379,14 +380,14 @@ NSDictionary * dictionaryForURL(NSURL * url)
  * This method will scan a specific album for changed files
  * this will not go any deeper than the current album
  */
-- (void)shallowScanAlbum:(PIXAlbum *)album
+- (void)scanAlbum:(PIXAlbum *)album withRecursion:(PIXFileParserRecursionOptions)recursionMode
 {
-    [self scanURLForChanges:[NSURL fileURLWithPath:album.path isDirectory:YES] semiRecurive:NO];
+    [self scanURLForChanges:[NSURL fileURLWithPath:album.path isDirectory:YES] withRecursion:recursionMode];
 }
 
-- (void)shallowScanPath:(NSString *)path
+- (void)scanPath:(NSString *)path withRecursion:(PIXFileParserRecursionOptions)recursionMode
 {
-    [self scanURLForChanges:[NSURL fileURLWithPath:path isDirectory:YES] semiRecurive:NO];
+    [self scanURLForChanges:[NSURL fileURLWithPath:path isDirectory:YES] withRecursion:recursionMode];
 }
 
 /** 
@@ -395,7 +396,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
  *  that arent already in the database structure. It will also track
  *  current scans so new ones arent started
  */
-- (void)scanURLForChanges:(NSURL *)url semiRecurive:(BOOL)recurse
+- (void)scanURLForChanges:(NSURL *)url withRecursion:(PIXFileParserRecursionOptions)recursionMode
 {
     self.scansCancelledFlag = NO;
     
@@ -418,6 +419,14 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 NSDirectoryEnumerationOptions options = NSDirectoryEnumerationSkipsHiddenFiles |
                                                         NSDirectoryEnumerationSkipsPackageDescendants |
                                                         NSDirectoryEnumerationSkipsSubdirectoryDescendants;
+                
+                // don't skip subdirectories if mode is full
+                if(recursionMode == PIXFileParserRecursionFull)
+                {
+                    options =   NSDirectoryEnumerationSkipsHiddenFiles |
+                                NSDirectoryEnumerationSkipsPackageDescendants;
+                }
+                
                 
                 dirEnumerator = [localFileManager enumeratorAtURL:url
                                        includingPropertiesForKeys:@[NSURLNameKey,
@@ -448,7 +457,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 }
                 
                 // if this is a directory then add it to the directories array to be checked for recursion
-                else if(recurse)
+                else if(recursionMode == PIXFileParserRecursionSemi)
                 {
                     NSNumber * isDirectoryValue;
                     [aURL getResourceValue:&isDirectoryValue forKey:NSURLIsDirectoryKey error:nil];
@@ -485,24 +494,43 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 
                 // go through and delete any photos/albums that weren't updated and should have been
                 
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"path == %@ && (dateLastUpdated == NULL || dateLastUpdated < %@)", path, startParseDate, nil];
+                
+                // if we're doing a full recursion then we need use a different predicate
+                if(recursionMode == PIXFileParserRecursionFull)
+                {
+                    predicate = [NSPredicate predicateWithFormat:@"path CONTAINS %@ && (dateLastUpdated == NULL || dateLastUpdated < %@)", path, startParseDate, nil];
+                }
+                
                 // be sure to delete albums first so there are less photos to iterate through in the second delete
-                if (![self deleteObjectsForEntityName:@"PIXAlbum" withUpdateDateBefore:startParseDate inContext:context withPath:path]) {
+                if (![self deleteObjectsForEntityName:@"PIXAlbum" inContext:context withPredicate:predicate]) {
                     DLog(@"There was a problem trying to delete old objects");
                 }
-                if (![self deleteObjectsForEntityName:@"PIXPhoto" withUpdateDateBefore:startParseDate inContext:context withPath:path]) {
+                
+                predicate = [NSPredicate predicateWithFormat:@"album.path == %@ && (dateLastUpdated == NULL || dateLastUpdated < %@)",path, startParseDate, nil];
+                
+                // if we're doing a full recursion then we need use a different predicate
+                if(recursionMode == PIXFileParserRecursionFull)
+                {
+                    predicate = [NSPredicate predicateWithFormat:@"album.path CONTAINS %@ && (dateLastUpdated == NULL || dateLastUpdated < %@)",path, startParseDate, nil];
+                }
+                
+                if (![self deleteObjectsForEntityName:@"PIXPhoto" inContext:context withPredicate:predicate]) {
                     DLog(@"There was a problem trying to delete old objects");
                 }
                 
                 /// check that all subfolders exist (deletion just give a notification that the parent folder changed)
-                
-                if (![self checkSubfoldersExistanceInContext:context withPath:path])
+                if(recursionMode != PIXFileParserRecursionFull)
                 {
-                    DLog(@"There was a problem trying to delete subfolder");
+                    if (![self checkSubfoldersExistanceInContext:context withPath:path])
+                    {
+                        DLog(@"There was a problem trying to delete subfolder");
+                    }
                 }
                 
             }];
             
-            if(recurse)
+            if(recursionMode == PIXFileParserRecursionSemi)
             {
                 // go through the directories we found and see if any are not already in the db
                 NSArray * existingAlbums = [self albumsWithPaths:directories];
@@ -529,7 +557,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                     // now go through the directories left over and start recursive shallow scans on them
                     for(NSString * path in directories)
                     {
-                        [self scanURLForChanges:[NSURL fileURLWithPath:path] semiRecurive:YES];
+                        [self scanURLForChanges:[NSURL fileURLWithPath:path] withRecursion:recursionMode];
                     }
                     
                     [self.loadingAlbumsDict removeObjectForKey:url.path];
@@ -681,16 +709,24 @@ NSDictionary * dictionaryForURL(NSURL * url)
             // go through and delete any photos/albums that weren't updated and should have been
             
             // be sure to delete albums first so there are less photos to iterate through in the second delete
-            if (![self deleteObjectsForEntityName:@"PIXAlbum" withUpdateDateBefore:startParseDate inContext:context withPath:path]) {
-                DLog(@"There was a problem trying to delete old objects");
-            }
-            if (![self deleteObjectsForEntityName:@"PIXPhoto" withUpdateDateBefore:startParseDate inContext:context withPath:path]) {
-                DLog(@"There was a problem trying to delete old objects");
-            }
-            
+           NSPredicate *predicate = [NSPredicate predicateWithFormat:@"path == %@ && (dateLastUpdated == NULL || dateLastUpdated < %@)", path, startParseDate, nil];
+           
+           // be sure to delete albums first so there are less photos to iterate through in the second delete
+           if (![self deleteObjectsForEntityName:@"PIXAlbum" inContext:context withPredicate:predicate]) {
+               DLog(@"There was a problem trying to delete old objects");
+           }
+           
+           predicate = [NSPredicate predicateWithFormat:@"album.path == %@ && (dateLastUpdated == NULL || dateLastUpdated < %@)",path, startParseDate, nil];
+           
+           if (![self deleteObjectsForEntityName:@"PIXPhoto" inContext:context withPredicate:predicate]) {
+               DLog(@"There was a problem trying to delete old objects");
+           }
+           
+           
+           
         }];
-                   
-                   
+        
+        
         [self decrementWorking];
     });
 }
@@ -873,7 +909,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 [lastAlbumsPhotos addObject:dbPhoto];
                 
                 // save the context and send a UI update notification every 500 loops
-                if (i%1000==0) {
+                if (i%500==0) {
                     [context save:nil];
                     
                     // update flush albums and the UI with a notification
@@ -1030,13 +1066,15 @@ NSDictionary * dictionaryForURL(NSURL * url)
     //[[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
 }
 
--(BOOL)deleteObjectsForEntityName:(NSString *)entityName withUpdateDateBefore:(NSDate *)lastUpdated inContext:(NSManagedObjectContext *)context withPath:(NSString *)path
+-(BOOL)deleteObjectsForEntityName:(NSString *)entityName inContext:(NSManagedObjectContext *)context withPredicate:(NSPredicate *)predicate
 {
     BOOL isPhotoEntity = NO;
     if ([entityName isEqualToString:kPhotoEntityName])
     {
         isPhotoEntity = YES;
     }
+    
+    /*
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dateLastUpdated == NULL || dateLastUpdated < %@", lastUpdated, nil];
     if (path!=nil) {
         if (isPhotoEntity) {
@@ -1045,21 +1083,19 @@ NSDictionary * dictionaryForURL(NSURL * url)
             
             predicate = [NSPredicate predicateWithFormat:@"path == %@ && (dateLastUpdated == NULL || dateLastUpdated < %@)", path, lastUpdated, nil];
         }
-    }
+    }*/
     
     
     NSFetchRequest *fetchRequestRemoval = [[NSFetchRequest alloc] initWithEntityName:entityName];
     // make sure the results are sorted as well
     [fetchRequestRemoval setPredicate:predicate];
-    [fetchRequestRemoval setSortDescriptors: [NSArray arrayWithObject:
-                                              [[NSSortDescriptor alloc] initWithKey: @"dateLastUpdated"
-                                                                          ascending:YES] ]];
+
     NSError * anError;
     NSArray *itemsToDelete = [context executeFetchRequest:fetchRequestRemoval error:&anError];
-    DLog(@"Deleting %ld items of entity type %@", itemsToDelete.count, entityName);
+    //DLog(@"Deleting %ld items of entity type %@", itemsToDelete.count, entityName);
     
     if (itemsToDelete==nil) {
-        DLog(@"Unresolved error %@, %@", anError, [anError userInfo]);
+        //DLog(@"Unresolved error %@, %@", anError, [anError userInfo]);
 #ifdef DEBUG
         [[NSApplication sharedApplication] presentError:anError];
 #endif
@@ -1068,12 +1104,12 @@ NSDictionary * dictionaryForURL(NSURL * url)
     
     
     if ([itemsToDelete count]>0) {
-        DLog(@"Deleting %ld items that are no longer in the feed", [itemsToDelete count]);
+        //DLog(@"Deleting %ld items that are no longer in the feed", [itemsToDelete count]);
         NSMutableSet *albumsChanged = [NSMutableSet set];
         // delete any albums that are no longer in the feed
         for (id anItemToDelete in itemsToDelete)
         {
-            DLog(@"Deleting item %@ with a dateLastUpdated of %@ which should be after %@", anItemToDelete, [anItemToDelete dateLastUpdated], lastUpdated);
+            //DLog(@"Deleting item %@ with a dateLastUpdated of %@ which should be after %@", anItemToDelete, [anItemToDelete dateLastUpdated], lastUpdated);
             if (isPhotoEntity) {
                 PIXPhoto *aPhoto = (PIXPhoto *)anItemToDelete;
                 if (aPhoto.album == nil) {

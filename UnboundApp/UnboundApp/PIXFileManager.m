@@ -268,7 +268,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     
     for (NSString *albumPath in albumPaths)
     {
-        [[PIXFileParser sharedFileParser] shallowScanPath:albumPath];
+        [[PIXFileParser sharedFileParser] scanPath:albumPath withRecursion:PIXFileParserRecursionNone];
     }
     
     //[[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
@@ -435,7 +435,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     
     for (NSString *albumPath in albumPaths)
     {
-        [[PIXFileParser sharedFileParser] shallowScanPath:albumPath];
+        [[PIXFileParser sharedFileParser] scanPath:albumPath withRecursion:PIXFileParserRecursionNone];
     }
     
     //[[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
@@ -578,7 +578,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     for (NSString *albumPath in albumPaths)
     {
         if (![albumPath isEqualToString:[self trashFolderPath]] && [self directoryIsSubpathOfObservedDirectories:albumPath]) {
-            [[PIXFileParser sharedFileParser] shallowScanPath:albumPath];
+            [[PIXFileParser sharedFileParser] scanPath:albumPath withRecursion:PIXFileParserRecursionNone];
         }
     }
     
@@ -652,7 +652,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     for (NSString *albumPath in albumPaths)
     {
         if (![albumPath isEqualToString:trashFolder] && [self directoryIsSubpathOfObservedDirectories:albumPath]) {
-            [[PIXFileParser sharedFileParser] shallowScanPath:albumPath];
+            [[PIXFileParser sharedFileParser] scanPath:albumPath withRecursion:PIXFileParserRecursionNone];
         }
     }
     

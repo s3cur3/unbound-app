@@ -31,6 +31,8 @@
                      toObject:[PIXFileParser sharedFileParser]
                   withKeyPath:@"isWorking"
                       options: nil]; //@{NSValueTransformerNameBindingOption : NSNegateBooleanTransformerName}];
+    
+    [self updateCounts:nil];
 }
 
 #pragma mark - MASPreferencesViewController

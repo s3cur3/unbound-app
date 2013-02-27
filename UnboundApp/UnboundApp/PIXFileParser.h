@@ -8,6 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
+
+typedef enum {
+    // No Recursion
+    PIXFileParserRecursionNone = 0,
+    
+    // Only recurse into folders that don't already exist as albums
+    PIXFileParserRecursionSemi = 1,
+    
+    // recurse all subfolders
+    PIXFileParserRecursionFull = 2
+    
+} PIXFileParserRecursionOptions;
+
 @class PIXAlbum;
 
 @interface PIXFileParser : NSObject
@@ -38,11 +51,10 @@
 
 /**
  * This method will scan a specific album for changed files
- * this will not go any deeper than the current album
  */
-- (void)shallowScanAlbum:(PIXAlbum *)album;
+- (void)scanAlbum:(PIXAlbum *)album withRecursion:(PIXFileParserRecursionOptions)recursionMode;
 
-- (void)shallowScanPath:(NSString *)path;
+- (void)scanPath:(NSString *)path withRecursion:(PIXFileParserRecursionOptions)recursionMode;
 
 /**
  *  This method will scan a specific path in a shallow manner.
@@ -50,7 +62,7 @@
  *  that arent already in the database structure. It will also track
  *  current scans so new ones arent started
  */
-- (void)scanURLForChanges:(NSURL *)url semiRecurive:(BOOL)recurse;
+- (void)scanURLForChanges:(NSURL *)url withRecursion:(PIXFileParserRecursionOptions)recursionMode;
 
 /**
  *  cancelScans will cancel any current directory scans and any current parsing threads
