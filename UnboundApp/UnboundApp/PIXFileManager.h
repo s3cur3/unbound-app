@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class PIXAlbum;
+
 @interface PIXFileManager : NSObject
 
 +(PIXFileManager *)sharedInstance;
@@ -16,7 +18,9 @@
 -(void)copyFiles:(NSArray *)items;
 
 -(void)recyclePhotos:(NSArray *)photos;
+
 -(void)recycleAlbums:(NSArray *)items;
+-(BOOL)renameAlbum:(PIXAlbum *)anAlbum withName:(NSString *)aNewName;
 
 //-(NSString *)trashFolderPath;
 
