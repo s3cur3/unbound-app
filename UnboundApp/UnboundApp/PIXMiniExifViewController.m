@@ -9,7 +9,7 @@
 #import "PIXMiniExifViewController.h"
 #import "PIXPhoto.h"
 
-@interface PIXMiniExifViewController ()
+@interface PIXMiniExifViewController () <NSTextFieldDelegate>
 
 @property (weak) IBOutlet NSTextField * photoName;
 @property (weak) IBOutlet NSTextField * dateTaken;
@@ -100,6 +100,18 @@
     
     [self.view setNeedsUpdateConstraints:YES];
     DLog(@"%@", [self.photo exifData]);
+}
+
+-(void)controlTextDidChange:(NSNotification*)aNotification
+{
+    
+}
+
+- (BOOL)control:(NSControl *)control textShouldBeginEditing:(NSText *)fieldEditor
+{
+    [self.photoName setBezelStyle:NSTextFieldSquareBezel];
+    return YES;
+    
 }
 
 @end

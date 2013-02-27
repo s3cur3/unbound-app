@@ -48,6 +48,7 @@
     
     [[NSColor whiteColor] setStroke];
     
+    
     // Create and stroke the shadow
     NSShadow * shadow = [[NSShadow alloc] init];
     [shadow setShadowColor:[NSColor colorWithCalibratedWhite:0.0 alpha:.7]];
@@ -57,6 +58,7 @@
     
     
     [path stroke];
+     
     
     // Restore the graphics state
     [NSGraphicsContext restoreGraphicsState];

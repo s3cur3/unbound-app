@@ -71,6 +71,8 @@
 //Used to load/save thumbs and other things in background
 -(NSOperationQueue *) globalBackgroundSaveQueue;
 
+- (NSURL *)applicationFilesDirectory;
+
 //NSWindowDelegate methods
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window;
 

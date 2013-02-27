@@ -983,9 +983,25 @@ NSDictionary * dictionaryForURL(NSURL * url)
 
 -(void)setPhotos:(NSMutableArray *)newPhotos forAlbum:(PIXAlbum *)anAlbum
 {
-    NSSortDescriptor *sortByDateTaken = [[NSSortDescriptor alloc] initWithKey:@"dateTaken" ascending:YES];
-    NSSortDescriptor *sortByDateCreated = [[NSSortDescriptor alloc] initWithKey:@"dateCreated" ascending:YES];
-    [newPhotos sortUsingDescriptors:@[sortByDateTaken, sortByDateCreated] ];
+    
+    
+    //NSSortDescriptor *sortByDateTaken = [[NSSortDescriptor alloc] initWithKey:@"dateTaken" ascending:YES];
+    //NSSortDescriptor *sortByDateCreated = [[NSSortDescriptor alloc] initWithKey:@"dateCreated" ascending:YES];
+    
+    [newPhotos sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        PIXPhoto * photo1 = obj1;
+        PIXPhoto * photo2 = obj2;
+        
+        NSDate * photo1Date = [photo1 dateTaken];
+        if(photo1Date == nil) photo1Date = [photo1 dateCreated];
+        
+        NSDate * photo2Date = [photo2 dateTaken];
+        if(photo2Date == nil) photo2Date = [photo2 dateCreated];
+        
+        return [photo1Date compare:photo2Date];
+        
+    }];
+    
     NSOrderedSet *newPhotosSet = [[NSOrderedSet alloc] initWithArray:newPhotos];
     [anAlbum setPhotos:newPhotosSet updateCoverImage:YES];
     [newPhotos removeAllObjects];
