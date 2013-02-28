@@ -318,6 +318,12 @@ typedef NSUInteger PIXOverwriteStrategy;
 
                 [undoManager registerUndoWithTarget:[PIXFileManager sharedInstance] selector:@selector(undoRecyclePhotos:) object:newURLs];
                 [undoManager setActionIsDiscardable:YES];
+                NSUInteger deletionCount = [newURLs count];
+                NSString *undoMessage = @"Delete Photo";
+                if (deletionCount>1) {
+                    undoMessage = [NSString stringWithFormat:@"Delete %ld Photos", deletionCount];
+                }
+                [undoManager setActionName:undoMessage];
             });
 
 
@@ -467,8 +473,11 @@ typedef NSUInteger PIXOverwriteStrategy;
         [[NSApplication sharedApplication] presentError:error];
         return NO;
     }
-    //[[PIXFileParser sharedFileParser] shallowScanPath:parentFolderPath];
-    [[PIXFileParser sharedFileParser] scanFullDirectory];
+    NSString *oldAlbumPath = [NSString stringWithFormat:@"%@/%@", parentFolderPath, oldAlbumName];
+    //[[PIXFileParser sharedFileParser] scanPath:parentFolderPath withRecursion:PIXFileParserRecursionFull];
+    [[PIXFileParser sharedFileParser] scanPath:oldAlbumPath withRecursion:PIXFileParserRecursionFull];
+    [[PIXFileParser sharedFileParser] scanPath:anAlbum.path withRecursion:PIXFileParserRecursionSemi];
+    //[[PIXFileParser sharedFileParser] scanFullDirectory];
     
     
     NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
@@ -518,7 +527,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     
     for (NSString *albumPath in albumPaths)
     {
-        [[PIXFileParser sharedFileParser] scanPath:albumPath withRecursion:PIXFileParserRecursionNone];
+        [[PIXFileParser sharedFileParser] scanPath:albumPath withRecursion:PIXFileParserRecursionFull];
     }
     
     //[[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
@@ -530,6 +539,7 @@ typedef NSUInteger PIXOverwriteStrategy;
 -(void)recycleAlbums:(NSArray *)items
 {
     NSMutableArray *urlsToDelete = [NSMutableArray arrayWithCapacity:[items count]];
+    
     //NSRunCriticalAlertPanel(@"Deleting albums is under development.", @"Feature Unavailable", @"OK", @"Cancel", nil);
     for (PIXAlbum * anAlbum in items)
     {
@@ -539,7 +549,21 @@ typedef NSUInteger PIXOverwriteStrategy;
             NSURL *deleteURL = [NSURL fileURLWithPath:path isDirectory:YES];
             [urlsToDelete addObject:deleteURL];
         } else {
-            [self recyclePhotos:[anAlbum.photos array]];
+            for (PIXPhoto *anItem in [[anAlbum.photos array] copy])
+            {
+                NSString *path = [anItem path];
+                NSURL *deleteURL = [NSURL fileURLWithPath:path isDirectory:NO];
+                [urlsToDelete addObject:deleteURL];
+            }
+            
+            //Delete the unbound metadata file if we are not deleting the directory
+            NSString *unboundFilePath = [NSString stringWithFormat:@"%@/%@", albumPath,kUnboundAlbumMetadataFileName];
+            if ([[NSFileManager defaultManager] fileExistsAtPath:unboundFilePath]) {
+                NSURL *ubMetadataFileURL = [NSURL fileURLWithPath:unboundFilePath];
+                [urlsToDelete addObject:ubMetadataFileURL];
+            }
+            //[self recyclePhotos:[anAlbum.photos array]];
+            //[urlsToDelete addObjectsFromArray:[[anAlbum.photos array] copy]];
         }
         //[[PIXAppDelegate sharedAppDelegate] deleteAlbumWithPath:anAlbum.path];
         [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] deleteObject:anAlbum];
@@ -571,10 +595,22 @@ typedef NSUInteger PIXOverwriteStrategy;
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
                 
-                NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
+                NSMutableSet *albumPaths = [NSMutableSet new];
+                for (NSURL *restorePathURL in [newURLs allKeys])
+                {
+                    NSString *restorePath = [restorePathURL.path stringByDeletingLastPathComponent];
+                    [albumPaths addObject:restorePath];
+                }
+                NSUInteger albumDeletionCount = [[albumPaths allObjects] count];
+                NSString *undoMessage = @"Delete Album";
+                if (albumDeletionCount>1) {
+                    undoMessage = [NSString stringWithFormat:@"Delete %ld Albums", albumDeletionCount];
+                } 
                 
+                NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
                 [undoManager registerUndoWithTarget:[PIXFileManager sharedInstance] selector:@selector(undoRecycleAlbums:) object:newURLs];
                 [undoManager setActionIsDiscardable:YES];
+                [undoManager setActionName:undoMessage];
             });
             
         } else {
