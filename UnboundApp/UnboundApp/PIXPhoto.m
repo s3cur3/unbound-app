@@ -163,29 +163,44 @@ const CGFloat kThumbnailSize = 200.0f;
 
 -(NSImage *)thumbnailImage
 {
-    if (_thumbnailImage == nil)
+    if (_thumbnailImage == nil && !_thumbnailImageIsLoading)
     {
         NSData *imgData = self.thumbnail.imageData;
+        
         if (imgData != nil) {
             
             
-            _thumbnailImage = [[NSImage alloc] initWithData:imgData];
+           // _thumbnailImage = [[NSImage alloc] initWithData:imgData];
             
-            /*
+            
             _thumbnailImageIsLoading = YES;
             __weak PIXPhoto *weakSelf = self;
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-                weakSelf.thumbnailImage = [[NSImage alloc] initWithData:imgData];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                    [[NSNotificationCenter defaultCenter] postNotificationName:PhotoThumbDidChangeNotification object:weakSelf];
-                    
-                    if(weakSelf.stackPhotoAlbum) {
-                        [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:weakSelf.album];
-                    }
-                    
-                });
-            });*/
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                
+                
+                NSImage * thumb = [[NSImage alloc] initWithData:imgData];
+                self.thumbnailImage = thumb;
+                
+                if(thumb != nil)
+                {
+                    // use performSelector instead of dispatch here because it updates the ui much faster
+                    [weakSelf performSelectorOnMainThread:@selector(setThumbAndNotify:) withObject:nil waitUntilDone:NO];
+                }
+                
+                // if we still havent found the thumb then laod from original image
+                else
+                {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        
+                        
+                        weakSelf.cancelThumbnailLoadOperation = NO;
+                        [weakSelf loadThumbnailImage];
+            
+                    });
+                }
+            });
+            
+            return nil;
             
         }
         
@@ -200,6 +215,16 @@ const CGFloat kThumbnailSize = 200.0f;
     return _thumbnailImage;
 }
 
+-(void)setThumbAndNotify:(NSImage *)thumb
+{
+    //self.thumbnailImage = thumb;
+    [[NSNotificationCenter defaultCenter] postNotificationName:PhotoThumbDidChangeNotification object:self];
+    
+    if(self.stackPhotoAlbum) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self.album];
+    }
+}
+
 -(NSDate *)findDateTaken
 {
     if(self.dateTaken != nil) return self.dateTaken;
@@ -212,11 +237,14 @@ const CGFloat kThumbnailSize = 200.0f;
     if (imageSrc!=nil)
     {
     // get the exif data
-        NSDictionary * exif = (__bridge NSDictionary *)(CGImageSourceCopyPropertiesAtIndex(imageSrc, 0, nil));
+        CFDictionaryRef cfDict = CGImageSourceCopyPropertiesAtIndex(imageSrc, 0, nil);
+        NSDictionary * exif = (__bridge NSDictionary *)(cfDict);
         
         CFRelease(imageSrc);
         
         dateTakenString = [[exif objectForKey:@"{Exif}"] objectForKey:@"DateTimeOriginal"];
+        
+        CFRelease(cfDict);
     }
     
     if(dateTakenString)
@@ -288,7 +316,10 @@ const CGFloat kThumbnailSize = 200.0f;
             //NSBitmapImageRep *rep = [[image representations] objectAtIndex: 0];
             
             // aslo get the exif data
-            NSDictionary * exif = (__bridge NSDictionary *)(CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil));
+            CFDictionaryRef cfDict = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil);
+            NSDictionary * exif = (__bridge NSDictionary *)(cfDict);
+            
+            
             
             NSDate * dateTaken = nil;
             NSString * dateTakenString = [[exif objectForKey:@"{Exif}"] objectForKey:@"DateTimeOriginal"];
@@ -304,6 +335,7 @@ const CGFloat kThumbnailSize = 200.0f;
             
             if (weakSelf.cancelThumbnailLoadOperation==YES) {
                 //DLog(@"3)thumbnail operation was canceled - return");
+                if(cfDict) CFRelease(cfDict);
                 CFRelease(imageSource);
                 _thumbnailImageIsLoading = NO;
                 weakSelf.cancelThumbnailLoadOperation = NO;
@@ -314,6 +346,7 @@ const CGFloat kThumbnailSize = 200.0f;
             
             if (weakSelf.cancelThumbnailLoadOperation==YES) {
                 //DLog(@"4)thumbnail operation was canceled - return");
+                if(cfDict) CFRelease(cfDict);
                 CFRelease(imageSource);
                 _thumbnailImageIsLoading = NO;
                 weakSelf.cancelThumbnailLoadOperation = NO;
@@ -335,6 +368,7 @@ const CGFloat kThumbnailSize = 200.0f;
             
             [weakSelf performSelectorOnMainThread:@selector(mainThreadComputePreviewThumbnailFinished:) withObject:data waitUntilDone:NO];
             
+            if(cfDict) CFRelease(cfDict);
             CFRelease(imageSource);
         }
     }];
