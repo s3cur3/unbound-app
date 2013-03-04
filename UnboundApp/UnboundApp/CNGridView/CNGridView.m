@@ -206,6 +206,9 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
                                              selector:@selector(updateVisibleRect)
                                                  name:NSViewBoundsDidChangeNotification
                                                object:clipView];
+    
+
+    
 }
 
 

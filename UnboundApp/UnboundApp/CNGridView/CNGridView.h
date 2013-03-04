@@ -35,7 +35,6 @@
 #import "CNLog.h"
 
 
-
 /**
  `CNGridView` is a (wanna be) replacement for NSCollectionView. It has full delegate and dataSource support with method calls like known from NSTableView/UITableView.
  

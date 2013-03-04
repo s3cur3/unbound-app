@@ -836,7 +836,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                     // combine the new photos we found with the albums previous existing photos
                     [lastAlbumsPhotos addObjectsFromArray:lastAlbumsExistingPhotos];
                     // set the photos at once - this method will update the stackPhotos relationship as well
-                    [self setPhotos:lastAlbumsPhotos forAlbum:lastAlbum];
+                    [lastAlbum setPhotos:[NSOrderedSet orderedSetWithArray:lastAlbumsPhotos] updateCoverImage:YES];
                 }
                 
                 // try to fetch an existing album with the new photos path
@@ -927,14 +927,12 @@ NSDictionary * dictionaryForURL(NSURL * url)
         
         // we've finished the loop. add the photos objects to the last album we were working with
         [lastAlbumsPhotos addObjectsFromArray:lastAlbumsExistingPhotos];
-        [self setPhotos:lastAlbumsPhotos  forAlbum:lastAlbum];
+        [lastAlbum setPhotos:[NSOrderedSet orderedSetWithArray:lastAlbumsPhotos] updateCoverImage:YES];
         
         if(deletionBlock)
         {
             deletionBlock(context);
         }
-        
-        
         
         // save the context
         [context save:nil];
@@ -1017,41 +1015,6 @@ NSDictionary * dictionaryForURL(NSURL * url)
     return [fetchedObjects lastObject];
 }
 
--(void)setPhotos:(NSMutableArray *)newPhotos forAlbum:(PIXAlbum *)anAlbum
-{
-    
-    
-    //NSSortDescriptor *sortByDateTaken = [[NSSortDescriptor alloc] initWithKey:@"dateTaken" ascending:YES];
-    //NSSortDescriptor *sortByDateCreated = [[NSSortDescriptor alloc] initWithKey:@"dateCreated" ascending:YES];
-    
-    [newPhotos sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        PIXPhoto * photo1 = obj1;
-        PIXPhoto * photo2 = obj2;
-        
-        NSDate * photo1Date = [photo1 dateTaken];
-        NSDate * photo2Date = [photo2 dateTaken];
-        
-        /*
-        if(photo1Date == nil) photo1Date = [photo1 dateCreated];
-        
-        
-        if(photo2Date == nil) photo2Date = [photo2 dateCreated];
-         */
-        
-        if(photo2Date == nil || photo1Date == nil)
-        {
-            photo1Date = [photo1 dateCreated];
-            photo2Date = [photo2 dateCreated];
-        }
-        
-        return [photo1Date compare:photo2Date];
-        
-    }];
-    
-    NSOrderedSet *newPhotosSet = [[NSOrderedSet alloc] initWithArray:newPhotos];
-    [anAlbum setPhotos:newPhotosSet updateCoverImage:YES];
-    [newPhotos removeAllObjects];
-}
 
 // this should always be called on the main thread
 -(void)flushAlbumsWithIDS:(NSSet *)albumIDs
@@ -1137,11 +1100,6 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 [anAlbum updateAlbumBecausePhotosDidChange];
             }
         }
-        anError = nil;
-        if (![context save:&anError]) {
-            DLog(@"Unresolved error %@, %@", anError, [anError userInfo]);
-            return NO;
-        }
     }
     
     return YES;
@@ -1166,12 +1124,6 @@ NSDictionary * dictionaryForURL(NSURL * url)
             [context deleteObject:anAlbum];
         }
         
-    }
-    
-    anError = nil;
-    if (![context save:&anError]) {
-        DLog(@"Unresolved error %@, %@", anError, [anError userInfo]);
-        return NO;
     }
     
     return YES;

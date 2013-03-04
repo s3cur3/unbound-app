@@ -367,7 +367,7 @@
         PIXAlbum *anAlbum =  [self.outlineView itemAtRow:[self.outlineView selectedRow]];
         if (anAlbum!=nil)
         {
-            DLog(@"New album selected");
+            //DLog(@"New album selected");
             self.splitViewController.selectedAlbum = anAlbum;
         } 
     }

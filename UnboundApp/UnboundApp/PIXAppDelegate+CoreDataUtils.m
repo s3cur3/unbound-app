@@ -777,7 +777,9 @@
     
     NSError *error;
     NSSortDescriptor *dateSorter = [[NSSortDescriptor alloc] initWithKey:@"albumDate" ascending:NO];
-    [fetchRequest setSortDescriptors:@[dateSorter]];
+    NSSortDescriptor *nameSorter = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO];
+    [fetchRequest setSortDescriptors:@[dateSorter, nameSorter]];
+    
     NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
     if (fetchedObjects == nil) {
         [[NSApplication sharedApplication] presentError:error];

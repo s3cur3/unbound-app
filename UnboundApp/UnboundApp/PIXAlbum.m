@@ -110,12 +110,36 @@ static NSString *const kItemsKey = @"photos";
 
 -(void)setPhotos:(NSOrderedSet *)photos updateCoverImage:(BOOL)shouldUpdateCoverPhoto;
 {
-    if (photos.count != self.photos.count)
-    {
-        self.subtitle = nil;
-    }
+    NSMutableOrderedSet *newPhotosSet = [photos mutableCopy];
     
-    self.photos = photos;
+    [newPhotosSet sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        PIXPhoto * photo1 = obj1;
+        PIXPhoto * photo2 = obj2;
+        
+        NSDate * photo1Date = [photo1 dateTaken];
+        NSDate * photo2Date = [photo2 dateTaken];
+        
+        /*
+         if(photo1Date == nil) photo1Date = [photo1 dateCreated];
+         
+         
+         if(photo2Date == nil) photo2Date = [photo2 dateCreated];
+         */
+        
+        if(photo2Date == nil || photo1Date == nil)
+        {
+            photo1Date = [photo1 dateCreated];
+            photo2Date = [photo2 dateCreated];
+        }
+        
+        return [photo1Date compare:photo2Date];
+        
+    }];
+    
+    self.subtitle = nil;
+    
+    self.photos = newPhotosSet;
+    
     if (shouldUpdateCoverPhoto==YES && photos.count != 0) {
         [self updateAlbumBecausePhotosDidChange];
     }

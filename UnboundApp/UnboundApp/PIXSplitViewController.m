@@ -189,7 +189,7 @@
     if (!selectedAlbum) {
         NSAssert(selectedAlbum!=nil, @"SplitViewController setAlbum called with nil value");
     } else if (selectedAlbum == _selectedAlbum) {
-        DLog(@"Same album selected, skip reloading");
+       // DLog(@"Same album selected, skip reloading");
         return;
     }
     _selectedAlbum = selectedAlbum;

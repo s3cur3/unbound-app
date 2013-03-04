@@ -42,7 +42,6 @@
 
 
 
-
 -(void)startFileSystemLoading;
 -(void)shouldStartFileSystemObservingWhenAlbumsFinishSaving;
 @property (assign) BOOL isObservingFileSystem;

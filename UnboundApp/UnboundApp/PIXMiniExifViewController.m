@@ -95,7 +95,10 @@
     
     NSString * modelString = [[[self.photo exifData] objectForKey:@"{TIFF}"] objectForKey:@"Model"];
     
-    if(modelString == nil) modelString = @"";
+    if(modelString == nil)
+    {
+        modelString = @"";
+    }
     self.cameraModel.stringValue = modelString;
     
     [self.view setNeedsUpdateConstraints:YES];

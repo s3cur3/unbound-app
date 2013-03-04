@@ -24,6 +24,7 @@
 #import "DebugPrefrencesViewController.h"
 
 
+
 NSString* kAppFirstRun = @"appFirstRun";
 
 //extern NSString *kLoadImageDidFinish;
@@ -545,6 +546,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     
     return NSTerminateNow;
 }
+
 
 
 @end
