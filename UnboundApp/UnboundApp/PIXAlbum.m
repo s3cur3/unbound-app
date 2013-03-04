@@ -158,9 +158,7 @@ static NSString *const kItemsKey = @"photos";
 }
 
 -(void) checkDates
-{
-    DLog(@"Starting Check Dates");
-    
+{    
     // create a dispatch queue so dispatches will happen in order
     dispatch_queue_t myQueue = dispatch_queue_create("com.pixite.albumDates", DISPATCH_QUEUE_SERIAL);
     // loop through all this album's photos
@@ -183,9 +181,7 @@ static NSString *const kItemsKey = @"photos";
             
             [self setPhotos:self.photos updateCoverImage:YES];
             [self flush];
-            
-            DLog(@"Finished Check Dates");
-                
+ 
         });
         
     });
