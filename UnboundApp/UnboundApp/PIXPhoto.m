@@ -68,13 +68,11 @@ const CGFloat kThumbnailSize = 200.0f;
         // This code needs to be threadsafe, as it will be called from the background thread.
         // The easiest way to ensure you only use stack variables is to make it a class method.
         NSNumber *maxPixelSize = [NSNumber numberWithInteger:kThumbnailSize];
-        NSDictionary *imageOptions = [NSDictionary dictionaryWithObjectsAndKeys:
-                                      (id)kCFBooleanTrue,(id)kCGImageSourceCreateThumbnailFromImageIfAbsent,
-                                      //(id)kCFBooleanFalse,(id)kCGImageSourceCreateThumbnailFromImageIfAbsent,
-                                      maxPixelSize, (id)kCGImageSourceThumbnailMaxPixelSize,
-                                      //kCFBooleanFalse, (id)kCGImageSourceCreateThumbnailWithTransform,
-                                      kCFBooleanTrue, (id)kCGImageSourceCreateThumbnailWithTransform,
-                                      nil];
+        NSDictionary *imageOptions = @{(id)kCGImageSourceCreateThumbnailFromImageIfAbsent: (id)kCFBooleanTrue,
+                                      // (id)kCGImageSourceCreateThumbnailFromImageAlways: (id)kCFBooleanTrue,
+                                       (id)kCGImageSourceThumbnailMaxPixelSize: maxPixelSize,
+                                       (id)kCGImageSourceCreateThumbnailWithTransform: (id)kCFBooleanTrue};
+
         CGImageRef imageRef = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, (__bridge CFDictionaryRef)imageOptions);
     
         if (imageRef != NULL) {
@@ -354,6 +352,8 @@ const CGFloat kThumbnailSize = 200.0f;
         //NSLog(@"Loading thumbnail");
         NSImage *image = nil;
         NSURL *urlForImage = [NSURL fileURLWithPath:aPath];
+        
+        
         CGImageSourceRef imageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)urlForImage, nil);
         if (imageSource) {
             
@@ -372,20 +372,7 @@ const CGFloat kThumbnailSize = 200.0f;
             // aslo get the exif data
             CFDictionaryRef cfDict = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil);
             NSDictionary * exif = (__bridge NSDictionary *)(cfDict);
-            
-            
-            
-            NSDate * dateTaken = nil;
-            NSString * dateTakenString = [[exif objectForKey:@"{Exif}"] objectForKey:@"DateTimeOriginal"];
-            
-            if(dateTakenString)
-            {
-                NSDateFormatter* exifFormat = [[NSDateFormatter alloc] init];
-                [exifFormat setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
-                dateTaken = [exifFormat dateFromString:dateTakenString];                
-            }
-            
-            //NSData *data = [rep representationUsingType: NSJPEGFileType properties: nil];
+
             
             if (weakSelf.cancelThumbnailLoadOperation==YES) {
                 //DLog(@"3)thumbnail operation was canceled - return");
@@ -410,11 +397,7 @@ const CGFloat kThumbnailSize = 200.0f;
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 
-                // set the exif data
-                [weakSelf setExifData:exif];
-                
-                // set the dateTaken
-                [weakSelf setDateTaken:dateTaken];
+                [self forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
                 
                 // set the thumbnail data (this will also post a notification to update the UI)
                 //[weakSelf mainThreadComputePreviewThumbnailFinished:data];

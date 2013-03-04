@@ -368,13 +368,12 @@ enum {
     // This code needs to be threadsafe, as it will be called from the background thread.
     // The easiest way to ensure you only use stack variables is to make it a class method.
     NSNumber *maxPixelSize = [NSNumber numberWithInteger:200];
-    NSDictionary *imageOptions = [NSDictionary dictionaryWithObjectsAndKeys:
-                                  (id)kCFBooleanTrue,(id)kCGImageSourceCreateThumbnailFromImageIfAbsent,
-                                  //(id)kCFBooleanFalse,(id)kCGImageSourceCreateThumbnailFromImageIfAbsent,
-                                  maxPixelSize, (id)kCGImageSourceThumbnailMaxPixelSize,
-                                  kCFBooleanFalse, (id)kCGImageSourceCreateThumbnailWithTransform,
-                                  //kCFBooleanTrue, (id)kCGImageSourceCreateThumbnailWithTransform,
-                                  nil];
+   
+    NSDictionary *imageOptions = @{(id)kCGImageSourceCreateThumbnailFromImageIfAbsent: (id)kCFBooleanTrue,
+                                  // (id)kCGImageSourceCreateThumbnailFromImageAlways: (id)kCFBooleanTrue,
+                                   (id)kCGImageSourceThumbnailMaxPixelSize: maxPixelSize,
+                                   (id)kCGImageSourceCreateThumbnailWithTransform: (id)kCFBooleanTrue};
+    
     CGImageRef imageRef = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, (__bridge CFDictionaryRef)imageOptions);
     if (imageRef != NULL) {
         CGRect rect;

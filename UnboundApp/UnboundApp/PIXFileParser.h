@@ -70,7 +70,5 @@ typedef enum {
 - (void)cancelScans;
 
 
-- (void)dateScanAlbum:(PIXAlbum *)album;
-
 
 @end

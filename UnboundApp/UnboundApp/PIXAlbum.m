@@ -159,6 +159,8 @@ static NSString *const kItemsKey = @"photos";
 
 -(void) checkDates
 {
+    DLog(@"Starting Check Dates");
+    
     // create a dispatch queue so dispatches will happen in order
     dispatch_queue_t myQueue = dispatch_queue_create("com.pixite.albumDates", DISPATCH_QUEUE_SERIAL);
     // loop through all this album's photos
@@ -168,6 +170,7 @@ static NSString *const kItemsKey = @"photos";
         if(aPhoto.exifData == nil)
         {
             // this will dispatch async to pull the data from the file and then set the data on the main thread
+            // this method will only do anything if exif is nil
             [aPhoto findExifDataUsingDispatchQueue:myQueue];
         }
     }
@@ -180,6 +183,8 @@ static NSString *const kItemsKey = @"photos";
             
             [self setPhotos:self.photos updateCoverImage:YES];
             [self flush];
+            
+            DLog(@"Finished Check Dates");
                 
         });
         
