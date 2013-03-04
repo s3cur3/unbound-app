@@ -41,7 +41,9 @@
 -(NSImage *)thumbnailImage;
 -(void)cancelThumbnailLoading;
 
--(NSDate *)findDateTaken;
+-(NSDate *)findDisplayDate;
+
+-(void)findExifDataUsingDispatchQueue:(dispatch_queue_t)aQueue;
 
 @end
 

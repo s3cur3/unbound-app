@@ -225,45 +225,99 @@ const CGFloat kThumbnailSize = 200.0f;
     }
 }
 
--(NSDate *)findDateTaken
+-(NSDate *)findDisplayDate
 {
-    if(self.dateTaken != nil) return self.dateTaken;
-    
-    NSString * dateTakenString = nil;
-    NSDate * thisDateTaken = nil;
-    
-    CGImageSourceRef imageSrc = CGImageSourceCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:self.path], nil);
-    
-    if (imageSrc!=nil)
+    // if we don't have exif data already then load it right now
+    if(self.exifData == nil)
     {
-    // get the exif data
-        CFDictionaryRef cfDict = CGImageSourceCopyPropertiesAtIndex(imageSrc, 0, nil);
-        NSDictionary * exif = (__bridge NSDictionary *)(cfDict);
+        NSURL * imageURL = [NSURL fileURLWithPath:self.path];
+        CGImageSourceRef imageSrc = CGImageSourceCreateWithURL((__bridge CFURLRef)imageURL, nil);
         
-        CFRelease(imageSrc);
-        
-        dateTakenString = [[exif objectForKey:@"{Exif}"] objectForKey:@"DateTimeOriginal"];
-        
-        CFRelease(cfDict);
+        if (imageSrc!=nil)
+        {
+            // get the exif data
+            CFDictionaryRef cfDict = CGImageSourceCopyPropertiesAtIndex(imageSrc, 0, nil);
+            NSDictionary * exif = (__bridge NSDictionary *)(cfDict);
+            
+            
+            [self forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
+            
+            CFRelease(imageSrc);
+            if(cfDict) CFRelease(cfDict);
+        }
     }
     
-    if(dateTakenString)
+    // check if we have a dateTaken
+    if(self.dateTaken)
     {
-        NSDateFormatter* exifFormat = [[NSDateFormatter alloc] init];
-        [exifFormat setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
-        thisDateTaken = [exifFormat dateFromString:dateTakenString];
+        return self.dateTaken;
     }
     
-    if(thisDateTaken == nil)
-    {
-        thisDateTaken = self.dateCreated;
-    }
-    
-    self.dateTaken = thisDateTaken;
-    
-    
-    return self.dateTaken;
+
+    return self.dateCreated;
 }
+
+-(void)findExifDataUsingDispatchQueue:(dispatch_queue_t)aQueue
+{
+    if(self.exifData != nil) return;
+    
+    NSURL * imageURL = [NSURL fileURLWithPath:self.path];
+    
+    dispatch_async(aQueue, ^{
+        
+        CGImageSourceRef imageSrc = CGImageSourceCreateWithURL((__bridge CFURLRef)imageURL, nil);
+        
+        if (imageSrc!=nil)
+        {
+            // get the exif data
+            CFDictionaryRef cfDict = CGImageSourceCopyPropertiesAtIndex(imageSrc, 0, nil);
+            NSDictionary * exif = (__bridge NSDictionary *)(cfDict);
+            
+            // now set it on the main thread
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [self forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
+                
+            });
+            
+            
+            CFRelease(imageSrc);
+            if(cfDict) CFRelease(cfDict);
+        }
+    });
+}
+
+-(void)forceSetExifData:(NSDictionary *)newExifData
+{
+    if(newExifData == nil) // if we're setting this to nil, set the exif to a special dictionary
+    {
+        // set this to non-nil so we don't try and load it again
+        [self setExifData:@{@"noExif":@"noExif"}];
+        self.dateTaken = nil;
+    }
+    
+    else
+    {
+        // set the exif data the normal way
+        [self setExifData:newExifData];
+        
+        // now also set attributes that are derived from the exif data
+        NSString * dateTakenString = [[newExifData objectForKey:@"{Exif}"] objectForKey:@"DateTimeOriginal"];
+        
+        if(dateTakenString)
+        {
+            NSDateFormatter* exifFormat = [[NSDateFormatter alloc] init];
+            [exifFormat setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
+            self.dateTaken = [exifFormat dateFromString:dateTakenString];
+        }
+        
+        else
+        {
+            self.dateTaken = nil;
+        }
+    }
+}
+
 
 
 -(void)loadThumbnailImage

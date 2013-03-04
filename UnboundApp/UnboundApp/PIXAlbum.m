@@ -100,7 +100,7 @@ static NSString *const kItemsKey = @"photos";
         if (newDatePhoto != self.datePhoto) {
             self.datePhoto = newDatePhoto;
             
-            self.albumDate = [self.datePhoto findDateTaken];
+            self.albumDate = [self.datePhoto findDisplayDate];
             
             self.subtitle = nil;
             
@@ -155,6 +155,36 @@ static NSString *const kItemsKey = @"photos";
         NSArray *stackArray = [self.photos objectsAtIndexes:stackSet];
         self.stackPhotos = [NSOrderedSet orderedSetWithArray:stackArray];
     }
+}
+
+-(void) checkDates
+{
+    // create a dispatch queue so dispatches will happen in order
+    dispatch_queue_t myQueue = dispatch_queue_create("com.pixite.albumDates", DISPATCH_QUEUE_SERIAL);
+    // loop through all this album's photos
+    for(PIXPhoto * aPhoto in self.photos)
+    {
+        // only try to get exif data if it's needed
+        if(aPhoto.exifData == nil)
+        {
+            // this will dispatch async to pull the data from the file and then set the data on the main thread
+            [aPhoto findExifDataUsingDispatchQueue:myQueue];
+        }
+    }
+    
+    // add this to the same queue so it will execute after all exif fetches are complete
+    dispatch_async(myQueue, ^{
+        
+        // dispatch async again to keep the execution to after the main thread settings of the exif data
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self setPhotos:self.photos updateCoverImage:YES];
+            [self flush];
+                
+        });
+        
+    });
+    
 }
 
 -(void)flush

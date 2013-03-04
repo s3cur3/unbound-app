@@ -74,6 +74,7 @@
 - (NSString *) imageSubtitle;
 
 -(void) flush;
+-(void) checkDates;
 
 
 @end

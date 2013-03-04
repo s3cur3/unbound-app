@@ -91,7 +91,9 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAlbum) name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
         
         // start a date scan for this album
-        [[PIXFileParser sharedFileParser] dateScanAlbum:self.album];
+        //[[PIXFileParser sharedFileParser] dateScanAlbum:self.album];
+        
+        [self.album checkDates];
         
     }
 }
@@ -117,8 +119,8 @@
     // if we've got more than one photo then display the whole date range
     if([self.items count] > 2)
     {
-        NSDate * startDate = [[self.items objectAtIndex:0] findDateTaken];
-        NSDate * endDate = [[self.items lastObject] findDateTaken];
+        NSDate * startDate = [[self.items objectAtIndex:0] findDisplayDate];
+        NSDate * endDate = [[self.items lastObject] findDisplayDate];
         
         
         NSCalendar* calendar = [NSCalendar currentCalendar];
