@@ -14,8 +14,9 @@
 #import "PIXSidebarTableCellView.h"
 #import "PIXSplitViewController.h"
 #import "PIXPhotoGridViewController.h"
-//#import "Album.h"
+#import "PIXFileParser.h"
 #import "PIXAlbum.h"
+#import "PIXPhoto.h"
 #import "PIXDefines.h"
 
 @interface PIXSidebarViewController ()
@@ -315,29 +316,26 @@
 - (IBAction)textTitleChanged:(id)sender {
     DLog(@"textTitleChanged");
     if ([self.outlineView selectedRow] != -1) {
-        //        NSTextField *aTextField =(NSTextField *)sender;
-        //
-        //        Album *anAlbum =  [self.outlineView itemAtRow:[self.outlineView selectedRow]];
-        //        if ([aTextField.stringValue length]==0 || [aTextField.stringValue isEqualToString:anAlbum.title])
-        //        {
-        //            return;
-        //        }
-        //        NSString *parentFolderPath = [anAlbum.filePath stringByDeletingLastPathComponent];
-        //        NSString *newFilePath = [parentFolderPath stringByAppendingPathComponent:aTextField.stringValue];
-        //
-        //
-        //        NSError *error;
-        //        BOOL success = [[NSFileManager defaultManager] moveItemAtPath:anAlbum.filePath toPath:newFilePath error:&error];
-        //        if (!success)
-        //        {
-        //            [[NSApplication sharedApplication] presentError:error];
-        //            //an error occurred when moving so keep the old title
-        //            aTextField.stringValue = anAlbum.title;
-        //        } else {
-        //            [anAlbum userSetTitle:aTextField.stringValue];
-        //            //anAlbum.filePath = newFilePath;
-        //            [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:anAlbum];
-        //        }
+        NSTextField *aTextField =(NSTextField *)sender;
+
+        PIXAlbum *anAlbum =  [self.outlineView itemAtRow:[self.outlineView selectedRow]];
+        if ([aTextField.stringValue length]==0 || [aTextField.stringValue isEqualToString:anAlbum.title])
+        {
+            DLog(@"renaming to empty string or same name disallowed.");
+            return;
+        }
+        
+        BOOL success = [[PIXFileManager sharedInstance] renameAlbum:anAlbum withName:aTextField.stringValue];
+        
+        if (!success)
+        {
+            //an error occurred when moving so keep the old title
+            aTextField.stringValue = anAlbum.title;
+            return;
+        } else {
+            //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:anAlbum];
+            DLog(@"Album was renamed successfuly : \"%@\"", anAlbum.path);
+        }
     }
 }
 
