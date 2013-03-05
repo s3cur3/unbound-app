@@ -182,6 +182,15 @@ static NSString *kContentTitleKey, *kContentImageKey;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Context Menu Support
 
+-(BOOL)verifyActionFoItemsWithMessage:(NSString *)warningMessage
+{
+    if (NSRunCriticalAlertPanel(@"Alert", warningMessage, @"OK", @"Cancel", nil) == NSAlertDefaultReturn) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 //TODO: Only for use with photos right now, fix to handle albums
 - (IBAction) deleteItems:(id )inSender
 {
@@ -211,6 +220,12 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 - (IBAction) openInApp:(id)sender
 {
+    if (self.selectedItems.count>1) {
+        NSString *msg = @"Are you sure you want to open all of the selected files?";
+        if (![self verifyActionFoItemsWithMessage:msg]) {
+            return;
+        }
+    }
     NSArray *itemsToOpen = [self.selectedItems allObjects];
     NSManagedObject *mObj = [itemsToOpen lastObject];
     //if ([mObj.entity.name isEqualToString:kPhotoEntityName]) {
@@ -264,6 +279,12 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 -(IBAction)getInfo:(id)sender;
 {
+    if (self.selectedItems.count>1) {
+        NSString *msg = @"Are you sure you want to open an info window for each of the selected files?";
+        if (![self verifyActionFoItemsWithMessage:msg]) {
+            return;
+        }
+    }
     NSSet *aSet = [self.selectedItems copy];
     [aSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
 
@@ -301,6 +322,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
     }
     
     // Get Info
+    //TODO: pop up message if multiple items selected for these actions
     [menu addItemWithTitle:[NSString stringWithFormat:@"Get Info"] action:
      @selector(getInfo:) keyEquivalent:@""];
     

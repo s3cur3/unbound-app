@@ -75,6 +75,7 @@
 
 -(void) flush;
 -(void) checkDates;
+-(void) updateUnboundFile;
 
 
 @end

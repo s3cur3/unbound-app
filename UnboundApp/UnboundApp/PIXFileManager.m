@@ -616,7 +616,7 @@ typedef NSUInteger PIXOverwriteStrategy;
         } else {
             [[NSApplication sharedApplication] presentError:error];
             NSArray *sucessfullyDeletedItems = [newURLs allKeys];
-            //TODO: handle this error properly
+            //TODO: handle this error properly - add option to undo and rescan
             for (id anItem in sucessfullyDeletedItems)
             {
                 DLog(@"Item at '%@' was recycled", anItem);
@@ -1016,6 +1016,56 @@ NSString * UserHomeDirectory();
 {
     NSString *trashFolderPathString = [NSString stringWithFormat:@"%@/.Trash", UserHomeDirectory()];
     return trashFolderPathString;
+}
+
+-(NSString *)defaultPhotosPath
+{
+    NSArray *observedDirectories = [[[PIXFileParser sharedFileParser] observedDirectories] valueForKey:@"path"];
+    for (NSString *observedPath in observedDirectories)
+    {
+        if ([[observedPath lastPathComponent] isEqualToString:@"Photos"]==YES) {
+            return observedPath;
+        }
+    }
+    if (observedDirectories.count>0) {
+        return [observedDirectories objectAtIndex:0];
+    }
+    //TODO: present an error here?
+    return [observedDirectories lastObject];
+}
+
+-(PIXAlbum *)createAlbumWithName:(NSString *)aName;
+{
+    return [self createAlbumAtPath:nil withName:aName];
+}
+
+-(PIXAlbum *)createAlbumAtPath:(NSString *)aPath withName:(NSString *)aName
+{
+    NSString *newAlbumPath = nil;
+    if (!aPath) {
+        
+        NSString *defaultPhotosPathString = [self defaultPhotosPath];
+        aPath = defaultPhotosPathString;
+        
+    }
+    newAlbumPath = [NSString stringWithFormat:@"%@/%@",aPath, aName];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:newAlbumPath])
+    {
+        //TODO: error handling
+        NSError *error;
+        if (![[NSFileManager defaultManager] createDirectoryAtPath:newAlbumPath withIntermediateDirectories:YES attributes:nil error:&error])
+        {
+            [[NSApplication sharedApplication] presentError:error];
+            //TODO: try and offer some course of action based on error failure reason
+            return nil;
+        }
+    }
+    NSManagedObjectContext *aContext = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
+    PIXAlbum *newAlbum = [NSEntityDescription insertNewObjectForEntityForName:kAlbumEntityName inManagedObjectContext:aContext];
+    newAlbum.path = newAlbumPath;
+    //[[Album alloc] initWithFilePath:newAlbumPath];
+    [newAlbum updateUnboundFile];
+    return newAlbum;
 }
 
 @end

@@ -21,6 +21,8 @@
 
 -(void)recycleAlbums:(NSArray *)items;
 -(BOOL)renameAlbum:(PIXAlbum *)anAlbum withName:(NSString *)aNewName;
+-(PIXAlbum *)createAlbumWithName:(NSString *)aName;
+-(PIXAlbum *)createAlbumAtPath:(NSString *)aPath withName:(NSString *)aName;
 
 //-(NSString *)trashFolderPath;
 
