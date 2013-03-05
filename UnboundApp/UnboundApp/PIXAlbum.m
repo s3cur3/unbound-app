@@ -11,6 +11,7 @@
 #import "PIXPhoto.h"
 #import "PIXThumbnail.h"
 #import "PIXDefines.h"
+#import "PIXAppDelegate.h"
 
 static NSString *const kItemsKey = @"photos";
 
@@ -176,7 +177,7 @@ static NSString *const kItemsKey = @"photos";
     // add this to the same queue so it will execute after all exif fetches are complete
     dispatch_async(myQueue, ^{
         
-        // dispatch async again to keep the execution to after the main thread settings of the exif data
+        // dispatch async again to keep the execution after the main thread settings of the exif data
         dispatch_async(dispatch_get_main_queue(), ^{
             
             [self setPhotos:self.photos updateCoverImage:YES];
@@ -197,6 +198,72 @@ static NSString *const kItemsKey = @"photos";
         // not sure if we need to send this. the all albums refresh is always sent after this
         [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
     }
+    
+    [self updateUnboundFile];
+}
+
+-(void)updateUnboundFile
+{
+
+    NSString *unboundFilePath = [NSString stringWithFormat:@"%@/.unbound", self.path];
+    
+    NSMutableDictionary * unboundMetaDictionary = nil;
+    
+    // if we already have a .unboubnd file load that
+    if ([[NSFileManager defaultManager] fileExistsAtPath:unboundFilePath])
+    {
+        NSData *data = [NSData dataWithContentsOfFile:unboundFilePath];
+        NSError *error = nil;
+        unboundMetaDictionary = [[NSJSONSerialization JSONObjectWithData:data
+                                                  options:kNilOptions
+                                                    error:&error] mutableCopy];
+    }
+    
+    // if this isn't a dictionary then it's not valid
+    if(![unboundMetaDictionary isKindOfClass:[NSMutableDictionary class]])
+    {
+        unboundMetaDictionary = [NSMutableDictionary new];
+    }
+
+    //DLog(@"before: %@", unboundMetaDictionary);
+    
+    [unboundMetaDictionary setObject:@"1.0" forKey:@"unboundFileVersion"];
+    
+    // loop through the photos and populate the captions
+    NSDictionary * photosDictionary = [unboundMetaDictionary objectForKey:@"photos"];
+    NSEnumerator *enumerator = [photosDictionary keyEnumerator];
+    id aKey = nil;
+    while ( (aKey = [enumerator nextObject]) != nil) {
+        NSString * photoName = (NSString *)aKey;
+        NSDictionary * photoDict = [photosDictionary objectForKey:aKey];
+        
+        // check that these are the right class types
+        if([photoName isKindOfClass:[NSString class]] && [photoDict isKindOfClass:[NSDictionary class]])
+        {
+            //DLog(@"Found Photo Caption");
+        }
+        
+    }
+    
+    NSDateFormatter *datFormatter = [[NSDateFormatter alloc] init];
+    [datFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss Z"];
+    
+    if(self.albumDate != nil)
+    {
+        [unboundMetaDictionary setObject:[datFormatter stringFromDate:[self albumDate]] forKey:@"albumDate"];
+    }
+    
+    //DLog(@"after: %@", unboundMetaDictionary);
+    
+    // write the JSON back to the file
+    NSOutputStream *os = [[NSOutputStream alloc] initToFileAtPath:unboundFilePath append:NO];
+    NSError *error;
+    [os open];
+    if (![NSJSONSerialization writeJSONObject:unboundMetaDictionary toStream:os options:NSJSONWritingPrettyPrinted error:&error]) {
+        [PIXAppDelegate presentError:error];
+    }
+    [os close];
+
 }
 
 //

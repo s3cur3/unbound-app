@@ -812,30 +812,6 @@ NSDictionary * dictionaryForURL(NSURL * url)
     // set the date modified
     [photo setDateLastModified:dateModified];
     
-    
-    // set the exif data if we have it
-    NSDictionary * exif = nil; //[fileInfo objectForKey:@"exif"];
-    
-    if(exif != nil)
-    {
-        [photo setExifData:exif];
-        
-        NSDate * photoDateTaken = nil;
-        NSString * dateTakenString = [[exif objectForKey:@"{Exif}"] objectForKey:@"DateTimeOriginal"];
-
-        // parse the exif date string
-        if(dateTakenString)
-        {
-            NSDateFormatter* exifFormat = [[NSDateFormatter alloc] init];
-            [exifFormat setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
-            photoDateTaken = [exifFormat dateFromString:dateTakenString];
-            
-            if(photoDateTaken)
-            {
-                [photo setDateTaken:photoDateTaken];
-            }
-        }
-    }
 }
 
 -(PIXAlbum *)fetchAlbumWithPath:(NSString *)aPath inContext:(NSManagedObjectContext *)context
