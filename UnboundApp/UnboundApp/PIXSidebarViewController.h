@@ -20,6 +20,8 @@
 
 @property (nonatomic, strong) PIXAlbum *dragDropDestination;
 
+-(IBAction)newAlbumPressed:(id)sender;
+
 @end
 
 @interface PIXSidebarViewController(NSOutlineViewDelegate)
@@ -30,7 +32,7 @@
 - (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item;
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification;
 
--(IBAction)newAlbumPressed:(id)sender;
+
 
 @end
 

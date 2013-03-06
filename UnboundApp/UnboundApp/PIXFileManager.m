@@ -1049,22 +1049,37 @@ NSString * UserHomeDirectory();
         
     }
     newAlbumPath = [NSString stringWithFormat:@"%@/%@",aPath, aName];
-    if (![[NSFileManager defaultManager] fileExistsAtPath:newAlbumPath])
+    
+    int i = 2;
+    // loop until we have an album name that doesn't already exits
+    while([[NSFileManager defaultManager] fileExistsAtPath:newAlbumPath])
     {
-        //TODO: error handling
-        NSError *error;
-        if (![[NSFileManager defaultManager] createDirectoryAtPath:newAlbumPath withIntermediateDirectories:YES attributes:nil error:&error])
-        {
-            [[NSApplication sharedApplication] presentError:error];
-            //TODO: try and offer some course of action based on error failure reason
-            return nil;
-        }
+        newAlbumPath = [NSString stringWithFormat:@"%@/%@ %d",aPath, aName, i];
+        i++;
     }
+    
+    
+    //TODO: error handling
+    NSError *error;
+    if (![[NSFileManager defaultManager] createDirectoryAtPath:newAlbumPath withIntermediateDirectories:YES attributes:nil error:&error])
+    {
+        [[NSApplication sharedApplication] presentError:error];
+        //TODO: try and offer some course of action based on error failure reason
+        return nil;
+    }
+    
     NSManagedObjectContext *aContext = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
     PIXAlbum *newAlbum = [NSEntityDescription insertNewObjectForEntityForName:kAlbumEntityName inManagedObjectContext:aContext];
     newAlbum.path = newAlbumPath;
     //[[Album alloc] initWithFilePath:newAlbumPath];
+    
+    [newAlbum setAlbumDate:[NSDate date]];
+    [newAlbum setDateLastUpdated:[NSDate date]];
+    
     [newAlbum updateUnboundFile];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
+    
     return newAlbum;
 }
 
