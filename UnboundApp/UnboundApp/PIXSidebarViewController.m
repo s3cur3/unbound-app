@@ -58,6 +58,13 @@
     [self updateSearch];
 }
 
+-(IBAction)newAlbumPressed:(id)sender
+{
+    PIXAlbum * newAlbum = [[PIXFileManager sharedInstance] createAlbumWithName:@"New Album"];
+    [self albumsChanged:nil];
+    
+}
+
 -(void)updateSearch
 {
 	

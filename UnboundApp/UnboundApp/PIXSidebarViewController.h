@@ -30,6 +30,8 @@
 - (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item;
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification;
 
+-(IBAction)newAlbumPressed:(id)sender;
+
 @end
 
 @interface PIXSidebarViewController(NSOutlineViewDataSource)
