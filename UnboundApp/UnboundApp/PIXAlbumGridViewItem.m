@@ -432,13 +432,14 @@
         [self addSubview:self.titleEditField];
         
         [self.window makeFirstResponder:self.titleEditField];
-        
     }
 }
 
 -(void)titleEdited:(id)sender
 {
     DLog(@"titleEdited");
+    
+    if([self.album isReallyDeleted]) return;
     
     NSTextField *aTextField =(NSTextField *)sender;
         

@@ -169,6 +169,8 @@
 - (void)reloadSelection;
 
 
+- (CNGridViewItem *)scrollToAndReturnItemAtIndex:(NSUInteger)index;
+
 
 
 

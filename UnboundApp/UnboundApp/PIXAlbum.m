@@ -278,6 +278,11 @@ static NSString *const kItemsKey = @"photos";
 
 }
 
+-(BOOL) isReallyDeleted
+{
+    return (self.isDeleted || self.managedObjectContext == nil);
+}
+
 //
 //- (PIXPhoto *)coverPhoto
 //{

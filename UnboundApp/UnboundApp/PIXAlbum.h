@@ -77,5 +77,7 @@
 -(void) checkDates;
 -(void) updateUnboundFile;
 
+-(BOOL) isReallyDeleted;
+
 
 @end

@@ -681,6 +681,21 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     }];
 }
 
+- (CNGridViewItem *)scrollToAndReturnItemAtIndex:(NSUInteger)index
+{
+    // scroll to this index
+    
+    NSPoint point = [self rectForItemAtIndex:index].origin;
+    point.x = 0;
+    point.y -= self.headerSpace;
+    
+    [self scrollPoint:point];
+    
+    CNGridViewItem * item = [keyedVisibleItems objectForKey:[NSNumber numberWithInteger:index]];
+    
+    return item;
+}
+
 
 - (void)handleClicks:(NSTimer *)theTimer
 {
