@@ -16,7 +16,10 @@
 @property (strong, nonatomic) PIXAlbum * album;
 
 
+
 // this is used when dragging an array of albums out of the album view
 + (NSImage *)dragImageForAlbums:(NSArray *)albumArray size:(NSSize)size;
+
+-(void)startEditing;
 
 @end

@@ -846,9 +846,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 - (BOOL)isFlipped { return YES; }
 
 - (void)setFrame:(NSRect)frameRect
-{
-    NSScrollView * scroller = [self enclosingScrollView];
-    
+{    
    // BOOL animated = (self.frame.size.width == frameRect.size.width ? NO: YES);
     [super setFrame:frameRect];
     [self refreshGridViewAnimated:NO];
@@ -987,8 +985,16 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     }
 }
 
+-(BOOL)acceptsFirstResponder
+{
+    return YES;
+}
+
+
 - (void)mouseDown:(NSEvent *)theEvent
 {
+    [self.window makeFirstResponder:self];
+    
     if (!self.allowsSelection)
         return;
 

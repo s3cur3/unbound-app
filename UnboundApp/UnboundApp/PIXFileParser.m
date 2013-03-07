@@ -197,7 +197,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
         NSData *token = [[NSUserDefaults standardUserDefaults] dataForKey:tokenKeyString];
         NSData *decodedToken = [NSKeyedUnarchiver unarchiveObjectWithData:token];
         //[aDir addDirectoryObserver:self options:ArchDirectoryObserverResponsive | ArchDirectoryObserverObservesSelf resumeToken:decodedToken];
-        [aDir addDirectoryObserver:self options:ArchDirectoryObserverResponsive resumeToken:decodedToken];
+        //[aDir addDirectoryObserver:self options:ArchDirectoryObserverResponsive resumeToken:decodedToken];
     }
 }
 
@@ -228,7 +228,16 @@ NSDictionary * dictionaryForURL(NSURL * url)
     [self updateResumeToken:resumeToken forObservedDirectory:observedURL];
     
     // do a shallow, semi-recursive scan of the directory
-    [self scanURLForChanges:changedURL withRecursion:PIXFileParserRecursionSemi];
+    
+    NSString * changedPath = changedURL.path;
+    if (changedPath != nil && [self.loadingAlbumsDict objectForKey:changedPath]==nil) {
+        
+        DLog(@"** Scanning file system at: %@", changedPath);
+        
+        [self.loadingAlbumsDict setObject:changedURL forKey:changedPath];
+    
+        [self scanURLForChanges:changedURL withRecursion:PIXFileParserRecursionSemi];
+    }
 }
 
 // At least one file somewhere inside--but not necessarily directly descended from--changedURL has changed.  You should examine the directory at changedURL and all subdirectories to see which files changed.
@@ -387,7 +396,10 @@ NSDictionary * dictionaryForURL(NSURL * url)
 
 - (void)scanPath:(NSString *)path withRecursion:(PIXFileParserRecursionOptions)recursionMode
 {
-    [self scanURLForChanges:[NSURL fileURLWithPath:path isDirectory:YES] withRecursion:recursionMode];
+    if(path)
+    {
+        [self scanURLForChanges:[NSURL fileURLWithPath:path isDirectory:YES] withRecursion:recursionMode];
+    }
 }
 
 /** 
@@ -401,8 +413,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
     self.scansCancelledFlag = NO;
     
     // if this path isn't already being scanned:
-    if (url.path != nil && [self.loadingAlbumsDict objectForKey:url.path]==nil) {
-        [self.loadingAlbumsDict setObject:url forKey:url.path];
+    
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             //
             
@@ -567,7 +578,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
             }
         });
         
-    }
+    
     
 }
 

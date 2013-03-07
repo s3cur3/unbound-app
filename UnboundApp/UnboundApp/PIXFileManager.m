@@ -112,7 +112,7 @@ typedef NSUInteger PIXOverwriteStrategy;
                    modalForWindow:[[PIXAppDelegate sharedAppDelegate] window]
                     modalDelegate:self
                    didEndSelector:@selector(chooseAppSheetClosed:returnCode:contextInfo:)
-                      contextInfo:nil];
+                      contextInfo:nil];    
 }
 
 - (void)chooseAppSheetClosed:(NSOpenPanel *)panel returnCode:(int)code contextInfo:(NSNumber *)useOptions
@@ -123,7 +123,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     {
 		[panel close];
         
-        [self openFileWithPaths:someFilePaths withApplication:[panel filename]];
+        [self openFileWithPaths:someFilePaths withApplication:[[panel URL] path]];
         //[self openSelectedFileWithApplication:[panel filename]];
     }
 }

@@ -47,6 +47,8 @@
         
         self.imageBrowserViewController = [[PIXPhotoGridViewController alloc] initWithNibName:@"PIXGridViewController" bundle:nil];
         
+        [self.sidebarViewController.outlineView setNextKeyView:self.imageBrowserViewController.gridView];
+        
         [self.splitView adjustSubviews];
     }
     

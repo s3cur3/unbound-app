@@ -263,7 +263,7 @@
     self.searchField = [[NSSearchField alloc] initWithFrame:CGRectMake(0, 0, 150, 55)];
     //[searchField setFont:[NSFont systemFontOfSize:18]];
         
-    [self.searchField setFocusRingType:NSFocusRingTypeNone];
+    //[self.searchField setFocusRingType:NSFocusRingTypeNone];
     self.searchField.delegate = self;
     [self.searchField.cell setPlaceholderString:@"Search Albums"];
     [self.searchField.cell setFont:[NSFont fontWithName:@"Helvetica" size:13]];

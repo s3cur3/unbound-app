@@ -15,7 +15,7 @@
 #import "PIXViewController.h"
 #include <stdlib.h>
 
-@interface PIXAlbumGridViewItem()
+@interface PIXAlbumGridViewItem() <NSTextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet NSTextField *mainLabel;
 @property (strong, nonatomic) IBOutlet NSTextField * detailLabel;
@@ -30,6 +30,11 @@
 @property CGFloat stackThumb2Rotate;
 
 @property BOOL isDraggingOver;
+
+@property CGRect titleEditFrame;
+@property (strong) NSTextField * titleEditField;
+
+@property BOOL allowTitleEdit;
 
 @end
 
@@ -341,6 +346,8 @@
                                  NSWidth(bounds) - 6,
                                  20);
     
+    self.titleEditFrame = NSInsetRect(textRect, -4, -4);
+    
     NSShadow *textShadow    = [[NSShadow alloc] init];
     [textShadow setShadowColor: [NSColor colorWithCalibratedWhite:0.0 alpha:0.5]];
     [textShadow setShadowOffset: NSMakeSize(0, -1)];
@@ -400,9 +407,132 @@
     // draw the top image
     [[self class] drawBorderedPhoto:self.albumThumb inRect:albumFrame];
     
+    
+    // include the title area in the contentFrame so clicks there will select the item
+    albumFrame.size.height = (textRect.origin.y+textRect.size.height) - albumFrame.origin.y;
     self.contentFrame = albumFrame;
 
 }
+
+-(void)startEditing
+{
+    if(self.titleEditField == nil)
+    {
+        self.titleEditField = [[NSTextField alloc] initWithFrame:self.titleEditFrame];
+        self.titleEditField.delegate = self;
+        self.titleEditField.stringValue = [self.album title];
+        
+        [self.titleEditField setFont:[NSFont fontWithName:@"Helvetica Neue Bold" size:14]];
+        [self.titleEditField setAlignment:NSCenterTextAlignment];
+        
+        [self.titleEditField setTarget:self];
+        [self.titleEditField setAction:@selector(titleEdited:)];
+        [(NSTextFieldCell *)self.titleEditField.cell setSendsActionOnEndEditing:YES];
+        
+        [self addSubview:self.titleEditField];
+        
+        [self.window makeFirstResponder:self.titleEditField];
+        
+    }
+}
+
+-(void)titleEdited:(id)sender
+{
+    DLog(@"titleEdited");
+    
+    NSTextField *aTextField =(NSTextField *)sender;
+        
+        
+    if ([aTextField.stringValue length]==0 || [aTextField.stringValue isEqualToString:self.album.title])
+    {
+        DLog(@"renaming to empty string or same name disallowed.");
+        return;
+    }
+    
+    BOOL success = [[PIXFileManager sharedInstance] renameAlbum:self.album withName:aTextField.stringValue];
+    
+    if (!success)
+    {
+        //an error occurred when moving so keep the old title
+        return;
+    } else {
+        //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:anAlbum];
+        DLog(@"Album was renamed successfuly : \"%@\"", self.album.path);
+    }
+    
+    // update the album
+    [self albumChanged:nil];
+    
+}
+
+-(BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
+{
+    // seem to need to handl
+    if (commandSelector == @selector(cancelOperation:)) {
+        
+        
+        [self controlTextDidEndEditing:nil];
+        
+        return YES;
+    }
+    
+    return NO;
+}
+
+
+-(void)controlTextDidEndEditing:(NSNotification *)obj
+{
+    if(self.titleEditField != nil)
+    {
+        // this will stop the action from being sent if we called this from the cancelOperation detection above
+        if(obj == nil)
+        {
+            [self.titleEditField setTarget:nil];
+        }
+        
+        [self.titleEditField removeFromSuperview];
+        self.titleEditField = nil;
+    }
+}
+
+
+
+-(void)mouseDown:(NSEvent *)theEvent
+{
+    if(self.selected) {
+        self.allowTitleEdit = YES;
+    } else {
+        self.allowTitleEdit = NO;
+    }
+    
+    [[self nextResponder] mouseDown:theEvent];
+}
+
+-(void)mouseDragged:(NSEvent *)theEvent
+{
+    self.allowTitleEdit = NO;
+    [[self nextResponder] mouseDragged:theEvent];
+}
+
+
+-(void)mouseUp:(NSEvent *)theEvent
+{
+    // only check for title edits if this was already selected on mouse down
+    if(self.allowTitleEdit)
+    {
+        NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+        
+        // if the user clicked up in title box
+        if(CGRectContainsPoint(self.titleEditFrame, location))
+        {
+            [self startEditing];
+            return;
+        }
+    }
+    [[self nextResponder] mouseUp:theEvent];
+}
+
+
 
 
 

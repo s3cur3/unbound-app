@@ -178,8 +178,6 @@
                 [self.detailTextLabel setTextColor:[NSColor colorWithCalibratedWhite:1.0 alpha:1.0]];
                 break;
         }
-        
-    
 }
 
 
