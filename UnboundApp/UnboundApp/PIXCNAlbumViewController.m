@@ -23,6 +23,7 @@
 
 #import "PIXCustomShareSheetViewController.h"
 #import "PIXFileParser.h"
+#import "PIXFileManager.h"
 
 @interface PIXCNAlbumViewController ()
 {
@@ -35,7 +36,7 @@
 
 @property (nonatomic, strong) NSToolbarItem * activityIndicator;
 @property (nonatomic, strong) NSToolbarItem * trashbutton;
-@property (nonatomic, strong) NSToolbarItem * settingsButton;
+@property (nonatomic, strong) NSToolbarItem * newAlbumButton;
 @property (nonatomic, strong) NSToolbarItem * searchBar;
 
 @property (nonatomic, strong) NSSearchField * searchField;
@@ -140,7 +141,7 @@
 {
     //NSArray * items = @[self.activityIndicator, self.navigationViewController.middleSpacer, self.searchBar];
 
-    NSArray * items = @[/*self.activityIndicator,*/ self.navigationViewController.middleSpacer, /*self.trashbutton, self.settingsButton,*/ self.searchBar];
+    NSArray * items = @[/*self.activityIndicator,*/ self.navigationViewController.middleSpacer, self.newAlbumButton, self.searchBar];
     
     [self.navigationViewController setToolbarItems:items];
     
@@ -225,34 +226,53 @@
     
 }
 
-- (NSToolbarItem *)settingsButton
+- (NSToolbarItem *)newAlbumButton
 {
-    if(_settingsButton != nil) return _settingsButton;
+    if(_newAlbumButton != nil) return _newAlbumButton;
     
-    _settingsButton = [[NSToolbarItem alloc] initWithItemIdentifier:@"SettingsButton"];
+    _newAlbumButton = [[NSToolbarItem alloc] initWithItemIdentifier:@"NewAlbumButton"];
     //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
     
-    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
-    buttonView.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
+    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+    buttonView.image = [NSImage imageNamed:NSImageNameAddTemplate];
     [buttonView setImagePosition:NSImageOnly];
-    [buttonView setBordered:NO];
-    [buttonView.cell setImageScaling:NSImageScaleProportionallyDown];
-    [buttonView.cell setHighlightsBy:NSPushInCellMask];
+    [buttonView setBordered:YES];
+    [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
+    [buttonView setTitle:nil];
     
-    _settingsButton.view = buttonView;
+    _newAlbumButton.view = buttonView;
     
-    [_settingsButton setLabel:@"Settings"];
-    [_settingsButton setPaletteLabel:@"Settings"];
+    [_newAlbumButton setLabel:@"New Album"];
+    [_newAlbumButton setPaletteLabel:@"New Album"];
     
     // Set up a reasonable tooltip, and image
     // you will likely want to localize many of the item's properties
-    [_settingsButton setToolTip:@"Load Files"];
+    [_newAlbumButton setToolTip:@"Create a New Album"];
     
     // Tell the item what message to send when it is clicked
-    [buttonView setTarget:[PIXAppDelegate sharedAppDelegate]];
-    [buttonView setAction:@selector(showLoadingWindow:)];
+    [buttonView setTarget:self];
+    [buttonView setAction:@selector(newAlbumPressed:)];
     
-    return _settingsButton;
+    return _newAlbumButton;
+    
+}
+
+-(IBAction)newAlbumPressed:(id)sender
+{
+    PIXAlbum * newAlbum = [[PIXFileManager sharedInstance] createAlbumWithName:@"New Album"];
+    
+    // the above method will automatically call a notification that causes the album list to refresh
+    
+    NSUInteger index = [self.albums indexOfObject:newAlbum];
+    
+    
+    NSAssert(index != NSNotFound, @"We should always find the album");
+    
+    
+    //[self.outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
+    
+    //[self.outlineView editColumn:0 row:index withEvent:nil select:YES];
+    //[self.outlineView scrollRowToVisible:index];
     
 }
 
