@@ -18,6 +18,7 @@
 #import "PIXAlbum.h"
 #import "PIXPhoto.h"
 #import "PIXDefines.h"
+#import "PIXMainWindowController.h"
 
 @interface PIXSidebarViewController ()
 
@@ -350,6 +351,7 @@
         {
             //an error occurred when moving so keep the old title
             aTextField.stringValue = anAlbum.title;
+            [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] makeFirstResponder:aTextField];
             return;
         } else {
             //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:anAlbum];

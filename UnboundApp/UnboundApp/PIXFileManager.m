@@ -329,13 +329,35 @@ typedef NSUInteger PIXOverwriteStrategy;
 
 
         } else {
+            //Some photos coudln't be deleted. Present the error and setup undo operation for items that were succesfully deleted
             [[NSApplication sharedApplication] presentError:error];
             NSArray *sucessfullyDeletedItems = [newURLs allKeys];
+            NSUInteger itemDeletionCount = [sucessfullyDeletedItems count];
+            
+            if (itemDeletionCount == 0) {
+                //No items were deleted so no need to setup undo operation
+                [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] discardEditing];
+                return;
+            }
             //TODO: handle this error properly
             for (id anItem in sucessfullyDeletedItems)
             {
                 DLog(@"Item at '%@' was recycled", anItem);
             }
+
+            [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] save:nil];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
+            
+            NSString *undoMessage = @"Delete Photo";
+            if (itemDeletionCount>1) {
+                undoMessage = [NSString stringWithFormat:@"Delete %ld Items", itemDeletionCount];
+            }
+            
+            NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
+            [undoManager registerUndoWithTarget:[PIXFileManager sharedInstance] selector:@selector(undoRecycleAlbums:) object:newURLs];
+            [undoManager setActionIsDiscardable:YES];
+            [undoManager setActionName:undoMessage];
         }
         
     }];
@@ -621,13 +643,31 @@ typedef NSUInteger PIXOverwriteStrategy;
             });
             
         } else {
+            //Some albums/photos coudln't be deleted. Present the error and setup undo operation for items that were succesfully deleted
             [[NSApplication sharedApplication] presentError:error];
+            
             NSArray *sucessfullyDeletedItems = [newURLs allKeys];
-            //TODO: handle this error properly - add option to undo and rescan
-            for (id anItem in sucessfullyDeletedItems)
-            {
-                DLog(@"Item at '%@' was recycled", anItem);
+            NSUInteger itemDeletionCount = [sucessfullyDeletedItems count];
+            
+            if (itemDeletionCount == 0) {
+                //No items were deleted so no need to setup undo operation
+                [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] discardEditing];
+                return;
             }
+            
+            [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] save:nil];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
+            
+            NSString *undoMessage = @"Delete Item";
+            if (itemDeletionCount>1) {
+                undoMessage = [NSString stringWithFormat:@"Delete %ld Items", itemDeletionCount];
+            }
+            
+            NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
+            [undoManager registerUndoWithTarget:[PIXFileManager sharedInstance] selector:@selector(undoRecycleAlbums:) object:newURLs];
+            [undoManager setActionIsDiscardable:YES];
+            [undoManager setActionName:undoMessage];
         }
         
     }];
