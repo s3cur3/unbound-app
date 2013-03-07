@@ -127,6 +127,16 @@
     [self updateCounts:nil];
 }
 
+-(IBAction)startObserving:(id)sender
+{
+    [[PIXFileParser sharedFileParser] startObserving];
+}
+
+-(IBAction)stopObserving:(id)sender
+{
+    [[PIXFileParser sharedFileParser] stopObserving];
+}
+
 
 
 

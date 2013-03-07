@@ -214,6 +214,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
 -(void)stopObserving
 {
     [NSURL removeObserverForAllDirectories:self];
+    [self.loadingAlbumsDict removeAllObjects];
 }
 
 

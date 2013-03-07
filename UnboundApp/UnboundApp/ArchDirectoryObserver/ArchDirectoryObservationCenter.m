@@ -140,16 +140,8 @@ static void ArchDirectoryEventStreamCallback(
     ArchDirectoryEventStream * self = (__bridge id)context;
     
     for(size_t i = 0; i < numEvents; i++) {
-        
-        FSEventStreamEventFlags thisEventFlags = eventFlags[i];
         NSURL * thisEventURL = [NSURL fileURLWithPath:[eventPaths objectAtIndex:i]];
-        
-        /*
-        if(!(kFSEventStreamEventFlagItemIsDir & thisEventFlags))
-        {
-            thisEventURL = [thisEventURL URLByDeletingLastPathComponent];
-        }*/
-        
+        FSEventStreamEventFlags thisEventFlags = eventFlags[i];
         id thisResumeToken = [self.center resumeTokenForEventID:eventIds[i]];
         
         if(thisEventFlags & kFSEventStreamEventFlagHistoryDone) {
@@ -179,7 +171,6 @@ static void ArchDirectoryEventStreamCallback(
         else {
             [self.observer observedDirectory:self.URL childrenAtURLDidChange:thisEventURL historical:self.historical resumeToken:thisResumeToken];
         }
-    
     }
 }
 
@@ -196,7 +187,7 @@ static void ArchDirectoryEventStreamCallback(
         context.version = 0;
         context.info = (__bridge void*)self;
         
-        FSEventStreamCreateFlags flags = kFSEventStreamCreateFlagWatchRoot | kFSEventStreamCreateFlagUseCFTypes;// | kFSEventStreamCreateFlagFileEvents;
+        FSEventStreamCreateFlags flags = kFSEventStreamCreateFlagWatchRoot | kFSEventStreamCreateFlagUseCFTypes;
         CFTimeInterval latency = 5.0;
     
         if(ignoresSelf) {

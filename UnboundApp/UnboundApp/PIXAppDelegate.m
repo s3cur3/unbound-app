@@ -142,6 +142,9 @@ NSString* kAppFirstRun = @"appFirstRun";
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kAppFirstRun];
         [[NSUserDefaults standardUserDefaults] synchronize];
     } else {
+        
+        [self startFileSystemLoading];
+        
         [self showMainWindow:self];
         NSArray *albums = [self fetchAllAlbums];
         if (!albums.count) {
@@ -150,8 +153,9 @@ NSString* kAppFirstRun = @"appFirstRun";
             return;
         }
         
+        
         //Start monitoring the file system for changes...
-        [self performSelector:@selector(startFileSystemLoading) withObject:self afterDelay:2.0];
+        //[self performSelector:@selector(startFileSystemLoading) withObject:self afterDelay:2.0];
     }
     
     [self setupProgressIndicator];
@@ -205,7 +209,8 @@ NSString* kAppFirstRun = @"appFirstRun";
         self.fileParser = [PIXFileParser sharedFileParser];
         //[self.dataSource startLoadingAllAlbumsAndPhotosInObservedDirectories];
         //[self.dataSource performSelector:@selector(startLoadingAllAlbumsAndPhotosInObservedDirectories) withObject:nil afterDelay:1.0];
-        [self.fileParser performSelector:@selector(startObserving) withObject:nil afterDelay:1.0];
+        //[self.fileParser performSelector:@selector(startObserving) withObject:nil afterDelay:1.0];
+        [self.fileParser startObserving];
     }
 
 

@@ -248,21 +248,33 @@ static NSString *const kItemsKey = @"photos";
     NSDateFormatter *datFormatter = [[NSDateFormatter alloc] init];
     [datFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss Z"];
     
+    BOOL wasChanged = NO;
+    
     if(self.albumDate != nil)
     {
-        [unboundMetaDictionary setObject:[datFormatter stringFromDate:[self albumDate]] forKey:@"albumDate"];
+        NSString * newDateString = [datFormatter stringFromDate:[self albumDate]];
+        NSString * oldDateString = [unboundMetaDictionary objectForKey:@"albumDate"];
+        
+        if(![oldDateString isEqualToString:newDateString])
+        {
+            [unboundMetaDictionary setObject:newDateString forKey:@"albumDate"];
+            wasChanged = YES;
+        }
     }
     
     //DLog(@"after: %@", unboundMetaDictionary);
     
-    // write the JSON back to the file
-    NSOutputStream *os = [[NSOutputStream alloc] initToFileAtPath:unboundFilePath append:NO];
-    NSError *error;
-    [os open];
-    if (![NSJSONSerialization writeJSONObject:unboundMetaDictionary toStream:os options:NSJSONWritingPrettyPrinted error:&error]) {
-        [PIXAppDelegate presentError:error];
+    if(wasChanged)
+    {
+        // write the JSON back to the file
+        NSOutputStream *os = [[NSOutputStream alloc] initToFileAtPath:unboundFilePath append:NO];
+        NSError *error;
+        [os open];
+        if (![NSJSONSerialization writeJSONObject:unboundMetaDictionary toStream:os options:NSJSONWritingPrettyPrinted error:&error]) {
+            [PIXAppDelegate presentError:error];
+        }
+        [os close];
     }
-    [os close];
 
 }
 
