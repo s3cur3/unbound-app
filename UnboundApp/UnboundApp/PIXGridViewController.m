@@ -203,7 +203,24 @@ static NSString *kContentTitleKey, *kContentImageKey;
         itemsToDelete = [[selectedSet allObjects] mutableCopy];
     }
     
-    NSString *warningMessage = [NSString stringWithFormat:@"The file(s) will be deleted immediately.\nAre you sure you want to continue?"];
+    NSString * deleteString = @"Delete";
+    
+    NSManagedObject *object = [itemsToDelete lastObject];
+    NSString *objectType = @"Item";
+    if([object isKindOfClass:[PIXPhoto class]])
+    {
+        objectType = PHOTO;
+    } else if([object isKindOfClass:[PIXAlbum class]]) {
+        objectType = ALBUM;
+    }
+    if([self.selectedItems count] > 1)
+    {
+        deleteString = [NSString stringWithFormat:@"%ld %@s", [self.selectedItems count], objectType];
+    } else {
+        deleteString = objectType;
+    }
+    
+    NSString *warningMessage = [NSString stringWithFormat:@"%@ will be deleted immediately.\nAre you sure you want to continue?", deleteString];
     if (NSRunCriticalAlertPanel(warningMessage, @"You cannot undo this action.", @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
         
         if ([[itemsToDelete lastObject] class] == [PIXAlbum class]) {

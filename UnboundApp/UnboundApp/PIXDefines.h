@@ -17,8 +17,8 @@
 
 #define kUnboundAlbumMetadataFileName @".unbound"
 
-#define ALBUM @"ALBUM"
-#define PHOTO @"PHOTO"
+#define ALBUM @"Album"
+#define PHOTO @"Photo"
 
 #define AlbumCreatedNotification @"AlbumCreatedNotification"
 #define AlbumDidChangeNotification @"AlbumDidChangeNotification"
