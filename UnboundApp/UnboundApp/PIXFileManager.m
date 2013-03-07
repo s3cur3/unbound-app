@@ -18,6 +18,8 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import "PIXDefines.h"
 
+//#define DEBUG_DELETE_ITEMS 1
+
 enum {
 	PIXFileOverwriteDuplicate,
 	PIXFileRenameDuplicateSequentially,
@@ -288,7 +290,10 @@ typedef NSUInteger PIXOverwriteStrategy;
         NSURL *deleteURL = [NSURL fileURLWithPath:path isDirectory:NO];
         [urlsToDelete addObject:deleteURL];
     }
-    
+#ifdef DEBUG_DELETE_ITEMS
+    NSURL *failURL = [NSURL fileURLWithPath:@"/tmp/bafdlsjkfasfasdss.txt"];
+    [urlsToDelete addObject:failURL];
+#endif
     DLog(@"About to recycle the following items : %@", urlsToDelete);
     [[NSWorkspace sharedWorkspace] recycleURLs:urlsToDelete completionHandler:^(NSDictionary *newURLs, NSError *error) {
         //
@@ -336,13 +341,29 @@ typedef NSUInteger PIXOverwriteStrategy;
             
             if (itemDeletionCount == 0) {
                 //No items were deleted so no need to setup undo operation
-                [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] discardEditing];
+                //[[[PIXAppDelegate sharedAppDelegate] managedObjectContext] discardEditing];
                 return;
             }
-            //TODO: handle this error properly
+            
+            NSMutableSet *albumsToUpdate = [[NSMutableSet alloc] init];
+            NSMutableSet *photosToDelete = [[NSMutableSet alloc] init];
             for (id anItem in sucessfullyDeletedItems)
             {
                 DLog(@"Item at '%@' was recycled", anItem);
+                NSString *aPhotoPath = [anItem path];
+                [photosToDelete addObject:aPhotoPath];
+            }
+            NSArray *photosWithPaths = [[PIXAppDelegate sharedAppDelegate] fetchPhotosWithPaths:[photosToDelete allObjects]];
+            for (PIXPhoto *aPhoto in photosWithPaths)
+            {
+                [albumsToUpdate addObject:aPhoto.album];
+                [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] deleteObject:aPhoto];
+            }
+
+            for (PIXAlbum *anAlbum in albumsToUpdate)
+            {
+                [anAlbum updateAlbumBecausePhotosDidChange];
+                [anAlbum flush];
             }
 
             [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] save:nil];
@@ -355,7 +376,7 @@ typedef NSUInteger PIXOverwriteStrategy;
             }
             
             NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
-            [undoManager registerUndoWithTarget:[PIXFileManager sharedInstance] selector:@selector(undoRecycleAlbums:) object:newURLs];
+            [undoManager registerUndoWithTarget:[PIXFileManager sharedInstance] selector:@selector(undoRecyclePhotos:) object:newURLs];
             [undoManager setActionIsDiscardable:YES];
             [undoManager setActionName:undoMessage];
         }

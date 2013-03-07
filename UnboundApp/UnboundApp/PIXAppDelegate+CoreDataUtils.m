@@ -807,6 +807,34 @@
     return [fetchedObjects lastObject];
 }
 
+-(NSArray *)fetchAlbumsWithPaths:(NSArray *)paths
+{
+    return [self fetchItemsWithPaths:paths inContext:self.managedObjectContext withEntityName:kAlbumEntityName];
+}
+
+-(NSArray *)fetchPhotosWithPaths:(NSArray *)paths
+{
+    return [self fetchItemsWithPaths:paths inContext:self.managedObjectContext withEntityName:kPhotoEntityName];
+}
+
+-(NSArray *)fetchItemsWithPaths:(NSArray *)paths inContext:(NSManagedObjectContext *)context withEntityName:(NSString *)entityName
+{
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"path IN %@", paths];
+    [fetchRequest setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+    if (fetchedObjects == nil) {
+        //
+    }
+    
+    return fetchedObjects;
+}
+
 -(IBAction)deleteAllAlbums:(id)sender
 {
     NSLog(@"delete all records");
