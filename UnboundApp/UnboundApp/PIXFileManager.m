@@ -442,6 +442,13 @@ typedef NSUInteger PIXOverwriteStrategy;
 
 -(BOOL)renameAlbum:(PIXAlbum *)anAlbum withName:(NSString *)aNewName
 {
+    if ([aNewName length]==0 || [aNewName isEqualToString:anAlbum.title])
+    {
+        DLog(@"renaming to empty string or same name disallowed.");
+        return NO;
+    }
+    
+    
     NSString *parentFolderPath = [anAlbum.path stringByDeletingLastPathComponent];
     NSString *oldAlbumName = [anAlbum.path lastPathComponent];
     NSString *newFilePath = [parentFolderPath stringByAppendingPathComponent:aNewName];

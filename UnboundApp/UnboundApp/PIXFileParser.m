@@ -197,7 +197,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
         NSData *token = [[NSUserDefaults standardUserDefaults] dataForKey:tokenKeyString];
         NSData *decodedToken = [NSKeyedUnarchiver unarchiveObjectWithData:token];
         //[aDir addDirectoryObserver:self options:ArchDirectoryObserverResponsive | ArchDirectoryObserverObservesSelf resumeToken:decodedToken];
-        //[aDir addDirectoryObserver:self options:ArchDirectoryObserverResponsive resumeToken:decodedToken];
+        [aDir addDirectoryObserver:self options:ArchDirectoryObserverResponsive resumeToken:decodedToken];
     }
 }
 

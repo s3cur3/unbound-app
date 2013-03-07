@@ -346,7 +346,7 @@
                                  NSWidth(bounds) - 6,
                                  20);
     
-    self.titleEditFrame = NSInsetRect(textRect, -4, -4);
+    self.titleEditFrame = NSInsetRect(textRect, -3, -3);
     
     NSShadow *textShadow    = [[NSShadow alloc] init];
     [textShadow setShadowColor: [NSColor colorWithCalibratedWhite:0.0 alpha:0.5]];
