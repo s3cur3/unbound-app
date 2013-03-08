@@ -23,7 +23,6 @@
 @interface PIXSidebarViewController ()
 
 @property (nonatomic, strong) NSArray * searchedAlbums;
-@property (nonatomic, strong) IBOutlet NSSearchField * searchField;
 @property (nonatomic, strong) NSString * lastSearch;
 
 @end

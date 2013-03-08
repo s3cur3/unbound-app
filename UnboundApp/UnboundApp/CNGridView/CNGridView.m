@@ -1053,6 +1053,11 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
             abortSelection = YES;
             break;
         }
+        default: {
+            [self.nextResponder keyDown:theEvent];
+            break;
+        }
+            
     }
 }
 
