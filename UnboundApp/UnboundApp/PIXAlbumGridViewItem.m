@@ -455,6 +455,8 @@
     if (!success)
     {
         //an error occurred when moving so keep the old title
+        aTextField.stringValue = self.album.title;
+        [self performSelector:@selector(startEditing) withObject:self afterDelay:0.0f];
         return;
     } else {
         //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:anAlbum];

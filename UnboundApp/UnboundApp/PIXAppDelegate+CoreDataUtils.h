@@ -37,6 +37,10 @@
 
 -(PIXAlbum *)fetchAlbumWithPath:(NSString *)aPath inContext:(NSManagedObjectContext *)context;
 
+-(NSArray *)fetchAlbumsWithPaths:(NSArray *)paths;
+
+-(NSArray *)fetchPhotosWithPaths:(NSArray *)paths;
+
 -(BOOL)deleteObjectsForEntityName:(NSString *)entityName withUpdateDateBefore:(NSDate *)lastUpdated inContext:(NSManagedObjectContext *)context;
 
 @end

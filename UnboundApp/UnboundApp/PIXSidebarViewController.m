@@ -23,7 +23,6 @@
 @interface PIXSidebarViewController ()
 
 @property (nonatomic, strong) NSArray * searchedAlbums;
-@property (nonatomic, strong) IBOutlet NSSearchField * searchField;
 @property (nonatomic, strong) NSString * lastSearch;
 
 @end
@@ -121,6 +120,12 @@
 
 -(void)willShowPIXView
 {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.view.window makeFirstResponder:self.outlineView];
+    });
+
+    
+    [self.outlineView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                                    selector:@selector(albumsChanged:)
                                                        name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM
@@ -148,14 +153,14 @@
 
 
 
--(void)awakeFromNib
-{
-    [super awakeFromNib];
-
-    [self.outlineView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
-    
-    ///[self.outlineView setWantsLayer:NO];
-}
+//-(void)awakeFromNib
+//{
+//    [super awakeFromNib];
+//
+//    //[self.outlineView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
+//    
+//    ///[self.outlineView setWantsLayer:NO];
+//}
 
 -(void)scrollToSelectedAlbum
 {
@@ -234,6 +239,13 @@
 
 -(BOOL)outlineView:(NSOutlineView *)outlineView acceptDrop:(id < NSDraggingInfo >)info item:(id)item childIndex:(NSInteger)index
 {
+    if (index != -1 || item==nil)
+    {
+//        if (item==nil && index==-1) {
+//            DLog(@"drag drop info %@", info);
+//        }
+        return NO;
+    }
     //DLog(@"drragging info %@", info);
     DLog(@"1)Dragging Source %@", [info draggingSource]);
     DLog(@"2)proposedItem %@", item);
@@ -290,8 +302,11 @@
 
 -(NSDragOperation)outlineView:(NSOutlineView *)outlineView validateDrop:(id < NSDraggingInfo >)info proposedItem:(id)item proposedChildIndex:(NSInteger)index
 {
-    if (index != -1 || item == nil)
+    if (index != -1 || item==nil)
     {
+//        if (item==nil && index==-1) {
+//            DLog(@"drag drop info %@", info);
+//        }
         return NSDragOperationNone;
     }
     DLog(@"drragging info %@", info);

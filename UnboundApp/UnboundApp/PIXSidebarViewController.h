@@ -17,6 +17,7 @@
 @property (nonatomic, weak) PIXSplitViewController *splitViewController;
 @property (nonatomic, strong) NSArray* albums;
 @property (nonatomic, assign) IBOutlet NSOutlineView *outlineView;
+@property (nonatomic, strong) IBOutlet NSSearchField * searchField;
 
 @property (nonatomic, strong) PIXAlbum *dragDropDestination;
 
