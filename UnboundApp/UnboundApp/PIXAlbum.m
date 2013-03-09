@@ -19,6 +19,7 @@ static NSString *const kItemsKey = @"photos";
 
 @dynamic albumDate;
 @dynamic dateLastUpdated;
+@dynamic dateReadUnboundFile;
 @dynamic path;
 @dynamic subtitle;
 @dynamic thumbnail;
@@ -212,6 +213,19 @@ static NSString *const kItemsKey = @"photos";
     // if we already have a .unboubnd file load that
     if ([[NSFileManager defaultManager] fileExistsAtPath:unboundFilePath])
     {
+        // if we've already loaded the .unbound file since it's been modified no need to do anything here
+        NSURL * unboundFileURL = [NSURL fileURLWithPath:unboundFilePath];
+        
+        NSDate * dateModified = nil;
+        [unboundFileURL getResourceValue:&dateModified forKey:NSURLContentModificationDateKey error:nil];
+        
+        if([self dateReadUnboundFile] && [[self dateReadUnboundFile] compare:dateModified] != NSOrderedAscending)
+        {
+            return; // no need to do anything here, the db is already up to date
+        }
+        
+        
+        
         NSData *data = [NSData dataWithContentsOfFile:unboundFilePath];
         NSError *error = nil;
         unboundMetaDictionary = [[NSJSONSerialization JSONObjectWithData:data
@@ -231,18 +245,22 @@ static NSString *const kItemsKey = @"photos";
     
     // loop through the photos and populate the captions
     NSDictionary * photosDictionary = [unboundMetaDictionary objectForKey:@"photos"];
-    NSEnumerator *enumerator = [photosDictionary keyEnumerator];
-    id aKey = nil;
-    while ( (aKey = [enumerator nextObject]) != nil) {
-        NSString * photoName = (NSString *)aKey;
-        NSDictionary * photoDict = [photosDictionary objectForKey:aKey];
-        
-        // check that these are the right class types
-        if([photoName isKindOfClass:[NSString class]] && [photoDict isKindOfClass:[NSDictionary class]])
+    
+    if(photosDictionary)
+    {
+        for(PIXPhoto * aPhoto in self.photos)
         {
-            //DLog(@"Found Photo Caption");
+            NSDictionary * photoInfoDict = [photosDictionary objectForKey:[aPhoto name]];
+            
+            if(photoInfoDict)
+            {
+                NSString * caption = [photoInfoDict objectForKey:@"caption"];
+                if([caption isKindOfClass:[NSString class]])
+                {
+                    [aPhoto setCaption:[photoInfoDict objectForKey:@"caption"]];
+                }
+            }
         }
-        
     }
     
     NSDateFormatter *datFormatter = [[NSDateFormatter alloc] init];
@@ -275,6 +293,8 @@ static NSString *const kItemsKey = @"photos";
         }
         [os close];
     }
+    
+    [self setDateReadUnboundFile:[NSDate date]];
 
 }
 

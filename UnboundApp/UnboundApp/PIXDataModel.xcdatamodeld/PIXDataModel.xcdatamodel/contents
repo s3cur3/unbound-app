@@ -8,6 +8,7 @@
     <entity name="PIXAlbum" representedClassName="PIXAlbum" syncable="YES">
         <attribute name="albumDate" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="dateLastUpdated" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
+        <attribute name="dateReadUnboundFile" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="path" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="subtitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="thumbnail" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
@@ -39,7 +40,7 @@
     </entity>
     <elements>
         <element name="PIXAccount" positionX="0" positionY="0" width="128" height="90"/>
-        <element name="PIXAlbum" positionX="0" positionY="0" width="128" height="195"/>
+        <element name="PIXAlbum" positionX="0" positionY="0" width="128" height="210"/>
         <element name="PIXPhoto" positionX="0" positionY="0" width="128" height="255"/>
         <element name="PIXThumbnail" positionX="0" positionY="0" width="128" height="75"/>
     </elements>

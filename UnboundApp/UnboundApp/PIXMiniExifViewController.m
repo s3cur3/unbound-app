@@ -102,7 +102,7 @@
     self.cameraModel.stringValue = modelString;
     
     [self.view setNeedsUpdateConstraints:YES];
-    DLog(@"%@", [self.photo exifData]);
+    DLog(@"%@", self.photo);
 }
 
 -(void)controlTextDidChange:(NSNotification*)aNotification

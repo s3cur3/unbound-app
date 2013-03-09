@@ -702,6 +702,15 @@
     
 }
 
+#pragma mark - Leap Methods
+- (void)gridView:(CNGridView *)gridView didPointItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
+{
+    [self.selectedItems removeAllObjects];
+    [self.selectedItems addObject:[self albumForIndex:index]];
+    [self updateToolbar];
+    [self.gridView reloadSelection];
+}
+
 #pragma mark - Drag Operations
 
 - (void)gridView:(CNGridView *)gridView dragDidBeginAtIndex:(NSUInteger)index inSection:(NSUInteger)section andEvent:(NSEvent *)event

@@ -24,6 +24,7 @@
 @property (nonatomic, retain) NSDate * dateTaken;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * path;
+@property (nonatomic, retain) NSString * caption;
 @property (nonatomic, retain) PIXAlbum *album;
 @property (nonatomic, retain) PIXAlbum *datePhotoAlbum;
 @property (nonatomic, retain) PIXAlbum *stackPhotoAlbum;

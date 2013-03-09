@@ -22,6 +22,7 @@
 #import "GeneralPreferencesViewController.h"
 #import "AdvancedPreferencesViewController.h"
 #import "DebugPrefrencesViewController.h"
+#import "PIXLeapInputManager.h"
 
 
 
@@ -165,6 +166,12 @@ NSString* kAppFirstRun = @"appFirstRun";
     // show constraint debug info if debuging
 #ifdef DEBUG
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
+#endif
+    
+    
+    
+#ifdef DEBUG
+    [[PIXLeapInputManager sharedInstance] run];
 #endif
     
 }

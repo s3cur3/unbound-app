@@ -468,6 +468,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - CNGridView Delegate Selection Methods
 
+
 - (void)gridView:(CNGridView *)gridView didSelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
     [self.selectedItems addObject:[self.items objectAtIndex:index]];
@@ -588,6 +589,15 @@ static NSString *kContentTitleKey, *kContentImageKey;
     {
         [self hideToolbar:YES];
     }
+}
+
+#pragma mark - Leap Methods
+- (void)gridView:(CNGridView *)gridView didPointItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
+{
+    [self.selectedItems removeAllObjects];
+    [self.selectedItems addObject:[self.items objectAtIndex:index]];
+    [self updateToolbar];
+    [self.gridView reloadSelection];
 }
 
 @end

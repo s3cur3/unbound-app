@@ -22,6 +22,7 @@
 
 @property (nonatomic, retain) NSDate * albumDate;
 @property (nonatomic, retain) NSDate * dateLastUpdated;
+@property (nonatomic, retain) NSDate * dateReadUnboundFile;
 @property (nonatomic, retain) NSString * path;
 @property (nonatomic, retain) NSString * subtitle;
 @property (nonatomic, retain) NSData * thumbnail;

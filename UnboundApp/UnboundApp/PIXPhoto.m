@@ -36,6 +36,7 @@ const CGFloat kThumbnailSize = 200.0f;
 @dynamic dateTaken;
 @dynamic name;
 @dynamic path;
+@dynamic caption;
 @dynamic album;
 @dynamic thumbnail;
 @dynamic datePhotoAlbum;

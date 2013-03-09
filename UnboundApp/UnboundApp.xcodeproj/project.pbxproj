@@ -71,6 +71,11 @@
 		1DDEF83F169D34F100C0D303 /* PIXLoadingWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF83D169D34F100C0D303 /* PIXLoadingWindowController.m */; };
 		1DDEF840169D34F100C0D303 /* PIXLoadingWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDEF83E169D34F100C0D303 /* PIXLoadingWindow.xib */; };
 		1DDEF843169D3CF300C0D303 /* MakeThumbnailOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF842169D3CF300C0D303 /* MakeThumbnailOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C031CD316E926F7009B7F38 /* LeapObjectiveC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8C031CCF16E926F7009B7F38 /* LeapObjectiveC.mm */; };
+		8C031CD416E926F7009B7F38 /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C031CD016E926F7009B7F38 /* libLeap.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
+		8C031CD516E926F7009B7F38 /* PIXLeapInputManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C031CD216E926F7009B7F38 /* PIXLeapInputManager.m */; };
+		8C031CD716E92CD2009B7F38 /* libLeap.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 8C031CD016E926F7009B7F38 /* libLeap.dylib */; };
+		8C031CD816E930B1009B7F38 /* libLeap.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8C031CD016E926F7009B7F38 /* libLeap.dylib */; };
 		8C097D2716D57D0700E0E134 /* PIXFileParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C097D2616D57D0700E0E134 /* PIXFileParser.m */; };
 		8C249E6E16AB426A00CB97AF /* PIXCNAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E6D16AB426A00CB97AF /* PIXCNAlbumViewController.m */; };
 		8C249E7D16AB429E00CB97AF /* CNGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7216AB429E00CB97AF /* CNGridView.m */; };
@@ -114,8 +119,9 @@
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 10;
+			dstSubfolderSpec = 6;
 			files = (
+				8C031CD816E930B1009B7F38 /* libLeap.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -229,6 +235,13 @@
 		1DDEF83E169D34F100C0D303 /* PIXLoadingWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXLoadingWindow.xib; sourceTree = "<group>"; };
 		1DDEF841169D3CF300C0D303 /* MakeThumbnailOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakeThumbnailOperation.h; sourceTree = "<group>"; };
 		1DDEF842169D3CF300C0D303 /* MakeThumbnailOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MakeThumbnailOperation.m; sourceTree = "<group>"; };
+		8C031CCC16E926F7009B7F38 /* Leap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Leap.h; sourceTree = "<group>"; };
+		8C031CCD16E926F7009B7F38 /* LeapMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeapMath.h; sourceTree = "<group>"; };
+		8C031CCE16E926F7009B7F38 /* LeapObjectiveC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeapObjectiveC.h; sourceTree = "<group>"; };
+		8C031CCF16E926F7009B7F38 /* LeapObjectiveC.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LeapObjectiveC.mm; sourceTree = "<group>"; };
+		8C031CD016E926F7009B7F38 /* libLeap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libLeap.dylib; path = UnboundApp/Leap/libLeap.dylib; sourceTree = "<group>"; };
+		8C031CD116E926F7009B7F38 /* PIXLeapInputManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXLeapInputManager.h; sourceTree = "<group>"; };
+		8C031CD216E926F7009B7F38 /* PIXLeapInputManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXLeapInputManager.m; sourceTree = "<group>"; };
 		8C097D2516D57D0700E0E134 /* PIXFileParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXFileParser.h; sourceTree = "<group>"; };
 		8C097D2616D57D0700E0E134 /* PIXFileParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXFileParser.m; sourceTree = "<group>"; };
 		8C249E6C16AB426A00CB97AF /* PIXCNAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXCNAlbumViewController.h; sourceTree = "<group>"; };
@@ -307,6 +320,7 @@
 				1D4A1E2B167D2A4D00C9A895 /* Quartz.framework in Frameworks */,
 				1D4A1E08167C056D00C9A895 /* QuartzCore.framework in Frameworks */,
 				1DB2F84F167ABE87008AC0F7 /* Cocoa.framework in Frameworks */,
+				8C031CD416E926F7009B7F38 /* libLeap.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -534,6 +548,7 @@
 		1DB2F84D167ABE87008AC0F7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8C031CD016E926F7009B7F38 /* libLeap.dylib */,
 				1DB2F84E167ABE87008AC0F7 /* Cocoa.framework */,
 				1DB2F850167ABE87008AC0F7 /* Other Frameworks */,
 			);
@@ -642,6 +657,19 @@
 			name = LoadingWindow;
 			sourceTree = "<group>";
 		};
+		8C031CCB16E926F7009B7F38 /* Leap */ = {
+			isa = PBXGroup;
+			children = (
+				8C031CCC16E926F7009B7F38 /* Leap.h */,
+				8C031CCD16E926F7009B7F38 /* LeapMath.h */,
+				8C031CCE16E926F7009B7F38 /* LeapObjectiveC.h */,
+				8C031CCF16E926F7009B7F38 /* LeapObjectiveC.mm */,
+				8C031CD116E926F7009B7F38 /* PIXLeapInputManager.h */,
+				8C031CD216E926F7009B7F38 /* PIXLeapInputManager.m */,
+			);
+			path = Leap;
+			sourceTree = "<group>";
+		};
 		8C249E7016AB429E00CB97AF /* CNGridView */ = {
 			isa = PBXGroup;
 			children = (
@@ -676,6 +704,7 @@
 		8C8EE92C16CACA6700F16C49 /* third party */ = {
 			isa = PBXGroup;
 			children = (
+				8C031CCB16E926F7009B7F38 /* Leap */,
 				8C8EE92D16CACA7900F16C49 /* ArchDirectoryObserver */,
 			);
 			name = "third party";
@@ -763,6 +792,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C031CD716E92CD2009B7F38 /* libLeap.dylib in Resources */,
 				1DB2F859167ABE87008AC0F7 /* InfoPlist.strings in Resources */,
 				1DB2F85F167ABE87008AC0F7 /* Credits.rtf in Resources */,
 				1DB2F865167ABE87008AC0F7 /* MainMenu.xib in Resources */,
@@ -870,6 +900,8 @@
 				8C4B9CA216DADA9500F6BADD /* PIXSidebarScrollView.m in Sources */,
 				8C4B9CA616DC30FE00F6BADD /* PIXMiniExifViewController.m in Sources */,
 				8C4B9CAA16DC436B00F6BADD /* PIXExifBGView.m in Sources */,
+				8C031CD316E926F7009B7F38 /* LeapObjectiveC.mm in Sources */,
+				8C031CD516E926F7009B7F38 /* PIXLeapInputManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -959,6 +991,7 @@
 		1DB2F869167ABE87008AC0F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = UnboundApp/UnboundApp.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -971,7 +1004,7 @@
 				INFOPLIST_FILE = "UnboundApp/UnboundApp-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/UnboundApp/Leap\"",
+					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -981,6 +1014,7 @@
 		1DB2F86A167ABE87008AC0F7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = UnboundApp/UnboundApp.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -993,7 +1027,7 @@
 				INFOPLIST_FILE = "UnboundApp/UnboundApp-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/UnboundApp/Leap\"",
+					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

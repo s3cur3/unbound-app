@@ -1715,7 +1715,15 @@ private:
 
 - (void)postNotificationOnMainThread:(NSNotification *)notification
 {
-	[self performSelectorOnMainThread:@selector(postNotification:) withObject:notification waitUntilDone:NO];
+    if([NSThread isMainThread])
+    {
+        [self postNotification:notification];
+    }
+    
+    else
+    {
+        [self performSelectorOnMainThread:@selector(postNotification:) withObject:notification waitUntilDone:NO];
+    }
 }
 
 - (void)postNotificationOnMainThreadName:(NSString *)aName object:(id)anObject

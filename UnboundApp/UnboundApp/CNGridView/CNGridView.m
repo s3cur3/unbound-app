@@ -32,6 +32,7 @@
 #import "NSColor+CNGridViewPalette.h"
 #import "NSView+CNGridView.h"
 #import "CNGridView.h"
+#import "PIXLeapInputManager.h"
 
 
 #if !__has_feature(objc_arc)
@@ -88,7 +89,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 #pragma mark CNGridView
 
 
-@interface CNGridView () {
+@interface CNGridView () <leapResponder> {
     NSMutableDictionary *keyedVisibleItems;
     NSMutableDictionary *reuseableItems;
     NSMutableDictionary *selectedItemsBySelectionFrame;
@@ -206,6 +207,8 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
                                              selector:@selector(updateVisibleRect)
                                                  name:NSViewBoundsDidChangeNotification
                                                object:clipView];
+    
+    [[PIXLeapInputManager sharedInstance] addResponder:self];
     
 
     
@@ -469,21 +472,21 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 - (NSUInteger)indexForItemAtLocationNoSpace:(NSPoint)location
 {
     NSPoint point = [self convertPoint:location fromView:nil];
-    NSUInteger indexForItemAtLocation;
+    NSUInteger indexForItemAtLocation = NSNotFound;
     
     NSUInteger columns = [self columnsInGridView];
     CGFloat space = (self.frame.size.width - (columns * self.itemSize.width)) / (columns + 1);
     
-    if (point.x > ((self.itemSize.width+space) * [self columnsInGridView])) {
+    /*if (point.x > ((self.itemSize.width+space) * [self columnsInGridView])) {
         indexForItemAtLocation = NSNotFound;
         
-    } else {
+    } else {*/
     
-        NSUInteger currentColumn = floor(point.x / (self.itemSize.width+space));
+        NSUInteger currentColumn = floor(point.x / ((self.itemSize.width+space)+space));
         NSUInteger currentRow = floor(point.y / self.itemSize.height);
         indexForItemAtLocation = currentRow * [self columnsInGridView] + currentColumn;
         indexForItemAtLocation = (indexForItemAtLocation > (numberOfItems - 1) ? NSNotFound : indexForItemAtLocation);
-    }
+    //}
     
     
     return indexForItemAtLocation;
@@ -1071,6 +1074,64 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     }
 }
 
+
+#pragma mark - Leap Responder
+-(void)singleFingerPoint:(NSPoint)normalizedPosition
+{
+    static NSUInteger lastPointed = -1;
+    
+    //first, denormailize the point
+    NSPoint pointInView = NSMakePoint((self.clippedRect.size.width * normalizedPosition.x),
+                                      (self.clippedRect.size.height * normalizedPosition.y));
+    
+    NSUInteger index = [self indexForItemAtLocationNoSpace:pointInView];
+    
+    //DLog(@"Index pointed at: %d", index);
+    
+    //CNGridViewItem * item = [keyedVisibleItems objectForKey:[NSNumber numberWithInteger:index]];
+    //[item setSelected:YES];
+    
+    if(index != lastPointed && index != NSNotFound)
+    {
+        lastPointed = index;
+        
+        if([self.delegate respondsToSelector:@selector(gridView:didPointItemAtIndex:inSection:)])
+        {
+            [self.delegate gridView:self didPointItemAtIndex:index inSection:0];
+        }
+    }
+    
+}
+
+-(void)singleFingerSelect:(NSPoint)normalizedPosition
+{
+    
+    //static NSUInteger lastPointed = -1;
+    
+    //first, denormailize the point
+    NSPoint pointInView = NSMakePoint((self.clippedRect.size.width * normalizedPosition.x),
+                                      (self.clippedRect.size.height * normalizedPosition.y));
+    
+    NSUInteger index = [self indexForItemAtLocationNoSpace:pointInView];
+    
+    [self gridView:self didDoubleClickItemAtIndex:index inSection:0]; 
+    
+    //DLog(@"Index pointed at: %d", index);
+    
+    //CNGridViewItem * item = [keyedVisibleItems objectForKey:[NSNumber numberWithInteger:index]];
+    //[item setSelected:YES];
+    /*
+    if(index != lastPointed && index != NSNotFound)
+    {
+        lastPointed = index;
+        
+        if([self.delegate respondsToSelector:@selector(gridView:didPointItemAtIndex:inSection:)])
+        {
+            [self.delegate gridView:self didPointItemAtIndex:index inSection:0];
+        }
+    }*/
+    
+}
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

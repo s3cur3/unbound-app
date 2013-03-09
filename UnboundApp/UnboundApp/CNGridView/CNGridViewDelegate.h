@@ -126,6 +126,11 @@
  */
 - (BOOL)performDragOperation:(id < NSDraggingInfo >)sender;
 
+/**
+ ...
+ */
+- (void)gridView:(CNGridView *)gridView didPointItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section;
+
 @end
 
 

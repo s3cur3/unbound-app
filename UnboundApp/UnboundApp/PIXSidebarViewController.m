@@ -199,6 +199,8 @@
     return self.splitViewController.selectedAlbum;
 }
 
+
+
 /*-(void)setSelectedAlbum:(Album *)anAlbum
 {
     [self setSelectedAlbum:anAlbum shouldEdit:NO];
@@ -288,7 +290,7 @@
 
 -(NSDragOperation)outlineView:(NSOutlineView *)outlineView validateDrop:(id < NSDraggingInfo >)info proposedItem:(id)item proposedChildIndex:(NSInteger)index
 {
-    if (index != -1)
+    if (index != -1 || item == nil)
     {
         return NSDragOperationNone;
     }
