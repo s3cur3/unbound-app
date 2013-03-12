@@ -120,11 +120,6 @@
 
 -(void)willShowPIXView
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.view.window makeFirstResponder:self.outlineView];
-    });
-
-    
     [self.outlineView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                                    selector:@selector(albumsChanged:)

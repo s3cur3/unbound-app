@@ -1300,7 +1300,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     {
         CNItemPoint lastSelectedPoint = [self locationForItemAtIndex:lastSelectedItemIndex];
         
-        if(lastSelectedPoint.row < (int)(numberOfItems / self.columnsInGridView))
+        if(lastSelectedPoint.row <= (int)(numberOfItems / self.columnsInGridView))
         {
             lastSelectedPoint.row++;
         }

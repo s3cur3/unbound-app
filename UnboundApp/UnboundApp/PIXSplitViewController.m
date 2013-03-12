@@ -68,6 +68,19 @@
     [self.sidebarViewController.outlineView setNextKeyView:self.imageBrowserViewController.gridView];
     [self.imageBrowserViewController.gridView setNextKeyView:self.sidebarViewController.searchField];
     [self.sidebarViewController.searchField setNextKeyView:self.sidebarViewController.outlineView];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        if([self.splitView isSubviewCollapsed:self.leftPane])
+        {
+            [self.view.window makeFirstResponder:self.imageBrowserViewController.gridView];
+        }
+        
+        else
+        {
+            [self.view.window makeFirstResponder:self.sidebarViewController.outlineView];
+        }
+    });
 }
 
 -(void)willHidePIXView
@@ -137,7 +150,7 @@
     // disable window flushing to keep views from rendering half way
     [self.navigationViewController.mainWindow disableFlushWindow];
         
-    
+    // open the sidebar
     if([self.splitView isSubviewCollapsed:self.leftPane])
     {
         float lastPosition = [[NSUserDefaults standardUserDefaults] floatForKey:@"albumSideBarToggleWidth"];
@@ -147,13 +160,19 @@
         
         [self.splitView setPosition:lastPosition ofDividerAtIndex:0];
         
+    
+        [self.view.window makeFirstResponder:self.sidebarViewController.outlineView];
+        
     }
     
+    // close the sidebar
     else
     {
         float currentPosition = self.leftPane.frame.size.width;
         [[NSUserDefaults standardUserDefaults] setFloat:currentPosition forKey:@"albumSideBarToggleWidth"];
         [self.splitView setPosition:0 ofDividerAtIndex:0];
+        
+        [self.view.window makeFirstResponder:self.imageBrowserViewController.gridView];
     }
     
     
