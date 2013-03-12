@@ -87,6 +87,12 @@
 {
     [super willShowPIXView];
     
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // make ourselves the first responder after we're added
+        [self.view.window makeFirstResponder:self.gridView];
+    });
+    
+    
     [[self.view window] setTitle:@"Unbound"];
     
     NSString * searchString = [[NSUserDefaults standardUserDefaults] objectForKey:@"PIX_AlbumSearchString"];
@@ -259,6 +265,14 @@
 
 -(IBAction)newAlbumPressed:(id)sender
 {
+    
+    // turn off the search if needed
+    if(self.searchedAlbums)
+    {
+        self.searchField.stringValue = @"";
+        [self updateSearch];
+    }
+    
     PIXAlbum * newAlbum = [[PIXFileManager sharedInstance] createAlbumWithName:@"New Album"];
     
     // the above method will automatically call a notification that causes the album list to refresh
@@ -275,7 +289,7 @@
     [self updateToolbar];
     
     // this will scroll to the item and make the text field the first responder
-    PIXAlbumGridViewItem * item = (PIXAlbumGridViewItem *)[self.gridView scrollToAndReturnItemAtIndex:index];
+    PIXAlbumGridViewItem * item = (PIXAlbumGridViewItem *)[self.gridView scrollToAndReturnItemAtIndex:index animated:YES];
     
     double delayInSeconds = 0.2;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
@@ -701,6 +715,22 @@
     [self updateToolbar];
     
 }
+
+- (void)gridView:(CNGridView *)gridView didKeySelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
+{
+    // if we're holding shift or command then keep the selection
+    if(!([NSEvent modifierFlags] & (NSCommandKeyMask | NSShiftKeyMask)))
+    {
+        [self.selectedItems removeAllObjects];
+    }
+    
+    [self.selectedItems addObject:[self albumForIndex:index]];
+    
+    [self updateToolbar];
+    [self.gridView reloadSelection];
+}
+
+
 
 #pragma mark - Leap Methods
 - (void)gridView:(CNGridView *)gridView didPointItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section

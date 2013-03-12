@@ -129,6 +129,15 @@
 /**
  ...
  */
+- (void)gridView:(CNGridView *)gridView didKeySelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section;
+
+- (void)gridView:(CNGridView *)gridView didKeyOpenItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section;
+
+- (void)gridViewDeleteKeyPressed:(CNGridView *)gridView;
+
+/**
+ ...
+ */
 - (void)gridView:(CNGridView *)gridView didPointItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section;
 
 @end

@@ -147,6 +147,16 @@ static NSString *const kItemsKey = @"photos";
     }
 }
 
+-(NSArray *)sortedPhotos
+{
+    return nil;
+}
+
+-(NSArray *)photoSortDescriptors
+{
+    return nil;
+}
+
 -(void)updateStackPhotos
 {
     NSUInteger photoCount = self.photos.count;

@@ -582,10 +582,11 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
     CNGridViewItem *gridViewItem = nil;
 
+    /*
     if (lastSelectedItemIndex != NSNotFound && lastSelectedItemIndex != selectedItemIndex) {
         gridViewItem = [keyedVisibleItems objectForKey:[NSNumber numberWithInteger:lastSelectedItemIndex]];
         [self deSelectItem:gridViewItem];
-    }
+    }*/
 
     gridViewItem = [keyedVisibleItems objectForKey:[NSNumber numberWithInteger:selectedItemIndex]];
     if (gridViewItem) {
@@ -616,7 +617,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
             
         }
         
-        lastSelectedItemIndex = (self.allowsMultipleSelection ? NSNotFound : selectedItemIndex);
+        lastSelectedItemIndex = selectedItemIndex;
     }
 }
 
@@ -682,17 +683,49 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         selectedItem.selected = [self gridView:self itemIsSelectedAtIndex:idx inSection:0];
         
     }];
+    
 }
 
-- (CNGridViewItem *)scrollToAndReturnItemAtIndex:(NSUInteger)index
+- (CNGridViewItem *)scrollToAndReturnItemAtIndex:(NSUInteger)index animated:(BOOL)animated
 {
     // scroll to this index
     
     NSPoint point = [self rectForItemAtIndex:index].origin;
     point.x = 0;
-    point.y -= self.headerSpace;
     
-    [self scrollPoint:point];
+    
+    CGFloat scrollY = -1;
+    
+    // if we need to scroll
+    if (point.y-self.headerSpace < self.clippedRect.origin.y)
+    {
+        scrollY = point.y - self.headerSpace;
+    }
+    
+    else if(point.y+self.itemSize.height > self.clippedRect.origin.y + self.clippedRect.size.height)
+    {
+        scrollY = (point.y+self.itemSize.height)-self.clippedRect.size.height;
+    }
+    
+    if(scrollY != -1)
+    {
+        if(animated)
+        {
+            [NSAnimationContext beginGrouping];
+            NSClipView* clipView = [[self enclosingScrollView] contentView];
+            NSPoint newOrigin = [clipView bounds].origin;
+            newOrigin.y = scrollY;
+            [[clipView animator] setBoundsOrigin:newOrigin];
+            [NSAnimationContext endGrouping];
+        }
+        
+        else
+        {
+            [self scrollPoint:NSMakePoint(0, scrollY)];
+        }
+    }
+    
+    
     
     CNGridViewItem * item = [keyedVisibleItems objectForKey:[NSNumber numberWithInteger:index]];
     
@@ -886,30 +919,92 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - NSResponder
+#pragma mark -
+#pragma mark NSResponder
 
-- (void)mouseExited:(NSEvent *)theEvent
+-(BOOL)acceptsFirstResponder
 {
-    lastHoveredIndex = NSNotFound;
+    return YES;
 }
+
+#pragma mark Mouse handlers
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
     if (!self.useHover)
         return;
-
+    
     NSUInteger hoverItemIndex = [self indexForItemAtLocation:theEvent.locationInWindow];
     if (hoverItemIndex != NSNotFound || hoverItemIndex != lastHoveredIndex) {
         /// unhover the last hovered item
         if (lastHoveredIndex != NSNotFound && lastHoveredIndex != hoverItemIndex) {
             [self unHoverItemAtIndex:lastHoveredIndex];
         }
-
+        
         /// inform the delegate
         if (lastHoveredIndex != hoverItemIndex) {
             [self hoverItemAtIndex:hoverItemIndex];
         }
     }
+}
+
+- (void)mouseExited:(NSEvent *)theEvent
+{
+    lastHoveredIndex = NSNotFound;
+}
+
+- (void)mouseDown:(NSEvent *)theEvent
+{
+    [self.window makeFirstResponder:self];
+    
+    if (!self.allowsSelection)
+        return;
+    
+    NSPoint location = [theEvent locationInWindow];
+    NSUInteger index = [self indexForItemAtLocation:location];
+    
+    // if we're clicking on a contect rect then handl selection stuff
+    if(index != NSNotFound)
+    {
+        // any drags that start with this click down will be for drag and drop, not selection box
+        mouseDragSelectMode = NO;
+        selectionFrameInitialPoint = location;
+        
+        // check for a double click right at mouse down to make this react faster -- scott
+        if([clickEvents count] >= 1)
+        {
+            NSUInteger indexClick1 = [self indexForItemAtLocation:[[clickEvents objectAtIndex:0] locationInWindow]];
+            if (indexClick1 == index) {
+                [self handleDoubleClickForItemAtIndex:indexClick1];
+                
+                [clickEvents removeAllObjects];
+                [clickTimer invalidate];
+                clickTimer = nil;
+                
+                
+                return;
+            }
+        }
+        
+        
+        // else if this was not selected then select (will deselect on mouseup instead of mousedown
+        [self selectItemAtIndexMouseDown:index usingModifierFlags:theEvent.modifierFlags];
+    }
+    
+    else
+    {
+        // any drags that start with this click down will be for a selection box
+        mouseDragSelectMode = YES;
+    }
+    
+    
+}
+
+- (void)rightMouseDown:(NSEvent *)theEvent
+{
+    NSPoint location = [theEvent locationInWindow];
+    /// inform the delegate
+    [self gridView:self rightMouseButtonClickedOnItemAtIndex:[self indexForItemAtLocation:location] inSection:0 andEvent:theEvent];
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent
@@ -975,6 +1070,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
         /// catch all newly selected items that was selected by selection frame
         [selectedItemsBySelectionFrame enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+            
             if ([(CNGridViewItem *)obj selected] == YES) {
                 [self selectItem:obj];
             } else {
@@ -1003,81 +1099,244 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     }
 }
 
--(BOOL)acceptsFirstResponder
+#pragma mark Keyboard handlers
+
+- (void)keyDown:(NSEvent*)event
 {
-    return YES;
-}
-
-
-- (void)mouseDown:(NSEvent *)theEvent
-{
-    [self.window makeFirstResponder:self];
+    BOOL localEvent = NO;
     
-    if (!self.allowsSelection)
-        return;
-
-    NSPoint location = [theEvent locationInWindow];
-    NSUInteger index = [self indexForItemAtLocation:location];
-    
-     // if we're clicking on a contect rect then handl selection stuff
-    if(index != NSNotFound)
+    if ([event type] == NSKeyDown)
     {
-        // any drags that start with this click down will be for drag and drop, not selection box
-        mouseDragSelectMode = NO;
-        selectionFrameInitialPoint = location;
-        
-        // check for a double click right at mouse down to make this react faster -- scott
-        if([clickEvents count] >= 1)
+        NSString* pressedChars = [event characters];
+        if ([pressedChars length] == 1)
         {
-            NSUInteger indexClick1 = [self indexForItemAtLocation:[[clickEvents objectAtIndex:0] locationInWindow]];
-            if (indexClick1 == index) {
-                [self handleDoubleClickForItemAtIndex:indexClick1];
-                
-                [clickEvents removeAllObjects];
-                [clickTimer invalidate];
-                clickTimer = nil;
-                
-                
+            unichar pressedUnichar =
+            [pressedChars characterAtIndex:0];
+            
+            if ( (pressedUnichar == NSDeleteCharacter) || // delete forward
+                (pressedUnichar == 0xf728) || // delete backward
+                pressedUnichar == NSCarriageReturnCharacter)
+            {
+                localEvent = YES;
+            }
+            
+            // map space to newline as well (open it)
+            if(pressedUnichar == ' ')
+            {
+                [self insertNewline:nil];
                 return;
             }
+            
+            
         }
-        
-        
-        // else if this was not selected then select (will deselect on mouseup instead of mousedown
-        [self selectItemAtIndexMouseDown:index usingModifierFlags:theEvent.modifierFlags];
     }
     
+    // If it was a delete key, handle the event specially, otherwise call
+    if (localEvent)
+    {
+        // This will end up calling deleteBackward: or deleteForward:.
+        [self interpretKeyEvents:[NSArray arrayWithObject:event]];
+    }
     else
     {
-        // any drags that start with this click down will be for a selection box
-        mouseDragSelectMode = YES;
+        [super keyDown:event];
     }
+}
 
+-(void)cancelOperation:(id)sender
+{
+    // escape key pressed
+    [self gridViewDidDeselectAllItems:self];
+}
+
+-(void)deleteForward:(id)sender
+{
+    if([self.delegate respondsToSelector:@selector(gridViewDeleteKeyPressed:)])
+    {
+        [self.delegate gridViewDeleteKeyPressed:self];
+    }
+}
+
+-(void)deleteBackward:(id)sender
+{
+    if([self.delegate respondsToSelector:@selector(gridViewDeleteKeyPressed:)])
+    {
+        [self.delegate gridViewDeleteKeyPressed:self];
+    }
+}
+
+// return key pressed
+-(void)insertNewline:(id)sender
+{
+    if(lastSelectedItemIndex != NSNotFound &&
+       [[keyedVisibleItems objectForKey:[NSNumber numberWithInteger:lastSelectedItemIndex]] selected])
+    {
+        if([self.delegate respondsToSelector:@selector(gridView:didKeyOpenItemAtIndex:inSection:)])
+        {
+            [self.delegate gridView:self didKeyOpenItemAtIndex:lastSelectedItemIndex inSection:0];
+        }
+    }
+}
+
+
+
+-(void)moveRight:(id)sender
+{
+    NSUInteger newIndex = 0;
     
-}
-
-- (void)rightMouseDown:(NSEvent *)theEvent
-{
-    NSPoint location = [theEvent locationInWindow];
-    /// inform the delegate
-    [self gridView:self rightMouseButtonClickedOnItemAtIndex:[self indexForItemAtLocation:location] inSection:0 andEvent:theEvent];
-}
-
-- (void)keyDown:(NSEvent *)theEvent
-{
-    CNLog(@"keyDown");
-    switch ([theEvent keyCode]) {
-        case 53: {  // escape
-            abortSelection = YES;
-            break;
+    if(lastSelectedItemIndex != NSNotFound &&
+       [[keyedVisibleItems objectForKey:[NSNumber numberWithInteger:lastSelectedItemIndex]] selected])
+    {
+        CNItemPoint lastSelectedPoint = [self locationForItemAtIndex:lastSelectedItemIndex];
+        
+        if(lastSelectedPoint.column < self.columnsInGridView)
+        {
+            lastSelectedPoint.column++;
         }
-        default: {
-            [self.nextResponder keyDown:theEvent];
-            break;
+        
+        else
+        {
+            return; // do nothing if we're at the furthest right column
         }
-            
+        
+        newIndex = lastSelectedPoint.column-1 + ((lastSelectedPoint.row-1) * self.columnsInGridView);
+        
+        if(newIndex >= numberOfItems)
+        {
+            newIndex = numberOfItems-1;
+        }
+        
     }
+    
+    if([self.delegate respondsToSelector:@selector(gridView:didKeySelectItemAtIndex:inSection:)])
+    {
+        [self.delegate gridView:self didKeySelectItemAtIndex:newIndex inSection:0];
+    }
+    
+    // scroll to keep the item visible
+    [self scrollToAndReturnItemAtIndex:newIndex animated:YES];
+    
+    // do this after the delegate call because that will probably call reloadSelection
+    lastSelectedItemIndex = newIndex;
 }
+
+-(void)moveLeft:(id)sender
+{
+    NSUInteger newIndex = 0;
+    
+    if(lastSelectedItemIndex != NSNotFound &&
+       [[keyedVisibleItems objectForKey:[NSNumber numberWithInteger:lastSelectedItemIndex]] selected])
+    {
+        CNItemPoint lastSelectedPoint = [self locationForItemAtIndex:lastSelectedItemIndex];
+        
+        if(lastSelectedPoint.column > 1)
+        {
+            lastSelectedPoint.column--;
+        }
+        
+        else
+        {
+            return; // do nothing if we're at the furthest left column
+        }
+        
+        newIndex = lastSelectedPoint.column-1 + ((lastSelectedPoint.row-1) * self.columnsInGridView);
+        
+    }
+    
+    if([self.delegate respondsToSelector:@selector(gridView:didKeySelectItemAtIndex:inSection:)])
+    {
+        [self.delegate gridView:self didKeySelectItemAtIndex:newIndex inSection:0];
+    }
+    
+    // scroll to keep the item visible
+    [self scrollToAndReturnItemAtIndex:newIndex animated:YES];
+    
+    // do this after the delegate call because that will probably call reloadSelection
+    lastSelectedItemIndex = newIndex;
+}
+
+-(void)moveUp:(id)sender
+{
+    NSUInteger newIndex = 0;
+    
+    if(lastSelectedItemIndex != NSNotFound &&
+       [[keyedVisibleItems objectForKey:[NSNumber numberWithInteger:lastSelectedItemIndex]] selected])
+    {
+        CNItemPoint lastSelectedPoint = [self locationForItemAtIndex:lastSelectedItemIndex];
+        
+        if(lastSelectedPoint.row > 1)
+        {
+            lastSelectedPoint.row--;
+        }
+        
+        else
+        {
+            return; // do nothing if we're at the top
+        }
+        
+        newIndex = lastSelectedPoint.column-1 + ((lastSelectedPoint.row-1) * self.columnsInGridView);
+        
+    }
+    
+    if([self.delegate respondsToSelector:@selector(gridView:didKeySelectItemAtIndex:inSection:)])
+    {
+        [self.delegate gridView:self didKeySelectItemAtIndex:newIndex inSection:0];
+    }
+    
+    // scroll to keep the item visible
+    [self scrollToAndReturnItemAtIndex:newIndex animated:YES];
+    
+    
+    // do this after the delegate call because that will probably call reloadSelection
+    lastSelectedItemIndex = newIndex;
+}
+
+-(void)moveDown:(id)sender
+{
+    NSUInteger newIndex = 0;
+    
+    if(lastSelectedItemIndex != NSNotFound &&
+       [[keyedVisibleItems objectForKey:[NSNumber numberWithInteger:lastSelectedItemIndex]] selected])
+    {
+        CNItemPoint lastSelectedPoint = [self locationForItemAtIndex:lastSelectedItemIndex];
+        
+        if(lastSelectedPoint.row < (int)(numberOfItems / self.columnsInGridView))
+        {
+            lastSelectedPoint.row++;
+        }
+        
+        else
+        {
+            return; // do nothing if we're at the top
+        }
+        
+        
+        newIndex = lastSelectedPoint.column-1 + ((lastSelectedPoint.row-1) * self.columnsInGridView);
+        
+        if(newIndex >= numberOfItems)
+        {
+            newIndex = numberOfItems-1;
+        }
+        
+        if(newIndex == lastSelectedItemIndex)
+        {
+            return; // do nothing if we're at the end
+        }
+        
+    }
+    
+    if([self.delegate respondsToSelector:@selector(gridView:didKeySelectItemAtIndex:inSection:)])
+    {
+        [self.delegate gridView:self didKeySelectItemAtIndex:newIndex inSection:0];
+    }
+    
+    // scroll to keep the item visible
+    [self scrollToAndReturnItemAtIndex:newIndex animated:YES];
+    
+    // do this after the delegate call because that will probably call reloadSelection
+    lastSelectedItemIndex = newIndex;
+}
+
 
 
 #pragma mark - Leap Responder

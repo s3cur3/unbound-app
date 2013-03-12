@@ -169,7 +169,7 @@
 - (void)reloadSelection;
 
 
-- (CNGridViewItem *)scrollToAndReturnItemAtIndex:(NSUInteger)index;
+- (CNGridViewItem *)scrollToAndReturnItemAtIndex:(NSUInteger)index animated:(BOOL)animated;
 
 
 

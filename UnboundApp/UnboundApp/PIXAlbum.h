@@ -65,6 +65,9 @@
 
 -(void)setPhotos:(NSOrderedSet *)photos updateCoverImage:(BOOL)shouldUpdateCoverImage;
 
+-(NSArray *)sortedPhotos;
+-(NSArray *)photoSortDescriptors;
+
 -(void)cancelThumbnailLoading;
 
 -(void)updateDatePhoto;

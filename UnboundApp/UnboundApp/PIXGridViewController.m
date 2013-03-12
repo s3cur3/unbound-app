@@ -194,6 +194,8 @@ static NSString *kContentTitleKey, *kContentImageKey;
 //TODO: Only for use with photos right now, fix to handle albums
 - (IBAction) deleteItems:(id )inSender
 {
+    // if we have nothing to delete then do nothing
+    if([self.selectedItems count] == 0) return;
     
     NSMutableArray *itemsToDelete = [[self.selectedItems allObjects] mutableCopy];
     NSSet *selectedSet = self.selectedItems;
@@ -233,6 +235,11 @@ static NSString *kContentTitleKey, *kContentImageKey;
         // User clicked cancel, they do not want to delete the files
     }
     
+}
+
+- (void)gridViewDeleteKeyPressed:(CNGridView *)gridView
+{
+    [self deleteItems:gridView];
 }
 
 - (IBAction) openInApp:(id)sender
@@ -537,6 +544,22 @@ static NSString *kContentTitleKey, *kContentImageKey;
     
     [self.gridView reloadSelection];
     [self updateToolbar];
+}
+
+- (void)gridView:(CNGridView *)gridView didKeySelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
+{
+    [self.selectedItems removeAllObjects];
+    
+    id item = [self.items objectAtIndex:index];
+    
+    [self.selectedItems addObject:item];
+    [self updateToolbar];
+    [self.gridView reloadSelection];
+}
+
+- (void)gridView:(CNGridView *)gridView didKeyOpenItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
+{
+    [self gridView:gridView didDoubleClickItemAtIndex:index inSection:section];
 }
 
 - (void)gridView:(CNGridView *)gridView didDeselectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
