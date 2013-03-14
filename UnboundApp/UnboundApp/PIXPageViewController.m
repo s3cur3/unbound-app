@@ -55,7 +55,7 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        [self.view.window makeFirstResponder:self.pageController.view];
+        [self.view.window makeFirstResponder:self];
         
     });
 }
@@ -75,10 +75,17 @@
     [self.pageController navigateBack:nil];
 }
 
--(void)cancelOperation:(id)sender
+-(void)moveRight:(id)sender
 {
-    [self.navigationViewController popViewController];
+    [self.pageController navigateForward:nil];
 }
+
+-(void)moveLeft:(id)sender
+{
+    [self.pageController navigateBack:nil];
+}
+
+
 
 -(void)multiFingerSwipeLeft
 {

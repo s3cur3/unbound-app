@@ -21,6 +21,5 @@
 
 @property (nonatomic, strong) NSViewController *pageControllerSelectedViewController;
 
--(void)cancelOperation:(id)sender;
 
 @end
