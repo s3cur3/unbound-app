@@ -13,8 +13,9 @@
 #import "PIXNavigationController.h"
 #import "PIXAppDelegate.h"
 #import "PIXMainWindowController.h"
+#import "PIXLeapInputManager.h"
 
-@interface PIXSplitViewController ()
+@interface PIXSplitViewController () <leapResponder>
 
 @property (nonatomic, strong) PIXSidebarViewController *sidebarViewController;
 @property (nonatomic, strong) PIXPhotoGridViewController *imageBrowserViewController;
@@ -81,12 +82,19 @@
             [self.view.window makeFirstResponder:self.sidebarViewController.outlineView];
         }
     });
+    
+    // become a leap responder to watch for the back swipe
+    [[PIXLeapInputManager sharedInstance] addResponder:self];
+    [[PIXLeapInputManager sharedInstance] addResponder:(id<leapResponder>)self.imageBrowserViewController.gridView];
 }
 
 -(void)willHidePIXView
 {
     [self.sidebarViewController willHidePIXView];
     [self.imageBrowserViewController willHidePIXView];
+    
+    [[PIXLeapInputManager sharedInstance] removeResponder:self];
+    [[PIXLeapInputManager sharedInstance] removeResponder:(id<leapResponder>)self.imageBrowserViewController.gridView];
 }
 
 -(void)setupToolbar
@@ -101,6 +109,7 @@
 
     NSArray * items = @[self.backButtonSegmentItem];
     
+    [self.navigationViewController setNavBarHidden:NO];
     [self.navigationViewController setToolbarItems:items];
     
 }
@@ -143,6 +152,13 @@
         [self.backButtonSegment setSelected:![self.splitView isSubviewCollapsed:self.leftPane]
                                  forSegment:1];
     }
+}
+
+-(void)multiFingerSwipeUp
+{
+    if(self.view.window == nil) return;
+    
+    [self.navigationViewController popViewController];
 }
 
 -(void)toggleSidebar

@@ -7,6 +7,7 @@
 //
 
 #import "PIXPageView.h"
+#import "PIXPageViewController.h"
 
 @implementation PIXPageView
 
@@ -25,5 +26,22 @@
     [[NSColor blackColor] setFill];
     NSRectFill(dirtyRect);
 }
+
+-(void)cancelOperation:(id)sender
+{
+    [self.viewController cancelOperation:sender];
+}
+
+-(void)mouseDown:(NSEvent *)theEvent
+{
+    [self.window mouseDown:theEvent];
+}
+
+-(void)mouseDragged:(NSEvent *)theEvent
+{
+    [self.window mouseDragged:theEvent];
+}
+
+
 
 @end

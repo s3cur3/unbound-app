@@ -548,7 +548,11 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 - (void)gridView:(CNGridView *)gridView didKeySelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
-    [self.selectedItems removeAllObjects];
+    // if we're holding shift or command then keep the selection
+    if(!([NSEvent modifierFlags] & (NSCommandKeyMask | NSShiftKeyMask)))
+    {
+        [self.selectedItems removeAllObjects];
+    }
     
     id item = [self.items objectAtIndex:index];
     

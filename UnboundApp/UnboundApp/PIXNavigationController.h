@@ -26,6 +26,8 @@
 -(void)popToRootViewController;
 -(NSArray *) viewControllerArray;
 
+-(void)setNavBarHidden:(BOOL)hidden;
+
 -(void)setToolbarItems:(NSArray *)items;
 
 

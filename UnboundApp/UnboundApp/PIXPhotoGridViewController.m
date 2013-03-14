@@ -70,6 +70,8 @@
     // this will allow droping files into the larger grid view
     [self.gridView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
     
+    
+    
 }
 
 

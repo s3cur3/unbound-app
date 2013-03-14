@@ -210,8 +210,6 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     
     [[PIXLeapInputManager sharedInstance] addResponder:self];
     
-
-    
 }
 
 
@@ -472,6 +470,12 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 - (NSUInteger)indexForItemAtLocationNoSpace:(NSPoint)location
 {
     NSPoint point = [self convertPoint:location fromView:nil];
+    
+    if(!CGRectContainsPoint(self.bounds, point))
+    {
+        return NSNotFound;
+    }
+    
     NSUInteger indexForItemAtLocation = NSNotFound;
     
     NSUInteger columns = [self columnsInGridView];
@@ -1342,13 +1346,18 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 #pragma mark - Leap Responder
 -(void)singleFingerPoint:(NSPoint)normalizedPosition
 {
+    if(self.window == nil) return;
+    
+    
     static NSUInteger lastPointed = -1;
     
     //first, denormailize the point
-    NSPoint pointInView = NSMakePoint((self.clippedRect.size.width * normalizedPosition.x),
-                                      (self.clippedRect.size.height * normalizedPosition.y));
+    NSPoint pointInWindow = NSMakePoint((self.window.frame.size.width * normalizedPosition.x),
+                                      (self.window.frame.size.height * normalizedPosition.y));
     
-    NSUInteger index = [self indexForItemAtLocationNoSpace:pointInView];
+    NSUInteger index = [self indexForItemAtLocationNoSpace:pointInWindow];
+    
+    
     
     //DLog(@"Index pointed at: %d", index);
     
@@ -1365,10 +1374,35 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         }
     }
     
+    
+    // scroll the grid view if we're near the edges
+    if(normalizedPosition.y < .2)
+    {
+        
+        float scrollChange = pow(((normalizedPosition.y - 0.2) * 15), 2);
+        NSPoint currentPoint = NSMakePoint([self clippedRect].origin.x, [self clippedRect].origin.y);
+        
+        currentPoint.y += scrollChange;
+        
+        [self scrollPoint:currentPoint];
+    }
+    
+    else if(normalizedPosition.y > .8)
+    {
+        
+        float scrollChange = pow(((normalizedPosition.y - 0.8) * 15), 2);
+        NSPoint currentPoint = NSMakePoint([self clippedRect].origin.x, [self clippedRect].origin.y);
+        
+        currentPoint.y -= scrollChange;
+        
+        [self scrollPoint:currentPoint];
+    }
+    
 }
 
 -(void)singleFingerSelect:(NSPoint)normalizedPosition
 {
+    if(self.window == nil) return;
     
     //static NSUInteger lastPointed = -1;
     

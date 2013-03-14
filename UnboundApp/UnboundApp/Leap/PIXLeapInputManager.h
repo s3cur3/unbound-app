@@ -17,6 +17,7 @@
 +(PIXLeapInputManager *)sharedInstance;
 
 -(void)addResponder:(id<leapResponder>)aResponder;
+- (void)removeResponder:(id<leapResponder>)aResponder;
 
 @end
 
@@ -26,6 +27,11 @@
 
 -(void)singleFingerPoint:(NSPoint)normalizedPosition;
 -(void)singleFingerSelect:(NSPoint)normalizedPosition;
+
+-(void)multiFingerSwipeUp;
+-(void)multiFingerSwipeDown;
+-(void)multiFingerSwipeRight;
+-(void)multiFingerSwipeLeft;
 
 
 @end

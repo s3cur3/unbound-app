@@ -16,6 +16,8 @@
 @property NSMutableArray * leapResponders;
 @property NSRect screenRect;
 
+@property BOOL swipeGestureFlag;
+
 @end
 
 @implementation PIXLeapInputManager
@@ -34,6 +36,10 @@
 
 - (void)run
 {
+    // hard coded screen position:
+    
+    self.screenRect = CGRectMake(-120, 130, 240, 200);
+    
     self.controller = [[LeapController alloc] init];
     [self.controller addListener:self];
 
@@ -49,6 +55,16 @@
     }
     
     [self.leapResponders insertObject:aResponder atIndex:0];
+}
+
+- (void)removeResponder:(id<leapResponder>)aResponder
+{
+    NSUInteger index = [self.leapResponders indexOfObject:aResponder];
+    while(index != NSNotFound)
+    {
+        [self.leapResponders removeObjectAtIndex:index];
+        index = [self.leapResponders indexOfObject:aResponder];
+    }
 }
 
 #pragma mark - SampleListener Callbacks
@@ -104,6 +120,7 @@
             
             avgPos = [avgPos divide:[fingers count]];
             
+            /*
             // if this is the first frame we've seen a finger in, center it
             if(self.screenRect.size.width == 0)
             {
@@ -142,12 +159,21 @@
             
             self.screenRect = CGRectMake(screenOrigin.x, screenOrigin.y, screenSize.width, screenSize.height);
             
+            DLog(@"SCREEN SIZE: %f, %f", screenSize.width, screenSize.height);
+            
+            */
+             
             // normalize the point so it's between 0 and 1 in both directions
             
             normalizedPoint.x = (avgPos.x - self.screenRect.origin.x)/self.screenRect.size.width;
             normalizedPoint.y = (avgPos.y - self.screenRect.origin.y)/self.screenRect.size.height;
             
-            DLog(@"SCREEN SIZE: %f, %f", screenSize.width, screenSize.height);
+            if(normalizedPoint.x < 0.0) normalizedPoint.x = 0.0;
+            if(normalizedPoint.y < 0.0) normalizedPoint.y = 0.0;
+            if(normalizedPoint.x > 1.0) normalizedPoint.x = 1.0;
+            if(normalizedPoint.y > 1.0) normalizedPoint.y = 1.0;
+            
+            
             
             // loop through the responders
             for(id<leapResponder> responder in self.leapResponders)
@@ -187,7 +213,7 @@
 //                      circleGesture.id, [PIXLeapInputManager stringForState:gesture.state],
 //                      circleGesture.progress, circleGesture.radius, sweptAngle * LEAP_RAD_TO_DEG);
                 
-                if(circleGesture.progress > 1.0 && circleGesture.state == LEAP_GESTURE_STATE_STOP)
+                if(circleGesture.progress > 0.7 && circleGesture.radius < 10.0 && circleGesture.state == LEAP_GESTURE_STATE_STOP)
                 {
                     // loop through the responders
                     for(id<leapResponder> responder in self.leapResponders)
@@ -208,11 +234,104 @@
 //                NSLog(@"Swipe id: %d, %@, position: %@, direction: %@, speed: %f",
 //                      swipeGesture.id, [PIXLeapInputManager stringForState:swipeGesture.state],
 //                      swipeGesture.position, swipeGesture.direction, swipeGesture.speed);
+                
+                
+                
+                if ([[frame hands] count] != 0 && swipeGesture.state == LEAP_GESTURE_STATE_START) {
+                    // Get the first hand
+                    LeapHand *hand = [[frame hands] objectAtIndex:0];
+                    
+                    // Check if the hand has any fingers
+                    NSArray *fingers = [hand fingers];
+                    if ([fingers count] > 2) {
+                        
+                        /*
+                        if(swipeGesture.state == LEAP_GESTURE_STATE_START)
+                        {
+                            self.swipeGestureFlag = YES;
+                            break;
+                        }*/
+                        
+                        if(!self.swipeGestureFlag)
+                        {
+                            self.swipeGestureFlag = YES;
+                            
+                            double delayInSeconds = 0.7;
+                            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                                self.swipeGestureFlag = NO;
+                            });
+                            
+                            // now figure out the gesture direction
+                            if(swipeGesture.direction.y > 0.8) // this is the up direction
+                            {
+                                // loop through the responders
+                                for(id<leapResponder> responder in self.leapResponders)
+                                {
+                                    if([responder respondsToSelector:@selector(multiFingerSwipeUp)])
+                                    {
+                                        [responder multiFingerSwipeUp];
+                                        break; // no need to keep going down the responder chain
+                                    }
+                                }
+                            }
+                            
+                            // now figure out the gesture direction
+                            if(swipeGesture.direction.y < -0.8) // this is the down direction
+                            {
+                                // loop through the responders
+                                for(id<leapResponder> responder in self.leapResponders)
+                                {
+                                    if([responder respondsToSelector:@selector(multiFingerSwipeDown)])
+                                    {
+                                        [responder multiFingerSwipeDown];
+                                        break; // no need to keep going down the responder chain
+                                    }
+                                }
+                            }
+                            
+                            // now figure out the gesture direction
+                            if(swipeGesture.direction.x > 0.8) // this is the right direction
+                            {
+                                // loop through the responders
+                                for(id<leapResponder> responder in self.leapResponders)
+                                {
+                                    if([responder respondsToSelector:@selector(multiFingerSwipeRight)])
+                                    {
+                                        [responder multiFingerSwipeRight];
+                                        break; // no need to keep going down the responder chain
+                                    }
+                                }
+                            }
+                            
+                            // now figure out the gesture direction
+                            if(swipeGesture.direction.x < -0.8) // this is the left direction
+                            {
+                                // loop through the responders
+                                for(id<leapResponder> responder in self.leapResponders)
+                                {
+                                    if([responder respondsToSelector:@selector(multiFingerSwipeLeft)])
+                                    {
+                                        [responder multiFingerSwipeLeft];
+                                        break; // no need to keep going down the responder chain
+                                    }
+                                }
+                            }
+                            
+                        }
+                        
+                        
+                        
+                        
+                    }
+                }
+                
+                
                 break;
             }
             case LEAP_GESTURE_TYPE_KEY_TAP: {
                 LeapKeyTapGesture *keyTapGesture = (LeapKeyTapGesture *)gesture;
-                //NSLog(@"Key Tap id: %d, %@, position: %@, direction: %@",
+//                NSLog(@"Key Tap id: %d, %@, position: %@, direction: %@",
 //                      keyTapGesture.id, [PIXLeapInputManager stringForState:keyTapGesture.state],
 //                      keyTapGesture.position, keyTapGesture.direction);
                 
@@ -297,9 +416,5 @@
     }
 }
 
--(void)dealloc
-{
-    
-}
 
 @end

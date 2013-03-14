@@ -12,8 +12,10 @@
 #import "Album.h"
 #import "PIXAlbum.h"
 #import "PIXImageViewController.h"
+#import "PIXLeapInputManager.h"
+#import "PIXNavigationController.h"
 
-@interface PIXPageViewController ()
+@interface PIXPageViewController () <leapResponder>
 
 @end
 
@@ -38,6 +40,49 @@
         
         [self updateData];
     }
+}
+/*
+-(void)setupToolbar
+{
+//    [self.navigationViewController setNavBarHidden:YES];
+}
+*/
+
+
+- (void)willShowPIXView
+{
+    [[PIXLeapInputManager sharedInstance] addResponder:self];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [self.view.window makeFirstResponder:self.pageController.view];
+        
+    });
+}
+
+- (void)willHidePIXView
+{
+    [[PIXLeapInputManager sharedInstance] removeResponder:self];
+}
+
+-(void)multiFingerSwipeUp
+{
+    [self.navigationViewController popViewController];
+}
+
+-(void)multiFingerSwipeRight
+{
+    [self.pageController navigateBack:nil];
+}
+
+-(void)cancelOperation:(id)sender
+{
+    [self.navigationViewController popViewController];
+}
+
+-(void)multiFingerSwipeLeft
+{
+    [self.pageController navigateForward:nil];
 }
 
 - (void)updateData {
