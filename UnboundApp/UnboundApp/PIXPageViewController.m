@@ -11,6 +11,7 @@
 #import "PIXAppDelegate.h"
 #import "Album.h"
 #import "PIXAlbum.h"
+#import "PIXPhoto.h"
 #import "PIXImageViewController.h"
 
 @interface PIXPageViewController ()
@@ -58,6 +59,26 @@
     _album = album;
 }
 
+-(void)preloadNextImagesForIndex:(NSUInteger)anIndex
+{
+    //PIXPhoto *startingPhoto = (PIXPhoto *)self.initialSelectedObject;
+    //NSImage *anImage = [[NSImage alloc] initWithContentsOfURL:aPhoto.filePath];
+    //[self.cachedImages replaceObjectAtIndex:0 withObject:anImage];
+    //[self.cachedImages addObject:anImage];
+    if (self.pagerData.count > anIndex) {
+        for (NSUInteger i = (int)anIndex; i<anIndex + 5; i++)
+        {
+            PIXPhoto *aPhoto = (PIXPhoto *)[self.album.photos objectAtIndex:i];
+            NSImage *anImage = [aPhoto fullsizeImage];
+            if (self.pagerData.count == i) {
+                DLog(@"done loading fullsize images through undex %ld", i);
+                return;
+            }
+        }
+    }
+}
+
+
 @end
 
 @implementation PIXPageViewController (NSPageControllerDelegate)
@@ -93,6 +114,8 @@
         [(NSScrollView*)viewController.view setMagnification:1.0];
         //[self makeSelectedViewFirstResponder];
     }
+    
+    [self preloadNextImagesForIndex:pageController.selectedIndex];
     
 }
 

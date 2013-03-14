@@ -25,6 +25,7 @@
 #define AlbumDeletedNotification @"AlbumDeletedNotification"
 
 #define PhotoThumbDidChangeNotification @"PhotoThumbDidChangeNotification"
+#define PhotoFullsizeDidChangeNotification @"PhotoFullsizebDidChangeNotification"
 
 #define kUB_ALBUMS_LOADED_FROM_FILESYSTEM @"UB_ALBUMS_LOADED_FROM_FILESYSTEM"
 #define kUB_PHOTOS_LOADED_FROM_FILESYSTEM @"UB_PHOTOS_LOADED_FROM_FILESYSTEM"
