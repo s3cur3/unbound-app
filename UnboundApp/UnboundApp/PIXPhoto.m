@@ -47,6 +47,9 @@ const CGFloat kThumbnailSize = 200.0f;
 @synthesize cancelThumbnailLoadOperation;
 @synthesize thumbnailImage = _thumbnailImage;
 
+@synthesize cancelFullsizeLoadOperation;
+@synthesize fullsizeImage = _fullsizeImage;
+
 
 //TODO: make this a real attribute?
 -(NSString *)title
@@ -59,6 +62,259 @@ const CGFloat kThumbnailSize = 200.0f;
 {
     return [NSURL fileURLWithPath:self.path isDirectory:NO];
 }
+
+//
+#pragma mark photo loading
+
+-(void)cancelFullsizeLoading;
+{
+    self.cancelFullsizeLoadOperation = YES;
+}
+
+-(NSImage *)fullsizeImageForFullscreenDisplay
+{
+    if (_fullsizeImage == nil && !_fullsizeImageIsLoading)
+    {
+        //_fullsizeImageIsLoading = YES;
+        __weak PIXPhoto *weakSelf = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            
+            weakSelf.cancelFullsizeLoadOperation = NO;
+            [weakSelf loadFullsizeImage];
+            
+        });
+        
+        //While full image is loading show the thumbnail stretched
+        if (_thumbnailImage!=nil) {
+            return _thumbnailImage;
+        } else {
+            //use placeholder as a last resort
+            return [NSImage imageNamed:@"nophoto"];
+            
+        }
+    }
+    return _fullsizeImage;
+}
+
+-(NSImage *)fullsizeImage
+{
+    if (_fullsizeImage == nil && !_fullsizeImageIsLoading)
+    {
+        //_fullsizeImageIsLoading = YES;
+        __weak PIXPhoto *weakSelf = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            
+            weakSelf.cancelFullsizeLoadOperation = NO;
+            [weakSelf loadFullsizeImage];
+            
+        });
+    }
+    return _fullsizeImage;
+}
+
+
+-(void)loadFullsizeImage
+{
+    if (_fullsizeImageIsLoading == YES) {
+        return;
+    }
+    
+    _fullsizeImageIsLoading = YES;
+    
+    NSString *aPath = self.path;
+    __weak PIXPhoto *weakSelf = self;
+    
+    
+    
+    PIXAppDelegate *appDelegate = (PIXAppDelegate *)[[NSApplication sharedApplication] delegate];
+    NSOperationQueue *globalQueue = [appDelegate globalBackgroundSaveQueue];
+    [globalQueue addOperationWithBlock:^{
+        
+        if (weakSelf == nil || aPath==nil) {
+            DLog(@"thumbnail operation completed after object was dealloced - return");
+            _fullsizeImageIsLoading = NO;
+            weakSelf.cancelFullsizeLoadOperation = NO;
+            return;
+        }
+        
+        if (weakSelf.cancelFullsizeLoadOperation==YES) {
+            //DLog(@"1)thumbnail operation was canceled - return");
+            _fullsizeImageIsLoading = NO;
+            weakSelf.cancelFullsizeLoadOperation = NO;
+            return;
+        }
+        
+        //NSLog(@"Loading thumbnail");
+        NSImage *image = nil;
+        image = [[NSImage alloc] initWithContentsOfFile:aPath];
+        if (image!=nil) {
+            //[NSThread sleepForTimeInterval:5.0f];
+//            double delayInSeconds = 5.0;
+//            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//                //
+//                            [weakSelf performSelectorOnMainThread:@selector(mainThreadLoadFullsizeFinished:) withObject:image waitUntilDone:NO];
+//            });
+            [weakSelf performSelectorOnMainThread:@selector(mainThreadLoadFullsizeFinished:) withObject:image waitUntilDone:NO];
+            return;
+        }
+//        NSURL *urlForImage = [NSURL fileURLWithPath:aPath];
+//        
+//        
+//        CGImageSourceRef imageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)urlForImage, nil);
+//        if (imageSource) {
+//            
+//            if (weakSelf.cancelThumbnailLoadOperation==YES) {
+//                //DLog(@"2)thumbnail operation was canceled - return");
+//                CFRelease(imageSource);
+//                _thumbnailImageIsLoading = NO;
+//                weakSelf.cancelThumbnailLoadOperation = NO;
+//                return;
+//            }
+//            
+//            // Now, compute the thumbnail
+//            image = [[weakSelf class] makeThumbnailImageFromImageSource:imageSource];
+//            //NSBitmapImageRep *rep = [[image representations] objectAtIndex: 0];
+//            
+//            // aslo get the exif data
+//            CFDictionaryRef cfDict = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil);
+//            //NSDictionary * exif = (__bridge NSDictionary *)(cfDict);
+//            
+//            
+//            if (weakSelf.cancelThumbnailLoadOperation==YES) {
+//                //DLog(@"3)thumbnail operation was canceled - return");
+//                if(cfDict) CFRelease(cfDict);
+//                CFRelease(imageSource);
+//                _thumbnailImageIsLoading = NO;
+//                weakSelf.cancelThumbnailLoadOperation = NO;
+//                return;
+//            }
+//            
+//            NSData *data = [image TIFFRepresentation];
+//            
+//            if (weakSelf.cancelThumbnailLoadOperation==YES) {
+//                //DLog(@"4)thumbnail operation was canceled - return");
+//                if(cfDict) CFRelease(cfDict);
+//                CFRelease(imageSource);
+//                _thumbnailImageIsLoading = NO;
+//                weakSelf.cancelThumbnailLoadOperation = NO;
+//                return;
+//            }
+//            
+//            
+//            
+//            [weakSelf performSelectorOnMainThread:@selector(mainThreadComputePreviewThumbnailFinished:) withObject:data waitUntilDone:NO];
+//            
+//            if(cfDict) CFRelease(cfDict);
+//            CFRelease(imageSource);
+//        }
+    }];
+}
+
+-(void)mainThreadLoadFullsizeFinished:(id)result
+{
+    if (self.cancelFullsizeLoadOperation==YES) {
+        DLog(@"5)fullsize operation was canceled - return?");
+        //        _thumbnailImageIsLoading = NO;
+        //        self.cancelThumbnailLoadOperation = NO;
+        //       return;
+    }
+    NSCParameterAssert(result);
+    if (self.fullsizeImage == nil ) {
+        [self setFullsizeImage:(NSImage *)result];
+    } 
+    _fullsizeImageIsLoading = NO;
+    
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:PhotoFullsizeDidChangeNotification object:self];
+    
+//    /*
+//     NSNotification *aNotification = [NSNotification notificationWithName:kCreateThumbDidFinish object:self];
+//     [[NSNotificationQueue defaultQueue] enqueueNotification:aNotification postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnName forModes:nil];
+//     */
+//    
+//    //If this is the datePhoto of an album send a notification to the album to update it's thumb as well
+//    if (self.album.datePhoto == self) {
+//        //NSNotification *albumNotification = [NSNotification notificationWithName:AlbumDidChangeNotification object:self.album];
+//        //[[NSNotificationQueue defaultQueue] enqueueNotification:albumNotification postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnSender forModes:nil];
+//        
+//        if(self.dateTaken)
+//        {
+//            [self.album setAlbumDate:self.dateTaken];
+//        }
+//        
+//        [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self.album];
+//    }
+//    
+//    else if(self.stackPhotoAlbum)
+//    {
+//        [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self.album];
+//    }
+    
+}
+
+
+//-(void)setFullsizeAndNotify:(NSImage *)fullsize
+//{
+//    //self.thumbnailImage = thumb;
+//    [[NSNotificationCenter defaultCenter] postNotificationName:PhotoThumbDidChangeNotification object:self];
+//    
+//    if(self.stackPhotoAlbum) {
+//        [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self.album];
+//    }
+//}
+
++ (NSImage *)makeFullsizeImageFromImageSource:(CGImageSourceRef)imageSource {
+    
+    NSImage *result = nil;
+    // i'm putting this in a try/catch block because I kept getting non-fatal exceptions
+    //@try {
+    
+    // This code needs to be threadsafe, as it will be called from the background thread.
+    // The easiest way to ensure you only use stack variables is to make it a class method.
+    NSNumber *maxPixelSize = [NSNumber numberWithInteger:2048.0f];
+    NSDictionary *imageOptions = @{(id)kCGImageSourceCreateThumbnailFromImageIfAbsent: (id)kCFBooleanTrue,
+                                   // (id)kCGImageSourceCreateThumbnailFromImageAlways: (id)kCFBooleanTrue,
+                                   (id)kCGImageSourceThumbnailMaxPixelSize: (id)maxPixelSize,
+                                   (id)kCGImageSourceCreateThumbnailWithTransform: (id)kCFBooleanTrue};
+    
+    CGImageRef imageRef = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, (__bridge CFDictionaryRef)imageOptions);
+    
+    if (imageRef != NULL) {
+        CGRect rect;
+        rect.origin.x = 0;
+        rect.origin.y = 0;
+        rect.size.width = CGImageGetWidth(imageRef);
+        rect.size.height = CGImageGetHeight(imageRef);
+        result = [[NSImage alloc] init];
+        //[result setFlipped:YES];
+        [result setSize:NSMakeSize(rect.size.width, rect.size.height)];
+        [result lockFocus];
+        CGContextDrawImage((CGContextRef)[[NSGraphicsContext currentContext] graphicsPort], rect, imageRef);
+        
+        [result unlockFocus];
+        CFRelease(imageRef);
+    }
+    
+    return result;
+    /*
+     }
+     
+     
+     @catch (NSException * e) {
+     NSLog(@"Exception: %@", e);
+     
+     
+     }
+     @finally {
+     return result;
+     }*/
+    
+}
+
+#pragma mark -
 
 + (NSImage *)makeThumbnailImageFromImageSource:(CGImageSourceRef)imageSource {
     
@@ -207,6 +463,7 @@ const CGFloat kThumbnailSize = 200.0f;
         if (_thumbnailImage == nil)
         {
             self.cancelThumbnailLoadOperation = NO;
+            _thumbnailImageIsLoading = YES;
             [self loadThumbnailImage];
             return nil;
         }
@@ -318,12 +575,11 @@ const CGFloat kThumbnailSize = 200.0f;
 }
 
 
-
 -(void)loadThumbnailImage
 {
-    if (_thumbnailImageIsLoading == YES) {
-        return;
-    }
+//    if (_thumbnailImageIsLoading == YES) {
+//        return;
+//    }
 
     _thumbnailImageIsLoading = YES;
     

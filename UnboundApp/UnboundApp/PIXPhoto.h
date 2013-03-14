@@ -16,6 +16,7 @@
 @interface PIXPhoto : NSManagedObject <PIXThumbnailLoadingDelegate>
 {
     BOOL                        _thumbnailImageIsLoading;
+    BOOL                        _fullsizeImageIsLoading;
 }
 
 @property (nonatomic, retain) NSDate * dateLastModified;
@@ -35,12 +36,20 @@
 @property (nonatomic, strong) NSImage *thumbnailImage;
 @property (nonatomic, assign, readwrite) BOOL cancelThumbnailLoadOperation;
 
+@property (nonatomic, strong) NSImage *fullsizeImage;
+@property (nonatomic, assign, readwrite) BOOL cancelFullsizeLoadOperation;
+
 //TODO: get rid of this
 -(NSURL *)filePath;
 
 //PIXThumbnailLoadingDelegate methods
 -(NSImage *)thumbnailImage;
 -(void)cancelThumbnailLoading;
+
+//Image pre-loading from disk methods
+-(NSImage *)fullsizeImageForFullscreenDisplay;
+-(NSImage *)fullsizeImage;
+-(void)cancelFullsizeLoading;
 
 -(NSDate *)findDisplayDate;
 
