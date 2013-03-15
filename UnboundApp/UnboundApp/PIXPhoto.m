@@ -148,84 +148,62 @@ const CGFloat kThumbnailSize = 200.0f;
         
         //NSLog(@"Loading thumbnail");
         NSImage *image = nil;
-        image = [[NSImage alloc] initWithContentsOfFile:aPath];
+//        image = [[NSImage alloc] initWithContentsOfFile:aPath];
+//        if (image!=nil) {
+//            [weakSelf performSelectorOnMainThread:@selector(mainThreadLoadFullsizeFinished:) withObject:image waitUntilDone:NO];
+//            return;
+//        }
         
-        if (weakSelf.cancelFullsizeLoadOperation==YES) {
-            //DLog(@"1)thumbnail operation was canceled - return");
-            _fullsizeImageIsLoading = NO;
-            weakSelf.cancelFullsizeLoadOperation = NO;
-            return;
-        }
+        NSURL *urlForImage = [NSURL fileURLWithPath:aPath];
         
-        if (image!=nil) {
-            //[NSThread sleepForTimeInterval:5.0f];
-//            double delayInSeconds = 5.0;
-//            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-//            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-//                //
-//                            [weakSelf performSelectorOnMainThread:@selector(mainThreadLoadFullsizeFinished:) withObject:image waitUntilDone:NO];
-//            });
+        
+        CGImageSourceRef imageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)urlForImage, nil);
+        if (imageSource) {
             
-            [image setCacheMode:NSImageCacheAlways];
-            [image TIFFRepresentation];
+            if (weakSelf.cancelFullsizeLoadOperation==YES) {
+                //DLog(@"2)thumbnail operation was canceled - return");
+                CFRelease(imageSource);
+                _fullsizeImageIsLoading = NO;
+                weakSelf.cancelFullsizeLoadOperation = NO;
+                return;
+            }
             
-            // this is slower than 'performSelectorOnMainThread:' but it doesn't block the scrolling animation
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf mainThreadLoadFullsizeFinished:image];
-            });
-            //[weakSelf performSelectorOnMainThread:@selector(mainThreadLoadFullsizeFinished:) withObject:image waitUntilDone:NO];
-            return;
-        }
-//        NSURL *urlForImage = [NSURL fileURLWithPath:aPath];
-//        
-//        
-//        CGImageSourceRef imageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)urlForImage, nil);
-//        if (imageSource) {
-//            
-//            if (weakSelf.cancelThumbnailLoadOperation==YES) {
-//                //DLog(@"2)thumbnail operation was canceled - return");
-//                CFRelease(imageSource);
-//                _thumbnailImageIsLoading = NO;
-//                weakSelf.cancelThumbnailLoadOperation = NO;
-//                return;
-//            }
-//            
-//            // Now, compute the thumbnail
-//            image = [[weakSelf class] makeThumbnailImageFromImageSource:imageSource];
-//            //NSBitmapImageRep *rep = [[image representations] objectAtIndex: 0];
-//            
+            // Now, compute the screensized image
+            image = [[weakSelf class] makeFullsizeImageFromImageSource:imageSource];
+            //NSBitmapImageRep *rep = [[image representations] objectAtIndex: 0];
+            
 //            // aslo get the exif data
 //            CFDictionaryRef cfDict = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil);
 //            //NSDictionary * exif = (__bridge NSDictionary *)(cfDict);
 //            
 //            
-//            if (weakSelf.cancelThumbnailLoadOperation==YES) {
+//            if (weakSelf.cancelFullsizeLoadOperation==YES) {
 //                //DLog(@"3)thumbnail operation was canceled - return");
 //                if(cfDict) CFRelease(cfDict);
 //                CFRelease(imageSource);
-//                _thumbnailImageIsLoading = NO;
-//                weakSelf.cancelThumbnailLoadOperation = NO;
+//                _fullsizeImageIsLoading = NO;
+//                weakSelf.cancelFullsizeLoadOperation = NO;
 //                return;
 //            }
-//            
-//            NSData *data = [image TIFFRepresentation];
-//            
-//            if (weakSelf.cancelThumbnailLoadOperation==YES) {
-//                //DLog(@"4)thumbnail operation was canceled - return");
-//                if(cfDict) CFRelease(cfDict);
-//                CFRelease(imageSource);
-//                _thumbnailImageIsLoading = NO;
-//                weakSelf.cancelThumbnailLoadOperation = NO;
-//                return;
-//            }
-//            
-//            
-//            
-//            [weakSelf performSelectorOnMainThread:@selector(mainThreadComputePreviewThumbnailFinished:) withObject:data waitUntilDone:NO];
-//            
-//            if(cfDict) CFRelease(cfDict);
-//            CFRelease(imageSource);
-//        }
+            
+            NSData *data = [image TIFFRepresentation];
+            
+            if (weakSelf.cancelFullsizeLoadOperation==YES) {
+                DLog(@"4)fulllsize operation was canceled - return");
+                //if(cfDict) CFRelease(cfDict);
+                CFRelease(imageSource);
+                _fullsizeImageIsLoading = NO;
+                weakSelf.cancelFullsizeLoadOperation = NO;
+                return;
+            }
+            
+            NSImage *fullScreenImage = [[NSImage alloc] initWithData:data];
+            
+            [weakSelf performSelectorOnMainThread:@selector(mainThreadComputeFullsizePreviewFinished:) withObject:fullScreenImage waitUntilDone:NO];
+            
+            //if(cfDict) CFRelease(cfDict);
+            CFRelease(imageSource);
+        }
     }];
 }
 
@@ -290,9 +268,17 @@ const CGFloat kThumbnailSize = 200.0f;
     
     // This code needs to be threadsafe, as it will be called from the background thread.
     // The easiest way to ensure you only use stack variables is to make it a class method.
-    NSNumber *maxPixelSize = [NSNumber numberWithInteger:2048.0f];
+    //NSDictionary *desktopOptions = [[NSWorkspace sharedWorkspace] desktopImageOptionsForScreen:[NSScreen mainScreen]];
+    NSRect visibleScreen = [[NSScreen mainScreen] visibleFrame];
+    //DLog(@"desktopOptions: %@", desktopOptions);
+    DLog(@"screen origin : %.0f , %.0f", visibleScreen.origin.x, visibleScreen.origin.y);
+    DLog(@"screen dimensions : %.0f x %.0f", visibleScreen.size.width, visibleScreen.size.height);
+    float maxDimension = (visibleScreen.size.width > visibleScreen.size.height) ? visibleScreen.size.width : visibleScreen.size.height;
+    //NSNumber *maxPixelSize = [NSNumber numberWithInteger:2048.0f];
+    NSNumber *maxPixelSize = [NSNumber numberWithInteger:maxDimension];
+    DLog(@"Using maxPixelSize : %@", maxPixelSize);
     NSDictionary *imageOptions = @{(id)kCGImageSourceCreateThumbnailFromImageIfAbsent: (id)kCFBooleanTrue,
-                                   // (id)kCGImageSourceCreateThumbnailFromImageAlways: (id)kCFBooleanTrue,
+                                   (id)kCGImageSourceCreateThumbnailFromImageAlways: (id)kCFBooleanTrue,
                                    (id)kCGImageSourceThumbnailMaxPixelSize: (id)maxPixelSize,
                                    (id)kCGImageSourceCreateThumbnailWithTransform: (id)kCFBooleanTrue};
     
@@ -327,6 +313,31 @@ const CGFloat kThumbnailSize = 200.0f;
      @finally {
      return result;
      }*/
+    
+}
+
+- (void)mainThreadComputeFullsizePreviewFinished:(id)data {
+    if (self.cancelFullsizeLoadOperation==YES) {
+        DLog(@"5)fullsize operation was canceled - return?");
+        //        _thumbnailImageIsLoading = NO;
+        //        self.cancelThumbnailLoadOperation = NO;
+        //       return;
+    }
+
+    _fullsizeImageIsLoading = NO;
+    NSImage *aFullScreenImage = nil;
+    if ([data isKindOfClass:[NSData class]])
+    {
+        aFullScreenImage = [[NSImage alloc] initWithData:data];
+    } else {
+        aFullScreenImage = (NSImage *)data;
+        self.fullsizeImage = aFullScreenImage;
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:PhotoFullsizeDidChangeNotification object:self];
+    
+
+    
     
 }
 
