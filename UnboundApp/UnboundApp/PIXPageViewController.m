@@ -50,8 +50,7 @@
     {
         [self.pageController.view setWantsLayer:YES];
         self.pageController.transitionStyle = NSPageControllerTransitionStyleHorizontalStrip;
-        
-        [self updateData];
+    
         
         
     }
@@ -68,11 +67,19 @@
 {
     [[PIXLeapInputManager sharedInstance] addResponder:self];
     
+    
+    [self updateData];
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         
         [self.view.window makeFirstResponder:self];
         
     });
+}
+
+-(BOOL)acceptsFirstResponder
+{
+    return YES;
 }
 
 - (void)willHidePIXView
@@ -88,6 +95,11 @@
 -(void)multiFingerSwipeRight
 {
     [self.pageController navigateBack:nil];
+}
+
+-(void)moveForward:(id)sender
+{
+    [self.pageController navigateForward:nil];
 }
 
 -(void)moveRight:(id)sender
@@ -195,6 +207,9 @@
 
 -(void)pageController:(NSPageController *)pageController prepareViewController:(NSViewController *)viewController withObject:(id)object {
     
+    if(object == nil) return;
+    
+    DLog(@"Preloading photo %ld into viewController %ld", [self.pagerData indexOfObject:object], [self.viewControllers indexOfObject:viewController]);
     viewController.representedObject = object;
     // viewControllers may be reused... make sure to reset important stuff like the current magnification factor.
     
@@ -207,7 +222,7 @@
     }
     
     
-    //[self preloadNextImagesForIndex:pageController.selectedIndex];
+    [self preloadNextImagesForIndex:pageController.selectedIndex];
     
 }
 
@@ -228,13 +243,13 @@
      }*/
     
     
-    [mainWindow makeFirstResponder:aView];
+    [mainWindow makeFirstResponder:self];
 }
 
 
 - (void)pageController:(NSPageController *)pageController didTransitionToObject:(id)object
 {
-    NSLog(@"didTransitionToObject : %@", object);
+    //NSLog(@"didTransitionToObject : %@", object);
     
     
     [self makeSelectedViewFirstResponder];

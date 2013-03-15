@@ -46,22 +46,27 @@
 
 -(void)photoFullsizeChanged:(NSNotification *)notification
 {
-    DLog(@"photoFullsizeChanged: %@", notification);
+    //(@"photoFullsizeChanged: %@", notification);
     NSCAssert(notification.object == self.representedObject, @"Notification received for wrong photo");
     PIXPhoto *aPhoto = (PIXPhoto *)notification.object;
     NSCParameterAssert(aPhoto.fullsizeImage);
-    self.imageView.image = aPhoto.fullsizeImage;
+    
+    if(aPhoto == self.representedObject)
+    {
+        self.imageView.image = aPhoto.fullsizeImage;
+    }
 }
 
 -(void)setPhoto:(PIXPhoto *)newPhoto
 {
-    if (self.representedObject != newPhoto)
+    if (self.representedObject != newPhoto && newPhoto != nil)
     {
         if (self.representedObject!=nil)
         {
             //[[NSNotificationCenter defaultCenter] removeObserver:self name:PhotoThumbDidChangeNotification object:self.representedObject];
-            [[NSNotificationCenter defaultCenter] removeObserver:self name:PhotoFullsizeDidChangeNotification object:self.representedObject];
             [self.representedObject cancelFullsizeLoading];
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:PhotoFullsizeDidChangeNotification object:self.representedObject];
+            
         }
         
         [super setRepresentedObject:newPhoto];
@@ -71,7 +76,9 @@
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photoFullsizeChanged:) name:PhotoFullsizeDidChangeNotification object:self.representedObject];
         }
         
-        self.imageView.image = [newPhoto fullsizeImageForFullscreenDisplay];
+        
+        NSImage * theImage = [newPhoto fullsizeImageForFullscreenDisplay];
+        self.imageView.image = theImage;
     
     } else {
         DLog(@"same representedObject being set.");

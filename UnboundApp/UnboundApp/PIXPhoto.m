@@ -149,6 +149,14 @@ const CGFloat kThumbnailSize = 200.0f;
         //NSLog(@"Loading thumbnail");
         NSImage *image = nil;
         image = [[NSImage alloc] initWithContentsOfFile:aPath];
+        
+        if (weakSelf.cancelFullsizeLoadOperation==YES) {
+            //DLog(@"1)thumbnail operation was canceled - return");
+            _fullsizeImageIsLoading = NO;
+            weakSelf.cancelFullsizeLoadOperation = NO;
+            return;
+        }
+        
         if (image!=nil) {
             //[NSThread sleepForTimeInterval:5.0f];
 //            double delayInSeconds = 5.0;
@@ -157,7 +165,15 @@ const CGFloat kThumbnailSize = 200.0f;
 //                //
 //                            [weakSelf performSelectorOnMainThread:@selector(mainThreadLoadFullsizeFinished:) withObject:image waitUntilDone:NO];
 //            });
-            [weakSelf performSelectorOnMainThread:@selector(mainThreadLoadFullsizeFinished:) withObject:image waitUntilDone:NO];
+            
+            [image setCacheMode:NSImageCacheAlways];
+            [image TIFFRepresentation];
+            
+            // this is slower than 'performSelectorOnMainThread:' but it doesn't block the scrolling animation
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf mainThreadLoadFullsizeFinished:image];
+            });
+            //[weakSelf performSelectorOnMainThread:@selector(mainThreadLoadFullsizeFinished:) withObject:image waitUntilDone:NO];
             return;
         }
 //        NSURL *urlForImage = [NSURL fileURLWithPath:aPath];
