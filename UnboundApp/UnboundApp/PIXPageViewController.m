@@ -30,15 +30,6 @@
     if (self) {
         // Initialization code here.
         
-        self.viewControllers = [[NSMutableArray alloc] initWithCapacity:3];
-        PIXImageViewController *aVC1 =  [[PIXImageViewController alloc] initWithNibName:@"imageview" bundle:nil];
-        aVC1.pageViewController = self;
-        PIXImageViewController *aVC2 =  [[PIXImageViewController alloc] initWithNibName:@"imageview" bundle:nil];
-        aVC2.pageViewController = self;
-        PIXImageViewController *aVC3 =  [[PIXImageViewController alloc] initWithNibName:@"imageview" bundle:nil];
-        aVC3.pageViewController = self;
-        
-        self.viewControllers = @[aVC1, aVC2, aVC3];
     }
     
     return self;
@@ -139,43 +130,16 @@
 
 -(void)preloadNextImagesForIndex:(NSUInteger)anIndex
 {
-    //PIXPhoto *startingPhoto = (PIXPhoto *)self.initialSelectedObject;
-    //NSImage *anImage = [[NSImage alloc] initWithContentsOfURL:aPhoto.filePath];
-    //[self.cachedImages replaceObjectAtIndex:0 withObject:anImage];
-    //[self.cachedImages addObject:anImage];
     
-    NSUInteger prevIndex = anIndex -1;
-    NSUInteger nextIndex = anIndex+1;
-    
-    if(prevIndex > 0 && prevIndex < [self.pagerData count])
+    for(NSUInteger i = anIndex -2; i < anIndex+2; i++)
     {
-        id representedObject = [self.pagerData objectAtIndex:prevIndex];
-        [(PIXImageViewController *)[self.viewControllers objectAtIndex:prevIndex%3] setRepresentedObject:representedObject];
-    }
-    
-    if(nextIndex < [self.pagerData count])
-    {
-        id representedObject = [self.pagerData objectAtIndex:nextIndex];
-        [(PIXImageViewController *)[self.viewControllers objectAtIndex:nextIndex%3] setRepresentedObject:representedObject];
-    }
-    
-    
-    /*
-    if (self.pagerData.count > anIndex) {
-        for (NSUInteger i = (int)anIndex; i<anIndex + 5; i++)
+        if(i < [self.pagerData count])
         {
-            if (self.pagerData.count <= i) {
-                DLog(@"done loading fullsize images through undex %ld", i);
-                return;
-            }
-            
-            PIXPhoto *aPhoto = (PIXPhoto *)[self.album.photos objectAtIndex:i];
-            
-            // this will call a notification once the image is loaded in the bg
-            [aPhoto fullsizeImage];
-            
+            // this will cause the image to preload
+            [(PIXPhoto *)[self.pagerData objectAtIndex:i] fullsizeImage];
         }
-    }*/
+    }
+    
 }
 
 
@@ -184,32 +148,29 @@
 @implementation PIXPageViewController (NSPageControllerDelegate)
 - (NSString *)pageController:(NSPageController *)pageController identifierForObject:(id)object {
     
-    int index = [self.pagerData indexOfObject:object] % 3;
-    
-    return [NSString stringWithFormat:@"%d", index];
-    
-    /*
-    return [(PIXPhoto *)object name];
-    
     if (![[object imageRepresentationType] isEqualToString:IKImageBrowserQTMoviePathRepresentationType]) {
         return @"picture";
     }
     return @"video";
-     */
 }
 
 - (NSViewController *)pageController:(NSPageController *)pageController viewControllerForIdentifier:(NSString *)identifier {
     //NSLog(@"pageController.selectedIndex : %ld", pageController.selectedIndex);
-   
-    return [self.viewControllers objectAtIndex:[identifier integerValue]];
-    
+    if (![identifier isEqualToString:@"video"])
+    {
+        PIXImageViewController *aVC =  [[PIXImageViewController alloc] initWithNibName:@"imageview" bundle:nil];
+        aVC.pageViewController = self;
+        return aVC;
+    } else {
+        NSViewController *videoView = [[NSViewController alloc] initWithNibName:@"videoview" bundle:nil];
+        return videoView;
+    }
 }
 
 -(void)pageController:(NSPageController *)pageController prepareViewController:(NSViewController *)viewController withObject:(id)object {
     
     if(object == nil) return;
     
-    DLog(@"Preloading photo %ld into viewController %ld", [self.pagerData indexOfObject:object], [self.viewControllers indexOfObject:viewController]);
     viewController.representedObject = object;
     // viewControllers may be reused... make sure to reset important stuff like the current magnification factor.
     
@@ -220,7 +181,6 @@
         [(NSScrollView*)viewController.view setMagnification:1.0];
         //[self makeSelectedViewFirstResponder];
     }
-    
     
     [self preloadNextImagesForIndex:pageController.selectedIndex];
     

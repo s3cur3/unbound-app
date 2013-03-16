@@ -15,7 +15,7 @@
 #import "MakeThumbnailOperation.h"
 #import "PIXDefines.h"
 
-const CGFloat kThumbnailSize = 200.0f;
+const CGFloat kThumbnailSize = 400.0f;
 
 @interface PIXPhoto()
 
@@ -186,6 +186,7 @@ const CGFloat kThumbnailSize = 200.0f;
 //                return;
 //            }
             
+            /*
             NSData *data = [image TIFFRepresentation];
             
             if (weakSelf.cancelFullsizeLoadOperation==YES) {
@@ -198,8 +199,21 @@ const CGFloat kThumbnailSize = 200.0f;
             }
             
             NSImage *fullScreenImage = [[NSImage alloc] initWithData:data];
+             */
             
-            [weakSelf performSelectorOnMainThread:@selector(mainThreadComputeFullsizePreviewFinished:) withObject:fullScreenImage waitUntilDone:NO];
+            if (weakSelf.cancelFullsizeLoadOperation==YES) {
+                DLog(@"4)fulllsize operation was canceled - return");
+                //if(cfDict) CFRelease(cfDict);
+                CFRelease(imageSource);
+                _fullsizeImageIsLoading = NO;
+                weakSelf.cancelFullsizeLoadOperation = NO;
+                return;
+            }
+            
+            [image setCacheMode:NSImageCacheAlways];
+            [[image representations] lastObject]; // call this to make sure the image loads ?
+            
+            [weakSelf performSelectorOnMainThread:@selector(mainThreadComputeFullsizePreviewFinished:) withObject:image waitUntilDone:NO];
             
             //if(cfDict) CFRelease(cfDict);
             CFRelease(imageSource);
@@ -353,7 +367,7 @@ const CGFloat kThumbnailSize = 200.0f;
         // The easiest way to ensure you only use stack variables is to make it a class method.
         NSNumber *maxPixelSize = [NSNumber numberWithInteger:kThumbnailSize];
         NSDictionary *imageOptions = @{(id)kCGImageSourceCreateThumbnailFromImageIfAbsent: (id)kCFBooleanTrue,
-                                      // (id)kCGImageSourceCreateThumbnailFromImageAlways: (id)kCFBooleanTrue,
+                                       (id)kCGImageSourceCreateThumbnailFromImageAlways: (id)kCFBooleanTrue,
                                        (id)kCGImageSourceThumbnailMaxPixelSize: maxPixelSize,
                                        (id)kCGImageSourceCreateThumbnailWithTransform: (id)kCFBooleanTrue};
 
