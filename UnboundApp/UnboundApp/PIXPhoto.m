@@ -367,7 +367,7 @@ const CGFloat kThumbnailSize = 400.0f;
         // The easiest way to ensure you only use stack variables is to make it a class method.
         NSNumber *maxPixelSize = [NSNumber numberWithInteger:kThumbnailSize];
         NSDictionary *imageOptions = @{(id)kCGImageSourceCreateThumbnailFromImageIfAbsent: (id)kCFBooleanTrue,
-                                       (id)kCGImageSourceCreateThumbnailFromImageAlways: (id)kCFBooleanTrue,
+                                      // (id)kCGImageSourceCreateThumbnailFromImageAlways: (id)kCFBooleanTrue,
                                        (id)kCGImageSourceThumbnailMaxPixelSize: maxPixelSize,
                                        (id)kCGImageSourceCreateThumbnailWithTransform: (id)kCFBooleanTrue};
 
