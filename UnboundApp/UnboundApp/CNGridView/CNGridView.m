@@ -378,9 +378,9 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
     NSUInteger rangeStart = 0;
     if (clippedRect.origin.y > self.itemSize.height) {
-        rangeStart = (ceilf(clippedRect.origin.y / self.itemSize.height) * columns) - columns;
+        rangeStart = (ceilf((clippedRect.origin.y-self.headerSpace) / self.itemSize.height) * columns) - columns;
     }
-    NSUInteger rangeLength = MIN(numberOfItems, (columns * rows) * 2); // load two pages worth of items
+    NSUInteger rangeLength = MIN(numberOfItems, (columns * rows) * 1.5); // load 1.5 pages worth of items
     rangeLength = ((rangeStart + rangeLength) > numberOfItems ? numberOfItems - rangeStart : rangeLength);
 
     NSRange rangeForVisibleRect = NSMakeRange(rangeStart, rangeLength);

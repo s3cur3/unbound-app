@@ -15,7 +15,7 @@
 #import "MakeThumbnailOperation.h"
 #import "PIXDefines.h"
 
-const CGFloat kThumbnailSize = 400.0f;
+const CGFloat kThumbnailSize = 200.0f;
 
 @interface PIXPhoto()
 

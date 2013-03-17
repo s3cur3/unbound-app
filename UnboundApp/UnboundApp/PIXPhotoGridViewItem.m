@@ -10,7 +10,42 @@
 #import "PIXPhoto.h"
 #import "PIXDefines.h"
 
+#import "PIXSelectionLayer.h"
+
+#import <Quartz/Quartz.h>
+
+@interface PIXPhotoGridViewItem ()
+
+@property CALayer * imageLayer;
+@property (nonatomic, strong) CALayer * selectionLayer;
+
+@end
+
 @implementation PIXPhotoGridViewItem
+
+- (id)initWithFrame:(NSRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.layer = [CALayer layer];
+        self.imageLayer = [CALayer layer];
+        
+        // disable all animatsion on the image layer
+        NSMutableDictionary *newActions = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSNull null], @"onOrderIn",
+                                           [NSNull null], @"onOrderOut",
+                                           [NSNull null], @"sublayers",
+                                           [NSNull null], @"contents",
+                                           [NSNull null], @"bounds",
+                                           nil];
+        self.imageLayer.actions = newActions;
+        
+        
+        
+        [self.layer addSublayer:self.imageLayer];
+        [self setWantsLayer:YES];
+    }
+    return self;
+}
 
 +(NSImage *)dragImageForPhotos:(NSArray *)photoArray size:(NSSize)size
 {
@@ -80,7 +115,7 @@
 
 -(BOOL)isOpaque
 {
-    return YES;
+    return NO;
 }
 
 -(void)setPhoto:(PIXPhoto *)newPhoto
@@ -109,6 +144,7 @@
         self.itemImage = [NSImage imageNamed:@"temp"];
     }
     
+    [self updateLayer];
     [self setNeedsDisplay:YES];
 }
 
@@ -126,6 +162,121 @@
     
 }
 
+-(void)setFrame:(NSRect)frameRect
+{
+    [super setFrame:frameRect];
+    [_selectionLayer setFrame:self.bounds];
+    [self updateLayer];
+}
+
+
+-(void)setSelected:(BOOL)value
+{
+    [super setSelected:value];
+    
+    if(value)
+    {
+        [self.layer addSublayer:self.selectionLayer];
+    }
+    
+    else
+    {
+        [_selectionLayer removeFromSuperlayer];
+    }
+    
+    
+}
+
+-(CALayer *)selectionLayer
+{
+    if(_selectionLayer != nil) return _selectionLayer;
+    
+    _selectionLayer = [[PIXSelectionLayer alloc] init];
+    
+    [_selectionLayer setFrame:self.bounds];
+        
+    return _selectionLayer;
+}
+
+-(void)updateLayer
+{
+    
+    [CATransaction begin];
+    [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+    
+    
+    NSImage * photo = self.itemImage;
+    CGRect rect = CGRectInset(self.bounds, 15, 15);
+    
+    // calculate the proportional image frame
+    CGSize imageSize = [photo size];
+    
+    CGRect imageFrame = CGRectMake(0, 0, imageSize.width, imageSize.height);
+    
+    if(imageSize.width > 0 && imageSize.height > 0)
+    {
+        if(imageSize.width / imageSize.height > rect.size.width / rect.size.height)
+        {
+            float mulitplier = rect.size.width / imageSize.width;
+            
+            imageFrame.size.width = rint(mulitplier * imageFrame.size.width);
+            imageFrame.size.height = rint(mulitplier * imageFrame.size.height);
+            
+            imageFrame.origin.x = rint(rect.origin.x);
+            imageFrame.origin.y = rint((rect.size.height - imageFrame.size.height)/2 + rect.origin.y);
+        }
+        
+        else
+        {
+            float mulitplier = rect.size.height / imageSize.height;
+            
+            imageFrame.size.width = rint(mulitplier * imageFrame.size.width);
+            imageFrame.size.height = rint(mulitplier * imageFrame.size.height);
+            
+            imageFrame.origin.y = rint(rect.origin.y);
+            imageFrame.origin.x = rint((rect.size.width - imageFrame.size.width)/2 + rect.origin.x);
+        }
+    }
+    
+    
+    CGFloat borderThickness = 6;
+    
+    if(rect.size.width < 120)
+    {
+        borderThickness = 4;
+    }
+    
+    self.imageLayer.frame = imageFrame;
+    
+    //CGRect borderFrame = CGRectInset(imageFrame, -(borderThickness-1), -(borderThickness-1));
+    
+    self.imageLayer.borderColor = [[NSColor whiteColor] CGColor];
+    self.imageLayer.borderWidth = borderThickness;
+    
+    self.imageLayer.shadowColor = [[NSColor colorWithGenericGamma22White:0.0 alpha:1.0] CGColor];
+    self.imageLayer.shadowOffset = CGSizeMake(0, 1);
+    self.imageLayer.shadowRadius = 3.0;
+    self.imageLayer.shadowOpacity = 0.4;
+    
+    
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGPathAddRect(path, NULL, self.imageLayer.bounds);
+    
+    self.imageLayer.shadowPath = path;
+    
+    CGPathRelease(path);
+    
+    
+    
+    
+    [self.imageLayer setContents:self.itemImage];
+    
+    [CATransaction commit];
+    
+    self.contentFrame = imageFrame;
+}
+
+/*
 - (void)drawRect:(NSRect)rect
 {
     
@@ -165,7 +316,8 @@
     // draw the  image
     CGRect photoFrame = [[self class] drawBorderedPhoto:self.itemImage inRect:albumFrame];
     self.contentFrame = photoFrame;
+     
     
-}
+}*/
 
 @end
