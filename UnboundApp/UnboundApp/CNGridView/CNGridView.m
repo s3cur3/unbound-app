@@ -226,7 +226,22 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 {
     if (!NSEqualSizes(_itemSize, itemSize)) {
         _itemSize = itemSize;
+        
+        [CATransaction begin];
+        [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+        
+        CGFloat viewPosition = (self.clippedRect.origin.y+(self.clippedRect.size.height/2)) / self.bounds.size.height;
+        
         [self refreshGridViewAnimated:NO];
+        
+        // if we're not at the top then stay centered when resizing
+        if(self.clippedRect.origin.y != 0) // stay at top if we're at the top
+        {
+            viewPosition = (viewPosition * self.bounds.size.height)-(self.clippedRect.size.height/2);
+            [self scrollPoint:NSMakePoint(0, viewPosition)];
+        }
+        
+        [CATransaction commit];
     }
 }
 
@@ -403,7 +418,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     if (clippedRect.origin.y > self.itemSize.height) {
         rangeStart = (ceilf((clippedRect.origin.y-self.headerSpace) / self.itemSize.height) * columns) - columns;
     }
-    NSUInteger rangeLength = MIN(numberOfItems, (columns * rows) * 1.5); // load 1.5 pages worth of items
+    NSUInteger rangeLength = MIN(numberOfItems, (columns * rows) * 2.0); // load 2 pages worth of items
     rangeLength = ((rangeStart + rangeLength) > numberOfItems ? numberOfItems - rangeStart : rangeLength);
 
     NSRange rangeForVisibleRect = NSMakeRange(rangeStart, rangeLength);
@@ -924,10 +939,25 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 - (BOOL)isFlipped { return YES; }
 
 - (void)setFrame:(NSRect)frameRect
-{    
+{
+    [CATransaction begin];
+    [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+    
+    CGFloat viewPosition = (self.clippedRect.origin.y+(self.clippedRect.size.height/2)) / self.bounds.size.height;
+    
    // BOOL animated = (self.frame.size.width == frameRect.size.width ? NO: YES);
     [super setFrame:frameRect];
+    
     [self refreshGridViewAnimated:NO];
+    
+    // if we're not at the top then stay centered when resizing
+    if(self.clippedRect.origin.y != 0) // stay at top if we're at the top
+    {
+        viewPosition = (viewPosition * self.bounds.size.height)-(self.clippedRect.size.height/2);
+        [self scrollPoint:NSMakePoint(0, viewPosition)];
+    }
+    
+    [CATransaction commit];
 }
 
 - (void)updateTrackingAreas

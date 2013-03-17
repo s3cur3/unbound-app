@@ -78,8 +78,8 @@
 // send a size between 0 and 1 (will be transformed into appropriate sizes)
 -(void)setThumbSize:(CGFloat)size
 {
-    // sizes mapped between 130 and 400
-    float transformedSize = 130+(270.0 * size);
+    // sizes mapped between 140 and 400
+    float transformedSize = 140+(260.0 * size);
     [self.gridView setItemSize:CGSizeMake(transformedSize, transformedSize)];
     
     [self.gridView setScrollElasticity:YES];

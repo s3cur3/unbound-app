@@ -79,6 +79,8 @@
                                                  name:@"backgroundThemeChanged"
                                                object:nil];
     
+    [self.scrollView setIdentifier:@"albumGridScroller"];
+    
     [self setBGColor];
     
 }

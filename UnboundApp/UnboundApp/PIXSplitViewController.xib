@@ -19,6 +19,7 @@
 			<string>NSSlider</string>
 			<string>NSSliderCell</string>
 			<string>NSSplitView</string>
+			<string>NSUserDefaultsController</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -87,7 +88,6 @@
 				<int key="NSvFlags">268</int>
 				<string key="NSFrameSize">{109, 24}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<bool key="NSEnabled">YES</bool>
@@ -128,21 +128,20 @@
 				</object>
 				<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 			</object>
-			<object class="NSSlider" id="584030363">
+			<object class="NSSlider" id="495369697">
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<string key="NSFrameSize">{100, 25}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<bool key="NSEnabled">YES</bool>
-				<object class="NSSliderCell" key="NSCell" id="776582401">
+				<object class="NSSliderCell" key="NSCell" id="360459668">
 					<int key="NSCellFlags">-2080112384</int>
 					<int key="NSCellFlags2">0</int>
 					<string key="NSContents"/>
 					<string key="NSCellIdentifier">_NS:9</string>
-					<reference key="NSControlView" ref="584030363"/>
+					<reference key="NSControlView" ref="495369697"/>
 					<double key="NSMaxValue">1</double>
 					<double key="NSMinValue">0.0</double>
 					<double key="NSValue">0.29999999999999999</double>
@@ -153,6 +152,9 @@
 					<bool key="NSVertical">NO</bool>
 				</object>
 				<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+			</object>
+			<object class="NSUserDefaultsController" id="536909404">
+				<bool key="NSSharedInstance">YES</bool>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -209,7 +211,7 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">sizeSlider</string>
 						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="584030363"/>
+						<reference key="destination" ref="495369697"/>
 					</object>
 					<int key="connectionID">87</int>
 				</object>
@@ -217,7 +219,7 @@
 					<object class="IBActionConnection" key="connection">
 						<string key="label">sliderValueChanged:</string>
 						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="776582401"/>
+						<reference key="destination" ref="360459668"/>
 					</object>
 					<int key="connectionID">88</int>
 				</object>
@@ -244,6 +246,26 @@
 						<reference key="destination" ref="49106227"/>
 					</object>
 					<int key="connectionID">84</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: values.photoThumbSize</string>
+						<reference key="source" ref="360459668"/>
+						<reference key="destination" ref="536909404"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="360459668"/>
+							<reference key="NSDestination" ref="536909404"/>
+							<string key="NSLabel">value: values.photoThumbSize</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">values.photoThumbSize</string>
+							<dictionary key="NSOptions">
+								<boolean value="YES" key="NSAlwaysPresentsApplicationModalAlerts"/>
+								<real value="0.29999999999999999" key="NSNullPlaceholder"/>
+							</dictionary>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">96</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -446,16 +468,21 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">85</int>
-						<reference key="object" ref="584030363"/>
+						<reference key="object" ref="495369697"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="776582401"/>
+							<reference ref="360459668"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">86</int>
-						<reference key="object" ref="776582401"/>
-						<reference key="parent" ref="584030363"/>
+						<reference key="object" ref="360459668"/>
+						<reference key="parent" ref="495369697"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">89</int>
+						<reference key="object" ref="536909404"/>
+						<reference key="parent" ref="0"/>
 					</object>
 				</array>
 			</object>
@@ -487,6 +514,7 @@
 				<string key="82.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="85.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="86.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="89.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<array key="9.IBNSViewMetadataConstraints">
 					<reference ref="421369103"/>
 				</array>
@@ -496,79 +524,9 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">88</int>
+			<int key="maxID">96</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes">
-			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
-				<object class="IBPartialClassDescription">
-					<string key="className">NSLayoutConstraint</string>
-					<string key="superclassName">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/NSLayoutConstraint.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">PIXSplitViewController</string>
-					<string key="superclassName">PIXViewController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="backBarSegmentChanged:">id</string>
-						<string key="sliderValueChanged:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="backBarSegmentChanged:">
-							<string key="name">backBarSegmentChanged:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="sliderValueChanged:">
-							<string key="name">sliderValueChanged:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="backButtonSegment">NSSegmentedControl</string>
-						<string key="leftPane">NSView</string>
-						<string key="rightPane">NSView</string>
-						<string key="sizeSlider">NSSlider</string>
-						<string key="splitView">NSSplitView</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="backButtonSegment">
-							<string key="name">backButtonSegment</string>
-							<string key="candidateClassName">NSSegmentedControl</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="leftPane">
-							<string key="name">leftPane</string>
-							<string key="candidateClassName">NSView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="rightPane">
-							<string key="name">rightPane</string>
-							<string key="candidateClassName">NSView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="sizeSlider">
-							<string key="name">sizeSlider</string>
-							<string key="candidateClassName">NSSlider</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="splitView">
-							<string key="name">splitView</string>
-							<string key="candidateClassName">NSSplitView</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/PIXSplitViewController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">PIXViewController</string>
-					<string key="superclassName">NSViewController</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/PIXViewController.h</string>
-					</object>
-				</object>
-			</array>
-		</object>
+		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
