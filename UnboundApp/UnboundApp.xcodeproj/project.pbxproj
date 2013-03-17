@@ -95,7 +95,6 @@
 		8C4B9CA616DC30FE00F6BADD /* PIXMiniExifViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B9CA416DC30FB00F6BADD /* PIXMiniExifViewController.m */; };
 		8C4B9CA716DC30FE00F6BADD /* PIXMiniExifViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4B9CA516DC30FD00F6BADD /* PIXMiniExifViewController.xib */; };
 		8C4B9CAA16DC436B00F6BADD /* PIXExifBGView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B9CA916DC436B00F6BADD /* PIXExifBGView.m */; };
-		8C68246816F5950D00245F09 /* PIXSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68246716F5950C00245F09 /* PIXSelectionView.m */; };
 		8C68246B16F596BB00245F09 /* PIXSelectionLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68246A16F596BB00245F09 /* PIXSelectionLayer.m */; };
 		8C68246E16F599FD00245F09 /* NSBezierPath+pathUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68246D16F599FD00245F09 /* NSBezierPath+pathUtilities.m */; };
 		8C7ABBBE16C42A3D00784BDA /* PIXGradientBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7ABBBD16C42A3D00784BDA /* PIXGradientBarView.m */; };
@@ -283,8 +282,6 @@
 		8C4B9CA516DC30FD00F6BADD /* PIXMiniExifViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXMiniExifViewController.xib; sourceTree = "<group>"; };
 		8C4B9CA816DC436A00F6BADD /* PIXExifBGView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXExifBGView.h; sourceTree = "<group>"; };
 		8C4B9CA916DC436B00F6BADD /* PIXExifBGView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXExifBGView.m; sourceTree = "<group>"; };
-		8C68246616F5950C00245F09 /* PIXSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXSelectionView.h; sourceTree = "<group>"; };
-		8C68246716F5950C00245F09 /* PIXSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSelectionView.m; sourceTree = "<group>"; };
 		8C68246916F596BB00245F09 /* PIXSelectionLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXSelectionLayer.h; sourceTree = "<group>"; };
 		8C68246A16F596BB00245F09 /* PIXSelectionLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSelectionLayer.m; sourceTree = "<group>"; };
 		8C68246C16F599FC00245F09 /* NSBezierPath+pathUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBezierPath+pathUtilities.h"; sourceTree = "<group>"; };
@@ -364,8 +361,6 @@
 				8CE460E516CD7BB300CDFA04 /* PIXCustomShareSheetViewController.h */,
 				8CE460E616CD7BB300CDFA04 /* PIXCustomShareSheetViewController.m */,
 				8CE460E716CD7BB300CDFA04 /* PIXCustomShareSheetViewController.xib */,
-				8C68246616F5950C00245F09 /* PIXSelectionView.h */,
-				8C68246716F5950C00245F09 /* PIXSelectionView.m */,
 				8C68246916F596BB00245F09 /* PIXSelectionLayer.h */,
 				8C68246A16F596BB00245F09 /* PIXSelectionLayer.m */,
 				8C68246C16F599FC00245F09 /* NSBezierPath+pathUtilities.h */,
@@ -917,7 +912,6 @@
 				8C4B9CAA16DC436B00F6BADD /* PIXExifBGView.m in Sources */,
 				8C031CD316E926F7009B7F38 /* LeapObjectiveC.mm in Sources */,
 				8C031CD516E926F7009B7F38 /* PIXLeapInputManager.m in Sources */,
-				8C68246816F5950D00245F09 /* PIXSelectionView.m in Sources */,
 				8C68246B16F596BB00245F09 /* PIXSelectionLayer.m in Sources */,
 				8C68246E16F599FD00245F09 /* NSBezierPath+pathUtilities.m in Sources */,
 			);

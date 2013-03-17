@@ -38,6 +38,7 @@
                                            [NSNull null], @"bounds",
                                            nil];
         self.imageLayer.actions = newActions;
+        self.layer.actions = newActions;
         
         
         

@@ -262,9 +262,14 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
 - (void)updateVisibleRect
 {
+    [CATransaction begin];
+    [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+    
     [self updateReuseableItems];
     [self updateVisibleItems];
     [self arrangeGridViewItemsAnimated:NO];
+    
+    [CATransaction commit];
 }
 
 - (void)refreshGridViewAnimated:(BOOL)animated
@@ -341,32 +346,50 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
 - (void)arrangeGridViewItemsAnimated:(BOOL)animated
 {
-    /// on initial call (aka application startup) we will fade all items (after loading it) in
-    if (isInitialCall && [keyedVisibleItems count] > 0) {
-        isInitialCall = NO;
-
-        [[NSAnimationContext currentContext] setDuration:0.35];
-        [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-            [keyedVisibleItems enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-                [[(CNGridViewItem *)obj animator] setAlphaValue:1.0];
-            }];
-
-        } completionHandler:^{
-
+    if(!animated)
+    {
+        [CATransaction begin];
+        [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+        
+        [keyedVisibleItems enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+            NSRect newRect = [self rectForItemAtIndex:[(CNGridViewItem *)obj index]];
+            [(CNGridViewItem *)obj setAlphaValue:1.0];
+            [(CNGridViewItem *)obj setFrame:newRect];
         }];
+        
+        [CATransaction commit];
+        
     }
+    
+    else
+    {
+        /// on initial call (aka application startup) we will fade all items (after loading it) in
+        if (isInitialCall && [keyedVisibleItems count] > 0) {
+            isInitialCall = NO;
 
-    else if ([keyedVisibleItems count] > 0) {
-        [[NSAnimationContext currentContext] setDuration:(animated ? 0.15 : 0.0)];
-        [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-            [keyedVisibleItems enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-                NSRect newRect = [self rectForItemAtIndex:[(CNGridViewItem *)obj index]];
-                [[(CNGridViewItem *)obj animator] setFrame:newRect];
+            [[NSAnimationContext currentContext] setDuration:0.35];
+            [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+                [keyedVisibleItems enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+                    [[(CNGridViewItem *)obj animator] setAlphaValue:1.0];
+                }];
+
+            } completionHandler:^{
+
             }];
+        }
 
-        } completionHandler:^{
+        else if ([keyedVisibleItems count] > 0) {
+            [[NSAnimationContext currentContext] setDuration:(animated ? 0.15 : 0.0)];
+            [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+                [keyedVisibleItems enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+                    NSRect newRect = [self rectForItemAtIndex:[(CNGridViewItem *)obj index]];
+                    [[(CNGridViewItem *)obj animator] setFrame:newRect];
+                }];
 
-        }];
+            } completionHandler:^{
+
+            }];
+        }
     }
 }
 
