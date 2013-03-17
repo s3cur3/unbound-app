@@ -64,11 +64,22 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         
         [self.view.window makeFirstResponder:self];
+        self.nextResponder = self.view;
         
     });
 }
 
+-(BOOL)becomeFirstResponder
+{
+    return YES;
+}
+
 -(BOOL)acceptsFirstResponder
+{
+    return YES;
+}
+
+-(BOOL) resignFirstResponder
 {
     return YES;
 }
@@ -88,9 +99,20 @@
     [self.pageController navigateBack:nil];
 }
 
+-(void)keyDown:(NSEvent *)theEvent
+{
+    [self interpretKeyEvents:@[theEvent]];
+    
+}
+
 -(void)moveForward:(id)sender
 {
     [self.pageController navigateForward:nil];
+}
+
+-(void)moveBackward:(id)sender
+{
+    [self.pageController navigateBack:nil];
 }
 
 -(void)moveRight:(id)sender
@@ -99,6 +121,16 @@
 }
 
 -(void)moveLeft:(id)sender
+{
+    [self.pageController navigateBack:nil];
+}
+
+-(void)moveDown:(id)sender
+{
+    [self.pageController navigateForward:nil];
+}
+
+-(void)moveUp:(id)sender
 {
     [self.pageController navigateBack:nil];
 }
@@ -191,6 +223,7 @@
     self.initialSelectedObject = [pageController.arrangedObjects objectAtIndex:pageController.selectedIndex];
 }
 
+/*
 -(void)makeSelectedViewFirstResponder
 {
     NSWindow *mainWindow = [[NSApplication sharedApplication] mainWindow];
@@ -198,13 +231,11 @@
     
     NSView *aView = self.pageController.selectedViewController.view;//
     //aView = [self.pageController.selectedViewController.view enclosingScrollView];
-    /*if (aView == nil) {
-     aView = aViewController.view;
-     }*/
+
     
     
-    [mainWindow makeFirstResponder:self];
-}
+    //[mainWindow makeFirstResponder:self];
+}*/
 
 
 - (void)pageController:(NSPageController *)pageController didTransitionToObject:(id)object
@@ -212,7 +243,7 @@
     //NSLog(@"didTransitionToObject : %@", object);
     
     
-    [self makeSelectedViewFirstResponder];
+ //   [self makeSelectedViewFirstResponder];
     /*dispatch_async(dispatch_get_current_queue(), ^{
      
      NSWindow *mainWindow = [[NSApplication sharedApplication] mainWindow];
@@ -229,7 +260,7 @@
 
 - (void)pageControllerDidEndLiveTransition:(NSPageController *)aPageController {
     [aPageController completeTransition];
-    [self makeSelectedViewFirstResponder];
+    //[self makeSelectedViewFirstResponder];
 }
 
 

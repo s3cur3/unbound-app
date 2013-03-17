@@ -1147,11 +1147,14 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     }
 }
 
+/*
+ 
+// don't use this, we need escape to get out of fullscreen mode
 -(void)cancelOperation:(id)sender
 {
     // escape key pressed
     [self gridViewDidDeselectAllItems:self];
-}
+}*/
 
 -(void)deleteForward:(id)sender
 {
