@@ -456,6 +456,28 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     return _managedObjectContext;
 }
 
+-(NSManagedObjectContext *)threadSafeManagedObjectContext
+{
+    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] init];
+    
+    //-------------------------------------------------------
+    //    Setting the undo manager to nil means that:
+    //
+    //    - You don’t waste effort recording undo actions for changes (such as insertions) that will not be undone;
+    //    - The undo manager doesn’t maintain strong references to changed objects and so prevent them from being deallocated
+    //-------------------------------------------------------
+    [context setUndoManager:nil];
+    
+    
+    //set it to the App Delegates persistant store coordinator
+    [context setPersistentStoreCoordinator:[self persistentStoreCoordinator]];
+    
+    // overwrite the database with updates from this context
+    [context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
+    
+    return context;
+}
+
 - (void)clearDatabase
 {
     // pop to the root vc

@@ -750,7 +750,31 @@ const CGFloat kThumbnailSize = 370.0f;
                     return;
                 }
                 
+                // now set the thumbnail data and exif (using a bg thread context)
                 
+                // create a thread-safe context (may want to make this a child context down the road)
+                NSManagedObjectContext *context = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];
+                
+                PIXPhoto * dbPhoto = (PIXPhoto *)[context existingObjectWithID:[weakSelf objectID] error:nil];
+                
+                [dbPhoto forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
+                
+            
+                if (dbPhoto.thumbnail == nil ) {
+                    PIXThumbnail *aThumb = [NSEntityDescription insertNewObjectForEntityForName:@"PIXThumbnail" inManagedObjectContext:context];
+                    aThumb.imageData = data;
+                    [dbPhoto setThumbnail:aThumb];
+                } else {
+                    dbPhoto.thumbnail.imageData = data;
+                }
+                _thumbnailImageIsLoading = NO;
+                
+                [context save:nil];
+                
+                [self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
+                
+                                
+                /*
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
                     [self forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
@@ -758,7 +782,7 @@ const CGFloat kThumbnailSize = 370.0f;
                     // set the thumbnail data (this will save the data into core data, the ui has already been updated)
                     [weakSelf mainThreadComputePreviewThumbnailFinished:data];
                     
-                });
+                });*/
                 
                 // clean up
                 if(cfDict) CFRelease(cfDict);

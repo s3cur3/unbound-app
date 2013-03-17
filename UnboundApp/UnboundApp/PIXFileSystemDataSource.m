@@ -885,11 +885,7 @@ NSString * DefaultDropBoxPhotosDirectory()
 {
     
     // create a thread-safe context (may want to make this a child context down the road)
-    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] init];
-    [context setUndoManager:nil];
-    
-    //set it to the App Delegates persistant store coordinator
-    [context setPersistentStoreCoordinator:[[PIXAppDelegate sharedAppDelegate] persistentStoreCoordinator]];
+    NSManagedObjectContext *context = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"PIXAlbum" inManagedObjectContext:context];

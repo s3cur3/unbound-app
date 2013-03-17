@@ -66,24 +66,7 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
         
         // create a thread-safe context (may want to make this a child context down the road)
-        NSManagedObjectContext *context = [[NSManagedObjectContext alloc] init];
-        
-        //-------------------------------------------------------
-        //    Setting the undo manager to nil means that:
-        //
-        //    - You don’t waste effort recording undo actions for changes (such as insertions) that will not be undone;
-        //    - The undo manager doesn’t maintain strong references to changed objects and so prevent them from being deallocated
-        //-------------------------------------------------------
-        [context setUndoManager:nil];
-        
-        
-        //set it to the App Delegates persistant store coordinator
-        PIXAppDelegate *appDelegate = (PIXAppDelegate *)[[NSApplication sharedApplication] delegate];
-        [context setPersistentStoreCoordinator:[appDelegate persistentStoreCoordinator]];
-        
-        // overwrite the database with updates from this context
-        [context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
-        
+        NSManagedObjectContext *context = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];
         
         // lastalbum will be used to cache the album fetch when looping through photos
         PIXAlbum *lastAlbum = nil;

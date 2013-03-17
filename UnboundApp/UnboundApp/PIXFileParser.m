@@ -591,11 +591,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
 {
     
     // create a thread-safe context (may want to make this a child context down the road)
-    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] init];
-    [context setUndoManager:nil];
-    
-    //set it to the App Delegates persistant store coordinator
-    [context setPersistentStoreCoordinator:[[PIXAppDelegate sharedAppDelegate] persistentStoreCoordinator]];
+    NSManagedObjectContext *context = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"PIXAlbum" inManagedObjectContext:context];
@@ -632,29 +628,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
         PIXAppDelegate *appDelegate = (PIXAppDelegate *)[[NSApplication sharedApplication] delegate];
         
         // create a thread-safe context (may want to make this a child context down the road)
-        NSManagedObjectContext *context = [[NSManagedObjectContext alloc] init];
-        
-        // try the parent child relationship
-        /*NSManagedObjectContext *context = [[NSManagedObjectContext alloc]
-                                           initWithConcurrencyType:NSConfinementConcurrencyType];
-        
-        
-        [context setParentContext:[appDelegate managedObjectContext]];*/
-        
-        //-------------------------------------------------------
-        //    Setting the undo manager to nil means that:
-        //
-        //    - You don’t waste effort recording undo actions for changes (such as insertions) that will not be undone;
-        //    - The undo manager doesn’t maintain strong references to changed objects and so prevent them from being deallocated
-        //-------------------------------------------------------
-        [context setUndoManager:nil];
-        
-        
-        //set it to the App Delegates persistant store coordinator
-        [context setPersistentStoreCoordinator:[appDelegate persistentStoreCoordinator]];
-        
-        // overwrite the database with updates from this context
-        [context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
+        NSManagedObjectContext *context = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];
         
         
         // lastalbum will be used to cache the album fetch when looping through photos

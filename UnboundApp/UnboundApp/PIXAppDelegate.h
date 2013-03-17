@@ -55,6 +55,8 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
+-(NSManagedObjectContext *)threadSafeManagedObjectContext;
+
 //The file parsing system (keeps file system in sync)
 @property (nonatomic, strong) PIXFileParser *fileParser;
 
