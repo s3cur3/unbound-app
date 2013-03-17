@@ -101,7 +101,14 @@ static CGSize kDefaultItemSizeCustomized;
     [NSBezierPath fillRect:imageFrame]; // will give a 6 pixel wide border
     CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
     
+    
     CGRect imageRect = CGRectInset(imageFrame, 6, 6);
+    
+    // make a smaller border when the photos are smaller
+    if(rect.size.width < 120)
+    {
+        imageRect = CGRectInset(imageFrame, 3, 3);
+    }
     //[photo drawInRect:imageRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
     
     [photo drawInRect:imageRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];

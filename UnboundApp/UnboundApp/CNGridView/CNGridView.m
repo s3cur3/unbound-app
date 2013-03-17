@@ -226,7 +226,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 {
     if (!NSEqualSizes(_itemSize, itemSize)) {
         _itemSize = itemSize;
-        [self refreshGridViewAnimated:YES];
+        [self refreshGridViewAnimated:NO];
     }
 }
 

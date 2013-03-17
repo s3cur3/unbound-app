@@ -18,10 +18,12 @@
 @property (nonatomic,weak) IBOutlet NSView *rightPane;
 
 @property (nonatomic,weak) IBOutlet NSSegmentedControl *backButtonSegment;
+@property (nonatomic,weak) IBOutlet NSSlider * sizeSlider;
 
 //@property (nonatomic, strong) Album* selectedAlbum;
 @property (nonatomic, strong) id selectedAlbum;
 
 -(IBAction)backBarSegmentChanged:(id)sender;
+-(IBAction)sliderValueChanged:(id)sender;
 
 @end

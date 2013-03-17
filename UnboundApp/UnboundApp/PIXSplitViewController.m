@@ -22,6 +22,8 @@
 @property (nonatomic, strong) NSViewController *mainViewController;
 
 @property (nonatomic, strong) NSToolbarItem * backButtonSegmentItem;
+@property (nonatomic, strong) NSToolbarItem * sliderItem;
+
 @property float lastSplitviewWidth;
 
 @end
@@ -70,6 +72,8 @@
     [self.imageBrowserViewController.gridView setNextKeyView:self.sidebarViewController.searchField];
     [self.sidebarViewController.searchField setNextKeyView:self.sidebarViewController.outlineView];
     
+    [self.imageBrowserViewController setThumbSize:self.sizeSlider.floatValue];
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         
         if([self.splitView isSubviewCollapsed:self.leftPane])
@@ -107,11 +111,37 @@
                              forSegment:1];
     
 
-    NSArray * items = @[self.backButtonSegmentItem];
+    NSArray * items = @[self.backButtonSegmentItem, self.navigationViewController.middleSpacer, self.sliderItem];
     
     [self.navigationViewController setNavBarHidden:NO];
     [self.navigationViewController setToolbarItems:items];
     
+}
+
+- (NSToolbarItem *)sliderItem
+{
+    if(_sliderItem!= nil) return _sliderItem;
+    
+    _sliderItem = [[NSToolbarItem alloc] initWithItemIdentifier:@"sliderItem"];
+    
+    
+    
+    _sliderItem.view = self.sizeSlider;
+    
+    [_sliderItem setLabel:@"Adjust Thumb Size"];
+    [_sliderItem setPaletteLabel:@"Adjust Thumb Size"];
+    
+    
+    // Set up a reasonable tooltip, and image
+    // you will likely want to localize many of the item's properties
+    [_sliderItem setToolTip:@"Adjust Thumb Size"];
+    
+    return _sliderItem;
+}
+
+-(IBAction)sliderValueChanged:(id)sender
+{
+    [self.imageBrowserViewController setThumbSize:self.sizeSlider.floatValue];
 }
 
 - (NSToolbarItem *)backButtonSegmentItem

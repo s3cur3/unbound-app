@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1080</int>
-		<string key="IBDocument.SystemVersion">12C60</string>
+		<string key="IBDocument.SystemVersion">12D78</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
-		<string key="IBDocument.AppKitVersion">1187.34</string>
-		<string key="IBDocument.HIToolboxVersion">625.00</string>
+		<string key="IBDocument.AppKitVersion">1187.37</string>
+		<string key="IBDocument.HIToolboxVersion">626.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">3084</string>
@@ -16,6 +16,8 @@
 			<string>NSCustomView</string>
 			<string>NSSegmentedCell</string>
 			<string>NSSegmentedControl</string>
+			<string>NSSlider</string>
+			<string>NSSliderCell</string>
 			<string>NSSplitView</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
@@ -36,7 +38,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomView" id="1005">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSSplitView" id="698707353">
@@ -49,7 +51,6 @@
 								<array class="NSMutableArray" key="NSSubviews"/>
 								<string key="NSFrameSize">{294, 684}</string>
 								<reference key="NSSuperview" ref="698707353"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="508775892"/>
 								<string key="NSReuseIdentifierKey">_NS:11</string>
 								<string key="NSClassName">NSView</string>
@@ -60,14 +61,12 @@
 								<array class="NSMutableArray" key="NSSubviews"/>
 								<string key="NSFrame">{{295, 0}, {727, 684}}</string>
 								<reference key="NSSuperview" ref="698707353"/>
-								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:13</string>
 								<string key="NSClassName">NSView</string>
 							</object>
 						</array>
 						<string key="NSFrameSize">{1022, 684}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="49106227"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSIsVertical">YES</bool>
@@ -80,8 +79,6 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{1022, 684}</string>
-				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="698707353"/>
 				<string key="NSClassName">NSView</string>
 			</object>
@@ -91,6 +88,7 @@
 				<string key="NSFrameSize">{109, 24}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
+				<reference key="NSNextKeyView"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<bool key="NSEnabled">YES</bool>
 				<object class="NSSegmentedCell" key="NSCell" id="757220986">
@@ -127,6 +125,32 @@
 					<int key="NSSelectedSegment">1</int>
 					<int key="NSTrackingMode">1</int>
 					<int key="NSSegmentStyle">5</int>
+				</object>
+				<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+			</object>
+			<object class="NSSlider" id="584030363">
+				<reference key="NSNextResponder"/>
+				<int key="NSvFlags">268</int>
+				<string key="NSFrameSize">{100, 25}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
+				<reference key="NSNextKeyView"/>
+				<string key="NSReuseIdentifierKey">_NS:9</string>
+				<bool key="NSEnabled">YES</bool>
+				<object class="NSSliderCell" key="NSCell" id="776582401">
+					<int key="NSCellFlags">-2080112384</int>
+					<int key="NSCellFlags2">0</int>
+					<string key="NSContents"/>
+					<string key="NSCellIdentifier">_NS:9</string>
+					<reference key="NSControlView" ref="584030363"/>
+					<double key="NSMaxValue">1</double>
+					<double key="NSMinValue">0.0</double>
+					<double key="NSValue">0.29999999999999999</double>
+					<double key="NSAltIncValue">0.0</double>
+					<int key="NSNumberOfTickMarks">0</int>
+					<int key="NSTickMarkPosition">1</int>
+					<bool key="NSAllowsTickMarkValuesOnly">NO</bool>
+					<bool key="NSVertical">NO</bool>
 				</object>
 				<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 			</object>
@@ -180,6 +204,22 @@
 						<reference key="destination" ref="1001133830"/>
 					</object>
 					<int key="connectionID">63</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">sizeSlider</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="584030363"/>
+					</object>
+					<int key="connectionID">87</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">sliderValueChanged:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="776582401"/>
+					</object>
+					<int key="connectionID">88</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -404,6 +444,19 @@
 						<reference key="object" ref="971497649"/>
 						<reference key="parent" ref="508775892"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">85</int>
+						<reference key="object" ref="584030363"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="776582401"/>
+						</array>
+						<reference key="parent" ref="0"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">86</int>
+						<reference key="object" ref="776582401"/>
+						<reference key="parent" ref="584030363"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -432,6 +485,8 @@
 				<string key="80.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="81.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="82.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="85.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="86.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<array key="9.IBNSViewMetadataConstraints">
 					<reference ref="421369103"/>
 				</array>
@@ -441,7 +496,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">84</int>
+			<int key="maxID">88</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -456,21 +511,25 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">PIXSplitViewController</string>
 					<string key="superclassName">PIXViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">backBarSegmentChanged:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">backBarSegmentChanged:</string>
-						<object class="IBActionInfo" key="NS.object.0">
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="backBarSegmentChanged:">id</string>
+						<string key="sliderValueChanged:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="backBarSegmentChanged:">
 							<string key="name">backBarSegmentChanged:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-					</object>
+						<object class="IBActionInfo" key="sliderValueChanged:">
+							<string key="name">sliderValueChanged:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="backButtonSegment">NSSegmentedControl</string>
 						<string key="leftPane">NSView</string>
 						<string key="rightPane">NSView</string>
+						<string key="sizeSlider">NSSlider</string>
 						<string key="splitView">NSSplitView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -485,6 +544,10 @@
 						<object class="IBToOneOutletInfo" key="rightPane">
 							<string key="name">rightPane</string>
 							<string key="candidateClassName">NSView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="sizeSlider">
+							<string key="name">sizeSlider</string>
+							<string key="candidateClassName">NSSlider</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="splitView">
 							<string key="name">splitView</string>

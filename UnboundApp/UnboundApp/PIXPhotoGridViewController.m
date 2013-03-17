@@ -74,6 +74,14 @@
     
 }
 
+// send a size between 0 and 1 (will be transformed into appropriate sizes)
+-(void)setThumbSize:(CGFloat)size
+{
+    // sizes mapped between 100 and 400
+    float transformedSize = 100+(300.0 * size);
+    [self.gridView setItemSize:CGSizeMake(transformedSize, transformedSize)];
+}
+
 
 -(void)setAlbum:(id)album
 {
