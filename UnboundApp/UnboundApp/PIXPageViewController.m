@@ -18,6 +18,8 @@
 
 #import "PIXPageHUDWindow.h"
 
+#import "PIXCustomShareSheetViewController.h"
+
 @interface PIXPageViewController () <leapResponder>
 
 @property NSArray * viewControllers;
@@ -25,8 +27,11 @@
 @property (assign) IBOutlet NSView * controlView;
 @property (assign) IBOutlet PIXPageHUDWindow * controlWindow;
 @property (assign) IBOutlet NSLayoutConstraint *infoPanelSpacer;
-
 @property BOOL infoPanelShowing;
+
+@property (nonatomic, strong) NSToolbarItem * shareItem;
+@property (nonatomic, strong) NSToolbarItem * infoItem;
+@property (nonatomic, strong) NSButton * infoButton;
 
 @end
 
@@ -77,6 +82,8 @@
         [NSAnimationContext beginGrouping];
         [self.infoPanelSpacer.animator setConstant:0];
         [NSAnimationContext endGrouping];
+        
+        [self.infoButton highlight:NO];
     }
     
     
@@ -85,9 +92,13 @@
         [NSAnimationContext beginGrouping];
         [self.infoPanelSpacer.animator setConstant:240];
         [NSAnimationContext endGrouping];
+        
+        [self.infoButton highlight:YES];
     }
     
     self.infoPanelShowing = !self.infoPanelShowing;
+    
+    
 }
 
 - (void)willShowPIXView
@@ -95,19 +106,16 @@
     [[PIXLeapInputManager sharedInstance] addResponder:self];
     
     
-    [self updateData];
+    
     
     dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [self updateData];
         
         [self.view.window makeFirstResponder:self];
         self.nextResponder = self.view;
         
-        
-        
-        [self.controlWindow setOpaque:NO];
-        [self.controlWindow setHasShadow:YES];
-        [self.view.window addChildWindow:self.controlWindow ordered:NSWindowAbove];
-        
+        [self.view.window addChildWindow:self.controlWindow ordered:NSWindowAbove];        
         [self.controlWindow orderFront:self];
         
         [self.controlView setNeedsDisplay:YES];
@@ -117,9 +125,101 @@
         
         [self.pageController.view layoutSubtreeIfNeeded];
         
-        [self.view setNeedsUpdateConstraints:YES];
+
         
     });
+}
+
+-(void)setupToolbar
+{
+    NSArray * items = @[self.navigationViewController.backButton, self.navigationViewController.middleSpacer, self.shareItem, self.infoItem];
+    
+    [self.navigationViewController setNavBarHidden:NO];
+    [self.navigationViewController setToolbarItems:items];
+    
+}
+
+- (NSToolbarItem *)shareItem
+{
+    if(_shareItem != nil) return _shareItem;
+    
+    _shareItem = [[NSToolbarItem alloc] initWithItemIdentifier:@"sharePhotoButton"];
+    //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
+    
+    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 60, 25)];
+    
+    [buttonView setImagePosition:NSNoImage];
+    [buttonView setBordered:YES];
+    [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
+    [buttonView setTitle:@"Share"];
+    
+    _shareItem.view = buttonView;
+    
+    [_shareItem setLabel:@"Share Photo"];
+    [_shareItem setPaletteLabel:@"Share Photo"];
+    
+    // Set up a reasonable tooltip, and image
+    // you will likely want to localize many of the item's properties
+    [_shareItem setToolTip:@"Share a Photo"];
+    
+    // Tell the item what message to send when it is clicked
+    [buttonView setTarget:self];
+    [buttonView setAction:@selector(shareButtonPressed:)];
+    
+    return _shareItem;
+    
+}
+
+-(IBAction)shareButtonPressed:(id)sender
+{
+    PIXCustomShareSheetViewController *controller = [[PIXCustomShareSheetViewController alloc] initWithNibName:@"PIXCustomShareSheetViewController"     bundle:nil];
+    NSPopover *popover = [[NSPopover alloc] init];
+    [popover setContentSize:NSMakeSize(280.0f, 100.0f)];
+    [popover setContentViewController:controller];
+    [popover setAnimates:YES];
+    [popover setBehavior:NSPopoverBehaviorTransient];
+    [popover showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMaxYEdge];
+}
+
+- (NSToolbarItem *)infoItem
+{
+    if(_infoItem != nil) return _infoItem;
+    
+    _infoItem = [[NSToolbarItem alloc] initWithItemIdentifier:@"infoButton"];
+    //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
+    
+    
+    
+    _infoItem.view = self.infoButton;
+    
+    [_infoItem setLabel:@"Photo Info"];
+    [_infoItem setPaletteLabel:@"Photo Info"];
+    
+    // Set up a reasonable tooltip, and image
+    // you will likely want to localize many of the item's properties
+    [_infoItem setToolTip:@"Photo Info"];
+
+    
+    return _infoItem;
+    
+}
+
+-(NSButton *)infoButton
+{
+    if(_infoButton != nil) return _infoButton;
+    
+    _infoButton = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 60, 25)];
+    
+    [_infoButton setImagePosition:NSNoImage];
+    [_infoButton setBordered:YES];
+    [_infoButton setBezelStyle:NSTexturedSquareBezelStyle];
+    [_infoButton setTitle:@"Info"];
+    
+    // Tell the item what message to send when it is clicked
+    [_infoButton setTarget:self];
+    [_infoButton setAction:@selector(toggleInfoPanel:)];
+    
+    return _infoButton;
 }
 
 -(BOOL)becomeFirstResponder
@@ -132,10 +232,6 @@
     return YES;
 }
 
--(BOOL) resignFirstResponder
-{
-    return YES;
-}
 
 - (void)willHidePIXView
 {
@@ -348,6 +444,7 @@
      [mainWindow makeFirstResponder:aView];
      
      });*/
+    
 }
 
 - (void)pageControllerDidEndLiveTransition:(NSPageController *)aPageController {

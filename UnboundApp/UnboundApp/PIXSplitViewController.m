@@ -14,6 +14,7 @@
 #import "PIXAppDelegate.h"
 #import "PIXMainWindowController.h"
 #import "PIXLeapInputManager.h"
+#import "PIXCustomShareSheetViewController.h"
 
 @interface PIXSplitViewController () <leapResponder>
 
@@ -23,6 +24,7 @@
 
 @property (nonatomic, strong) NSToolbarItem * backButtonSegmentItem;
 @property (nonatomic, strong) NSToolbarItem * sliderItem;
+@property (nonatomic, strong) NSToolbarItem * shareItem;
 
 @property float lastSplitviewWidth;
 
@@ -111,7 +113,7 @@
                              forSegment:1];
     
 
-    NSArray * items = @[self.backButtonSegmentItem, self.navigationViewController.middleSpacer, self.sliderItem];
+    NSArray * items = @[self.backButtonSegmentItem, self.navigationViewController.middleSpacer, self.shareItem, self.sliderItem];
     
     [self.navigationViewController setNavBarHidden:NO];
     [self.navigationViewController setToolbarItems:items];
@@ -183,6 +185,49 @@
                                  forSegment:1];
     }
 }
+
+- (NSToolbarItem *)shareItem
+{
+    if(_shareItem != nil) return _shareItem;
+    
+    _shareItem = [[NSToolbarItem alloc] initWithItemIdentifier:@"shareAlbumButton"];
+    //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
+    
+    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 60, 25)];
+
+    [buttonView setImagePosition:NSNoImage];
+    [buttonView setBordered:YES];
+    [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
+    [buttonView setTitle:@"Share"];
+    
+    _shareItem.view = buttonView;
+    
+    [_shareItem setLabel:@"Share Album"];
+    [_shareItem setPaletteLabel:@"Share Album"];
+    
+    // Set up a reasonable tooltip, and image
+    // you will likely want to localize many of the item's properties
+    [_shareItem setToolTip:@"Share an Album"];
+    
+    // Tell the item what message to send when it is clicked
+    [buttonView setTarget:self];
+    [buttonView setAction:@selector(shareButtonPressed:)];
+    
+    return _shareItem;
+    
+}
+
+-(IBAction)shareButtonPressed:(id)sender
+{
+    PIXCustomShareSheetViewController *controller = [[PIXCustomShareSheetViewController alloc] initWithNibName:@"PIXCustomShareSheetViewController"     bundle:nil];
+    NSPopover *popover = [[NSPopover alloc] init];
+    [popover setContentSize:NSMakeSize(280.0f, 100.0f)];
+    [popover setContentViewController:controller];
+    [popover setAnimates:YES];
+    [popover setBehavior:NSPopoverBehaviorTransient];
+    [popover showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMaxYEdge];
+}
+
 
 -(void)multiFingerSwipeUp
 {
