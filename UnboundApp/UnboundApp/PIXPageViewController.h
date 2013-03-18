@@ -17,9 +17,11 @@
 @property (assign) IBOutlet NSPageController *pageController;
 @property (strong) NSMutableArray *pagerData;
 
+
 @property (assign) id initialSelectedObject;
 
 @property (nonatomic, strong) NSViewController *pageControllerSelectedViewController;
 
+-(IBAction)toggleInfoPanel:(id)sender;
 
 @end

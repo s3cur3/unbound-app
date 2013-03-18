@@ -16,9 +16,17 @@
 #import "PIXLeapInputManager.h"
 #import "PIXNavigationController.h"
 
+#import "PIXPageHUDWindow.h"
+
 @interface PIXPageViewController () <leapResponder>
 
 @property NSArray * viewControllers;
+
+@property (assign) IBOutlet NSView * controlView;
+@property (assign) IBOutlet PIXPageHUDWindow * controlWindow;
+@property (assign) IBOutlet NSLayoutConstraint *infoPanelSpacer;
+
+@property BOOL infoPanelShowing;
 
 @end
 
@@ -41,8 +49,11 @@
     {
         [self.pageController.view setWantsLayer:YES];
         self.pageController.transitionStyle = NSPageControllerTransitionStyleHorizontalStrip;
-    
         
+        [self.infoPanelSpacer setConstant:0.0];
+        self.infoPanelShowing = NO;
+        
+        [self.view setNeedsUpdateConstraints:YES];
         
     }
 }
@@ -50,9 +61,34 @@
 -(void)setupToolbar
 {
 //    [self.navigationViewController setNavBarHidden:YES];
+ 
+ [NSAnimationContext beginGrouping];
+ [self.toolbarPosition.animator setConstant:0];
+ //[[clipView animator] setBoundsOrigin:origin];
+ [NSAnimationContext endGrouping];
 }
 */
 
+
+-(IBAction)toggleInfoPanel:(id)sender;
+{
+    if(self.infoPanelShowing)
+    {
+        [NSAnimationContext beginGrouping];
+        [self.infoPanelSpacer.animator setConstant:0];
+        [NSAnimationContext endGrouping];
+    }
+    
+    
+    else
+    {
+        [NSAnimationContext beginGrouping];
+        [self.infoPanelSpacer.animator setConstant:240];
+        [NSAnimationContext endGrouping];
+    }
+    
+    self.infoPanelShowing = !self.infoPanelShowing;
+}
 
 - (void)willShowPIXView
 {
@@ -65,6 +101,23 @@
         
         [self.view.window makeFirstResponder:self];
         self.nextResponder = self.view;
+        
+        
+        
+        [self.controlWindow setOpaque:NO];
+        [self.controlWindow setHasShadow:YES];
+        [self.view.window addChildWindow:self.controlWindow ordered:NSWindowAbove];
+        
+        [self.controlWindow orderFront:self];
+        
+        [self.controlView setNeedsDisplay:YES];
+        
+        [self.controlWindow setParentView:self.pageController.view];
+        
+        
+        [self.pageController.view layoutSubtreeIfNeeded];
+        
+        [self.view setNeedsUpdateConstraints:YES];
         
     });
 }
@@ -86,7 +139,11 @@
 
 - (void)willHidePIXView
 {
+    [self.view.window removeChildWindow:self.controlWindow];
+    
     [[PIXLeapInputManager sharedInstance] removeResponder:self];
+    
+    
 }
 
 -(void)multiFingerSwipeUp
@@ -142,6 +199,35 @@
     [self.pageController navigateForward:nil];
 }
 
+#pragma mark - 
+#pragma mark mouse movement methods (for hiding and showing the hud)
+
+-(void)mouseEntered:(NSEvent *)theEvent
+{
+    [self.controlWindow showAnimated:NO];
+    
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(fadeWindow) object:nil];
+    [self performSelector:@selector(fadeWindow) withObject:nil afterDelay:2.5];
+}
+
+-(void)mouseMoved:(NSEvent *)theEvent
+{
+    [self.controlWindow showAnimated:NO];
+    
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(fadeWindow) object:nil];
+    [self performSelector:@selector(fadeWindow) withObject:nil afterDelay:2.5];
+}
+
+-(void)mouseExited:(NSEvent *)theEvent
+{
+    [self performSelector:@selector(fadeWindow) withObject:nil afterDelay:0.5];
+}
+
+-(void)fadeWindow
+{
+    [self.controlWindow hideAnimated:YES];
+}
+
 - (void)updateData {
     
     self.pagerData = [[self.album.photos array] mutableCopy];
@@ -191,6 +277,7 @@
     if (![identifier isEqualToString:@"video"])
     {
         PIXImageViewController *aVC =  [[PIXImageViewController alloc] initWithNibName:@"imageview" bundle:nil];
+        [aVC.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
         aVC.pageViewController = self;
         return aVC;
     } else {

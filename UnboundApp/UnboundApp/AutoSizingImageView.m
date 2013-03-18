@@ -23,6 +23,8 @@
     } else {
         [super setFrameSize:newSize];
     }
+    
+    [scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
 }
 
 -(void)keyDown:(NSEvent *)theEvent

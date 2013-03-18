@@ -97,6 +97,8 @@
 		8C4B9CAA16DC436B00F6BADD /* PIXExifBGView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B9CA916DC436B00F6BADD /* PIXExifBGView.m */; };
 		8C68246B16F596BB00245F09 /* PIXSelectionLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68246A16F596BB00245F09 /* PIXSelectionLayer.m */; };
 		8C68246E16F599FD00245F09 /* NSBezierPath+pathUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68246D16F599FD00245F09 /* NSBezierPath+pathUtilities.m */; };
+		8C68247116F6850C00245F09 /* PIXPageHUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68247016F6850B00245F09 /* PIXPageHUDView.m */; };
+		8C68247416F6A75100245F09 /* PIXPageHUDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68247316F6A75000245F09 /* PIXPageHUDWindow.m */; };
 		8C7ABBBE16C42A3D00784BDA /* PIXGradientBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7ABBBD16C42A3D00784BDA /* PIXGradientBarView.m */; };
 		8C8EE92B16C46AB800F16C49 /* PIXAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE92A16C46AB800F16C49 /* PIXAlbum.m */; };
 		8C8EE93416CACA7900F16C49 /* ArchDirectoryObservationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE92F16CACA7900F16C49 /* ArchDirectoryObservationCenter.m */; };
@@ -286,6 +288,10 @@
 		8C68246A16F596BB00245F09 /* PIXSelectionLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSelectionLayer.m; sourceTree = "<group>"; };
 		8C68246C16F599FC00245F09 /* NSBezierPath+pathUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBezierPath+pathUtilities.h"; sourceTree = "<group>"; };
 		8C68246D16F599FD00245F09 /* NSBezierPath+pathUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBezierPath+pathUtilities.m"; sourceTree = "<group>"; };
+		8C68246F16F6850B00245F09 /* PIXPageHUDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPageHUDView.h; sourceTree = "<group>"; };
+		8C68247016F6850B00245F09 /* PIXPageHUDView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPageHUDView.m; sourceTree = "<group>"; };
+		8C68247216F6A74F00245F09 /* PIXPageHUDWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPageHUDWindow.h; sourceTree = "<group>"; };
+		8C68247316F6A75000245F09 /* PIXPageHUDWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPageHUDWindow.m; sourceTree = "<group>"; };
 		8C7ABBBC16C42A3D00784BDA /* PIXGradientBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXGradientBarView.h; sourceTree = "<group>"; };
 		8C7ABBBD16C42A3D00784BDA /* PIXGradientBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXGradientBarView.m; sourceTree = "<group>"; };
 		8C8EE92916C46AB800F16C49 /* PIXAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXAlbum.h; sourceTree = "<group>"; };
@@ -346,6 +352,10 @@
 				1D08351F167E7C80003D557A /* PIXPageView.m */,
 				1D08352B167E8B2A003D557A /* PIXImageViewController.h */,
 				1D08352C167E8B2B003D557A /* PIXImageViewController.m */,
+				8C68246F16F6850B00245F09 /* PIXPageHUDView.h */,
+				8C68247016F6850B00245F09 /* PIXPageHUDView.m */,
+				8C68247216F6A74F00245F09 /* PIXPageHUDWindow.h */,
+				8C68247316F6A75000245F09 /* PIXPageHUDWindow.m */,
 			);
 			name = PageView;
 			sourceTree = "<group>";
@@ -914,6 +924,8 @@
 				8C031CD516E926F7009B7F38 /* PIXLeapInputManager.m in Sources */,
 				8C68246B16F596BB00245F09 /* PIXSelectionLayer.m in Sources */,
 				8C68246E16F599FD00245F09 /* NSBezierPath+pathUtilities.m in Sources */,
+				8C68247116F6850C00245F09 /* PIXPageHUDView.m in Sources */,
+				8C68247416F6A75100245F09 /* PIXPageHUDWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

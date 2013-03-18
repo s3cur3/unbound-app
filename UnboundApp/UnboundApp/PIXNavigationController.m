@@ -72,11 +72,12 @@
         
     [aViewController.view setFrame:self.view.bounds];
     
+    
     [aViewController willShowPIXView];
     
     [self.view addSubview:aViewController.view];
         
-    //[aViewController.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+    [aViewController.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
     
     [self.viewControllers addObject:aViewController];
     
@@ -101,7 +102,8 @@
     
     
         
-    //[aViewController.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+    //[underViewController.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+    
     [self setupToolbar];
 }
 
@@ -128,9 +130,8 @@
     [underViewController willShowPIXView];
     [self.view addSubview:[underViewController view]];
     
+    //[underViewController.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
     
-    
-    //[aViewController.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
     [self setupToolbar];
 }
 

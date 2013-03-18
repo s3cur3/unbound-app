@@ -486,6 +486,10 @@ const CGFloat kThumbnailSize = 370.0f;
                 {
                     // use performSelector instead of dispatch here because it updates the ui much faster
                     [weakSelf performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        _thumbnailImageIsLoading = NO;
+                    });
                 }
                 
                 // if we still havent found the thumb then laod from original image
@@ -500,18 +504,27 @@ const CGFloat kThumbnailSize = 370.0f;
             return nil;
             
         }
+        
+        if (_thumbnailImage == nil)
+        {
+            self.cancelThumbnailLoadOperation = NO;
+            _thumbnailImageIsLoading = YES;
+            [self loadThumbnailImage];
+            return nil;
+        }
     }
     
-    // if this is still nil (the image load may have failed)
-    // even if we have a _thumbnailImage object, load the self.thumbnail if it's nil
-    if ((_thumbnailImage == nil || self.thumbnail == nil) && !_thumbnailImageIsLoading)
+    /* TODO: figure out why this case isn't working -- scott
+    // the load seems to have been cancelled before the thumb was saved to disk
+    if(!_thumbnailImageIsLoading && self.thumbnail == nil)
     {
+        // try relaoding here, the load may
         self.cancelThumbnailLoadOperation = NO;
         _thumbnailImageIsLoading = YES;
         [self loadThumbnailImage];
-        return nil;
     }
     
+    */
 
     return _thumbnailImage;
 }
@@ -767,7 +780,7 @@ const CGFloat kThumbnailSize = 370.0f;
                 } else {
                     dbPhoto.thumbnail.imageData = data;
                 }
-                _thumbnailImageIsLoading = NO;
+                
                 
                 [context save:nil];
                 
@@ -787,6 +800,12 @@ const CGFloat kThumbnailSize = 370.0f;
                 // clean up
                 if(cfDict) CFRelease(cfDict);
                 CFRelease(imageSource);
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    _thumbnailImageIsLoading = NO;
+                });
+                
+                
             });
         }
     });
