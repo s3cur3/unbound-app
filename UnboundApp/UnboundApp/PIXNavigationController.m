@@ -147,25 +147,15 @@
 
 -(void)setNavBarHidden:(BOOL)hidden
 {
-    /*
-    NSRect frame = [[self.view window] frame];
-    
-    NSUInteger mask = 0;
-    
-    if(hidden)
+    if(hidden && [self.toolbar isVisible])
     {
-        mask = NSTexturedBackgroundWindowMask | NSResizableWindowMask;
+        [self.view.window toggleToolbarShown:self];
     }
     
-    else
+    else if(![self.toolbar isVisible])
     {
-        mask = NSTitledWindowMask | NSClosableWindowMask | NSResizableWindowMask | NSMiniaturizableWindowMask;
+        [self.view.window toggleToolbarShown:self];
     }
-    
-    [self.view.window setStyleMask:mask];
-    
-    [[self.view window] setFrame:frame display:YES];
-     */
 }
 
 -(void)setupToolbar

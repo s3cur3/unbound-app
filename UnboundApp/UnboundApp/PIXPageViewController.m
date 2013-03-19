@@ -33,6 +33,8 @@
 @property (nonatomic, strong) NSToolbarItem * infoItem;
 @property (nonatomic, strong) NSButton * infoButton;
 
+@property BOOL hasMouse;
+
 @end
 
 @implementation PIXPageViewController
@@ -300,28 +302,78 @@
 
 -(void)mouseEntered:(NSEvent *)theEvent
 {
-    [self.controlWindow showAnimated:NO];
+    [self unfadeControls];
     
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(fadeWindow) object:nil];
-    [self performSelector:@selector(fadeWindow) withObject:nil afterDelay:2.5];
+    // stop any current timed control fades
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(tryFadeControls) object:nil];
+    
+    // start another timer
+    [self performSelector:@selector(tryFadeControls) withObject:nil afterDelay:2.5];
+    
+    self.hasMouse = YES;
 }
 
 -(void)mouseMoved:(NSEvent *)theEvent
 {
-    [self.controlWindow showAnimated:NO];
+    [self unfadeControls];
     
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(fadeWindow) object:nil];
-    [self performSelector:@selector(fadeWindow) withObject:nil afterDelay:2.5];
+    // stop any current timed control fades
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(tryFadeControls) object:nil];
+    
+    // start another timer
+    [self performSelector:@selector(tryFadeControls) withObject:nil afterDelay:2.5];
+    
+    self.hasMouse = YES;
 }
 
 -(void)mouseExited:(NSEvent *)theEvent
 {
-    [self performSelector:@selector(fadeWindow) withObject:nil afterDelay:0.5];
+    // stop any current timed control fades
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(tryFadeControls) object:nil];
+    
+    
+    NSPoint location = [theEvent locationInWindow];
+    
+    
+    // if we're above the view in fullscreen don't fade (user is activating the toolbar)
+    if(([self.view.window styleMask] & NSFullScreenWindowMask) &&
+       location.x > self.view.bounds.origin.x &&
+       location.x < self.view.frame.origin.x + self.view.bounds.size.width)
+    {
+        return;
+    }
+        
+    // start another timer (this one shorter than normal)
+    [self performSelector:@selector(tryFadeControls) withObject:nil afterDelay:0.5];
+    
+    self.hasMouse = NO;
 }
 
--(void)fadeWindow
+-(void)unfadeControls
 {
-    [self.controlWindow hideAnimated:YES];
+    [self.controlWindow showAnimated:NO];
+    [self.navigationViewController setNavBarHidden:NO];
+}
+
+-(void)tryFadeControls
+{
+    if(![self.controlWindow hasMouse])
+    {
+        [self.controlWindow hideAnimated:YES];
+        
+        
+        // if we're in fullscreen mode then also fade the top toolbar
+        if([self.view.window styleMask] & NSFullScreenWindowMask && !self.infoPanelShowing)
+        {
+            [self.navigationViewController setNavBarHidden:YES];
+        }
+        
+        // hide the cursor until it moves
+        if(self.hasMouse)
+        {
+            [NSCursor setHiddenUntilMouseMoves:YES];
+        }
+    }
 }
 
 - (void)updateData {
