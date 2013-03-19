@@ -130,6 +130,10 @@
 		8CE8F62616BD8C9E00DC6014 /* DebugPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE8F62316BD8C9E00DC6014 /* DebugPreferencesViewController.m */; };
 		8CF2C5E316BB458900F906F1 /* MASPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CF2C5DF16BB458900F906F1 /* MASPreferencesWindow.xib */; };
 		8CF2C5E416BB458900F906F1 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CF2C5E216BB458900F906F1 /* MASPreferencesWindowController.m */; };
+		8CF9CE4216F8200A003B0933 /* arrow-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CF9CE3E16F8200A003B0933 /* arrow-left.png */; };
+		8CF9CE4316F8200A003B0933 /* arrow-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CF9CE3F16F8200A003B0933 /* arrow-left@2x.png */; };
+		8CF9CE4416F8200A003B0933 /* arrow-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CF9CE4016F8200A003B0933 /* arrow-right.png */; };
+		8CF9CE4516F8200A003B0933 /* arrow-right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CF9CE4116F8200A003B0933 /* arrow-right@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -350,6 +354,10 @@
 		8CF2C5E016BB458900F906F1 /* MASPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASPreferencesViewController.h; sourceTree = "<group>"; };
 		8CF2C5E116BB458900F906F1 /* MASPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASPreferencesWindowController.h; sourceTree = "<group>"; };
 		8CF2C5E216BB458900F906F1 /* MASPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASPreferencesWindowController.m; sourceTree = "<group>"; };
+		8CF9CE3E16F8200A003B0933 /* arrow-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-left.png"; sourceTree = "<group>"; };
+		8CF9CE3F16F8200A003B0933 /* arrow-left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-left@2x.png"; sourceTree = "<group>"; };
+		8CF9CE4016F8200A003B0933 /* arrow-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-right.png"; sourceTree = "<group>"; };
+		8CF9CE4116F8200A003B0933 /* arrow-right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-right@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -475,6 +483,10 @@
 				8C68248016F8089400245F09 /* buttongrid_share@2x.png */,
 				8C68248116F8089400245F09 /* buttongrid_twitter.png */,
 				8C68248216F8089400245F09 /* buttongrid_twitter@2x.png */,
+				8CF9CE3E16F8200A003B0933 /* arrow-left.png */,
+				8CF9CE3F16F8200A003B0933 /* arrow-left@2x.png */,
+				8CF9CE4016F8200A003B0933 /* arrow-right.png */,
+				8CF9CE4116F8200A003B0933 /* arrow-right@2x.png */,
 			);
 			path = images;
 			sourceTree = "<group>";
@@ -902,6 +914,10 @@
 				8C68248E16F8089400245F09 /* buttongrid_share@2x.png in Resources */,
 				8C68248F16F8089400245F09 /* buttongrid_twitter.png in Resources */,
 				8C68249016F8089400245F09 /* buttongrid_twitter@2x.png in Resources */,
+				8CF9CE4216F8200A003B0933 /* arrow-left.png in Resources */,
+				8CF9CE4316F8200A003B0933 /* arrow-left@2x.png in Resources */,
+				8CF9CE4416F8200A003B0933 /* arrow-right.png in Resources */,
+				8CF9CE4516F8200A003B0933 /* arrow-right@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

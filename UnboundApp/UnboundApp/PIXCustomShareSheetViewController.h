@@ -10,4 +10,7 @@
 
 @interface PIXCustomShareSheetViewController : NSViewController
 
+-(void)setPhotosToShare:(NSArray *)photos;
+-(void)setAlbumsToShare:(NSArray *)albums;
+
 @end

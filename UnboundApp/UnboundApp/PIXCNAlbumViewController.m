@@ -466,8 +466,11 @@
 -(void)share:(id)sender
 {
     PIXCustomShareSheetViewController *controller = [[PIXCustomShareSheetViewController alloc] initWithNibName:@"PIXCustomShareSheetViewController"     bundle:nil];
+    
+    [controller setAlbumsToShare:[self.selectedItems allObjects]];
+    
     NSPopover *popover = [[NSPopover alloc] init];
-    [popover setContentSize:NSMakeSize(280.0f, 100.0f)];
+    
     [popover setContentViewController:controller];
     [popover setAnimates:YES];
     [popover setBehavior:NSPopoverBehaviorTransient];

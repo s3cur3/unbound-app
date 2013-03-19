@@ -175,8 +175,12 @@
 -(IBAction)shareButtonPressed:(id)sender
 {
     PIXCustomShareSheetViewController *controller = [[PIXCustomShareSheetViewController alloc] initWithNibName:@"PIXCustomShareSheetViewController"     bundle:nil];
+    
+    PIXPhoto * thisPhoto = [self.pagerData objectAtIndex:self.pageController.selectedIndex];
+    
+    [controller setPhotosToShare:@[thisPhoto]];
+    
     NSPopover *popover = [[NSPopover alloc] init];
-    [popover setContentSize:NSMakeSize(280.0f, 100.0f)];
     [popover setContentViewController:controller];
     [popover setAnimates:YES];
     [popover setBehavior:NSPopoverBehaviorTransient];
