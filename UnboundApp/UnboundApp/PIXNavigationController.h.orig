@@ -1,0 +1,36 @@
+//
+//  PIXNavigationController.h
+//  UnboundApp
+//
+//  Created by Bob on 12/14/12.
+//  Copyright (c) 2012 Pixite Apps LLC. All rights reserved.
+//
+
+#import <Cocoa/Cocoa.h>
+
+@class PIXViewController;
+
+@interface PIXNavigationController : NSViewController <NSToolbarDelegate>
+
+@property (weak, nonatomic) IBOutlet NSWindow *mainWindow;
+@property (weak, nonatomic) IBOutlet NSToolbar * toolbar;
+
+@property (strong, nonatomic) IBOutlet NSToolbarItem * backButton;
+@property (strong, nonatomic) IBOutlet NSToolbarItem * middleSpacer;
+
+@property (weak) IBOutlet NSProgressIndicator *activitySpinner;
+- (IBAction)backPressed:(id)sender;
+
+-(void)pushViewController:(PIXViewController *)aViewController;
+-(void)popViewController;
+-(NSArray *) viewControllerArray;
+
+-(void)setToolbarItems:(NSArray *)items;
+<<<<<<< HEAD
+-(void)startSpinner;
+-(void)stopSpinner;
+=======
+
+>>>>>>> a503f073e1da679b6dc924cf4c3bcb6ba3d915c5
+
+@end

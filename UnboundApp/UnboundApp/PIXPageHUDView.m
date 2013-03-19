@@ -32,6 +32,11 @@
     [(PIXPageHUDWindow *)[self window] setHasMouse:YES];
 }
 
+-(void)mouseMoved:(NSEvent *)theEvent
+{
+    [(PIXPageHUDWindow *)[self window] setHasMouse:YES];
+}
+
 
 -(void)mouseExited:(NSEvent *)theEvent
 {
@@ -45,7 +50,7 @@
         [self removeTrackingArea:self.boundsTrackingArea];
     }
     
-    int opts = (NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways);
+    int opts = (NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways | NSTrackingMouseMoved);
     self.boundsTrackingArea = [ [NSTrackingArea alloc] initWithRect:[self bounds]
                                                             options:opts
                                                               owner:self
@@ -59,7 +64,7 @@
     // Drawing code here.
     
     
-    NSRect innerbounds = CGRectInset(self.bounds, 6.5, 6.5);
+    NSRect innerbounds = CGRectInset(self.bounds, 6.0, 6.0);
     NSBezierPath *selectionRectPath = [NSBezierPath bezierPathWithRoundedRect:innerbounds xRadius:10 yRadius:10];
     
     
@@ -75,7 +80,8 @@
     CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
     
     // stroke the outside
-    [[NSColor colorWithCalibratedWhite:1.0 alpha:.4] setStroke];
+    [[NSColor colorWithCalibratedWhite:1.0 alpha:.3] setStroke];
+    [selectionRectPath setLineWidth:2.0];
     [selectionRectPath stroke];
     
     

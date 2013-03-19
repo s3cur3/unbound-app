@@ -14,6 +14,8 @@
 
 @property (weak, nonatomic) NSView * parentView;
 
+@property NSUInteger position;
+
 
 @end
 
@@ -37,6 +39,8 @@
         [self setOpaque:NO];
         [self setBackgroundColor:[NSColor clearColor]]; 
         [self setHasShadow:YES];
+        
+        self.position = [[NSUserDefaults standardUserDefaults] integerForKey:@"PIXPageHudPosition"];
        
     }
     return self;
@@ -59,17 +63,132 @@
 -(void)parentFrameChaged:(NSNotificationCenter *)note
 {
     [self setPositionAnimated:NO];
+}
 
+-(void)findClosestPosition
+{
+    CGRect viewFrame = [self.parentView.window convertRectToScreen:self.parentView.frame];
+    
+    
+    NSPoint normalizedPosition = NSMakePoint((self.frame.origin.x-viewFrame.origin.x) / (viewFrame.size.width - self.frame.size.width),
+                                             (self.frame.origin.y-viewFrame.origin.y) / (viewFrame.size.height - self.frame.size.height));
+    
+    // top postions
+    if(normalizedPosition.y > 0.5)
+    {
+        if(normalizedPosition.x < 0.2)
+        {
+            // top left
+            self.position = 2;
+        }
+        
+        else if(normalizedPosition.x > 0.8)
+        {
+            // top right
+            self.position = 4;
+        }
+        
+        else
+        {
+            // top center
+            self.position = 3;
+        }
+    }
+    
+    // bottom positions
+    else
+    {
+        if(normalizedPosition.x < 0.2)
+        {
+            // bottom left
+            self.position = 1;
+        }
+        
+        else if(normalizedPosition.x > 0.8)
+        {
+            // bottom right
+            self.position = 5;
+        }
+        
+        else
+        {
+            // bottom center
+            self.position = 0;
+        }
+    }
+
+    
+    [[NSUserDefaults standardUserDefaults] setInteger:self.position forKey:@"PIXPageHudPosition"];
+    [self setPositionAnimated:YES];
+    
+    
 }
 
 -(void)setPositionAnimated:(BOOL)animated
 {
     CGRect viewFrame = [self.parentView.window convertRectToScreen:self.parentView.frame];
     
-    CGRect newFrame = CGRectMake(viewFrame.origin.x + (viewFrame.size.width /2) - (self.frame.size.width/2),
-                                 viewFrame.origin.y + 30,
-                                 self.frame.size.width,
-                                 self.frame.size.height);
+    
+    CGRect newFrame = CGRectZero;
+    
+    switch (self.position) {
+            
+        case 1: // bottom left
+            
+            newFrame = CGRectMake(viewFrame.origin.x + 30,
+                                  viewFrame.origin.y + 30,
+                                  self.frame.size.width,
+                                  self.frame.size.height);
+            
+            break;
+            
+        case 2: // top left
+            
+            newFrame = CGRectMake(viewFrame.origin.x + 30,
+                                  viewFrame.origin.y + viewFrame.size.height - 30 - self.frame.size.height,
+                                  self.frame.size.width,
+                                  self.frame.size.height);
+            
+            break;
+            
+        case 3: // top center
+            
+            newFrame = CGRectMake(viewFrame.origin.x + (viewFrame.size.width /2) - (self.frame.size.width/2),
+                                  viewFrame.origin.y + viewFrame.size.height - 30 - self.frame.size.height,
+                                  self.frame.size.width,
+                                  self.frame.size.height);
+            
+            break;
+            
+        case 4: // top right
+            
+            newFrame = CGRectMake(viewFrame.origin.x + viewFrame.size.width - 30 - self.frame.size.width,
+                                  viewFrame.origin.y + viewFrame.size.height - 30 - self.frame.size.height,
+                                  self.frame.size.width,
+                                  self.frame.size.height);
+            
+            break;
+            
+        case 5: // bottom right
+            
+            newFrame = CGRectMake(viewFrame.origin.x + viewFrame.size.width - 30 - self.frame.size.width,
+                                  viewFrame.origin.y + 30,
+                                  self.frame.size.width,
+                                  self.frame.size.height);
+            
+            break;
+            
+        default: // bottom center
+            
+            newFrame = CGRectMake(viewFrame.origin.x + (viewFrame.size.width /2) - (self.frame.size.width/2),
+                                  viewFrame.origin.y + 30,
+                                  self.frame.size.width,
+                                  self.frame.size.height);
+            
+            break;
+    }
+    
+    
     
     // Move the window to the new location
     if(animated)
@@ -177,8 +296,9 @@
 
 
 - (void)mouseUp:(NSEvent *)theEvent {
-    // Get the mouse location in window coordinates.
-    [self setPositionAnimated:YES];
+    // animate to the closest snap position
+    [self findClosestPosition];
+    self.hasMouse = NO;
 }
 
 
