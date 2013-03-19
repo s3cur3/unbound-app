@@ -15,7 +15,7 @@
 		1D083516167D78AD003D557A /* PIXImageBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D083515167D78AD003D557A /* PIXImageBrowserCell.m */; };
 		1D083519167DCA71003D557A /* AutoSizingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D083518167DCA71003D557A /* AutoSizingImageView.m */; };
 		1D083520167E7C80003D557A /* PIXPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D08351F167E7C80003D557A /* PIXPageView.m */; };
-		1D083526167E7EEE003D557A /* imageview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D083525167E7EEE003D557A /* imageview.xib */; };
+		1D083526167E7EEE003D557A /* AutoSizingImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D083525167E7EEE003D557A /* AutoSizingImageView.xib */; };
 		1D08352D167E8B2B003D557A /* PIXImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D08352C167E8B2B003D557A /* PIXImageViewController.m */; };
 		1D4A1DAE167AD93400C9A895 /* dark_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1D9A167AD93400C9A895 /* dark_bg.png */; };
 		1D4A1DAF167AD93400C9A895 /* dark_bg@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1D9B167AD93400C9A895 /* dark_bg@2X.png */; };
@@ -134,6 +134,7 @@
 		8CF9CE4316F8200A003B0933 /* arrow-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CF9CE3F16F8200A003B0933 /* arrow-left@2x.png */; };
 		8CF9CE4416F8200A003B0933 /* arrow-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CF9CE4016F8200A003B0933 /* arrow-right.png */; };
 		8CF9CE4516F8200A003B0933 /* arrow-right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CF9CE4116F8200A003B0933 /* arrow-right@2x.png */; };
+		8CF9CE4816F8B4A9003B0933 /* PIXInfoPanelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CF9CE4716F8B4A9003B0933 /* PIXInfoPanelView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -164,7 +165,7 @@
 		1D083518167DCA71003D557A /* AutoSizingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoSizingImageView.m; sourceTree = "<group>"; };
 		1D08351E167E7C80003D557A /* PIXPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPageView.h; sourceTree = "<group>"; };
 		1D08351F167E7C80003D557A /* PIXPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPageView.m; sourceTree = "<group>"; };
-		1D083525167E7EEE003D557A /* imageview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = imageview.xib; sourceTree = "<group>"; };
+		1D083525167E7EEE003D557A /* AutoSizingImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AutoSizingImageView.xib; sourceTree = "<group>"; };
 		1D08352B167E8B2A003D557A /* PIXImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXImageViewController.h; sourceTree = "<group>"; };
 		1D08352C167E8B2B003D557A /* PIXImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXImageViewController.m; sourceTree = "<group>"; };
 		1D4A1D9A167AD93400C9A895 /* dark_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dark_bg.png; sourceTree = "<group>"; };
@@ -358,6 +359,8 @@
 		8CF9CE3F16F8200A003B0933 /* arrow-left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-left@2x.png"; sourceTree = "<group>"; };
 		8CF9CE4016F8200A003B0933 /* arrow-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-right.png"; sourceTree = "<group>"; };
 		8CF9CE4116F8200A003B0933 /* arrow-right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-right@2x.png"; sourceTree = "<group>"; };
+		8CF9CE4616F8B4A9003B0933 /* PIXInfoPanelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXInfoPanelView.h; sourceTree = "<group>"; };
+		8CF9CE4716F8B4A9003B0933 /* PIXInfoPanelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXInfoPanelView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -378,9 +381,6 @@
 		1D0834F5167D63E5003D557A /* PageView */ = {
 			isa = PBXGroup;
 			children = (
-				1D083525167E7EEE003D557A /* imageview.xib */,
-				1D083517167DCA71003D557A /* AutoSizingImageView.h */,
-				1D083518167DCA71003D557A /* AutoSizingImageView.m */,
 				1D0834F8167D6478003D557A /* PIXPageViewController.h */,
 				1D0834F9167D6478003D557A /* PIXPageViewController.m */,
 				1D0834FA167D6478003D557A /* PIXPageViewController.xib */,
@@ -388,10 +388,15 @@
 				1D08351F167E7C80003D557A /* PIXPageView.m */,
 				1D08352B167E8B2A003D557A /* PIXImageViewController.h */,
 				1D08352C167E8B2B003D557A /* PIXImageViewController.m */,
+				1D083525167E7EEE003D557A /* AutoSizingImageView.xib */,
+				1D083517167DCA71003D557A /* AutoSizingImageView.h */,
+				1D083518167DCA71003D557A /* AutoSizingImageView.m */,
 				8C68246F16F6850B00245F09 /* PIXPageHUDView.h */,
 				8C68247016F6850B00245F09 /* PIXPageHUDView.m */,
 				8C68247216F6A74F00245F09 /* PIXPageHUDWindow.h */,
 				8C68247316F6A75000245F09 /* PIXPageHUDWindow.m */,
+				8CF9CE4616F8B4A9003B0933 /* PIXInfoPanelView.h */,
+				8CF9CE4716F8B4A9003B0933 /* PIXInfoPanelView.m */,
 			);
 			name = PageView;
 			sourceTree = "<group>";
@@ -886,7 +891,7 @@
 				1D4A1E37167D365900C9A895 /* PIXSidebarViewController.xib in Resources */,
 				1D0834FC167D6478003D557A /* PIXPageViewController.xib in Resources */,
 				1D083502167D6678003D557A /* PIXImageBrowserViewController.xib in Resources */,
-				1D083526167E7EEE003D557A /* imageview.xib in Resources */,
+				1D083526167E7EEE003D557A /* AutoSizingImageView.xib in Resources */,
 				1DDEF840169D34F100C0D303 /* PIXLoadingWindow.xib in Resources */,
 				1DA66CB016AA2ED10060D796 /* nophoto_200x200.jpg in Resources */,
 				1D8CD7F016AB6EC70072D516 /* PIXGridViewController.xib in Resources */,
@@ -998,6 +1003,7 @@
 				8C68246E16F599FD00245F09 /* NSBezierPath+pathUtilities.m in Sources */,
 				8C68247116F6850C00245F09 /* PIXPageHUDView.m in Sources */,
 				8C68247416F6A75100245F09 /* PIXPageHUDWindow.m in Sources */,
+				8CF9CE4816F8B4A9003B0933 /* PIXInfoPanelView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

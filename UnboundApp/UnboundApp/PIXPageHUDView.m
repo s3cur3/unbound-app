@@ -70,7 +70,7 @@
     
     // draw a shadow under the round rect
     CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
-    CGContextSetShadowWithColor(context, CGSizeMake(0, -1), 6.0, [[NSColor colorWithGenericGamma22White:0.0 alpha:.6] CGColor]);
+    CGContextSetShadowWithColor(context, CGSizeMake(0, -1), 6.0, [[NSColor colorWithGenericGamma22White:0.0 alpha:.7] CGColor]);
     
     // fill the round rect
     [[NSColor colorWithCalibratedWhite:0.0 alpha:.5] setFill];

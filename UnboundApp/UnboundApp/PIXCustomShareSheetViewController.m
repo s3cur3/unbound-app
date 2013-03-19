@@ -174,6 +174,7 @@
     {
         aButton.font = [NSFont fontWithName:@"Helvetica Neue" size:12];
         aButton.imagePosition = NSImageAbove;
+        [aButton setButtonType:NSMomentaryChangeButton];
         [aButton setBordered:NO];
         
         CGRect outerFrame = CGRectMake((i%3)*buttonWidth, viewHeight - (((i/3)+1) * buttonHeight), buttonWidth, buttonHeight);

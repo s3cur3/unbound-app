@@ -24,25 +24,6 @@
         [super setFrameSize:newSize];
     }
     
-    [scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-}
-
--(void)keyDown:(NSEvent *)theEvent
-{
-    DLog(@"keyDown : %@", theEvent);
-	// get the event and the modifiers
-    NSString * characters = [theEvent charactersIgnoringModifiers];
-    unichar event = [characters characterAtIndex:0];
-    
-    switch (event)
-    {
-        case ' ':
-            
-            break;
-            
-        default:
-            [super keyDown:theEvent];
-    }
 }
 
 - (NSView *)hitTest:(NSPoint)aPoint
@@ -66,34 +47,6 @@
 -(void)mouseDown:(NSEvent *)theEvent {
 	[super mouseDown:theEvent];
     
-}
-/*- (BOOL)performKeyEquivalent:(NSEvent *)theEvent;
-{
-    NSString*   const   character   =   [theEvent charactersIgnoringModifiers];
-    unichar     const   code        =   [character characterAtIndex:0];
-    
-    switch (code)
-    {
-        case NSLeftArrowFunctionKey:
-        {
-            [[self.delegate pageViewController] performSelector:@selector(moveToPreviousPage)];
-            break;
-        }
-        case NSRightArrowFunctionKey:
-        {
-            [[self.delegate pageViewController] performSelector:@selector(moveToNextPage)];
-            break;
-        }
-    }
-    
-    return YES;
-}*/
-
--(void)setDesktopImage:(id)sender
-{
-    if(self.delegate && [self.delegate respondsToSelector:@selector(setDesktopImage:)]) {
-        [self.delegate performSelector:@selector(setDesktopImage:) withObject:sender];
-    }
 }
 
 

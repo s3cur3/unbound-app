@@ -122,7 +122,7 @@
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="254680761"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
-				<int key="NSsFlags">723504</int>
+				<int key="NSsFlags">743936</int>
 				<reference key="NSVScroller" ref="181441033"/>
 				<reference key="NSHScroller" ref="228945311"/>
 				<reference key="NSContentView" ref="254680761"/>

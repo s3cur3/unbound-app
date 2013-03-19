@@ -24,4 +24,7 @@
 
 -(IBAction)toggleInfoPanel:(id)sender;
 
+-(IBAction)nextPage:(id)sender;
+-(IBAction)lastPage:(id)sender;
+
 @end

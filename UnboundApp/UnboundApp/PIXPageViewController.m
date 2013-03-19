@@ -266,30 +266,40 @@
 
 -(void)moveForward:(id)sender
 {
-    [self.pageController navigateForward:nil];
+    [self nextPage:sender];
 }
 
 -(void)moveBackward:(id)sender
 {
-    [self.pageController navigateBack:nil];
+    [self lastPage:sender];
 }
 
 -(void)moveRight:(id)sender
 {
-    [self.pageController navigateForward:nil];
+    [self nextPage:sender];
 }
 
 -(void)moveLeft:(id)sender
 {
-    [self.pageController navigateBack:nil];
+    [self lastPage:sender];
 }
 
 -(void)moveDown:(id)sender
 {
-    [self.pageController navigateForward:nil];
+    [self nextPage:sender];
 }
 
 -(void)moveUp:(id)sender
+{
+    [self lastPage:sender];
+}
+
+-(IBAction)nextPage:(id)sender
+{
+    [self.pageController navigateForward:nil];
+}
+
+-(IBAction)lastPage:(id)sender
 {
     [self.pageController navigateBack:nil];
 }
@@ -315,6 +325,8 @@
     [self performSelector:@selector(tryFadeControls) withObject:nil afterDelay:2.5];
     
     self.hasMouse = YES;
+    
+    [self.view.window makeFirstResponder:self];
 }
 
 -(void)mouseMoved:(NSEvent *)theEvent
@@ -428,7 +440,7 @@
     //NSLog(@"pageController.selectedIndex : %ld", pageController.selectedIndex);
     if (![identifier isEqualToString:@"video"])
     {
-        PIXImageViewController *aVC =  [[PIXImageViewController alloc] initWithNibName:@"imageview" bundle:nil];
+        PIXImageViewController *aVC =  [[PIXImageViewController alloc] initWithNibName:@"AutoSizingImageView" bundle:nil];
         [aVC.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
         aVC.pageViewController = self;
         return aVC;
