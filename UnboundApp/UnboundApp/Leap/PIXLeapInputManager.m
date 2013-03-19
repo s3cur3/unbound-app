@@ -18,6 +18,10 @@
 
 @property BOOL swipeGestureFlag;
 
+@property CGFloat pinchStartWidth;
+@property CGFloat pinchStartDepth;
+@property NSPoint pinchStartPosition;
+
 @end
 
 @implementation PIXLeapInputManager
@@ -49,6 +53,8 @@
 
 - (void)addResponder:(id<leapResponder>)aResponder
 {
+    if(aResponder == nil)return;
+    
     if(self.leapResponders == nil)
     {
         self.leapResponders = [NSMutableArray new];
@@ -103,97 +109,133 @@
     
     NSPoint normalizedPoint = CGPointZero;
     
-    if ([[frame hands] count] != 0) {
-        // Get the first hand
-        LeapHand *hand = [[frame hands] objectAtIndex:0];
+    NSMutableArray *fingers = [NSMutableArray new];
+    
+
+    
+    for(LeapHand * hand in [frame hands])
+    {
+        [fingers addObjectsFromArray:[hand fingers]];
+    }
+    
+    
+    if ([fingers count] != 0) {
         
-        // Check if the hand has any fingers
-        NSArray *fingers = [hand fingers];
-        if ([fingers count] != 0) {
+        // Calculate the hand's average finger tip position
+        LeapVector *avgPos = [[LeapVector alloc] init];
+        for (int i = 0; i < [fingers count]; i++) {
+            LeapFinger *finger = [fingers objectAtIndex:i];
+            avgPos = [avgPos plus:[finger tipPosition]];
+        }
+        
+        avgPos = [avgPos divide:[fingers count]];
+        
+        
+        
+                     
+        // normalize the point so it's between 0 and 1 in both directions
+        
+        normalizedPoint.x = (avgPos.x - self.screenRect.origin.x)/self.screenRect.size.width;
+        normalizedPoint.y = (avgPos.y - self.screenRect.origin.y)/self.screenRect.size.height;
+        
+        if(normalizedPoint.x < 0.0) normalizedPoint.x = 0.0;
+        if(normalizedPoint.y < 0.0) normalizedPoint.y = 0.0;
+        if(normalizedPoint.x > 1.0) normalizedPoint.x = 1.0;
+        if(normalizedPoint.y > 1.0) normalizedPoint.y = 1.0;
+        
+        
+        // handle two finger pinch
+        if([fingers count] == 2)
+        {
+            LeapFinger *finger1 = [fingers objectAtIndex:0];
+            LeapFinger *finger2 = [fingers objectAtIndex:1];
             
-            // Calculate the hand's average finger tip position
-            LeapVector *avgPos = [[LeapVector alloc] init];
-            for (int i = 0; i < [fingers count]; i++) {
-                LeapFinger *finger = [fingers objectAtIndex:i];
-                avgPos = [avgPos plus:[finger tipPosition]];
-            }
+            CGFloat deltax= finger2.tipPosition.x - finger1.tipPosition.x;
+            CGFloat deltay= finger2.tipPosition.y - finger1.tipPosition.y;
+            CGFloat deltaz= finger2.tipPosition.z - finger1.tipPosition.z;
             
-            avgPos = [avgPos divide:[fingers count]];
-            
-            /*
-            // if this is the first frame we've seen a finger in, center it
-            if(self.screenRect.size.width == 0)
+            CGFloat pinchDistance = sqrt((deltax*deltax)+(deltay*deltay)+(deltaz*deltaz));
+            CGFloat pinchDepth = avgPos.z;
+           
+            // if this is mid pinch, call the responder with the deltas
+            if(self.pinchStartWidth > 0)
             {
-                self.screenRect = CGRectMake(avgPos.x - 50, avgPos.y - 40, 100, 80);
+                // scale change in depth:
+                CGFloat distanceChange = pinchDistance / self.pinchStartWidth;
+                
+                // make this a bit less sensitive
+                //distanceChange = ((distanceChange - 1.0) / 10.0)+1.0;
+                
+                CGFloat depthChange = pinchDepth - self.pinchStartDepth;
+                
+                depthChange = (-depthChange / 200.0) + 1;
+                
+                
+                // 
+                
+                
+                CGFloat scaleDelta =  distanceChange * depthChange;
+                
+                NSPoint positionDelta = NSMakePoint(normalizedPoint.x - self.pinchStartPosition.x,
+                                                    normalizedPoint.y - self.pinchStartPosition.y);
+                
+                // loop through the responders
+                for(id<leapResponder> responder in self.leapResponders)
+                {
+                    if([responder respondsToSelector:@selector(twoFingerPinchPosition:andScale:)])
+                    {
+                        [responder twoFingerPinchPosition:positionDelta andScale:scaleDelta];
+                        break; // do nothing else after we hit the first responder
+                    }
+                }
+                
             }
             
-            NSPoint screenOrigin = self.screenRect.origin;
-            NSSize screenSize = self.screenRect.size;
-            
-            // make the screenRect wider if we're outside of it
-            if(avgPos.x < self.screenRect.origin.x)
+            // this will always be called at the start
+            else
             {
-                float difference = self.screenRect.origin.x - avgPos.x;
-                screenOrigin.x = avgPos.x;
-                screenSize.width += difference;
+                self.pinchStartWidth = pinchDistance;
+                self.pinchStartDepth = pinchDepth;
+                self.pinchStartPosition = normalizedPoint;
+                
+                // loop through the responders
+                for(id<leapResponder> responder in self.leapResponders)
+                {
+                    if([responder respondsToSelector:@selector(twoFingerPinchStart)])
+                    {
+                        [responder twoFingerPinchStart];
+                        break; // do nothing else after we hit the first responder
+                    }
+                }
             }
             
-            else if(avgPos.x > self.screenRect.origin.x + self.screenRect.size.width)
-            {
-                screenSize.width =  avgPos.x - self.screenRect.origin.x;
-            }
-            
-            // make the screenRect taller if we're outside of it
-            if(avgPos.y < self.screenRect.origin.y)
-            {
-                float difference = self.screenRect.origin.y - avgPos.y;
-                screenOrigin.y = avgPos.y;
-                screenSize.height += difference;
-            }
-            
-            else if(avgPos.y > self.screenRect.origin.y + self.screenRect.size.height)
-            {
-                screenSize.height = avgPos.y - self.screenRect.origin.y;
-            }
-            
-            
-            self.screenRect = CGRectMake(screenOrigin.x, screenOrigin.y, screenSize.width, screenSize.height);
-            
-            DLog(@"SCREEN SIZE: %f, %f", screenSize.width, screenSize.height);
-            
-            */
-             
-            // normalize the point so it's between 0 and 1 in both directions
-            
-            normalizedPoint.x = (avgPos.x - self.screenRect.origin.x)/self.screenRect.size.width;
-            normalizedPoint.y = (avgPos.y - self.screenRect.origin.y)/self.screenRect.size.height;
-            
-            if(normalizedPoint.x < 0.0) normalizedPoint.x = 0.0;
-            if(normalizedPoint.y < 0.0) normalizedPoint.y = 0.0;
-            if(normalizedPoint.x > 1.0) normalizedPoint.x = 1.0;
-            if(normalizedPoint.y > 1.0) normalizedPoint.y = 1.0;
-            
-            
-            
+        }
+        
+        else
+        {
+            // clear out any pinch gesture values
+            self.pinchStartWidth = -1;
+            self.pinchStartDepth = -1;
+            self.pinchStartPosition = NSZeroPoint;
+        }
+        
+        // handle the single finger point
+        if([fingers count] == 1)
+        {
             // loop through the responders
             for(id<leapResponder> responder in self.leapResponders)
             {
                 if([responder respondsToSelector:@selector(singleFingerPoint:)])
                 {
                     [responder singleFingerPoint:normalizedPoint];
-                    break; // no need to keep going down the responder chain
+                    return; // do nothing else after we hit the first responder
                 }
             }
-            
-            //DLog(@"NormalizedPoint: %f, %f", normalizedPoint.x, normalizedPoint.y);
-            
-            
-            //NSLog(@"Hand has %ld fingers, average finger tip position %@", [fingers count], avgPos);
-            
-            // now convert the vector into a normalized point
-            
         }
+        
+        
     }
+  
     
     
     NSArray *gestures = [frame gestures:nil];
@@ -238,92 +280,20 @@
                 
                 
                 if ([[frame hands] count] != 0 && swipeGesture.state == LEAP_GESTURE_STATE_START) {
-                    // Get the first hand
-                    LeapHand *hand = [[frame hands] objectAtIndex:0];
+
                     
-                    // Check if the hand has any fingers
-                    NSArray *fingers = [hand fingers];
-                    if ([fingers count] > 2) {
-                        
-                        /*
-                        if(swipeGesture.state == LEAP_GESTURE_STATE_START)
-                        {
-                            self.swipeGestureFlag = YES;
-                            break;
-                        }*/
-                        
-                        if(!self.swipeGestureFlag)
-                        {
-                            self.swipeGestureFlag = YES;
-                            
-                            double delayInSeconds = 0.7;
-                            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-                            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                                self.swipeGestureFlag = NO;
-                            });
-                            
-                            // now figure out the gesture direction
-                            if(swipeGesture.direction.y > 0.8) // this is the up direction
-                            {
-                                // loop through the responders
-                                for(id<leapResponder> responder in self.leapResponders)
-                                {
-                                    if([responder respondsToSelector:@selector(multiFingerSwipeUp)])
-                                    {
-                                        [responder multiFingerSwipeUp];
-                                        break; // no need to keep going down the responder chain
-                                    }
-                                }
-                            }
-                            
-                            // now figure out the gesture direction
-                            if(swipeGesture.direction.y < -0.8) // this is the down direction
-                            {
-                                // loop through the responders
-                                for(id<leapResponder> responder in self.leapResponders)
-                                {
-                                    if([responder respondsToSelector:@selector(multiFingerSwipeDown)])
-                                    {
-                                        [responder multiFingerSwipeDown];
-                                        break; // no need to keep going down the responder chain
-                                    }
-                                }
-                            }
-                            
-                            // now figure out the gesture direction
-                            if(swipeGesture.direction.x > 0.8) // this is the right direction
-                            {
-                                // loop through the responders
-                                for(id<leapResponder> responder in self.leapResponders)
-                                {
-                                    if([responder respondsToSelector:@selector(multiFingerSwipeRight)])
-                                    {
-                                        [responder multiFingerSwipeRight];
-                                        break; // no need to keep going down the responder chain
-                                    }
-                                }
-                            }
-                            
-                            // now figure out the gesture direction
-                            if(swipeGesture.direction.x < -0.8) // this is the left direction
-                            {
-                                // loop through the responders
-                                for(id<leapResponder> responder in self.leapResponders)
-                                {
-                                    if([responder respondsToSelector:@selector(multiFingerSwipeLeft)])
-                                    {
-                                        [responder multiFingerSwipeLeft];
-                                        break; // no need to keep going down the responder chain
-                                    }
-                                }
-                            }
-                            
-                        }
-                        
-                        
-                        
+                    if(!self.swipeGestureFlag)
+                    {
+                        [self handleSwipe:(LeapSwipeGesture *)swipeGesture];
                         
                     }
+                    
+                    
+                }
+                
+                if(swipeGesture.state == LEAP_GESTURE_STATE_STOP || swipeGesture.state == LEAP_GESTURE_STATE_INVALID)
+                {
+                    //self.swipeGestureFlag = NO;
                 }
                 
                 
@@ -342,6 +312,20 @@
                 //NSLog(@"Screen Tap id: %d, %@, position: %@, direction: %@",
 //                      screenTapGesture.id, [PIXLeapInputManager stringForState:screenTapGesture.state],
 //                      screenTapGesture.position, screenTapGesture.direction);
+                
+                if(screenTapGesture.state == LEAP_GESTURE_STATE_STOP)
+                {
+                    // loop through the responders
+                    for(id<leapResponder> responder in self.leapResponders)
+                    {
+                        if([responder respondsToSelector:@selector(singleFingerSelect:)])
+                        {
+                            [responder singleFingerSelect:normalizedPoint];
+                            break; // no need to keep going down the responder chain
+                        }
+                    }
+                }
+                
                 break;
             }
             default:
@@ -353,51 +337,86 @@
     
     
     
-    /*
-    NSLog(@"Frame id: %lld, timestamp: %lld, hands: %ld, fingers: %ld, tools: %ld, gestures: %ld",
-          [frame id], [frame timestamp], [[frame hands] count],
-          [[frame fingers] count], [[frame tools] count], [[frame gestures:nil] count]);
 
-    if ([[frame hands] count] != 0) {
-        // Get the first hand
-        LeapHand *hand = [[frame hands] objectAtIndex:0];
+}
 
-        // Check if the hand has any fingers
-        NSArray *fingers = [hand fingers];
-        if ([fingers count] != 0) {
-            // Calculate the hand's average finger tip position
-            LeapVector *avgPos = [[LeapVector alloc] init];
-            for (int i = 0; i < [fingers count]; i++) {
-                LeapFinger *finger = [fingers objectAtIndex:i];
-                avgPos = [avgPos plus:[finger tipPosition]];
+-(void)handleSwipe:(LeapSwipeGesture *)swipeGesture
+{
+    LeapVector * direction = swipeGesture.direction;
+    BOOL didswipe = NO;
+    
+    // figure out the gesture direction
+    if(direction.y > 0.7) // this is the up direction
+    {
+        // loop through the responders
+        for(id<leapResponder> responder in self.leapResponders)
+        {
+            if([responder respondsToSelector:@selector(multiFingerSwipeUp)])
+            {
+                [responder multiFingerSwipeUp];
+                break; // no need to keep going down the responder chain
             }
-            avgPos = [avgPos divide:[fingers count]];
-            NSLog(@"Hand has %ld fingers, average finger tip position %@",
-                  [fingers count], avgPos);
         }
-
-        // Get the hand's sphere radius and palm position
-        NSLog(@"Hand sphere radius: %f mm, palm position: %@",
-              [hand sphereRadius], [hand palmPosition]);
-
-        // Get the hand's normal vector and direction
-        const LeapVector *normal = [hand palmNormal];
-        const LeapVector *direction = [hand direction];
-
-        // Calculate the hand's pitch, roll, and yaw angles
-        NSLog(@"Hand pitch: %f degrees, roll: %f degrees, yaw: %f degrees\n",
-              [direction pitch] * LEAP_RAD_TO_DEG,
-              [normal roll] * LEAP_RAD_TO_DEG,
-              [direction yaw] * LEAP_RAD_TO_DEG);
-
         
-
-        if (([[frame hands] count] > 0) || [[frame gestures:nil] count] > 0) {
-            NSLog(@" ");
-        }
+        didswipe = YES;
     }
-     
-     */
+    
+    else if(direction.y < -0.7) // this is the down direction
+    {
+        // loop through the responders
+        for(id<leapResponder> responder in self.leapResponders)
+        {
+            if([responder respondsToSelector:@selector(multiFingerSwipeDown)])
+            {
+                [responder multiFingerSwipeDown];
+                break; // no need to keep going down the responder chain
+            }
+        }
+        
+        didswipe = YES;
+    }
+    
+    else if(direction.x > 0.7) // this is the right direction
+    {
+        // loop through the responders
+        for(id<leapResponder> responder in self.leapResponders)
+        {
+            if([responder respondsToSelector:@selector(multiFingerSwipeRight)])
+            {
+                [responder multiFingerSwipeRight];
+                break; // no need to keep going down the responder chain
+            }
+        }
+        
+        didswipe = YES;
+    }
+    
+    else if(direction.x < -0.7) // this is the left direction
+    {
+        // loop through the responders
+        for(id<leapResponder> responder in self.leapResponders)
+        {
+            if([responder respondsToSelector:@selector(multiFingerSwipeLeft)])
+            {
+                [responder multiFingerSwipeLeft];
+                break; // no need to keep going down the responder chain
+            }
+        }
+        
+        didswipe = YES;
+    }
+    
+    
+    if(didswipe)
+    {
+        self.swipeGestureFlag = YES;
+        
+        double delayInSeconds = 0.7;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            self.swipeGestureFlag = NO;
+        });
+    }
 }
 
 + (NSString *)stringForState:(LeapGestureState)state

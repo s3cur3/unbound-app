@@ -33,6 +33,8 @@
 @property (nonatomic, strong) NSToolbarItem * infoItem;
 @property (nonatomic, strong) NSButton * infoButton;
 
+@property (nonatomic, strong) PIXImageViewController * currentImageVC;
+
 @property BOOL hasMouse;
 
 @end
@@ -513,10 +515,20 @@
      
      });*/
     
+    [self.currentImageVC setIsCurrentView:NO];
+    
+    self.currentImageVC = (PIXImageViewController *)[pageController selectedViewController];
+    
+    [self.currentImageVC setIsCurrentView:YES];
+    
 }
 
 - (void)pageControllerDidEndLiveTransition:(NSPageController *)aPageController {
     [aPageController completeTransition];
+    
+
+    
+    
     //[self makeSelectedViewFirstResponder];
 }
 

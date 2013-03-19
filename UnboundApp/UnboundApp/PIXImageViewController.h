@@ -17,4 +17,6 @@
 @property (nonatomic, strong) IBOutlet NSScrollView * scrollView;
 @property (nonatomic, strong) IBOutlet AutoSizingImageView *imageView;
 
+@property (nonatomic) BOOL isCurrentView;
+
 @end

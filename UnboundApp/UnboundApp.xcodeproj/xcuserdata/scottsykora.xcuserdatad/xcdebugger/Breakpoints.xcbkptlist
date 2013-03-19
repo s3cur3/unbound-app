@@ -86,11 +86,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXImageViewController.m"
-         timestampString = "385021821.889846"
+         timestampString = "385420312.42276"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "76"
-         endingLineNumber = "76"
+         startingLineNumber = "81"
+         endingLineNumber = "81"
          landmarkName = "-setPhoto:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -99,11 +99,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXPageViewController.m"
-         timestampString = "385397485.907597"
+         timestampString = "385418310.224918"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "481"
-         endingLineNumber = "481"
+         startingLineNumber = "483"
+         endingLineNumber = "483"
          landmarkName = "@implementation PIXPageViewController(NSPageControllerDelegate)"
          landmarkType = "3">
       </FileBreakpoint>
@@ -168,6 +168,19 @@
          startingLineNumber = "721"
          endingLineNumber = "721"
          landmarkName = "-loadThumbnailImage"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "UnboundApp/Leap/PIXLeapInputManager.m"
+         timestampString = "385420312.42276"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "348"
+         endingLineNumber = "348"
+         landmarkName = "-handleSwipe:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

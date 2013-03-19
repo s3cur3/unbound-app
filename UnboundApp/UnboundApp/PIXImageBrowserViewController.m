@@ -32,6 +32,7 @@
 
 -(void)awakeFromNib
 {
+    
     if (self.album!=nil)
     {
         [[[PIXAppDelegate sharedAppDelegate] window] setTitle:self.album.title];

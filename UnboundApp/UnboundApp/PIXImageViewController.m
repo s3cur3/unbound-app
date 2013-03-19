@@ -11,7 +11,12 @@
 #import "PIXPhoto.h"
 #import "PIXDefines.h"
 
-@interface PIXImageViewController ()
+#import "PIXLeapInputManager.h"
+
+@interface PIXImageViewController () <leapResponder>
+
+@property CGFloat startPinchZoom;
+@property NSPoint startPinchPosition;
 
 @end
 
@@ -79,6 +84,63 @@
     } else {
         DLog(@"same representedObject being set.");
     }
+}
+
+
+-(void)setIsCurrentView:(BOOL)value
+{
+    if(_isCurrentView != value)
+    {
+        _isCurrentView = value;
+        
+        if(_isCurrentView)
+        {
+            [[PIXLeapInputManager sharedInstance] addResponder:self];
+        }
+        
+        else
+        {
+            [[PIXLeapInputManager sharedInstance] removeResponder:self];
+        }
+    }
+}
+
+-(void)twoFingerPinchStart
+{
+    self.startPinchZoom = [self.scrollView magnification];
+    
+    CGRect bounds = [[self.scrollView contentView] bounds];
+    
+    self.startPinchPosition= CGPointMake(bounds.origin.x + (bounds.size.width / 2),
+                                         bounds.origin.y + (bounds.size.height / 2));
+}
+
+-(void)twoFingerPinchPosition:(NSPoint)position andScale:(CGFloat)scale
+{
+    // scale the view
+    [self.scrollView setMagnification:self.startPinchZoom * scale];
+    
+    
+    CGRect bounds = [[self.scrollView contentView] bounds];
+    
+    NSPoint scaledPosition = NSMakePoint(position.x * [[self.scrollView contentView] bounds].size.width,
+                                         position.y * [[self.scrollView contentView] bounds].size.height);
+    
+    
+    NSPoint newScrollPosition =  NSMakePoint(self.startPinchPosition.x - (bounds.size.width / 2) - scaledPosition.x,
+                                             self.startPinchPosition.y - (bounds.size.height / 2) - scaledPosition.y);
+    
+    [[self.scrollView documentView] scrollPoint:newScrollPosition];
+    
+
+    
+    //DLog(@"Bounds height to: %f", [[self.scrollView contentView] bounds].size.width);
+    
+    //[self.scrollView.documentView scaleBy:currentZoom*scaleDelta];
+    //[self.scrollView.documentView setFrame:NSMakeRect(0, 0, frame.size.width * zoomFactor, frame.size.height * zoomFactor)];
+    //[[self.scrollView documentView] scrollPoint:newrect.origin];
+    
+    [self.scrollView setNeedsDisplay:YES];
 }
 
 @end

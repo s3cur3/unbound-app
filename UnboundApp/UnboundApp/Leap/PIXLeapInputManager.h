@@ -28,6 +28,9 @@
 -(void)singleFingerPoint:(NSPoint)normalizedPosition;
 -(void)singleFingerSelect:(NSPoint)normalizedPosition;
 
+-(void)twoFingerPinchStart;
+-(void)twoFingerPinchPosition:(NSPoint)position andScale:(CGFloat)scale;
+
 -(void)multiFingerSwipeUp;
 -(void)multiFingerSwipeDown;
 -(void)multiFingerSwipeRight;
