@@ -30,6 +30,8 @@
 #define kUB_ALBUMS_LOADED_FROM_FILESYSTEM @"UB_ALBUMS_LOADED_FROM_FILESYSTEM"
 #define kUB_PHOTOS_LOADED_FROM_FILESYSTEM @"UB_PHOTOS_LOADED_FROM_FILESYSTEM"
 
+#define kAppFirstRun @"appFirstRun"
+
 
 // key for obtaining the current scan count
 #define kScanCountKey @"scanCount"

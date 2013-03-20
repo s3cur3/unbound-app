@@ -228,7 +228,7 @@
                 if([responder respondsToSelector:@selector(singleFingerPoint:)])
                 {
                     [responder singleFingerPoint:normalizedPoint];
-                    return; // do nothing else after we hit the first responder
+                    break; // do nothing else after we hit the first responder
                 }
             }
         }
@@ -279,7 +279,7 @@
                 
                 
                 
-                if ([[frame hands] count] != 0 && swipeGesture.state == LEAP_GESTURE_STATE_START) {
+                if (swipeGesture.state == LEAP_GESTURE_STATE_START) {
 
                     
                     if(!self.swipeGestureFlag)

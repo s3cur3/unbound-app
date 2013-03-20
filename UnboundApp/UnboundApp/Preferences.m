@@ -1,7 +1,8 @@
 #import "Preferences.h"
 //#import "../Utils/Utils.h"
 
-extern NSString* kAppFirstRun;
+#import "PIXDefines.h"
+
 
 @implementation Preferences
 

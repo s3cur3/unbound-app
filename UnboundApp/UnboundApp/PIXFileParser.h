@@ -70,5 +70,11 @@ typedef enum {
 - (void)cancelScans;
 
 
+-(NSURL *) defaultDBFolder;
+-(NSURL *) defaultDBCameraUploadsFolder;
+
+-(void)setObservedURLs:(NSArray *)direcoryURLs;
+
+
 
 @end

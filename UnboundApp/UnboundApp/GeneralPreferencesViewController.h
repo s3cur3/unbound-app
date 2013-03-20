@@ -5,4 +5,10 @@
 #import "MASPreferencesViewController.h"
 
 @interface GeneralPreferencesViewController : NSViewController <MASPreferencesViewController>
+
+-(IBAction)themeChanged:(id)sender;
+- (IBAction)useDBDefaults:(id)sender;
+- (IBAction)chooseFolder:(id)sender;
+- (IBAction)reloadFiles:(id)sender;
+
 @end

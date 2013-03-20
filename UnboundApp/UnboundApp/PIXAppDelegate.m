@@ -10,7 +10,6 @@
 #import "PIXAppDelegate+CoreDataUtils.h"
 #import "PIXInfoWindowController.h"
 #import "PIXMainWindowController.h"
-#import "PIXLoadingWindowController.h"
 
 #import "PIXNavigationController.h"
  
@@ -25,8 +24,6 @@
 #import "PIXLeapInputManager.h"
 
 
-
-NSString* kAppFirstRun = @"appFirstRun";
 
 //extern NSString *kLoadImageDidFinish;
 //extern NSString *kSearchDidFinishNotification;
@@ -122,44 +119,18 @@ NSString* kAppFirstRun = @"appFirstRun";
         //[self updateAlbumsPhotos];
     }];
     
-    /*
-    //Notification for standard fetches
-    [[NSNotificationCenter defaultCenter] addObserverForName:@"PhotoLoadingFinished" object:self queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"PhotoLoadingFinished" object:self];
-        //[self loadAlbums];
-        //
-        DLog(@"Finished loading photos");
-        [self updateAlbumsPhotos];
-    }];
-    
-    [[NSNotificationCenter defaultCenter] addObserverForName:@"AlbumLoadingFinished" object:self queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AlbumLoadingFinished" object:self];
-        [self loadPhotos];
-    }];*/
-    
+
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kAppFirstRun]==YES)
     {
         [self showIntroWindow:self];
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kAppFirstRun];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+
     } else {
         
         [self startFileSystemLoading];
-        
         [self showMainWindow:self];
-        NSArray *albums = [self fetchAllAlbums];
-        if (!albums.count) {
-            [self performSelector:@selector(showLoadingWindow:) withObject:self afterDelay:0.2];
-            //TODO: make sure the loading window starts the file observer when dismissed
-            return;
-        }
-        
-        
-        //Start monitoring the file system for changes...
-        //[self performSelector:@selector(startFileSystemLoading) withObject:self afterDelay:2.0];
     }
     
-    [self setupProgressIndicator];
+    //[self setupProgressIndicator];
     
     
     
@@ -199,14 +170,6 @@ NSString* kAppFirstRun = @"appFirstRun";
     [self.progressItem setView:indicator];
 }
 
--(void)shouldStartFileSystemObservingWhenAlbumsFinishSaving
-{
-    [[NSNotificationCenter defaultCenter] addObserverForName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
-        [self startFileSystemLoading];
-    }];
-}
-
 
 -(void)startFileSystemLoading
 {
@@ -214,23 +177,9 @@ NSString* kAppFirstRun = @"appFirstRun";
     {
         self.isObservingFileSystem = YES;
         self.fileParser = [PIXFileParser sharedFileParser];
-        //[self.dataSource startLoadingAllAlbumsAndPhotosInObservedDirectories];
-        //[self.dataSource performSelector:@selector(startLoadingAllAlbumsAndPhotosInObservedDirectories) withObject:nil afterDelay:1.0];
-        //[self.fileParser performSelector:@selector(startObserving) withObject:nil afterDelay:1.0];
         [self.fileParser startObserving];
     }
 
-
-//    [self.dataSource loadAllAlbums];
-//    //TODO: maybe show a loading/splash/progress window while data is loading?
-//    [[NSNotificationCenter defaultCenter] addObserverForName:kUB_PHOTOS_LOADED_FROM_FILESYSTEM object:self.dataSource queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-//        
-//        [[NSNotificationCenter defaultCenter] removeObserver:self name:kUB_PHOTOS_LOADED_FROM_FILESYSTEM object:self.dataSource];
-//        
-//        //start observing the file system
-//        [self.dataSource performSelector:@selector(startObserving) withObject:nil afterDelay:1.0];
-//        
-//    }];
 }
 
 // -------------------------------------------------------------------------------
@@ -239,7 +188,10 @@ NSString* kAppFirstRun = @"appFirstRun";
 - (IBAction)showIntroWindow:(id)sender
 {
     if (showIntroWindow == nil)
+    {
         showIntroWindow = [[PIXInfoWindowController alloc] initWithWindowNibName:@"PIXInfoWindowController"];
+    }
+    
     [showIntroWindow showWindow:self];
 }
 
@@ -304,14 +256,6 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     [self.mainWindowController showWindow:self];
 }
 
-- (IBAction)showLoadingWindow:(id)sender {
-    
-    if (loadingWindow == nil) {
-        loadingWindow = [[PIXLoadingWindowController alloc] initWithWindowNibName:@"PIXLoadingWindow"];
-    }
-    [loadingWindow showWindow:self];
-    //[self startFileSystemLoading];
-}
 
 - (NSError *)application:(NSApplication *)application willPresentError:(NSError *)error;
 {

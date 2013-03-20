@@ -215,6 +215,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
 {
     [NSURL removeObserverForAllDirectories:self];
     [self.loadingAlbumsDict removeAllObjects];
+    _observedDirectories = nil;
 }
 
 
@@ -303,7 +304,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 NSFileManager *localFileManager=[[NSFileManager alloc] init];
                 
                 NSDirectoryEnumerationOptions options = NSDirectoryEnumerationSkipsHiddenFiles |
-                NSDirectoryEnumerationSkipsPackageDescendants;
+                                                        NSDirectoryEnumerationSkipsPackageDescendants;
                 
                 dirEnumerator = [localFileManager enumeratorAtURL:aTopURL
                                        includingPropertiesForKeys:@[NSURLNameKey,
@@ -474,7 +475,10 @@ NSDictionary * dictionaryForURL(NSURL * url)
                     NSNumber * isDirectoryValue;
                     [aURL getResourceValue:&isDirectoryValue forKey:NSURLIsDirectoryKey error:nil];
                     
-                    if([isDirectoryValue boolValue])
+                    NSNumber * isPackage;
+                    [aURL getResourceValue:&isPackage forKey:NSURLIsPackageKey error:nil];
+                    
+                    if([isDirectoryValue boolValue] && ![isPackage boolValue])
                     {
                         // add the path string value to the mutable array
                         [directories addObject:[aURL path]];
@@ -937,6 +941,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
 #pragma mark - Lazy Loaders
 
 
+
 -(NSArray *) observedDirectories
 {
     if (_observedDirectories==nil) {
@@ -949,10 +954,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
         // if we have not observed directories in the settings then default to the dropbox /Photos and /Camera Uploads folders
         if([pathArray count] == 0)
         {
-            NSString *dropboxHomePath = aDefaultDropBoxDirectory();
-            NSURL *rootFilePathURL = [NSURL fileURLWithPath: [NSString stringWithFormat:@"%@/Photos", dropboxHomePath]];
-            NSURL *cameraUploadsLocation = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/Camera Uploads", dropboxHomePath]];
-            _observedDirectories = [NSArray arrayWithObjects:rootFilePathURL, cameraUploadsLocation, nil];
+            _observedDirectories = @[[self defaultDBFolder], [self defaultDBCameraUploadsFolder]];
         }
         
         // otherwise loop through and create NSUrls from the strings
@@ -975,6 +977,35 @@ NSDictionary * dictionaryForURL(NSURL * url)
     }
     
     return _observedDirectories;
+}
+
+-(void)setObservedURLs:(NSArray *)direcoryURLs
+{
+    NSMutableArray * pathArray = [NSMutableArray new];
+    
+    for(NSURL * url in direcoryURLs)
+    {
+        [pathArray addObject:[url path]];
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setObject:pathArray forKey:@"PIX_ObservedDirectoriesKey"];
+    self.observedDirectories = nil;
+}
+
+-(NSURL *) defaultDBFolder
+{
+    NSString *dropboxHomePath = aDefaultDropBoxDirectory();
+    NSURL *rootFilePathURL = [NSURL fileURLWithPath: [NSString stringWithFormat:@"%@/Photos", dropboxHomePath]];
+    
+    return rootFilePathURL;
+}
+
+-(NSURL *) defaultDBCameraUploadsFolder
+{
+    NSString *dropboxHomePath = aDefaultDropBoxDirectory();
+    NSURL *cameraUploadsLocation = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/Camera Uploads", dropboxHomePath]];
+    
+    return cameraUploadsLocation;
 }
 
 @end

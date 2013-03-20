@@ -10,7 +10,6 @@
 
 @class PIXInfoWindowController;
 @class PIXMainWindowController;
-@class PIXLoadingWindowController;
 @class PIXFileParser;
 
 @interface PIXAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate>
@@ -19,7 +18,6 @@
     BOOL loadingWasCanceled;
     
     @public
-    PIXLoadingWindowController *loadingWindow;
     
     PIXInfoWindowController *showIntroWindow;
 
@@ -30,7 +28,6 @@
 
 - (IBAction)showMainWindow:(id)sender;
 - (IBAction)showIntroWindow:(id)sender;
-- (IBAction)showLoadingWindow:(id)sender;
 
 @property (nonatomic, strong) IBOutlet NSMenuItem * progressItem;
 // for MASPreferences class:
@@ -43,7 +40,7 @@
 
 
 -(void)startFileSystemLoading;
--(void)shouldStartFileSystemObservingWhenAlbumsFinishSaving;
+
 @property (assign) BOOL isObservingFileSystem;
 
 @property (nonatomic,strong) NSDate *startDate;

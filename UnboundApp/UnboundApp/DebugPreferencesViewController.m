@@ -137,6 +137,24 @@
     [[PIXFileParser sharedFileParser] stopObserving];
 }
 
+-(IBAction)clearDefaults:(id)sender
+{    
+    NSDictionary * allObjects;
+    NSString     * key;
+    
+    allObjects = [ [ NSUserDefaults standardUserDefaults ] dictionaryRepresentation ];
+    
+    for( key in allObjects )
+    {
+        [ [ NSUserDefaults standardUserDefaults ] removeObjectForKey: key ];
+    }
+    
+    [ [ NSUserDefaults standardUserDefaults ] synchronize ];
+
+}
+
+
+
 
 
 
