@@ -121,18 +121,16 @@ static NSString *const kItemsKey = @"photos";
         NSDate * photo1Date = [photo1 dateTaken];
         NSDate * photo2Date = [photo2 dateTaken];
         
-        /*
-         if(photo1Date == nil) photo1Date = [photo1 dateCreated];
-         
-         
-         if(photo2Date == nil) photo2Date = [photo2 dateCreated];
-         */
         
+        if(photo1Date == nil) photo1Date = [photo1 dateCreated];
+        if(photo2Date == nil) photo2Date = [photo2 dateCreated];
+         
+        /*
         if(photo2Date == nil || photo1Date == nil)
         {
             photo1Date = [photo1 dateCreated];
             photo2Date = [photo2 dateCreated];
-        }
+        }*/
         
         return [photo1Date compare:photo2Date];
         

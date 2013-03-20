@@ -564,6 +564,8 @@
 {
     //[gridView deselectAllItems];
     
+    if(index == NSNotFound) return;
+    
     DLog(@"didDoubleClickItemAtIndex: %li", index);
     PIXAlbum * album = nil;
     

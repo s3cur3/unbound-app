@@ -233,8 +233,9 @@ NSDictionary * dictionaryForURL(NSURL * url)
     // if the path is in a package or inside a package then don't traverse
     
     NSURL * subURL = changedURL;
+    NSURL * lastSubURL = nil;
     
-    while ([subURL isFileURL]) {
+    while ([lastSubURL isEqual:subURL]) {
         
         NSNumber * isPackage;
         NSNumber * isHidden;
@@ -248,6 +249,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
             return;
         }
         
+        
+        lastSubURL = subURL;
         subURL = [subURL URLByDeletingLastPathComponent];
         
     }
@@ -820,8 +823,28 @@ NSDictionary * dictionaryForURL(NSURL * url)
     // if this was modified since the last time we looked at it then we need to clear some data
     if([photo dateLastModified] != nil && [[photo dateLastModified] compare:dateModified] == NSOrderedAscending)
     {
+        
         [photo setThumbnail:nil];
         [photo setExifData:nil];
+        
+        NSManagedObjectID * objectID = [photo objectID];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            NSManagedObjectContext * mainThreadContext = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
+            PIXPhoto * mainThreadPhoto = (PIXPhoto *)[mainThreadContext existingObjectWithID:objectID error:nil];
+            
+            [mainThreadPhoto setThumbnailImage:nil];
+            [mainThreadPhoto setThumbnail:nil];
+            [mainThreadPhoto setExifData:nil];
+            
+            [mainThreadPhoto postPhotoUpdatedNote];
+            
+        });
+        
+
+        
+        
     }
         
     // set the date modified

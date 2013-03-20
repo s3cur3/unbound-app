@@ -113,4 +113,6 @@
  */
 - (BOOL) isSelectable;
 
+-(void)postPhotoUpdatedNote;
+
 @end

@@ -254,6 +254,8 @@
 
 - (void)gridView:(CNGridView *)gridView didDoubleClickItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
+    if(index == NSNotFound) return;
+    
     CNLog(@"didDoubleClickItemAtIndex: %li", index);
     [self showPageControllerForIndex:index];
 }
