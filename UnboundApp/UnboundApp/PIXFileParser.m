@@ -229,9 +229,34 @@ NSDictionary * dictionaryForURL(NSURL * url)
     // update the resume token
     [self updateResumeToken:resumeToken forObservedDirectory:observedURL];
     
+    
+    // if the path is in a package or inside a package then don't traverse
+    
+    NSURL * subURL = changedURL;
+    
+    while ([subURL isFileURL]) {
+        
+        NSNumber * isPackage;
+        NSNumber * isHidden;
+        
+        [subURL getResourceValue:&isPackage forKey:NSURLIsPackageKey error:nil];
+        [subURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:nil];
+        
+        if([isPackage boolValue] || [isHidden boolValue])
+        {
+            // do nothing, this is hidden or a package
+            return;
+        }
+        
+        subURL = [subURL URLByDeletingLastPathComponent];
+        
+    }
+    
+    
     // do a shallow, semi-recursive scan of the directory
     
     NSString * changedPath = changedURL.path;
+    
     if (changedPath != nil && [self.loadingAlbumsDict objectForKey:changedPath]==nil) {
         
         DLog(@"** Scanning file system at: %@", changedPath);

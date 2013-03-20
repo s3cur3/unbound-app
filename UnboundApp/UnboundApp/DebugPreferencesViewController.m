@@ -32,7 +32,7 @@
                   withKeyPath:@"isWorking"
                       options: nil]; //@{NSValueTransformerNameBindingOption : NSNegateBooleanTransformerName}];
     
-    [self updateCounts:nil];
+    //[self updateCounts:nil];
 }
 
 #pragma mark - MASPreferencesViewController

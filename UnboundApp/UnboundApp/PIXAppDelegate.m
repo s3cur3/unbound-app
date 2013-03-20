@@ -139,11 +139,8 @@
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
 #endif
     
-    
-    
-#ifdef DEBUG
     [[PIXLeapInputManager sharedInstance] run];
-#endif
+
     
 }
 
