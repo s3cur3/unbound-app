@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "1DB2F849167ABE87008AC0F7"
-               BuildableName = "UnboundApp.app"
-               BlueprintName = "UnboundApp"
+               BuildableName = "Unbound.app"
+               BlueprintName = "Unbound"
                ReferencedContainer = "container:UnboundApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,8 +33,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1DB2F849167ABE87008AC0F7"
-            BuildableName = "UnboundApp.app"
-            BlueprintName = "UnboundApp"
+            BuildableName = "Unbound.app"
+            BlueprintName = "Unbound"
             ReferencedContainer = "container:UnboundApp.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -52,8 +52,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1DB2F849167ABE87008AC0F7"
-            BuildableName = "UnboundApp.app"
-            BlueprintName = "UnboundApp"
+            BuildableName = "Unbound.app"
+            BlueprintName = "Unbound"
             ReferencedContainer = "container:UnboundApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -70,8 +70,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1DB2F849167ABE87008AC0F7"
-            BuildableName = "UnboundApp.app"
-            BlueprintName = "UnboundApp"
+            BuildableName = "Unbound.app"
+            BlueprintName = "Unbound"
             ReferencedContainer = "container:UnboundApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

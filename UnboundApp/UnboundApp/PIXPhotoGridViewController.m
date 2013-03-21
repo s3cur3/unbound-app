@@ -20,8 +20,9 @@
 #import "PIXCustomShareSheetViewController.h"
 #import "PIXFileManager.h"
 #import "PIXFileParser.h"
+#import "PIXShareManager.h"
 
-@interface PIXPhotoGridViewController ()
+@interface PIXPhotoGridViewController () 
 
 @property(nonatomic,strong) NSDateFormatter * titleDateFormatter;
 
@@ -448,6 +449,12 @@
 
 -(void)share:(id)sender
 {
+    [[PIXShareManager defaultShareManager] showShareSheetForItems:[self.selectedItems allObjects]
+                                                   relativeToRect:[sender bounds]
+                                                           ofView:sender
+                                                    preferredEdge:NSMaxXEdge];
+    
+    /*
     PIXCustomShareSheetViewController *controller = [[PIXCustomShareSheetViewController alloc] initWithNibName:@"PIXCustomShareSheetViewController"     bundle:nil];
     
     [controller setPhotosToShare:[self.selectedItems allObjects]];
@@ -457,7 +464,7 @@
     [popover setAnimates:YES];
     [popover setBehavior:NSPopoverBehaviorTransient];
     [popover showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMaxYEdge];
-    
+    */
 }
 
 

@@ -55,6 +55,8 @@
 
 -(void)findExifDataUsingDispatchQueue:(dispatch_queue_t)aQueue;
 
+-(void)postPhotoUpdatedNote;
+
 @end
 
 #pragma mark Required Methods IKImageBrowserItem Informal Protocol
@@ -113,6 +115,6 @@
  */
 - (BOOL) isSelectable;
 
--(void)postPhotoUpdatedNote;
+
 
 @end

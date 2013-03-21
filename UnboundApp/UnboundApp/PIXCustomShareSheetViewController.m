@@ -11,6 +11,8 @@
 #import "PIXPhoto.h"
 #import "PIXAlbum.h"
 
+#import "PIXShareManager.h"
+
 @interface PIXCustomShareSheetViewController ()
 
 @property (strong) NSArray * itemsToShare;
@@ -191,10 +193,7 @@
 
 -(void)emailItems:(id)sender
 {
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert setMessageText:@"Not yet Implemented"];
-    [alert addButtonWithTitle:@"OK"];
-    [alert runModal];
+    //[[PIXShareManager defaultShareManager] emailPhotos:self.itemsToShare];
 }
 
 -(void)copyItems:(id)sender

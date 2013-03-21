@@ -233,9 +233,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
     // if the path is in a package or inside a package then don't traverse
     
     NSURL * subURL = changedURL;
-    NSURL * lastSubURL = nil;
     
-    while ([lastSubURL isEqual:subURL]) {
+    while ([self isURLInObservedDirectories:subURL]) {
         
         NSNumber * isPackage;
         NSNumber * isHidden;
@@ -249,8 +248,6 @@ NSDictionary * dictionaryForURL(NSURL * url)
             return;
         }
         
-        
-        lastSubURL = subURL;
         subURL = [subURL URLByDeletingLastPathComponent];
         
     }
@@ -268,6 +265,19 @@ NSDictionary * dictionaryForURL(NSURL * url)
     
         [self scanURLForChanges:changedURL withRecursion:PIXFileParserRecursionSemi];
     }
+}
+
+-(BOOL)isURLInObservedDirectories:(NSURL *)subURL
+{
+    for(NSURL * anObservedDirectory in self.observedDirectories)
+    {
+        if([[subURL path] hasPrefix:[anObservedDirectory path]])
+        {
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 // At least one file somewhere inside--but not necessarily directly descended from--changedURL has changed.  You should examine the directory at changedURL and all subdirectories to see which files changed.
@@ -657,7 +667,6 @@ NSDictionary * dictionaryForURL(NSURL * url)
     
     //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
     dispatch_async([self sharedParsingQueue], ^(void) {
-        PIXAppDelegate *appDelegate = (PIXAppDelegate *)[[NSApplication sharedApplication] delegate];
         
         // create a thread-safe context (may want to make this a child context down the road)
         NSManagedObjectContext *context = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];

@@ -245,7 +245,7 @@
             case LEAP_GESTURE_TYPE_CIRCLE: {
                 LeapCircleGesture *circleGesture = (LeapCircleGesture *)gesture;
                 // Calculate the angle swept since the last frame
-                float sweptAngle = 0;
+                //float sweptAngle = 0;
                 if(circleGesture.state != LEAP_GESTURE_STATE_START) {
                     //LeapCircleGesture *previousUpdate = (LeapCircleGesture *)[[aController frame:1] gesture:gesture.id];
                     //sweptAngle = (circleGesture.progress - previousUpdate.progress) * 2 * LEAP_PI;
@@ -300,7 +300,7 @@
                 break;
             }
             case LEAP_GESTURE_TYPE_KEY_TAP: {
-                LeapKeyTapGesture *keyTapGesture = (LeapKeyTapGesture *)gesture;
+                //LeapKeyTapGesture *keyTapGesture = (LeapKeyTapGesture *)gesture;
 //                NSLog(@"Key Tap id: %d, %@, position: %@, direction: %@",
 //                      keyTapGesture.id, [PIXLeapInputManager stringForState:keyTapGesture.state],
 //                      keyTapGesture.position, keyTapGesture.direction);

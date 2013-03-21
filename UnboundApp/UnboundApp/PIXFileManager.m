@@ -17,6 +17,7 @@
 #import "PIXPhoto.h"
 #import <CoreFoundation/CoreFoundation.h>
 #import "PIXDefines.h"
+#import "PIXMainWindowController.h"
 
 //#define DEBUG_DELETE_ITEMS 1
 
@@ -108,15 +109,32 @@ typedef NSUInteger PIXOverwriteStrategy;
     [panel setCanChooseFiles:YES];
     [panel setCanChooseDirectories:NO];
     
+    /* this was deprecated, replaced it with the code below
     [panel beginSheetForDirectory:@"/Applications"
                              file:nil
                             types:nil
                    modalForWindow:[[PIXAppDelegate sharedAppDelegate] window]
                     modalDelegate:self
                    didEndSelector:@selector(chooseAppSheetClosed:returnCode:contextInfo:)
-                      contextInfo:nil];    
+                      contextInfo:nil];
+    */
+    
+    
+    [panel setDirectoryURL:[NSURL fileURLWithPath:@"/Applications"]];
+    [panel beginSheetModalForWindow:[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] completionHandler:^(NSInteger result) {
+        
+        NSArray *someFilePaths = [self.selectedFilePaths copy];
+        self.selectedFilePaths = nil;
+        if (result == NSOKButton)
+        {
+            [panel close];
+            
+            [self openFileWithPaths:someFilePaths withApplication:[[panel URL] path]];
+            //[self openSelectedFileWithApplication:[panel filename]];
+        }
+    }];
 }
-
+/*
 - (void)chooseAppSheetClosed:(NSOpenPanel *)panel returnCode:(int)code contextInfo:(NSNumber *)useOptions
 {
     NSArray *someFilePaths = [self.selectedFilePaths copy];
@@ -128,7 +146,7 @@ typedef NSUInteger PIXOverwriteStrategy;
         [self openFileWithPaths:someFilePaths withApplication:[[panel URL] path]];
         //[self openSelectedFileWithApplication:[panel filename]];
     }
-}
+}*/
 
 /// construct menu item for app
 - (NSMenuItem *)menuItemForOpenWithForApplication:(NSString *)appName appPath:(NSString *)appPath filePaths:(NSArray *)filePaths

@@ -99,11 +99,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXPageViewController.m"
-         timestampString = "385418310.224918"
+         timestampString = "385533720.254107"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "483"
-         endingLineNumber = "483"
+         startingLineNumber = "493"
+         endingLineNumber = "493"
          landmarkName = "@implementation PIXPageViewController(NSPageControllerDelegate)"
          landmarkType = "3">
       </FileBreakpoint>
@@ -181,6 +181,19 @@
          startingLineNumber = "348"
          endingLineNumber = "348"
          landmarkName = "-handleSwipe:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "UnboundApp/PIXFileParser.m"
+         timestampString = "385506436.895577"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "248"
+         endingLineNumber = "248"
+         landmarkName = "-observedDirectory:childrenAtURLDidChange:historical:resumeToken:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

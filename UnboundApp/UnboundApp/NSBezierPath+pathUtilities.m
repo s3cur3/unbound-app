@@ -13,7 +13,7 @@
 // This method works only in OS X v10.2 and later.
 - (CGPathRef)quartzPath
 {
-    int i, numElements;
+    NSUInteger i, numElements;
     
     // Need to begin a path here.
     CGPathRef           immutablePath = NULL;

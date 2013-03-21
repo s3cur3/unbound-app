@@ -19,6 +19,7 @@
 #import "PIXPageHUDWindow.h"
 
 #import "PIXCustomShareSheetViewController.h"
+#import "PIXShareManager.h"
 
 @interface PIXPageViewController () <leapResponder>
 
@@ -176,6 +177,14 @@
 
 -(IBAction)shareButtonPressed:(id)sender
 {
+    PIXPhoto * currentPhoto = (PIXPhoto *)[self.pagerData objectAtIndex:self.pageController.selectedIndex];
+    
+    [[PIXShareManager defaultShareManager] showShareSheetForItems:@[currentPhoto]
+                                                   relativeToRect:[sender bounds]
+                                                           ofView:sender
+                                                    preferredEdge:NSMaxXEdge];
+    
+    /*
     PIXCustomShareSheetViewController *controller = [[PIXCustomShareSheetViewController alloc] initWithNibName:@"PIXCustomShareSheetViewController"     bundle:nil];
     
     PIXPhoto * thisPhoto = [self.pagerData objectAtIndex:self.pageController.selectedIndex];
@@ -187,6 +196,7 @@
     [popover setAnimates:YES];
     [popover setBehavior:NSPopoverBehaviorTransient];
     [popover showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMaxYEdge];
+     */
 }
 
 - (NSToolbarItem *)infoItem

@@ -15,6 +15,7 @@
 #import "PIXMainWindowController.h"
 #import "PIXLeapInputManager.h"
 #import "PIXCustomShareSheetViewController.h"
+#import "PIXShareManager.h"
 
 @interface PIXSplitViewController () <leapResponder>
 
@@ -219,6 +220,13 @@
 
 -(IBAction)shareButtonPressed:(id)sender
 {
+    
+    [[PIXShareManager defaultShareManager] showShareSheetForItems:@[self.selectedAlbum]
+                                                   relativeToRect:[sender bounds]
+                                                           ofView:sender
+                                                    preferredEdge:NSMaxXEdge];
+    
+    /*
     PIXCustomShareSheetViewController *controller = [[PIXCustomShareSheetViewController alloc] initWithNibName:@"PIXCustomShareSheetViewController"     bundle:nil];
     
     [controller setAlbumsToShare:@[self.selectedAlbum]];
@@ -228,6 +236,7 @@
     [popover setAnimates:YES];
     [popover setBehavior:NSPopoverBehaviorTransient];
     [popover showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMaxYEdge];
+     */
 }
 
 

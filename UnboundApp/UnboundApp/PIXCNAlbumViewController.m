@@ -25,6 +25,8 @@
 #import "PIXFileParser.h"
 #import "PIXFileManager.h"
 
+#import "PIXShareManager.h"
+
 @interface PIXCNAlbumViewController ()
 {
     
@@ -465,6 +467,11 @@
 
 -(void)share:(id)sender
 {
+    [[PIXShareManager defaultShareManager] showShareSheetForItems:[self.selectedItems allObjects]
+                                                   relativeToRect:[sender bounds]
+                                                           ofView:sender
+                                                    preferredEdge:NSMaxXEdge];
+    /*
     PIXCustomShareSheetViewController *controller = [[PIXCustomShareSheetViewController alloc] initWithNibName:@"PIXCustomShareSheetViewController"     bundle:nil];
     
     [controller setAlbumsToShare:[self.selectedItems allObjects]];
@@ -474,7 +481,7 @@
     [popover setContentViewController:controller];
     [popover setAnimates:YES];
     [popover setBehavior:NSPopoverBehaviorTransient];
-    [popover showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMaxYEdge];
+    [popover showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMaxYEdge];*/
     
 }
 

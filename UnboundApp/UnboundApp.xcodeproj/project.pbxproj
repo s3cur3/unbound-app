@@ -114,6 +114,7 @@
 		8C68248F16F8089400245F09 /* buttongrid_twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68248116F8089400245F09 /* buttongrid_twitter.png */; };
 		8C68249016F8089400245F09 /* buttongrid_twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68248216F8089400245F09 /* buttongrid_twitter@2x.png */; };
 		8C7ABBBE16C42A3D00784BDA /* PIXGradientBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7ABBBD16C42A3D00784BDA /* PIXGradientBarView.m */; };
+		8C85AC1916FA98470021ADB4 /* PIXShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C85AC1816FA98470021ADB4 /* PIXShareManager.m */; };
 		8C8EE92B16C46AB800F16C49 /* PIXAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE92A16C46AB800F16C49 /* PIXAlbum.m */; };
 		8C8EE93416CACA7900F16C49 /* ArchDirectoryObservationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE92F16CACA7900F16C49 /* ArchDirectoryObservationCenter.m */; };
 		8C8EE93516CACA7900F16C49 /* NSURL+DirectoryObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE93316CACA7900F16C49 /* NSURL+DirectoryObserver.m */; };
@@ -223,7 +224,7 @@
 		1D8CD7F216AB76E20072D516 /* PIXPhotoGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPhotoGridViewController.h; sourceTree = "<group>"; };
 		1D8CD7F316AB76E20072D516 /* PIXPhotoGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhotoGridViewController.m; sourceTree = "<group>"; };
 		1DA66CAF16AA2ED00060D796 /* nophoto_200x200.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = nophoto_200x200.jpg; sourceTree = "<group>"; };
-		1DB2F84A167ABE87008AC0F7 /* UnboundApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnboundApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DB2F84A167ABE87008AC0F7 /* Unbound.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unbound.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DB2F84E167ABE87008AC0F7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		1DB2F851167ABE87008AC0F7 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		1DB2F852167ABE87008AC0F7 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -286,6 +287,7 @@
 		8C24A40716F94C1100703F97 /* intro_bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = intro_bg.jpg; sourceTree = "<group>"; };
 		8C24A40916F94ED100703F97 /* PIXRoundRectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXRoundRectView.h; sourceTree = "<group>"; };
 		8C24A40A16F94ED100703F97 /* PIXRoundRectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXRoundRectView.m; sourceTree = "<group>"; };
+		8C3F667C16FA2BA900615689 /* Unbound.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Unbound.entitlements; sourceTree = "<group>"; };
 		8C4B80E616B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPhotoGridViewItem.h; sourceTree = "<group>"; };
 		8C4B80E716B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhotoGridViewItem.m; sourceTree = "<group>"; };
 		8C4B80F516BB3D8900C7E8F4 /* GeneralPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralPreferencesViewController.h; sourceTree = "<group>"; };
@@ -327,6 +329,8 @@
 		8C68248216F8089400245F09 /* buttongrid_twitter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttongrid_twitter@2x.png"; sourceTree = "<group>"; };
 		8C7ABBBC16C42A3D00784BDA /* PIXGradientBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXGradientBarView.h; sourceTree = "<group>"; };
 		8C7ABBBD16C42A3D00784BDA /* PIXGradientBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXGradientBarView.m; sourceTree = "<group>"; };
+		8C85AC1716FA98470021ADB4 /* PIXShareManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXShareManager.h; sourceTree = "<group>"; };
+		8C85AC1816FA98470021ADB4 /* PIXShareManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXShareManager.m; sourceTree = "<group>"; };
 		8C8EE92916C46AB800F16C49 /* PIXAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXAlbum.h; sourceTree = "<group>"; };
 		8C8EE92A16C46AB800F16C49 /* PIXAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXAlbum.m; sourceTree = "<group>"; };
 		8C8EE92E16CACA7900F16C49 /* ArchDirectoryObservationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArchDirectoryObservationCenter.h; sourceTree = "<group>"; };
@@ -409,9 +413,6 @@
 				1D8CD7F316AB76E20072D516 /* PIXPhotoGridViewController.m */,
 				8C4B80E616B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.h */,
 				8C4B80E716B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.m */,
-				8CE460E516CD7BB300CDFA04 /* PIXCustomShareSheetViewController.h */,
-				8CE460E616CD7BB300CDFA04 /* PIXCustomShareSheetViewController.m */,
-				8CE460E716CD7BB300CDFA04 /* PIXCustomShareSheetViewController.xib */,
 				8C68246916F596BB00245F09 /* PIXSelectionLayer.h */,
 				8C68246A16F596BB00245F09 /* PIXSelectionLayer.m */,
 				8C68246C16F599FC00245F09 /* NSBezierPath+pathUtilities.h */,
@@ -605,6 +606,9 @@
 				8C4B9CA516DC30FD00F6BADD /* PIXMiniExifViewController.xib */,
 				8C4B9CA816DC436A00F6BADD /* PIXExifBGView.h */,
 				8C4B9CA916DC436B00F6BADD /* PIXExifBGView.m */,
+				8CE460E516CD7BB300CDFA04 /* PIXCustomShareSheetViewController.h */,
+				8CE460E616CD7BB300CDFA04 /* PIXCustomShareSheetViewController.m */,
+				8CE460E716CD7BB300CDFA04 /* PIXCustomShareSheetViewController.xib */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -612,6 +616,7 @@
 		1DB2F83F167ABE87008AC0F7 = {
 			isa = PBXGroup;
 			children = (
+				8C3F667C16FA2BA900615689 /* Unbound.entitlements */,
 				1DB2F854167ABE87008AC0F7 /* UnboundApp */,
 				1DB2F84D167ABE87008AC0F7 /* Frameworks */,
 				1DB2F84B167ABE87008AC0F7 /* Products */,
@@ -621,7 +626,7 @@
 		1DB2F84B167ABE87008AC0F7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1DB2F84A167ABE87008AC0F7 /* UnboundApp.app */,
+				1DB2F84A167ABE87008AC0F7 /* Unbound.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -675,6 +680,7 @@
 		1DB2F870167AC0A6008AC0F7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				8C85AC1616FA98280021ADB4 /* Helpers */,
 				8C8EE92C16CACA6700F16C49 /* third party */,
 				1DB2F860167ABE87008AC0F7 /* PIXAppDelegate.h */,
 				1DB2F861167ABE87008AC0F7 /* PIXAppDelegate.m */,
@@ -772,6 +778,15 @@
 			name = MASPreferences;
 			sourceTree = "<group>";
 		};
+		8C85AC1616FA98280021ADB4 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				8C85AC1716FA98470021ADB4 /* PIXShareManager.h */,
+				8C85AC1816FA98470021ADB4 /* PIXShareManager.m */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
 		8C8EE92C16CACA6700F16C49 /* third party */ = {
 			isa = PBXGroup;
 			children = (
@@ -813,9 +828,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1DB2F849167ABE87008AC0F7 /* UnboundApp */ = {
+		1DB2F849167ABE87008AC0F7 /* Unbound */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DB2F868167ABE87008AC0F7 /* Build configuration list for PBXNativeTarget "UnboundApp" */;
+			buildConfigurationList = 1DB2F868167ABE87008AC0F7 /* Build configuration list for PBXNativeTarget "Unbound" */;
 			buildPhases = (
 				1DB2F846167ABE87008AC0F7 /* Sources */,
 				1DB2F847167ABE87008AC0F7 /* Frameworks */,
@@ -826,9 +841,9 @@
 			);
 			dependencies = (
 			);
-			name = UnboundApp;
+			name = Unbound;
 			productName = UnboundApp;
-			productReference = 1DB2F84A167ABE87008AC0F7 /* UnboundApp.app */;
+			productReference = 1DB2F84A167ABE87008AC0F7 /* Unbound.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -853,7 +868,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1DB2F849167ABE87008AC0F7 /* UnboundApp */,
+				1DB2F849167ABE87008AC0F7 /* Unbound */,
 			);
 		};
 /* End PBXProject section */
@@ -996,6 +1011,7 @@
 				8C68247416F6A75100245F09 /* PIXPageHUDWindow.m in Sources */,
 				8CF9CE4816F8B4A9003B0933 /* PIXInfoPanelView.m in Sources */,
 				8C24A40B16F94ED100703F97 /* PIXRoundRectView.m in Sources */,
+				8C85AC1916FA98470021ADB4 /* PIXShareManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1110,7 +1126,7 @@
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = UnboundApp/UnboundApp.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1124,6 +1140,7 @@
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1140,7 +1157,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1DB2F868167ABE87008AC0F7 /* Build configuration list for PBXNativeTarget "UnboundApp" */ = {
+		1DB2F868167ABE87008AC0F7 /* Build configuration list for PBXNativeTarget "Unbound" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DB2F869167ABE87008AC0F7 /* Debug */,
