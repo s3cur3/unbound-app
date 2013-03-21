@@ -61,6 +61,7 @@
     PIXPhoto *aPhoto = (PIXPhoto *)obj;
     NSCParameterAssert(aPhoto.fullsizeImage);
     self.imageView.image = aPhoto.fullsizeImage;
+    [self.imageView setNeedsDisplay:YES];
 }
 
 -(void)setPhoto:(PIXPhoto *)newPhoto
@@ -71,7 +72,9 @@
         {
             //[[NSNotificationCenter defaultCenter] removeObserver:self name:PhotoThumbDidChangeNotification object:self.representedObject];
             [[NSNotificationCenter defaultCenter] removeObserver:self name:PhotoFullsizeDidChangeNotification object:self.representedObject];
-            //[self.representedObject cancelFullsizeLoading];
+//            if (newPhoto!=nil) {
+//                [self.representedObject cancelFullsizeLoading];
+//            }
         }
         
         [super setRepresentedObject:newPhoto];

@@ -69,7 +69,8 @@
         dispatch_once(&onceToken, ^{
             _backgroundSaveQueue = [[NSOperationQueue alloc] init];
             [_backgroundSaveQueue setName:@"com.pixite.thumbnail.generator"];
-            [_backgroundSaveQueue setMaxConcurrentOperationCount:NSOperationQueueDefaultMaxConcurrentOperationCount];
+            //[_backgroundSaveQueue setMaxConcurrentOperationCount:NSOperationQueueDefaultMaxConcurrentOperationCount];
+            [_backgroundSaveQueue setMaxConcurrentOperationCount:1];
         });
         
     }

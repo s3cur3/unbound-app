@@ -92,19 +92,23 @@ const CGFloat kThumbnailSize = 370.0f;
     if (_fullsizeImage == nil)
     {
         //_fullsizeImageIsLoading = YES;
-        if (!_fullsizeImageIsLoading) {
-            __weak PIXPhoto *weakSelf = self;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                
-                weakSelf.cancelFullsizeLoadOperation = NO;
-                [weakSelf loadFullsizeImage];
-                
-            });
-        }
+//        if (!_fullsizeImageIsLoading) {
+//            __weak PIXPhoto *weakSelf = self;
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                
+//                
+//                weakSelf.cancelFullsizeLoadOperation = NO;
+//                [weakSelf loadFullsizeImage];
+//                
+//            });
+//        }
         
         //While full image is loading show the thumbnail stretched
         if (_thumbnailImage!=nil) {
+            return _thumbnailImage;
+        } else if (self.thumbnail.imageData) {
+            NSImage *thumbImage = [[NSImage alloc] initWithData:self.thumbnail.imageData];
+            [self setThumbnailImage:thumbImage];
             return _thumbnailImage;
         } else {
             //use placeholder as a last resort
@@ -151,14 +155,14 @@ const CGFloat kThumbnailSize = 370.0f;
     [globalQueue addOperationWithBlock:^{
         
         if (weakSelf == nil || aPath==nil) {
-            DLog(@"thumbnail operation completed after object was dealloced - return");
+            DLog(@"fullsize operation completed after object was dealloced - return");
             _fullsizeImageIsLoading = NO;
             weakSelf.cancelFullsizeLoadOperation = NO;
             return;
         }
         
         if (weakSelf.cancelFullsizeLoadOperation==YES) {
-            //DLog(@"1)thumbnail operation was canceled - return");
+            DLog(@"1)fullsize operation was canceled - return");
             _fullsizeImageIsLoading = NO;
             weakSelf.cancelFullsizeLoadOperation = NO;
             return;
@@ -179,7 +183,7 @@ const CGFloat kThumbnailSize = 370.0f;
         if (imageSource) {
             
             if (weakSelf.cancelFullsizeLoadOperation==YES) {
-                //DLog(@"2)thumbnail operation was canceled - return");
+                DLog(@"2)fullsize operation was canceled - return");
                 CFRelease(imageSource);
                 _fullsizeImageIsLoading = NO;
                 weakSelf.cancelFullsizeLoadOperation = NO;
@@ -233,7 +237,7 @@ const CGFloat kThumbnailSize = 370.0f;
             [image lockFocus]; // call this to make sure the image loads ?
             [image unlockFocus];
             
-            [weakSelf performSelectorOnMainThread:@selector(mainThreadComputeFullsizePreviewFinished:) withObject:image waitUntilDone:NO];
+            [weakSelf performSelectorOnMainThread:@selector(mainThreadComputeFullsizePreviewFinished:) withObject:image waitUntilDone:YES];
             
             //if(cfDict) CFRelease(cfDict);
             CFRelease(imageSource);
@@ -245,9 +249,9 @@ const CGFloat kThumbnailSize = 370.0f;
 {
     if (self.cancelFullsizeLoadOperation==YES) {
         DLog(@"5)fullsize operation was canceled - return?");
-        //        _thumbnailImageIsLoading = NO;
-        //        self.cancelThumbnailLoadOperation = NO;
-        //       return;
+                _fullsizeImageIsLoading = NO;
+                self.cancelFullsizeLoadOperation = NO;
+               return;
     }
     NSCParameterAssert(result);
     if (self.fullsizeImage == nil ) {
@@ -309,15 +313,31 @@ const CGFloat kThumbnailSize = 370.0f;
     //DLog(@"desktopOptions: %@", desktopOptions);
     //DLog(@"screen origin : %.0f , %.0f", visibleScreen.origin.x, visibleScreen.origin.y);
     //DLog(@"screen dimensions : %.0f x %.0f", visibleScreen.size.width, visibleScreen.size.height);
-    NSRect visibleScreen = [[NSScreen mainScreen] visibleFrame];
-    float maxDimension = (visibleScreen.size.width > visibleScreen.size.height) ? visibleScreen.size.width : visibleScreen.size.height;
-    
-    NSNumber *maxPixelSize = [NSNumber numberWithInteger:maxDimension];
-    //DLog(@"Using maxPixelSize : %@", maxPixelSize);
-    NSDictionary *imageOptions = @{(id)kCGImageSourceCreateThumbnailFromImageIfAbsent: (id)kCFBooleanTrue,
-                                   (id)kCGImageSourceCreateThumbnailFromImageAlways: (id)kCFBooleanTrue,
-                                   (id)kCGImageSourceThumbnailMaxPixelSize: (id)maxPixelSize,
-                                   (id)kCGImageSourceCreateThumbnailWithTransform: (id)kCFBooleanTrue};
+    BOOL resizeImage = YES;
+    NSDictionary *imageOptions = nil;
+    if (resizeImage)
+    {
+        NSRect visibleScreen = [[NSScreen mainScreen] visibleFrame];
+        float maxDimension = (visibleScreen.size.width > visibleScreen.size.height) ? visibleScreen.size.width : visibleScreen.size.height;
+        
+        NSNumber *maxPixelSize = [NSNumber numberWithInteger:maxDimension];
+        //DLog(@"Using maxPixelSize : %@", maxPixelSize);
+        imageOptions = @{(id)kCGImageSourceCreateThumbnailFromImageIfAbsent: (id)kCFBooleanTrue,
+                                       (id)kCGImageSourceCreateThumbnailFromImageAlways: (id)kCFBooleanTrue,
+                                       (id)kCGImageSourceThumbnailMaxPixelSize: (id)maxPixelSize,
+                                       (id)kCGImageSourceCreateThumbnailWithTransform: (id)kCFBooleanTrue};
+    } else {
+//        NSRect visibleScreen = [[NSScreen mainScreen] visibleFrame];
+//        float maxDimension = (visibleScreen.size.width > visibleScreen.size.height) ? visibleScreen.size.width : visibleScreen.size.height;
+//        
+//        NSNumber *maxPixelSize = [NSNumber numberWithInteger:maxDimension];
+        //DLog(@"Using maxPixelSize : %@", maxPixelSize);
+        imageOptions = @{(id)kCGImageSourceCreateThumbnailFromImageIfAbsent: (id)kCFBooleanTrue,
+                                       (id)kCGImageSourceCreateThumbnailFromImageAlways: (id)kCFBooleanTrue,
+                                       //(id)kCGImageSourceThumbnailMaxPixelSize: (id)maxPixelSize,
+                                       (id)kCGImageSourceCreateThumbnailWithTransform: (id)kCFBooleanTrue};
+    }
+
     
     CGImageRef imageRef = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, (__bridge CFDictionaryRef)imageOptions);
     
@@ -367,14 +387,16 @@ const CGFloat kThumbnailSize = 370.0f;
     }
 
     _fullsizeImageIsLoading = NO;
-    NSImage *aFullScreenImage = nil;
-    if ([data isKindOfClass:[NSData class]])
-    {
-        aFullScreenImage = [[NSImage alloc] initWithData:data];
-    } else {
-        aFullScreenImage = (NSImage *)data;
-        self.fullsizeImage = aFullScreenImage;
-    }
+    NSCParameterAssert(data);
+    self.fullsizeImage = (NSImage *)data;
+    
+//    if ([data isKindOfClass:[NSData class]])
+//    {
+//        aFullScreenImage = [[NSImage alloc] initWithData:data];
+//    } else {
+//        aFullScreenImage = (NSImage *)data;
+//        self.fullsizeImage = aFullScreenImage;
+//    }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:PhotoFullsizeDidChangeNotification object:self];
     
