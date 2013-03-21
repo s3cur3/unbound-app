@@ -139,6 +139,8 @@
         
         [self.pageController.view layoutSubtreeIfNeeded];
         
+        [self.infoPanelVC setPhoto:[self.pagerData objectAtIndex:self.pageController.selectedIndex]];
+        
 
         
     });
@@ -586,7 +588,7 @@
     
     self.currentImageVC = (PIXImageViewController *)[pageController selectedViewController];
     
-    [self.infoPanelVC setPhoto:(PIXPhoto *)[self.currentImageVC representedObject]];
+    [self.infoPanelVC setPhoto:[self.pagerData objectAtIndex:pageController.selectedIndex]];
     
     [self.currentImageVC setIsCurrentView:YES];
     

@@ -47,10 +47,13 @@
 
 -(void)setPhoto:(PIXPhoto *)photo
 {
-    _photo = photo;
-    
-    [self updateLabels];
-    [self updateMap];
+    if(_photo != photo)
+    {    
+        _photo = photo;
+        
+        [self updateLabels];
+        [self updateMap];
+    }
 }
 
 -(void)updateLabels

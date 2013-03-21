@@ -97,8 +97,8 @@
 		8C53DFEE16FB7C36008EF8B1 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFED16FB7C36008EF8B1 /* MapKit.framework */; };
 		8C53DFF216FB7CED008EF8B1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFF116FB7CED008EF8B1 /* CoreFoundation.framework */; };
 		8C53DFF416FB7E0F008EF8B1 /* MapKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFED16FB7C36008EF8B1 /* MapKit.framework */; };
-		8C53DFF516FB7E11008EF8B1 /* libLeap.dylib in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8C031CD016E926F7009B7F38 /* libLeap.dylib */; };
 		8C53DFF716FB831A008EF8B1 /* MapViewAdditions.css in Resources */ = {isa = PBXBuildFile; fileRef = 8C53DFF616FB8319008EF8B1 /* MapViewAdditions.css */; };
+		8C53E00516FBCB36008EF8B1 /* libLeap.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8C031CD016E926F7009B7F38 /* libLeap.dylib */; };
 		8C68246B16F596BB00245F09 /* PIXSelectionLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68246A16F596BB00245F09 /* PIXSelectionLayer.m */; };
 		8C68246E16F599FD00245F09 /* NSBezierPath+pathUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68246D16F599FD00245F09 /* NSBezierPath+pathUtilities.m */; };
 		8C68247116F6850C00245F09 /* PIXPageHUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68247016F6850B00245F09 /* PIXPageHUDView.m */; };
@@ -150,9 +150,18 @@
 			dstSubfolderSpec = 10;
 			files = (
 				8C53DFF416FB7E0F008EF8B1 /* MapKit.framework in Copy Frameworks */,
-				8C53DFF516FB7E11008EF8B1 /* libLeap.dylib in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8C53E00416FBCB0D008EF8B1 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				8C53E00516FBCB36008EF8B1 /* libLeap.dylib in CopyFiles */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -854,6 +863,7 @@
 				8C53DFF316FB7DF4008EF8B1 /* Copy Frameworks */,
 				1DB2F847167ABE87008AC0F7 /* Frameworks */,
 				1DB2F848167ABE87008AC0F7 /* Resources */,
+				8C53E00416FBCB0D008EF8B1 /* CopyFiles */,
 			);
 			buildRules = (
 			);
