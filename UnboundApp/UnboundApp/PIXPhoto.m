@@ -360,6 +360,7 @@ const CGFloat kThumbnailSize = 370.0f;
         */
         
         result = [[NSImage alloc] initWithCGImage:imageRef size:CGSizeZero];
+        CFRelease(imageRef);
     }
     
     return result;
@@ -457,7 +458,7 @@ const CGFloat kThumbnailSize = 370.0f;
              */
             
             result = [[NSImage alloc] initWithCGImage:imageRef size:CGSizeZero];
-            
+            CFRelease(imageRef);
         }
     
         return result;
