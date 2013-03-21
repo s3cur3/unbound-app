@@ -7,10 +7,11 @@
 //
 
 #import "PIXObject.h"
+#import <MapKit/MapKit.h>
 
 @class Album;
 
-@interface Photo : PIXObject
+@interface Photo : PIXObject <MKAnnotation>
 
 
 @property (nonatomic, strong) NSDate *dateLastModified;

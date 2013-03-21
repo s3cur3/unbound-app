@@ -1105,13 +1105,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     NSPoint location = [theEvent locationInWindow];
     NSInteger index = [self indexForItemAtLocation:location];
     
-    // this will only deselect the same object we clicked down in, so we're save to do this first
-    if(index != NSNotFound)
-    {
-        // if we're clicking up while on a selected item
-        // else if this was not selected then deselect --scott
-        [self selectItemAtIndexMouseUp:index usingModifierFlags:theEvent.modifierFlags];
-    }
+    
 
     abortSelection = NO;
 
@@ -1130,8 +1124,8 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
             
             if ([(CNGridViewItem *)obj selected] == YES) {
                 [self selectItem:obj];
-            } else {
-                [self deSelectItem:obj];
+           // } else {
+           //     [self deSelectItem:obj];
             }
         }];
         [selectedItemsBySelectionFrame removeAllObjects];
@@ -1146,6 +1140,14 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         {
             [self gridViewDidDeselectAllItems:self];
             return;
+        }
+        
+        // this will only deselect the same object we clicked down in, so we're safe to do this first
+        else
+        {
+            // if we're clicking up while on a selected item
+            // else if this was not selected then deselect --scott
+            [self selectItemAtIndexMouseUp:index usingModifierFlags:theEvent.modifierFlags];
         }
         
         

@@ -43,6 +43,8 @@ const CGFloat kThumbnailSize = 370.0f;
 @dynamic stackPhotoAlbum;
 @dynamic exifData;
 @dynamic fileSize;
+@dynamic latitude;
+@dynamic longitude;
 
 @synthesize cancelThumbnailLoadOperation;
 @synthesize thumbnailImage = _thumbnailImage;
@@ -652,6 +654,7 @@ const CGFloat kThumbnailSize = 370.0f;
         // set this to non-nil so we don't try and load it again
         [self setExifData:@{@"noExif":@"noExif"}];
         self.dateTaken = nil;
+        
     }
     
     else
@@ -673,7 +676,46 @@ const CGFloat kThumbnailSize = 370.0f;
         {
             self.dateTaken = nil;
         }
+        
+        // set the lat and lon in the db (so we can fetch based on location)
+        
+        NSNumber * latitudeNumber = [newExifData valueForKeyPath: @"{GPS}.Latitude"];
+        NSNumber * longitudeNumber = [newExifData valueForKeyPath: @"{GPS}.Longitude"];
+        NSString * latRef = [newExifData valueForKeyPath: @"{GPS}.LatitudeRef"];
+        NSString * longRef = [newExifData valueForKeyPath: @"{GPS}.LongitudeRef"];
+        
+        if (latitudeNumber && longitudeNumber) {
+            double latitude = [latitudeNumber doubleValue];
+            double longitude = [longitudeNumber doubleValue];
+            if ([latRef isEqualToString: @"S"]) {
+                latitude = -latitude;
+            }
+            if ([longRef isEqualToString: @"W"]) {
+                longitude = -longitude;
+            }
+            [self setLatitude: [NSNumber numberWithDouble: latitude]];
+            [self setLongitude: [NSNumber numberWithDouble: longitude]];
+        }
     }
+}
+
+#pragma mark -
+#pragma mark Map Annotation
+
+// Map Annotation stuff
+-(CLLocationCoordinate2D)coordinate
+{
+	CLLocationCoordinate2D coord;
+	
+	coord.latitude = [[self latitude] doubleValue];
+	coord.longitude = [[self longitude] doubleValue];
+	
+	return coord;
+}
+
+- (NSString *)subtitle
+{
+	return nil;
 }
 
 
