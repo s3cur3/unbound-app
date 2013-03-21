@@ -71,6 +71,22 @@ const CGFloat kThumbnailSize = 370.0f;
     self.cancelFullsizeLoadOperation = YES;
 }
 
+-(NSImage *)fullsizeImage
+{
+    //    if (_fullsizeImage == nil && !_fullsizeImageIsLoading)
+    //    {
+    //        __weak PIXPhoto *weakSelf = self;
+    //        dispatch_async(dispatch_get_main_queue(), ^{
+    //
+    //
+    //            weakSelf.cancelFullsizeLoadOperation = NO;
+    //            [weakSelf loadFullsizeImage];
+    //
+    //        });
+    //    }
+    return _fullsizeImage;
+}
+
 -(NSImage *)fullsizeImageForFullscreenDisplay
 {
     if (_fullsizeImage == nil && !_fullsizeImageIsLoading)
@@ -97,9 +113,10 @@ const CGFloat kThumbnailSize = 370.0f;
     return _fullsizeImage;
 }
 
--(NSImage *)fullsizeImage
+
+-(NSImage *)fullsizeImageStartLoadingIfNeeded:(BOOL)shouldLoad
 {
-    if (_fullsizeImage == nil && !_fullsizeImageIsLoading)
+    if (_fullsizeImage == nil && !_fullsizeImageIsLoading && shouldLoad)
     {
         //_fullsizeImageIsLoading = YES;
         __weak PIXPhoto *weakSelf = self;
@@ -287,8 +304,8 @@ const CGFloat kThumbnailSize = 370.0f;
     //NSDictionary *desktopOptions = [[NSWorkspace sharedWorkspace] desktopImageOptionsForScreen:[NSScreen mainScreen]];
     NSRect visibleScreen = [[NSScreen mainScreen] visibleFrame];
     //DLog(@"desktopOptions: %@", desktopOptions);
-    DLog(@"screen origin : %.0f , %.0f", visibleScreen.origin.x, visibleScreen.origin.y);
-    DLog(@"screen dimensions : %.0f x %.0f", visibleScreen.size.width, visibleScreen.size.height);
+    //DLog(@"screen origin : %.0f , %.0f", visibleScreen.origin.x, visibleScreen.origin.y);
+    //DLog(@"screen dimensions : %.0f x %.0f", visibleScreen.size.width, visibleScreen.size.height);
     float maxDimension = (visibleScreen.size.width > visibleScreen.size.height) ? visibleScreen.size.width : visibleScreen.size.height;
     //NSNumber *maxPixelSize = [NSNumber numberWithInteger:2048.0f];
     NSNumber *maxPixelSize = [NSNumber numberWithInteger:maxDimension];
@@ -340,9 +357,9 @@ const CGFloat kThumbnailSize = 370.0f;
 - (void)mainThreadComputeFullsizePreviewFinished:(id)data {
     if (self.cancelFullsizeLoadOperation==YES) {
         DLog(@"5)fullsize operation was canceled - return?");
-        //        _thumbnailImageIsLoading = NO;
-        //        self.cancelThumbnailLoadOperation = NO;
-        //       return;
+                _fullsizeImageIsLoading = NO;
+                self.cancelFullsizeLoadOperation = NO;
+               return;
     }
 
     _fullsizeImageIsLoading = NO;

@@ -47,8 +47,10 @@
 -(void)cancelThumbnailLoading;
 
 //Image pre-loading from disk methods
--(NSImage *)fullsizeImageForFullscreenDisplay;
 -(NSImage *)fullsizeImage;
+-(NSImage *)fullsizeImageStartLoadingIfNeeded:(BOOL)shouldLoad;
+-(NSImage *)fullsizeImageForFullscreenDisplay;
+
 -(void)cancelFullsizeLoading;
 
 -(NSDate *)findDisplayDate;

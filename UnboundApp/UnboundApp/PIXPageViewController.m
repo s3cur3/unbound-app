@@ -38,6 +38,8 @@
 
 @property BOOL hasMouse;
 
+@property (nonatomic, strong) NSMutableSet *preLoadPhotosSet;
+
 @end
 
 @implementation PIXPageViewController
@@ -65,6 +67,10 @@
         
         [self.view setNeedsUpdateConstraints:YES];
         
+    }
+    
+    if (self.preLoadPhotosSet == nil) {
+        self.preLoadPhotosSet = [[NSMutableSet alloc] initWithCapacity:4];
     }
 }
 /*
@@ -424,17 +430,52 @@
 
 -(void)preloadNextImagesForIndex:(NSUInteger)anIndex
 {
+    NSUInteger pagerDataCount = [self.pagerData count];
+    NSUInteger startIndex = anIndex>=2 ? anIndex-2 : 0;
     
-    for(NSUInteger i = anIndex -2; i <= anIndex+2; i++)
-    {
-        if(i < [self.pagerData count])
-        {
-            // this will cause the image to preload
-            [(PIXPhoto *)[self.pagerData objectAtIndex:i] fullsizeImage];
-        }
+    NSUInteger rangeLength = 4;
+    if (startIndex+4 > pagerDataCount) {
+        rangeLength = pagerDataCount-startIndex;
     }
+    NSRange nearbyItemsRange = NSMakeRange(startIndex, rangeLength);
+    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:nearbyItemsRange];
+    NSSet *newPhotosToPreload = [NSSet setWithArray:[self.pagerData objectsAtIndexes:indexSet]];
+    NSMutableSet *photosToCancel = [self.preLoadPhotosSet mutableCopy];
+    [photosToCancel minusSet:newPhotosToPreload];
+    
+    self.preLoadPhotosSet = [newPhotosToPreload mutableCopy];
+    
+    [photosToCancel enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        //
+        [(PIXPhoto *)obj setCancelFullsizeLoadOperation:YES];
+    }];
+    
+    [newPhotosToPreload enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        //
+        [(PIXPhoto *)obj fullsizeImageStartLoadingIfNeeded:YES];
+    }];
+    
+//    for(NSUInteger i = anIndex -2; i <= anIndex+2; i++)
+//    {
+//        if(i < [self.pagerData count])
+//        {
+//            // this will cause the image to preload
+//            [(PIXPhoto *)[self.pagerData objectAtIndex:i] fullsizeImageStartLoadingIfNeeded:YES];
+//        }
+//    }
     
 }
+
+-(void)startPreloadForController:(NSPageController *)pageController
+{
+    //[self preloadNextImagesForIndex:pageController.selectedIndex];
+    double delayInSeconds = 0.1;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self preloadNextImagesForIndex:pageController.selectedIndex];
+    });
+}
+
 
 
 @end
@@ -475,15 +516,9 @@
     if (!isRepreparingOriginalView) {
         [(NSScrollView*)viewController.view setMagnification:1.0];
         //[self makeSelectedViewFirstResponder];
+    } else {
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(startPreloadForController:) object:pageController];
     }
-    
-    double delayInSeconds = 0.1;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [self preloadNextImagesForIndex:pageController.selectedIndex];
-    });
-    
-    
 }
 
 - (void)pageControllerWillStartLiveTransition:(NSPageController *)pageController {
@@ -531,6 +566,9 @@
     
     [self.currentImageVC setIsCurrentView:YES];
     
+    
+    [self performSelector:@selector(startPreloadForController:) withObject:pageController afterDelay:0.25];
+
 }
 
 - (void)pageControllerDidEndLiveTransition:(NSPageController *)aPageController {
