@@ -423,7 +423,7 @@
         [self.pageController setArrangedObjects:self.pagerData];
         NSInteger index = [self.album.photos indexOfObject:self.initialSelectedObject];
         [self.pageController setSelectedIndex:index];
-        [self performSelector:@selector(startPreloadForController:) withObject:self.pageController afterDelay:5.0f];
+        [self performSelector:@selector(startPreloadForController:) withObject:self.pageController afterDelay:0.0f];
     }
 }
 
@@ -434,6 +434,9 @@
 
 -(void)preloadNextImagesForIndex:(NSUInteger)anIndex
 {
+    PIXPhoto *aPhoto = (PIXPhoto *)[self.pagerData objectAtIndex:anIndex];
+    [(PIXPhoto *)aPhoto fullsizeImageStartLoadingIfNeeded:YES];
+    
     NSUInteger pagerDataCount = [self.pagerData count];
     NSUInteger startIndex = anIndex>=2 ? anIndex-2 : 0;
     
@@ -588,7 +591,7 @@
     [self.currentImageVC setIsCurrentView:YES];
     
     
-    [self performSelector:@selector(startPreloadForController:) withObject:pageController afterDelay:5.0f];
+    [self performSelector:@selector(startPreloadForController:) withObject:pageController afterDelay:0.0f];
 
 }
 
