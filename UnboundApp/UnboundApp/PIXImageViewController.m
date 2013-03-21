@@ -34,19 +34,21 @@
 
 -(void)awakeFromNib
 {
-    self.imageView.delegate = self;
+    //self.imageView.delegate = self;
 }
 
 -(void)dealloc
 {
-    self.imageView.delegate = nil;
+    //self.imageView.delegate = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)setRepresentedObject:(id)representedObject
 {
+//    if (representedObject==nil) {
+//        //[super setRepresentedObject:representedObject];
+//    }
     [self setPhoto:(PIXPhoto *)representedObject];
-    //[super setRepresentedObject:representedObject];
 }
 
 -(void)photoFullsizeChanged:(NSNotification *)notification
@@ -55,7 +57,7 @@
     NSCAssert(notification.object == self.representedObject, @"Notification received for wrong photo");
     //PIXPhoto *aPhoto = (PIXPhoto *)notification.object;
     id obj = notification.object;
-    DLog(@"obj class : %@", [obj class]);
+    //DLog(@"obj class : %@", [obj class]);
     PIXPhoto *aPhoto = (PIXPhoto *)obj;
     NSCParameterAssert(aPhoto.fullsizeImage);
     self.imageView.image = aPhoto.fullsizeImage;
@@ -76,13 +78,14 @@
     
         if (self.representedObject!=nil) {
             //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photoChanged:) name:PhotoThumbDidChangeNotification object:self.representedObject];
+            self.imageView.image = [newPhoto fullsizeImageForFullscreenDisplay];
+            [self.imageView setNeedsDisplay];
+            NSCParameterAssert(self.imageView.image);
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photoFullsizeChanged:) name:PhotoFullsizeDidChangeNotification object:self.representedObject];
         }
-        
-        self.imageView.image = [newPhoto fullsizeImageForFullscreenDisplay];
     
-    } else {
-        DLog(@"same representedObject being set.");
+    } else if (newPhoto!=nil) {
+        DLog(@"same non-nil representedObject being set.");
     }
 }
 

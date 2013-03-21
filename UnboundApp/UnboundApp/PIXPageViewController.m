@@ -117,8 +117,6 @@
     [[PIXLeapInputManager sharedInstance] addResponder:self];
     
     
-    
-    
     dispatch_async(dispatch_get_main_queue(), ^{
         
         [self updateData];
@@ -420,6 +418,7 @@
         [self.pageController setArrangedObjects:self.pagerData];
         NSInteger index = [self.album.photos indexOfObject:self.initialSelectedObject];
         [self.pageController setSelectedIndex:index];
+        [self performSelector:@selector(startPreloadForController:) withObject:self.pageController afterDelay:5.0f];
     }
 }
 
@@ -469,11 +468,12 @@
 -(void)startPreloadForController:(NSPageController *)pageController
 {
     //[self preloadNextImagesForIndex:pageController.selectedIndex];
-    double delayInSeconds = 0.1;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [self preloadNextImagesForIndex:pageController.selectedIndex];
-    });
+    [self preloadNextImagesForIndex:pageController.selectedIndex];
+//    double delayInSeconds = 0.1;
+//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//        [self preloadNextImagesForIndex:pageController.selectedIndex];
+//    });
 }
 
 
@@ -482,30 +482,42 @@
 
 @implementation PIXPageViewController (NSPageControllerDelegate)
 - (NSString *)pageController:(NSPageController *)pageController identifierForObject:(id)object {
-    
-    if (![[object imageRepresentationType] isEqualToString:IKImageBrowserQTMoviePathRepresentationType]) {
-        return @"picture";
+    if (object==nil) {
+        DLog(@"identifierForObject has nil object");
     }
-    return @"video";
+    return @"picture";
+    
+//    if (![[object imageRepresentationType] isEqualToString:IKImageBrowserQTMoviePathRepresentationType]) {
+//        return @"picture";
+//    }
+//    return @"video";
 }
 
 - (NSViewController *)pageController:(NSPageController *)pageController viewControllerForIdentifier:(NSString *)identifier {
     //NSLog(@"pageController.selectedIndex : %ld", pageController.selectedIndex);
-    if (![identifier isEqualToString:@"video"])
-    {
-        PIXImageViewController *aVC =  [[PIXImageViewController alloc] initWithNibName:@"AutoSizingImageView" bundle:nil];
-        [aVC.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-        aVC.pageViewController = self;
-        return aVC;
-    } else {
-        NSViewController *videoView = [[NSViewController alloc] initWithNibName:@"videoview" bundle:nil];
-        return videoView;
-    }
+    PIXImageViewController *aVC =  [[PIXImageViewController alloc] initWithNibName:@"AutoSizingImageView" bundle:nil];
+    [aVC.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+    aVC.pageViewController = self;
+    return aVC;
+    
+    //TODO: add video support
+//    if (![identifier isEqualToString:@"video"])
+//    {
+//        PIXImageViewController *aVC =  [[PIXImageViewController alloc] initWithNibName:@"AutoSizingImageView" bundle:nil];
+//        [aVC.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+//        aVC.pageViewController = self;
+//        return aVC;
+//    } else {
+//        NSViewController *videoView = [[NSViewController alloc] initWithNibName:@"videoview" bundle:nil];
+//        return videoView;
+//    }
 }
 
 -(void)pageController:(NSPageController *)pageController prepareViewController:(NSViewController *)viewController withObject:(id)object {
     
-    if(object == nil) return;
+//    if(object == nil) {
+//        return;
+//    }
     
     viewController.representedObject = object;
     // viewControllers may be reused... make sure to reset important stuff like the current magnification factor.
@@ -516,9 +528,11 @@
     if (!isRepreparingOriginalView) {
         [(NSScrollView*)viewController.view setMagnification:1.0];
         //[self makeSelectedViewFirstResponder];
-    } else {
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(startPreloadForController:) object:pageController];
     }
+//    else {
+//        
+//    }
 }
 
 - (void)pageControllerWillStartLiveTransition:(NSPageController *)pageController {
@@ -567,7 +581,7 @@
     [self.currentImageVC setIsCurrentView:YES];
     
     
-    [self performSelector:@selector(startPreloadForController:) withObject:pageController afterDelay:0.25];
+    [self performSelector:@selector(startPreloadForController:) withObject:pageController afterDelay:5.0f];
 
 }
 

@@ -89,27 +89,28 @@ const CGFloat kThumbnailSize = 370.0f;
 
 -(NSImage *)fullsizeImageForFullscreenDisplay
 {
-    if (_fullsizeImage == nil && !_fullsizeImageIsLoading)
+    if (_fullsizeImage == nil)
     {
         //_fullsizeImageIsLoading = YES;
-        __weak PIXPhoto *weakSelf = self;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            
-            weakSelf.cancelFullsizeLoadOperation = NO;
-            [weakSelf loadFullsizeImage];
-            
-        });
+        if (!_fullsizeImageIsLoading) {
+            __weak PIXPhoto *weakSelf = self;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                
+                weakSelf.cancelFullsizeLoadOperation = NO;
+                [weakSelf loadFullsizeImage];
+                
+            });
+        }
         
         //While full image is loading show the thumbnail stretched
         if (_thumbnailImage!=nil) {
             return _thumbnailImage;
         } else {
             //use placeholder as a last resort
-            return [NSImage imageNamed:@"nophoto"];
-            
+            return [NSImage imageNamed:@"nophoto"]; 
         }
-    }
+    } 
     return _fullsizeImage;
 }
 
@@ -301,15 +302,18 @@ const CGFloat kThumbnailSize = 370.0f;
     
     // This code needs to be threadsafe, as it will be called from the background thread.
     // The easiest way to ensure you only use stack variables is to make it a class method.
+    
+    //NSNumber *maxPixelSize = [NSNumber numberWithInteger:2048.0f];
     //NSDictionary *desktopOptions = [[NSWorkspace sharedWorkspace] desktopImageOptionsForScreen:[NSScreen mainScreen]];
-    NSRect visibleScreen = [[NSScreen mainScreen] visibleFrame];
+    
     //DLog(@"desktopOptions: %@", desktopOptions);
     //DLog(@"screen origin : %.0f , %.0f", visibleScreen.origin.x, visibleScreen.origin.y);
     //DLog(@"screen dimensions : %.0f x %.0f", visibleScreen.size.width, visibleScreen.size.height);
+    NSRect visibleScreen = [[NSScreen mainScreen] visibleFrame];
     float maxDimension = (visibleScreen.size.width > visibleScreen.size.height) ? visibleScreen.size.width : visibleScreen.size.height;
-    //NSNumber *maxPixelSize = [NSNumber numberWithInteger:2048.0f];
+    
     NSNumber *maxPixelSize = [NSNumber numberWithInteger:maxDimension];
-    DLog(@"Using maxPixelSize : %@", maxPixelSize);
+    //DLog(@"Using maxPixelSize : %@", maxPixelSize);
     NSDictionary *imageOptions = @{(id)kCGImageSourceCreateThumbnailFromImageIfAbsent: (id)kCFBooleanTrue,
                                    (id)kCGImageSourceCreateThumbnailFromImageAlways: (id)kCFBooleanTrue,
                                    (id)kCGImageSourceThumbnailMaxPixelSize: (id)maxPixelSize,
