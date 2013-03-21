@@ -44,6 +44,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
 @property (strong) CNGridViewItemLayout *selectionLayout;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *toolbarPosition;
+@property BOOL toolbarIsShowing;
 
 @end
 
@@ -104,25 +105,34 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 -(void)showToolbar:(BOOL)animated
 {
+    if(!self.toolbarIsShowing)
+    {
+    
+        CGPoint origin = self.scrollView.bounds.origin;
+        origin.y += 35;
 
-    CGPoint origin = self.scrollView.bounds.origin;
-    origin.y += 35;
-
-    
-    //NSClipView *clipView = (NSClipView *)[self.gridView superview];
-    
-    
-    [NSAnimationContext beginGrouping];
-    [self.toolbarPosition.animator setConstant:0];
-    //[[clipView animator] setBoundsOrigin:origin];
-    [NSAnimationContext endGrouping];
+        
+        //NSClipView *clipView = (NSClipView *)[self.gridView superview];
+        
+        
+        [NSAnimationContext beginGrouping];
+        [self.toolbarPosition.animator setConstant:0];
+        //[[clipView animator] setBoundsOrigin:origin];
+        [NSAnimationContext endGrouping];
+     
+        self.toolbarIsShowing = YES;
+    }
     
 }
 
 -(void)hideToolbar:(BOOL)animated
 {
-    [self.toolbarPosition.animator setConstant:-self.toolbar.frame.size.height];
-    //[self.view updateConstraintsForSubtreeIfNeeded];
+    if(self.toolbarIsShowing)
+    {
+        [self.toolbarPosition.animator setConstant:-self.toolbar.frame.size.height];
+        //[self.view updateConstraintsForSubtreeIfNeeded];
+        self.toolbarIsShowing = NO;
+    }
 }
 
 -(void)defaultThemeChanged:(NSNotification *)note

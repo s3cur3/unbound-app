@@ -30,7 +30,6 @@
 @interface PIXCNAlbumViewController ()
 {
     
-    
 }
 
 @property(nonatomic,strong) NSArray * albums;

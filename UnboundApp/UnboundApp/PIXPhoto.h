@@ -8,12 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import <MapKit/MapKit.h>
 #import "PIXThumbnailLoadingDelegate.h"
 
 @class PIXAlbum, PIXThumbnail;
 @class MakeThumbnailOperation;
 
-@interface PIXPhoto : NSManagedObject <PIXThumbnailLoadingDelegate>
+@interface PIXPhoto : NSManagedObject <PIXThumbnailLoadingDelegate, MKAnnotation>
 {
     BOOL                        _thumbnailImageIsLoading;
     BOOL                        _fullsizeImageIsLoading;
@@ -32,6 +33,9 @@
 @property (nonatomic, retain) PIXThumbnail *thumbnail;
 @property (nonatomic, retain) NSDictionary * exifData;
 @property (nonatomic, retain) NSNumber * fileSize;
+
+@property (nonatomic, retain) NSNumber * latitude;
+@property (nonatomic, retain) NSNumber * longitude;
 
 @property (nonatomic, strong) NSImage *thumbnailImage;
 @property (nonatomic, assign, readwrite) BOOL cancelThumbnailLoadOperation;

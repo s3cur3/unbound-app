@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12C60" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12D78" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="PIXAccount" representedClassName="PIXAccount" syncable="YES">
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
@@ -26,6 +26,8 @@
         <attribute name="dateTaken" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="exifData" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="fileSize" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="name" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="path" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="thumbnailData" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
@@ -41,7 +43,7 @@
     <elements>
         <element name="PIXAccount" positionX="0" positionY="0" width="128" height="90"/>
         <element name="PIXAlbum" positionX="0" positionY="0" width="128" height="210"/>
-        <element name="PIXPhoto" positionX="0" positionY="0" width="128" height="255"/>
+        <element name="PIXPhoto" positionX="0" positionY="0" width="128" height="285"/>
         <element name="PIXThumbnail" positionX="0" positionY="0" width="128" height="75"/>
     </elements>
 </model>

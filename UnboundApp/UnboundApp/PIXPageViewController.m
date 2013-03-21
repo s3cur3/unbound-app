@@ -21,6 +21,8 @@
 #import "PIXCustomShareSheetViewController.h"
 #import "PIXShareManager.h"
 
+#import "PIXInfoPanelViewController.h"
+
 @interface PIXPageViewController () <leapResponder>
 
 @property NSArray * viewControllers;
@@ -28,6 +30,9 @@
 @property (assign) IBOutlet NSView * controlView;
 @property (assign) IBOutlet PIXPageHUDWindow * controlWindow;
 @property (assign) IBOutlet NSLayoutConstraint *infoPanelSpacer;
+
+@property (assign) IBOutlet PIXInfoPanelViewController * infoPanelVC;
+
 @property BOOL infoPanelShowing;
 
 @property (nonatomic, strong) NSToolbarItem * shareItem;
@@ -577,6 +582,8 @@
     [self.currentImageVC setIsCurrentView:NO];
     
     self.currentImageVC = (PIXImageViewController *)[pageController selectedViewController];
+    
+    [self.infoPanelVC setPhoto:(PIXPhoto *)[self.currentImageVC representedObject]];
     
     [self.currentImageVC setIsCurrentView:YES];
     
