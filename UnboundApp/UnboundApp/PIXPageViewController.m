@@ -460,10 +460,10 @@
     [(PIXPhoto *)aPhoto fullsizeImageStartLoadingIfNeeded:YES];
     
     NSUInteger pagerDataCount = [self.pagerData count];
-    NSUInteger startIndex = anIndex>=2 ? anIndex-2 : 0;
+    NSUInteger startIndex = anIndex>=1 ? anIndex-1 : 0;
     
-    NSUInteger rangeLength = 4;
-    if (startIndex+4 > pagerDataCount) {
+    NSUInteger rangeLength = 5;
+    if (startIndex+5 > pagerDataCount) {
         rangeLength = pagerDataCount-startIndex;
     }
     NSRange nearbyItemsRange = NSMakeRange(startIndex, rangeLength);
@@ -477,6 +477,7 @@
     [photosToCancel enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
         //
         [(PIXPhoto *)obj setCancelFullsizeLoadOperation:YES];
+        [(PIXPhoto *)obj setFullsizeImage:nil];
     }];
     
     [newPhotosToPreload enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
