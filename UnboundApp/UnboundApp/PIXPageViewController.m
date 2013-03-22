@@ -31,6 +31,9 @@
 @property (assign) IBOutlet PIXPageHUDWindow * controlWindow;
 @property (assign) IBOutlet NSLayoutConstraint *infoPanelSpacer;
 
+@property (assign) IBOutlet NSButton * rightArrowButton;
+@property (assign) IBOutlet NSButton * leftArrowButton;
+
 @property (assign) IBOutlet PIXInfoPanelViewController * infoPanelVC;
 
 @property BOOL infoPanelShowing;
@@ -281,6 +284,11 @@
     [self.pageController navigateBack:nil];
 }
 
+-(void)multiFingerSwipeLeft
+{
+    [self.pageController navigateForward:nil];
+}
+
 -(void)keyDown:(NSEvent *)theEvent
 {
     [self interpretKeyEvents:@[theEvent]];
@@ -344,10 +352,7 @@
 
 
 
--(void)multiFingerSwipeLeft
-{
-    [self.pageController navigateForward:nil];
-}
+
 
 #pragma mark - 
 #pragma mark mouse movement methods (for hiding and showing the hud)
