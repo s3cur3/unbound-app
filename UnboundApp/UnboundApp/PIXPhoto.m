@@ -315,7 +315,7 @@ const CGFloat kThumbnailSize = 370.0f;
     //DLog(@"desktopOptions: %@", desktopOptions);
     //DLog(@"screen origin : %.0f , %.0f", visibleScreen.origin.x, visibleScreen.origin.y);
     //DLog(@"screen dimensions : %.0f x %.0f", visibleScreen.size.width, visibleScreen.size.height);
-    BOOL resizeImage = YES;
+    BOOL resizeImage = NO;
     NSDictionary *imageOptions = nil;
     if (resizeImage)
     {
