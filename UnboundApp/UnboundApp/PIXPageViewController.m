@@ -75,10 +75,35 @@
         
         [self.view setNeedsUpdateConstraints:YES];
         
+        [self.pageController addObserver:self forKeyPath:@"selectedIndex" options:NSKeyValueObservingOptionNew context:nil];
+        
     }
     
     if (self.preLoadPhotosSet == nil) {
         self.preLoadPhotosSet = [[NSMutableSet alloc] initWithCapacity:4];
+    }
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if(self.pageController.selectedIndex+1 >= [self.pagerData count])
+    {
+        [self.rightArrowButton setAlphaValue:0.2];
+    }
+    
+    else
+    {
+        [self.rightArrowButton setAlphaValue:1.0];
+    }
+    
+    if(self.pageController.selectedIndex == 0)
+    {
+        [self.leftArrowButton setAlphaValue:0.2];
+    }
+    
+    else
+    {
+        [self.leftArrowButton setAlphaValue:1.0];
     }
 }
 /*

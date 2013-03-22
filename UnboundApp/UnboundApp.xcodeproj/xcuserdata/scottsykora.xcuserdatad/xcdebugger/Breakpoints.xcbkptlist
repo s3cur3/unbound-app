@@ -99,11 +99,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXPageViewController.m"
-         timestampString = "385603402.039964"
+         timestampString = "385605741.688527"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "517"
-         endingLineNumber = "517"
+         startingLineNumber = "542"
+         endingLineNumber = "542"
          landmarkName = "-pageController:identifierForObject:"
          landmarkType = "5">
       </FileBreakpoint>
