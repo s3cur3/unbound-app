@@ -315,7 +315,7 @@ const CGFloat kThumbnailSize = 370.0f;
     //DLog(@"desktopOptions: %@", desktopOptions);
     //DLog(@"screen origin : %.0f , %.0f", visibleScreen.origin.x, visibleScreen.origin.y);
     //DLog(@"screen dimensions : %.0f x %.0f", visibleScreen.size.width, visibleScreen.size.height);
-    BOOL resizeImage = YES;
+    BOOL resizeImage = NO;
     NSDictionary *imageOptions = nil;
     if (resizeImage)
     {
@@ -830,13 +830,16 @@ const CGFloat kThumbnailSize = 370.0f;
                 // get the bitmap data
                 NSData *data = [image TIFFRepresentation];
                 
+                /*
                 // now create a jpeg representation:
                 NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData:data];
 
                 NSDictionary *imageProperties = @{NSImageCompressionFactor : [NSNumber numberWithFloat:0.6],
-                                                  NSImageProgressive : [NSNumber numberWithBool:YES]};
+                                                  //NSImageProgressive : [NSNumber numberWithBool:YES]
+                                                  };
                 
                 data = [imageRep representationUsingType:NSJPEGFileType properties:imageProperties];
+                */
                 
                 // if the load was cancelled then bail
                 if (weakSelf.cancelThumbnailLoadOperation==YES) {
@@ -848,6 +851,7 @@ const CGFloat kThumbnailSize = 370.0f;
                     return;
                 }
                 
+                /*
                 // now set the thumbnail data and exif (using a bg thread context)
                 
                 // create a thread-safe context (may want to make this a child context down the road)
@@ -867,12 +871,13 @@ const CGFloat kThumbnailSize = 370.0f;
                 }
                 
                 
-                [context save:nil];
+                //[context save:nil];
+                 
                 
                 [self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
                 
-                                
-                /*
+                                */
+                
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
                     [self forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
@@ -880,7 +885,7 @@ const CGFloat kThumbnailSize = 370.0f;
                     // set the thumbnail data (this will save the data into core data, the ui has already been updated)
                     [weakSelf mainThreadComputePreviewThumbnailFinished:data];
                     
-                });*/
+                });
                 
                 // clean up
                 if(cfDict) CFRelease(cfDict);

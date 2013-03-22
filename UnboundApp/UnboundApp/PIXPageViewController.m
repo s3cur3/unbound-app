@@ -319,12 +319,27 @@
 
 -(IBAction)nextPage:(id)sender
 {
-    [self.pageController navigateForward:nil];
+    NSUInteger currentIndex = [self.pageController selectedIndex];
+    currentIndex++;
+    
+    if(currentIndex < [self.pagerData count])
+    {
+        [self.pageController setSelectedIndex:currentIndex];
+    }
+    //[self.pageController navigateForward:nil];
 }
 
 -(IBAction)lastPage:(id)sender
 {
-    [self.pageController navigateBack:nil];
+    NSUInteger currentIndex = [self.pageController selectedIndex];
+    currentIndex--;
+    
+    if(currentIndex < [self.pagerData count])
+    {
+        [self.pageController setSelectedIndex:currentIndex];
+    }
+    
+    //[self.pageController navigateBack:nil];
 }
 
 
