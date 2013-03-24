@@ -438,6 +438,10 @@
     [deleteButton setAction:@selector(deleteItems:)];
     
     PIXCustomButton * shareButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
+    
+    //[shareButton setImage:[NSImage imageNamed:NSImageNameShareTemplate]];
+    //[shareButton setImagePosition:NSImageLeft];
+    
     [shareButton setTitle:@"Share"];
     [shareButton setTarget:self];
     [shareButton setAction:@selector(share:)];

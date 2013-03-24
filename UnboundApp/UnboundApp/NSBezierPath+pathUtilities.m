@@ -11,7 +11,7 @@
 
 @implementation NSBezierPath (pathUtilities)
 // This method works only in OS X v10.2 and later.
-- (CGPathRef)quartzPath
+- (CGPathRef)newQuartzPath
 {
     NSUInteger i, numElements;
     

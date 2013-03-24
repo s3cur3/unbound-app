@@ -194,13 +194,14 @@
     _shareItem = [[NSToolbarItem alloc] initWithItemIdentifier:@"shareAlbumButton"];
     //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
     
-    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 60, 25)];
+    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 110, 25)];
 
-    [buttonView setImagePosition:NSNoImage];
+    [buttonView setImage:[NSImage imageNamed:NSImageNameShareTemplate]];
+    [buttonView setImagePosition:NSImageLeft];
     [buttonView setBordered:YES];
     [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
-    [buttonView setTitle:@"Share"];
-    
+    [buttonView setTitle:@"Share Album"];
+        
     _shareItem.view = buttonView;
     
     [_shareItem setLabel:@"Share Album"];

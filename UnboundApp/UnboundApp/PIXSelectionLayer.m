@@ -22,10 +22,13 @@
     NSRect innerbounds = CGRectInset(self.bounds, 6, 6);
     NSBezierPath *selectionRectPath = [NSBezierPath bezierPathWithRoundedRect:innerbounds xRadius:10 yRadius:10];
     
-    CGContextAddPath(ctx, [selectionRectPath quartzPath]);
+    CGPathRef path = [selectionRectPath newQuartzPath];
+    CGContextAddPath(ctx, path);
     CGContextSetStrokeColorWithColor(ctx, [NSColor colorWithCalibratedRed:0.189 green:0.657 blue:0.859 alpha:1.000].CGColor);
     CGContextSetLineWidth(ctx, 4.0);
     CGContextStrokePath(ctx);
+    
+    CGPathRelease(path);
 }
 
 @end

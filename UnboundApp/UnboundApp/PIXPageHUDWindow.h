@@ -17,4 +17,6 @@
 -(void)showAnimated:(BOOL)animated;
 -(void)hideAnimated:(BOOL)animated;
 
+-(void)positionWindowWithSize:(NSSize)size animated:(BOOL)animated;
+
 @end

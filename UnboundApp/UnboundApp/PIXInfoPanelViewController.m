@@ -122,52 +122,30 @@
 {
     if([[self.photo latitude] doubleValue] == 0 || [[self.photo longitude] doubleValue] == 0)
     {
-        [self.mapView setHidden:YES];
+        [self.mapView.animator setHidden:YES];
     }
     
     else
     {
-        [self.mapView setHidden:NO];
-        MKCoordinateRegion region;
-        
-        region.center = [self.photo coordinate];
-        region.span.latitudeDelta = 0.0;
-        region.span.longitudeDelta = 0.0;
-        
-        // fix the region so it has the same aspect ratio as the view
-        CGFloat viewAspectRatio = self.mapView.frame.size.width / self.mapView.frame.size.height;
-        
-        if(viewAspectRatio < 1)
-        {
-            region.span.latitudeDelta = region.span.latitudeDelta * viewAspectRatio;
-        }
-        
-        else
-        {
-            region.span.longitudeDelta = region.span.longitudeDelta * (1.0/viewAspectRatio);
-        }
-        
-        
-        //[self.mapView setRegion:region animated:YES];
-        
+        [self.mapView.animator setHidden:NO];
         
         [self.mapView removeAnnotations:self.mapView.annotations];
         [self.mapView addAnnotation:self.photo];
         
         [self.mapView setCenterCoordinate:[self.photo coordinate] animated:YES];
+        
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"MapViewAdditions" ofType:@"css"];
+        [self.mapView addStylesheetTag:path];
+        
     }
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)aMapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
-    //NSLog(@"mapView: %@ viewForAnnotation: %@", aMapView, annotation);
-    //MKAnnotationView *view = [[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"blah"] autorelease];
     MKPinAnnotationView *view = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"blah"];
     view.draggable = NO;
     view.animatesDrop = YES;
-    //NSString *path = [[NSBundle mainBundle] pathForResource:@"MarkerTest" ofType:@"png"];
-    //NSURL *url = [NSURL fileURLWithPath:path];
-    //view.imageUrl = [url absoluteString];
+
     return view;
 }
 

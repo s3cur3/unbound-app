@@ -14,11 +14,12 @@
 @interface PIXPageViewController : PIXViewController <NSPageControllerDelegate>
 
 @property (nonatomic, strong) IBOutlet PIXAlbum *album;
-@property (assign) IBOutlet NSPageController *pageController;
+@property (weak) IBOutlet NSPageController *pageController;
 @property (strong) NSMutableArray *pagerData;
 
 
-@property (assign) id initialSelectedObject;
+
+@property (weak) id initialSelectedObject;
 
 @property (nonatomic, strong) NSViewController *pageControllerSelectedViewController;
 
@@ -26,5 +27,7 @@
 
 -(IBAction)nextPage:(id)sender;
 -(IBAction)lastPage:(id)sender;
+
+-(IBAction)toggleFullScreen:(id)sender;
 
 @end

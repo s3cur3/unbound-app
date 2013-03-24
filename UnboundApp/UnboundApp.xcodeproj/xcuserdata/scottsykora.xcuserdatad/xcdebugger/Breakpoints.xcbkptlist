@@ -99,11 +99,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXPageViewController.m"
-         timestampString = "385605741.688527"
+         timestampString = "385776090.943694"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "542"
-         endingLineNumber = "542"
+         startingLineNumber = "591"
+         endingLineNumber = "591"
          landmarkName = "-pageController:identifierForObject:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -125,22 +125,22 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXSelectionLayer.m"
-         timestampString = "385194697.577755"
+         timestampString = "385691375.972444"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "33"
-         endingLineNumber = "33">
+         startingLineNumber = "36"
+         endingLineNumber = "36">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXPhotoGridViewItem.m"
-         timestampString = "385195578.039789"
+         timestampString = "385688164.277878"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "198"
-         endingLineNumber = "198"
+         startingLineNumber = "201"
+         endingLineNumber = "201"
          landmarkName = "-selectionLayer"
          landmarkType = "5">
       </FileBreakpoint>
@@ -162,11 +162,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXPhoto.m"
-         timestampString = "385584490.12924"
+         timestampString = "385693027.965894"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "763"
-         endingLineNumber = "763"
+         startingLineNumber = "765"
+         endingLineNumber = "765"
          landmarkName = "-loadThumbnailImage"
          landmarkType = "5">
       </FileBreakpoint>
@@ -188,11 +188,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXFileParser.m"
-         timestampString = "385506436.895577"
+         timestampString = "385692835.752685"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "248"
-         endingLineNumber = "248"
+         startingLineNumber = "253"
+         endingLineNumber = "253"
          landmarkName = "-observedDirectory:childrenAtURLDidChange:historical:resumeToken:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -207,19 +207,6 @@
          startingLineNumber = "130"
          endingLineNumber = "130"
          landmarkName = "-hideToolbar:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "UnboundApp/PIXInfoPanelViewController.m"
-         timestampString = "385600208.757413"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "147"
-         endingLineNumber = "147"
-         landmarkName = "-updateMap"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

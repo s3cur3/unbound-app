@@ -67,6 +67,11 @@
     static dispatch_once_t onceTokenParsingQueue;
     dispatch_once(&onceTokenParsingQueue, ^{
         _sharedParsingQueue  = dispatch_queue_create("com.pixite.ub.parsingQueue", 0);
+        
+        // set this to a high priority queue so it doens't get blocked by the thumbs loading
+        dispatch_set_target_queue(_sharedParsingQueue, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0));
+        
+        
     });
     
     return _sharedParsingQueue;
@@ -318,7 +323,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
 {
     [self incrementWorking];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    // set this to a high priority queue so it doens't get blocked by the thumbs loading
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         
         if(self.scansCancelledFlag)
         {

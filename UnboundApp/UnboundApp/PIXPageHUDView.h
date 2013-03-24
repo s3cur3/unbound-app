@@ -8,6 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class PIXPhoto;
+
 @interface PIXPageHUDView : NSView
+
+@property (weak, nonatomic) PIXPhoto * photo;
+@property (nonatomic) BOOL captionIsBelow;
+
+@property float heightChange;
 
 @end

@@ -560,17 +560,17 @@ const CGFloat kThumbnailSize = 370.0f;
         }
     }
     
-    /* TODO: figure out why this case isn't working -- scott
+    // TODO: figure out why this case isn't working -- scott
     // the load seems to have been cancelled before the thumb was saved to disk
     if(!_thumbnailImageIsLoading && self.thumbnail == nil)
     {
-        // try relaoding here, the load may
+        // try relaoding here, the load may have been cancelled before the image was saved
         self.cancelThumbnailLoadOperation = NO;
         _thumbnailImageIsLoading = YES;
         [self loadThumbnailImage];
     }
     
-    */
+    
 
     return _thumbnailImage;
 }
@@ -649,6 +649,8 @@ const CGFloat kThumbnailSize = 370.0f;
 
 -(void)forceSetExifData:(NSDictionary *)newExifData
 {
+    if(self.managedObjectContext == nil) return;
+    
     if(newExifData == nil) // if we're setting this to nil, set the exif to a special dictionary
     {
         // set this to non-nil so we don't try and load it again

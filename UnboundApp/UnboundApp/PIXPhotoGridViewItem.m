@@ -195,7 +195,10 @@
     _selectionLayer = [[PIXSelectionLayer alloc] init];
     
     [_selectionLayer setFrame:self.bounds];
-        
+    
+    _selectionLayer.contentsScale = self.layer.contentsScale;
+
+    
     return _selectionLayer;
 }
 

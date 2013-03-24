@@ -10,6 +10,6 @@
 
 @interface NSBezierPath (pathUtilities)
 
-- (CGPathRef)quartzPath;
+- (CGPathRef)newQuartzPath;
 
 @end

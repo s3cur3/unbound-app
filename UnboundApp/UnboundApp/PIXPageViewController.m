@@ -17,6 +17,7 @@
 #import "PIXNavigationController.h"
 
 #import "PIXPageHUDWindow.h"
+#import "PIXPageHUDView.h"
 
 #import "PIXCustomShareSheetViewController.h"
 #import "PIXShareManager.h"
@@ -27,14 +28,16 @@
 
 @property NSArray * viewControllers;
 
-@property (assign) IBOutlet NSView * controlView;
-@property (assign) IBOutlet PIXPageHUDWindow * controlWindow;
-@property (assign) IBOutlet NSLayoutConstraint *infoPanelSpacer;
+@property (weak) IBOutlet PIXPageHUDView * controlView;
+@property (strong) IBOutlet PIXPageHUDWindow * controlWindow;
+@property (weak) IBOutlet NSLayoutConstraint *infoPanelSpacer;
 
-@property (assign) IBOutlet NSButton * rightArrowButton;
-@property (assign) IBOutlet NSButton * leftArrowButton;
+@property (weak) IBOutlet NSButton * rightArrowButton;
+@property (weak) IBOutlet NSButton * leftArrowButton;
 
-@property (assign) IBOutlet PIXInfoPanelViewController * infoPanelVC;
+@property (weak) IBOutlet NSButton * fullscreenButton;
+
+@property (weak) IBOutlet PIXInfoPanelViewController * infoPanelVC;
 
 @property BOOL infoPanelShowing;
 
@@ -73,10 +76,7 @@
         [self.infoPanelSpacer setConstant:0.0];
         self.infoPanelShowing = NO;
         
-        [self.view setNeedsUpdateConstraints:YES];
-        
-        [self.pageController addObserver:self forKeyPath:@"selectedIndex" options:NSKeyValueObservingOptionNew context:nil];
-        
+        //[self.view setNeedsUpdateConstraints:YES];
     }
     
     if (self.preLoadPhotosSet == nil) {
@@ -84,6 +84,7 @@
     }
 }
 
+// this is called when photo changes
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if(self.pageController.selectedIndex+1 >= [self.pagerData count])
@@ -105,6 +106,19 @@
     {
         [self.leftArrowButton setAlphaValue:1.0];
     }
+    
+    PIXPhoto * thisPhoto = [self.pagerData objectAtIndex:self.pageController.selectedIndex];
+    
+    // update the info panel if it's visible
+    if(self.infoPanelShowing)
+    {
+        [self.infoPanelVC setPhoto:thisPhoto];
+        
+    }
+    
+    // update the HUD (caption view)
+    [self.controlView setPhoto:thisPhoto];
+    
 }
 /*
 -(void)setupToolbar
@@ -133,11 +147,16 @@
     
     else
     {
+        
+        
         [NSAnimationContext beginGrouping];
         [self.infoPanelSpacer.animator setConstant:240];
         [NSAnimationContext endGrouping];
         
         [self.infoButton highlight:YES];
+        
+        // update the panel info
+        [self.infoPanelVC setPhoto:[self.pagerData objectAtIndex:self.pageController.selectedIndex]];
     }
     
     self.infoPanelShowing = !self.infoPanelShowing;
@@ -145,11 +164,17 @@
     
 }
 
+-(void)toggleFullScreen:(id)sender
+{
+    [self.view.window toggleFullScreen:sender];
+}
+
 - (void)willShowPIXView
 {
     [[PIXLeapInputManager sharedInstance] addResponder:self];
     
-    
+    [self.pageController addObserver:self forKeyPath:@"selectedIndex" options:NSKeyValueObservingOptionNew context:nil];
+
     dispatch_async(dispatch_get_main_queue(), ^{
         
         [self updateData];
@@ -169,9 +194,27 @@
         
         [self.infoPanelVC setPhoto:[self.pagerData objectAtIndex:self.pageController.selectedIndex]];
         
-
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fullscreenChanged:) name:NSWindowDidEnterFullScreenNotification object:self.view.window];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fullscreenChanged:) name:NSWindowDidExitFullScreenNotification object:self.view.window];
+        
+        [self fullscreenChanged:nil];
         
     });
+}
+
+-(void)fullscreenChanged:(id)sender
+{
+    // set the right icon on the expand/contract button
+    if([self.view.window styleMask] & NSFullScreenWindowMask)
+    {
+        self.fullscreenButton.image = [NSImage imageNamed:@"contract"];
+    }
+    
+    else
+    {
+        self.fullscreenButton.image = [NSImage imageNamed:@"expand"];
+    }
+
 }
 
 -(void)setupToolbar
@@ -292,11 +335,16 @@
 
 - (void)willHidePIXView
 {
-    [self.view.window removeChildWindow:self.controlWindow];
+    //[self.view.window removeChildWindow:self.controlWindow];
+    [self.controlWindow close];
+    //self.controlWindow = nil;
+    //self.controlView = nil;
     
     [[PIXLeapInputManager sharedInstance] removeResponder:self];
     
+    [self.pageController removeObserver:self forKeyPath:@"selectedIndex"];
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)multiFingerSwipeUp
@@ -390,7 +438,7 @@
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(tryFadeControls) object:nil];
     
     // start another timer
-    [self performSelector:@selector(tryFadeControls) withObject:nil afterDelay:2.5];
+    [self performSelector:@selector(tryFadeControls) withObject:nil afterDelay:3];
     
     self.hasMouse = YES;
     
@@ -405,7 +453,7 @@
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(tryFadeControls) object:nil];
     
     // start another timer
-    [self performSelector:@selector(tryFadeControls) withObject:nil afterDelay:2.5];
+    [self performSelector:@selector(tryFadeControls) withObject:nil afterDelay:3];
     
     self.hasMouse = YES;
 }
@@ -491,6 +539,7 @@
     if (startIndex+5 > pagerDataCount) {
         rangeLength = pagerDataCount-startIndex;
     }
+    
     NSRange nearbyItemsRange = NSMakeRange(startIndex, rangeLength);
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:nearbyItemsRange];
     NSSet *newPhotosToPreload = [NSSet setWithArray:[self.pagerData objectsAtIndexes:indexSet]];
@@ -634,7 +683,6 @@
     
     self.currentImageVC = (PIXImageViewController *)[pageController selectedViewController];
     
-    [self.infoPanelVC setPhoto:[self.pagerData objectAtIndex:pageController.selectedIndex]];
     
     [self.currentImageVC setIsCurrentView:YES];
     
