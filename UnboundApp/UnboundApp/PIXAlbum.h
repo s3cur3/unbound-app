@@ -81,6 +81,8 @@
 -(void) checkDates;
 -(void) updateUnboundFile;
 
+-(void) setUnboundFileCaptionForPhoto:(PIXPhoto *)photo;
+
 -(BOOL) isReallyDeleted;
 
 

@@ -59,6 +59,26 @@ const CGFloat kThumbnailSize = 370.0f;
     return self.name;
 }
 
+-(void)userSetCaption:(NSString *)userCaption
+{
+    // empty strings should be nil
+    if([userCaption isEqualToString:@""])
+    {
+        userCaption = nil;
+        
+        if(self.caption == nil) return;
+    }
+    
+    // do nothing if we're not changing the value
+    if([userCaption isEqualToString:self.caption]) return;
+    
+    // set the caption in the db
+    self.caption = userCaption;
+    
+    // write the caption to the unbound file
+    [self.album setUnboundFileCaptionForPhoto:self];
+}
+
 //TODO: get rid of this
 -(NSURL *)filePath;
 {

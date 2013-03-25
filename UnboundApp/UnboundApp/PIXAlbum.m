@@ -211,13 +211,10 @@ static NSString *const kItemsKey = @"photos";
     [self updateUnboundFile];
 }
 
--(void)updateUnboundFile
+-(BOOL)unboundFileIsChanged
 {
-
     NSString *unboundFilePath = [NSString stringWithFormat:@"%@/.unbound", self.path];
-    
-    NSMutableDictionary * unboundMetaDictionary = nil;
-    
+        
     // if we already have a .unboubnd file load that
     if ([[NSFileManager defaultManager] fileExistsAtPath:unboundFilePath])
     {
@@ -229,16 +226,27 @@ static NSString *const kItemsKey = @"photos";
         
         if([self dateReadUnboundFile] && [[self dateReadUnboundFile] compare:dateModified] != NSOrderedAscending)
         {
-            return; // no need to do anything here, the db is already up to date
+            return NO; // no need to do anything here, the db is already up to date
         }
-        
-        
-        
+    }
+    
+    return YES;
+}
+
+-(NSMutableDictionary *)readUnboundFile
+{
+    NSString *unboundFilePath = [NSString stringWithFormat:@"%@/.unbound", self.path];
+    
+    NSMutableDictionary * unboundMetaDictionary = nil;
+    
+    // if we already have a .unboubnd file load that
+    if ([[NSFileManager defaultManager] fileExistsAtPath:unboundFilePath])
+    {
         NSData *data = [NSData dataWithContentsOfFile:unboundFilePath];
         NSError *error = nil;
         unboundMetaDictionary = [[NSJSONSerialization JSONObjectWithData:data
-                                                  options:kNilOptions
-                                                    error:&error] mutableCopy];
+                                                                 options:kNilOptions
+                                                                   error:&error] mutableCopy];
     }
     
     // if this isn't a dictionary then it's not valid
@@ -246,6 +254,30 @@ static NSString *const kItemsKey = @"photos";
     {
         unboundMetaDictionary = [NSMutableDictionary new];
     }
+    
+    return unboundMetaDictionary;
+}
+
+-(void)writeUnboundFile:(NSDictionary *)unboundJSON
+{
+    NSString *unboundFilePath = [NSString stringWithFormat:@"%@/.unbound", self.path];
+    
+    // write the JSON back to the file
+    NSOutputStream *os = [[NSOutputStream alloc] initToFileAtPath:unboundFilePath append:NO];
+    NSError *error;
+    [os open];
+    if (![NSJSONSerialization writeJSONObject:unboundJSON toStream:os options:NSJSONWritingPrettyPrinted error:&error]) {
+        [PIXAppDelegate presentError:error];
+    }
+    [os close];
+}
+
+-(void)updateUnboundFile
+{
+    
+    if(![self unboundFileIsChanged]) return;
+
+    NSMutableDictionary * unboundMetaDictionary = [self readUnboundFile];
 
     //DLog(@"before: %@", unboundMetaDictionary);
     
@@ -292,18 +324,39 @@ static NSString *const kItemsKey = @"photos";
     
     if(wasChanged)
     {
-        // write the JSON back to the file
-        NSOutputStream *os = [[NSOutputStream alloc] initToFileAtPath:unboundFilePath append:NO];
-        NSError *error;
-        [os open];
-        if (![NSJSONSerialization writeJSONObject:unboundMetaDictionary toStream:os options:NSJSONWritingPrettyPrinted error:&error]) {
-            [PIXAppDelegate presentError:error];
-        }
-        [os close];
+        [self writeUnboundFile:unboundMetaDictionary];
     }
     
     [self setDateReadUnboundFile:[NSDate date]];
 
+}
+
+-(void) setUnboundFileCaptionForPhoto:(PIXPhoto *)photo
+{
+    if(photo == nil) return;
+    
+    NSMutableDictionary * unboundMetaDictionary = [self readUnboundFile];
+
+    NSMutableDictionary * photos = [[unboundMetaDictionary objectForKey:@"photos"] mutableCopy];
+    
+    if(photos == nil)
+    {
+        photos= [NSMutableDictionary new];
+    }
+    
+    NSMutableDictionary * photoDict = [[photos objectForKey:photo.name] mutableCopy];
+    
+    if(photoDict == nil)
+    {
+        photoDict = [NSMutableDictionary new];
+    }
+    
+    [photoDict setObject:photo.caption forKey:@"caption"];
+    
+    [photos setObject:photoDict forKey:photo.name];
+    [unboundMetaDictionary setObject:photos forKey:@"photos"];
+    
+    [self writeUnboundFile:unboundMetaDictionary];
 }
 
 -(BOOL) isReallyDeleted

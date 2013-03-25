@@ -489,7 +489,7 @@
 
 -(void)tryFadeControls
 {
-    if(![self.controlWindow hasMouse])
+    if(![self.controlWindow hasMouse] || [self.controlView isTextEditing])
     {
         [self.controlWindow hideAnimated:YES];
         

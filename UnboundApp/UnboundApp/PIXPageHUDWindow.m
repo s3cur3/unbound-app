@@ -275,7 +275,7 @@
  so that controls in this window will be enabled.
  */
 - (BOOL)canBecomeKeyWindow {
-    return NO;
+    return self.hudView.isTextEditing;
 }
 
 /*
@@ -293,7 +293,16 @@
  the user to drag (so we have to implement dragging ourselves)
  */
 - (void)mouseDragged:(NSEvent *)theEvent {
-    NSRect screenVisibleFrame = [[NSScreen mainScreen] visibleFrame];
+    
+    // if the initial point is zero predend this is a mousedown event
+    if(self.initialLocation.x == 0 && self.initialLocation.y == 0)
+    {
+        self.initialLocation = [theEvent locationInWindow];
+        self.hasMouse = YES;
+        return;
+    }
+    
+    //NSRect screenVisibleFrame = [[NSScreen mainScreen] visibleFrame];
     NSRect windowFrame = [self frame];
     NSPoint newOrigin = windowFrame.origin;
     
@@ -303,10 +312,12 @@
     newOrigin.x += (currentLocation.x - self.initialLocation.x);
     newOrigin.y += (currentLocation.y - self.initialLocation.y);
     
+    /*
     // Don't let window get dragged up under the menu bar
     if ((newOrigin.y + windowFrame.size.height) > (screenVisibleFrame.origin.y + screenVisibleFrame.size.height)) {
         newOrigin.y = screenVisibleFrame.origin.y + (screenVisibleFrame.size.height - windowFrame.size.height);
     }
+    */
     
     // Move the window to the new location
     [self setFrameOrigin:newOrigin];
@@ -318,7 +329,14 @@
 - (void)mouseUp:(NSEvent *)theEvent {
     // animate to the closest snap position
     [self findClosestPosition];
+    
+    self.initialLocation = NSZeroPoint;
     self.hasMouse = NO;
+}
+
+-(void)resignKeyWindow
+{
+    [self.hudView textDidEndEditing:nil];
 }
 
 

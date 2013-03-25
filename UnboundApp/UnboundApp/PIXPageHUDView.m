@@ -10,7 +10,7 @@
 #import "PIXPageHUDWindow.h"
 #import "PIXPhoto.h"
 
-@interface PIXPageHUDView ()
+@interface PIXPageHUDView () <NSTextViewDelegate>
 
 @property (strong) NSTrackingArea * boundsTrackingArea;
 
@@ -28,7 +28,10 @@
 @property (strong) NSArray * captionConstraints;
 
 
+@property (nonatomic) BOOL captionEditCancelled;
+
 @property (nonatomic) BOOL isShowingCaption;
+@property (nonatomic) BOOL mouseDragged;
 
 @end
 
@@ -82,24 +85,39 @@
     
 }
 
+#pragma mark -
+#pragma mark caption display
+
 -(void)setupCaptionSpace
 {
     float newSpace = 0;
-    if([self.photo caption] != nil && ![[self.photo caption] isEqualToString:@""])
+    if(([self.photo caption] != nil && ![[self.photo caption] isEqualToString:@""]) ||
+       [self isTextEditing])
     {
         self.isShowingCaption = YES; // this will add the view to the subview if needed
         
-        [self.captionTextView setString:self.photo.caption];
+        if(self.photo.caption)
+        {
+            [self.captionTextView setString:self.photo.caption];
+        }
+        
+        else
+        {
+            [self.captionTextView setString:@""];
+        }
+        
         
         // find the height the text view should be:
         
+        [[self.captionTextView textStorage] setFont:[NSFont fontWithName:@"Helvetica" size:18]];
+        [[self.captionTextView textStorage] setForegroundColor:[NSColor whiteColor]];
+        [[self.captionTextView textStorage] setAlignment:NSCenterTextAlignment range:NSMakeRange(0, [self.captionTextView textStorage].length)];
         
         NSTextStorage *textStorage = [[NSTextStorage alloc] initWithAttributedString:self.captionTextView.attributedString];
         NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
         NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(self.captionTextView.frame.size.width, FLT_MAX)];
         [layoutManager addTextContainer:textContainer];
         [textStorage addLayoutManager:layoutManager];
-
 
         // NSLayoutManager is lazy, so we need the following kludge to force layout:
 		[layoutManager glyphRangeForTextContainer:textContainer];
@@ -111,6 +129,12 @@
         //CGFloat height = boundingRect.size.height + 15;
         
         newSpace = usedRect.size.height + 15;
+        
+        // max the space out at 100px (the scrollview will scroll
+        if(newSpace > 150) newSpace = 150;
+        
+        // if we're textediting then always have at least 80px
+        if(self.isTextEditing && newSpace < 80) newSpace = 80;
         
         [self.captionTextView setNeedsDisplay:YES];
         
@@ -160,26 +184,44 @@
             [self.topCaptionSpace.animator setConstant:newSpace];
         }
         
-    } completionHandler:^{
-        
-        // this block will be called when the animations called above have been completed
-        
-        CGRect newWindowFrame = self.window.frame;
-        newWindowFrame.size.height = newHeight;
-        
-        if(self.captionIsBelow)
-        {
-            newWindowFrame.origin.y -= (newHeight - newWindowFrame.size.height);
-        }
-        
-        
-        [(PIXPageHUDWindow *)self.window positionWindowWithSize:newWindowFrame.size animated:NO];
-        //[self.window setFrame:newWindowFrame display:YES animate:NO];
-        
-    }];
+    } completionHandler:^{}];
     
-    
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(fixCaptionSpace) object:nil];
+    [self performSelector:@selector(fixCaptionSpace) withObject:nil afterDelay:0.5];
 
+}
+
+-(void)fixCaptionSpace
+{
+    CGFloat newHeight = 55;
+    
+    if(self.captionIsBelow)
+    {
+        newHeight += self.bottomCaptionSpace.constant;
+    
+    }
+    
+    else
+    {
+        newHeight += self.topCaptionSpace.constant;
+    }
+    // this method will be called wheån the animations called above have been completed
+    
+    
+    CGRect newWindowFrame = self.window.frame;
+    newWindowFrame.size.height = newHeight;
+    
+    if(self.captionIsBelow)
+    {
+        newWindowFrame.origin.y -= (newHeight - newWindowFrame.size.height);
+    }
+    
+    // update the window if it's in a different place
+    if(!CGRectEqualToRect(self.window.frame, newWindowFrame))
+    {
+        [(PIXPageHUDWindow *)self.window positionWindowWithSize:newWindowFrame.size animated:NO];
+    }
+    //[self.window setFrame:newWindowFrame display:YES animate:NO];
 }
 
 -(void)setIsShowingCaption:(BOOL)isShowingCaption
@@ -242,33 +284,6 @@
     }
 }
 
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-    // Drawing code here.
-    
-    
-    NSRect innerbounds = CGRectInset(self.bounds, 6.0, 6.0);
-    NSBezierPath *selectionRectPath = [NSBezierPath bezierPathWithRoundedRect:innerbounds xRadius:10 yRadius:10];
-    
-    
-    // draw a shadow under the round rect
-    CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
-    CGContextSetShadowWithColor(context, CGSizeMake(0, -1), 6.0, [[NSColor colorWithGenericGamma22White:0.0 alpha:.7] CGColor]);
-    
-    // fill the round rect
-    [[NSColor colorWithCalibratedWhite:0.0 alpha:.5] setFill];
-    [selectionRectPath fill];
-    
-    // turn off the shadow
-    CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
-    
-    // stroke the outside
-    [[NSColor colorWithCalibratedWhite:1.0 alpha:.3] setStroke];
-    [selectionRectPath setLineWidth:2.0];
-    [selectionRectPath stroke];
-}
-
 -(void)setCaptionIsBelow:(BOOL)captionIsBelow
 {
     if(captionIsBelow != _captionIsBelow)
@@ -283,9 +298,9 @@
         NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(self);
         
         NSArray *horizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-0-[self]-0-|"
-                                                                       options:0
-                                                                       metrics:nil
-                                                                         views:viewsDictionary];
+                                                                                 options:0
+                                                                                 metrics:nil
+                                                                                   views:viewsDictionary];
         
         [self.superview addConstraints:horizontalConstraints];
         
@@ -316,10 +331,152 @@
         }
         
         
-
+        
         [self setupCaptionSpace];
     }
 }
+
+#pragma mark -
+#pragma mark caption edit mode handling
+-(void)mouseDown:(NSEvent *)theEvent
+{
+    [super mouseDown:theEvent];
+    self.mouseDragged = NO;
+}
+
+-(void)mouseUp:(NSEvent *)theEvent
+{
+    
+    if(self.mouseDragged == NO &&
+       NSPointInRect([self convertPoint:[theEvent locationInWindow] fromView:nil], self.captionScrollView.frame) &&
+       self.isShowingCaption)
+    {
+        [self startEditingCaption:self];
+    }
+    
+    [super mouseUp:theEvent];
+    self.mouseDragged = NO;
+}
+
+-(void)mouseDragged:(NSEvent *)theEvent
+{
+    [super mouseDragged:theEvent];
+    self.mouseDragged = YES;
+}
+
+
+-(IBAction)toggleCaptionEdit:(id)sender
+{
+    if(self.isTextEditing)
+    {
+        [self textDidEndEditing:sender];
+    }
+    
+    else
+    {
+        [self startEditingCaption:self];
+    }
+}
+
+-(IBAction)startEditingCaption:(id)sender
+{
+    [self setIsTextEditing:YES];
+    [self setupCaptionSpace];
+    
+    [(PIXPageHUDWindow *)self.window makeKeyAndOrderFront:sender];
+    [self.captionTextView setEditable:YES];
+    [self.window makeFirstResponder:self.captionTextView];
+    
+    [self.captionTextView setDelegate:self];
+    
+    
+    [self.captionTextView setSelectedTextAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      [NSColor colorWithCalibratedWhite:1.0 alpha:0.5], NSBackgroundColorAttributeName,
+      [NSColor blackColor], NSForegroundColorAttributeName,
+      nil]];
+    
+    self.captionEditCancelled = NO;
+    
+}
+
+
+-(void)cancelOperation:(id)sender
+{
+    if(self.isTextEditing)
+    {
+        self.captionEditCancelled = YES;
+        [[NSApp mainWindow] makeKeyWindow];
+    }
+}
+
+
+-(void)textDidEndEditing:(NSNotification *)notification
+{
+    if(self.captionEditCancelled == NO)
+    {
+        [self.photo userSetCaption:self.captionTextView.string];
+    }
+    
+    else
+    {
+        [self.captionTextView setString:self.photo.caption];
+    }
+    
+    [self.captionTextView setSelectedRange:NSMakeRange(0, 0)];
+    
+    [self setIsTextEditing:NO];
+    [[NSApp mainWindow] makeKeyWindow];
+    
+    [self.captionTextView setEditable:NO];
+    [self.captionTextView setSelectable:NO];
+    
+    [self.window makeFirstResponder:self];
+    
+    [self setupCaptionSpace];
+}
+
+
+- (NSRange)textView:(NSTextView *)aTextView willChangeSelectionFromCharacterRange:(NSRange)oldSelectedCharRange toCharacterRange:(NSRange)newSelectedCharRange
+{
+    
+    [[self.captionTextView textStorage] setFont:[NSFont fontWithName:@"Helvetica" size:18]];
+    [[self.captionTextView textStorage] setForegroundColor:[NSColor whiteColor]];
+    [[self.captionTextView textStorage] setAlignment:NSCenterTextAlignment range:NSMakeRange(0, [self.captionTextView textStorage].length)];
+    
+    
+    return newSelectedCharRange;
+}
+
+#pragma mark -
+#pragma mark background drawing
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+    // Drawing code here.
+    
+    
+    NSRect innerbounds = CGRectInset(self.bounds, 6.0, 6.0);
+    NSBezierPath *selectionRectPath = [NSBezierPath bezierPathWithRoundedRect:innerbounds xRadius:10 yRadius:10];
+    
+    
+    // draw a shadow under the round rect
+    CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
+    CGContextSetShadowWithColor(context, CGSizeMake(0, -1), 6.0, [[NSColor colorWithGenericGamma22White:0.0 alpha:.7] CGColor]);
+    
+    // fill the round rect
+    [[NSColor colorWithCalibratedWhite:0.0 alpha:.5] setFill];
+    [selectionRectPath fill];
+    
+    // turn off the shadow
+    CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
+    
+    // stroke the outside
+    [[NSColor colorWithCalibratedWhite:1.0 alpha:.3] setStroke];
+    [selectionRectPath setLineWidth:2.0];
+    [selectionRectPath stroke];
+}
+
 
 
 

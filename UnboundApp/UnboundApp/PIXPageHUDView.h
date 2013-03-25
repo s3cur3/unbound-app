@@ -15,6 +15,12 @@
 @property (weak, nonatomic) PIXPhoto * photo;
 @property (nonatomic) BOOL captionIsBelow;
 
+@property BOOL isTextEditing;
+
 @property float heightChange;
+
+-(void)textDidEndEditing:(NSNotification *)notification;
+
+-(IBAction)toggleCaptionEdit:(id)sender;
 
 @end

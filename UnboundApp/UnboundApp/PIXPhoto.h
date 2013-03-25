@@ -63,6 +63,8 @@
 
 -(void)postPhotoUpdatedNote;
 
+-(void)userSetCaption:(NSString *)userCaption;
+
 @end
 
 #pragma mark Required Methods IKImageBrowserItem Informal Protocol
