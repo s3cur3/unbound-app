@@ -24,6 +24,8 @@
 
 #import "PIXInfoPanelViewController.h"
 
+#import "PIXSlideshowOptonsViewController.h"
+
 @interface PIXPageViewController () <leapResponder>
 
 @property NSArray * viewControllers;
@@ -167,6 +169,19 @@
 -(void)toggleFullScreen:(id)sender
 {
     [self.view.window toggleFullScreen:sender];
+}
+
+-(IBAction)playButtonPressed:(id)sender
+{
+    PIXSlideshowOptonsViewController *controller = [[PIXSlideshowOptonsViewController alloc]
+                                                    initWithNibName:@"PIXSlideshowOptonsViewController" bundle:nil];
+    
+    
+    NSPopover *popover = [[NSPopover alloc] init];
+    [popover setContentViewController:controller];
+    [popover setAnimates:YES];
+    [popover setBehavior:NSPopoverBehaviorTransient];
+    [popover showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMinYEdge];
 }
 
 - (void)willShowPIXView

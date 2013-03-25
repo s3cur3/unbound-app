@@ -125,6 +125,8 @@
 		8C972CB41680FE8B00358913 /* PIXModifierSwitchedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */; };
 		8C9AA2B916FFE39500D989CA /* captionbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9AA2B716FFE39500D989CA /* captionbutton.png */; };
 		8C9AA2BA16FFE39500D989CA /* captionbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9AA2B816FFE39500D989CA /* captionbutton@2x.png */; };
+		8C9AA2BE1700A5C100D989CA /* PIXSlideshowOptonsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9AA2BC1700A5C000D989CA /* PIXSlideshowOptonsViewController.m */; };
+		8C9AA2BF1700A5C100D989CA /* PIXSlideshowOptonsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C9AA2BD1700A5C000D989CA /* PIXSlideshowOptonsViewController.xib */; };
 		8CE460DB16CB650600CDFA04 /* btn-roundrect-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D716CB650600CDFA04 /* btn-roundrect-down.png */; };
 		8CE460DC16CB650600CDFA04 /* btn-roundrect-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D816CB650600CDFA04 /* btn-roundrect-down@2x.png */; };
 		8CE460DD16CB650600CDFA04 /* btn-roundrect-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D916CB650600CDFA04 /* btn-roundrect-up.png */; };
@@ -370,6 +372,9 @@
 		8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXModifierSwitchedEvent.m; sourceTree = "<group>"; };
 		8C9AA2B716FFE39500D989CA /* captionbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = captionbutton.png; sourceTree = "<group>"; };
 		8C9AA2B816FFE39500D989CA /* captionbutton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "captionbutton@2x.png"; sourceTree = "<group>"; };
+		8C9AA2BB1700A5BF00D989CA /* PIXSlideshowOptonsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXSlideshowOptonsViewController.h; sourceTree = "<group>"; };
+		8C9AA2BC1700A5C000D989CA /* PIXSlideshowOptonsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSlideshowOptonsViewController.m; sourceTree = "<group>"; };
+		8C9AA2BD1700A5C000D989CA /* PIXSlideshowOptonsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXSlideshowOptonsViewController.xib; sourceTree = "<group>"; };
 		8CE460D716CB650600CDFA04 /* btn-roundrect-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-roundrect-down.png"; sourceTree = "<group>"; };
 		8CE460D816CB650600CDFA04 /* btn-roundrect-down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-roundrect-down@2x.png"; sourceTree = "<group>"; };
 		8CE460D916CB650600CDFA04 /* btn-roundrect-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-roundrect-up.png"; sourceTree = "<group>"; };
@@ -441,6 +446,9 @@
 				8C53DFE616FB76E8008EF8B1 /* PIXInfoPanelViewController.h */,
 				8C53DFE716FB76E8008EF8B1 /* PIXInfoPanelViewController.m */,
 				8C53DFF616FB8319008EF8B1 /* MapViewAdditions.css */,
+				8C9AA2BB1700A5BF00D989CA /* PIXSlideshowOptonsViewController.h */,
+				8C9AA2BC1700A5C000D989CA /* PIXSlideshowOptonsViewController.m */,
+				8C9AA2BD1700A5C000D989CA /* PIXSlideshowOptonsViewController.xib */,
 			);
 			name = PageView;
 			sourceTree = "<group>";
@@ -988,6 +996,7 @@
 				8CFC13C516FD6111004CA7D5 /* play@2x.png in Resources */,
 				8C9AA2B916FFE39500D989CA /* captionbutton.png in Resources */,
 				8C9AA2BA16FFE39500D989CA /* captionbutton@2x.png in Resources */,
+				8C9AA2BF1700A5C100D989CA /* PIXSlideshowOptonsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1071,6 +1080,7 @@
 				8C24A40B16F94ED100703F97 /* PIXRoundRectView.m in Sources */,
 				8C85AC1916FA98470021ADB4 /* PIXShareManager.m in Sources */,
 				8C53DFE816FB76E9008EF8B1 /* PIXInfoPanelViewController.m in Sources */,
+				8C9AA2BE1700A5C100D989CA /* PIXSlideshowOptonsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
