@@ -420,7 +420,15 @@
     
     else
     {
-        [self.captionTextView setString:self.photo.caption];
+        if(self.photo.caption)
+        {
+            [self.captionTextView setString:self.photo.caption];
+        }
+        
+        else
+        {
+            [self.captionTextView setString:@""];
+        }
     }
     
     [self.captionTextView setSelectedRange:NSMakeRange(0, 0)];

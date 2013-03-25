@@ -197,6 +197,8 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fullscreenChanged:) name:NSWindowDidEnterFullScreenNotification object:self.view.window];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fullscreenChanged:) name:NSWindowDidExitFullScreenNotification object:self.view.window];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photoThumbChanged:) name:@"PhotoThumbDidChangeNotification" object:nil];
+        
         [self fullscreenChanged:nil];
         
     });
@@ -215,6 +217,23 @@
         self.fullscreenButton.image = [NSImage imageNamed:@"expand"];
     }
 
+}
+
+-(void)photoThumbChanged:(NSNotification *)note
+{
+    PIXPhoto * thisPhoto = [self.pagerData objectAtIndex:self.pageController.selectedIndex];
+    
+    // update the info panel if it's visible
+    if(self.infoPanelShowing)
+    {
+        [self.infoPanelVC setPhoto:nil];
+        [self.infoPanelVC setPhoto:thisPhoto];
+        
+    }
+    
+    // update the HUD (caption view)
+    [self.controlView setPhoto:nil];
+    [self.controlView setPhoto:thisPhoto];
 }
 
 -(void)setupToolbar
@@ -489,7 +508,7 @@
 
 -(void)tryFadeControls
 {
-    if(![self.controlWindow hasMouse] || [self.controlView isTextEditing])
+    if(!([self.controlWindow hasMouse] || [self.controlView isTextEditing]))
     {
         [self.controlWindow hideAnimated:YES];
         

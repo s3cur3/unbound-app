@@ -297,7 +297,17 @@ static NSString *const kItemsKey = @"photos";
                 NSString * caption = [photoInfoDict objectForKey:@"caption"];
                 if([caption isKindOfClass:[NSString class]])
                 {
-                    [aPhoto setCaption:[photoInfoDict objectForKey:@"caption"]];
+                    // if we're changing the caption
+                    if(![aPhoto.caption isEqualToString:[photoInfoDict objectForKey:@"caption"]])
+                    {
+                        [aPhoto setCaption:[photoInfoDict objectForKey:@"caption"]];
+                        
+                        // also update the views
+                        
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [aPhoto postPhotoUpdatedNote];
+                        });
+                    }
                 }
             }
         }
