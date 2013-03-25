@@ -275,7 +275,10 @@
  so that controls in this window will be enabled.
  */
 - (BOOL)canBecomeKeyWindow {
-    return self.hudView.isTextEditing;
+    
+    return YES;
+    
+    //return self.hudView.isTextEditing;
 }
 
 /*

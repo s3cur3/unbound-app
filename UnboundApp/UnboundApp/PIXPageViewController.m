@@ -182,6 +182,7 @@
     [popover setAnimates:YES];
     [popover setBehavior:NSPopoverBehaviorTransient];
     [popover showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMinYEdge];
+    
 }
 
 - (void)willShowPIXView
