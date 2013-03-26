@@ -786,7 +786,10 @@
     [prevItemsToRelease enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
         //
         //[(PIXPhoto *)obj setCancelFullsizeLoadOperation:YES];
-        [(PIXPhoto *)obj setFullsizeImage:nil];
+        PIXPhoto *aPhoto = (PIXPhoto *)obj;
+        if ([aPhoto isReallyDeleted]==NO) {
+            [aPhoto setFullsizeImage:nil];
+        }
     }];
     
     NSUInteger farIndexStart = startIndex+rangeLength;
@@ -797,7 +800,10 @@
     [nextItemsToRelease enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
         //
         //[(PIXPhoto *)obj setCancelFullsizeLoadOperation:YES];
-        [(PIXPhoto *)obj setFullsizeImage:nil];
+        PIXPhoto *aPhoto = (PIXPhoto *)obj;
+        if ([aPhoto isReallyDeleted]==NO) {
+            [aPhoto setFullsizeImage:nil];
+        }
     }];
     
 //    for(NSUInteger i = anIndex -2; i <= anIndex+2; i++)
@@ -828,9 +834,9 @@
 
 @implementation PIXPageViewController (NSPageControllerDelegate)
 - (NSString *)pageController:(NSPageController *)pageController identifierForObject:(id)object {
-    if (object==nil) {
-        DLog(@"identifierForObject has nil object");
-    }
+//    if (object==nil) {
+//        DLog(@"identifierForObject has nil object");
+//    }
     return @"picture";
     
 //    if (![[object imageRepresentationType] isEqualToString:IKImageBrowserQTMoviePathRepresentationType]) {
@@ -929,7 +935,7 @@
     
     
     [self performSelector:@selector(startPreloadForController:) withObject:pageController afterDelay:0.0f];
-    
+    //[self preloadNextImagesForIndex:pageController.selectedIndex];
     
 
 }

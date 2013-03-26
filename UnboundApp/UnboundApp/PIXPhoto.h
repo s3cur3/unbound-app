@@ -43,6 +43,8 @@
 @property (nonatomic, strong) NSImage *fullsizeImage;
 @property (nonatomic, assign, readwrite) BOOL cancelFullsizeLoadOperation;
 
+@property (readonly) BOOL isReallyDeleted;
+
 //TODO: get rid of this
 -(NSURL *)filePath;
 
