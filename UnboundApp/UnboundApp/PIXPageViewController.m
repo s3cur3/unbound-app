@@ -747,8 +747,23 @@
     }
     
     NSRange nearbyItemsRange = NSMakeRange(startIndex, rangeLength);
-    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:nearbyItemsRange];
+    NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSetWithIndexesInRange:nearbyItemsRange];
+    
+    // if we're playing a slideshow and we're in shuffle, then also preload the next two shuffle photos
+    if(self.isPlayingSlideshow && [[NSUserDefaults standardUserDefaults] boolForKey:@"slideshowShouldShuffle"])
+    {
+        int slideToLoad = (int)self.currentSlide+1;
+        
+        if(slideToLoad < self.slideshowPhotoIndexes.count)
+        {
+            [indexSet addIndex:[[self.slideshowPhotoIndexes objectAtIndex:slideToLoad] intValue]];
+        }
+    }
+    
     NSSet *newPhotosToPreload = [NSSet setWithArray:[self.pagerData objectsAtIndexes:indexSet]];
+    
+    
+    
     NSMutableSet *photosToCancel = [self.preLoadPhotosSet mutableCopy];
     [photosToCancel minusSet:newPhotosToPreload];
     
