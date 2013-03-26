@@ -361,9 +361,30 @@ static NSString *const kItemsKey = @"photos";
         photoDict = [NSMutableDictionary new];
     }
     
-    [photoDict setObject:photo.caption forKey:@"caption"];
+    // if we have a caption set it
+    if(photo.caption != nil)
+    {
+        [photoDict setObject:photo.caption forKey:@"caption"];
+    }
     
-    [photos setObject:photoDict forKey:photo.name];
+    // otherwise remove it
+    else
+    {
+        [photoDict removeObjectForKey:@"caption"];
+    }
+    
+    // if we have any photo info set it
+    if([photoDict count])
+    {
+        [photos setObject:photoDict forKey:photo.name];
+    }
+    
+    // if it's empty remove the key
+    else
+    {
+        [photos removeObjectForKey:photo.name];
+    }
+    
     [unboundMetaDictionary setObject:photos forKey:@"photos"];
     
     [self writeUnboundFile:unboundMetaDictionary];
