@@ -14,6 +14,9 @@
 
 @implementation PIXSlideshowOptonsViewController
 
+
+// NOTE: Most options for this class are bound to the NSUserDefaults controller in the nib, so no need for code here
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -24,4 +27,12 @@
     return self;
 }
 
+-(IBAction)startSlideShow:(id)sender
+{
+    [self.delegate startSlideShow:sender];
+}
+
+
 @end
+
+

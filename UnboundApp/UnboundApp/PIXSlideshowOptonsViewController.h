@@ -8,6 +8,16 @@
 
 #import <Cocoa/Cocoa.h>
 
+@protocol PIXSlideshowOptonsDelegate;
+
 @interface PIXSlideshowOptonsViewController : NSViewController
+
+@property id<PIXSlideshowOptonsDelegate> delegate;
+
+@end
+
+@protocol PIXSlideshowOptonsDelegate <NSObject>
+
+-(IBAction)startSlideShow:(id)sender;
 
 @end

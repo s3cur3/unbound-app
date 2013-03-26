@@ -26,7 +26,7 @@
 
 #import "PIXSlideshowOptonsViewController.h"
 
-@interface PIXPageViewController () <leapResponder>
+@interface PIXPageViewController () <leapResponder, PIXSlideshowOptonsDelegate>
 
 @property NSArray * viewControllers;
 
@@ -50,6 +50,12 @@
 @property (nonatomic, strong) PIXImageViewController * currentImageVC;
 
 @property BOOL hasMouse;
+
+// slideshow properties
+@property BOOL isPlayingSlideshow;
+@property NSArray * slideshowPhotoIndexes;
+@property NSUInteger currentSlide;
+@property (weak) IBOutlet NSButton * startSlideshowButton;
 
 @property (nonatomic, strong) NSMutableSet *preLoadPhotosSet;
 
@@ -173,8 +179,17 @@
 
 -(IBAction)playButtonPressed:(id)sender
 {
+    // if we're already playing the slideshow then stop it
+    if(self.isPlayingSlideshow)
+    {
+        [self stopSlideShow:nil];
+        return;
+    }
+    
+    // otherwise present the options
     PIXSlideshowOptonsViewController *controller = [[PIXSlideshowOptonsViewController alloc]
                                                     initWithNibName:@"PIXSlideshowOptonsViewController" bundle:nil];
+    controller.delegate = self;
     
     
     NSPopover *popover = [[NSPopover alloc] init];
@@ -182,6 +197,42 @@
     [popover setAnimates:YES];
     [popover setBehavior:NSPopoverBehaviorTransient];
     [popover showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMinYEdge];
+    
+}
+
+-(IBAction)startSlideShow:(id)sender
+{
+    self.isPlayingSlideshow = YES;
+    self.startSlideshowButton.image = [NSImage imageNamed:@"pause"];
+    
+    // set up an array of integers for the slideshowPhotoIndexes array (we use this to handle shuffle)
+    NSMutableArray *photoIndexes = [[NSMutableArray alloc] initWithCapacity:self.pagerData.count];
+    
+    NSUInteger numPhotos = self.pagerData.count;
+    
+    for (NSInteger i = 0; i < numPhotos; i++)
+    {
+        [photoIndexes addObject:[NSNumber numberWithInteger:i]];
+    }
+    
+    if([[NSUserDefaults standardUserDefaults] boolForKey:@"slidshowShouldShuffle"])
+    {
+        // if we're shuffling, then shuffle the indexes
+    }
+    
+}
+
+-(IBAction)stopSlideShow:(id)sender
+{
+    self.isPlayingSlideshow = NO;
+    self.startSlideshowButton.image = [NSImage imageNamed:@"play"];
+    
+    
+    
+}
+
+-(void)nextSlide
+{
     
 }
 

@@ -114,7 +114,7 @@
                              forSegment:1];
     
 
-    NSArray * items = @[self.backButtonSegmentItem, self.navigationViewController.middleSpacer, self.shareItem, self.sliderItem];
+    NSArray * items = @[self.backButtonSegmentItem, self.navigationViewController.middleSpacer, self.sliderItem];
     
     [self.navigationViewController setNavBarHidden:NO];
     [self.navigationViewController setToolbarItems:items];

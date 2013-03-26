@@ -438,7 +438,7 @@
     [super updateToolbar];
     
     PIXCustomButton * deleteButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
-    [deleteButton setTitle:@"Delete"];
+    [deleteButton setTitle:@"Delete Album"];
     [deleteButton setTarget:self];
     [deleteButton setAction:@selector(deleteItems:)];
     
@@ -454,12 +454,13 @@
     
     if([self.selectedItems count] > 1)
     {
-        [self.toolbar setButtons:@[deleteButton, shareButton, mergeButton]];
+        [deleteButton setTitle:[NSString stringWithFormat:@"Delete %ld Albums", [self.selectedItems count]]];
+        [self.toolbar setButtons:@[deleteButton]];
     }
     
     else
     {
-        [self.toolbar setButtons:@[deleteButton, shareButton]];
+        [self.toolbar setButtons:@[deleteButton]];
     }
     
 }
