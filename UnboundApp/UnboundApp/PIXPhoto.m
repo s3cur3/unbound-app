@@ -335,6 +335,8 @@ const CGFloat kThumbnailSize = 370.0f;
     //DLog(@"desktopOptions: %@", desktopOptions);
     //DLog(@"screen origin : %.0f , %.0f", visibleScreen.origin.x, visibleScreen.origin.y);
     //DLog(@"screen dimensions : %.0f x %.0f", visibleScreen.size.width, visibleScreen.size.height);
+    CGImageRef imageRef = nil;
+    
     BOOL resizeImage = NO;
     NSDictionary *imageOptions = nil;
     if (resizeImage)
@@ -348,20 +350,29 @@ const CGFloat kThumbnailSize = 370.0f;
                                        (id)kCGImageSourceCreateThumbnailFromImageAlways: (id)kCFBooleanTrue,
                                        (id)kCGImageSourceThumbnailMaxPixelSize: (id)maxPixelSize,
                                        (id)kCGImageSourceCreateThumbnailWithTransform: (id)kCFBooleanTrue};
+        
+        imageRef = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, (__bridge CFDictionaryRef)imageOptions);
+        
     } else {
 //        NSRect visibleScreen = [[NSScreen mainScreen] visibleFrame];
 //        float maxDimension = (visibleScreen.size.width > visibleScreen.size.height) ? visibleScreen.size.width : visibleScreen.size.height;
 //        
 //        NSNumber *maxPixelSize = [NSNumber numberWithInteger:maxDimension];
         //DLog(@"Using maxPixelSize : %@", maxPixelSize);
-        imageOptions = @{(id)kCGImageSourceCreateThumbnailFromImageIfAbsent: (id)kCFBooleanTrue,
-                                       (id)kCGImageSourceCreateThumbnailFromImageAlways: (id)kCFBooleanTrue,
-                                       //(id)kCGImageSourceThumbnailMaxPixelSize: (id)maxPixelSize,
-                                       (id)kCGImageSourceCreateThumbnailWithTransform: (id)kCFBooleanTrue};
+//        imageOptions = @{(id)kCGImageSourceCreateThumbnailFromImageIfAbsent: (id)kCFBooleanTrue,
+//                                       (id)kCGImageSourceCreateThumbnailFromImageAlways: (id)kCFBooleanTrue,
+//                                       //(id)kCGImageSourceThumbnailMaxPixelSize: (id)maxPixelSize,
+//                                       (id)kCGImageSourceCreateThumbnailWithTransform: (id)kCFBooleanTrue};
+        
+        //imageOptions = @{};
+        
+        imageRef = CGImageSourceCreateImageAtIndex(imageSource, 0, NULL);
     }
 
     
-    CGImageRef imageRef = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, (__bridge CFDictionaryRef)imageOptions);
+//    CGImageRef imageRef = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, (__bridge CFDictionaryRef)imageOptions);
+//    
+//    CGImageRef imageRef = CGImageSourceCreateImageAtIndex(imageSource, 0, NULL);
     
     if (imageRef != NULL) {
         
