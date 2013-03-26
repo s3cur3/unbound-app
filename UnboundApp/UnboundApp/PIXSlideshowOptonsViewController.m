@@ -30,6 +30,7 @@
 -(IBAction)startSlideShow:(id)sender
 {
     [self.delegate startSlideShow:sender];
+    [self.myPopover performClose:sender];
 }
 
 

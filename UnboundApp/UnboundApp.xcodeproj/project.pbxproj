@@ -99,6 +99,8 @@
 		8C53DFF416FB7E0F008EF8B1 /* MapKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFED16FB7C36008EF8B1 /* MapKit.framework */; };
 		8C53DFF716FB831A008EF8B1 /* MapViewAdditions.css in Resources */ = {isa = PBXBuildFile; fileRef = 8C53DFF616FB8319008EF8B1 /* MapViewAdditions.css */; };
 		8C53E00516FBCB36008EF8B1 /* libLeap.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8C031CD016E926F7009B7F38 /* libLeap.dylib */; };
+		8C5D757417015A5C0008CC00 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C5D757217015A5C0008CC00 /* pause.png */; };
+		8C5D757517015A5C0008CC00 /* pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C5D757317015A5C0008CC00 /* pause@2x.png */; };
 		8C68246B16F596BB00245F09 /* PIXSelectionLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68246A16F596BB00245F09 /* PIXSelectionLayer.m */; };
 		8C68246E16F599FD00245F09 /* NSBezierPath+pathUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68246D16F599FD00245F09 /* NSBezierPath+pathUtilities.m */; };
 		8C68247116F6850C00245F09 /* PIXPageHUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68247016F6850B00245F09 /* PIXPageHUDView.m */; };
@@ -334,6 +336,8 @@
 		8C53DFED16FB7C36008EF8B1 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = UnboundApp/MapKit.framework; sourceTree = "<group>"; };
 		8C53DFF116FB7CED008EF8B1 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		8C53DFF616FB8319008EF8B1 /* MapViewAdditions.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = MapViewAdditions.css; sourceTree = "<group>"; };
+		8C5D757217015A5C0008CC00 /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
+		8C5D757317015A5C0008CC00 /* pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pause@2x.png"; sourceTree = "<group>"; };
 		8C68246916F596BB00245F09 /* PIXSelectionLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXSelectionLayer.h; sourceTree = "<group>"; };
 		8C68246A16F596BB00245F09 /* PIXSelectionLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSelectionLayer.m; sourceTree = "<group>"; };
 		8C68246C16F599FC00245F09 /* NSBezierPath+pathUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBezierPath+pathUtilities.h"; sourceTree = "<group>"; };
@@ -551,6 +555,8 @@
 				8CF9CE3F16F8200A003B0933 /* arrow-left@2x.png */,
 				8CF9CE4016F8200A003B0933 /* arrow-right.png */,
 				8CF9CE4116F8200A003B0933 /* arrow-right@2x.png */,
+				8C5D757217015A5C0008CC00 /* pause.png */,
+				8C5D757317015A5C0008CC00 /* pause@2x.png */,
 			);
 			path = images;
 			sourceTree = "<group>";
@@ -997,6 +1003,8 @@
 				8C9AA2B916FFE39500D989CA /* captionbutton.png in Resources */,
 				8C9AA2BA16FFE39500D989CA /* captionbutton@2x.png in Resources */,
 				8C9AA2BF1700A5C100D989CA /* PIXSlideshowOptonsViewController.xib in Resources */,
+				8C5D757417015A5C0008CC00 /* pause.png in Resources */,
+				8C5D757517015A5C0008CC00 /* pause@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,6 +13,7 @@
 @interface PIXSlideshowOptonsViewController : NSViewController
 
 @property id<PIXSlideshowOptonsDelegate> delegate;
+@property (weak) NSPopover * myPopover;
 
 @end
 

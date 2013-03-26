@@ -54,7 +54,7 @@
 // slideshow properties
 @property BOOL isPlayingSlideshow;
 @property NSArray * slideshowPhotoIndexes;
-@property NSUInteger currentSlide;
+@property NSInteger currentSlide;
 @property (weak) IBOutlet NSButton * startSlideshowButton;
 
 @property (nonatomic, strong) NSMutableSet *preLoadPhotosSet;
@@ -78,7 +78,8 @@
 {
     if (self.album!=nil)
     {
-        [self.pageController.view setWantsLayer:YES];
+        [self.view setWantsLayer:YES];
+        [self.view.layer setBackgroundColor:[NSColor blackColor].CGColor];
         self.pageController.transitionStyle = NSPageControllerTransitionStyleHorizontalStrip;
         
         [self.infoPanelSpacer setConstant:0.0];
@@ -194,6 +195,9 @@
     
     NSPopover *popover = [[NSPopover alloc] init];
     [popover setContentViewController:controller];
+    
+    controller.myPopover = popover;
+    
     [popover setAnimates:YES];
     [popover setBehavior:NSPopoverBehaviorTransient];
     [popover showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMinYEdge];
@@ -215,11 +219,34 @@
         [photoIndexes addObject:[NSNumber numberWithInteger:i]];
     }
     
-    if([[NSUserDefaults standardUserDefaults] boolForKey:@"slidshowShouldShuffle"])
+    if([[NSUserDefaults standardUserDefaults] boolForKey:@"slideshowShouldShuffle"])
     {
         // if we're shuffling, then shuffle the indexes
+        // randomize the order
+        NSUInteger count = [photoIndexes count];
+        for (NSUInteger i = 0; i < count; ++i) {
+            // Select a random element between i and end of array to swap with.
+            NSInteger nElements = count - i;
+            NSInteger n = (arc4random() % nElements) + i;
+            [photoIndexes exchangeObjectAtIndex:i withObjectAtIndex:n];
+        }
+        
+        self.slideshowPhotoIndexes = photoIndexes;
+        self.currentSlide = -1; // start at the begining of the random list (this will be incremented immediatley)
+        
+        // go to next slide righ away, No need for a delay if it's random
+        [self nextSlide];
     }
     
+    else
+    {
+        self.slideshowPhotoIndexes = photoIndexes;
+        self.currentSlide = [self.pageController selectedIndex];
+        
+        CGFloat interval = [[NSUserDefaults standardUserDefaults] floatForKey:@"slideshowTimeInterval"];
+        [self performSelector:@selector(nextSlide) withObject:nil afterDelay:interval];
+    }
+
 }
 
 -(IBAction)stopSlideShow:(id)sender
@@ -227,13 +254,100 @@
     self.isPlayingSlideshow = NO;
     self.startSlideshowButton.image = [NSImage imageNamed:@"play"];
     
+    // cancel any timers that are running
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(nextSlide) object:nil];
     
+}
+
+-(void)restartNextSlideIfNeeded
+{
+    // don't do anything unless we're playing a slideshow
+    if(!self.isPlayingSlideshow) return;
     
+    // cancel any timers that are running
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(nextSlide) object:nil];
+    
+    // if we need to go to the current slide (not shuffle) then set that
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"slideshowShouldShuffle"])
+    {
+        self.currentSlide = self.pageController.selectedIndex;
+    }
+    
+    CGFloat interval = [[NSUserDefaults standardUserDefaults] floatForKey:@"slideshowTimeInterval"];
+    [self performSelector:@selector(nextSlide) withObject:nil afterDelay:interval];
 }
 
 -(void)nextSlide
 {
+    self.currentSlide++;
     
+    if(self.currentSlide < self.slideshowPhotoIndexes.count)
+    {
+        CGFloat interval = [[NSUserDefaults standardUserDefaults] floatForKey:@"slideshowTimeInterval"];
+        NSNumber * nextIndex = [self.slideshowPhotoIndexes objectAtIndex:self.currentSlide];
+        
+        
+        //
+        
+        /*
+        [self.pageController setTransitionStyle:NSPageControllerTransitionStyleStackBook];
+        [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+            [self.pageController.animator setSelectedIndex:[nextIndex intValue]];
+        } completionHandler:^{
+            [self.pageController completeTransition];
+        }];*/
+        
+        
+        // animate the transition
+        NSString *type = nil;
+        NSInteger transition = [[NSUserDefaults standardUserDefaults] integerForKey:@"slideshowTransitionStyle"];
+        switch (transition)
+        {
+            case 0:
+                type = kCATransitionFade;
+                break;
+            case 1:
+                type = kCATransitionPush;
+                break;
+            case 2:
+                type = kCATransitionReveal;
+                break;
+        }
+        
+        CATransition *animation = [CATransition animation];
+        [animation setDuration:0.5+(interval/10.0)];
+        
+        [animation setType:type];
+        [animation setSubtype:kCATransitionFromRight];
+        
+        // dispatch the transition so it goes a little smoother
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.pageController.view.layer addAnimation:animation forKey:@"slideShowFade"];
+            [self.pageController setSelectedIndex:[nextIndex intValue]];
+        });
+        
+        
+        
+        [self performSelector:@selector(nextSlide) withObject:nil afterDelay:interval];
+         
+    }
+    
+    // if we're at the end of the loop
+    else
+    {
+        // if we should keep looping then start at the begining
+        if([[NSUserDefaults standardUserDefaults] boolForKey:@"slideshowShouldLoop"])
+        {
+            self.currentSlide = -1; // start at -1 because it will increment immediatley
+            [self nextSlide];
+        }
+        
+        // otherwise stop
+        else
+        {
+            [self stopSlideShow:nil];
+        }
+    }
 }
 
 - (void)willShowPIXView
@@ -441,11 +555,13 @@
 -(void)multiFingerSwipeRight
 {
     [self.pageController navigateBack:nil];
+    [self restartNextSlideIfNeeded];
 }
 
 -(void)multiFingerSwipeLeft
 {
     [self.pageController navigateForward:nil];
+    [self restartNextSlideIfNeeded];
 }
 
 -(void)keyDown:(NSEvent *)theEvent
@@ -494,6 +610,8 @@
         [self.pageController setSelectedIndex:currentIndex];
     }
     //[self.pageController navigateForward:nil];
+    
+    [self restartNextSlideIfNeeded];
 }
 
 -(IBAction)lastPage:(id)sender
@@ -507,6 +625,8 @@
     }
     
     //[self.pageController navigateBack:nil];
+    
+    [self restartNextSlideIfNeeded];
 }
 
 
@@ -774,6 +894,8 @@
     
     
     [self performSelector:@selector(startPreloadForController:) withObject:pageController afterDelay:0.0f];
+    
+    
 
 }
 
@@ -781,7 +903,7 @@
     [aPageController completeTransition];
     
 
-    
+    [self restartNextSlideIfNeeded];
     
     //[self makeSelectedViewFirstResponder];
 }
