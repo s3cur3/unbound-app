@@ -765,6 +765,26 @@
         [(PIXPhoto *)obj fullsizeImageStartLoadingIfNeeded:YES];
     }];
     
+    NSRange previousFarItemsRange = NSMakeRange(0, startIndex);
+    NSIndexSet *previndexSet = [NSIndexSet indexSetWithIndexesInRange:previousFarItemsRange];
+    NSSet *prevItemsToRelease = [NSSet setWithArray:[self.pagerData objectsAtIndexes:previndexSet]];
+    [prevItemsToRelease enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        //
+        //[(PIXPhoto *)obj setCancelFullsizeLoadOperation:YES];
+        [(PIXPhoto *)obj setFullsizeImage:nil];
+    }];
+    
+    NSUInteger farIndexStart = startIndex+rangeLength;
+    NSUInteger farIndexLength = pagerDataCount-farIndexStart;
+    NSRange nextFarItemsRange = NSMakeRange(farIndexStart, farIndexLength);
+    NSIndexSet *nextFarIndexSet = [NSIndexSet indexSetWithIndexesInRange:nextFarItemsRange];
+    NSSet *nextItemsToRelease = [NSSet setWithArray:[self.pagerData objectsAtIndexes:nextFarIndexSet]];
+    [nextItemsToRelease enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        //
+        //[(PIXPhoto *)obj setCancelFullsizeLoadOperation:YES];
+        [(PIXPhoto *)obj setFullsizeImage:nil];
+    }];
+    
 //    for(NSUInteger i = anIndex -2; i <= anIndex+2; i++)
 //    {
 //        if(i < [self.pagerData count])
@@ -900,6 +920,10 @@
 }
 
 - (void)pageControllerDidEndLiveTransition:(NSPageController *)aPageController {
+//    PIXPhoto *aPhoto = (PIXPhoto *)pageController.representedObject;
+//    if (aPhoto.fullsizeImage == nil) {
+//        DLog(@"pageControllerDidEndLiveTransition fullsizeImage not loaded : %@", aPhoto);
+//    }
     [aPageController completeTransition];
     
 
