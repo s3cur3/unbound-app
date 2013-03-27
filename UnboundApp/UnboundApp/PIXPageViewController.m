@@ -643,9 +643,51 @@
     //    [NSMenu popUpContextMenu:theMenu withEvent:theEvent forView:self.imageView];
 }
 
+- (IBAction) openInApp:(id)sender
+{
+    NSArray *itemsToOpen = [NSArray arrayWithObject:[self.pagerData objectAtIndex:self.pageController.selectedIndex]];
 
+    for (id obj in itemsToOpen) {
+        
+        NSString* path = [obj path];
+        [[NSWorkspace sharedWorkspace] openFile:path];
+        
+    }
+}
 
-#pragma mark - 
+- (IBAction) revealInFinder:(id)inSender
+{
+    NSSet *aSet = [NSSet setWithObject:[self.pagerData objectAtIndex:self.pageController.selectedIndex]];
+    [aSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        
+        NSString* path = [obj path];
+        NSString* folder = [path stringByDeletingLastPathComponent];
+        [[NSWorkspace sharedWorkspace] selectFile:path inFileViewerRootedAtPath:folder];
+        
+    }];
+}
+
+-(IBAction)getInfo:(id)sender;
+{
+    NSSet *aSet = [NSSet setWithObject:[self.pagerData objectAtIndex:self.pageController.selectedIndex]];
+    [aSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        
+        NSPasteboard *pboard = [NSPasteboard pasteboardWithUniqueName];
+        [pboard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
+        [pboard setString:[obj path]  forType:NSStringPboardType];
+        NSPerformService(@"Finder/Show Info", pboard);
+        
+    }];
+    
+}
+
+//TODO: implement this
+- (IBAction) deleteItems:(id )inSender
+{
+    NSRunCriticalAlertPanel(@"Delete photo is under development.", @"Feature Unavailable", @"OK", @"Cancel", nil);
+}
+
+#pragma mark -
 #pragma mark mouse movement methods (for hiding and showing the hud)
 
 -(void)mouseEntered:(NSEvent *)theEvent
