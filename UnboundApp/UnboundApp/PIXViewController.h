@@ -19,6 +19,10 @@
 
 +(BOOL)optionKeyIsPressed;
 
+-(NSMenu *)menuForObject:(id)object;
+
+-(NSMenu *)menuForObjects:(NSArray *)objects selectedObject:(id)selectdObject;
+
 -(void)setupToolbar;
 
 -(void)willShowPIXView;

@@ -33,5 +33,12 @@
     }
 }
 
+-(void)rightMouseDown:(NSEvent *)theEvent {
+    DLog(@"rightMouseDown:%@", theEvent);
+    [[self nextResponder] rightMouseDown:theEvent];
+    //    NSMenu *theMenu = [[NSMenu alloc] initWithTitle:@"Options"];
+    //    [theMenu insertItemWithTitle:@"Set As Desktop Background" action:@selector(setDesktopImage:) keyEquivalent:@""atIndex:0];
+    //    [NSMenu popUpContextMenu:theMenu withEvent:theEvent forView:self.imageView];
+}
 
 @end

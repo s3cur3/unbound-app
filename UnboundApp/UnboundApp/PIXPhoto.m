@@ -957,6 +957,10 @@ const CGFloat kThumbnailSize = 370.0f;
     }
 }
 
+- (BOOL) isReallyDeleted {
+    return [self isDeleted] || [self managedObjectContext] == nil;
+}
+
 
 //- (NSImage *)thumbnailImage
 //{

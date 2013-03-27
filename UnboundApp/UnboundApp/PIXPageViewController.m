@@ -26,7 +26,9 @@
 
 #import "PIXSlideshowOptonsViewController.h"
 
-@interface PIXPageViewController () <leapResponder, PIXSlideshowOptonsDelegate>
+#import "PIXViewController.h"
+
+@interface PIXPageViewController () <leapResponder, PIXSlideshowOptonsDelegate, NSMenuDelegate>
 
 @property NSArray * viewControllers;
 
@@ -630,10 +632,62 @@
 }
 
 
+-(void)rightMouseDown:(NSEvent *)theEvent {
+    DLog(@"rightMouseDown:%@", theEvent);
+    PIXPhoto *aPhoto = [self.pagerData objectAtIndex:self.pageController.selectedIndex];
+    NSMenu *contextMenu = [self menuForObject:aPhoto];
+    contextMenu.delegate = self;
+    [NSMenu popUpContextMenu:contextMenu withEvent:theEvent forView:self.pageController.selectedViewController.view];
+    //    NSMenu *theMenu = [[NSMenu alloc] initWithTitle:@"Options"];
+    //    [theMenu insertItemWithTitle:@"Set As Desktop Background" action:@selector(setDesktopImage:) keyEquivalent:@""atIndex:0];
+    //    [NSMenu popUpContextMenu:theMenu withEvent:theEvent forView:self.imageView];
+}
 
+- (IBAction) openInApp:(id)sender
+{
+    NSArray *itemsToOpen = [NSArray arrayWithObject:[self.pagerData objectAtIndex:self.pageController.selectedIndex]];
 
+    for (id obj in itemsToOpen) {
+        
+        NSString* path = [obj path];
+        [[NSWorkspace sharedWorkspace] openFile:path];
+        
+    }
+}
 
-#pragma mark - 
+- (IBAction) revealInFinder:(id)inSender
+{
+    NSSet *aSet = [NSSet setWithObject:[self.pagerData objectAtIndex:self.pageController.selectedIndex]];
+    [aSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        
+        NSString* path = [obj path];
+        NSString* folder = [path stringByDeletingLastPathComponent];
+        [[NSWorkspace sharedWorkspace] selectFile:path inFileViewerRootedAtPath:folder];
+        
+    }];
+}
+
+-(IBAction)getInfo:(id)sender;
+{
+    NSSet *aSet = [NSSet setWithObject:[self.pagerData objectAtIndex:self.pageController.selectedIndex]];
+    [aSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        
+        NSPasteboard *pboard = [NSPasteboard pasteboardWithUniqueName];
+        [pboard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
+        [pboard setString:[obj path]  forType:NSStringPboardType];
+        NSPerformService(@"Finder/Show Info", pboard);
+        
+    }];
+    
+}
+
+//TODO: implement this
+- (IBAction) deleteItems:(id )inSender
+{
+    NSRunCriticalAlertPanel(@"Delete photo is under development.", @"Feature Unavailable", @"OK", @"Cancel", nil);
+}
+
+#pragma mark -
 #pragma mark mouse movement methods (for hiding and showing the hud)
 
 -(void)mouseEntered:(NSEvent *)theEvent
@@ -786,7 +840,10 @@
     [prevItemsToRelease enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
         //
         //[(PIXPhoto *)obj setCancelFullsizeLoadOperation:YES];
-        [(PIXPhoto *)obj setFullsizeImage:nil];
+        PIXPhoto *aPhoto = (PIXPhoto *)obj;
+        if ([aPhoto isReallyDeleted]==NO) {
+            [aPhoto setFullsizeImage:nil];
+        }
     }];
     
     NSUInteger farIndexStart = startIndex+rangeLength;
@@ -797,7 +854,10 @@
     [nextItemsToRelease enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
         //
         //[(PIXPhoto *)obj setCancelFullsizeLoadOperation:YES];
-        [(PIXPhoto *)obj setFullsizeImage:nil];
+        PIXPhoto *aPhoto = (PIXPhoto *)obj;
+        if ([aPhoto isReallyDeleted]==NO) {
+            [aPhoto setFullsizeImage:nil];
+        }
     }];
     
 //    for(NSUInteger i = anIndex -2; i <= anIndex+2; i++)
@@ -828,9 +888,9 @@
 
 @implementation PIXPageViewController (NSPageControllerDelegate)
 - (NSString *)pageController:(NSPageController *)pageController identifierForObject:(id)object {
-    if (object==nil) {
-        DLog(@"identifierForObject has nil object");
-    }
+//    if (object==nil) {
+//        DLog(@"identifierForObject has nil object");
+//    }
     return @"picture";
     
 //    if (![[object imageRepresentationType] isEqualToString:IKImageBrowserQTMoviePathRepresentationType]) {
@@ -929,7 +989,7 @@
     
     
     [self performSelector:@selector(startPreloadForController:) withObject:pageController afterDelay:0.0f];
-    
+    //[self preloadNextImagesForIndex:pageController.selectedIndex];
     
 
 }
