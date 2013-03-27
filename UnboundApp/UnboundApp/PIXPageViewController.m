@@ -26,7 +26,9 @@
 
 #import "PIXSlideshowOptonsViewController.h"
 
-@interface PIXPageViewController () <leapResponder, PIXSlideshowOptonsDelegate>
+#import "PIXViewController.h"
+
+@interface PIXPageViewController () <leapResponder, PIXSlideshowOptonsDelegate, NSMenuDelegate>
 
 @property NSArray * viewControllers;
 
@@ -630,6 +632,16 @@
 }
 
 
+-(void)rightMouseDown:(NSEvent *)theEvent {
+    DLog(@"rightMouseDown:%@", theEvent);
+    PIXPhoto *aPhoto = [self.pagerData objectAtIndex:self.pageController.selectedIndex];
+    NSMenu *contextMenu = [self menuForObject:aPhoto];
+    contextMenu.delegate = self;
+    [NSMenu popUpContextMenu:contextMenu withEvent:theEvent forView:self.pageController.selectedViewController.view];
+    //    NSMenu *theMenu = [[NSMenu alloc] initWithTitle:@"Options"];
+    //    [theMenu insertItemWithTitle:@"Set As Desktop Background" action:@selector(setDesktopImage:) keyEquivalent:@""atIndex:0];
+    //    [NSMenu popUpContextMenu:theMenu withEvent:theEvent forView:self.imageView];
+}
 
 
 

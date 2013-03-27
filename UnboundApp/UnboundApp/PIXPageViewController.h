@@ -10,6 +10,7 @@
 
 @class Album;
 @class PIXAlbum;
+@class PIXViewController;
 
 @interface PIXPageViewController : PIXViewController <NSPageControllerDelegate>
 
