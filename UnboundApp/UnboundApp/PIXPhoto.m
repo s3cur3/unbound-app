@@ -11,7 +11,7 @@
 #import "PIXAlbum.h"
 #import "PIXThumbnail.h"
 #import "PIXAppDelegate.h"
-#import "PIXAppDelegate+CoreDataUtils.h"
+//#import "PIXAppDelegate+CoreDataUtils.h"
 #import "MakeThumbnailOperation.h"
 #import "PIXDefines.h"
 

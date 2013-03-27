@@ -8,7 +8,7 @@
 
 #import "PIXPhotoGridViewController.h"
 #import "PIXAppDelegate.h"
-#import "PIXAppDelegate+CoreDataUtils.h"
+//#import "PIXAppDelegate+CoreDataUtils.h"
 #import "PIXAlbum.h"
 #import "PIXPageViewController.h"
 #import "PIXNavigationController.h"

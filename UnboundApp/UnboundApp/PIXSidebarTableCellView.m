@@ -7,7 +7,6 @@
 //
 
 #import "PIXSidebarTableCellView.h"
-#import "Album.h"
 #import "PIXAlbum.h"
 #import "PIXDefines.h"
 

@@ -8,7 +8,7 @@
 
 #import "PIXFileManager.h"
 #import "PIXAppDelegate.h"
-#import "PIXAppDelegate+CoreDataUtils.h"
+//#import "PIXAppDelegate+CoreDataUtils.h"
 #import "PIXFileParser.h"
 //#import "MainWindowController.h"
 //#import "FileSystemEventController.h"
@@ -371,7 +371,7 @@ typedef NSUInteger PIXOverwriteStrategy;
                 NSString *aPhotoPath = [anItem path];
                 [photosToDelete addObject:aPhotoPath];
             }
-            NSArray *photosWithPaths = [[PIXAppDelegate sharedAppDelegate] fetchPhotosWithPaths:[photosToDelete allObjects]];
+            NSArray *photosWithPaths = [[PIXFileParser sharedFileParser] fetchPhotosWithPaths:[photosToDelete allObjects]];
             for (PIXPhoto *aPhoto in photosWithPaths)
             {
                 [albumsToUpdate addObject:aPhoto.album];
@@ -491,7 +491,7 @@ typedef NSUInteger PIXOverwriteStrategy;
 -(BOOL)renameAlbumWithPath:(NSString *)anAlbumPath withName:(NSString *)aNewName
 {
     NSManagedObjectContext *context = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
-    PIXAlbum *anAlbum = (PIXAlbum *)[[PIXAppDelegate sharedAppDelegate] fetchAlbumWithPath:anAlbumPath inContext:context];
+    PIXAlbum *anAlbum = (PIXAlbum *)[[PIXFileParser sharedFileParser] fetchAlbumWithPath:anAlbumPath inContext:context];
     
     if (anAlbum==nil) {
         NSString *errMsg = [NSString stringWithFormat:@"Unable to undo album rename operation.\n(%@)", anAlbumPath];

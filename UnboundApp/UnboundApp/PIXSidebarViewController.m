@@ -7,10 +7,8 @@
 //
 
 #import "PIXSidebarViewController.h"
-#import "PIXDataSource.h"
 #import "PIXAppDelegate.h"
 #import "PIXFileManager.h"
-#import "PIXAppDelegate+CoreDataUtils.h"
 #import "PIXSidebarTableCellView.h"
 #import "PIXSplitViewController.h"
 #import "PIXPhotoGridViewController.h"
@@ -47,7 +45,7 @@
     if(_albums != nil) {return _albums;}
     
     //[self.view setWantsLayer:YES];
-    _albums = [[PIXAppDelegate sharedAppDelegate] fetchAllAlbums];
+    _albums = [PIXAlbum sortedAllAlbums];
     
     return _albums;
 }

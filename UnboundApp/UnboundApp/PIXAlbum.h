@@ -12,6 +12,24 @@
 
 @class PIXAccount, PIXPhoto;
 
+typedef enum {
+    
+    PIXAlbumSortNewToOld = 0,
+    PIXAlbumSortOldToNew = 1,
+    PIXAlbumSortAtoZ = 2,
+    PIXAlbumSortZtoA = 3
+    
+} PIXAlbumSort;
+
+typedef enum {
+    
+    PIXPhotoSortNewToOld = 0,
+    PIXPhotoSortOldToNew = 1,
+    PIXPhotoSortAtoZ = 2,
+    PIXPhotoSortZtoA = 3
+    
+} PIXPhotoSort;
+
 @interface PIXAlbum : NSManagedObject<PIXThumbnailLoadingDelegate, NSPasteboardWriting>
 {
     //    @private
@@ -62,6 +80,9 @@
 
 //fetches photo with the most recent dateLastModified
 //- (PIXPhoto *)fetchMostRecentPhoto;
+
+
++(NSArray *)sortedAllAlbums;
 
 -(void)setPhotos:(NSOrderedSet *)photos updateCoverImage:(BOOL)shouldUpdateCoverImage;
 

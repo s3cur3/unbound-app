@@ -10,6 +10,6 @@
 #import "PIXViewController.h"
 #import "PIXGridViewController.h"
 
-@interface PIXCNAlbumViewController : PIXGridViewController <NSTextFieldDelegate>
+@interface PIXAlbumGridViewController : PIXGridViewController <NSTextFieldDelegate>
 
 @end

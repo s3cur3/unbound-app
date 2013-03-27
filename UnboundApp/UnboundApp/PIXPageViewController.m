@@ -9,7 +9,6 @@
 
 #import "PIXPageViewController.h"
 #import "PIXAppDelegate.h"
-#import "Album.h"
 #import "PIXAlbum.h"
 #import "PIXPhoto.h"
 #import "PIXImageViewController.h"

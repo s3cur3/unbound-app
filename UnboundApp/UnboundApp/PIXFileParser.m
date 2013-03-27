@@ -92,7 +92,7 @@
 /*
  * Used to get the home directory of the user, UNIX/C based workaround for sandbox issues
  */
-NSString * aUserHomeDirectory()
+NSString * UserHomeDirectory()
 {
     const struct passwd * passwd = getpwnam([NSUserName() UTF8String]);
     if(!passwd)
@@ -106,7 +106,7 @@ NSString * aUserHomeDirectory()
 
 NSString * aDefaultDropBoxDirectory()
 {
-    NSString *dropBoxHome =[aUserHomeDirectory() stringByAppendingPathComponent:@"Dropbox/"];
+    NSString *dropBoxHome =[UserHomeDirectory() stringByAppendingPathComponent:@"Dropbox/"];
     return dropBoxHome;
 }
 
@@ -865,6 +865,36 @@ NSDictionary * dictionaryForURL(NSURL * url)
     // set the date modified
     [photo setDateLastModified:dateModified];
     
+}
+
+-(NSArray *)fetchAlbumsWithPaths:(NSArray *)paths
+{
+    NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
+    return [self fetchItemsWithPaths:paths inContext:context withEntityName:kAlbumEntityName];
+}
+
+-(NSArray *)fetchPhotosWithPaths:(NSArray *)paths
+{
+    NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
+    return [self fetchItemsWithPaths:paths inContext:context withEntityName:kPhotoEntityName];
+}
+
+-(NSArray *)fetchItemsWithPaths:(NSArray *)paths inContext:(NSManagedObjectContext *)context withEntityName:(NSString *)entityName
+{
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"path IN %@", paths];
+    [fetchRequest setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+    if (fetchedObjects == nil) {
+        //
+    }
+    
+    return fetchedObjects;
 }
 
 -(PIXAlbum *)fetchAlbumWithPath:(NSString *)aPath inContext:(NSManagedObjectContext *)context

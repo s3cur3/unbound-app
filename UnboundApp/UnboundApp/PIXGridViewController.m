@@ -11,7 +11,7 @@
 #import "CNGridViewItem.h"
 #import "CNGridViewItemLayout.h"
 #import "PIXAppDelegate.h"
-#import "PIXAppDelegate+CoreDataUtils.h"
+//#import "PIXAppDelegate+CoreDataUtils.h"
 #import "PIXPhotoGridViewItem.h"
 #import "PIXAlbumGridViewItem.h"
 

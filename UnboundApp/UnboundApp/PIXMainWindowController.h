@@ -12,7 +12,7 @@
 @class PIXNavigationController;
 @class PIXViewController;
 
-@class PIXCNAlbumViewController;
+@class PIXAlbumGridViewController;
 
 @interface PIXMainWindowController : NSWindowController
 {
@@ -20,6 +20,6 @@
 }
 
 @property (nonatomic, strong) IBOutlet PIXNavigationController *navigationViewController;
-@property (nonatomic, strong) PIXCNAlbumViewController *albumViewController;
+@property (nonatomic, strong) PIXAlbumGridViewController *albumViewController;
 
 @end

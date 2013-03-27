@@ -7,7 +7,7 @@
 //
 
 #import "PIXAppDelegate.h"
-#import "PIXAppDelegate+CoreDataUtils.h"
+//#import "PIXAppDelegate+CoreDataUtils.h"
 #import "PIXInfoWindowController.h"
 #import "PIXMainWindowController.h"
 
@@ -111,7 +111,7 @@
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photosFinishedLoading:) name:SearchDidFinishNotification object:self.spotLightFetchController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminate:) name:NSApplicationWillTerminateNotification object:nil];
     
-    
+    /*
     //Notification for spotlight fetches
     [[NSNotificationCenter defaultCenter] addObserverForName:kSearchDidFinishNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         //[[NSNotificationCenter defaultCenter] removeObserver:self name:kSearchDidFinishNotification object:nil];
@@ -119,7 +119,7 @@
         [self photosFinishedLoading:note];
         //[self updateAlbumsPhotos];
     }];
-    
+    */
 
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kAppFirstRun]==YES)
     {

@@ -7,11 +7,10 @@
 //
 
 #import "PIXNavigationController.h"
-#import "PIXCNAlbumViewController.h"
+#import "PIXAlbumGridViewController.h"
 #import "CNGridViewItemLayout.h"
 
 #import "PIXAppDelegate.h"
-#import "PIXAppDelegate+CoreDataUtils.h"
 #import "PIXDefines.h"
 
 #import "PIXAlbum.h"
@@ -27,7 +26,7 @@
 
 #import "PIXShareManager.h"
 
-@interface PIXCNAlbumViewController ()
+@interface PIXAlbumGridViewController ()
 {
     
 }
@@ -37,6 +36,7 @@
 
 @property (nonatomic, strong) NSToolbarItem * activityIndicator;
 @property (nonatomic, strong) NSToolbarItem * trashbutton;
+@property (nonatomic, strong) NSToolbarItem * sortButton;
 @property (nonatomic, strong) NSToolbarItem * newAlbumButton;
 @property (nonatomic, strong) NSToolbarItem * searchBar;
 
@@ -47,7 +47,7 @@
 
 @end
 
-@implementation PIXCNAlbumViewController
+@implementation PIXAlbumGridViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -150,7 +150,7 @@
 {
     //NSArray * items = @[self.activityIndicator, self.navigationViewController.middleSpacer, self.searchBar];
 
-    NSArray * items = @[/*self.activityIndicator,*/ self.navigationViewController.middleSpacer, self.newAlbumButton, self.searchBar];
+    NSArray * items = @[/*self.activityIndicator,*/ self.navigationViewController.middleSpacer, self.sortButton, self.newAlbumButton, self.searchBar];
     
     [self.navigationViewController setToolbarItems:items];
     
@@ -233,6 +233,85 @@
     
     return _trashbutton;
     
+}
+
+- (NSToolbarItem *)sortButton
+{
+    if(_sortButton != nil) return _sortButton;
+    
+    _sortButton = [[NSToolbarItem alloc] initWithItemIdentifier:@"sortButton"];
+    //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
+    
+    NSPopUpButton * buttonView = [[NSPopUpButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25) pullsDown:YES];
+    buttonView.image = [NSImage imageNamed:NSImageNameAddTemplate];
+    [buttonView setImagePosition:NSImageOnly];
+    [buttonView setBordered:YES];
+    [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
+    [buttonView setTitle:@"Album Sort Order"];
+    
+    _sortButton.view = buttonView;
+    
+    [_sortButton setLabel:@"Sort Albums"];
+    [_sortButton setPaletteLabel:@"Sort Albums"];
+    
+    // Set up a reasonable tooltip, and image
+    // you will likely want to localize many of the item's properties
+    [_sortButton setToolTip:@"Choose Album Sort"];
+    
+
+    // Tell the item what message to send when it is clicked
+    
+    [buttonView insertItemWithTitle:@"Choose Album Sort" atIndex:0]; // first index is always the title
+    [buttonView insertItemWithTitle:@"New to Old" atIndex:1];
+    [buttonView insertItemWithTitle:@"Old to New" atIndex:2];
+    [buttonView insertItemWithTitle:@"A to Z" atIndex:3];
+    [buttonView insertItemWithTitle:@"Z to A" atIndex:4];
+    
+    
+    int sortOrder = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"PIXAlbumSort"];
+    
+    for (int i = 1; i <= 4; i++) {
+        
+        NSMenuItem * item = [[buttonView itemArray] objectAtIndex:i];
+        
+        if(i-1 == sortOrder)
+        {
+            [item setState:NSOnState];
+        }
+        
+        [item setTag:i-1];
+        [item setTarget:self];
+        [item setAction:@selector(sortChanged:)];
+        
+    }
+
+    return _sortButton;
+    
+}
+
+
+
+-(void)sortChanged:(id)sender
+{
+    // this should only be called from the men
+    if([sender isKindOfClass:[NSMenuItem class]])
+    {
+        NSArray * menuItems = [(NSPopUpButton *)self.sortButton.view itemArray];
+        
+        for(NSMenuItem * anItem in menuItems)
+        {
+            [anItem setState:NSOffState];
+        }
+        
+        
+        NSMenuItem * thisItem = sender;
+        [thisItem setState:NSOnState];
+        [[NSUserDefaults standardUserDefaults] setInteger:[thisItem tag] forKey:@"PIXAlbumSort"];
+        
+        // update any albums views
+        [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
+        
+    }
 }
 
 - (NSToolbarItem *)newAlbumButton
@@ -542,7 +621,7 @@
     return album;
 }
 
--(NSInteger)indesForAlbum:(PIXAlbum *)album
+-(NSInteger)indexForAlbum:(PIXAlbum *)album
 {
     if(self.searchedAlbums)
     {
@@ -657,7 +736,7 @@
         
         for(PIXAlbum * aSelectedAlbum in self.selectedItems)
         {
-            NSUInteger thisIndex = [self indesForAlbum:aSelectedAlbum];
+            NSUInteger thisIndex = [self indexForAlbum:aSelectedAlbum];
             NSUInteger thisDistance = abs((int)(thisIndex-index));
             
             if(thisIndex != NSNotFound && thisDistance < distance)
@@ -863,6 +942,8 @@
     self.albums = nil;
     [self.gridView reloadData];
     [self updateGridTitle];
+    
+    self.lastSearch = nil; // clear this out because we need to do a new search when all the albums change
     [self updateSearch];
 }
 
@@ -870,7 +951,7 @@
 {
     if(_albums != nil) return _albums;
     
-    _albums = [[PIXAppDelegate sharedAppDelegate] fetchAllAlbums];
+    _albums = [PIXAlbum sortedAllAlbums];
     
     return _albums;
 }

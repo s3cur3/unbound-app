@@ -30,10 +30,6 @@
 		1D4A1DD0167AE22A00C9A895 /* PIXInfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DCE167AE22A00C9A895 /* PIXInfoWindowController.m */; };
 		1D4A1DD1167AE22A00C9A895 /* PIXInfoWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DCF167AE22A00C9A895 /* PIXInfoWindowController.xib */; };
 		1D4A1DD4167AEEDE00C9A895 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DD3167AEEDE00C9A895 /* Preferences.m */; };
-		1D4A1DDA167AFBD000C9A895 /* PIXObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DD9167AFBD000C9A895 /* PIXObject.m */; };
-		1D4A1DDD167AFBF100C9A895 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DDC167AFBF000C9A895 /* Album.m */; };
-		1D4A1DE0167AFC0300C9A895 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DDF167AFC0300C9A895 /* Photo.m */; };
-		1D4A1DE8167B018D00C9A895 /* PIXFileSystemDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DE7167B018D00C9A895 /* PIXFileSystemDataSource.m */; };
 		1D4A1E00167BEAF300C9A895 /* PIXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DFF167BEAF200C9A895 /* PIXViewController.m */; };
 		1D4A1E03167BEC1800C9A895 /* PIXNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E02167BEC1700C9A895 /* PIXNavigationController.m */; };
 		1D4A1E08167C056D00C9A895 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4A1E07167C056C00C9A895 /* QuartzCore.framework */; };
@@ -44,7 +40,6 @@
 		1D4A1E37167D365900C9A895 /* PIXSidebarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1E35167D365900C9A895 /* PIXSidebarViewController.xib */; };
 		1D4A1E3A167D36E100C9A895 /* PIXSidebarTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E39167D36E100C9A895 /* PIXSidebarTableCellView.m */; };
 		1D4A1E3D167D372600C9A895 /* SquareImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E3C167D372600C9A895 /* SquareImageView.m */; };
-		1D4A1E40167D3C8500C9A895 /* PIXDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E3F167D3C8500C9A895 /* PIXDataSource.m */; };
 		1D5F9D5B16AEF4A3008F8C80 /* PIXLoadAlbumOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5F9D5A16AEF4A3008F8C80 /* PIXLoadAlbumOperation.m */; };
 		1D5F9D5F16AEF815008F8C80 /* PIXGetAlbumPathsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5F9D5E16AEF814008F8C80 /* PIXGetAlbumPathsOperation.m */; };
 		1D8CD7E816AB4D220072D516 /* PIXGridViewItemLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8CD7E716AB4D220072D516 /* PIXGridViewItemLayout.m */; };
@@ -65,7 +60,6 @@
 		1DDEF828169D2FE800C0D303 /* PIXThumbnail.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF827169D2FE800C0D303 /* PIXThumbnail.m */; };
 		1DDEF82E169D2FE800C0D303 /* PIXPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF82D169D2FE800C0D303 /* PIXPhoto.m */; };
 		1DDEF830169D2FE800C0D303 /* PIXAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF82F169D2FE800C0D303 /* PIXAccount.m */; };
-		1DDEF833169D301200C0D303 /* PIXAppDelegate+CoreDataUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF832169D301200C0D303 /* PIXAppDelegate+CoreDataUtils.m */; };
 		1DDEF839169D34A400C0D303 /* GetPathsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF836169D34A400C0D303 /* GetPathsOperation.m */; };
 		1DDEF83A169D34A400C0D303 /* LoadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF838169D34A400C0D303 /* LoadOperation.m */; };
 		1DDEF843169D3CF300C0D303 /* MakeThumbnailOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF842169D3CF300C0D303 /* MakeThumbnailOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -73,7 +67,7 @@
 		8C031CD416E926F7009B7F38 /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C031CD016E926F7009B7F38 /* libLeap.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
 		8C031CD516E926F7009B7F38 /* PIXLeapInputManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C031CD216E926F7009B7F38 /* PIXLeapInputManager.m */; };
 		8C097D2716D57D0700E0E134 /* PIXFileParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C097D2616D57D0700E0E134 /* PIXFileParser.m */; };
-		8C249E6E16AB426A00CB97AF /* PIXCNAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E6D16AB426A00CB97AF /* PIXCNAlbumViewController.m */; };
+		8C249E6E16AB426A00CB97AF /* PIXAlbumGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E6D16AB426A00CB97AF /* PIXAlbumGridViewController.m */; };
 		8C249E7D16AB429E00CB97AF /* CNGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7216AB429E00CB97AF /* CNGridView.m */; };
 		8C249E7E16AB429E00CB97AF /* CNGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7616AB429E00CB97AF /* CNGridViewItem.m */; };
 		8C249E7F16AB429E00CB97AF /* CNGridViewItemLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7816AB429E00CB97AF /* CNGridViewItemLayout.m */; };
@@ -213,14 +207,6 @@
 		1D4A1DD2167AEEDE00C9A895 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
 		1D4A1DD3167AEEDE00C9A895 /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; };
 		1D4A1DD6167AF00000C9A895 /* PIXDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXDefines.h; sourceTree = "<group>"; };
-		1D4A1DD8167AFBD000C9A895 /* PIXObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXObject.h; sourceTree = "<group>"; };
-		1D4A1DD9167AFBD000C9A895 /* PIXObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXObject.m; sourceTree = "<group>"; };
-		1D4A1DDB167AFBF000C9A895 /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
-		1D4A1DDC167AFBF000C9A895 /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
-		1D4A1DDE167AFC0300C9A895 /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
-		1D4A1DDF167AFC0300C9A895 /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
-		1D4A1DE6167B018D00C9A895 /* PIXFileSystemDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXFileSystemDataSource.h; sourceTree = "<group>"; };
-		1D4A1DE7167B018D00C9A895 /* PIXFileSystemDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXFileSystemDataSource.m; sourceTree = "<group>"; };
 		1D4A1DFE167BEAF200C9A895 /* PIXViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXViewController.h; sourceTree = "<group>"; };
 		1D4A1DFF167BEAF200C9A895 /* PIXViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXViewController.m; sourceTree = "<group>"; };
 		1D4A1E01167BEC1600C9A895 /* PIXNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXNavigationController.h; sourceTree = "<group>"; };
@@ -237,8 +223,6 @@
 		1D4A1E39167D36E100C9A895 /* PIXSidebarTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSidebarTableCellView.m; sourceTree = "<group>"; };
 		1D4A1E3B167D372600C9A895 /* SquareImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SquareImageView.h; sourceTree = "<group>"; };
 		1D4A1E3C167D372600C9A895 /* SquareImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SquareImageView.m; sourceTree = "<group>"; };
-		1D4A1E3E167D3C8400C9A895 /* PIXDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXDataSource.h; sourceTree = "<group>"; };
-		1D4A1E3F167D3C8500C9A895 /* PIXDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXDataSource.m; sourceTree = "<group>"; };
 		1D5F9D5916AEF4A2008F8C80 /* PIXLoadAlbumOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXLoadAlbumOperation.h; sourceTree = "<group>"; };
 		1D5F9D5A16AEF4A3008F8C80 /* PIXLoadAlbumOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXLoadAlbumOperation.m; sourceTree = "<group>"; };
 		1D5F9D5D16AEF814008F8C80 /* PIXGetAlbumPathsOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXGetAlbumPathsOperation.h; sourceTree = "<group>"; };
@@ -275,8 +259,6 @@
 		1DDEF82C169D2FE800C0D303 /* PIXPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPhoto.h; sourceTree = "<group>"; };
 		1DDEF82D169D2FE800C0D303 /* PIXPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhoto.m; sourceTree = "<group>"; };
 		1DDEF82F169D2FE800C0D303 /* PIXAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXAccount.m; sourceTree = "<group>"; };
-		1DDEF831169D301200C0D303 /* PIXAppDelegate+CoreDataUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PIXAppDelegate+CoreDataUtils.h"; sourceTree = "<group>"; };
-		1DDEF832169D301200C0D303 /* PIXAppDelegate+CoreDataUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PIXAppDelegate+CoreDataUtils.m"; sourceTree = "<group>"; };
 		1DDEF835169D34A400C0D303 /* GetPathsOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetPathsOperation.h; sourceTree = "<group>"; };
 		1DDEF836169D34A400C0D303 /* GetPathsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetPathsOperation.m; sourceTree = "<group>"; };
 		1DDEF837169D34A400C0D303 /* LoadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadOperation.h; sourceTree = "<group>"; };
@@ -292,8 +274,8 @@
 		8C031CD216E926F7009B7F38 /* PIXLeapInputManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXLeapInputManager.m; sourceTree = "<group>"; };
 		8C097D2516D57D0700E0E134 /* PIXFileParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXFileParser.h; sourceTree = "<group>"; };
 		8C097D2616D57D0700E0E134 /* PIXFileParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXFileParser.m; sourceTree = "<group>"; };
-		8C249E6C16AB426A00CB97AF /* PIXCNAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXCNAlbumViewController.h; sourceTree = "<group>"; };
-		8C249E6D16AB426A00CB97AF /* PIXCNAlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXCNAlbumViewController.m; sourceTree = "<group>"; };
+		8C249E6C16AB426A00CB97AF /* PIXAlbumGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXAlbumGridViewController.h; sourceTree = "<group>"; };
+		8C249E6D16AB426A00CB97AF /* PIXAlbumGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXAlbumGridViewController.m; sourceTree = "<group>"; };
 		8C249E7116AB429E00CB97AF /* CNGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CNGridView.h; sourceTree = "<group>"; };
 		8C249E7216AB429E00CB97AF /* CNGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CNGridView.m; sourceTree = "<group>"; };
 		8C249E7316AB429E00CB97AF /* CNGridViewDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CNGridViewDefinitions.h; sourceTree = "<group>"; };
@@ -564,8 +546,8 @@
 		1D4A1DC2167AD97B00C9A895 /* AlbumView */ = {
 			isa = PBXGroup;
 			children = (
-				8C249E6C16AB426A00CB97AF /* PIXCNAlbumViewController.h */,
-				8C249E6D16AB426A00CB97AF /* PIXCNAlbumViewController.m */,
+				8C249E6C16AB426A00CB97AF /* PIXAlbumGridViewController.h */,
+				8C249E6D16AB426A00CB97AF /* PIXAlbumGridViewController.m */,
 				8C249E8416AB467000CB97AF /* PIXAlbumGridViewItem.h */,
 				8C249E8516AB467100CB97AF /* PIXAlbumGridViewItem.m */,
 			);
@@ -600,16 +582,6 @@
 				1DBFD55516CAE415001944A9 /* PIXFileManager.m */,
 				1DDEF834169D348E00C0D303 /* Operations */,
 				1DDEF81B169D2D4A00C0D303 /* CoreData */,
-				1D4A1DD8167AFBD000C9A895 /* PIXObject.h */,
-				1D4A1DD9167AFBD000C9A895 /* PIXObject.m */,
-				1D4A1DDB167AFBF000C9A895 /* Album.h */,
-				1D4A1DDC167AFBF000C9A895 /* Album.m */,
-				1D4A1DDE167AFC0300C9A895 /* Photo.h */,
-				1D4A1DDF167AFC0300C9A895 /* Photo.m */,
-				1D4A1DE6167B018D00C9A895 /* PIXFileSystemDataSource.h */,
-				1D4A1DE7167B018D00C9A895 /* PIXFileSystemDataSource.m */,
-				1D4A1E3E167D3C8400C9A895 /* PIXDataSource.h */,
-				1D4A1E3F167D3C8500C9A895 /* PIXDataSource.m */,
 				1D8CD7F116AB724C0072D516 /* PIXThumbnailLoadingDelegate.h */,
 			);
 			name = Model;
@@ -769,8 +741,6 @@
 				1DDEF81D169D2D9F00C0D303 /* PIXDataModel.xcdatamodeld */,
 				8C8EE92916C46AB800F16C49 /* PIXAlbum.h */,
 				8C8EE92A16C46AB800F16C49 /* PIXAlbum.m */,
-				1DDEF831169D301200C0D303 /* PIXAppDelegate+CoreDataUtils.h */,
-				1DDEF832169D301200C0D303 /* PIXAppDelegate+CoreDataUtils.m */,
 				1DDEF82F169D2FE800C0D303 /* PIXAccount.m */,
 				1DDEF82C169D2FE800C0D303 /* PIXPhoto.h */,
 				1DDEF82D169D2FE800C0D303 /* PIXPhoto.m */,
@@ -1020,17 +990,12 @@
 				1D4A1DCC167AE1A500C9A895 /* PIXMainWindowController.m in Sources */,
 				1D4A1DD0167AE22A00C9A895 /* PIXInfoWindowController.m in Sources */,
 				1D4A1DD4167AEEDE00C9A895 /* Preferences.m in Sources */,
-				1D4A1DDA167AFBD000C9A895 /* PIXObject.m in Sources */,
-				1D4A1DDD167AFBF100C9A895 /* Album.m in Sources */,
-				1D4A1DE0167AFC0300C9A895 /* Photo.m in Sources */,
-				1D4A1DE8167B018D00C9A895 /* PIXFileSystemDataSource.m in Sources */,
 				1D4A1E00167BEAF300C9A895 /* PIXViewController.m in Sources */,
 				1D4A1E03167BEC1800C9A895 /* PIXNavigationController.m in Sources */,
 				1D4A1E30167D2D8F00C9A895 /* PIXSplitViewController.m in Sources */,
 				1D4A1E36167D365900C9A895 /* PIXSidebarViewController.m in Sources */,
 				1D4A1E3A167D36E100C9A895 /* PIXSidebarTableCellView.m in Sources */,
 				1D4A1E3D167D372600C9A895 /* SquareImageView.m in Sources */,
-				1D4A1E40167D3C8500C9A895 /* PIXDataSource.m in Sources */,
 				1D0834FB167D6478003D557A /* PIXPageViewController.m in Sources */,
 				1D083501167D6678003D557A /* PIXImageBrowserViewController.m in Sources */,
 				1D083513167D785F003D557A /* PIXImageBrowserView.m in Sources */,
@@ -1043,11 +1008,10 @@
 				1DDEF828169D2FE800C0D303 /* PIXThumbnail.m in Sources */,
 				1DDEF82E169D2FE800C0D303 /* PIXPhoto.m in Sources */,
 				1DDEF830169D2FE800C0D303 /* PIXAccount.m in Sources */,
-				1DDEF833169D301200C0D303 /* PIXAppDelegate+CoreDataUtils.m in Sources */,
 				1DDEF839169D34A400C0D303 /* GetPathsOperation.m in Sources */,
 				1DDEF83A169D34A400C0D303 /* LoadOperation.m in Sources */,
 				1DDEF843169D3CF300C0D303 /* MakeThumbnailOperation.m in Sources */,
-				8C249E6E16AB426A00CB97AF /* PIXCNAlbumViewController.m in Sources */,
+				8C249E6E16AB426A00CB97AF /* PIXAlbumGridViewController.m in Sources */,
 				8C249E7D16AB429E00CB97AF /* CNGridView.m in Sources */,
 				8C249E7E16AB429E00CB97AF /* CNGridViewItem.m in Sources */,
 				8C249E7F16AB429E00CB97AF /* CNGridViewItemLayout.m in Sources */,

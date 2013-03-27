@@ -75,6 +75,11 @@ typedef enum {
 
 -(void)setObservedURLs:(NSArray *)direcoryURLs;
 
+-(NSArray *)fetchAlbumsWithPaths:(NSArray *)paths;
+-(NSArray *)fetchPhotosWithPaths:(NSArray *)paths;
+
+-(PIXAlbum *)fetchAlbumWithPath:(NSString *)aPath inContext:(NSManagedObjectContext *)context;
+
 
 
 @end
