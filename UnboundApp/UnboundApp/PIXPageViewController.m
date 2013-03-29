@@ -771,13 +771,13 @@
 
 - (void)updateData {
     
-    self.pagerData = [[self.album.photos array] mutableCopy];
+    self.pagerData = [[self.album sortedPhotos] mutableCopy];
     
     
     // set the first image in our list to the main magnifying view
     if ([self.pagerData count] > 0) {
         [self.pageController setArrangedObjects:self.pagerData];
-        NSInteger index = [self.album.photos indexOfObject:self.initialSelectedObject];
+        NSInteger index = [self.album.sortedPhotos indexOfObject:self.initialSelectedObject];
         [self.pageController setSelectedIndex:index];
         [self performSelector:@selector(startPreloadForController:) withObject:self.pageController afterDelay:0.0f];
     }

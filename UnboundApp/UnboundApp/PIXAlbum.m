@@ -18,6 +18,7 @@ static NSString *const kItemsKey = @"photos";
 @implementation PIXAlbum
 
 @dynamic albumDate;
+@dynamic startDate;
 @dynamic dateLastUpdated;
 @dynamic dateReadUnboundFile;
 @dynamic path;
@@ -160,31 +161,12 @@ static NSString *const kItemsKey = @"photos";
     [self didChangeValueForKey:@"path"];
 }
 
--(void)updateAlbumBecausePhotosDidChange
-{
-    self.subtitle = nil;
-    [self updateDatePhoto];
-    [self updateStackPhotos];
-}
 
--(void)updateDatePhoto
-{
-    if (self.photos.count)
-    {
-        PIXPhoto *newDatePhoto = [self.photos lastObject];
-        if (newDatePhoto != self.datePhoto) {
-            self.datePhoto = newDatePhoto;
-            
-            self.albumDate = [self.datePhoto findDisplayDate];
-            
-            self.subtitle = nil;
-            
-        }
-    }
-}
 
--(void)setPhotos:(NSOrderedSet *)photos updateCoverImage:(BOOL)shouldUpdateCoverPhoto;
+
+-(void)setPhotos:(NSSet *)photos updateCoverImage:(BOOL)shouldUpdateCoverPhoto;
 {
+    /*
     NSMutableOrderedSet *newPhotosSet = [photos mutableCopy];
     
     [newPhotosSet sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
@@ -198,47 +180,115 @@ static NSString *const kItemsKey = @"photos";
         if(photo1Date == nil) photo1Date = [photo1 dateCreated];
         if(photo2Date == nil) photo2Date = [photo2 dateCreated];
          
-        /*
-        if(photo2Date == nil || photo1Date == nil)
-        {
-            photo1Date = [photo1 dateCreated];
-            photo2Date = [photo2 dateCreated];
-        }*/
         
+//        if(photo2Date == nil || photo1Date == nil)
+//        {
+//            photo1Date = [photo1 dateCreated];
+//            photo2Date = [photo2 dateCreated];
+//        }
+    
         return [photo1Date compare:photo2Date];
         
     }];
+    */
     
     self.subtitle = nil;
     
-    self.photos = newPhotosSet;
+    self.photos = photos;
     
-    if (shouldUpdateCoverPhoto==YES && photos.count != 0) {
-        [self updateAlbumBecausePhotosDidChange];
+    NSUInteger photoCount = self.photos.count;
+    if (shouldUpdateCoverPhoto==YES && photoCount != 0)
+    {
+        // sort the photos for setting up the dates and stacks
+        NSSortDescriptor * sort1 = [[NSSortDescriptor alloc] initWithKey:@"sortDate" ascending:YES];
+
+        NSArray * datePhotos = [self.photos sortedArrayUsingDescriptors:@[sort1]];
+
+        // set the startDate of the album (used at the top of the thumb grid)
+        PIXPhoto * firstPhoto = [datePhotos objectAtIndex:0];
+        self.startDate = [firstPhoto findDisplayDate];
+
+        // set the datephoto and albumdate (maybe we don't need to store the datephoto relationship?)
+        PIXPhoto *newDatePhoto = [datePhotos lastObject];
+
+        if (newDatePhoto != self.datePhoto) {
+            self.datePhoto = newDatePhoto;
+            
+            self.albumDate = [self.datePhoto findDisplayDate];
+            
+            self.subtitle = nil;
+        }
+
+        // set the stackphotos
+        NSUInteger stackRange = photoCount>=3 ? 3 : photoCount;
+        NSRange indexRange = NSMakeRange(0, stackRange);
+        NSIndexSet *stackSet = [NSIndexSet indexSetWithIndexesInRange:indexRange];
+        NSArray *stackArray = [self.sortedPhotos objectsAtIndexes:stackSet];
+        self.stackPhotos = [NSOrderedSet orderedSetWithArray:stackArray];
     }
 }
 
 -(NSArray *)sortedPhotos
 {
-    return nil;
+    return [(NSSet *)self.photos sortedArrayUsingDescriptors:[self photoSortDescriptors]];
 }
 
 -(NSArray *)photoSortDescriptors
 {
-    return nil;
+    PIXPhotoSort currentSort = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"PIXPhotoSort"];
+    
+    NSSortDescriptor * sort1 = nil;
+    NSSortDescriptor * sort2 = nil;
+    NSArray * sortDescriptors;
+    
+    switch (currentSort) {
+        case PIXPhotoSortNewToOld:
+            
+            sort1 = [[NSSortDescriptor alloc] initWithKey:@"sortDate" ascending:NO];
+            sort2 = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO selector:@selector(localizedStandardCompare:)];
+            sortDescriptors = @[sort1, sort2];
+            
+            break;
+            
+        case PIXPhotoSortOldToNew:
+            
+            sort1 = [[NSSortDescriptor alloc] initWithKey:@"sortDate" ascending:YES];
+            sort2 = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES selector:@selector(localizedStandardCompare:)];
+            sortDescriptors = @[sort1, sort2];
+            
+            break;
+            
+        case PIXPhotoSortAtoZ:
+            
+            sort1 = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES selector:@selector(localizedStandardCompare:)];
+            sort2 = [[NSSortDescriptor alloc] initWithKey:@"sortDate" ascending:YES];
+            
+            sortDescriptors = @[sort1, sort2];
+            
+            break;
+            
+        case PIXPhotoSortZtoA:
+            
+            sort1 = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO selector:@selector(localizedStandardCompare:)];
+            sort2 = [[NSSortDescriptor alloc] initWithKey:@"sortDate" ascending:NO];
+            
+            sortDescriptors = @[sort1, sort2];
+            
+            break;
+            
+        default:
+            
+            sort1 = [[NSSortDescriptor alloc] initWithKey:@"sortDate" ascending:NO];
+            sort2 = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO];
+            sortDescriptors = @[sort1, sort2];
+            
+            break;
+    }
+    
+    return sortDescriptors;
+
 }
 
--(void)updateStackPhotos
-{
-    NSUInteger photoCount = self.photos.count;
-    if (photoCount > 0) {
-        NSUInteger stackRange = photoCount>=3 ? 3 : photoCount;
-        NSRange indexRange = NSMakeRange(0, stackRange);
-        NSIndexSet *stackSet = [NSIndexSet indexSetWithIndexesInRange:indexRange];
-        NSArray *stackArray = [self.photos objectsAtIndexes:stackSet];
-        self.stackPhotos = [NSOrderedSet orderedSetWithArray:stackArray];
-    }
-}
 
 -(void) checkDates
 {    

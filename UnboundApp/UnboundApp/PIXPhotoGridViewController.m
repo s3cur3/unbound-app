@@ -133,8 +133,8 @@
     // if we've got more than one photo then display the whole date range
     if([self.items count] > 2)
     {
-        NSDate * startDate = [[self.items objectAtIndex:0] findDisplayDate];
-        NSDate * endDate = [[self.items lastObject] findDisplayDate];
+        NSDate * startDate = [self.album startDate];
+        NSDate * endDate = [self.album albumDate];
         
         
         NSCalendar* calendar = [NSCalendar currentCalendar];
@@ -200,7 +200,7 @@
 -(NSMutableArray *)fetchItems
 {
     //return [[[PIXAppDelegate sharedAppDelegate] fetchAllPhotos] mutableCopy];
-    return [NSMutableArray arrayWithArray:[self.album.photos array]];
+    return [NSMutableArray arrayWithArray:[self.album sortedPhotos]];
 }
 
 - (CNGridViewItem *)gridView:(CNGridView *)gridView itemAtIndex:(NSInteger)index inSection:(NSInteger)section
@@ -241,7 +241,7 @@
 {
     PIXPageViewController *pageViewController = [[PIXPageViewController alloc] initWithNibName:@"PIXPageViewController" bundle:nil];
     pageViewController.album = self.album;
-    pageViewController.initialSelectedObject = [self.album.photos objectAtIndex:index];
+    pageViewController.initialSelectedObject = [self.album.sortedPhotos objectAtIndex:index];
     [self.navigationViewController pushViewController:pageViewController];
 }
 

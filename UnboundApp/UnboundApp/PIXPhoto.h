@@ -24,6 +24,7 @@
 @property (nonatomic, retain) NSDate * dateCreated;
 @property (nonatomic, retain) NSDate * dateLastUpdated;
 @property (nonatomic, retain) NSDate * dateTaken;
+@property (nonatomic, retain) NSDate * sortDate;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * path;
 @property (nonatomic, retain) NSString * caption;

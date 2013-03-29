@@ -729,7 +729,7 @@ typedef NSUInteger PIXOverwriteStrategy;
             NSURL *deleteURL = [NSURL fileURLWithPath:path isDirectory:YES];
             [urlsToDelete addObject:deleteURL];
         } else {
-            for (PIXPhoto *anItem in [[anAlbum.photos array] copy])
+            for (PIXPhoto *anItem in [[anAlbum sortedPhotos] copy])
             {
                 NSString *path = [anItem path];
                 NSURL *deleteURL = [NSURL fileURLWithPath:path isDirectory:NO];

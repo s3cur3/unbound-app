@@ -16,6 +16,7 @@
 #import "PIXLeapInputManager.h"
 #import "PIXCustomShareSheetViewController.h"
 #import "PIXShareManager.h"
+#import "PIXDefines.h"
 
 @interface PIXSplitViewController () <leapResponder>
 
@@ -26,6 +27,7 @@
 @property (nonatomic, strong) NSToolbarItem * backButtonSegmentItem;
 @property (nonatomic, strong) NSToolbarItem * sliderItem;
 @property (nonatomic, strong) NSToolbarItem * shareItem;
+@property (nonatomic, strong) NSToolbarItem * sortButton;
 
 @property float lastSplitviewWidth;
 
@@ -106,19 +108,16 @@
 
 -(void)setupToolbar
 {
-    
     [self.backButtonSegment setSelected:NO forSegment:0];
     
     // set the toggle to the correct view
     [self.backButtonSegment setSelected:![self.splitView isSubviewCollapsed:self.leftPane]
                              forSegment:1];
     
-
-    NSArray * items = @[self.backButtonSegmentItem, self.navigationViewController.middleSpacer, self.sliderItem];
+    NSArray * items = @[self.backButtonSegmentItem, self.navigationViewController.middleSpacer, self.sliderItem, self.sortButton];
     
     [self.navigationViewController setNavBarHidden:NO];
     [self.navigationViewController setToolbarItems:items];
-    
 }
 
 - (NSToolbarItem *)sliderItem
@@ -145,6 +144,89 @@
 -(IBAction)sliderValueChanged:(id)sender
 {
     [self.imageBrowserViewController setThumbSize:self.sizeSlider.floatValue];
+}
+
+- (NSToolbarItem *)sortButton
+{
+    if(_sortButton != nil) return _sortButton;
+    
+    _sortButton = [[NSToolbarItem alloc] initWithItemIdentifier:@"sortButton"];
+    //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
+    
+    NSPopUpButton * buttonView = [[NSPopUpButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25) pullsDown:YES];
+    
+    [buttonView setImagePosition:NSImageOverlaps];
+    [buttonView setBordered:YES];
+    [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
+    [buttonView setTitle:@""];
+    [buttonView.cell setArrowPosition:NSPopUpNoArrow];
+    
+    _sortButton.view = buttonView;
+    
+    [_sortButton setLabel:@"Sort Photos"];
+    [_sortButton setPaletteLabel:@"Sort Photos"];
+    
+    // Set up a reasonable tooltip, and image
+    // you will likely want to localize many of the item's properties
+    [_sortButton setToolTip:@"Choose Photo Sort"];
+    
+    
+    // Tell the item what message to send when it is clicked
+    
+    [buttonView insertItemWithTitle:@"" atIndex:0]; // first index is always the title
+    [buttonView insertItemWithTitle:@"New to Old" atIndex:1];
+    [buttonView insertItemWithTitle:@"Old to New" atIndex:2];
+    [buttonView insertItemWithTitle:@"Filename A to Z" atIndex:3];
+    [buttonView insertItemWithTitle:@"Filename Z to A" atIndex:4];
+    
+    NSMenuItem * item = [[buttonView itemArray] objectAtIndex:0];
+    item.image = [NSImage imageNamed:@"sortbutton"];
+    
+    
+    int sortOrder = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"PIXPhotoSort"];
+    
+    for (int i = 1; i <= 4; i++) {
+        
+        NSMenuItem * item = [[buttonView itemArray] objectAtIndex:i];
+        
+        if(i-1 == sortOrder)
+        {
+            [item setState:NSOnState];
+        }
+        
+        [item setTag:i-1];
+        [item setTarget:self];
+        [item setAction:@selector(sortChanged:)];
+        
+    }
+    
+    return _sortButton;
+    
+}
+
+
+
+-(void)sortChanged:(id)sender
+{
+    // this should only be called from the men
+    if([sender isKindOfClass:[NSMenuItem class]])
+    {
+        NSArray * menuItems = [(NSPopUpButton *)self.sortButton.view itemArray];
+        
+        for(NSMenuItem * anItem in menuItems)
+        {
+            [anItem setState:NSOffState];
+        }
+        
+        
+        NSMenuItem * thisItem = sender;
+        [thisItem setState:NSOnState];
+        [[NSUserDefaults standardUserDefaults] setInteger:[thisItem tag] forKey:@"PIXPhotoSort"];
+        
+        // update any albums views
+        [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
+        
+    }
 }
 
 - (NSToolbarItem *)backButtonSegmentItem

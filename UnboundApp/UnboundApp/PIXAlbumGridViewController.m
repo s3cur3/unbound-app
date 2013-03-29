@@ -150,7 +150,7 @@
 {
     //NSArray * items = @[self.activityIndicator, self.navigationViewController.middleSpacer, self.searchBar];
 
-    NSArray * items = @[/*self.activityIndicator,*/ self.navigationViewController.middleSpacer, self.sortButton, self.newAlbumButton, self.searchBar];
+    NSArray * items = @[/*self.activityIndicator,*/ self.navigationViewController.middleSpacer, self.newAlbumButton, self.searchBar, self.sortButton];
     
     [self.navigationViewController setToolbarItems:items];
     

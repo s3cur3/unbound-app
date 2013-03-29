@@ -34,6 +34,7 @@ const CGFloat kThumbnailSize = 370.0f;
 @dynamic dateCreated;
 @dynamic dateLastUpdated;
 @dynamic dateTaken;
+@dynamic sortDate;
 @dynamic name;
 @dynamic path;
 @dynamic caption;
@@ -614,6 +615,34 @@ const CGFloat kThumbnailSize = 370.0f;
     if(self.stackPhotoAlbum) {
         [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self.album];
     }
+}
+
+-(void)setDateCreated:(NSDate *)dateCreated
+{
+    // if the sort date isn't set yet
+    if(self.sortDate == nil)
+    {
+        self.sortDate = dateCreated;
+    }
+    
+    [self willChangeValueForKey:@"dateCreated"];
+    [self setPrimitiveValue:dateCreated forKey:@"dateCreated"];
+    [self didChangeValueForKey:@"dateCreated"];
+    
+}
+
+-(void)setDateTaken:(NSDate *)dateTaken
+{
+    if(dateTaken != nil)
+    {
+        // always sort by date taken if we have it
+        self.sortDate = dateTaken;
+    }
+
+    [self willChangeValueForKey:@"dateTaken"];
+    [self setPrimitiveValue:dateTaken forKey:@"dateTaken"];
+    [self didChangeValueForKey:@"dateTaken"];
+    
 }
 
 -(NSDate *)findDisplayDate

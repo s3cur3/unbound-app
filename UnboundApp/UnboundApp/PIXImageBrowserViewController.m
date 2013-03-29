@@ -55,7 +55,7 @@
     _album = album;
     if (album) {
         [[[PIXAppDelegate sharedAppDelegate] window] setTitle:[self.album title]];
-        self.browserData = [[[self.album photos] array] mutableCopy];
+        self.browserData = [[self.album sortedPhotos] mutableCopy];
         // deselect all items in the view
         [self.browserView setSelectionIndexes:nil byExtendingSelection:NO];
         
@@ -76,7 +76,7 @@
 {
     PIXPageViewController *pageViewController = [[PIXPageViewController alloc] initWithNibName:@"PIXPageViewController" bundle:nil];
     pageViewController.album = self.album;
-    pageViewController.initialSelectedObject = [self.album.photos objectAtIndex:index];
+    pageViewController.initialSelectedObject = [self.album.sortedPhotos objectAtIndex:index];
     [self.navigationViewController pushViewController:pageViewController];
 }
 

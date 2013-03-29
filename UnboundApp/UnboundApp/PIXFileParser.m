@@ -365,6 +365,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
             
             
             // loop through each item in each enumerator
+            
+            
             NSURL *aURL = nil;
             while (aURL = [dirEnumerator nextObject]) {
                 
@@ -711,7 +713,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                     // combine the new photos we found with the albums previous existing photos
                     [lastAlbumsPhotos addObjectsFromArray:lastAlbumsExistingPhotos];
                     // set the photos at once - this method will update the stackPhotos relationship as well
-                    [lastAlbum setPhotos:[NSOrderedSet orderedSetWithArray:lastAlbumsPhotos] updateCoverImage:YES];
+                    [lastAlbum setPhotos:[NSSet setWithArray:lastAlbumsPhotos] updateCoverImage:YES];
                 }
                 
                 // try to fetch an existing album with the new photos path
@@ -734,7 +736,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 [lastAlbum setDateLastUpdated:fetchDate];
                 
                 // sethi the existing photos array to the current photos in the album
-                lastAlbumsExistingPhotos = [[lastAlbum.photos array] mutableCopy];
+                lastAlbumsExistingPhotos = [[lastAlbum sortedPhotos] mutableCopy];
             }
             
             // if this is a .unbound file than no need to create a photo object
@@ -802,7 +804,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
         
         // we've finished the loop. add the photos objects to the last album we were working with
         [lastAlbumsPhotos addObjectsFromArray:lastAlbumsExistingPhotos];
-        [lastAlbum setPhotos:[NSOrderedSet orderedSetWithArray:lastAlbumsPhotos] updateCoverImage:YES];
+        [lastAlbum setPhotos:[NSSet setWithArray:lastAlbumsPhotos] updateCoverImage:YES];
         
         if(deletionBlock)
         {

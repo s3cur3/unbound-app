@@ -39,6 +39,7 @@ typedef enum {
 }
 
 @property (nonatomic, retain) NSDate * albumDate;
+@property (nonatomic, retain) NSDate * startDate;
 @property (nonatomic, retain) NSDate * dateLastUpdated;
 @property (nonatomic, retain) NSDate * dateReadUnboundFile;
 @property (nonatomic, retain) NSString * path;
@@ -47,22 +48,19 @@ typedef enum {
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) PIXAccount *account;
 @property (nonatomic, retain) PIXPhoto *datePhoto;
-@property (nonatomic, retain) NSOrderedSet *photos;
+@property (nonatomic, retain) NSSet *photos;
 @property (nonatomic, retain) NSOrderedSet *stackPhotos;
 @end
 
 @interface PIXAlbum (CoreDataGeneratedAccessors)
 
-- (void)insertObject:(PIXPhoto *)value inPhotosAtIndex:(NSUInteger)idx;
-- (void)removeObjectFromPhotosAtIndex:(NSUInteger)idx;
-- (void)insertPhotos:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
-- (void)removePhotosAtIndexes:(NSIndexSet *)indexes;
-- (void)replaceObjectInPhotosAtIndex:(NSUInteger)idx withObject:(PIXPhoto *)value;
-- (void)replacePhotosAtIndexes:(NSIndexSet *)indexes withPhotos:(NSArray *)values;
+// photos
 - (void)addPhotosObject:(PIXPhoto *)value;
 - (void)removePhotosObject:(PIXPhoto *)value;
-- (void)addPhotos:(NSOrderedSet *)values;
-- (void)removePhotos:(NSOrderedSet *)values;
+- (void)addPhotos:(NSSet *)values;
+- (void)removePhotos:(NSSet *)values;
+
+// stack photos
 - (void)insertObject:(PIXPhoto *)value inStackPhotosAtIndex:(NSUInteger)idx;
 - (void)removeObjectFromStackPhotosAtIndex:(NSUInteger)idx;
 - (void)insertStackPhotos:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
@@ -84,7 +82,7 @@ typedef enum {
 
 +(NSArray *)sortedAlbums;
 
--(void)setPhotos:(NSOrderedSet *)photos updateCoverImage:(BOOL)shouldUpdateCoverImage;
+-(void)setPhotos:(NSSet *)photos updateCoverImage:(BOOL)shouldUpdateCoverImage;
 
 -(NSArray *)sortedPhotos;
 -(NSArray *)photoSortDescriptors;
