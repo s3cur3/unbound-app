@@ -181,6 +181,7 @@
     
     NSMenuItem * item = [[buttonView itemArray] objectAtIndex:0];
     item.image = [NSImage imageNamed:@"sortbutton"];
+    [item.image setTemplate:YES];
     
     
     int sortOrder = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"PIXPhotoSort"];

@@ -270,6 +270,7 @@
     
     NSMenuItem * item = [[buttonView itemArray] objectAtIndex:0];
     item.image = [NSImage imageNamed:@"sortbutton"];
+    [item.image setTemplate:YES];
     
     
     int sortOrder = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"PIXAlbumSort"];
@@ -327,6 +328,7 @@
     
     NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
     buttonView.image = [NSImage imageNamed:@"addbutton"];
+    [buttonView.image setTemplate:YES];
     [buttonView setImagePosition:NSImageOnly];
     [buttonView setBordered:YES];
     [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
