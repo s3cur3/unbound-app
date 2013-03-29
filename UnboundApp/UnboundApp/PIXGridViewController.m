@@ -46,7 +46,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *toolbarPosition;
 @property BOOL toolbarIsShowing;
 
-@property (strong, nonatomic) PIXMiniExifViewController * miniExifViewController;
+
 
 @end
 
@@ -444,15 +444,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
 }
 
 
--(PIXMiniExifViewController *)miniExifViewController
-{
-    if(_miniExifViewController != nil) return _miniExifViewController;
-    
-    _miniExifViewController = [[PIXMiniExifViewController alloc] initWithNibName:@"PIXMiniExifViewController" bundle:nil];
-    
-    return _miniExifViewController;
-    
-}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - CNGridView DataSource

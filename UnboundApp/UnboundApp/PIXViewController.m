@@ -44,12 +44,10 @@
     if([object isKindOfClass:[PIXPhoto class]])
     {
         NSMenuItem * miniExifDisplay = [[NSMenuItem alloc] init];
+                
+        self.miniExifViewController.photo = object;
         
-        PIXMiniExifViewController * exifVC = [[PIXMiniExifViewController alloc] initWithNibName:@"PIXMiniExifViewController" bundle:nil];
-        
-        exifVC.photo = object;
-        
-        miniExifDisplay.view = exifVC.view;
+        miniExifDisplay.view = self.miniExifViewController.view;
         
         [miniExifDisplay.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
         
@@ -146,6 +144,15 @@
     return menu;
 }
 
+-(PIXMiniExifViewController *)miniExifViewController
+{
+    if(_miniExifViewController != nil) return _miniExifViewController;
+    
+    _miniExifViewController = [[PIXMiniExifViewController alloc] initWithNibName:@"PIXMiniExifViewController" bundle:nil];
+    
+    return _miniExifViewController;
+    
+}
 
 
 -(NSMenu *)menuForObject:(id)object;

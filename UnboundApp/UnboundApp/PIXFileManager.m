@@ -518,6 +518,22 @@ typedef NSUInteger PIXOverwriteStrategy;
         return NO;
     }
     
+    // validate filename
+    NSError *error = NULL;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^[\\w\\-. ]+$"
+                                                                           options:NSRegularExpressionCaseInsensitive
+                                                                             error:&error];
+    NSUInteger numberOfMatches = [regex numberOfMatchesInString:aNewName
+                                                        options:0
+                                                          range:NSMakeRange(0, [aNewName length])];
+    
+    if(numberOfMatches == 0)
+    {
+        NSString *errMsg = [NSString stringWithFormat:@"\"%@\" is an invalid name for a folder.", aNewName];
+        NSRunCriticalAlertPanel(@"Invalid Folder Name", errMsg, @"OK", nil, nil);
+        return NO;
+    }
+    
     
     NSString *parentFolderPath = [anAlbum.path stringByDeletingLastPathComponent];
     NSString *oldAlbumName = [anAlbum.path lastPathComponent];
@@ -526,10 +542,10 @@ typedef NSUInteger PIXOverwriteStrategy;
          fileExistsAtPath: newFilePath])
     {
         NSString *errMsg = [NSString stringWithFormat:@"There's already a directory with the name \"%@\" at this album's location. Please enter a new name.", aNewName];
-        NSRunCriticalAlertPanel(@"Duplicate Album Name", errMsg, @"OK", @"Cancel", nil);
+        NSRunCriticalAlertPanel(@"Duplicate Album Name", errMsg, @"OK", nil, nil);
         return NO;
     }
-    NSError *error;
+
     BOOL success = [[NSFileManager defaultManager] moveItemAtPath:anAlbum.path toPath:newFilePath error:&error];
     if (!success)
     {
@@ -589,6 +605,22 @@ typedef NSUInteger PIXOverwriteStrategy;
         return NO;
     }
     
+    // validate filename
+    NSError *error = NULL;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^[\\w\\-. ]+$"
+                                                                           options:NSRegularExpressionCaseInsensitive
+                                                                             error:&error];
+    NSUInteger numberOfMatches = [regex numberOfMatchesInString:aNewName
+                                                        options:0
+                                                          range:NSMakeRange(0, [aNewName length])];
+    
+    if(numberOfMatches == 0)
+    {
+        NSString *errMsg = [NSString stringWithFormat:@"\"%@\" is an invalid name for a file.", aNewName];
+        NSRunCriticalAlertPanel(@"Invalid File Name", errMsg, @"OK", nil, nil);
+        return NO;
+    }
+    
     
     NSString *parentFolderPath = [aPhoto.album path];
     NSString *oldPhotoName = aPhoto.name;
@@ -598,11 +630,10 @@ typedef NSUInteger PIXOverwriteStrategy;
          fileExistsAtPath: newFilePath])
     {
         NSString *errMsg = [NSString stringWithFormat:@"There's already a photo with the name \"%@\" at this album's location. Please enter a new name.", aNewName];
-        NSRunCriticalAlertPanel(@"Duplicate Photo Name", errMsg, @"OK", @"Cancel", nil);
+        NSRunCriticalAlertPanel(@"Duplicate Photo Name", errMsg, @"OK", nil, nil);
         return NO;
     }
     
-    NSError *error;
     BOOL success = [[NSFileManager defaultManager] moveItemAtPath:aPhoto.path toPath:newFilePath error:&error];
     if (!success)
     {
