@@ -341,6 +341,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
         {
             
             NSDirectoryEnumerator *dirEnumerator = nil;
+            NSUInteger progressCounter = 0;
             
             BOOL isDir = NO;
             if([[NSFileManager defaultManager] fileExistsAtPath:aTopURL.path isDirectory:&isDir] && isDir)
@@ -361,6 +362,11 @@ NSDictionary * dictionaryForURL(NSURL * url)
                                                      errorHandler:^(NSURL *url, NSError *error) {
                                                          return NO;
                                                      }];
+                
+                NSNumber * fileCount = nil;
+                [aTopURL getResourceValue:&fileCount forKey:NSURLLinkCountKey error:nil];
+                
+                progressCounter += [fileCount integerValue];
             }
             
             
@@ -726,8 +732,11 @@ NSDictionary * dictionaryForURL(NSURL * url)
                     [lastAlbum setValue:aPath forKey:@"path"];
                 }
                 
-                // store the objectID's of any albums we touch so we can go through and update them on the main thread later
-                [editedAlbumObjectIDs addObject:[lastAlbum objectID]];
+                else
+                {
+                    // store the objectID's of any albums we change so we can go through and update them on the main thread later
+                    [editedAlbumObjectIDs addObject:[lastAlbum objectID]];
+                }
                 
                 // we're starting a freshly found/created album so clear this array
                 [lastAlbumsPhotos removeAllObjects];
