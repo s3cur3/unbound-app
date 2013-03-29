@@ -46,6 +46,8 @@ static NSString *kContentTitleKey, *kContentImageKey;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *toolbarPosition;
 @property BOOL toolbarIsShowing;
 
+@property (strong, nonatomic) PIXMiniExifViewController * miniExifViewController;
+
 @end
 
 @implementation PIXGridViewController
@@ -343,12 +345,10 @@ static NSString *kContentTitleKey, *kContentImageKey;
     if([object isKindOfClass:[PIXPhoto class]])
     {   
         NSMenuItem * miniExifDisplay = [[NSMenuItem alloc] init];
+                
+        self.miniExifViewController.photo = object;
         
-        PIXMiniExifViewController * exifVC = [[PIXMiniExifViewController alloc] initWithNibName:@"PIXMiniExifViewController" bundle:nil];
-        
-        exifVC.photo = object;
-        
-        miniExifDisplay.view = exifVC.view;
+        miniExifDisplay.view = self.miniExifViewController.view;
         
         [miniExifDisplay.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
         
@@ -443,6 +443,16 @@ static NSString *kContentTitleKey, *kContentImageKey;
     return menu;
 }
 
+
+-(PIXMiniExifViewController *)miniExifViewController
+{
+    if(_miniExifViewController != nil) return _miniExifViewController;
+    
+    _miniExifViewController = [[PIXMiniExifViewController alloc] initWithNibName:@"PIXMiniExifViewController" bundle:nil];
+    
+    return _miniExifViewController;
+    
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - CNGridView DataSource

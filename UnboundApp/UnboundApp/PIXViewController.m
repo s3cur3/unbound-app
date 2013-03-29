@@ -146,6 +146,8 @@
     return menu;
 }
 
+
+
 -(NSMenu *)menuForObject:(id)object;
 {
     return [self menuForObjects:[NSArray arrayWithObject:object] selectedObject:object];

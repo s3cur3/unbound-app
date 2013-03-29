@@ -250,7 +250,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     _scrollElasticity = scrollElasticity;
     NSScrollView *scrollView = [self enclosingScrollView];
     if (_scrollElasticity) {
-        [scrollView setHorizontalScrollElasticity:NSScrollElasticityAllowed];
+        [scrollView setHorizontalScrollElasticity:NSScrollElasticityNone];
         [scrollView setVerticalScrollElasticity:NSScrollElasticityAllowed];
     } else {
         [scrollView setHorizontalScrollElasticity:NSScrollElasticityNone];

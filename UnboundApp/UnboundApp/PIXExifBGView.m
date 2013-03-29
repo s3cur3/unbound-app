@@ -31,9 +31,17 @@
     // Create and fill the shown path
     NSBezierPath * path = [NSBezierPath bezierPathWithRoundedRect:greenRect xRadius:3 yRadius:3];
     
+    NSColor * color1 = [NSColor colorWithCalibratedRed:0.883 green:0.890 blue:0.807 alpha:1.000];
+    NSColor * color2 = [NSColor colorWithCalibratedRed:0.734 green:0.766 blue:0.608 alpha:1.000];
     
-    NSGradient * gradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedRed:0.883 green:0.890 blue:0.807 alpha:1.000]
-                                                          endingColor:[NSColor colorWithCalibratedRed:0.734 green:0.766 blue:0.608 alpha:1.000]];
+    NSGradient * gradient = [[NSGradient alloc] initWithStartingColor:color1
+                                                          endingColor:color2];
+    
+    [color1 setFill];
+    [path fill];
+    
+    
+    
     [gradient drawInBezierPath:path angle:90];
     
     // Save the graphics state for shadow

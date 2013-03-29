@@ -45,7 +45,7 @@
     if(_albums != nil) {return _albums;}
     
     //[self.view setWantsLayer:YES];
-    _albums = [PIXAlbum sortedAllAlbums];
+    _albums = [PIXAlbum sortedAlbums];
     
     return _albums;
 }

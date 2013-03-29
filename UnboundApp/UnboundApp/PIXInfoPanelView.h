@@ -8,6 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class PIXPageViewController;
+
 @interface PIXInfoPanelView : NSView
+
+@property (weak) IBOutlet PIXPageViewController * viewController;
 
 @end

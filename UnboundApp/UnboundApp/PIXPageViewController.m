@@ -689,6 +689,8 @@
 #pragma mark -
 #pragma mark mouse movement methods (for hiding and showing the hud)
 
+
+
 -(void)mouseEntered:(NSEvent *)theEvent
 {
     [self unfadeControls];
@@ -701,7 +703,7 @@
     
     self.hasMouse = YES;
     
-    [self.view.window makeFirstResponder:self];
+    //[self.view.window makeFirstResponder:self];
 }
 
 -(void)mouseMoved:(NSEvent *)theEvent

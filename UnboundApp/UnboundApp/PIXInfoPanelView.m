@@ -7,6 +7,7 @@
 //
 
 #import "PIXInfoPanelView.h"
+#import "PIXPageViewController.h"
 
 @implementation PIXInfoPanelView
 
@@ -18,6 +19,13 @@
     }
     
     return self;
+}
+
+-(void)mouseDown:(NSEvent *)theEvent
+{
+    // grab the first responder on mouse down
+    [self.window makeFirstResponder:self.viewController];
+    [super mouseDown:theEvent];
 }
 
 - (void)drawRect:(NSRect)dirtyRect

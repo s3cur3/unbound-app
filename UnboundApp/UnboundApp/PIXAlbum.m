@@ -29,13 +29,13 @@ static NSString *const kItemsKey = @"photos";
 @dynamic photos;
 @dynamic stackPhotos;
 
-+(NSArray *)sortedAllAlbums
++(NSArray *)sortedAlbums
 {
     
     NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kAlbumEntityName];
-    [fetchRequest setFetchBatchSize:500];
+    [fetchRequest setFetchBatchSize:100];
     
     // prefetch stack photos. These are used in the album-level views
     [fetchRequest setRelationshipKeyPathsForPrefetching:@[@"stackPhotos"]];

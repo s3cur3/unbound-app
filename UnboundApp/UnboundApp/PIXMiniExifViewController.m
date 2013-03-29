@@ -8,6 +8,7 @@
 
 #import "PIXMiniExifViewController.h"
 #import "PIXPhoto.h"
+#import "PIXFileManager.h"
 
 @interface PIXMiniExifViewController () <NSTextFieldDelegate>
 
@@ -26,6 +27,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Initialization code here.
+        
     }
     
     return self;
@@ -34,6 +36,9 @@
 -(void)awakeFromNib
 {
     [self updateLabels];
+    [self.photoName setDelegate:self];
+    [self.photoName setTarget:self];
+    [self.photoName setAction:@selector(controlTextDidEndEditing:)];
 }
 
 -(void)setPhoto:(PIXPhoto *)photo
@@ -105,15 +110,47 @@
     DLog(@"%@", self.photo);
 }
 
--(void)controlTextDidChange:(NSNotification*)aNotification
+-(BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
 {
+    // seem to need to handl
+    if (commandSelector == @selector(cancelOperation:)) {
+        
+        // reset the filename so we don't edit it
+        
+        [self.photoName setStringValue:self.photo.name];
+        [self fileNameAction:nil];
+        
+        return YES;
+    }
     
+    if (commandSelector == @selector(insertNewline:)) {
+        
+        // the user pressed return, call the action
+        
+        [self fileNameAction:nil];
+        
+        return YES;
+    }
+    
+    return NO;
 }
 
-- (BOOL)control:(NSControl *)control textShouldBeginEditing:(NSText *)fieldEditor
+
+-(IBAction)fileNameAction:(id)sender
 {
-    [self.photoName setBezelStyle:NSTextFieldSquareBezel];
-    return YES;
+    if(![[self.photoName stringValue] isEqualToString:self.photo.name])
+    {
+        [[PIXFileManager sharedInstance] renamePhoto:self.photo withName:[self.photoName stringValue]];
+        
+        [self.photoName setStringValue:self.photo.name];
+    }
+    
+    // get rid of the first responder status
+    [self.view.window makeFirstResponder:self.view.superview];
+}
+
+-(void)controlTextDidEndEditing:(NSNotification *)obj
+{
     
 }
 

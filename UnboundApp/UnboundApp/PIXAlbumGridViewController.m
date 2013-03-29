@@ -243,11 +243,12 @@
     //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
     
     NSPopUpButton * buttonView = [[NSPopUpButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25) pullsDown:YES];
-    buttonView.image = [NSImage imageNamed:NSImageNameAddTemplate];
-    [buttonView setImagePosition:NSImageOnly];
+    
+    [buttonView setImagePosition:NSImageOverlaps];
     [buttonView setBordered:YES];
     [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
-    [buttonView setTitle:@"Album Sort Order"];
+    [buttonView setTitle:@""];
+    [buttonView.cell setArrowPosition:NSPopUpNoArrow];
     
     _sortButton.view = buttonView;
     
@@ -261,11 +262,14 @@
 
     // Tell the item what message to send when it is clicked
     
-    [buttonView insertItemWithTitle:@"Choose Album Sort" atIndex:0]; // first index is always the title
+    [buttonView insertItemWithTitle:@"" atIndex:0]; // first index is always the title
     [buttonView insertItemWithTitle:@"New to Old" atIndex:1];
     [buttonView insertItemWithTitle:@"Old to New" atIndex:2];
     [buttonView insertItemWithTitle:@"A to Z" atIndex:3];
     [buttonView insertItemWithTitle:@"Z to A" atIndex:4];
+    
+    NSMenuItem * item = [[buttonView itemArray] objectAtIndex:0];
+    item.image = [NSImage imageNamed:@"sortbutton"];
     
     
     int sortOrder = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"PIXAlbumSort"];
@@ -322,7 +326,7 @@
     //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
     
     NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
-    buttonView.image = [NSImage imageNamed:NSImageNameAddTemplate];
+    buttonView.image = [NSImage imageNamed:@"addbutton"];
     [buttonView setImagePosition:NSImageOnly];
     [buttonView setBordered:YES];
     [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
@@ -417,7 +421,6 @@
 
 -(void)updateSearch
 {
-	
     NSString * searchText = [self.searchField stringValue];
     if(searchText != nil && [searchText length] > 0)
     {
@@ -951,7 +954,7 @@
 {
     if(_albums != nil) return _albums;
     
-    _albums = [PIXAlbum sortedAllAlbums];
+    _albums = [PIXAlbum sortedAlbums];
     
     return _albums;
 }

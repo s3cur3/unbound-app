@@ -539,7 +539,7 @@ const CGFloat kThumbnailSize = 370.0f;
 
 -(NSImage *)thumbnailImage
 {
-    
+    //return nil;
     
     if (_thumbnailImage == nil && !_thumbnailImageIsLoading)
     {

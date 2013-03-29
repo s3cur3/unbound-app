@@ -82,7 +82,7 @@ typedef enum {
 //- (PIXPhoto *)fetchMostRecentPhoto;
 
 
-+(NSArray *)sortedAllAlbums;
++(NSArray *)sortedAlbums;
 
 -(void)setPhotos:(NSOrderedSet *)photos updateCoverImage:(BOOL)shouldUpdateCoverImage;
 

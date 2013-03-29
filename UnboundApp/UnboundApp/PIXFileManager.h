@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class PIXAlbum;
+@class PIXPhoto;
 
 @interface PIXFileManager : NSObject
 
@@ -21,6 +22,7 @@
 
 -(void)recycleAlbums:(NSArray *)items;
 -(BOOL)renameAlbum:(PIXAlbum *)anAlbum withName:(NSString *)aNewName;
+-(BOOL)renamePhoto:(PIXPhoto *)aPhoto withName:(NSString *)aNewName;
 -(PIXAlbum *)createAlbumWithName:(NSString *)aName;
 -(PIXAlbum *)createAlbumAtPath:(NSString *)aPath withName:(NSString *)aName;
 

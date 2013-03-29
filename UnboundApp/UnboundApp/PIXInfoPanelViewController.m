@@ -9,8 +9,10 @@
 #import "PIXInfoPanelViewController.h"
 #import <MapKit/MapKit.h>
 #import "PIXPhoto.h"
+#import "PIXPageViewController.h"
+#import "PIXFileManager.h"
 
-@interface PIXInfoPanelViewController () <MKMapViewDelegate>
+@interface PIXInfoPanelViewController () <MKMapViewDelegate, NSTextFieldDelegate>
 
 @property (weak) IBOutlet NSTextField * photoName;
 @property (weak) IBOutlet NSTextField * dateTaken;
@@ -148,5 +150,45 @@
 
     return view;
 }
+
+-(void)mouseDown:(NSEvent *)theEvent
+{
+    // grab the first responder on mouse down
+    [self.view.window makeFirstResponder:self];
+    [super mouseDown:theEvent];
+}
+
+
+-(BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
+{
+    // seem to need to handl
+    if (commandSelector == @selector(cancelOperation:)) {
+        
+        // reset the filename so we don't edit it
+        
+        [self.photoName setStringValue:self.photo.name];
+        [self fileNameAction:nil];
+        
+        return YES;
+    }
+    
+    return NO;
+}
+
+
+-(IBAction)fileNameAction:(id)sender
+{
+    if(![[self.photoName stringValue] isEqualToString:self.photo.name])
+    {
+        [[PIXFileManager sharedInstance] renamePhoto:self.photo withName:[self.photoName stringValue]];
+        
+        [self.photoName setStringValue:self.photo.name];
+    }
+    
+    // get rid of the first responder status
+    [self.view.window makeFirstResponder:self.pageView.view];
+}
+
+
 
 @end

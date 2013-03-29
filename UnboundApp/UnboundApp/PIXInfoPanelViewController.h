@@ -9,13 +9,14 @@
 #import <Cocoa/Cocoa.h>
 
 @class PIXPhoto;
+@class PIXPageViewController;
 
 @interface PIXInfoPanelViewController : NSViewController
 
 @property (nonatomic, strong) PIXPhoto * photo;
+@property (weak) IBOutlet PIXPageViewController * pageView;
 
-
-
+-(IBAction)fileNameAction:(id)sender;
 
 
 @end

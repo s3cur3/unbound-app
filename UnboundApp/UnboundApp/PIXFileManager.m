@@ -475,6 +475,15 @@ typedef NSUInteger PIXOverwriteStrategy;
     //return [self renameAlbumWithObjectID:albumID withName:name];
 }
 
+-(BOOL)undoRenamePhoto:(NSDictionary *)userInfo
+{
+    //NSManagedObjectID *albumID = [userInfo objectForKey:@""];
+    NSString *path = [userInfo objectForKey:@"path"];
+    NSString *name = [userInfo objectForKey:@"name"];
+    return [self renamePhotoWithPath:path withName:name];
+    //return [self renameAlbumWithObjectID:albumID withName:name];
+}
+
 //-(BOOL)renameAlbumWithObjectID:(NSManagedObjectID *)anAlbumID withName:(NSString *)aNewName
 //{
 //    NSError *error = nil;
@@ -554,6 +563,75 @@ typedef NSUInteger PIXOverwriteStrategy;
     [undoManager registerUndoWithTarget:self selector:@selector(undoRenameAlbum:) object:undoInfo];
     [undoManager setActionName:@"Rename Album"];
     [undoManager setActionIsDiscardable:YES];
+    
+    return YES;
+}
+
+-(BOOL)renamePhotoWithPath:(NSString *)aPhotoPath withName:(NSString *)aNewName
+{
+    NSArray * photos = (NSArray *)[[PIXFileParser sharedFileParser] fetchPhotosWithPaths:@[aPhotoPath]];
+    
+    PIXPhoto * aPhoto = [photos lastObject];
+    
+    if (aPhoto==nil) {
+        NSString *errMsg = [NSString stringWithFormat:@"Unable to undo photo rename operation.\n(%@)", aPhotoPath];
+        NSRunCriticalAlertPanel(errMsg, @"Undo Failed", @"OK", @"Cancel", nil);
+        return NO;
+    }
+    return [self renamePhoto:aPhoto withName:aNewName];
+}
+
+-(BOOL)renamePhoto:(PIXPhoto *)aPhoto withName:(NSString *)aNewName;
+{
+    if ([aNewName length]==0 || [aNewName isEqualToString:aPhoto.name])
+    {
+        DLog(@"renaming to empty string or same name disallowed.");
+        return NO;
+    }
+    
+    
+    NSString *parentFolderPath = [aPhoto.album path];
+    NSString *oldPhotoName = aPhoto.name;
+    NSString *newFilePath = [parentFolderPath stringByAppendingPathComponent:aNewName];
+    
+    if ([[NSFileManager defaultManager]
+         fileExistsAtPath: newFilePath])
+    {
+        NSString *errMsg = [NSString stringWithFormat:@"There's already a photo with the name \"%@\" at this album's location. Please enter a new name.", aNewName];
+        NSRunCriticalAlertPanel(@"Duplicate Photo Name", errMsg, @"OK", @"Cancel", nil);
+        return NO;
+    }
+    
+    NSError *error;
+    BOOL success = [[NSFileManager defaultManager] moveItemAtPath:aPhoto.path toPath:newFilePath error:&error];
+    if (!success)
+    {
+        [[NSApplication sharedApplication] presentError:error];
+        return NO;
+    }
+    
+    [aPhoto setName:aNewName];
+    [aPhoto setPath:newFilePath];
+    
+    if (![[[PIXAppDelegate sharedAppDelegate] managedObjectContext] save:&error]) {
+        DLog(@"%@", error);
+        [[NSApplication sharedApplication] presentError:error];
+        return NO;
+    }
+    
+
+    [[PIXFileParser sharedFileParser] scanPath:parentFolderPath withRecursion:PIXFileParserRecursionNone];
+    
+    
+    NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
+    //NSDictionary *undoInfo = @{@"albumID" : anAlbum.objectID, @"name" : oldAlbumName};
+    NSDictionary *undoInfo = @{@"path" : [aPhoto path], @"name" : [oldPhotoName copy]};
+    [undoManager registerUndoWithTarget:self selector:@selector(undoRenamePhoto:) object:undoInfo];
+    [undoManager setActionName:@"Rename Photo"];
+    [undoManager setActionIsDiscardable:YES];
+    
+    // update any views that watch this photo
+    [[NSNotificationCenter defaultCenter] postNotificationName:PhotoThumbDidChangeNotification object:self];
     
     return YES;
 }

@@ -466,6 +466,8 @@
     // update the album
     [self albumChanged:nil];
     
+    
+    
 }
 
 -(BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
