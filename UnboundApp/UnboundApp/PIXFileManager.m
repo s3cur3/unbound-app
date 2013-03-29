@@ -504,7 +504,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     
     if (anAlbum==nil) {
         NSString *errMsg = [NSString stringWithFormat:@"Unable to undo album rename operation.\n(%@)", anAlbumPath];
-        NSRunCriticalAlertPanel(errMsg, @"Undo Failed", @"OK", @"Cancel", nil);
+        NSRunAlertPanel(errMsg, @"Undo Failed", @"OK", nil, nil);
         return NO;
     }
     return [self renameAlbum:anAlbum withName:aNewName];
@@ -520,17 +520,18 @@ typedef NSUInteger PIXOverwriteStrategy;
     
     // validate filename
     NSError *error = NULL;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^[\\w\\-. ]+$"
+    // after looking into this, it seems macosx supports all unicode characters in filenames. I'll test for / and leave this in just in case we want ot add more.
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"[/]"
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:&error];
     NSUInteger numberOfMatches = [regex numberOfMatchesInString:aNewName
                                                         options:0
                                                           range:NSMakeRange(0, [aNewName length])];
     
-    if(numberOfMatches == 0)
+    if(numberOfMatches != 0)
     {
         NSString *errMsg = [NSString stringWithFormat:@"\"%@\" is an invalid name for a folder.", aNewName];
-        NSRunCriticalAlertPanel(@"Invalid Folder Name", errMsg, @"OK", nil, nil);
+        NSRunAlertPanel(@"Invalid Folder Name", errMsg, @"OK", nil, nil);
         return NO;
     }
     
@@ -542,7 +543,7 @@ typedef NSUInteger PIXOverwriteStrategy;
          fileExistsAtPath: newFilePath])
     {
         NSString *errMsg = [NSString stringWithFormat:@"There's already a directory with the name \"%@\" at this album's location. Please enter a new name.", aNewName];
-        NSRunCriticalAlertPanel(@"Duplicate Album Name", errMsg, @"OK", nil, nil);
+        NSRunAlertPanel(@"Duplicate Album Name", errMsg, @"OK", nil, nil);
         return NO;
     }
 
@@ -591,7 +592,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     
     if (aPhoto==nil) {
         NSString *errMsg = [NSString stringWithFormat:@"Unable to undo photo rename operation.\n(%@)", aPhotoPath];
-        NSRunCriticalAlertPanel(errMsg, @"Undo Failed", @"OK", @"Cancel", nil);
+        NSRunAlertPanel(errMsg, @"Undo Failed", @"OK", nil, nil);
         return NO;
     }
     return [self renamePhoto:aPhoto withName:aNewName];
@@ -607,14 +608,16 @@ typedef NSUInteger PIXOverwriteStrategy;
     
     // validate filename
     NSError *error = NULL;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^[\\w\\-. ]+$"
+    
+    // after looking into this, it seems macosx supports all unicode characters in filenames. I'll test for / and leave this in just in case we want ot add more.
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"[/]"
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:&error];
     NSUInteger numberOfMatches = [regex numberOfMatchesInString:aNewName
                                                         options:0
                                                           range:NSMakeRange(0, [aNewName length])];
     
-    if(numberOfMatches == 0)
+    if(numberOfMatches != 0)
     {
         NSString *errMsg = [NSString stringWithFormat:@"\"%@\" is an invalid name for a file.", aNewName];
         NSRunCriticalAlertPanel(@"Invalid File Name", errMsg, @"OK", nil, nil);
