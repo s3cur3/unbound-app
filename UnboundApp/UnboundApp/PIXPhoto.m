@@ -198,10 +198,12 @@ const CGFloat kThumbnailSize = 370.0f;
 //            [weakSelf performSelectorOnMainThread:@selector(mainThreadLoadFullsizeFinished:) withObject:image waitUntilDone:NO];
 //            return;
 //        }
+       
         
         NSURL *urlForImage = [NSURL fileURLWithPath:aPath];
         
-        NSData * imageData = [NSData dataWithContentsOfURL:urlForImage];
+        /// loading the image directly from the data wasn't working for raw images
+        //NSData * imageData = [NSData dataWithContentsOfURL:urlForImage];
         
         if (weakSelf.cancelFullsizeLoadOperation==YES) {
             //DLog(@"3)thumbnail operation was canceled - return");
@@ -210,7 +212,7 @@ const CGFloat kThumbnailSize = 370.0f;
             return;
         }
         
-        image = [[NSImage alloc] initWithData:imageData];
+        image = [[NSImage alloc] initWithContentsOfURL:urlForImage];
         
         if (weakSelf.cancelFullsizeLoadOperation==YES) {
                 //DLog(@"3)thumbnail operation was canceled - return");
@@ -225,8 +227,8 @@ const CGFloat kThumbnailSize = 370.0f;
         [image unlockFocus];
         
         [weakSelf performSelectorOnMainThread:@selector(mainThreadComputeFullsizePreviewFinished:) withObject:image waitUntilDone:YES];
-        
         /*
+        
         CGImageSourceRef imageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)urlForImage, nil);
         if (imageSource) {
             
@@ -289,9 +291,9 @@ const CGFloat kThumbnailSize = 370.0f;
             
             //if(cfDict) CFRelease(cfDict);
             CFRelease(imageSource);
-        }
-         
-         */
+        }*/
+        
+        
     }];
 }
 
@@ -387,14 +389,14 @@ const CGFloat kThumbnailSize = 370.0f;
 //        
 //        NSNumber *maxPixelSize = [NSNumber numberWithInteger:maxDimension];
         //DLog(@"Using maxPixelSize : %@", maxPixelSize);
-//        imageOptions = @{(id)kCGImageSourceCreateThumbnailFromImageIfAbsent: (id)kCFBooleanTrue,
-//                                       (id)kCGImageSourceCreateThumbnailFromImageAlways: (id)kCFBooleanTrue,
-//                                       //(id)kCGImageSourceThumbnailMaxPixelSize: (id)maxPixelSize,
-//                                       (id)kCGImageSourceCreateThumbnailWithTransform: (id)kCFBooleanTrue};
+        imageOptions = @{//(id)kCGImageSourceCreateThumbnailFromImageIfAbsent: (id)kCFBooleanTrue,
+                                       (id)kCGImageSourceCreateThumbnailFromImageAlways: (id)kCFBooleanTrue,
+                                       //(id)kCGImageSourceThumbnailMaxPixelSize: (id)maxPixelSize,
+                                       (id)kCGImageSourceCreateThumbnailWithTransform: (id)kCFBooleanTrue};
         
         //imageOptions = @{};
         
-        imageRef = CGImageSourceCreateImageAtIndex(imageSource, 0, NULL);
+        imageRef = CGImageSourceCreateImageAtIndex(imageSource, 0, (__bridge CFDictionaryRef)imageOptions);
     }
 
     
