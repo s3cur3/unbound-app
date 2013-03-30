@@ -201,7 +201,32 @@ const CGFloat kThumbnailSize = 370.0f;
         
         NSURL *urlForImage = [NSURL fileURLWithPath:aPath];
         
+        NSData * imageData = [NSData dataWithContentsOfURL:urlForImage];
         
+        if (weakSelf.cancelFullsizeLoadOperation==YES) {
+            //DLog(@"3)thumbnail operation was canceled - return");
+            _fullsizeImageIsLoading = NO;
+            weakSelf.cancelFullsizeLoadOperation = NO;
+            return;
+        }
+        
+        image = [[NSImage alloc] initWithData:imageData];
+        
+        if (weakSelf.cancelFullsizeLoadOperation==YES) {
+                //DLog(@"3)thumbnail operation was canceled - return");
+                _fullsizeImageIsLoading = NO;
+                weakSelf.cancelFullsizeLoadOperation = NO;
+                return;
+            }
+        
+        
+        
+        [image lockFocus]; // call this to make sure the image loads ?
+        [image unlockFocus];
+        
+        [weakSelf performSelectorOnMainThread:@selector(mainThreadComputeFullsizePreviewFinished:) withObject:image waitUntilDone:YES];
+        
+        /*
         CGImageSourceRef imageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)urlForImage, nil);
         if (imageSource) {
             
@@ -231,9 +256,21 @@ const CGFloat kThumbnailSize = 370.0f;
 //                return;
 //            }
             
-            /*
-            NSData *data = [image TIFFRepresentation];
             
+//            NSData *data = [image TIFFRepresentation];
+//            
+//            if (weakSelf.cancelFullsizeLoadOperation==YES) {
+//                DLog(@"4)fulllsize operation was canceled - return");
+//                //if(cfDict) CFRelease(cfDict);
+//                CFRelease(imageSource);
+//                _fullsizeImageIsLoading = NO;
+//                weakSelf.cancelFullsizeLoadOperation = NO;
+//                return;
+//            }
+//            
+//            NSImage *fullScreenImage = [[NSImage alloc] initWithData:data];
+//             
+        
             if (weakSelf.cancelFullsizeLoadOperation==YES) {
                 DLog(@"4)fulllsize operation was canceled - return");
                 //if(cfDict) CFRelease(cfDict);
@@ -243,19 +280,7 @@ const CGFloat kThumbnailSize = 370.0f;
                 return;
             }
             
-            NSImage *fullScreenImage = [[NSImage alloc] initWithData:data];
-             */
-            
-            if (weakSelf.cancelFullsizeLoadOperation==YES) {
-                DLog(@"4)fulllsize operation was canceled - return");
-                //if(cfDict) CFRelease(cfDict);
-                CFRelease(imageSource);
-                _fullsizeImageIsLoading = NO;
-                weakSelf.cancelFullsizeLoadOperation = NO;
-                return;
-            }
-            
-            [image setCacheMode:NSImageCacheAlways];
+            //[image setCacheMode:NSImageCacheAlways];
             
             [image lockFocus]; // call this to make sure the image loads ?
             [image unlockFocus];
@@ -265,6 +290,8 @@ const CGFloat kThumbnailSize = 370.0f;
             //if(cfDict) CFRelease(cfDict);
             CFRelease(imageSource);
         }
+         
+         */
     }];
 }
 
