@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXPageHUDView.m"
-         timestampString = "385916468.675991"
+         timestampString = "386284897.725806"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "456"
-         endingLineNumber = "456"
+         startingLineNumber = "465"
+         endingLineNumber = "465"
          landmarkName = "-textView:willChangeSelectionFromCharacterRange:toCharacterRange:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -92,6 +92,19 @@
          startingLineNumber = "141"
          endingLineNumber = "141"
          landmarkName = "-fileNameAction:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "UnboundApp/PIXPageHUDView.m"
+         timestampString = "386284938.107942"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "415"
+         endingLineNumber = "415"
+         landmarkName = "-insertNewline:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

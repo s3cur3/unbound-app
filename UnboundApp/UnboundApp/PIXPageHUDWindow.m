@@ -291,6 +291,7 @@
     self.hasMouse = YES;
 }
 
+
 // pass keystrokes up to the containing view
 -(void)keyDown:(NSEvent *)theEvent
 {

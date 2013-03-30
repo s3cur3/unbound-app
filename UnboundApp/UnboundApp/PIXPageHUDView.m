@@ -410,6 +410,15 @@
     }
 }
 
+-(void)insertNewline:(id)sender
+{
+    if(self.isTextEditing)
+    {
+        //self.captionEditCancelled = YES;
+        [[NSApp mainWindow] makeKeyWindow];
+    }
+}
+
 
 -(void)textDidEndEditing:(NSNotification *)notification
 {

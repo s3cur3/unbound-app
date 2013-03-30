@@ -858,10 +858,10 @@ typedef NSUInteger PIXOverwriteStrategy;
         NSString *src = [aDict valueForKey:@"source"];
         NSString *dest = [aDict valueForKey:@"destination"];
         NSString *filename = [src lastPathComponent];
-        BOOL destintationWasRenamed = NO;
+        //BOOL destintationWasRenamed = NO; // this was never used. Commenting out
         //There was a conflicting filename at destination, so file will be renamed.
         if ([aDict objectForKey:@"destinationFileName"]!=nil) {
-            destintationWasRenamed = YES;
+            //destintationWasRenamed = YES; this was never read (analyzer warning)
             filename = [aDict objectForKey:@"destinationFileName"];
         }
         

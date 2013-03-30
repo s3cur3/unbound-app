@@ -264,7 +264,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
     
     if (changedPath != nil && [self.loadingAlbumsDict objectForKey:changedPath]==nil) {
         
-        DLog(@"** Scanning file system at: %@", changedPath);
+        //DLog(@"** Scanning file system at: %@", changedPath);
         
         [self.loadingAlbumsDict setObject:changedURL forKey:changedPath];
     
@@ -341,7 +341,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
         {
             
             NSDirectoryEnumerator *dirEnumerator = nil;
-            NSUInteger progressCounter = 0;
+            //NSUInteger progressCounter = 0;
             
             BOOL isDir = NO;
             if([[NSFileManager defaultManager] fileExistsAtPath:aTopURL.path isDirectory:&isDir] && isDir)
@@ -363,10 +363,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                                                          return NO;
                                                      }];
                 
-                NSNumber * fileCount = nil;
-                [aTopURL getResourceValue:&fileCount forKey:NSURLLinkCountKey error:nil];
-                
-                progressCounter += [fileCount integerValue];
+
             }
             
             
@@ -930,7 +927,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
 
 // this should always be called on the main thread
 -(void)flushAlbumsWithIDS:(NSSet *)albumIDs
-{    
+{
     // fetch any the albums with these ids
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kAlbumEntityName];
     [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(self IN %@)", albumIDs]];
@@ -947,8 +944,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
     NSNotification *albumNotification = [NSNotification notificationWithName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
     [[NSNotificationQueue defaultQueue] enqueueNotification:albumNotification postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnName forModes:nil];
     
-    
     //[[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
+     
 }
 
 -(BOOL)deleteObjectsForEntityName:(NSString *)entityName inContext:(NSManagedObjectContext *)context withPredicate:(NSPredicate *)predicate

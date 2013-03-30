@@ -513,7 +513,7 @@ const CGFloat kThumbnailSize = 370.0f;
 
 
 - (void)mainThreadComputePreviewThumbnailFinished:(NSData *)data {
-    if (self.cancelThumbnailLoadOperation==YES) {
+    if (self.cancelThumbnailLoadOperation==YES || self.managedObjectContext == nil) {
         //DLog(@"5)thumbnail operation was canceled - return?");
         _thumbnailImageIsLoading = NO;
         self.cancelThumbnailLoadOperation = NO;
@@ -780,6 +780,76 @@ const CGFloat kThumbnailSize = 370.0f;
 	return nil;
 }
 
+/*
+-(NSOperationQueue *)sharedThumbnailFastLoadQueue;
+{
+    static NSOperationQueue * _sharedThumbnailFastLoadQueue = NULL;
+    
+    if (_sharedThumbnailFastLoadQueue == NULL)
+    {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            _sharedThumbnailFastLoadQueue = [[NSOperationQueue alloc] init];
+            [_sharedThumbnailFastLoadQueue setName:@"com.pixite.ub.unboundThumbnailFastLoadQueue"];
+            //[_backgroundSaveQueue setMaxConcurrentOperationCount:NSOperationQueueDefaultMaxConcurrentOperationCount];
+            [_sharedThumbnailFastLoadQueue setMaxConcurrentOperationCount:3];
+        });
+        
+    }
+    return _sharedThumbnailFastLoadQueue;
+}*/
+
+
+- (dispatch_queue_t)sharedThumbnailFastLoadQueue
+{
+    static dispatch_queue_t _sharedThumbnailFastLoadQueue= 0;
+    static dispatch_queue_t _sharedThumbnailFastLoadQueue2= 0;
+    
+    static BOOL alternator = 0;
+    
+    static dispatch_once_t oncesharedThumbnailFastLoadQueue;
+    dispatch_once(&oncesharedThumbnailFastLoadQueue, ^{
+        _sharedThumbnailFastLoadQueue  = dispatch_queue_create("com.pixite.ub.unboundThumbnailFastLoadQueue", 0);
+        
+        // set this to a high priority queue so it doens't get blocked by the thumbs loading
+        dispatch_set_target_queue(_sharedThumbnailFastLoadQueue, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));
+        
+        _sharedThumbnailFastLoadQueue2  = dispatch_queue_create("com.pixite.ub.unboundThumbnailFastLoadQueue2", 0);
+        
+        // set this to a high priority queue so it doens't get blocked by the thumbs loading
+        dispatch_set_target_queue(_sharedThumbnailFastLoadQueue2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));
+        
+        
+    });
+    
+    alternator = !alternator;
+    
+    if(alternator)
+    {
+        return _sharedThumbnailFastLoadQueue;
+    }
+    
+    return _sharedThumbnailFastLoadQueue2;
+}
+
+- (dispatch_queue_t)sharedThumbnailFullLoadQueue
+{
+    static dispatch_queue_t _sharedThumbnailFullLoadQueue = 0;
+    
+    static dispatch_once_t oncesharedThumbnailFullLoadQueue;
+    dispatch_once(&oncesharedThumbnailFullLoadQueue, ^{
+        _sharedThumbnailFullLoadQueue  = dispatch_queue_create("com.pixite.ub.unboundThumbnailFullLoadQueue", 0);
+        
+        // set this to a high priority queue so it doens't get blocked by the thumbs loading
+        dispatch_set_target_queue(_sharedThumbnailFullLoadQueue, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0));
+        
+        
+    });
+    
+    return _sharedThumbnailFullLoadQueue;
+}
+
+
 
 -(void)loadThumbnailImage
 {
@@ -798,9 +868,9 @@ const CGFloat kThumbnailSize = 370.0f;
     NSOperationQueue *globalQueue = [appDelegate globalBackgroundSaveQueue];
     [globalQueue addOperationWithBlock:^{
      */
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-   
-        
+    dispatch_async([self sharedThumbnailFastLoadQueue], ^{
+   //[[self sharedThumbnailFastLoadQueue] addOperationWithBlock:^{
+    
         if (weakSelf == nil || aPath==nil) {
             DLog(@"thumbnail operation completed after object was dealloced - return");
             _thumbnailImageIsLoading = NO;
@@ -842,7 +912,7 @@ const CGFloat kThumbnailSize = 370.0f;
             [self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
             
             // we've finished updating the ui with the image, do everythinge else at a lower priority
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            dispatch_async([self sharedThumbnailFullLoadQueue], ^{
                 
                 // if the load was cancelled then bail
                 if (weakSelf.cancelThumbnailLoadOperation==YES) {
@@ -893,7 +963,7 @@ const CGFloat kThumbnailSize = 370.0f;
                 // get the bitmap data
                 NSData *data = [image TIFFRepresentation];
                 
-                /*
+                
                 // now create a jpeg representation:
                 NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData:data];
 
@@ -902,7 +972,7 @@ const CGFloat kThumbnailSize = 370.0f;
                                                   };
                 
                 data = [imageRep representationUsingType:NSJPEGFileType properties:imageProperties];
-                */
+                
                 
                 // if the load was cancelled then bail
                 if (weakSelf.cancelThumbnailLoadOperation==YES) {

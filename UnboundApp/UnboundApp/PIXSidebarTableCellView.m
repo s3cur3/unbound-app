@@ -64,7 +64,17 @@
     
     if ([self.detailTextLabel.stringValue isEqualToString:[_album imageSubtitle]]==NO) {
         //DLog(@"Update subtitle for view with album : %@", self.album.title);
-        [self.detailTextLabel setStringValue:[self.album imageSubtitle]];
+        
+        NSString * subtitle = [self.album subtitle];
+        if(subtitle)
+        {
+            [self.detailTextLabel setStringValue:subtitle];
+        }
+        
+        else
+        {
+            [self.detailTextLabel setStringValue:@""];
+        }
         [self setNeedsDisplay:YES];
     }
 }

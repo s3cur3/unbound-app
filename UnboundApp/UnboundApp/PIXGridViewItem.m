@@ -94,11 +94,12 @@ static CGSize kDefaultItemSizeCustomized;
     CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
     CGContextSetShadowWithColor(context, CGSizeMake(0, -1), 6.0, [[NSColor colorWithGenericGamma22White:0.0 alpha:.4] CGColor]);
     
+    CGContextSetFillColorWithColor(context, [[NSColor whiteColor] CGColor]);
+    CGContextFillRect (context,imageFrame);
+    
+    //[[NSColor whiteColor] set];
     
     
-    
-    [[NSColor whiteColor] set];
-    [NSBezierPath fillRect:imageFrame]; // will give a 6 pixel wide border
     CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
     
     

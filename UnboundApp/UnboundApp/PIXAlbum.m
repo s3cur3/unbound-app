@@ -125,6 +125,7 @@ static NSString *const kItemsKey = @"photos";
 
 - (NSString *) imageSubtitle;
 {
+    /*
     if (self.subtitle == nil)
     {
         if (self.dateLastUpdated && self.albumDate)
@@ -141,7 +142,7 @@ static NSString *const kItemsKey = @"photos";
             return @"Loading...";
         }
         
-    }
+    }*/
     return self.subtitle;
 }
 
@@ -162,6 +163,21 @@ static NSString *const kItemsKey = @"photos";
 }
 
 
++(NSDateFormatter *)sharedSubtitleDateFormatter
+{
+    
+    __strong static NSDateFormatter *_sharedSubtitleDateFormatter = nil;
+    
+    if(_sharedSubtitleDateFormatter == nil)
+    {    
+        _sharedSubtitleDateFormatter = [[NSDateFormatter alloc] init];
+        [_sharedSubtitleDateFormatter setDateStyle:NSDateFormatterShortStyle];
+        [_sharedSubtitleDateFormatter setTimeStyle:NSDateFormatterNoStyle]; // no time on albums
+    }
+    
+    return _sharedSubtitleDateFormatter;
+
+}
 
 
 -(void)setPhotos:(NSSet *)photos updateCoverImage:(BOOL)shouldUpdateCoverPhoto;
@@ -192,7 +208,6 @@ static NSString *const kItemsKey = @"photos";
     }];
     */
     
-    self.subtitle = nil;
     
     self.photos = photos;
     
@@ -216,7 +231,6 @@ static NSString *const kItemsKey = @"photos";
             
             self.albumDate = [self.datePhoto findDisplayDate];
             
-            self.subtitle = nil;
         }
 
         // set the stackphotos
@@ -225,6 +239,19 @@ static NSString *const kItemsKey = @"photos";
         NSIndexSet *stackSet = [NSIndexSet indexSetWithIndexesInRange:indexRange];
         NSArray *stackArray = [self.sortedPhotos objectsAtIndexes:stackSet];
         self.stackPhotos = [NSOrderedSet orderedSetWithArray:stackArray];
+        
+        
+        // set the subtitle
+        NSDate *aDate = self.albumDate;
+        
+        NSString *formattedDateString = [[PIXAlbum sharedSubtitleDateFormatter] stringFromDate:aDate];
+        self.subtitle = [NSString stringWithFormat:@"%ld items from %@", photoCount, formattedDateString];
+        
+    }
+    
+    else
+    {
+        self.subtitle = @"No Items";
     }
 }
 
@@ -325,13 +352,13 @@ static NSString *const kItemsKey = @"photos";
 {
     if(self.managedObjectContext != nil && ![self isDeleted])
     {
-        self.subtitle = nil;
+        //self.subtitle = nil;
         
         // not sure if we need to send this. the all albums refresh is always sent after this
-        [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
+        //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
+        
+        [self updateUnboundFile];
     }
-    
-    [self updateUnboundFile];
 }
 
 -(BOOL)unboundFileIsChanged
@@ -363,7 +390,9 @@ static NSString *const kItemsKey = @"photos";
     NSMutableDictionary * unboundMetaDictionary = nil;
     
     // if we already have a .unboubnd file load that
-    if ([[NSFileManager defaultManager] fileExistsAtPath:unboundFilePath])
+    NSFileManager * fm = [[NSFileManager alloc] init];
+    
+    if ([fm fileExistsAtPath:unboundFilePath])
     {
         NSData *data = [NSData dataWithContentsOfFile:unboundFilePath];
         NSError *error = nil;
@@ -395,72 +424,114 @@ static NSString *const kItemsKey = @"photos";
     [os close];
 }
 
--(void)updateUnboundFile
+- (dispatch_queue_t)sharedUnboundQueue
 {
+    static dispatch_queue_t _sharedUnboundQueue = 0;
     
+    static dispatch_once_t oncesharedUnboundQueue;
+    dispatch_once(&oncesharedUnboundQueue, ^{
+        _sharedUnboundQueue  = dispatch_queue_create("com.pixite.ub.unboundFileParsingQueue", 0);
+        
+        // set this to a high priority queue so it doens't get blocked by the thumbs loading
+        dispatch_set_target_queue(_sharedUnboundQueue, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0));
+        
+        
+        
+    });
+    
+    return _sharedUnboundQueue;
+}
+
+
+-(void)updateUnboundFile
+{    
     if(![self unboundFileIsChanged]) return;
+    
+    NSManagedObjectID * thisID = [self objectID];
+    
+    dispatch_async([self sharedUnboundQueue], ^{
 
     NSMutableDictionary * unboundMetaDictionary = [self readUnboundFile];
-
-    //DLog(@"before: %@", unboundMetaDictionary);
-    
-    [unboundMetaDictionary setObject:@"1.0" forKey:@"unboundFileVersion"];
-    
-    // loop through the photos and populate the captions
-    NSDictionary * photosDictionary = [unboundMetaDictionary objectForKey:@"photos"];
-    
-    if(photosDictionary)
-    {
-        for(PIXPhoto * aPhoto in self.photos)
-        {
-            NSDictionary * photoInfoDict = [photosDictionary objectForKey:[aPhoto name]];
+        
+        // get a bg thread context and find the album object
+        NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];
+        PIXAlbum * threadAlbum = (PIXAlbum *)[context existingObjectWithID:thisID error:nil];
+        
+        if(threadAlbum == nil) return;
+            //DLog(@"before: %@", unboundMetaDictionary);
             
-            if(photoInfoDict)
+        [unboundMetaDictionary setObject:@"1.0" forKey:@"unboundFileVersion"];
+        
+        // loop through the photos and populate the captions
+        NSDictionary * photosDictionary = [unboundMetaDictionary objectForKey:@"photos"];
+        
+        if(photosDictionary)
+        {
+            for(PIXPhoto * aPhoto in threadAlbum.photos)
             {
-                NSString * caption = [photoInfoDict objectForKey:@"caption"];
-                if([caption isKindOfClass:[NSString class]])
+                NSDictionary * photoInfoDict = [photosDictionary objectForKey:[aPhoto name]];
+                
+                if(photoInfoDict)
                 {
-                    // if we're changing the caption
-                    if(![aPhoto.caption isEqualToString:[photoInfoDict objectForKey:@"caption"]])
+                    NSString * caption = [photoInfoDict objectForKey:@"caption"];
+                    if([caption isKindOfClass:[NSString class]])
                     {
-                        [aPhoto setCaption:[photoInfoDict objectForKey:@"caption"]];
-                        
-                        // also update the views
-                        
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [aPhoto postPhotoUpdatedNote];
-                        });
+                        // if we're changing the caption
+                        if(![aPhoto.caption isEqualToString:[photoInfoDict objectForKey:@"caption"]])
+                        {
+                            NSManagedObjectID * photoID = [aPhoto objectID];
+                            
+                            // update the photo on the main thread
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                
+                                // get the mainthread context and find the photo
+                                NSManagedObjectContext * mainContext = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
+                                NSString * newCaption = [photoInfoDict objectForKey:@"caption"];
+                                
+                                PIXPhoto * mainThreadPhoto = (PIXPhoto *)[mainContext existingObjectWithID:photoID error:nil];
+                                
+                                if(mainThreadPhoto)
+                                {
+                                    // update the photo's caption
+                                    [mainThreadPhoto setCaption:newCaption];
+                
+                                    // also update the views
+                                    [mainThreadPhoto postPhotoUpdatedNote];
+                                }
+                            });
+                        }
                     }
                 }
             }
         }
-    }
-    
-    NSDateFormatter *datFormatter = [[NSDateFormatter alloc] init];
-    [datFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss Z"];
-    
-    BOOL wasChanged = NO;
-    
-    if(self.albumDate != nil)
-    {
-        NSString * newDateString = [datFormatter stringFromDate:[self albumDate]];
-        NSString * oldDateString = [unboundMetaDictionary objectForKey:@"albumDate"];
         
-        if(![oldDateString isEqualToString:newDateString])
+        NSDateFormatter *datFormatter = [[NSDateFormatter alloc] init];
+        [datFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss Z"];
+        
+        BOOL wasChanged = NO;
+        
+        if(self.albumDate != nil)
         {
-            [unboundMetaDictionary setObject:newDateString forKey:@"albumDate"];
-            wasChanged = YES;
+            NSString * newDateString = [datFormatter stringFromDate:[self albumDate]];
+            NSString * oldDateString = [unboundMetaDictionary objectForKey:@"albumDate"];
+            
+            if(![oldDateString isEqualToString:newDateString])
+            {
+                [unboundMetaDictionary setObject:newDateString forKey:@"albumDate"];
+                wasChanged = YES;
+            }
         }
-    }
-    
-    //DLog(@"after: %@", unboundMetaDictionary);
-    
-    if(wasChanged)
-    {
-        [self writeUnboundFile:unboundMetaDictionary];
-    }
-    
-    [self setDateReadUnboundFile:[NSDate date]];
+        
+        //DLog(@"after: %@", unboundMetaDictionary);
+        
+        if(wasChanged)
+        {
+            [self writeUnboundFile:unboundMetaDictionary];
+            [threadAlbum setDateReadUnboundFile:[NSDate date]];
+        }
+        
+        [context save:nil];
+    });
 
 }
 
