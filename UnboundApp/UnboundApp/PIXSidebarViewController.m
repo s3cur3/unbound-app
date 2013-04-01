@@ -379,6 +379,66 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
 }
 
+-(BOOL)becomeFirstResponder
+{
+    return YES;
+}
+
+-(BOOL)acceptsFirstResponder
+{
+    return YES;
+}
+
+-(void)rightMouseDown:(NSEvent *)theEvent {
+    DLog(@"rightMouseDown:%@", theEvent);
+    [[self nextResponder] rightMouseDown:theEvent];
+    //    NSMenu *theMenu = [[NSMenu alloc] initWithTitle:@"Options"];
+    //    [theMenu insertItemWithTitle:@"Set As Desktop Background" action:@selector(setDesktopImage:) keyEquivalent:@""atIndex:0];
+    //    [NSMenu popUpContextMenu:theMenu withEvent:theEvent forView:self.imageView];
+}
+
+
+//- (IBAction) openInApp:(id)sender
+//{
+//    PIXAlbum *anAlbum =  [self.outlineView itemAtRow:[self.outlineView selectedRow]];
+//    NSArray *itemsToOpen = [NSArray arrayWithObject:anAlbum];
+//    
+//    for (id obj in itemsToOpen) {
+//        
+//        NSString* path = [obj path];
+//        [[NSWorkspace sharedWorkspace] openFile:path];
+//        
+//    }
+//}
+
+//- (IBAction) revealInFinder:(id)inSender
+//{
+//    PIXAlbum *anAlbum =  [self.outlineView itemAtRow:[self.outlineView selectedRow]];
+//    NSSet *aSet = [NSSet setWithObject:anAlbum];
+//    [aSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+//        
+//        NSString* path = [obj path];
+//        NSString* folder = [path stringByDeletingLastPathComponent];
+//        [[NSWorkspace sharedWorkspace] selectFile:path inFileViewerRootedAtPath:folder];
+//        
+//    }];
+//}
+//
+//-(IBAction)getInfo:(id)sender;
+//{
+//    PIXAlbum *anAlbum =  [self.outlineView itemAtRow:[self.outlineView selectedRow]];
+//    NSSet *aSet = [NSSet setWithObject:anAlbum];
+//    [aSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+//        
+//        NSPasteboard *pboard = [NSPasteboard pasteboardWithUniqueName];
+//        [pboard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
+//        [pboard setString:[obj path]  forType:NSStringPboardType];
+//        NSPerformService(@"Finder/Show Info", pboard);
+//        
+//    }];
+//    
+//}
+
 
 @end
 
@@ -460,5 +520,7 @@
 {
     return [item title];
 }
+
+
 
 @end

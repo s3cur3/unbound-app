@@ -136,25 +136,33 @@
 }
 
 
-//-(void)setAlbum:(id)album
-//{
-//    BOOL firstLoad = NO;
-//    //The first time album is set, no need to reload
-//    if (_album==nil && album!=nil)
-//    {
-//        firstLoad = YES;
-//    }
-//    _album = album;
-//    if (album) {
-//        //[[[PIXAppDelegate sharedAppDelegate] window] setTitle:[self.album title]];
-//        if (firstLoad == NO)
-//        {
-//            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAlbumView:) name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:album];
-//        }
-//    }
-//}
+- (IBAction) revealInFinder:(id)inSender
+{
+    PIXAlbum *anAlbum =  self.album;
+    NSSet *aSet = [NSSet setWithObject:anAlbum];
+    [aSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        
+        NSString* path = [obj path];
+        NSString* folder = [path stringByDeletingLastPathComponent];
+        [[NSWorkspace sharedWorkspace] selectFile:path inFileViewerRootedAtPath:folder];
+        
+    }];
+}
 
-
+-(IBAction)getInfo:(id)sender;
+{
+    PIXAlbum *anAlbum =  self.album;
+    NSSet *aSet = [NSSet setWithObject:anAlbum];
+    [aSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        
+        NSPasteboard *pboard = [NSPasteboard pasteboardWithUniqueName];
+        [pboard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
+        [pboard setString:[obj path]  forType:NSStringPboardType];
+        NSPerformService(@"Finder/Show Info", pboard);
+        
+    }];
+    
+}
 
 // use this to switch text color when highligthed
 - (void)setBackgroundStyle:(NSBackgroundStyle)style
@@ -189,5 +197,63 @@
         }
 }
 
+//// Only called if the 'selected' property is yes.
+//- (void)drawSelectionInRect:(NSRect)dirtyRect {
+//    // Check the selectionHighlightStyle, in case it was set to None
+//    if (self.hasContextMenuOpen) {
+//        // We want a hard-crisp stroke, and stroking 1 pixel will border half on one side and half on another, so we offset by the 0.5 to handle this
+//        NSRect selectionRect = NSInsetRect(self.bounds, 5.5, 5.5);
+//        [[NSColor colorWithCalibratedWhite:.72 alpha:1.0] setStroke];
+//        [[NSColor colorWithCalibratedWhite:.82 alpha:1.0] setFill];
+//        NSBezierPath *selectionPath = [NSBezierPath bezierPathWithRoundedRect:selectionRect xRadius:10 yRadius:10];
+//        [selectionPath fill];
+//        [selectionPath stroke];
+//    }
+//}
+//
+//- (void)drawBackgroundInRect:(NSRect)dirtyRect {
+//    // Custom background drawing. We don't call super at all.
+//    [self.backgroundColor set];
+//    // Fill with the background color first
+//    NSRectFill(self.bounds);
+//    
+//    // Draw a white/alpha gradient
+//    if (self.hasContextMenuOpen) {
+//        NSGradient *gradient = gradientWithTargetColor([NSColor whiteColor]);
+//        [gradient drawInRect:self.bounds angle:0];
+//    }
+//}
+
+- (void)menuWillOpen:(NSMenu *)menu;
+{
+    self.hasContextMenuOpen = YES;
+    CGColorRef color = CGColorCreateGenericGray(1.0, 1.0);
+    //[self.layer setBackgroundColor:color];
+    [self.layer setBorderWidth:2.0f];
+    [self.layer setBorderColor:color];
+//    [super drawFocusRingMask];
+//    //self.backgroundStyle =
+//    [self.detailTextLabel setStringValue:@"Context menu..."];
+//    self.backgroundStyle = NSBackgroundStyleRaised;
+    [self setNeedsDisplay:YES];
+}
+- (void)menuDidClose:(NSMenu *)menu;
+{
+    self.hasContextMenuOpen = NO;
+    [self.layer setBorderWidth:0.0f];
+    //[self.layer setBorderColor:color];
+}
+
+- (void)rightMouseDown:(NSEvent *)theEvent;
+{
+    [super rightMouseDown:theEvent];
+    DLog(@"rightMouseDown : %@", theEvent);
+}
+
+//- (void)drawDraggingDestinationFeedbackInRect:(NSRect)dirtyRect;
+//{
+//    //[super drawDraggingDestinationFeedbackInRect:dirtyRect];
+//    //[super drawFocusRingMask];
+//}
 
 @end
