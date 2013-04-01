@@ -9,6 +9,8 @@
 #import "PIXSidebarTableCellView.h"
 #import "PIXAlbum.h"
 #import "PIXDefines.h"
+#import "PIXFileManager.h"
+#import "NSColor+CNGridViewPalette.h"
 
 @implementation PIXSidebarTableCellView
 
@@ -135,6 +137,26 @@
     
 }
 
+- (IBAction) deleteItems:(id )inSender
+{
+    // if we have nothing to delete then do nothing
+    if(!self.album) return;
+    
+    NSMutableArray *itemsToDelete = [NSArray arrayWithObject:self.album];
+
+    NSString * deleteString = @"Delete Album";
+
+    NSString *warningMessage = [NSString stringWithFormat:@"%@ will be deleted immediately.\nAre you sure you want to continue?", deleteString];
+    if (NSRunCriticalAlertPanel(warningMessage, @"You cannot undo this action.", @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
+        
+        [[PIXFileManager sharedInstance] recycleAlbums:itemsToDelete];
+        
+    } else {
+        // User clicked cancel, they do not want to delete the files
+    }
+    
+}
+
 
 - (IBAction) revealInFinder:(id)inSender
 {
@@ -227,10 +249,12 @@
 - (void)menuWillOpen:(NSMenu *)menu;
 {
     self.hasContextMenuOpen = YES;
-    CGColorRef color = CGColorCreateGenericGray(1.0, 1.0);
+    CGColorRef color = CGColorCreateGenericRGB(0.346, 0.531, 0.792, 1.000);
+    //NSColor *color = [NSColor itemSelectionRingColor];
     //[self.layer setBackgroundColor:color];
     [self.layer setBorderWidth:2.0f];
     [self.layer setBorderColor:color];
+    [self.layer setCornerRadius:2.5];
 //    [super drawFocusRingMask];
 //    //self.backgroundStyle =
 //    [self.detailTextLabel setStringValue:@"Context menu..."];

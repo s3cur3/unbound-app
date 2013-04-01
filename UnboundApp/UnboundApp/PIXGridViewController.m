@@ -235,7 +235,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
     }
     
     NSString *warningMessage = [NSString stringWithFormat:@"%@ will be deleted immediately.\nAre you sure you want to continue?", deleteString];
-    if (NSRunCriticalAlertPanel(warningMessage, @"You cannot undo this action.", @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
+    if (NSRunCriticalAlertPanel(@"Warning", warningMessage, @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
         
         if ([[itemsToDelete lastObject] class] == [PIXAlbum class]) {
             [[PIXFileManager sharedInstance] recycleAlbums:itemsToDelete];
