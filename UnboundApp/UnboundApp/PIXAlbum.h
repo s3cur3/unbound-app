@@ -90,7 +90,7 @@ typedef enum {
 -(void)cancelThumbnailLoading;
 
 -(void)updateDatePhoto;
--(void)updateAlbumBecausePhotosDidChange;
+//-(void)updateAlbumBecausePhotosDidChange;
 
 //non-core data
 - (NSURL *)filePathURL;

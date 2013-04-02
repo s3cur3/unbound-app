@@ -1006,7 +1006,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
         if (isPhotoEntity) {
             for (PIXAlbum *anAlbum in albumsChanged)
             {
-                [anAlbum updateAlbumBecausePhotosDidChange];
+                //[anAlbum updateAlbumBecausePhotosDidChange];
+                [[PIXFileParser sharedFileParser] scanPath:anAlbum.path withRecursion:PIXFileParserRecursionNone];
             }
         }
     }

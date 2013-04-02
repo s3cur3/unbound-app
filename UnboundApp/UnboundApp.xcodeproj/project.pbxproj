@@ -46,6 +46,7 @@
 		1D8CD7EF16AB6EC70072D516 /* PIXGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8CD7ED16AB6EC70072D516 /* PIXGridViewController.m */; };
 		1D8CD7F016AB6EC70072D516 /* PIXGridViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8CD7EE16AB6EC70072D516 /* PIXGridViewController.xib */; };
 		1D8CD7F416AB76E20072D516 /* PIXPhotoGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8CD7F316AB76E20072D516 /* PIXPhotoGridViewController.m */; };
+		1D91D13C1709DB1C00747629 /* PIXOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D91D13B1709DB1C00747629 /* PIXOutlineView.m */; };
 		1DA66CB016AA2ED10060D796 /* nophoto_200x200.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1DA66CAF16AA2ED00060D796 /* nophoto_200x200.jpg */; };
 		1DB2F84F167ABE87008AC0F7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DB2F84E167ABE87008AC0F7 /* Cocoa.framework */; };
 		1DB2F859167ABE87008AC0F7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F857167ABE87008AC0F7 /* InfoPlist.strings */; };
@@ -240,6 +241,8 @@
 		1D8CD7F116AB724C0072D516 /* PIXThumbnailLoadingDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXThumbnailLoadingDelegate.h; sourceTree = "<group>"; };
 		1D8CD7F216AB76E20072D516 /* PIXPhotoGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPhotoGridViewController.h; sourceTree = "<group>"; };
 		1D8CD7F316AB76E20072D516 /* PIXPhotoGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhotoGridViewController.m; sourceTree = "<group>"; };
+		1D91D13A1709DB1C00747629 /* PIXOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXOutlineView.h; sourceTree = "<group>"; };
+		1D91D13B1709DB1C00747629 /* PIXOutlineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXOutlineView.m; sourceTree = "<group>"; };
 		1DA66CAF16AA2ED00060D796 /* nophoto_200x200.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = nophoto_200x200.jpg; sourceTree = "<group>"; };
 		1DB2F84A167ABE87008AC0F7 /* Unbound.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unbound.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DB2F84E167ABE87008AC0F7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -620,6 +623,8 @@
 		1D4A1E32167D361E00C9A895 /* SidebarOutlineView */ = {
 			isa = PBXGroup;
 			children = (
+				1D91D13A1709DB1C00747629 /* PIXOutlineView.h */,
+				1D91D13B1709DB1C00747629 /* PIXOutlineView.m */,
 				1D4A1E3B167D372600C9A895 /* SquareImageView.h */,
 				1D4A1E3C167D372600C9A895 /* SquareImageView.m */,
 				1D4A1E33167D365900C9A895 /* PIXSidebarViewController.h */,
@@ -1080,7 +1085,7 @@
 				8C53DFE816FB76E9008EF8B1 /* PIXInfoPanelViewController.m in Sources */,
 				8C9AA2BE1700A5C100D989CA /* PIXSlideshowOptonsViewController.m in Sources */,
 				8C8F4354170534610040562D /* PIXFileTextField.m in Sources */,
-				8CCE8D19170A67F700CFA3D2 /* YRKSpinningProgressIndicatorLayer.m in Sources */,
+				1D91D13C1709DB1C00747629 /* PIXOutlineView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -26,6 +26,7 @@
 #import "PIXSlideshowOptonsViewController.h"
 
 #import "PIXViewController.h"
+#import "PIXFileManager.h"
 
 @interface PIXPageViewController () <leapResponder, PIXSlideshowOptonsDelegate, NSMenuDelegate>
 
@@ -636,10 +637,12 @@
     PIXPhoto *aPhoto = [self.pagerData objectAtIndex:self.pageController.selectedIndex];
     NSMenu *contextMenu = [self menuForObject:aPhoto];
     contextMenu.delegate = self;
+    NSMenuItem *desktopBackgroundMenuItem = [[NSMenuItem alloc] initWithTitle:@"Set As Desktop Background" action:@selector(setDesktopImage:) keyEquivalent:@""];
+    desktopBackgroundMenuItem.target = self;
+    [contextMenu addItem:desktopBackgroundMenuItem];
+    //[contextMenu addItemWithTitle:@"Set As Desktop Background" action:@selector(setDesktopImage:) keyEquivalent:@""];
+    //[contextMenu insertItemWithTitle:@"Set As Desktop Background" action:@selector(setDesktopImage:) keyEquivalent:@""atIndex:0];
     [NSMenu popUpContextMenu:contextMenu withEvent:theEvent forView:self.pageController.selectedViewController.view];
-    //    NSMenu *theMenu = [[NSMenu alloc] initWithTitle:@"Options"];
-    //    [theMenu insertItemWithTitle:@"Set As Desktop Background" action:@selector(setDesktopImage:) keyEquivalent:@""atIndex:0];
-    //    [NSMenu popUpContextMenu:theMenu withEvent:theEvent forView:self.imageView];
 }
 
 - (IBAction) openInApp:(id)sender
@@ -683,7 +686,38 @@
 //TODO: implement this
 - (IBAction) deleteItems:(id )inSender
 {
-    NSRunCriticalAlertPanel(@"Delete photo is under development.", @"Feature Unavailable", @"OK", @"Cancel", nil);
+    //NSRunCriticalAlertPanel(@"Delete photo is under development.", @"Feature Unavailable", @"OK", @"Cancel", nil);
+    NSString *warningMessage = [NSString stringWithFormat:@"This photo will be deleted immediately.\nAre you sure you want to continue?"];
+    if (NSRunCriticalAlertPanel(@"Warning", warningMessage, @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
+        
+        PIXPhoto *aPhoto = [self.pagerData objectAtIndex:self.pageController.selectedIndex];
+        BOOL lastItem = NO;
+        if (aPhoto == [self.pagerData lastObject]) {
+            lastItem = YES;
+        }
+        NSArray *itemsToDelete = [NSArray arrayWithObject:aPhoto];
+        if (!lastItem) {
+            [self.pageController navigateForward:nil];
+            //[self nextPage:nil];
+        } else if (self.pagerData.count>1) {
+            [self.pageController navigateBack:nil];
+        } else {
+            [self.navigationViewController popViewController];
+        }
+        [[PIXFileManager sharedInstance] recyclePhotos:itemsToDelete];
+        
+    } else {
+        // User clicked cancel, they do not want to delete the files
+    }
+
+
+    //[self.pageController moveForward:nil];
+}
+
+-(void)setDesktopImage:(id)sender
+{
+    PIXPhoto *aPhoto = [self.pagerData objectAtIndex:self.pageController.selectedIndex];
+    [[PIXFileManager sharedInstance] setDesktopImage:aPhoto];
 }
 
 #pragma mark -

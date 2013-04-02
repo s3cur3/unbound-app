@@ -329,7 +329,8 @@ typedef NSUInteger PIXOverwriteStrategy;
                 
                 for (PIXAlbum *anAlbum in albumsToUpdate)
                 {
-                    [anAlbum updateAlbumBecausePhotosDidChange];
+                    //[anAlbum updateAlbumBecausePhotosDidChange];
+                    [[PIXFileParser sharedFileParser] scanPath:anAlbum.path withRecursion:PIXFileParserRecursionNone];
                     [anAlbum flush];
                 }
                 
@@ -380,7 +381,8 @@ typedef NSUInteger PIXOverwriteStrategy;
 
             for (PIXAlbum *anAlbum in albumsToUpdate)
             {
-                [anAlbum updateAlbumBecausePhotosDidChange];
+                //[anAlbum updateAlbumBecausePhotosDidChange];
+                [[PIXFileParser sharedFileParser] scanPath:anAlbum.path withRecursion:PIXFileParserRecursionNone];
                 [anAlbum flush];
             }
 
@@ -1279,6 +1281,23 @@ NSString * UserHomeDirectory();
     [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
     
     return newAlbum;
+}
+
+-(void)setDesktopImage:(PIXPhoto *)aPhoto
+{
+    NSDictionary *screenOptions = [[NSWorkspace sharedWorkspace] desktopImageOptionsForScreen:[NSScreen mainScreen]];
+    NSError *error = nil;
+    
+    NSURL *aURL = [aPhoto filePath];
+    
+    [[NSWorkspace sharedWorkspace] setDesktopImageURL:aURL
+                                            forScreen:[NSScreen mainScreen]
+                                              options:screenOptions
+                                                error:&error];
+    if (error)
+    {
+        [NSApp presentError:error];
+    }
 }
 
 @end

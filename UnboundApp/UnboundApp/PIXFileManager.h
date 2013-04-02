@@ -26,6 +26,8 @@
 -(PIXAlbum *)createAlbumWithName:(NSString *)aName;
 -(PIXAlbum *)createAlbumAtPath:(NSString *)aPath withName:(NSString *)aName;
 
+-(void)setDesktopImage:(PIXPhoto *)aPhoto;
+
 //-(NSString *)trashFolderPath;
 
 - (NSString *)defaultAppPathForOpeningFileWithPath:(NSString *)filePath;

@@ -11,10 +11,12 @@
 @class Album;
 @class PIXAlbum;
 
-@interface PIXSidebarTableCellView : NSTableCellView
+@interface PIXSidebarTableCellView : NSTableCellView <NSMenuDelegate>
 
 @property(strong) IBOutlet NSTextField *titleTextLabel;
 @property(strong) IBOutlet NSTextField *detailTextLabel;
 @property(nonatomic, strong) IBOutlet PIXAlbum *album;
+
+@property (assign) BOOL hasContextMenuOpen;
 
 @end
