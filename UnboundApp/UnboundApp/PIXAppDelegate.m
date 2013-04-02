@@ -203,20 +203,27 @@
 
 - (NSWindowController *)preferencesWindowController
 {
-    if (_preferencesWindowController == nil)
-    {
+    //if (_preferencesWindowController == nil)
+    //{
         NSViewController *generalViewController = [[GeneralPreferencesViewController alloc] init];
         NSViewController *advancedViewController = [[AdvancedPreferencesViewController alloc] init];
         
 
         NSArray *controllers = [[NSArray alloc] initWithObjects:[NSNull null], generalViewController, advancedViewController, [NSNull null], nil];
         
+        
+        BOOL debug = NO;
         // add the debug preferences pane if we're on a debug build
 #ifdef DEBUG
-        NSViewController *debugController = [[DebugPrefrencesViewController alloc] init];
-        controllers = [controllers arrayByAddingObject:debugController];
         
+        debug = YES;
 #endif
+        
+        if(debug || [NSEvent modifierFlags] & NSAlternateKeyMask)
+        {
+            NSViewController *debugController = [[DebugPrefrencesViewController alloc] init];
+            controllers = [controllers arrayByAddingObject:debugController];
+        }
         
         
         // To add a flexible space between General and Advanced preference panes insert [NSNull null]:
@@ -224,7 +231,7 @@
         
         NSString *title = NSLocalizedString(@"Preferences", @"Common title for Preferences window");
         _preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:controllers title:title];
-    }
+    //}
     return _preferencesWindowController;
 }
 

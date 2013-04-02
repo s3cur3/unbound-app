@@ -206,6 +206,7 @@
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(albumChanged:) name:AlbumDidChangeNotification object:_album];
         
+        [self displayIfNeeded];
     }
 }
 
@@ -285,9 +286,6 @@
 - (void)drawRect:(NSRect)rect
 {
     NSRect bounds = self.bounds;
-    
-    
-    
     
     NSBezierPath *contentRectPath = [NSBezierPath bezierPathWithRect:rect];
     

@@ -24,6 +24,8 @@
 #import "PIXFileParser.h"
 #import "PIXFileManager.h"
 
+#import "YRKSpinningProgressIndicatorLayer.h"
+
 #import "PIXShareManager.h"
 
 @interface PIXAlbumGridViewController ()
@@ -150,7 +152,7 @@
 {
     //NSArray * items = @[self.activityIndicator, self.navigationViewController.middleSpacer, self.searchBar];
 
-    NSArray * items = @[/*self.activityIndicator,*/ self.navigationViewController.middleSpacer, self.newAlbumButton, self.searchBar, self.sortButton];
+    NSArray * items = @[/*self.activityIndicator, */self.navigationViewController.middleSpacer, self.newAlbumButton, self.searchBar, self.sortButton];
     
     [self.navigationViewController setToolbarItems:items];
     
@@ -163,6 +165,7 @@
     _activityIndicator = [[NSToolbarItem alloc] initWithItemIdentifier:@"activityIndicator"];
     //_trashbutton.image = [NSImage imageNamed:NSImageNameTrashEmpty];
     
+    
     NSProgressIndicator * indicator = [[NSProgressIndicator alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
     [indicator setStyle:NSProgressIndicatorSpinningStyle];
     [indicator setIndeterminate:YES];
@@ -174,10 +177,31 @@
     
     [indicator setUsesThreadedAnimation:YES];
     
+    
     [indicator bind:@"animate"
            toObject:[PIXFileParser sharedFileParser]
         withKeyPath:@"isWorking"
             options: nil]; //@{NSValueTransformerNameBindingOption : NSNegateBooleanTransformerName}];
+     
+     /*
+     NSView * containerView = [[NSView alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
+     
+     
+     YRKSpinningProgressIndicatorLayer * progressIndicatorLayer = [[YRKSpinningProgressIndicatorLayer alloc] init];
+     progressIndicatorLayer.name = @"progressIndicatorLayer";
+     progressIndicatorLayer.anchorPoint = CGPointMake(0.0, 0.0);
+     progressIndicatorLayer.position = CGPointMake(0, 0);
+     progressIndicatorLayer.bounds = [[containerView layer] bounds];
+     progressIndicatorLayer.autoresizingMask = (kCALayerWidthSizable|kCALayerHeightSizable);
+     progressIndicatorLayer.zPosition = 10; // make sure it goes in front of the background layer
+     progressIndicatorLayer.hidden = YES;
+    
+    [containerView setLayer:progressIndicatorLayer];
+    [containerView setWantsLayer:YES];
+    
+    [progressIndicatorLayer startProgressAnimation];
+      
+    */
     
     _activityIndicator.view = indicator;
     
@@ -945,7 +969,7 @@
 -(void)albumsChanged:(NSNotification *)note
 {
     self.albums = nil;
-    [self.gridView reloadData];
+    //[self.gridView reloadData]; // the updateSearch call will reload data always so no need to call this
     [self updateGridTitle];
     
     self.lastSearch = nil; // clear this out because we need to do a new search when all the albums change

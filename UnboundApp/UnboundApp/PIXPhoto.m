@@ -202,6 +202,7 @@ const CGFloat kThumbnailSize = 370.0f;
         
         NSURL *urlForImage = [NSURL fileURLWithPath:aPath];
         
+        /*
         /// loading the image directly from the data wasn't working for raw images
         //NSData * imageData = [NSData dataWithContentsOfURL:urlForImage];
         
@@ -227,8 +228,7 @@ const CGFloat kThumbnailSize = 370.0f;
         [image unlockFocus];
         
         [weakSelf performSelectorOnMainThread:@selector(mainThreadComputeFullsizePreviewFinished:) withObject:image waitUntilDone:YES];
-        /*
-        
+        */
         CGImageSourceRef imageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)urlForImage, nil);
         if (imageSource) {
             
@@ -291,7 +291,7 @@ const CGFloat kThumbnailSize = 370.0f;
             
             //if(cfDict) CFRelease(cfDict);
             CFRelease(imageSource);
-        }*/
+        }//*/
         
         
     }];
@@ -389,14 +389,16 @@ const CGFloat kThumbnailSize = 370.0f;
 //        
 //        NSNumber *maxPixelSize = [NSNumber numberWithInteger:maxDimension];
         //DLog(@"Using maxPixelSize : %@", maxPixelSize);
-        imageOptions = @{//(id)kCGImageSourceCreateThumbnailFromImageIfAbsent: (id)kCFBooleanTrue,
-                                       (id)kCGImageSourceCreateThumbnailFromImageAlways: (id)kCFBooleanTrue,
-                                       //(id)kCGImageSourceThumbnailMaxPixelSize: (id)maxPixelSize,
-                                       (id)kCGImageSourceCreateThumbnailWithTransform: (id)kCFBooleanTrue};
+        imageOptions = [NSDictionary dictionaryWithObjectsAndKeys:
+                        (id)kCFBooleanTrue, (id)kCGImageSourceCreateThumbnailFromImageAlways,
+                          (id)kCFBooleanTrue, (id)kCGImageSourceCreateThumbnailWithTransform,
+                          (id)kCFBooleanTrue, (id)kCGImageSourceCreateThumbnailFromImageIfAbsent,
+                          //[NSNumber numberWithInt:128], (id)kCGImageSourceThumbnailMaxPixelSize,
+                          nil]; 
         
         //imageOptions = @{};
         
-        imageRef = CGImageSourceCreateImageAtIndex(imageSource, 0, (__bridge CFDictionaryRef)imageOptions);
+        imageRef = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, (__bridge CFDictionaryRef)imageOptions);
     }
 
     

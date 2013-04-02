@@ -9,6 +9,7 @@
 #import "PIXSidebarTableCellView.h"
 #import "PIXAlbum.h"
 #import "PIXDefines.h"
+#import "PIXAlbumGridViewItem.h"
 
 @implementation PIXSidebarTableCellView
 
@@ -187,6 +188,18 @@
                 [self.detailTextLabel setTextColor:[NSColor colorWithCalibratedWhite:1.0 alpha:1.0]];
                 break;
         }
+}
+
+
+-(NSArray *)draggingImageComponents
+{
+    NSDraggingImageComponent * imageComponent = [[NSDraggingImageComponent alloc] init];
+    
+    NSImage * dragImage = [PIXAlbumGridViewItem dragImageForAlbums:@[self.album] size:NSMakeSize(180, 180)];
+    [imageComponent setContents:dragImage];
+    [imageComponent setFrame:NSMakeRect(0, 0, 180, 180)];
+    
+    return @[imageComponent];
 }
 
 

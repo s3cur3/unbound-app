@@ -17,6 +17,7 @@
 #import "PIXPhoto.h"
 #import "PIXDefines.h"
 #import "PIXMainWindowController.h"
+#import "PIXAlbumGridViewItem.h"
 
 @interface PIXSidebarViewController ()
 
@@ -119,6 +120,9 @@
 -(void)willShowPIXView
 {
     [self.outlineView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
+    
+    [self.outlineView setDraggingSourceOperationMask:(NSDragOperationCopy) forLocal:NO];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                                    selector:@selector(albumsChanged:)
                                                        name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM
@@ -341,6 +345,32 @@
         }
 	}
     
+}
+
+
+
+#pragma mark -
+#pragma mark Dragging Source Methods:
+
+
+- (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard
+{
+    [pboard declareTypes:[NSArray arrayWithObject:NSFilenamesPboardType] owner:nil];
+    
+    NSMutableArray * filenames = [[NSMutableArray alloc] initWithCapacity:[items count]];
+    
+    for(PIXAlbum * anAlbum in items)
+    {
+        [filenames addObject:anAlbum.path];
+        //[dragPBoard setString:anAlbum.path forType:NSFilenamesPboardType];
+    }
+    
+    [pboard setPropertyList:filenames
+                        forType:NSFilenamesPboardType];
+    
+    
+    
+    return YES;
 }
 
 - (IBAction)textTitleChanged:(id)sender {

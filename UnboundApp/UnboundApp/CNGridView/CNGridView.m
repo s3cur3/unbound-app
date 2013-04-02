@@ -336,17 +336,24 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     [visibleItemIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
         CNGridViewItem *item = [self gridView:self itemAtIndex:idx inSection:0];
         if (item) {
+            
+            [self addSubview:item];
+            
             item.index = idx;
             if (isInitialCall) {
                 [item setAlphaValue:0.0];
                 [item setFrame:[self rectForItemAtIndex:idx]];
             }
+            
             [keyedVisibleItems setObject:item forKey:[NSNumber numberWithUnsignedInteger:item.index]];
             
             item.selected = [self gridView:self itemIsSelectedAtIndex:idx inSection:0];
             
-            [self addSubview:item];            
+            
+            
+            [item setNeedsDisplay:YES];
         }
+        
     }];
 }
 
@@ -574,20 +581,43 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
 - (void)reloadDataAnimated:(BOOL)animated
 {
-     //[[self window ] disableScreenUpdatesUntilFlush];
+    if(animated)
+    {
+        CATransition *animation = [CATransition animation];
+        [animation setDuration:0.1];
         
+        [animation setType:kCATransitionFade];
+        
+        [self.layer addAnimation:animation forKey:@"gridRefreshFade"];
+    }
+    
+    
+    
     numberOfItems = [self gridView:self numberOfItemsInSection:0];
-    [keyedVisibleItems enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+    
+    // take all the items on the screen and put them into the reusable item bin
+    [[keyedVisibleItems allValues] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         
-        CNGridViewItem * item = (CNGridViewItem *)obj;
+        CNGridViewItem *item = (CNGridViewItem *)obj;
+        
+        [keyedVisibleItems removeObjectForKey:[NSNumber numberWithUnsignedInteger:item.index]];
         [item removeFromSuperview];
+        //[item setAlphaValue:0.0];
+        [item prepareForReuse];
+        
+        if ([item isReuseable]) {
+            NSMutableSet *reuseQueue = [reuseableItems objectForKey:item.reuseIdentifier];
+            if (reuseQueue == nil)
+                reuseQueue = [NSMutableSet set];
+            [reuseQueue addObject:item];
+            [reuseableItems setObject:reuseQueue forKey:item.reuseIdentifier];
+        }
     }];
+   
+    // the refresh gridview will update them all
+    [self refreshGridViewAnimated:NO];
     
-    [keyedVisibleItems removeAllObjects];
-    [reuseableItems removeAllObjects];
-    [self refreshGridViewAnimated:animated];
-    
-    //[[self window] enableFlushWindow];
+    DLog(@"Num subviews: %ld", [[self subviews] count]);
 }
 
 
