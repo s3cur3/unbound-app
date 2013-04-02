@@ -422,6 +422,9 @@ static NSString *const kItemsKey = @"photos";
         [PIXAppDelegate presentError:error];
     }
     [os close];
+    
+    [self setDateReadUnboundFile:[NSDate date]];
+    
 }
 
 - (dispatch_queue_t)sharedUnboundQueue
@@ -526,8 +529,7 @@ static NSString *const kItemsKey = @"photos";
         
         if(wasChanged)
         {
-            [self writeUnboundFile:unboundMetaDictionary];
-            [threadAlbum setDateReadUnboundFile:[NSDate date]];
+            [threadAlbum writeUnboundFile:unboundMetaDictionary];
         }
         
         [context save:nil];

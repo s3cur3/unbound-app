@@ -875,9 +875,14 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     [self selectItemAtIndexMouseDown:selectedItemIndex usingModifierFlags:[NSEvent modifierFlags]];
     
     
-
-    /// inform the delegate
-    [self gridView:self didDoubleClickItemAtIndex:selectedItemIndex inSection:0];
+    double delayInSeconds = 0.01;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+        /// inform the delegate
+        [self gridView:self didDoubleClickItemAtIndex:selectedItemIndex inSection:0];
+    });
+    
 }
 
 - (void)drawSelectionFrameForMousePointerAtLocation:(NSPoint)location
@@ -1062,6 +1067,9 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         {
             NSUInteger indexClick1 = [self indexForItemAtLocation:[[clickEvents objectAtIndex:0] locationInWindow]];
             if (indexClick1 == index) {
+                
+                
+                
                 [self handleDoubleClickForItemAtIndex:indexClick1];
                 
                 [clickEvents removeAllObjects];

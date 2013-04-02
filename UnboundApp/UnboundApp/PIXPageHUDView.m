@@ -80,9 +80,13 @@
 
 -(void)setPhoto:(PIXPhoto *)photo
 {
-    _photo = photo;
-    [self setupCaptionSpace];
+    if(self.isTextEditing)
+    {
+        [self textDidEndEditing:nil];
+    }
     
+    _photo = photo;
+    [self setupCaptionSpace];    
 }
 
 #pragma mark -
@@ -455,6 +459,7 @@
 
 - (BOOL)textView:(NSTextView *)aTextView shouldChangeTextInRange:(NSRange)affectedCharRange replacementString:(NSString *)replacementString
 {
+    // always fix the font and alignment after changes
     dispatch_async(dispatch_get_main_queue(), ^{
         [[self.captionTextView textStorage] setFont:[NSFont fontWithName:@"Helvetica" size:18]];
         [[self.captionTextView textStorage] setForegroundColor:[NSColor whiteColor]];
@@ -472,22 +477,6 @@
     return YES;
 }
 
-- (NSDictionary *)textView:(NSTextView *)textView shouldChangeTypingAttributes:(NSDictionary *)oldTypingAttributes toAttributes:(NSDictionary *)newTypingAttributes
-{
-    return newTypingAttributes;
-}
-
-/*
-- (NSRange)textView:(NSTextView *)aTextView willChangeSelectionFromCharacterRange:(NSRange)oldSelectedCharRange toCharacterRange:(NSRange)newSelectedCharRange
-{
-    
-    [[self.captionTextView textStorage] setFont:[NSFont fontWithName:@"Helvetica" size:18]];
-    [[self.captionTextView textStorage] setForegroundColor:[NSColor whiteColor]];
-    [[self.captionTextView textStorage] setAlignment:NSCenterTextAlignment range:NSMakeRange(0, [self.captionTextView textStorage].length)];
-    
-    
-    return newSelectedCharRange;
-}*/
 
 #pragma mark -
 #pragma mark background drawing

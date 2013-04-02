@@ -80,6 +80,13 @@ const CGFloat kThumbnailSize = 370.0f;
     [self.album setUnboundFileCaptionForPhoto:self];
 }
 
+-(void)setCaption:(NSString *)caption
+{
+    [self willChangeValueForKey:@"caption"];
+    [self setPrimitiveValue:caption forKey:@"caption"];
+    [self didChangeValueForKey:@"caption"];
+}
+
 //TODO: get rid of this
 -(NSURL *)filePath;
 {

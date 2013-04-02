@@ -127,6 +127,8 @@
         
     }
     
+    DLog(@"New Photo Index = %ld", self.pageController.selectedIndex);
+    
     // update the HUD (caption view)
     [self.controlView setPhoto:thisPhoto];
     
