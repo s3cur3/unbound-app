@@ -453,7 +453,31 @@
     [self setupCaptionSpace];
 }
 
+- (BOOL)textView:(NSTextView *)aTextView shouldChangeTextInRange:(NSRange)affectedCharRange replacementString:(NSString *)replacementString
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[self.captionTextView textStorage] setFont:[NSFont fontWithName:@"Helvetica" size:18]];
+        [[self.captionTextView textStorage] setForegroundColor:[NSColor whiteColor]];
+        [[self.captionTextView textStorage] setAlignment:NSCenterTextAlignment range:NSMakeRange(0, [self.captionTextView textStorage].length)];
+        [self.captionTextView alignCenter:nil];
+    });
+    
+    // if the user hit return without holding down 
+    if([replacementString isEqualToString:@"\n"] && !([NSEvent modifierFlags] & NSShiftKeyMask))
+    {
+        [[NSApp mainWindow] makeKeyWindow];
+        return NO;
+    }
+    
+    return YES;
+}
 
+- (NSDictionary *)textView:(NSTextView *)textView shouldChangeTypingAttributes:(NSDictionary *)oldTypingAttributes toAttributes:(NSDictionary *)newTypingAttributes
+{
+    return newTypingAttributes;
+}
+
+/*
 - (NSRange)textView:(NSTextView *)aTextView willChangeSelectionFromCharacterRange:(NSRange)oldSelectedCharRange toCharacterRange:(NSRange)newSelectedCharRange
 {
     
@@ -463,7 +487,7 @@
     
     
     return newSelectedCharRange;
-}
+}*/
 
 #pragma mark -
 #pragma mark background drawing

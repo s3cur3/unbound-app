@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXPageHUDView.m"
-         timestampString = "386284897.725806"
+         timestampString = "386569149.456314"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "465"
-         endingLineNumber = "465"
+         startingLineNumber = "489"
+         endingLineNumber = "489"
          landmarkName = "-textView:willChangeSelectionFromCharacterRange:toCharacterRange:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -105,6 +105,19 @@
          startingLineNumber = "400"
          endingLineNumber = "400"
          landmarkName = "+makeFullsizeImageFromImageSource:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "UnboundApp/PIXPageHUDView.m"
+         timestampString = "386569149.456314"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "477"
+         endingLineNumber = "477"
+         landmarkName = "-textView:shouldChangeTypingAttributes:toAttributes:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
