@@ -22,6 +22,7 @@
 
 @property (weak) IBOutlet MKMapView * mapView;
 
+
 @end
 
 @implementation PIXInfoPanelViewController
@@ -122,6 +123,7 @@
 
 -(void)updateMap
 {
+    
     if([[self.photo latitude] doubleValue] == 0 || [[self.photo longitude] doubleValue] == 0)
     {
         [self.mapView.animator setHidden:YES];
@@ -140,6 +142,12 @@
         [self.mapView addStylesheetTag:path];
         
     }
+}
+
+-(void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
+{
+    
+    [self updateMap];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)aMapView viewForAnnotation:(id <MKAnnotation>)annotation
@@ -187,6 +195,11 @@
     
     // get rid of the first responder status
     [self.view.window makeFirstResponder:self.pageView.view];
+}
+
+-(void)dealloc
+{
+    [self.mapView setDelegate:nil];
 }
 
 

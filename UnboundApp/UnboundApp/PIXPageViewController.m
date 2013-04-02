@@ -1044,6 +1044,11 @@
     //[self makeSelectedViewFirstResponder];
 }
 
+-(void)dealloc
+{
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(tryFadeControls) object:nil];
+}
+
 
 
 @end

@@ -113,6 +113,12 @@
     }
     
     [self updateSearch];
+    
+    [self hideToolbar:NO];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self updateToolbar];
+    });
 }
 
 -(void)defaultThemeChanged:(NSNotification *)note
