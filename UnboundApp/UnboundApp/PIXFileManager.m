@@ -622,7 +622,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     if(numberOfMatches != 0)
     {
         NSString *errMsg = [NSString stringWithFormat:@"\"%@\" is an invalid name for a file.", aNewName];
-        NSRunCriticalAlertPanel(@"Invalid File Name", errMsg, @"OK", nil, nil);
+        NSRunAlertPanel(@"Invalid File Name", errMsg, @"OK", nil, nil);
         return NO;
     }
     
@@ -635,7 +635,7 @@ typedef NSUInteger PIXOverwriteStrategy;
          fileExistsAtPath: newFilePath])
     {
         NSString *errMsg = [NSString stringWithFormat:@"There's already a photo with the name \"%@\" at this album's location. Please enter a new name.", aNewName];
-        NSRunCriticalAlertPanel(@"Duplicate Photo Name", errMsg, @"OK", nil, nil);
+        NSRunAlertPanel(@"Duplicate Photo Name", errMsg, @"OK", nil, nil);
         return NO;
     }
     
@@ -674,12 +674,7 @@ typedef NSUInteger PIXOverwriteStrategy;
 
 -(void)undoRecycleAlbums:(NSDictionary *)newURLs
 {
-//    NSRunCriticalAlertPanel(@"Undo deleting albums is under development.", @"Feature Unavailable", @"OK", @"Cancel", nil);
-//    [[[PIXAppDelegate sharedAppDelegate] undoManager] performSelector:@selector(removeAllActions) withObject:nil afterDelay:0.1f];
-//    return;
-    
-    //TODO: Make this undo restore directories, photos, and metadata files that were deleted, possibly using undo groupings.
-    
+    //TODO: consider use this notification for progress bar if many files are to be restored
     //NSWorkspaceDidPerformFileOperationNotification
     NSMutableSet *albumPaths = [NSMutableSet set];
     NSURL *restorePathURL = nil;
@@ -721,8 +716,7 @@ typedef NSUInteger PIXOverwriteStrategy;
 -(void)recycleAlbums:(NSArray *)items
 {
     NSMutableArray *urlsToDelete = [NSMutableArray arrayWithCapacity:[items count]];
-    
-    //NSRunCriticalAlertPanel(@"Deleting albums is under development.", @"Feature Unavailable", @"OK", @"Cancel", nil);
+
     for (PIXAlbum * anAlbum in items)
     {
         NSString *albumPath = anAlbum.path;

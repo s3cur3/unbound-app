@@ -148,7 +148,7 @@
     NSString * deleteString = @"Delete Album";
 
     NSString *warningMessage = [NSString stringWithFormat:@"%@ will be deleted immediately.\nAre you sure you want to continue?", deleteString];
-    if (NSRunCriticalAlertPanel(warningMessage, @"You cannot undo this action.", @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
+    if (NSRunAlertPanel(@"Delete Album?", warningMessage, @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
         
         [[PIXFileManager sharedInstance] recycleAlbums:itemsToDelete];
         

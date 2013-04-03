@@ -196,7 +196,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 -(BOOL)verifyActionFoItemsWithMessage:(NSString *)warningMessage
 {
-    if (NSRunCriticalAlertPanel(@"Alert", warningMessage, @"OK", @"Cancel", nil) == NSAlertDefaultReturn) {
+    if (NSRunAlertPanel(@"Confirm Action", warningMessage, @"OK", @"Cancel", nil) == NSAlertDefaultReturn) {
         return YES;
     } else {
         return NO;
@@ -234,8 +234,9 @@ static NSString *kContentTitleKey, *kContentImageKey;
         deleteString = objectType;
     }
     
+    NSString *warningTitle = [NSString stringWithFormat:@"Delete %@?", deleteString];
     NSString *warningMessage = [NSString stringWithFormat:@"%@ will be deleted immediately.\nAre you sure you want to continue?", deleteString];
-    if (NSRunCriticalAlertPanel(@"Warning", warningMessage, @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
+    if (NSRunAlertPanel(warningTitle, warningMessage, @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
         
         if ([[itemsToDelete lastObject] class] == [PIXAlbum class]) {
             [[PIXFileManager sharedInstance] recycleAlbums:itemsToDelete];
@@ -256,8 +257,9 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 - (IBAction) openInApp:(id)sender
 {
-    if (self.selectedItems.count>1) {
-        NSString *msg = @"Are you sure you want to open all of the selected files?";
+    NSUInteger fileCount = self.selectedItems.count;
+    if (fileCount>9) {
+        NSString *msg = [NSString stringWithFormat:@"Are you sure you want to open an app window for each of the %ld selected files?", fileCount];
         if (![self verifyActionFoItemsWithMessage:msg]) {
             return;
         }
@@ -315,8 +317,9 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 -(IBAction)getInfo:(id)sender;
 {
-    if (self.selectedItems.count>1) {
-        NSString *msg = @"Are you sure you want to open an info window for each of the selected files?";
+    NSUInteger fileCount = self.selectedItems.count;
+    if (fileCount>6) {
+        NSString *msg = [NSString stringWithFormat:@"Are you sure you want to open a separate info window for each of the %ld selected files?", fileCount];
         if (![self verifyActionFoItemsWithMessage:msg]) {
             return;
         }
