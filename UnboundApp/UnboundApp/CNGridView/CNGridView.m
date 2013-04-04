@@ -581,6 +581,8 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
 - (void)reloadDataAnimated:(BOOL)animated
 {
+    
+    NSDisableScreenUpdates();
     if(animated)
     {
         CATransition *animation = [CATransition animation];
@@ -617,7 +619,18 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     // the refresh gridview will update them all
     [self refreshGridViewAnimated:NO];
     
-    DLog(@"Num subviews: %ld", [[self subviews] count]);
+    /*
+    // now go through reusable views and remove them if necesarry
+    [reuseableItems enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        NSSet * items = obj;
+        
+        for(CNGridViewItem *item in items)
+        {
+            [item removeFromSuperview];
+        }
+    }];*/
+    
+    NSEnableScreenUpdates();
 }
 
 
