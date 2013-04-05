@@ -932,8 +932,11 @@ NSDictionary * dictionaryForURL(NSURL * url)
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kAlbumEntityName];
     [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(self IN %@)", albumIDs]];
     
+    NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
+    
     NSError * error;
-    NSArray * editedAlbums = [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] executeFetchRequest:fetchRequest error:&error];
+    
+    NSArray * editedAlbums = [context executeFetchRequest:fetchRequest error:&error];
     
     for(PIXAlbum * album in editedAlbums)
     {

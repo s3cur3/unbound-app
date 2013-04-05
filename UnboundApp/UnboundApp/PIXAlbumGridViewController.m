@@ -24,7 +24,6 @@
 #import "PIXFileParser.h"
 #import "PIXFileManager.h"
 
-#import "YRKSpinningProgressIndicatorLayer.h"
 
 #import "PIXShareManager.h"
 
@@ -46,6 +45,8 @@
 @property (nonatomic, strong) NSString * lastSearch;
 
 @property (nonatomic, strong) PIXSplitViewController *aSplitViewController;
+
+@property BOOL isMountDisconnected;
 
 @end
 
@@ -85,6 +86,8 @@
     [self.scrollView setIdentifier:@"albumGridScroller"];
     
     [self setBGColor];
+    
+    
     
 }
 

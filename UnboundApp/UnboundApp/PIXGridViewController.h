@@ -24,6 +24,8 @@
 @property (strong) IBOutlet NSScrollView * scrollView;
 @property (strong) IBOutlet NSView * layerBackedView;
 
+@property (strong) IBOutlet NSView * mountDisconnectedView;
+
 @property (strong) IBOutlet NSProgressIndicator * progressIndicator;
 
 -(NSMenu *)menuForObject:(id)object;

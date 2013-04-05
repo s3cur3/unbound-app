@@ -1076,7 +1076,7 @@ const CGFloat kThumbnailSize = 370.0f;
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:PhotoThumbDidChangeNotification object:self];
     
-    
+    /*
     //If this is the datePhoto of an album send a notification to the album to update it's thumb as well
     if (self.album.datePhoto == self) {
         
@@ -1086,11 +1086,16 @@ const CGFloat kThumbnailSize = 370.0f;
         }
         
         [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self.album];
-    }
+    }*/
     
-    else if(self.stackPhotoAlbum)
+    if(self.stackPhotoAlbum)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self.album];
+        //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self.album];
+        NSNotification * note = [NSNotification notificationWithName:AlbumDidChangeNotification object:self.album];
+        
+        // enqueue these notes on the sender so if a few album stack images load right after each other it doesn't have to redraw multiple times
+         [[NSNotificationQueue defaultQueue] enqueueNotification:note postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnSender forModes:nil];
+        
     }
 }
 
