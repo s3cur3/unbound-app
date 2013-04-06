@@ -685,12 +685,11 @@
     
 }
 
-//TODO: implement this
+
 - (IBAction) deleteItems:(id )inSender
 {
-    //NSRunCriticalAlertPanel(@"Delete photo is under development.", @"Feature Unavailable", @"OK", @"Cancel", nil);
     NSString *warningMessage = [NSString stringWithFormat:@"This photo will be deleted immediately.\nAre you sure you want to continue?"];
-    if (NSRunCriticalAlertPanel(@"Warning", warningMessage, @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
+    if (NSRunAlertPanel(@"Delete Photo?", warningMessage, @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
         
         PIXPhoto *aPhoto = [self.pagerData objectAtIndex:self.pageController.selectedIndex];
         BOOL lastItem = NO;
@@ -700,7 +699,6 @@
         NSArray *itemsToDelete = [NSArray arrayWithObject:aPhoto];
         if (!lastItem) {
             [self.pageController navigateForward:nil];
-            //[self nextPage:nil];
         } else if (self.pagerData.count>1) {
             [self.pageController navigateBack:nil];
         } else {
@@ -712,8 +710,6 @@
         // User clicked cancel, they do not want to delete the files
     }
 
-
-    //[self.pageController moveForward:nil];
 }
 
 -(void)setDesktopImage:(id)sender
