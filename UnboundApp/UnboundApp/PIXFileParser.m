@@ -479,183 +479,185 @@ NSDictionary * dictionaryForURL(NSURL * url)
 - (void)scanURLForChanges:(NSURL *)url withRecursion:(PIXFileParserRecursionOptions)recursionMode
 {
     self.scansCancelledFlag = NO;
+    [self incrementWorking];
     
     // if this path isn't already being scanned:
     
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            //
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        //
+        
+        if(self.scansCancelledFlag)
+        {
+            [self decrementWorking];
+            return;
+        }
+        
+        //DLog(@"Doing a shallow scan of: %@", url.path);
+        
+        NSDirectoryEnumerator *dirEnumerator = nil;
+        
+        
+        if([[NSFileManager defaultManager] fileExistsAtPath:url.path])
+        {
+            NSFileManager *localFileManager=[[NSFileManager alloc] init];
             
-            [self incrementWorking];
-            //DLog(@"Doing a shallow scan of: %@", url.path);
+            NSDirectoryEnumerationOptions options = NSDirectoryEnumerationSkipsHiddenFiles |
+                                                    NSDirectoryEnumerationSkipsPackageDescendants |
+                                                    NSDirectoryEnumerationSkipsSubdirectoryDescendants;
             
-            NSDirectoryEnumerator *dirEnumerator = nil;
-            
-            
-            if([[NSFileManager defaultManager] fileExistsAtPath:url.path])
+            // don't skip subdirectories if mode is full
+            if(recursionMode == PIXFileParserRecursionFull)
             {
-                NSFileManager *localFileManager=[[NSFileManager alloc] init];
-                
-                NSDirectoryEnumerationOptions options = NSDirectoryEnumerationSkipsHiddenFiles |
-                                                        NSDirectoryEnumerationSkipsPackageDescendants |
-                                                        NSDirectoryEnumerationSkipsSubdirectoryDescendants;
-                
-                // don't skip subdirectories if mode is full
-                if(recursionMode == PIXFileParserRecursionFull)
-                {
-                    options =   NSDirectoryEnumerationSkipsHiddenFiles |
-                                NSDirectoryEnumerationSkipsPackageDescendants;
-                }
-                
-                
-                dirEnumerator = [localFileManager enumeratorAtURL:url
-                                       includingPropertiesForKeys:@[NSURLNameKey,
-                                                                    NSURLIsDirectoryKey,
-                                                                    NSURLTypeIdentifierKey,
-                                                                    NSURLCreationDateKey,
-                                                                    NSURLContentModificationDateKey,
-                                                                    NSURLFileSizeKey]
-                                                          options:options
-                                                     errorHandler:^(NSURL *url, NSError *error) {
-                                                                                return NO;
-                                                                            }];
+                options =   NSDirectoryEnumerationSkipsHiddenFiles |
+                            NSDirectoryEnumerationSkipsPackageDescendants;
             }
             
             
+            dirEnumerator = [localFileManager enumeratorAtURL:url
+                                   includingPropertiesForKeys:@[NSURLNameKey,
+                                                                NSURLIsDirectoryKey,
+                                                                NSURLTypeIdentifierKey,
+                                                                NSURLCreationDateKey,
+                                                                NSURLContentModificationDateKey,
+                                                                NSURLFileSizeKey]
+                                                      options:options
+                                                 errorHandler:^(NSURL *url, NSError *error) {
+                                                                            return NO;
+                                                                        }];
+        }
+        
+        
+        
+        NSMutableArray *photoFiles = [NSMutableArray new];
+        NSMutableArray *directories = [NSMutableArray new];
+        NSURL *aURL;
+        while (aURL = [dirEnumerator nextObject]) {
             
-            NSMutableArray *photoFiles = [NSMutableArray new];
-            NSMutableArray *directories = [NSMutableArray new];
-            NSURL *aURL;
-            while (aURL = [dirEnumerator nextObject]) {
-                
-                // if this is an parsable file add it to the photofiles array to be parsed
-                NSDictionary * info = dictionaryForURL(aURL);
-                
-                if(info != nil)
-                {
-                    [photoFiles addObject:info];
-                }
-                
-                // if this is a directory then add it to the directories array to be checked for recursion
-                else if(recursionMode == PIXFileParserRecursionSemi)
-                {
-                    NSNumber * isDirectoryValue;
-                    [aURL getResourceValue:&isDirectoryValue forKey:NSURLIsDirectoryKey error:nil];
-                    
-                    NSNumber * isPackage;
-                    [aURL getResourceValue:&isPackage forKey:NSURLIsPackageKey error:nil];
-                    
-                    if([isDirectoryValue boolValue] && ![isPackage boolValue])
-                    {
-                        // add the path string value to the mutable array
-                        [directories addObject:[aURL path]];
-                    }
-                    
-                }
-            }
-            
-            // add the unbound file of the main directory if it exists
-            NSDictionary * info = dictionaryForURL(url);
+            // if this is an parsable file add it to the photofiles array to be parsed
+            NSDictionary * info = dictionaryForURL(aURL);
             
             if(info != nil)
             {
                 [photoFiles addObject:info];
             }
             
-            if(self.scansCancelledFlag)
+            // if this is a directory then add it to the directories array to be checked for recursion
+            else if(recursionMode == PIXFileParserRecursionSemi)
             {
-                [self decrementWorking];
-                self.fullScanProgress = 1.0;
-                return;
+                NSNumber * isDirectoryValue;
+                [aURL getResourceValue:&isDirectoryValue forKey:NSURLIsDirectoryKey error:nil];
+                
+                NSNumber * isPackage;
+                [aURL getResourceValue:&isPackage forKey:NSURLIsPackageKey error:nil];
+                
+                if([isDirectoryValue boolValue] && ![isPackage boolValue])
+                {
+                    // add the path string value to the mutable array
+                    [directories addObject:[aURL path]];
+                }
+                
             }
-            
-            NSDate * startParseDate = [NSDate date];
-            
-            NSString * path = url.path;
-            
-            // start parsing photos we've found (this will dispatch to another bg thread)
-            [self parsePhotos:photoFiles withDeletionBlock:^(NSManagedObjectContext *context) {
-                
-                // go through and delete any photos/albums that weren't updated and should have been
-                
-                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"path == %@ && (dateLastUpdated == NULL || dateLastUpdated < %@)", path, startParseDate, nil];
-                
-                // if we're doing a full recursion then we need use a different predicate
-                if(recursionMode == PIXFileParserRecursionFull)
-                {
-                    predicate = [NSPredicate predicateWithFormat:@"path CONTAINS %@ && (dateLastUpdated == NULL || dateLastUpdated < %@)", path, startParseDate, nil];
-                }
-                
-                // be sure to delete albums first so there are less photos to iterate through in the second delete
-                if (![self deleteObjectsForEntityName:@"PIXAlbum" inContext:context withPredicate:predicate]) {
-                    DLog(@"There was a problem trying to delete old objects");
-                }
-                
-                predicate = [NSPredicate predicateWithFormat:@"album.path == %@ && (dateLastUpdated == NULL || dateLastUpdated < %@)",path, startParseDate, nil];
-                
-                // if we're doing a full recursion then we need use a different predicate
-                if(recursionMode == PIXFileParserRecursionFull)
-                {
-                    predicate = [NSPredicate predicateWithFormat:@"album.path CONTAINS %@ && (dateLastUpdated == NULL || dateLastUpdated < %@)",path, startParseDate, nil];
-                }
-                
-                if (![self deleteObjectsForEntityName:@"PIXPhoto" inContext:context withPredicate:predicate]) {
-                    DLog(@"There was a problem trying to delete old objects");
-                }
-                
-                /// check that all subfolders exist (deletion just give a notification that the parent folder changed)
-                if(recursionMode != PIXFileParserRecursionFull)
-                {
-                    if (![self checkSubfoldersExistanceInContext:context withPath:path])
-                    {
-                        DLog(@"There was a problem trying to delete subfolder");
-                    }
-                }
-                
-            }];
-            
-            if(recursionMode == PIXFileParserRecursionSemi)
-            {
-                // go through the directories we found and see if any are not already in the db
-                NSArray * existingAlbums = [self albumsWithPaths:directories];
-                
-                // for each directory we found, remove it from the list
-                for(NSDictionary * anAlbumDict in existingAlbums)
-                {
-                    NSString * thisAlbumPath = [anAlbumDict objectForKey:@"path"];
-                    
-                    NSUInteger index = [directories indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-                        return [thisAlbumPath isEqualToString:(NSString *)obj];
-                    }];
-                    
-                    if(index != NSNotFound)
-                    {
-                        [directories removeObjectAtIndex:index];
-                    }
-                }
-                
-                
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                    // now go through the directories left over and start recursive shallow scans on them
-                    for(NSString * path in directories)
-                    {
-                        [self scanURLForChanges:[NSURL fileURLWithPath:path] withRecursion:recursionMode];
-                    }
-                    
-                    [self.loadingAlbumsDict removeObjectForKey:url.path];
-                    
-                    
-                });
-            }
-            
-            // always go back and decrement the loading
-            [self decrementWorking];
-            
-        });
+        }
         
-    
-    
+        // add the unbound file of the main directory if it exists
+        NSDictionary * info = dictionaryForURL(url);
+        
+        if(info != nil)
+        {
+            [photoFiles addObject:info];
+        }
+        
+        if(self.scansCancelledFlag)
+        {
+            [self decrementWorking];
+            return;
+        }
+        
+        NSDate * startParseDate = [NSDate date];
+        
+        NSString * path = url.path;
+        
+        // start parsing photos we've found (this will dispatch to another bg thread)
+        [self parsePhotos:photoFiles withDeletionBlock:^(NSManagedObjectContext *context) {
+            
+            // go through and delete any photos/albums that weren't updated and should have been
+            
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"path == %@ && (dateLastUpdated == NULL || dateLastUpdated < %@)", path, startParseDate, nil];
+            
+            // if we're doing a full recursion then we need use a different predicate
+            if(recursionMode == PIXFileParserRecursionFull)
+            {
+                predicate = [NSPredicate predicateWithFormat:@"path CONTAINS %@ && (dateLastUpdated == NULL || dateLastUpdated < %@)", path, startParseDate, nil];
+            }
+            
+            // be sure to delete albums first so there are less photos to iterate through in the second delete
+            if (![self deleteObjectsForEntityName:@"PIXAlbum" inContext:context withPredicate:predicate]) {
+                DLog(@"There was a problem trying to delete old objects");
+            }
+            
+            predicate = [NSPredicate predicateWithFormat:@"album.path == %@ && (dateLastUpdated == NULL || dateLastUpdated < %@)",path, startParseDate, nil];
+            
+            // if we're doing a full recursion then we need use a different predicate
+            if(recursionMode == PIXFileParserRecursionFull)
+            {
+                predicate = [NSPredicate predicateWithFormat:@"album.path CONTAINS %@ && (dateLastUpdated == NULL || dateLastUpdated < %@)",path, startParseDate, nil];
+            }
+            
+            if (![self deleteObjectsForEntityName:@"PIXPhoto" inContext:context withPredicate:predicate]) {
+                DLog(@"There was a problem trying to delete old objects");
+            }
+            
+            /// check that all subfolders exist (deletion just give a notification that the parent folder changed)
+            if(recursionMode != PIXFileParserRecursionFull)
+            {
+                if (![self checkSubfoldersExistanceInContext:context withPath:path])
+                {
+                    DLog(@"There was a problem trying to delete subfolder");
+                }
+            }
+            
+        }];
+        
+        if(recursionMode == PIXFileParserRecursionSemi)
+        {
+            // go through the directories we found and see if any are not already in the db
+            NSArray * existingAlbums = [self albumsWithPaths:directories];
+            
+            // for each directory we found, remove it from the list
+            for(NSDictionary * anAlbumDict in existingAlbums)
+            {
+                NSString * thisAlbumPath = [anAlbumDict objectForKey:@"path"];
+                
+                NSUInteger index = [directories indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+                    return [thisAlbumPath isEqualToString:(NSString *)obj];
+                }];
+                
+                if(index != NSNotFound)
+                {
+                    [directories removeObjectAtIndex:index];
+                }
+            }
+            
+            
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                // now go through the directories left over and start recursive shallow scans on them
+                for(NSString * path in directories)
+                {
+                    [self scanURLForChanges:[NSURL fileURLWithPath:path] withRecursion:recursionMode];
+                }
+                
+                [self.loadingAlbumsDict removeObjectForKey:url.path];
+                
+                
+            });
+        }
+        
+        // always go back and decrement the loading
+        [self decrementWorking];
+        
+    });
 }
 
 

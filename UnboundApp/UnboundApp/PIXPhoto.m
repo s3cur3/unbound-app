@@ -891,15 +891,8 @@ const CGFloat kThumbnailSize = 370.0f;
     NSString *aPath = self.path;
     __weak PIXPhoto *weakSelf = self;
     
-   
-    /*
-    PIXAppDelegate *appDelegate = (PIXAppDelegate *)[[NSApplication sharedApplication] delegate];
-    NSOperationQueue *globalQueue = [appDelegate globalBackgroundSaveQueue];
-    [globalQueue addOperationWithBlock:^{
-     */
     [[self sharedThumbnailFastLoadQueue] addOperationWithBlock:^{
     
-   //[[self sharedThumbnailFastLoadQueue] addOperationWithBlock:^{
     
         if (weakSelf == nil || aPath==nil || weakSelf.cancelThumbnailLoadOperation==YES) {
             DLog(@"thumbnail operation completed after object was dealloced or canceled - return");
@@ -1020,32 +1013,6 @@ const CGFloat kThumbnailSize = 370.0f;
                     return;
                 }
                 
-                /*
-                // now set the thumbnail data and exif (using a bg thread context)
-                
-                // create a thread-safe context (may want to make this a child context down the road)
-                NSManagedObjectContext *context = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];
-                
-                PIXPhoto * dbPhoto = (PIXPhoto *)[context existingObjectWithID:[weakSelf objectID] error:nil];
-                
-                [dbPhoto forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
-                
-            
-                if (dbPhoto.thumbnail == nil ) {
-                    PIXThumbnail *aThumb = [NSEntityDescription insertNewObjectForEntityForName:@"PIXThumbnail" inManagedObjectContext:context];
-                    aThumb.imageData = data;
-                    [dbPhoto setThumbnail:aThumb];
-                } else {
-                    dbPhoto.thumbnail.imageData = data;
-                }
-                
-                
-                //[context save:nil];
-                 
-                
-                [self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
-                
-                                */
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
@@ -1068,6 +1035,11 @@ const CGFloat kThumbnailSize = 370.0f;
                 
                 
             }];
+        }
+        
+        else
+        {
+            [[PIXFileParser sharedFileParser] decrementWorking];
         }
     }];
 }
