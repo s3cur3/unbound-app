@@ -114,7 +114,7 @@
     [self.backButtonSegment setSelected:![self.splitView isSubviewCollapsed:self.leftPane]
                              forSegment:1];
     
-    NSArray * items = @[self.backButtonSegmentItem, self.navigationViewController.middleSpacer, self.sliderItem, self.sortButton];
+    NSArray * items = @[self.backButtonSegmentItem, self.navigationViewController.activityIndicator, self.navigationViewController.middleSpacer, self.sliderItem, self.sortButton];
     
     [self.navigationViewController setNavBarHidden:NO];
     [self.navigationViewController setToolbarItems:items];

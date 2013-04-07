@@ -581,8 +581,8 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
 - (void)reloadDataAnimated:(BOOL)animated
 {
+    NSDisableScreenUpdates();
     
-    //NSDisableScreenUpdates();
     if(animated)
     {
         CATransition *animation = [CATransition animation];
@@ -591,6 +591,13 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         [animation setType:kCATransitionFade];
         
         [self.layer addAnimation:animation forKey:@"gridRefreshFade"];
+    }
+    
+    else
+    {
+        [CATransaction begin];
+        [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+
     }
     
     
@@ -619,6 +626,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     // the refresh gridview will update them all
     [self refreshGridViewAnimated:NO];
     
+    
     /*
     // now go through reusable views and remove them if necesarry
     [reuseableItems enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
@@ -632,7 +640,12 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         }
     }];*/
     
-    //NSEnableScreenUpdates();
+    if(!animated)
+    {
+        [CATransaction commit];
+    }
+    
+    NSEnableScreenUpdates();
 }
 
 

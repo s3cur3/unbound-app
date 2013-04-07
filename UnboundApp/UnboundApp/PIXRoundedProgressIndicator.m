@@ -20,6 +20,12 @@
     return self;
 }
 
+-(void)setProgress:(double)newValue;
+{
+    _progress = newValue;
+    [self setNeedsDisplay:YES];
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.
@@ -34,7 +40,7 @@
     
     NSRect progressBounds = CGRectInset(innerbounds, 3, 3);
     
-    progressBounds.size.width = (self.doubleValue / self.maxValue) * progressBounds.size.width;
+    progressBounds.size.width = self.progress * progressBounds.size.width;
     
     NSBezierPath *progressPath = [NSBezierPath bezierPathWithRoundedRect:progressBounds xRadius:3 yRadius:3];
     

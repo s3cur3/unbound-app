@@ -9,6 +9,7 @@
 #import "PIXNavigationController.h"
 #import "PIXViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "PIXFileParser.h"
 
 
 @interface PIXNavigationController ()
@@ -234,6 +235,67 @@
     [buttonView setAction:@selector(popViewController)];
     
     return _backButton;
+    
+}
+
+- (NSToolbarItem *)activityIndicator
+{
+    if(_activityIndicator != nil) return _activityIndicator;
+    
+    _activityIndicator = [[NSToolbarItem alloc] initWithItemIdentifier:@"activityIndicator"];
+    //_trashbutton.image = [NSImage imageNamed:NSImageNameTrashEmpty];
+    
+    
+    NSProgressIndicator * indicator = [[NSProgressIndicator alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
+    [indicator setStyle:NSProgressIndicatorSpinningStyle];
+    [indicator setIndeterminate:YES];
+    
+    [indicator setControlSize:NSSmallControlSize];
+    [indicator sizeToFit];
+    
+    [indicator setDisplayedWhenStopped:NO];
+    
+    [indicator setUsesThreadedAnimation:YES];
+    
+    //[indicator setCanDrawConcurrently:YES];
+    
+    [indicator bind:@"animate"
+           toObject:[PIXFileParser sharedFileParser]
+        withKeyPath:@"isWorking"
+            options: nil]; //@{NSValueTransformerNameBindingOption : NSNegateBooleanTransformerName}];
+    
+    /*
+     NSView * containerView = [[NSView alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
+     
+     
+     YRKSpinningProgressIndicatorLayer * progressIndicatorLayer = [[YRKSpinningProgressIndicatorLayer alloc] init];
+     progressIndicatorLayer.name = @"progressIndicatorLayer";
+     progressIndicatorLayer.anchorPoint = CGPointMake(0.0, 0.0);
+     progressIndicatorLayer.position = CGPointMake(0, 0);
+     progressIndicatorLayer.bounds = [[containerView layer] bounds];
+     progressIndicatorLayer.autoresizingMask = (kCALayerWidthSizable|kCALayerHeightSizable);
+     progressIndicatorLayer.zPosition = 10; // make sure it goes in front of the background layer
+     progressIndicatorLayer.hidden = YES;
+     
+     [containerView setLayer:progressIndicatorLayer];
+     [containerView setWantsLayer:YES];
+     
+     [progressIndicatorLayer startProgressAnimation];
+     
+     */
+    
+    _activityIndicator.view = indicator;
+    
+    [_activityIndicator setLabel:@"Acitivity"];
+    [_activityIndicator setPaletteLabel:@"Activity"];
+    
+    // Set up a reasonable tooltip, and image
+    // you will likely want to localize many of the item's properties
+    [_activityIndicator setToolTip:@"Activity"];
+    
+    
+    
+    return _activityIndicator;
     
 }
 

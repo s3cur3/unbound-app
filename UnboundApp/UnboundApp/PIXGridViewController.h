@@ -9,6 +9,7 @@
 #import "PIXViewController.h"
 #import "CNGridView.h"
 #import "PIXGradientBarView.h"
+#import "PIXRoundedProgressIndicator.h"
 
 @interface PIXGridViewController : PIXViewController <CNGridViewDataSource, CNGridViewDelegate>
 
@@ -20,7 +21,7 @@
 
 @property (strong) IBOutlet PIXGradientBarView * toolbar;
 @property (strong) IBOutlet NSTextField * toolbarTitle;
-@property (strong) IBOutlet NSProgressIndicator * gridViewProgress;
+@property (strong) IBOutlet PIXRoundedProgressIndicator * gridViewProgress;
 @property (strong) IBOutlet NSTextField * gridViewTitle;
 @property (strong) IBOutlet NSScrollView * scrollView;
 @property (strong) IBOutlet NSView * layerBackedView;

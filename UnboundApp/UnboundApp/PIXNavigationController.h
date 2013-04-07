@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet NSToolbar * toolbar;
 
 @property (strong, nonatomic) IBOutlet NSToolbarItem * backButton;
+@property (strong, nonatomic) IBOutlet NSToolbarItem * activityIndicator;
 @property (strong, nonatomic) IBOutlet NSToolbarItem * middleSpacer;
 
 @property (weak) IBOutlet NSProgressIndicator *activitySpinner;

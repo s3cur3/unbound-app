@@ -35,7 +35,6 @@
 @property(nonatomic,strong) NSArray * albums;
 @property(nonatomic,strong) NSArray * searchedAlbums;
 
-@property (nonatomic, strong) NSToolbarItem * activityIndicator;
 @property (nonatomic, strong) NSToolbarItem * trashbutton;
 @property (nonatomic, strong) NSToolbarItem * sortButton;
 @property (nonatomic, strong) NSToolbarItem * newAlbumButton;
@@ -58,6 +57,9 @@
     if (self) {
         // Initialization code here.
         self.selectedItemsName = @"album";
+        
+        // don't make the 
+        [self.view setWantsLayer:NO];
         
     }
     
@@ -139,7 +141,7 @@
             [self.gridViewProgress setHidden:NO];
             
             
-            [self.gridViewProgress setDoubleValue:progress*1000.0];
+            [self.gridViewProgress setProgress:progress];
         }
         
         else
@@ -196,72 +198,13 @@
 {
     //NSArray * items = @[self.activityIndicator, self.navigationViewController.middleSpacer, self.searchBar];
 
-    NSArray * items = @[self.activityIndicator, self.navigationViewController.middleSpacer, self.newAlbumButton, self.searchBar, self.sortButton];
+    NSArray * items = @[self.navigationViewController.activityIndicator, self.navigationViewController.middleSpacer, self.newAlbumButton, self.searchBar, self.sortButton];
     
     [self.navigationViewController setToolbarItems:items];
     
 }
 
-- (NSToolbarItem *)activityIndicator
-{
-    if(_activityIndicator != nil) return _activityIndicator;
-    
-    _activityIndicator = [[NSToolbarItem alloc] initWithItemIdentifier:@"activityIndicator"];
-    //_trashbutton.image = [NSImage imageNamed:NSImageNameTrashEmpty];
-    
-    
-    NSProgressIndicator * indicator = [[NSProgressIndicator alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
-    [indicator setStyle:NSProgressIndicatorSpinningStyle];
-    [indicator setIndeterminate:YES];
-    
-    [indicator setControlSize:NSSmallControlSize];
-    [indicator sizeToFit];
-        
-    [indicator setDisplayedWhenStopped:NO];
-    
-    [indicator setUsesThreadedAnimation:YES];
-    
-    [indicator setCanDrawConcurrently:YES];
-    
-    [indicator bind:@"animate"
-           toObject:[PIXFileParser sharedFileParser]
-        withKeyPath:@"isWorking"
-            options: nil]; //@{NSValueTransformerNameBindingOption : NSNegateBooleanTransformerName}];
-     
-     /*
-     NSView * containerView = [[NSView alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
-     
-     
-     YRKSpinningProgressIndicatorLayer * progressIndicatorLayer = [[YRKSpinningProgressIndicatorLayer alloc] init];
-     progressIndicatorLayer.name = @"progressIndicatorLayer";
-     progressIndicatorLayer.anchorPoint = CGPointMake(0.0, 0.0);
-     progressIndicatorLayer.position = CGPointMake(0, 0);
-     progressIndicatorLayer.bounds = [[containerView layer] bounds];
-     progressIndicatorLayer.autoresizingMask = (kCALayerWidthSizable|kCALayerHeightSizable);
-     progressIndicatorLayer.zPosition = 10; // make sure it goes in front of the background layer
-     progressIndicatorLayer.hidden = YES;
-    
-    [containerView setLayer:progressIndicatorLayer];
-    [containerView setWantsLayer:YES];
-    
-    [progressIndicatorLayer startProgressAnimation];
-      
-    */
-    
-    _activityIndicator.view = indicator;
-    
-    [_activityIndicator setLabel:@"Acitivity"];
-    [_activityIndicator setPaletteLabel:@"Activity"];
-    
-    // Set up a reasonable tooltip, and image
-    // you will likely want to localize many of the item's properties
-    [_activityIndicator setToolTip:@"Activity"];
 
-    
-    
-    return _activityIndicator;
-    
-}
 
 - (NSToolbarItem *)trashbutton
 {

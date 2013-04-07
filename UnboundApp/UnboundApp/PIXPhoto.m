@@ -14,6 +14,7 @@
 //#import "PIXAppDelegate+CoreDataUtils.h"
 #import "MakeThumbnailOperation.h"
 #import "PIXDefines.h"
+#import "PIXFileParser.h"
 
 const CGFloat kThumbnailSize = 370.0f;
 
@@ -883,6 +884,8 @@ const CGFloat kThumbnailSize = 370.0f;
 //        return;
 //    }
 
+    [[PIXFileParser sharedFileParser] incrementWorking];
+    
     _thumbnailImageIsLoading = YES;
     
     NSString *aPath = self.path;
@@ -898,19 +901,15 @@ const CGFloat kThumbnailSize = 370.0f;
     
    //[[self sharedThumbnailFastLoadQueue] addOperationWithBlock:^{
     
-        if (weakSelf == nil || aPath==nil) {
-            DLog(@"thumbnail operation completed after object was dealloced - return");
+        if (weakSelf == nil || aPath==nil || weakSelf.cancelThumbnailLoadOperation==YES) {
+            DLog(@"thumbnail operation completed after object was dealloced or canceled - return");
             _thumbnailImageIsLoading = NO;
             weakSelf.cancelThumbnailLoadOperation = NO;
+            
+            [[PIXFileParser sharedFileParser] decrementWorking];
             return;
         }
         
-        if (weakSelf.cancelThumbnailLoadOperation==YES) {
-            //DLog(@"1)thumbnail operation was canceled - return");
-            _thumbnailImageIsLoading = NO;
-            weakSelf.cancelThumbnailLoadOperation = NO;
-            return;
-        }
         
         //NSLog(@"Loading thumbnail");
         __block NSImage *image = nil;
@@ -925,6 +924,8 @@ const CGFloat kThumbnailSize = 370.0f;
                 CFRelease(imageSource);
                 _thumbnailImageIsLoading = NO;
                 weakSelf.cancelThumbnailLoadOperation = NO;
+                
+                [[PIXFileParser sharedFileParser] decrementWorking];
                 return;
             }
             
@@ -947,6 +948,8 @@ const CGFloat kThumbnailSize = 370.0f;
                     CFRelease(imageSource);
                     _thumbnailImageIsLoading = NO;
                     weakSelf.cancelThumbnailLoadOperation = NO;
+                    
+                    [[PIXFileParser sharedFileParser] decrementWorking];
                     return;
                 }
             
@@ -961,6 +964,8 @@ const CGFloat kThumbnailSize = 370.0f;
                     CFRelease(imageSource);
                     _thumbnailImageIsLoading = NO;
                     weakSelf.cancelThumbnailLoadOperation = NO;
+                    
+                    [[PIXFileParser sharedFileParser] decrementWorking];
                     return;
                 }
                 
@@ -984,6 +989,8 @@ const CGFloat kThumbnailSize = 370.0f;
                     CFRelease(imageSource);
                     _thumbnailImageIsLoading = NO;
                     weakSelf.cancelThumbnailLoadOperation = NO;
+                    
+                    [[PIXFileParser sharedFileParser] decrementWorking];
                     return;
                 }
                 
@@ -1008,6 +1015,8 @@ const CGFloat kThumbnailSize = 370.0f;
                     CFRelease(imageSource);
                     _thumbnailImageIsLoading = NO;
                     weakSelf.cancelThumbnailLoadOperation = NO;
+                    
+                    [[PIXFileParser sharedFileParser] decrementWorking];
                     return;
                 }
                 
@@ -1044,6 +1053,8 @@ const CGFloat kThumbnailSize = 370.0f;
                     
                     // set the thumbnail data (this will save the data into core data, the ui has already been updated)
                     [weakSelf mainThreadComputePreviewThumbnailFinished:data];
+                    
+                    [[PIXFileParser sharedFileParser] decrementWorking];
                     
                 });
                 

@@ -178,7 +178,9 @@
 
     // only set it if it's different
     if(_album != album)
-    {        
+    {
+
+        
         if (_album != nil)
         {
             [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:_album];
@@ -207,6 +209,8 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(albumChanged:) name:AlbumDidChangeNotification object:_album];
         
         [self displayIfNeeded];
+        
+
     }
 }
 

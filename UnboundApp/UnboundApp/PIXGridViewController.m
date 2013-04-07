@@ -68,7 +68,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
         _selectionLayout = [CNGridViewItemLayout defaultLayout];
         
         [self.gridView setAllowsMultipleSelection:YES];
-                
+        
         [self.view setWantsLayer:YES];
     }
     

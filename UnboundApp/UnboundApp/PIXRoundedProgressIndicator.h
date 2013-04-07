@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface PIXRoundedProgressIndicator : NSProgressIndicator
+@interface PIXRoundedProgressIndicator : NSView
+
+@property (nonatomic) double progress;
 
 @end

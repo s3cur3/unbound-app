@@ -37,21 +37,21 @@
 
 -(void)incrementWorking
 {
-    //dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         self.isWorkingCounter++;
         
         if(self.isWorkingCounter > 0 && self.isWorking == NO)
         {
             self.isWorking = YES;
         }
-    //});
+    });
     
 
 }
 
 -(void)decrementWorking
 {
-    //dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         self.isWorkingCounter--;
         
         if(self.isWorkingCounter <= 0)
@@ -59,7 +59,7 @@
             self.isWorkingCounter = 0;
             self.isWorking = NO;
         }
-    //});
+    });
 }
 
 

@@ -82,6 +82,7 @@ typedef enum {
 
 -(PIXAlbum *)fetchAlbumWithPath:(NSString *)aPath inContext:(NSManagedObjectContext *)context;
 
-
+-(void)incrementWorking;
+-(void)decrementWorking;
 
 @end
