@@ -645,9 +645,13 @@ NSDictionary * dictionaryForURL(NSURL * url)
                     
                     [self.loadingAlbumsDict removeObjectForKey:url.path];
                     
-                    [self decrementWorking];
+                    
                 });
             }
+            
+            // always go back and decrement the loading
+            [self decrementWorking];
+            
         });
         
     
