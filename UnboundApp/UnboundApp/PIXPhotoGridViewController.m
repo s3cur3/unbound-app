@@ -78,7 +78,6 @@
         [self updateToolbar];
     });
     
-    
 }
 
 // send a size between 0 and 1 (will be transformed into appropriate sizes)

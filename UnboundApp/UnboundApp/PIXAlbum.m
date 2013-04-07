@@ -358,7 +358,7 @@ static NSString *const kItemsKey = @"photos";
         // not sure if we need to send this. the all albums refresh is always sent after this
         //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
         
-        [self updateUnboundFile];
+        [self updateUnboundFileinBackground];
     }
 }
 
@@ -449,8 +449,8 @@ static NSString *const kItemsKey = @"photos";
 }
 
 
--(void)updateUnboundFile
-{    
+-(void)updateUnboundFileinBackground
+{
     if(![self unboundFileIsChanged]) return;
     
     NSManagedObjectID * thisID = [self objectID];
@@ -462,10 +462,18 @@ static NSString *const kItemsKey = @"photos";
         PIXAlbum * threadAlbum = (PIXAlbum *)[context existingObjectWithID:thisID error:nil];
         
         if(threadAlbum == nil) return;
-            //DLog(@"before: %@", unboundMetaDictionary);
         
+        [threadAlbum updateUnboundFile];
         
-         NSMutableDictionary * unboundMetaDictionary = [threadAlbum readUnboundFile];
+    });
+}
+
+-(void)updateUnboundFile
+{    
+    if(![self unboundFileIsChanged]) return;
+    
+    
+         NSMutableDictionary * unboundMetaDictionary = [self readUnboundFile];
             
         [unboundMetaDictionary setObject:@"1.0" forKey:@"unboundFileVersion"];
         
@@ -474,7 +482,7 @@ static NSString *const kItemsKey = @"photos";
         
         if(photosDictionary)
         {
-            for(PIXPhoto * aPhoto in threadAlbum.photos)
+            for(PIXPhoto * aPhoto in self.photos)
             {
                 NSDictionary * photoInfoDict = [photosDictionary objectForKey:[aPhoto name]];
                 
@@ -533,11 +541,11 @@ static NSString *const kItemsKey = @"photos";
         
         if(wasChanged)
         {
-            [threadAlbum writeUnboundFile:unboundMetaDictionary];
+            [self writeUnboundFile:unboundMetaDictionary];
         }
         
-        [context save:nil];
-    });
+        [self.managedObjectContext save:nil];
+
 
 }
 

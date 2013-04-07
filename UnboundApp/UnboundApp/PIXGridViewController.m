@@ -69,7 +69,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
         
         [self.gridView setAllowsMultipleSelection:YES];
         
-        [self.view setWantsLayer:YES];
+        //[self.view setWantsLayer:YES];
     }
     
     return self;
@@ -110,6 +110,10 @@ static NSString *kContentTitleKey, *kContentImageKey;
     [super willShowPIXView];
     
     [self.gridViewTitle setHidden:NO];
+    
+    
+    // make sure the toolbar is on the top
+    [self.toolbar.layer setZPosition:1000];
 }
 
 -(void)showToolbar:(BOOL)animated
