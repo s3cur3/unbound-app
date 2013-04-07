@@ -30,6 +30,12 @@
         self.layer = [CALayer layer];
         self.imageLayer = [CALayer layer];
         
+        self.imageLayer.borderColor = [[NSColor whiteColor] CGColor];
+        self.imageLayer.shadowColor = [[NSColor colorWithGenericGamma22White:0.0 alpha:1.0] CGColor];
+        self.imageLayer.shadowOffset = CGSizeMake(0, 1);
+        self.imageLayer.shadowRadius = 3.0;
+        self.imageLayer.shadowOpacity = 0.4;
+        
         // disable all animatsion on the image layer
         NSMutableDictionary *newActions = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSNull null], @"onOrderIn",
                                            [NSNull null], @"onOrderOut",
@@ -254,13 +260,10 @@
     
     //CGRect borderFrame = CGRectInset(imageFrame, -(borderThickness-1), -(borderThickness-1));
     
-    self.imageLayer.borderColor = [[NSColor whiteColor] CGColor];
+    
     self.imageLayer.borderWidth = borderThickness;
     
-    self.imageLayer.shadowColor = [[NSColor colorWithGenericGamma22White:0.0 alpha:1.0] CGColor];
-    self.imageLayer.shadowOffset = CGSizeMake(0, 1);
-    self.imageLayer.shadowRadius = 3.0;
-    self.imageLayer.shadowOpacity = 0.4;
+    
     
     
     CGMutablePathRef path = CGPathCreateMutable();

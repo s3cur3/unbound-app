@@ -838,55 +838,43 @@ const CGFloat kThumbnailSize = 370.0f;
 }*/
 
 
-- (dispatch_queue_t)sharedThumbnailFastLoadQueue
+- (NSOperationQueue *)sharedThumbnailFastLoadQueue
 {
-    static dispatch_queue_t _sharedThumbnailFastLoadQueue= 0;
-    static dispatch_queue_t _sharedThumbnailFastLoadQueue2= 0;
     
-    static BOOL alternator = 0;
+    static NSOperationQueue * _sharedThumbnailFastLoadQueue = nil;
     
-    static dispatch_once_t oncesharedThumbnailFastLoadQueue;
-    dispatch_once(&oncesharedThumbnailFastLoadQueue, ^{
-        _sharedThumbnailFastLoadQueue  = dispatch_queue_create("com.pixite.ub.unboundThumbnailFastLoadQueue", 0);
-        
-        // set this to a high priority queue so it doens't get blocked by the thumbs loading
-        dispatch_set_target_queue(_sharedThumbnailFastLoadQueue, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));
-        
-        _sharedThumbnailFastLoadQueue2  = dispatch_queue_create("com.pixite.ub.unboundThumbnailFastLoadQueue2", 0);
-        
-        // set this to a high priority queue so it doens't get blocked by the thumbs loading
-        dispatch_set_target_queue(_sharedThumbnailFastLoadQueue2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));
-        
-        
-    });
-    
-    alternator = !alternator;
-    
-    if(alternator)
+    if (_sharedThumbnailFastLoadQueue == NULL)
     {
-        return _sharedThumbnailFastLoadQueue;
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            _sharedThumbnailFastLoadQueue = [[NSOperationQueue alloc] init];
+            [_sharedThumbnailFastLoadQueue setName:@"com.pixite.thumbnailfast.generator"];
+            //[_backgroundSaveQueue setMaxConcurrentOperationCount:NSOperationQueueDefaultMaxConcurrentOperationCount];
+            [_sharedThumbnailFastLoadQueue setMaxConcurrentOperationCount:6];
+        });
+        
     }
-    
-    return _sharedThumbnailFastLoadQueue2;
+    return _sharedThumbnailFastLoadQueue;
 }
 
-- (dispatch_queue_t)sharedThumbnailFullLoadQueue
+- (NSOperationQueue *)sharedThumbnailFullLoadQueue
 {
-    static dispatch_queue_t _sharedThumbnailFullLoadQueue = 0;
     
-    static dispatch_once_t oncesharedThumbnailFullLoadQueue;
-    dispatch_once(&oncesharedThumbnailFullLoadQueue, ^{
-        _sharedThumbnailFullLoadQueue  = dispatch_queue_create("com.pixite.ub.unboundThumbnailFullLoadQueue", 0);
-        
-        // set this to a high priority queue so it doens't get blocked by the thumbs loading
-        dispatch_set_target_queue(_sharedThumbnailFullLoadQueue, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0));
-        
-        
-    });
+    static NSOperationQueue * _sharedThumbnailFullLoadQueue = nil;
     
+    if (_sharedThumbnailFullLoadQueue == NULL)
+    {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            _sharedThumbnailFullLoadQueue = [[NSOperationQueue alloc] init];
+            [_sharedThumbnailFullLoadQueue setName:@"com.pixite.thumbnailfull.generator"];
+            //[_backgroundSaveQueue setMaxConcurrentOperationCount:NSOperationQueueDefaultMaxConcurrentOperationCount];
+            [_sharedThumbnailFullLoadQueue setMaxConcurrentOperationCount:3];
+        });
+        
+    }
     return _sharedThumbnailFullLoadQueue;
 }
-
 
 
 -(void)loadThumbnailImage
@@ -906,7 +894,8 @@ const CGFloat kThumbnailSize = 370.0f;
     NSOperationQueue *globalQueue = [appDelegate globalBackgroundSaveQueue];
     [globalQueue addOperationWithBlock:^{
      */
-    dispatch_async([self sharedThumbnailFastLoadQueue], ^{
+    [[self sharedThumbnailFastLoadQueue] addOperationWithBlock:^{
+    
    //[[self sharedThumbnailFastLoadQueue] addOperationWithBlock:^{
     
         if (weakSelf == nil || aPath==nil) {
@@ -950,7 +939,7 @@ const CGFloat kThumbnailSize = 370.0f;
             [self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
             
             // we've finished updating the ui with the image, do everythinge else at a lower priority
-            dispatch_async([self sharedThumbnailFullLoadQueue], ^{
+            [[self sharedThumbnailFullLoadQueue] addOperationWithBlock:^{
                 
                 // if the load was cancelled then bail
                 if (weakSelf.cancelThumbnailLoadOperation==YES) {
@@ -1067,9 +1056,9 @@ const CGFloat kThumbnailSize = 370.0f;
                 });
                 
                 
-            });
+            }];
         }
-    });
+    }];
 }
 
 -(void)postPhotoUpdatedNote

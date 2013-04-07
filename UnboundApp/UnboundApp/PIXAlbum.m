@@ -146,13 +146,14 @@ static NSString *const kItemsKey = @"photos";
     return self.subtitle;
 }
 
+/*
 - (NSString *)path
 {
     [self willAccessValueForKey:@"path"];
     NSString *tmpValue = [self primitiveValueForKey:@"path"];
     [self didAccessValueForKey:@"path"];
     return tmpValue;
-}
+}*/
 
 - (void)setPath:(NSString *)value
 {
@@ -385,6 +386,8 @@ static NSString *const kItemsKey = @"photos";
 
 -(NSMutableDictionary *)readUnboundFile
 {
+    if([self isReallyDeleted]) return nil;
+    
     NSString *unboundFilePath = [NSString stringWithFormat:@"%@/.unbound", self.path];
     
     NSMutableDictionary * unboundMetaDictionary = nil;
@@ -453,8 +456,6 @@ static NSString *const kItemsKey = @"photos";
     NSManagedObjectID * thisID = [self objectID];
     
     dispatch_async([self sharedUnboundQueue], ^{
-
-    NSMutableDictionary * unboundMetaDictionary = [self readUnboundFile];
         
         // get a bg thread context and find the album object
         NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];
@@ -462,6 +463,9 @@ static NSString *const kItemsKey = @"photos";
         
         if(threadAlbum == nil) return;
             //DLog(@"before: %@", unboundMetaDictionary);
+        
+        
+         NSMutableDictionary * unboundMetaDictionary = [threadAlbum readUnboundFile];
             
         [unboundMetaDictionary setObject:@"1.0" forKey:@"unboundFileVersion"];
         

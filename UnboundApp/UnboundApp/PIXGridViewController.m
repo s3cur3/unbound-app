@@ -105,6 +105,13 @@ static NSString *kContentTitleKey, *kContentImageKey;
     
 }
 
+-(void)willShowPIXView
+{
+    [super willShowPIXView];
+    
+    [self.gridViewTitle setHidden:NO];
+}
+
 -(void)showToolbar:(BOOL)animated
 {
     if(!self.toolbarIsShowing)

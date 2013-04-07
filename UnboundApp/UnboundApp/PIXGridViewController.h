@@ -20,6 +20,7 @@
 
 @property (strong) IBOutlet PIXGradientBarView * toolbar;
 @property (strong) IBOutlet NSTextField * toolbarTitle;
+@property (strong) IBOutlet NSProgressIndicator * gridViewProgress;
 @property (strong) IBOutlet NSTextField * gridViewTitle;
 @property (strong) IBOutlet NSScrollView * scrollView;
 @property (strong) IBOutlet NSView * layerBackedView;

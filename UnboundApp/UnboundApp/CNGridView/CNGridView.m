@@ -582,7 +582,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 - (void)reloadDataAnimated:(BOOL)animated
 {
     
-    NSDisableScreenUpdates();
+    //NSDisableScreenUpdates();
     if(animated)
     {
         CATransition *animation = [CATransition animation];
@@ -626,11 +626,13 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         
         for(CNGridViewItem *item in items)
         {
+            
             [item removeFromSuperview];
+            [item prepareForReuse];
         }
     }];*/
     
-    NSEnableScreenUpdates();
+    //NSEnableScreenUpdates();
 }
 
 

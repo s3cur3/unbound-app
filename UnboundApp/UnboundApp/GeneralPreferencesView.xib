@@ -55,7 +55,7 @@
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:945</string>
-						<int key="NSpiFlags">20746</int>
+						<int key="NSpiFlags">28938</int>
 						<double key="NSMaxValue">100</double>
 					</object>
 					<object class="NSButton" id="62544489">

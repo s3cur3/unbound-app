@@ -32,6 +32,8 @@ typedef enum {
 
 @property BOOL isWorking;
 
+@property float fullScanProgress;
+
 /**
  * This is a singleton accessor to get the shared instance of this 
  * class. We should only ever use this instance

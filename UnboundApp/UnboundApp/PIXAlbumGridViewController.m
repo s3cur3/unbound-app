@@ -122,6 +122,41 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self updateToolbar];
     });
+    
+    
+    [[PIXFileParser sharedFileParser] addObserver:self forKeyPath:@"fullScanProgress" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+// this is called when the full scan progress changes
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        float progress = [[PIXFileParser sharedFileParser] fullScanProgress];
+        
+        if(progress < 1.0)
+        {
+            [self.gridViewTitle setHidden:YES];
+            [self.gridViewProgress setHidden:NO];
+            
+            
+            [self.gridViewProgress setDoubleValue:progress*1000.0];
+        }
+        
+        else
+        {
+            [self.gridViewTitle setHidden:NO];
+            [self.gridViewProgress setHidden:YES];
+        }
+    });
+    
+}
+
+
+-(void)willHidePIXView
+{
+    [super willHidePIXView];
+    
+    [[PIXFileParser sharedFileParser] removeObserver:self forKeyPath:@"fullScanProgress"];
 }
 
 -(void)defaultThemeChanged:(NSNotification *)note
@@ -161,7 +196,7 @@
 {
     //NSArray * items = @[self.activityIndicator, self.navigationViewController.middleSpacer, self.searchBar];
 
-    NSArray * items = @[/*self.activityIndicator, */self.navigationViewController.middleSpacer, self.newAlbumButton, self.searchBar, self.sortButton];
+    NSArray * items = @[self.activityIndicator, self.navigationViewController.middleSpacer, self.newAlbumButton, self.searchBar, self.sortButton];
     
     [self.navigationViewController setToolbarItems:items];
     
@@ -186,6 +221,7 @@
     
     [indicator setUsesThreadedAnimation:YES];
     
+    [indicator setCanDrawConcurrently:YES];
     
     [indicator bind:@"animate"
            toObject:[PIXFileParser sharedFileParser]
@@ -859,6 +895,7 @@
     
     [self updateToolbar];
     [self.gridView reloadSelection];
+    
 }
 
 

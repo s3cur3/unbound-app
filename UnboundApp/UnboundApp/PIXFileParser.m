@@ -27,6 +27,9 @@
 
 @property int isWorkingCounter;
 
+@property float fullScannProgressCurrent;
+@property float fullScannProgressTotal;
+
 @end
 
 @implementation PIXFileParser
@@ -323,14 +326,22 @@ NSDictionary * dictionaryForURL(NSURL * url)
 {
     [self incrementWorking];
     
+    self.fullScanProgress = 0.0;
+    
     // set this to a high priority queue so it doens't get blocked by the thumbs loading
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        
+        
         
         if(self.scansCancelledFlag)
         {
             [self decrementWorking];
+            self.fullScanProgress = 1.0;
             return;
         }
+        
+        self.fullScannProgressCurrent = 0;
+        self.fullScannProgressTotal = 0;
         
         NSDate * startScanTime = [NSDate date];
         
@@ -379,6 +390,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 if(info != nil)
                 {
                     [photoFiles addObject:info];
+                    
+                    self.fullScannProgressTotal++;
                 }
             }
             
@@ -397,6 +410,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 if(self.scansCancelledFlag)
                 {
                     [self decrementWorking];
+                    self.fullScanProgress = 1.0;
                     return;
                 }
                 
@@ -426,6 +440,9 @@ NSDictionary * dictionaryForURL(NSURL * url)
             if (![self deleteObjectsForEntityName:@"PIXPhoto" inContext:context withPredicate:predicate]) {
                 DLog(@"There was a problem trying to delete old objects");
             }
+            
+            
+            self.fullScanProgress = 1.0;
             
             
         }];
@@ -547,6 +564,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
             if(self.scansCancelledFlag)
             {
                 [self decrementWorking];
+                self.fullScanProgress = 1.0;
                 return;
             }
             
@@ -669,7 +687,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
 
 -(void)parsePhotos:(NSArray *)photos withDeletionBlock:(void(^)(NSManagedObjectContext * context))deletionBlock
 {
-
+    self.fullScanProgress = (float)self.fullScannProgressCurrent / (float)self.fullScannProgressTotal;
     
     // recored an initial fetch date to use when deleting items that weren't found
     __block NSDate * fetchDate = [NSDate date];
@@ -703,6 +721,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
         for (NSDictionary *aPhoto in photos)
         {
             i++;
+            
+            self.fullScannProgressCurrent++;
             
             // aPath is the path of this photos album
             NSString *aPath = [aPhoto valueForKey:@"dirPath"];
@@ -791,6 +811,12 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 // add the photos to the array of found photos for this album
                 [lastAlbumsPhotos addObject:dbPhoto];
                 
+                // update the progress bar every 100 items
+                if(i%100==0)
+                {
+                    self.fullScanProgress = (float)self.fullScannProgressCurrent / (float)self.fullScannProgressTotal;
+                }
+                
                 // save the context and send a UI update notification every 500 loops
                 if (i%500==0) {
                     [context save:nil];
@@ -824,6 +850,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
         // use performSelector instead of dispatch async because it's faster
         [self performSelectorOnMainThread:@selector(flushAlbumsWithIDS:) withObject:[editedAlbumObjectIDs copy] waitUntilDone:NO];
         
+        self.fullScanProgress = (float)self.fullScannProgressCurrent / (float)self.fullScannProgressTotal;
         
         [self decrementWorking];
         
