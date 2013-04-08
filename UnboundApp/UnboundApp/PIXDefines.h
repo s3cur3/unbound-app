@@ -32,6 +32,8 @@
 
 #define kAppFirstRun @"appFirstRun"
 
+#define kAppObservedDirectoryUnavailable @"observedDirectoryUnavailable"
+
 
 // key for obtaining the current scan count
 #define kScanCountKey @"scanCount"

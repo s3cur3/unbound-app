@@ -397,11 +397,20 @@ static NSString *const kItemsKey = @"photos";
     
     if ([fm fileExistsAtPath:unboundFilePath])
     {
-        NSData *data = [NSData dataWithContentsOfFile:unboundFilePath];
-        NSError *error = nil;
-        unboundMetaDictionary = [[NSJSONSerialization JSONObjectWithData:data
-                                                                 options:kNilOptions
-                                                                   error:&error] mutableCopy];
+        NSError *anError = nil;
+        //NSData *data = [NSData dataWithContentsOfFile:unboundFilePath];
+        NSData *data = [NSData dataWithContentsOfFile:unboundFilePath options:(NSDataReadingUncached) error:&anError];
+        if (data == nil) {
+            DLog(@"No data returned when attempting to read '%@', error: %@", unboundFilePath, anError);
+        } else {
+            NSError *error = nil;
+            unboundMetaDictionary = [[NSJSONSerialization JSONObjectWithData:data
+                                                                     options:kNilOptions
+                                                                       error:&error] mutableCopy];
+            if (error != nil) {
+                DLog(@"%@", error);
+            }
+        }
     }
     
     // if this isn't a dictionary then it's not valid
