@@ -40,21 +40,26 @@
 
 -(void)mouseDown:(NSEvent *)theEvent{
     DLog(@"mouseDown:%@", theEvent);
+    [[self nextResponder] mouseDown:theEvent];
+    
     if (theEvent.clickCount ==2) {
         NSScrollView *scrollView = [self enclosingScrollView];
         CGFloat curMagnification = [scrollView magnification];
-        CGFloat maxMagnification = 3.0f;//[scrollView maxMagnification];
-        DLog(@"double click received. curMagnification : %f - maxMagnification : %f", curMagnification, maxMagnification);
-        if (curMagnification != maxMagnification) {
-            DLog(@"zooming to max magnification : %f", maxMagnification);
-            [scrollView setMagnification:maxMagnification];
-        } else {
-            [scrollView setMagnification:1.0];
+        CGFloat maxMagnification = [scrollView maxMagnification];
+        if (maxMagnification<=0) {
+            maxMagnification = 4.0f;
         }
-        
-    } else {
-        [[self nextResponder] mouseDown:theEvent];
+        CGFloat thresholdMagnification = maxMagnification/2.0f;
+        DLog(@"double click received. curMagnification : %f - maxMagnification : %f", curMagnification, maxMagnification);
+        if (curMagnification < thresholdMagnification) {
+            DLog(@"zooming to max magnification : %f", maxMagnification);
+            [scrollView setMagnification:maxMagnification centeredAtPoint:(NSPoint)theEvent.locationInWindow];
+        } else {
+            [scrollView magnifyToFitRect:self.bounds];
+        }
     }
+
+    
 }
 
 @end
