@@ -36,9 +36,25 @@
 -(void)rightMouseDown:(NSEvent *)theEvent {
     DLog(@"rightMouseDown:%@", theEvent);
     [[self nextResponder] rightMouseDown:theEvent];
-    //    NSMenu *theMenu = [[NSMenu alloc] initWithTitle:@"Options"];
-    //    [theMenu insertItemWithTitle:@"Set As Desktop Background" action:@selector(setDesktopImage:) keyEquivalent:@""atIndex:0];
-    //    [NSMenu popUpContextMenu:theMenu withEvent:theEvent forView:self.imageView];
+}
+
+-(void)mouseDown:(NSEvent *)theEvent{
+    DLog(@"mouseDown:%@", theEvent);
+    if (theEvent.clickCount ==2) {
+        NSScrollView *scrollView = [self enclosingScrollView];
+        CGFloat curMagnification = [scrollView magnification];
+        CGFloat maxMagnification = 3.0f;//[scrollView maxMagnification];
+        DLog(@"double click received. curMagnification : %f - maxMagnification : %f", curMagnification, maxMagnification);
+        if (curMagnification != maxMagnification) {
+            DLog(@"zooming to max magnification : %f", maxMagnification);
+            [scrollView setMagnification:maxMagnification];
+        } else {
+            [scrollView setMagnification:1.0];
+        }
+        
+    } else {
+        [[self nextResponder] mouseDown:theEvent];
+    }
 }
 
 @end
