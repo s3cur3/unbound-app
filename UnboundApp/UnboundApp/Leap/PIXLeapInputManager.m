@@ -25,6 +25,8 @@
 @property CGFloat pinchStartDepth;
 @property NSPoint pinchStartPosition;
 
+@property (strong) NSTimer * connectionTimer;
+
 @end
 
 @implementation PIXLeapInputManager
@@ -53,6 +55,7 @@
     NSLog(@"running");
     //[[NSRunLoop currentRunLoop] run]; // required for performSelectorOnMainThread:withObject
 }
+
 
 - (void)addResponder:(id<leapResponder>)aResponder
 {
@@ -105,7 +108,25 @@
     PIXHUDMessageController * messageHUD = [PIXHUDMessageController windowWithTitle:@"Leap Connected" andIcon:[NSImage imageNamed:@"leapconnected"]];
     [messageHUD presentInParentWindow:mainwindow forTimeInterval:3.0];
     
+    self.isConnected = YES;
     
+    // stop the old timer
+    [self.connectionTimer invalidate];
+    
+    // start a new timer
+    self.connectionTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(checkConnection:) userInfo:nil repeats:YES];
+    
+}
+
+-(void)checkConnection:(NSTimer *)timer
+{
+    if(![self.controller isConnected])
+    {
+        [self onDisconnect:nil];
+        
+        [timer invalidate];
+        self.connectionTimer = nil;
+    }
 }
 
 - (void)onDisconnect:(NSNotification *)notification;
@@ -117,6 +138,8 @@
     // present the hud message that the leap connected
     PIXHUDMessageController * messageHUD = [PIXHUDMessageController windowWithTitle:@"Leap Disconnected" andIcon:[NSImage imageNamed:@"leapconnected"]];
     [messageHUD presentInParentWindow:mainwindow forTimeInterval:3.0];
+    
+    self.isConnected = NO;
 }
 
 - (void)onExit:(NSNotification *)notification;
@@ -128,6 +151,8 @@
     // present the hud message that the leap connected
     PIXHUDMessageController * messageHUD = [PIXHUDMessageController windowWithTitle:@"Leap Exited" andIcon:[NSImage imageNamed:@"leapconnected"]];
     [messageHUD presentInParentWindow:mainwindow forTimeInterval:3.0];
+    
+    self.isConnected = NO;
 }
 
 - (void)onFrame:(NSNotification *)notification;

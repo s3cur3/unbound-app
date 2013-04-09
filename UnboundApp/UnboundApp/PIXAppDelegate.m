@@ -217,10 +217,10 @@
     //if (_preferencesWindowController == nil)
     //{
         NSViewController *generalViewController = [[GeneralPreferencesViewController alloc] init];
-        NSViewController *advancedViewController = [[AdvancedPreferencesViewController alloc] init];
+        //NSViewController *advancedViewController = [[AdvancedPreferencesViewController alloc] init];
         
 
-        NSArray *controllers = [[NSArray alloc] initWithObjects:[NSNull null], generalViewController, advancedViewController, [NSNull null], nil];
+        NSArray *controllers = [[NSArray alloc] initWithObjects:[NSNull null], generalViewController, [NSNull null], nil];
         
         
         BOOL debug = NO;

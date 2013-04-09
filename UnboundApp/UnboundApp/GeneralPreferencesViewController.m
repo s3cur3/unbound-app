@@ -3,12 +3,16 @@
 #import "PIXFileParser.h"
 #import "PIXAppDelegate.h"
 #import "PIXDefines.h"
+#import "PIXLeapInputManager.h"
 
 @interface GeneralPreferencesViewController ()
 
 @property NSURL * pickerStartURL;
 @property (weak) IBOutlet NSButton * dbFolderButton;
 @property (weak) IBOutlet NSTextField * folderDisplay;
+
+@property (weak) IBOutlet NSImageView * leapStatus;
+@property (weak) IBOutlet NSTextField * leapStatusText;
 
 @property (strong) IBOutlet NSProgressIndicator * workingSpinner;
 
@@ -26,6 +30,9 @@
     // set the folder display
     
     [self updateFolderFeild];
+    [self updateLeapInfo];
+    
+    [[PIXLeapInputManager sharedInstance] addObserver:self forKeyPath:@"isConnected" options:NSKeyValueObservingOptionNew context:nil];
     
     [self.workingSpinner bind:@"animate"
                      toObject:[PIXFileParser sharedFileParser]
@@ -64,6 +71,26 @@
     {
         self.pickerStartURL = [NSURL fileURLWithPath:@"~/Dropbox/"];
     }
+}
+
+-(void)updateLeapInfo
+{
+    if([[PIXLeapInputManager sharedInstance] isConnected])
+    {
+        [self.leapStatus setImage:[NSImage imageNamed:@"greendot"]];
+        [self.leapStatusText setStringValue:@"Leap Connected"];
+    }
+    
+    else
+    {
+        [self.leapStatus setImage:[NSImage imageNamed:@"graydot"]];
+        [self.leapStatusText setStringValue:@"Leap Not Connected"];
+    }
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    [self updateLeapInfo];
 }
 
 #pragma mark -
@@ -152,6 +179,11 @@
 {
     [[PIXAppDelegate sharedAppDelegate] clearDatabase];
     [[PIXFileParser sharedFileParser] scanFullDirectory];
+}
+
+-(void)dealloc
+{
+    [[PIXLeapInputManager sharedInstance] removeObserver:self forKeyPath:@"isConnected"];
 }
 
 @end

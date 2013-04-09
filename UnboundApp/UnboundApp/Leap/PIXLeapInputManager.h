@@ -19,6 +19,8 @@
 -(void)addResponder:(id<leapResponder>)aResponder;
 - (void)removeResponder:(id<leapResponder>)aResponder;
 
+@property BOOL isConnected;
+
 @end
 
 @protocol leapResponder <NSObject>
