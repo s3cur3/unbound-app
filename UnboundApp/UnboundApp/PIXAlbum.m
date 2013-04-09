@@ -254,6 +254,8 @@ static NSString *const kItemsKey = @"photos";
     {
         self.subtitle = @"No Items";
     }
+    
+    
 }
 
 -(NSArray *)sortedPhotos
@@ -359,6 +361,8 @@ static NSString *const kItemsKey = @"photos";
         //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
         
         [self updateUnboundFileinBackground];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
     }
 }
 
@@ -464,6 +468,8 @@ static NSString *const kItemsKey = @"photos";
         if(threadAlbum == nil) return;
         
         [threadAlbum updateUnboundFile];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
         
     });
 }

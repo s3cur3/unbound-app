@@ -44,6 +44,8 @@
         [self.titleDateFormatter setTimeStyle:NSDateFormatterNoStyle];
         self.selectedItemsName = @"photo";
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAlbum) name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
+        
     }
     
     return self;
@@ -143,6 +145,9 @@
     
     if (album != _album)
     {
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:_album];
+        
         _album = album;
         [[[PIXAppDelegate sharedAppDelegate] window] setTitle:[self.album title]];
         
@@ -152,7 +157,7 @@
         
         [self.gridView scrollPoint:NSZeroPoint];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAlbum) name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAlbum) name:AlbumDidChangeNotification object:_album];
         
         // start a date scan for this album
         //[[PIXFileParser sharedFileParser] dateScanAlbum:self.album];
