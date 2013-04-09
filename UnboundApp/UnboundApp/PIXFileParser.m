@@ -193,6 +193,25 @@ NSDictionary * dictionaryForURL(NSURL * url)
 
 #pragma mark - File System Change Oberver Methods
 
+-(BOOL)canAccessObservedDirectories
+{
+    BOOL canAccessAllDirectories = YES;
+    
+    DLog(@"** CHECKING FILE SYSTEM OBSERVATION AVAILABILITY **");
+    for (NSURL *aDir in [self observedDirectories])
+    {
+        BOOL isDir = NO;
+        if ([[NSFileManager defaultManager] fileExistsAtPath:aDir.path isDirectory:&isDir]) {
+            if (isDir!=YES) {
+                canAccessAllDirectories = NO;
+            }
+        } else {
+            canAccessAllDirectories = NO;
+        }
+    }
+    return canAccessAllDirectories;
+}
+
 -(void)startObserving
 {
     // remove any observers, we only do this one

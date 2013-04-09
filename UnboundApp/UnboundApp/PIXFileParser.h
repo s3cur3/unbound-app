@@ -85,4 +85,6 @@ typedef enum {
 -(void)incrementWorking;
 -(void)decrementWorking;
 
+-(BOOL)canAccessObservedDirectories;
+
 @end

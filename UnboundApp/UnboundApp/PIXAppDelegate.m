@@ -171,10 +171,21 @@
 
 -(void)startFileSystemLoading
 {
+    self.fileParser = [PIXFileParser sharedFileParser];
+    if (![self.fileParser canAccessObservedDirectories])
+    {
+        DLog(@"can't access observed directories");
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kAppObservedDirectoryUnavailable];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        return;
+    } else {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kAppObservedDirectoryUnavailable];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
     if (!self.isObservingFileSystem)
     {
         self.isObservingFileSystem = YES;
-        self.fileParser = [PIXFileParser sharedFileParser];
+        //self.fileParser = [PIXFileParser sharedFileParser];
         [self.fileParser startObserving];
     }
 
