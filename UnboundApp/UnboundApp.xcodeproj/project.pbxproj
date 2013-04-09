@@ -68,6 +68,8 @@
 		8C031CD416E926F7009B7F38 /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C031CD016E926F7009B7F38 /* libLeap.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
 		8C031CD516E926F7009B7F38 /* PIXLeapInputManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C031CD216E926F7009B7F38 /* PIXLeapInputManager.m */; };
 		8C097D2716D57D0700E0E134 /* PIXFileParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C097D2616D57D0700E0E134 /* PIXFileParser.m */; };
+		8C14692817149A92009ECCC5 /* PIXLeapTutorialWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C14692617149A92009ECCC5 /* PIXLeapTutorialWindowController.m */; };
+		8C14692917149A92009ECCC5 /* PIXLeapTutorialWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C14692717149A92009ECCC5 /* PIXLeapTutorialWindowController.xib */; };
 		8C23026417056E6E001A5510 /* sortbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C23026217056E6E001A5510 /* sortbutton.png */; };
 		8C23026517056E6E001A5510 /* sortbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C23026317056E6E001A5510 /* sortbutton@2x.png */; };
 		8C23026817057400001A5510 /* addbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C23026617057400001A5510 /* addbutton.png */; };
@@ -294,6 +296,9 @@
 		8C031CD216E926F7009B7F38 /* PIXLeapInputManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXLeapInputManager.m; sourceTree = "<group>"; };
 		8C097D2516D57D0700E0E134 /* PIXFileParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXFileParser.h; sourceTree = "<group>"; };
 		8C097D2616D57D0700E0E134 /* PIXFileParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXFileParser.m; sourceTree = "<group>"; };
+		8C14692517149A92009ECCC5 /* PIXLeapTutorialWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXLeapTutorialWindowController.h; sourceTree = "<group>"; };
+		8C14692617149A92009ECCC5 /* PIXLeapTutorialWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXLeapTutorialWindowController.m; sourceTree = "<group>"; };
+		8C14692717149A92009ECCC5 /* PIXLeapTutorialWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXLeapTutorialWindowController.xib; sourceTree = "<group>"; };
 		8C23026217056E6E001A5510 /* sortbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sortbutton.png; sourceTree = "<group>"; };
 		8C23026317056E6E001A5510 /* sortbutton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sortbutton@2x.png"; sourceTree = "<group>"; };
 		8C23026617057400001A5510 /* addbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addbutton.png; sourceTree = "<group>"; };
@@ -834,6 +839,9 @@
 				8C031CCF16E926F7009B7F38 /* LeapObjectiveC.mm */,
 				8C031CD116E926F7009B7F38 /* PIXLeapInputManager.h */,
 				8C031CD216E926F7009B7F38 /* PIXLeapInputManager.m */,
+				8C14692517149A92009ECCC5 /* PIXLeapTutorialWindowController.h */,
+				8C14692617149A92009ECCC5 /* PIXLeapTutorialWindowController.m */,
+				8C14692717149A92009ECCC5 /* PIXLeapTutorialWindowController.xib */,
 			);
 			path = Leap;
 			sourceTree = "<group>";
@@ -1049,6 +1057,7 @@
 				8C72FE6D1713EAAA00AA72B0 /* graydot@2x.png in Resources */,
 				8C72FE6E1713EAAA00AA72B0 /* greendot.png in Resources */,
 				8C72FE6F1713EAAA00AA72B0 /* greendot@2x.png in Resources */,
+				8C14692917149A92009ECCC5 /* PIXLeapTutorialWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1131,6 +1140,7 @@
 				1D91D13C1709DB1C00747629 /* PIXOutlineView.m in Sources */,
 				8C33D5191711FC8700647F95 /* PIXRoundedProgressIndicator.m in Sources */,
 				8C72FE6217134BEE00AA72B0 /* PIXHUDMessageController.m in Sources */,
+				8C14692817149A92009ECCC5 /* PIXLeapTutorialWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

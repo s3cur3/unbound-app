@@ -220,14 +220,14 @@
         //NSViewController *advancedViewController = [[AdvancedPreferencesViewController alloc] init];
         
 
-        NSArray *controllers = [[NSArray alloc] initWithObjects:[NSNull null], generalViewController, [NSNull null], nil];
+        NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, nil];
         
         
         BOOL debug = NO;
         // add the debug preferences pane if we're on a debug build
 #ifdef DEBUG
         
-        debug = YES;
+        //debug = YES;
 #endif
         
         if(debug || [NSEvent modifierFlags] & NSAlternateKeyMask)

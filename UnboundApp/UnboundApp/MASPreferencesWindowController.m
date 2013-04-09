@@ -66,6 +66,13 @@ static NSString *const PreferencesKeyForViewBounds (NSString *identifier)
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidMove:)   name:NSWindowDidMoveNotification object:self.window];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidResize:) name:NSWindowDidResizeNotification object:self.window];
+    
+    
+    if ([self.viewControllers count] == 1)
+    {
+        [self.window.toolbar setVisible:NO];
+    }
+    
 }
 
 - (NSViewController <MASPreferencesViewController> *)firstViewController {
