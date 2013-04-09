@@ -21,10 +21,12 @@
 #import "PIXFileManager.h"
 #import "PIXFileParser.h"
 #import "PIXShareManager.h"
+#import "PIXLeapInputManager.h"
 
-@interface PIXPhotoGridViewController () 
+@interface PIXPhotoGridViewController () <leapResponder>
 
 @property(nonatomic,strong) NSDateFormatter * titleDateFormatter;
+@property CGFloat startPinchZoom;
 
 @end
 
@@ -66,6 +68,8 @@
 {
     [super willShowPIXView];
     
+    [self updateAlbum];
+    
     [self.gridView reloadSelection];
     
     
@@ -78,7 +82,16 @@
         [self updateToolbar];
     });
     
+    [[PIXLeapInputManager sharedInstance] addResponder:self];
+    
 }
+
+-(void)willHidePIXView
+{
+    [[PIXLeapInputManager sharedInstance] removeResponder:self];
+}
+
+
 
 // send a size between 0 and 1 (will be transformed into appropriate sizes)
 -(void)setThumbSize:(CGFloat)size
@@ -89,6 +102,39 @@
     
     [self.gridView setScrollElasticity:YES];
 }
+
+#pragma mark -
+#pragma mark Leap Thumb Size Adjustment
+
+-(void)twoFingerPinchStart
+{
+    if(![self.view.window isKeyWindow]) return;
+    
+    self.startPinchZoom = [[NSUserDefaults standardUserDefaults] floatForKey:@"photoThumbSize"];
+
+}
+
+
+
+-(void)twoFingerPinchPosition:(NSPoint)position andScale:(CGFloat)scale
+{
+    if(![self.view.window isKeyWindow]) return;
+    
+    
+    float magnification = self.startPinchZoom + (scale - 1.0);
+    
+    //magnification = magnification * 4;
+    
+    if(magnification < 0.0) magnification = 0.0;
+    if(magnification > 1.0) magnification = 1.0;
+    
+    // set the new default
+    [[NSUserDefaults standardUserDefaults] setFloat:magnification forKey:@"photoThumbSize"];
+    
+    // set the actual maginification
+    [self setThumbSize:magnification];
+}
+
 
 
 -(void)setAlbum:(id)album
@@ -120,7 +166,7 @@
 {
     self.items = [self fetchItems];
     
-    // remove any items that are no lon
+    // remove any items that are no longer in the selection
     [self.selectedItems intersectSet:[NSSet setWithArray:self.items]];
     
     
@@ -244,8 +290,11 @@
 -(void)showPageControllerForIndex:(NSUInteger)index
 {
     PIXPageViewController *pageViewController = [[PIXPageViewController alloc] initWithNibName:@"PIXPageViewController" bundle:nil];
-    pageViewController.album = self.album;
+    
     pageViewController.initialSelectedObject = [self.album.sortedPhotos objectAtIndex:index];
+    
+    pageViewController.album = self.album;
+    
     [self.navigationViewController pushViewController:pageViewController];
 }
 

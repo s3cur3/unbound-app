@@ -39,7 +39,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomView" id="1005">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSSplitView" id="698707353">
@@ -62,7 +62,6 @@
 								<array class="NSMutableArray" key="NSSubviews"/>
 								<string key="NSFrame">{{295, 0}, {727, 684}}</string>
 								<reference key="NSSuperview" ref="698707353"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:13</string>
 								<string key="NSClassName">NSView</string>
 							</object>
@@ -81,7 +80,6 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{1022, 684}</string>
-				<reference key="NSSuperview"/>
 				<reference key="NSNextKeyView" ref="698707353"/>
 				<string key="NSClassName">NSView</string>
 			</object>
@@ -131,9 +129,12 @@
 				<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 			</object>
 			<object class="NSSlider" id="495369697">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<string key="NSFrameSize">{100, 25}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
+				<reference key="NSNextKeyView"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<bool key="NSEnabled">YES</bool>
 				<object class="NSSliderCell" key="NSCell" id="360459668">
@@ -541,11 +542,16 @@
 					<string key="superclassName">PIXViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="backBarSegmentChanged:">id</string>
+						<string key="shareButtonPressed:">id</string>
 						<string key="sliderValueChanged:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="backBarSegmentChanged:">
 							<string key="name">backBarSegmentChanged:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="shareButtonPressed:">
+							<string key="name">shareButtonPressed:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="sliderValueChanged:">

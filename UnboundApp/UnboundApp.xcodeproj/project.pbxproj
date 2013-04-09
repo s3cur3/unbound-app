@@ -119,6 +119,12 @@
 		8C68248E16F8089400245F09 /* buttongrid_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68248016F8089400245F09 /* buttongrid_share@2x.png */; };
 		8C68248F16F8089400245F09 /* buttongrid_twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68248116F8089400245F09 /* buttongrid_twitter.png */; };
 		8C68249016F8089400245F09 /* buttongrid_twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68248216F8089400245F09 /* buttongrid_twitter@2x.png */; };
+		8C72FE581712843B00AA72B0 /* preferences_dark_theme.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE561712843B00AA72B0 /* preferences_dark_theme.png */; };
+		8C72FE591712843B00AA72B0 /* preferences_light_theme.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE571712843B00AA72B0 /* preferences_light_theme.png */; };
+		8C72FE6217134BEE00AA72B0 /* PIXHUDMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C72FE6017134BEE00AA72B0 /* PIXHUDMessageController.m */; };
+		8C72FE6317134BEE00AA72B0 /* PIXHUDMessageController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE6117134BEE00AA72B0 /* PIXHUDMessageController.xib */; };
+		8C72FE661713701200AA72B0 /* leapconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE641713701200AA72B0 /* leapconnected.png */; };
+		8C72FE671713701200AA72B0 /* leapconnected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE651713701200AA72B0 /* leapconnected@2x.png */; };
 		8C7ABBBE16C42A3D00784BDA /* PIXGradientBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7ABBBD16C42A3D00784BDA /* PIXGradientBarView.m */; };
 		8C85AC1916FA98470021ADB4 /* PIXShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C85AC1816FA98470021ADB4 /* PIXShareManager.m */; };
 		8C8EE92B16C46AB800F16C49 /* PIXAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE92A16C46AB800F16C49 /* PIXAlbum.m */; };
@@ -357,6 +363,13 @@
 		8C68248016F8089400245F09 /* buttongrid_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttongrid_share@2x.png"; sourceTree = "<group>"; };
 		8C68248116F8089400245F09 /* buttongrid_twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttongrid_twitter.png; sourceTree = "<group>"; };
 		8C68248216F8089400245F09 /* buttongrid_twitter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttongrid_twitter@2x.png"; sourceTree = "<group>"; };
+		8C72FE561712843B00AA72B0 /* preferences_dark_theme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = preferences_dark_theme.png; sourceTree = "<group>"; };
+		8C72FE571712843B00AA72B0 /* preferences_light_theme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = preferences_light_theme.png; sourceTree = "<group>"; };
+		8C72FE5F17134BEE00AA72B0 /* PIXHUDMessageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXHUDMessageController.h; sourceTree = "<group>"; };
+		8C72FE6017134BEE00AA72B0 /* PIXHUDMessageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXHUDMessageController.m; sourceTree = "<group>"; };
+		8C72FE6117134BEE00AA72B0 /* PIXHUDMessageController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXHUDMessageController.xib; sourceTree = "<group>"; };
+		8C72FE641713701200AA72B0 /* leapconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leapconnected.png; sourceTree = "<group>"; };
+		8C72FE651713701200AA72B0 /* leapconnected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leapconnected@2x.png"; sourceTree = "<group>"; };
 		8C7ABBBC16C42A3D00784BDA /* PIXGradientBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXGradientBarView.h; sourceTree = "<group>"; };
 		8C7ABBBD16C42A3D00784BDA /* PIXGradientBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXGradientBarView.m; sourceTree = "<group>"; };
 		8C85AC1716FA98470021ADB4 /* PIXShareManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXShareManager.h; sourceTree = "<group>"; };
@@ -514,6 +527,8 @@
 		1D4A1D99167AD93400C9A895 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				8C72FE561712843B00AA72B0 /* preferences_dark_theme.png */,
+				8C72FE571712843B00AA72B0 /* preferences_light_theme.png */,
 				8C23026617057400001A5510 /* addbutton.png */,
 				8C23026717057400001A5510 /* addbutton@2x.png */,
 				8CFC13BA16FD2B21004CA7D5 /* contract.png */,
@@ -560,6 +575,8 @@
 				8CF9CE4116F8200A003B0933 /* arrow-right@2x.png */,
 				8C5D757217015A5C0008CC00 /* pause.png */,
 				8C5D757317015A5C0008CC00 /* pause@2x.png */,
+				8C72FE641713701200AA72B0 /* leapconnected.png */,
+				8C72FE651713701200AA72B0 /* leapconnected@2x.png */,
 			);
 			path = images;
 			sourceTree = "<group>";
@@ -843,6 +860,9 @@
 			children = (
 				8C85AC1716FA98470021ADB4 /* PIXShareManager.h */,
 				8C85AC1816FA98470021ADB4 /* PIXShareManager.m */,
+				8C72FE5F17134BEE00AA72B0 /* PIXHUDMessageController.h */,
+				8C72FE6017134BEE00AA72B0 /* PIXHUDMessageController.m */,
+				8C72FE6117134BEE00AA72B0 /* PIXHUDMessageController.xib */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1006,6 +1026,11 @@
 				8C23026517056E6E001A5510 /* sortbutton@2x.png in Resources */,
 				8C23026817057400001A5510 /* addbutton.png in Resources */,
 				8C23026917057400001A5510 /* addbutton@2x.png in Resources */,
+				8C72FE581712843B00AA72B0 /* preferences_dark_theme.png in Resources */,
+				8C72FE591712843B00AA72B0 /* preferences_light_theme.png in Resources */,
+				8C72FE6317134BEE00AA72B0 /* PIXHUDMessageController.xib in Resources */,
+				8C72FE661713701200AA72B0 /* leapconnected.png in Resources */,
+				8C72FE671713701200AA72B0 /* leapconnected@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1087,6 +1112,7 @@
 				8C8F4354170534610040562D /* PIXFileTextField.m in Sources */,
 				1D91D13C1709DB1C00747629 /* PIXOutlineView.m in Sources */,
 				8C33D5191711FC8700647F95 /* PIXRoundedProgressIndicator.m in Sources */,
+				8C72FE6217134BEE00AA72B0 /* PIXHUDMessageController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

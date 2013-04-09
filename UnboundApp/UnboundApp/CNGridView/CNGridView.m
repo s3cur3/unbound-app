@@ -210,6 +210,8 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     
     [[PIXLeapInputManager sharedInstance] addResponder:self];
     
+    [self setTranslatesAutoresizingMaskIntoConstraints:YES];
+    
 }
 
 
@@ -376,6 +378,9 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         [keyedVisibleItems enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
             NSRect newRect = [self rectForItemAtIndex:[(CNGridViewItem *)obj index]];
             [(CNGridViewItem *)obj setAlphaValue:1.0];
+            
+            [(CNGridViewItem *)obj setAutoresizingMask:NSViewNotSizable];
+            
             [(CNGridViewItem *)obj setFrame:newRect];
         }];
         
@@ -511,7 +516,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     return NSNotFound;
 }
 
-// this is used by the drag select -- added by scott
+// this is used by the leap pointer code -- added by scott
 - (NSUInteger)indexForItemAtLocationNoSpace:(NSPoint)location
 {
     NSPoint point = [self convertPoint:location fromView:nil];
@@ -534,7 +539,34 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         NSUInteger currentColumn = floor(point.x / ((self.itemSize.width+space)+space));
         NSUInteger currentRow = floor(point.y / self.itemSize.height);
         indexForItemAtLocation = currentRow * [self columnsInGridView] + currentColumn;
-        indexForItemAtLocation = (indexForItemAtLocation > (numberOfItems - 1) ? NSNotFound : indexForItemAtLocation);
+    
+        // if we're out of range, find the closest item (by column for leap)
+        if(indexForItemAtLocation > (numberOfItems - 1))
+        {
+            while(indexForItemAtLocation > (numberOfItems - 1))
+            {
+                
+                // if we can go up a row, do that first
+                if(currentRow > 0)
+                {
+                    currentRow--;
+                    indexForItemAtLocation = currentRow * [self columnsInGridView] + currentColumn;
+                }
+                
+                // otherwise, go up a column
+                else
+                {
+                    currentColumn--;
+                    indexForItemAtLocation = currentRow * [self columnsInGridView] + currentColumn;
+                }
+            }
+            
+            // if we still havent found the item (there are none)
+            if(indexForItemAtLocation > (numberOfItems - 1))
+            {
+                indexForItemAtLocation = NSNotFound;
+            }
+        }
     //}
     
     
@@ -581,7 +613,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
 - (void)reloadDataAnimated:(BOOL)animated
 {
-    NSDisableScreenUpdates();
+    //NSDisableScreenUpdates();
     
     if(animated)
     {
@@ -645,7 +677,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         [CATransaction commit];
     }
     
-    NSEnableScreenUpdates();
+    //NSEnableScreenUpdates();
 }
 
 
@@ -1472,6 +1504,8 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 {
     if(self.window == nil) return;
     
+    if(![self.window isKeyWindow]) return;
+    
     
     static NSUInteger lastPointed = -1;
     
@@ -1491,6 +1525,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     if(index != lastPointed && index != NSNotFound)
     {
         lastPointed = index;
+        lastSelectedItemIndex = index;
         
         if([self.delegate respondsToSelector:@selector(gridView:didPointItemAtIndex:inSection:)])
         {
@@ -1509,6 +1544,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         currentPoint.y += scrollChange;
         
         [self scrollPoint:currentPoint];
+        
     }
     
     else if(normalizedPosition.y > .8)
@@ -1528,15 +1564,20 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 {
     if(self.window == nil) return;
     
+    if(![self.window isKeyWindow]) return;
+    
     //static NSUInteger lastPointed = -1;
     
+    /*
     //first, denormailize the point
     NSPoint pointInView = NSMakePoint((self.clippedRect.size.width * normalizedPosition.x),
                                       (self.clippedRect.size.height * normalizedPosition.y));
     
     NSUInteger index = [self indexForItemAtLocationNoSpace:pointInView];
+     
+    */
     
-    [self gridView:self didDoubleClickItemAtIndex:index inSection:0]; 
+    [self gridView:self didDoubleClickItemAtIndex:lastSelectedItemIndex inSection:0]; 
     
     //DLog(@"Index pointed at: %d", index);
     

@@ -196,8 +196,6 @@
 
 -(void)setupToolbar
 {
-    //NSArray * items = @[self.activityIndicator, self.navigationViewController.middleSpacer, self.searchBar];
-
     NSArray * items = @[self.navigationViewController.activityIndicator, self.navigationViewController.middleSpacer, self.newAlbumButton, self.searchBar, self.sortButton];
     
     [self.navigationViewController setToolbarItems:items];

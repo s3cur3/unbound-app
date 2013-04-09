@@ -806,6 +806,7 @@
     self.pagerData = [[self.album sortedPhotos] mutableCopy];
     
     
+    
     // set the first image in our list to the main magnifying view
     if ([self.pagerData count] > 0) {
         [self.pageController setArrangedObjects:self.pagerData];

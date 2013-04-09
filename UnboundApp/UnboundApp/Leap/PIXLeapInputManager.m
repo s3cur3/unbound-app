@@ -7,6 +7,9 @@
 \******************************************************************************/
 
 #import "PIXLeapInputManager.h"
+#import "PIXHUDMessageController.h"
+#import "PIXAppDelegate.h"
+#import "PIXMainWindowController.h"
 #import "LeapObjectiveC.h"
 
 
@@ -61,6 +64,12 @@
     }
     
     [self.leapResponders insertObject:aResponder atIndex:0];
+    
+    
+    // clear out any pinch gesture values
+    self.pinchStartWidth = -1;
+    self.pinchStartDepth = -1;
+    self.pinchStartPosition = NSZeroPoint;
 }
 
 - (void)removeResponder:(id<leapResponder>)aResponder
@@ -88,16 +97,37 @@
     [aController enableGesture:LEAP_GESTURE_TYPE_KEY_TAP enable:YES];
     [aController enableGesture:LEAP_GESTURE_TYPE_SCREEN_TAP enable:YES];
     [aController enableGesture:LEAP_GESTURE_TYPE_SWIPE enable:YES];
+    
+    
+    NSWindow * mainwindow = [[[PIXAppDelegate sharedAppDelegate] mainWindowController] window];
+    
+    // present the hud message that the leap connected
+    PIXHUDMessageController * messageHUD = [PIXHUDMessageController windowWithTitle:@"Leap Connected" andIcon:[NSImage imageNamed:@"leapconnected"]];
+    [messageHUD presentInParentWindow:mainwindow forTimeInterval:3.0];
+    
+    
 }
 
 - (void)onDisconnect:(NSNotification *)notification;
 {
     DLog(@"Leap Disconnected");
+    
+    NSWindow * mainwindow = [[[PIXAppDelegate sharedAppDelegate] mainWindowController] window];
+    
+    // present the hud message that the leap connected
+    PIXHUDMessageController * messageHUD = [PIXHUDMessageController windowWithTitle:@"Leap Disconnected" andIcon:[NSImage imageNamed:@"leapconnected"]];
+    [messageHUD presentInParentWindow:mainwindow forTimeInterval:3.0];
 }
 
 - (void)onExit:(NSNotification *)notification;
 {
     DLog(@"Leap Exited");
+    
+    NSWindow * mainwindow = [[[PIXAppDelegate sharedAppDelegate] mainWindowController] window];
+    
+    // present the hud message that the leap connected
+    PIXHUDMessageController * messageHUD = [PIXHUDMessageController windowWithTitle:@"Leap Exited" andIcon:[NSImage imageNamed:@"leapconnected"]];
+    [messageHUD presentInParentWindow:mainwindow forTimeInterval:3.0];
 }
 
 - (void)onFrame:(NSNotification *)notification;
@@ -109,15 +139,24 @@
     
     NSPoint normalizedPoint = CGPointZero;
     
+    NSArray * hands = [frame hands];
     NSMutableArray *fingers = [NSMutableArray new];
     
-
+    // Calculate the hand's average finger tip position
+    LeapVector *avgPalmPos = [[LeapVector alloc] init];
     
-    for(LeapHand * hand in [frame hands])
+    
+    
+    for(LeapHand * hand in hands)
     {
         [fingers addObjectsFromArray:[hand fingers]];
+        
+        // also get the average palm position
+        avgPalmPos = [avgPalmPos plus:[hand palmPosition]];
+        
     }
     
+    avgPalmPos = [avgPalmPos divide:[hands count]];
     
     if ([fingers count] != 0) {
         
@@ -143,7 +182,7 @@
         if(normalizedPoint.x > 1.0) normalizedPoint.x = 1.0;
         if(normalizedPoint.y > 1.0) normalizedPoint.y = 1.0;
         
-        
+        /*
         // handle two finger pinch
         if([fingers count] == 2)
         {
@@ -217,10 +256,10 @@
             self.pinchStartWidth = -1;
             self.pinchStartDepth = -1;
             self.pinchStartPosition = NSZeroPoint;
-        }
+        }*/
         
-        // handle the single finger point
-        if([fingers count] == 1)
+        // handle the single or two finger point
+        if([fingers count] < 3)
         {
             // loop through the responders
             for(id<leapResponder> responder in self.leapResponders)
@@ -234,6 +273,89 @@
         }
         
         
+    }
+    
+    
+    
+    // handle palm grab zoom
+    if([fingers count] == 0 && [hands count] == 1 &&
+       [[hands lastObject] sphereRadius] <= 70.0)
+    {
+        
+        DLog(@"Hand Radius: %f", [[hands lastObject] sphereRadius]);
+        
+        normalizedPoint.x = (avgPalmPos.x - self.screenRect.origin.x)/self.screenRect.size.width;
+        normalizedPoint.y = (avgPalmPos.y - self.screenRect.origin.y)/self.screenRect.size.height;
+        
+        if(normalizedPoint.x < 0.0) normalizedPoint.x = 0.0;
+        if(normalizedPoint.y < 0.0) normalizedPoint.y = 0.0;
+        if(normalizedPoint.x > 1.0) normalizedPoint.x = 1.0;
+        if(normalizedPoint.y > 1.0) normalizedPoint.y = 1.0;
+        
+        CGFloat pinchDepth = -avgPalmPos.z;
+        
+        // if this is mid pinch, call the responder with the deltas
+        if(self.pinchStartWidth > 0)
+        {
+
+            
+            CGFloat depthChange = pinchDepth - self.pinchStartDepth;
+            
+            depthChange = (-depthChange / 150.0) + 1;
+            
+            
+            // never allow 0
+            if(depthChange == 0)
+            {
+                depthChange = 0.01;
+            }
+            
+            
+            CGFloat scaleDelta =   depthChange;
+            
+            
+            
+            NSPoint positionDelta = NSMakePoint(normalizedPoint.x - self.pinchStartPosition.x,
+                                                normalizedPoint.y - self.pinchStartPosition.y);
+            
+            // loop through the responders
+            for(id<leapResponder> responder in self.leapResponders)
+            {
+                if([responder respondsToSelector:@selector(twoFingerPinchPosition:andScale:)])
+                {
+                    [responder twoFingerPinchPosition:positionDelta andScale:scaleDelta];
+                    break; // do nothing else after we hit the first responder
+                }
+            }
+            
+        }
+        
+        // this will always be called at the start
+        else
+        {
+            self.pinchStartWidth = 1.0;
+            self.pinchStartDepth = pinchDepth;
+            self.pinchStartPosition = normalizedPoint;
+            
+            // loop through the responders
+            for(id<leapResponder> responder in self.leapResponders)
+            {
+                if([responder respondsToSelector:@selector(twoFingerPinchStart)])
+                {
+                    [responder twoFingerPinchStart];
+                    break; // do nothing else after we hit the first responder
+                }
+            }
+        }
+        
+    }
+    
+    else
+    {
+        // clear out any pinch gesture values
+        self.pinchStartWidth = -1;
+        self.pinchStartDepth = -1;
+        self.pinchStartPosition = NSZeroPoint;
     }
   
     

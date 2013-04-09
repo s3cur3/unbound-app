@@ -12,6 +12,16 @@
 #import "Leap.h"
 
 //////////////////////////////////////////////////////////////////////////
+// MainThread category for posting notifications to the main application thread
+@interface NSNotificationCenter (MainThread)
+
+- (void)postNotificationOnMainThread:(NSNotification *)notification;
+- (void)postNotificationOnMainThreadName:(NSString *)aName object:(id)anObject;
+
+@end
+
+
+//////////////////////////////////////////////////////////////////////////
 //VECTOR
 @implementation LeapVector
 
@@ -20,7 +30,7 @@
 @synthesize y = _y;
 @synthesize z = _z;
 
-- (id)initWithX:(float)x y:(float)y z:(float)z;
+- (id)initWithX:(float)x y:(float)y z:(float)z
 {
     self = [super init];
     if (self) {
@@ -31,7 +41,7 @@
     return self;
 }
 
-- (id)initWithVector:(const LeapVector *)vector;
+- (id)initWithVector:(const LeapVector *)vector
 {
     self = [super init];
     if (self) {
@@ -42,7 +52,7 @@
     return self;
 }
 
-- (id)initWithLeapVector:(void *)leapVector;
+- (id)initWithLeapVector:(void *)leapVector
 {
     self = [super init];
     if (self) {
@@ -57,6 +67,32 @@
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"(%f, %f, %f)", _x, _y, _z];
+}
+
+- (float)magnitude
+{
+    return sqrt(_x * _x + _y * _y + _z * _z);
+}
+
+- (float)magnitudeSquared
+{
+    return _x * _x + _y * _y + _z * _z;
+}
+
+- (float)distanceTo:(const LeapVector *)vector
+{
+    return sqrt((_x - [vector x]) * (_x - [vector x]) +
+                (_y - [vector y]) * (_y - [vector y]) +
+                (_z - [vector z]) * (_z - [vector z]));
+}
+
+- (float)angleTo:(const LeapVector *)vector
+{
+    float denom = [self magnitudeSquared] * [vector magnitudeSquared];
+    if (denom <= 0.0f) {
+        return 0.0f;
+    }
+    return acos([self dot:vector] / sqrt(denom));
 }
 
 - (float)pitch
@@ -104,12 +140,12 @@
     return _x == [vector x] && _y == [vector y] && _z == [vector z];
 }
 
-- (float)dot:(LeapVector *)vector
+- (float)dot:(const LeapVector *)vector
 {
     return _x * [vector x] + _y * [vector y] + _z * [vector z];
 }
 
-- (LeapVector *)cross:(LeapVector *)vector
+- (LeapVector *)cross:(const LeapVector *)vector
 {
     Leap::Vector me(_x, _y, _z);
     Leap::Vector other([vector x], [vector y], [vector z]);
@@ -146,55 +182,55 @@
     return [[LeapVector alloc] initWithX:v.x y:v.y z:v.z];
 }
 
-+ (LeapVector *)xAxis;
++ (LeapVector *)xAxis
 {
     const Leap::Vector& v = Leap::Vector::xAxis();
     return [[LeapVector alloc] initWithX:v.x y:v.y z:v.z];
 }
 
-+ (LeapVector *)yAxis;
++ (LeapVector *)yAxis
 {
     const Leap::Vector& v = Leap::Vector::yAxis();
     return [[LeapVector alloc] initWithX:v.x y:v.y z:v.z];
 }
 
-+ (LeapVector *)zAxis;
++ (LeapVector *)zAxis
 {
     const Leap::Vector& v = Leap::Vector::zAxis();
     return [[LeapVector alloc] initWithX:v.x y:v.y z:v.z];
 }
 
-+ (LeapVector *)left;
++ (LeapVector *)left
 {
     const Leap::Vector& v = Leap::Vector::left();
     return [[LeapVector alloc] initWithX:v.x y:v.y z:v.z];
 }
 
-+ (LeapVector *)right;
++ (LeapVector *)right
 {
     const Leap::Vector& v = Leap::Vector::right();
     return [[LeapVector alloc] initWithX:v.x y:v.y z:v.z];
 }
 
-+ (LeapVector *)down;
++ (LeapVector *)down
 {
     const Leap::Vector& v = Leap::Vector::down();
     return [[LeapVector alloc] initWithX:v.x y:v.y z:v.z];
 }
 
-+ (LeapVector *)up;
++ (LeapVector *)up
 {
     const Leap::Vector& v = Leap::Vector::up();
     return [[LeapVector alloc] initWithX:v.x y:v.y z:v.z];
 }
 
-+ (LeapVector *)forward;
++ (LeapVector *)forward
 {
     const Leap::Vector& v = Leap::Vector::forward();
     return [[LeapVector alloc] initWithX:v.x y:v.y z:v.z];
 }
 
-+ (LeapVector *)backward;
++ (LeapVector *)backward
 {
     const Leap::Vector& v = Leap::Vector::backward();
     return [[LeapVector alloc] initWithX:v.x y:v.y z:v.z];
@@ -212,7 +248,7 @@
 @synthesize zBasis = _zBasis;
 @synthesize origin = _origin;
 
-- (id)initWithXBasis:(const LeapVector *)xBasis yBasis:(const LeapVector *)yBasis zBasis:(const LeapVector *)zBasis origin:(const LeapVector *)origin;
+- (id)initWithXBasis:(const LeapVector *)xBasis yBasis:(const LeapVector *)yBasis zBasis:(const LeapVector *)zBasis origin:(const LeapVector *)origin
 {
     self = [super init];
     if (self) {
@@ -224,7 +260,7 @@
     return self;
 }
 
-- (id)initWithMatrix:(LeapMatrix *)matrix;
+- (id)initWithMatrix:(LeapMatrix *)matrix
 {
     self = [super init];
     if (self) {
@@ -236,7 +272,7 @@
     return self;
 }
 
-- (id)initWithLeapMatrix:(void *)matrix;
+- (id)initWithLeapMatrix:(void *)matrix
 {
     self = [super init];
     if (self) {
@@ -249,7 +285,7 @@
     return self;
 }
 
-- (id)initWithAxis:(const LeapVector *)axis angleRadians:(float)angleRadians;
+- (id)initWithAxis:(const LeapVector *)axis angleRadians:(float)angleRadians
 {
     self = [super init];
     if (self) {
@@ -263,7 +299,7 @@
     return self;
 }
 
-- (id)initWithAxis:(const LeapVector *)axis angleRadians:(float)angleRadians translation:(const LeapVector *)translation;
+- (id)initWithAxis:(const LeapVector *)axis angleRadians:(float)angleRadians translation:(const LeapVector *)translation
 {
     self = [super init];
     if (self) {
@@ -291,7 +327,7 @@
     return [[[a plus:b] plus:c] plus:_origin];
 }
 
-- (LeapVector *)transformDirection:(const LeapVector *)direction;
+- (LeapVector *)transformDirection:(const LeapVector *)direction
 {
     LeapVector *a = [_xBasis times:[direction x]];
     LeapVector *b = [_yBasis times:[direction y]];
@@ -299,24 +335,12 @@
     return [[a plus:b] plus:c];
 }
 
-- (LeapMatrix *)orthoNormalized;
+- (LeapMatrix *)times:(const LeapMatrix *)other
 {
-    const Leap::Vector localXBasis([_xBasis x], [_xBasis y], [_xBasis z]);
-    const Leap::Vector localYBasis([_yBasis x], [_yBasis y], [_yBasis z]);
-    const Leap::Vector localZBasis([_zBasis x], [_zBasis y], [_zBasis z]);
-    const Leap::Vector localOrigin([_origin x], [_origin y], [_origin z]);
-    Leap::Matrix m(localXBasis, localYBasis, localZBasis, localOrigin);
-    return [[LeapMatrix alloc] initWithLeapMatrix:&m];
+    return [[LeapMatrix alloc] initWithXBasis:[self transformDirection:[other xBasis]] yBasis:[self transformDirection:[other yBasis]] zBasis:[self transformDirection:[other zBasis]] origin:[self transformPoint:[other origin]]];
 }
 
-- (LeapMatrix *)times:(const LeapMatrix *)other;
-{
-    LeapMatrix *unnormalized;
-    unnormalized = [[LeapMatrix alloc] initWithXBasis:[self transformDirection:[other xBasis]] yBasis:[self transformDirection:[other yBasis]] zBasis:[self transformDirection:[other zBasis]] origin:[self transformPoint:[other origin]]];
-    return [unnormalized orthoNormalized];
-}
-
-- (BOOL)equals:(const LeapMatrix *)other;
+- (BOOL)equals:(const LeapMatrix *)other
 {
     return [_xBasis equals:[other xBasis]] && [_yBasis equals:[other yBasis]] && [_zBasis equals:[other zBasis]];
 }
@@ -380,7 +404,7 @@
     return data;
 }
 
-+ (LeapMatrix *)identity;
++ (LeapMatrix *)identity
 {
     const Leap::Matrix& m = Leap::Matrix::identity();
     return [[LeapMatrix alloc] initWithLeapMatrix:(void *)&m];
@@ -398,7 +422,7 @@
 @synthesize frame = _frame;
 @synthesize hand = _hand;
 
-- (id)initWithPointable:(void *)pointable frame:(const LeapFrame *)frame hand:(const LeapHand *)hand
+- (id)initWithPointable:(void *)pointable frame:(LeapFrame *)frame hand:(LeapHand *)hand
 {
     self = [super init];
     if (self) {
@@ -442,17 +466,17 @@
     return _interfacePointable->id();
 }
 
-- (const LeapVector *)tipPosition
+- (LeapVector *)tipPosition
 {
     return [[LeapVector alloc] initWithX:_interfacePointable->tipPosition().x y:_interfacePointable->tipPosition().y z:_interfacePointable->tipPosition().z];
 }
 
-- (const LeapVector *)tipVelocity
+- (LeapVector *)tipVelocity
 {
     return [[LeapVector alloc] initWithX:_interfacePointable->tipVelocity().x y:_interfacePointable->tipVelocity().y z:_interfacePointable->tipVelocity().z];
 }
 
-- (const LeapVector *)direction
+- (LeapVector *)direction
 {
     return [[LeapVector alloc] initWithX:_interfacePointable->direction().x y:_interfacePointable->direction().y z:_interfacePointable->direction().z];
 }
@@ -482,13 +506,13 @@
     return _interfacePointable->isValid();
 }
 
-- (const LeapFrame *)frame
+- (LeapFrame *)frame
 {
     NSAssert(_frame != nil, @"Pointable's frame property has been deallocated due to weak ARC reference. Retain a strong pointer to this frame if you wish to access it later.");
     return _frame;
 }
 
-- (const LeapHand *)hand
+- (LeapHand *)hand
 {
     NSAssert(_hand != nil, @"Pointable's finger property has been deallocated due to weak ARC reference. Retain a strong pointer to this hand if you wish to access it later.");
     return _hand;
@@ -559,7 +583,7 @@
 
 @synthesize frame = _frame;
 
-- (id)initWithHand:(void *)hand frame:(const LeapFrame *)frame
+- (id)initWithHand:(void *)hand frame:(LeapFrame *)frame
 {
     self = [super init];
     if (self) {
@@ -615,45 +639,45 @@
     return [NSArray arrayWithArray:tools_ar];
 }
 
-- (const LeapPointable *)pointable:(int32_t)pointable_id
+- (LeapPointable *)pointable:(int32_t)pointableId
 {
-    const Leap::Pointable &tmpLeapPointable = _interfaceHand->pointable(pointable_id);
+    const Leap::Pointable &tmpLeapPointable = _interfaceHand->pointable(pointableId);
     return [[LeapPointable typedPointableAlloc:(void *)&tmpLeapPointable] initWithPointable:(void *)&tmpLeapPointable frame:_frame hand:self];
 }
 
-- (const LeapFinger *)finger:(int32_t)finger_id
+- (LeapFinger *)finger:(int32_t)fingerId
 {
-    const Leap::Finger &tmpLeapFinger = _interfaceHand->finger(finger_id);
+    const Leap::Finger &tmpLeapFinger = _interfaceHand->finger(fingerId);
     return [[LeapFinger alloc] initWithPointable:(void *)&tmpLeapFinger frame:_frame hand:self];
 }
 
-- (const LeapTool *)tool:(int32_t)tool_id
+- (LeapTool *)tool:(int32_t)toolId
 {
-    const Leap::Tool &tmpLeapTool = _interfaceHand->tool(tool_id);
+    const Leap::Tool &tmpLeapTool = _interfaceHand->tool(toolId);
     return [[LeapTool alloc] initWithPointable:(void *)&tmpLeapTool frame:_frame hand:self];
 }
 
-- (const LeapVector *)palmPosition
+- (LeapVector *)palmPosition
 {
     return [[LeapVector alloc] initWithX:_interfaceHand->palmPosition().x y:_interfaceHand->palmPosition().y z:_interfaceHand->palmPosition().z];
 }
 
-- (const LeapVector *)palmVelocity
+- (LeapVector *)palmVelocity
 {
     return [[LeapVector alloc] initWithX:_interfaceHand->palmVelocity().x y:_interfaceHand->palmVelocity().y z:_interfaceHand->palmVelocity().z];
 }
 
-- (const LeapVector *)palmNormal
+- (LeapVector *)palmNormal
 {
     return [[LeapVector alloc] initWithX:_interfaceHand->palmNormal().x y:_interfaceHand->palmNormal().y z:_interfaceHand->palmNormal().z];
 }
 
-- (const LeapVector *)direction
+- (LeapVector *)direction
 {
     return [[LeapVector alloc] initWithX:_interfaceHand->direction().x y:_interfaceHand->direction().y z:_interfaceHand->direction().z];
 }
 
-- (const LeapVector *)sphereCenter
+- (LeapVector *)sphereCenter
 {
     return [[LeapVector alloc] initWithX:_interfaceHand->sphereCenter().x y:_interfaceHand->sphereCenter().y z:_interfaceHand->sphereCenter().z];
 }
@@ -668,7 +692,7 @@
     return _interfaceHand->isValid();
 }
 
-- (const LeapFrame *)frame
+- (LeapFrame *)frame
 {
     NSAssert(_frame != nil, @"Hand's frame has been deallocated due to weak ARC reference. Retain a strong pointer to this frame if you wish to access it later.");
     return _frame;
@@ -679,38 +703,38 @@
     delete _interfaceHand;
 }
 
-- (LeapVector *)translation:(const LeapFrame *)since_frame
+- (LeapVector *)translation:(const LeapFrame *)sinceFrame
 {
-    Leap::Vector v = _interfaceHand->translation(*(const Leap::Frame *)[since_frame interfaceFrame]);
+    Leap::Vector v = _interfaceHand->translation(*(const Leap::Frame *)[sinceFrame interfaceFrame]);
     return [[LeapVector alloc] initWithLeapVector:&v];
 }
 
-- (LeapVector *)rotationAxis:(const LeapFrame *)since_frame
+- (LeapVector *)rotationAxis:(const LeapFrame *)sinceFrame
 {
-    Leap::Vector v = _interfaceHand->rotationAxis(*(const Leap::Frame *)[since_frame interfaceFrame]);
+    Leap::Vector v = _interfaceHand->rotationAxis(*(const Leap::Frame *)[sinceFrame interfaceFrame]);
     return [[LeapVector alloc] initWithLeapVector:&v];
 }
 
-- (float)rotationAngle:(const LeapFrame *)since_frame
+- (float)rotationAngle:(const LeapFrame *)sinceFrame
 {
-    return _interfaceHand->rotationAngle(*(const Leap::Frame *)[since_frame interfaceFrame]);
+    return _interfaceHand->rotationAngle(*(const Leap::Frame *)[sinceFrame interfaceFrame]);
 }
 
-- (float)rotationAngle:(const LeapFrame *)since_frame axis:(const LeapVector *)axis
+- (float)rotationAngle:(const LeapFrame *)sinceFrame axis:(const LeapVector *)axis
 {
     Leap::Vector v([axis x], [axis y], [axis z]);
-    return _interfaceHand->rotationAngle(*(const Leap::Frame *)[since_frame interfaceFrame], v);
+    return _interfaceHand->rotationAngle(*(const Leap::Frame *)[sinceFrame interfaceFrame], v);
 }
 
-- (LeapMatrix *)rotationMatrix:(const LeapFrame *)since_frame
+- (LeapMatrix *)rotationMatrix:(const LeapFrame *)sinceFrame
 {
-    Leap::Matrix m = _interfaceHand->rotationMatrix(*(const Leap::Frame *)[since_frame interfaceFrame]);
+    Leap::Matrix m = _interfaceHand->rotationMatrix(*(const Leap::Frame *)[sinceFrame interfaceFrame]);
     return [[LeapMatrix alloc] initWithLeapMatrix:&m];
 }
 
-- (float)scaleFactor:(const LeapFrame *)since_frame
+- (float)scaleFactor:(const LeapFrame *)sinceFrame
 {
-    return _interfaceHand->scaleFactor(*(const Leap::Frame *)[since_frame interfaceFrame]);
+    return _interfaceHand->scaleFactor(*(const Leap::Frame *)[sinceFrame interfaceFrame]);
 }
 
 + (LeapHand *)invalid
@@ -758,6 +782,21 @@
 {
     const Leap::Pointable *leapPointable = (const Leap::Pointable *)[pointable interfacePointable];
     Leap::Vector v = _interfaceScreen->intersect(*leapPointable, normalize, clampRatio);
+    return [[LeapVector alloc] initWithLeapVector:&v];
+}
+
+- (LeapVector *)intersect:(LeapVector *)position direction:(LeapVector *)direction normalize:(BOOL)normalize clampRatio:(float)clampRatio
+{
+    Leap::Vector leapPosition([position x], [position y], [position z]);
+    Leap::Vector leapDirection([direction x], [direction y], [direction z]);
+    Leap::Vector v = _interfaceScreen->intersect(leapPosition, leapDirection, normalize, clampRatio);
+    return [[LeapVector alloc] initWithLeapVector:&v];
+}
+
+- (LeapVector *)project:(LeapVector *)position normalize:(BOOL)normalize clampRatio:(float)clampRatio
+{
+    Leap::Vector leapPosition([position x], [position y], [position z]);
+    Leap::Vector v = _interfaceScreen->project(leapPosition, normalize, clampRatio);
     return [[LeapVector alloc] initWithLeapVector:&v];
 }
 
@@ -816,7 +855,7 @@
     delete _interfaceScreen;
 }
 
-+ (const LeapScreen *)invalid
++ (LeapScreen *)invalid
 {
     static const Leap::Screen &invalid_screen = Leap::Screen::invalid();
     return [[LeapScreen alloc] initWithScreen:(void *)&invalid_screen];
@@ -840,7 +879,6 @@
     self = [super init];
     if (self) {
         NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-        Leap::Frame leapFrame = *(Leap::Frame *)[frame interfaceFrame];
         switch(((const Leap::Gesture *)leapGesture)->type()) {
             case LEAP_GESTURE_TYPE_SWIPE:
                 _interfaceGesture = new Leap::SwipeGesture(*(const Leap::SwipeGesture *)leapGesture);
@@ -860,8 +898,8 @@
         _frame = frame;
         
         NSMutableArray *hands_ar = [NSMutableArray array];
-        for (int i = 0; i < leapFrame.hands().count(); i++) {
-            const Leap::Hand &tmpLeapHand = leapFrame.hands()[i];
+        for (int i = 0; i < _interfaceGesture->hands().count(); i++) {
+            const Leap::Hand &tmpLeapHand = _interfaceGesture->hands()[i];
             LeapHand *hand = [[LeapHand alloc] initWithHand:(void *)&(tmpLeapHand) frame:frame];
             [hands_ar addObject:hand];
             [dictionary setObject:hand forKey:[NSNumber numberWithUnsignedInteger:tmpLeapHand.id()]];
@@ -869,9 +907,9 @@
         _hands = [NSArray arrayWithArray:hands_ar];
         
         NSMutableArray *pointables_ar = [NSMutableArray array];
-        for (int i = 0; i < leapFrame.pointables().count(); i++) {
-            const Leap::Pointable &tmpLeapPointable = leapFrame.pointables()[i];
-            const LeapHand *hand;
+        for (int i = 0; i < _interfaceGesture->pointables().count(); i++) {
+            const Leap::Pointable &tmpLeapPointable = _interfaceGesture->pointables()[i];
+            LeapHand *hand;
             if (tmpLeapPointable.hand().isValid()) {
                 hand = [dictionary objectForKey:[NSNumber numberWithUnsignedInteger:tmpLeapPointable.hand().id()]];
             }
@@ -938,7 +976,7 @@
     delete _interfaceGesture;
 }
 
-+ (const LeapGesture *)invalid
++ (LeapGesture *)invalid
 {
     static const Leap::Gesture &invalid_gesture = Leap::Gesture::invalid();
     return [[LeapGesture alloc] initWithGesture:(void *)&invalid_gesture frame:nil];
@@ -951,19 +989,19 @@
 //SWIPE GESTURE
 @implementation LeapSwipeGesture : LeapGesture
 
-- (const LeapVector *)position
+- (LeapVector *)position
 {
     const Leap::Vector &leapVector = ((const Leap::SwipeGesture *)[self interfaceGesture])->position();
     return [[LeapVector alloc]initWithX:leapVector.x y:leapVector.y z:leapVector.z];
 }
 
-- (const LeapVector *)startPosition
+- (LeapVector *)startPosition
 {
     const Leap::Vector &leapVector = ((const Leap::SwipeGesture *)[self interfaceGesture])->startPosition();
     return [[LeapVector alloc]initWithX:leapVector.x y:leapVector.y z:leapVector.z];
 }
 
-- (const LeapVector *)direction
+- (LeapVector *)direction
 {
     const Leap::Vector &leapVector = ((const Leap::SwipeGesture *)[self interfaceGesture])->direction();
     return [[LeapVector alloc]initWithX:leapVector.x y:leapVector.y z:leapVector.z];
@@ -974,7 +1012,7 @@
     return ((const Leap::SwipeGesture *)[self interfaceGesture])->speed();
 }
 
-- (const LeapPointable *)pointable
+- (LeapPointable *)pointable
 {
     const Leap::Pointable &leapPointable = ((const Leap::SwipeGesture *)[self interfaceGesture])->pointable();
     return [[LeapPointable typedPointableAlloc:(void *)&leapPointable]initWithPointable:(void *)&leapPointable frame:[self frame] hand:nil];
@@ -991,13 +1029,13 @@
     return ((const Leap::CircleGesture *)[self interfaceGesture])->progress();
 }
 
-- (const LeapVector *)center
+- (LeapVector *)center
 {
     const Leap::Vector &leapVector = ((const Leap::CircleGesture *)[self interfaceGesture])->center();
     return [[LeapVector alloc]initWithX:leapVector.x y:leapVector.y z:leapVector.z];
 }
 
-- (const LeapVector *)normal
+- (LeapVector *)normal
 {
     const Leap::Vector &leapVector = ((const Leap::CircleGesture *)[self interfaceGesture])->normal();
     return [[LeapVector alloc]initWithX:leapVector.x y:leapVector.y z:leapVector.z];
@@ -1008,7 +1046,7 @@
     return ((const Leap::CircleGesture *)[self interfaceGesture])->radius();
 }
 
-- (const LeapPointable *)pointable
+- (LeapPointable *)pointable
 {
     const Leap::Pointable &leapPointable = ((const Leap::CircleGesture *)[self interfaceGesture])->pointable();
     return [[LeapPointable typedPointableAlloc:(void *)&leapPointable]initWithPointable:(void *)&leapPointable frame:[self frame] hand:nil];
@@ -1020,13 +1058,13 @@
 //SCREEN TAP GESTURE
 @implementation LeapScreenTapGesture : LeapGesture
 
-- (const LeapVector *)position
+- (LeapVector *)position
 {
     const Leap::Vector &leapVector = ((const Leap::ScreenTapGesture *)[self interfaceGesture])->position();
     return [[LeapVector alloc]initWithX:leapVector.x y:leapVector.y z:leapVector.z];
 }
 
-- (const LeapVector *)direction
+- (LeapVector *)direction
 {
     const Leap::Vector &leapVector = ((const Leap::ScreenTapGesture *)[self interfaceGesture])->direction();
     return [[LeapVector alloc]initWithX:leapVector.x y:leapVector.y z:leapVector.z];
@@ -1037,7 +1075,7 @@
     return ((const Leap::ScreenTapGesture *)[self interfaceGesture])->progress();
 }
 
-- (const LeapPointable *)pointable
+- (LeapPointable *)pointable
 {
     const Leap::Pointable &leapPointable = ((const Leap::ScreenTapGesture *)[self interfaceGesture])->pointable();
     return [[LeapPointable typedPointableAlloc:(void *)&leapPointable]initWithPointable:(void *)&leapPointable frame:[self frame] hand:nil];
@@ -1049,13 +1087,13 @@
 //KEY TAP GESTURE
 @implementation LeapKeyTapGesture : LeapGesture
 
-- (const LeapVector *)position
+- (LeapVector *)position
 {
     const Leap::Vector &leapVector = ((const Leap::KeyTapGesture *)[self interfaceGesture])->position();
     return [[LeapVector alloc]initWithX:leapVector.x y:leapVector.y z:leapVector.z];
 }
 
-- (const LeapVector *)direction
+- (LeapVector *)direction
 {
     const Leap::Vector &leapVector = ((const Leap::KeyTapGesture *)[self interfaceGesture])->direction();
     return [[LeapVector alloc]initWithX:leapVector.x y:leapVector.y z:leapVector.z];
@@ -1066,7 +1104,7 @@
     return ((const Leap::KeyTapGesture *)[self interfaceGesture])->progress();
 }
 
-- (const LeapPointable *)pointable
+- (LeapPointable *)pointable
 {
     const Leap::Pointable &leapPointable = ((const Leap::KeyTapGesture *)[self interfaceGesture])->pointable();
     return [[LeapPointable typedPointableAlloc:(void *)&leapPointable]initWithPointable:(void *)&leapPointable frame:[self frame] hand:nil];
@@ -1106,7 +1144,7 @@
         NSMutableArray *pointables_ar = [NSMutableArray array];
         for (int i = 0; i < leapFrame.pointables().count(); i++) {
             const Leap::Pointable &tmpLeapPointable = leapFrame.pointables()[i];
-            const LeapHand *hand;
+            LeapHand *hand;
             if (tmpLeapPointable.hand().isValid()) {
                 hand = [dictionary objectForKey:[NSNumber numberWithUnsignedInteger:tmpLeapPointable.hand().id()]];
             }
@@ -1121,7 +1159,7 @@
         NSMutableArray *fingers_ar = [NSMutableArray array];
         for (int i = 0; i < leapFrame.fingers().count(); i++) {
             const Leap::Finger &tmpLeapFinger = leapFrame.fingers()[i];
-            const LeapHand *hand;
+            LeapHand *hand;
             if (tmpLeapFinger.hand().isValid()) {
                 hand = [dictionary objectForKey:[NSNumber numberWithUnsignedInteger:tmpLeapFinger.hand().id()]];
             }
@@ -1136,7 +1174,7 @@
         NSMutableArray *tools_ar = [NSMutableArray array];
         for (int i = 0; i < leapFrame.tools().count(); i++) {
             const Leap::Tool &tmpLeapTool = leapFrame.tools()[i];
-            const LeapHand *hand;
+            LeapHand *hand;
             if (tmpLeapTool.hand().isValid()) {
                 hand = [dictionary objectForKey:[NSNumber numberWithUnsignedInteger:tmpLeapTool.hand().id()]];
             }
@@ -1171,48 +1209,48 @@
     return _interfaceFrame->timestamp();
 }
 
-- (const LeapHand *)hand:(int32_t)hand_id
+- (LeapHand *)hand:(int32_t)handId
 {
     NSEnumerator *e = [_hands objectEnumerator];
     LeapHand *obj;
     while (obj = [e nextObject]) {
-        if ([obj id] == hand_id) {
+        if ([obj id] == handId) {
             return obj;
         }
     }
     return [LeapHand invalid];
 }
 
-- (const LeapPointable *)pointable:(int32_t)pointable_id
+- (LeapPointable *)pointable:(int32_t)pointableId
 {
     NSEnumerator *e = [_pointables objectEnumerator];
     LeapPointable *obj;
     while (obj = [e nextObject]) {
-        if ([obj id] == pointable_id) {
+        if ([obj id] == pointableId) {
             return obj;
         }
     }
     return [LeapPointable invalid];
 }
 
-- (const LeapPointable *)finger:(int32_t)finger_id
+- (LeapPointable *)finger:(int32_t)fingerId
 {
     NSEnumerator *e = [_fingers objectEnumerator];
     LeapFinger *obj;
     while (obj = [e nextObject]) {
-        if ([obj id] == finger_id) {
+        if ([obj id] == fingerId) {
             return obj;
         }
     }
     return [LeapFinger invalid];
 }
 
-- (const LeapPointable *)tool:(int32_t)tool_id
+- (LeapPointable *)tool:(int32_t)toolId
 {
     NSEnumerator *e = [_tools objectEnumerator];
     LeapTool *obj;
     while (obj = [e nextObject]) {
-        if ([obj id] == tool_id) {
+        if ([obj id] == toolId) {
             return obj;
         }
     }
@@ -1246,11 +1284,11 @@
     return [gesture initWithGesture:leapGesture frame:self];
 }
 
-- (NSArray *)gestures:(const LeapFrame *)since_frame
+- (NSArray *)gestures:(const LeapFrame *)sinceFrame
 {
-    Leap::GestureList leapGestures = (since_frame == nil ?
+    Leap::GestureList leapGestures = (sinceFrame == nil ?
                                       _interfaceFrame->gestures() :
-                                      _interfaceFrame->gestures(*(Leap::Frame*)[since_frame interfaceFrame]));
+                                      _interfaceFrame->gestures(*(Leap::Frame*)[sinceFrame interfaceFrame]));
     NSMutableArray *gestures_ar = [NSMutableArray array];
     for (Leap::GestureList::const_iterator it = leapGestures.begin(); it != leapGestures.end(); ++it) {
         const Leap::Gesture leapGesture = *it;
@@ -1260,44 +1298,44 @@
     return [NSArray arrayWithArray:gestures_ar];
 }
 
-- (LeapGesture *)gesture:(int32_t) gesture_id
+- (LeapGesture *)gesture:(int32_t) gestureId
 {
-    Leap::Gesture leapGesture = _interfaceFrame->gesture(gesture_id);
+    Leap::Gesture leapGesture = _interfaceFrame->gesture(gestureId);
     return [self typedGestureCreate:(void *)&leapGesture];
 }
 
-- (LeapVector *)translation:(const LeapFrame *)since_frame
+- (LeapVector *)translation:(const LeapFrame *)sinceFrame
 {
-    Leap::Vector v = _interfaceFrame->translation(*(const Leap::Frame *)[since_frame interfaceFrame]);
+    Leap::Vector v = _interfaceFrame->translation(*(const Leap::Frame *)[sinceFrame interfaceFrame]);
     return [[LeapVector alloc] initWithLeapVector:&v];
 }
 
-- (LeapVector *)rotationAxis:(const LeapFrame *)since_frame
+- (LeapVector *)rotationAxis:(const LeapFrame *)sinceFrame
 {
-    Leap::Vector v = _interfaceFrame->rotationAxis(*(const Leap::Frame *)[since_frame interfaceFrame]);
+    Leap::Vector v = _interfaceFrame->rotationAxis(*(const Leap::Frame *)[sinceFrame interfaceFrame]);
     return [[LeapVector alloc] initWithLeapVector:&v];
 }
 
-- (float)rotationAngle:(const LeapFrame *)since_frame
+- (float)rotationAngle:(const LeapFrame *)sinceFrame
 {
-    return _interfaceFrame->rotationAngle(*(const Leap::Frame *)[since_frame interfaceFrame]);
+    return _interfaceFrame->rotationAngle(*(const Leap::Frame *)[sinceFrame interfaceFrame]);
 }
 
-- (float)rotationAngle:(const LeapFrame *)since_frame axis:(const LeapVector *)axis
+- (float)rotationAngle:(const LeapFrame *)sinceFrame axis:(const LeapVector *)axis
 {
     Leap::Vector v([axis x], [axis y], [axis z]);
-    return _interfaceFrame->rotationAngle(*(const Leap::Frame *)[since_frame interfaceFrame], v);
+    return _interfaceFrame->rotationAngle(*(const Leap::Frame *)[sinceFrame interfaceFrame], v);
 }
 
-- (LeapMatrix *)rotationMatrix:(const LeapFrame *)since_frame
+- (LeapMatrix *)rotationMatrix:(const LeapFrame *)sinceFrame
 {
-    Leap::Matrix m = _interfaceFrame->rotationMatrix(*(const Leap::Frame *)[since_frame interfaceFrame]);
+    Leap::Matrix m = _interfaceFrame->rotationMatrix(*(const Leap::Frame *)[sinceFrame interfaceFrame]);
     return [[LeapMatrix alloc] initWithLeapMatrix:&m];
 }
 
-- (float)scaleFactor:(const LeapFrame *)since_frame
+- (float)scaleFactor:(const LeapFrame *)sinceFrame
 {
-    return _interfaceFrame->scaleFactor(*(const Leap::Frame *)[since_frame interfaceFrame]);
+    return _interfaceFrame->scaleFactor(*(const Leap::Frame *)[sinceFrame interfaceFrame]);
 }
 
 - (BOOL)isValid
@@ -1355,7 +1393,7 @@
     }
 }
 
-- (LeapValueType)type:(NSString *)key;
+- (LeapValueType)type:(NSString *)key
 {
     std::string *keyString = new std::string([key UTF8String]);
     Leap::Config::ValueType val = _config.type(*keyString);
@@ -1584,6 +1622,24 @@ private:
         notificationListener->setController(self);
         _listener = notificationListener;
         _controller = new Leap::Controller(*_listener);
+
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+        if ([leapListener respondsToSelector:@selector(onInit:)]) {
+            [nc addObserver:leapListener selector:@selector(onInit:) name:@"OnInit" object:self];
+        }
+        if ([leapListener respondsToSelector:@selector(onConnect:)]) {
+            [nc addObserver:leapListener selector:@selector(onConnect:) name:@"OnConnect" object:self];
+        }
+        if ([leapListener respondsToSelector:@selector(onDisconnect:)]) {
+            [nc addObserver:leapListener selector:@selector(onDisconnect:) name:@"OnDisconnect" object:self];
+        }
+        if ([leapListener respondsToSelector:@selector(onExit:)]) {
+            [nc addObserver:leapListener selector:@selector(onExit:) name:@"OnExit" object:self];
+        }
+        if ([leapListener respondsToSelector:@selector(onFrame:)]) {
+            [nc addObserver:leapListener selector:@selector(onFrame:) name:@"OnFrame" object:self];
+        }
+
     }
     return self;
 }
@@ -1603,7 +1659,7 @@ private:
     if ([listener respondsToSelector:@selector(onExit:)]) {
         [nc addObserver:listener selector:@selector(onExit:) name:@"OnExit" object:self];
     }
-    if ([listener respondsToSelector:@selector(onInit:)]) {
+    if ([listener respondsToSelector:@selector(onFrame:)]) {
         [nc addObserver:listener selector:@selector(onFrame:) name:@"OnFrame" object:self];
     }
 
@@ -1649,7 +1705,7 @@ private:
     return TRUE;
 }
 
-- (BOOL)removeDelegate:(id<LeapDelegate>)leapDelegate
+- (BOOL)removeDelegate
 {
     NSAssert(_listener, @"Must call addDelegate before trying to remove a LeapDelegate");
     _controller->removeListener(*_listener);
@@ -1681,12 +1737,12 @@ private:
     _controller->enableGesture(Leap::Gesture::Type(gesture_type), enable);
 }
 
-- (BOOL)isGestureEnabled:(LeapGestureType)gesture_type;
+- (BOOL)isGestureEnabled:(LeapGestureType)gesture_type
 {
     return _controller->isGestureEnabled(Leap::Gesture::Type(gesture_type));
 }
 
-- (NSArray *)calibratedScreens;
+- (NSArray *)calibratedScreens
 {
     Leap::ScreenList leapScreens = _controller->calibratedScreens();
     NSMutableArray *screens_ar = [NSMutableArray array];
@@ -1711,6 +1767,7 @@ private:
 
 @end;
 
+
 @implementation NSNotificationCenter (MainThread)
 
 - (void)postNotificationOnMainThread:(NSNotification *)notification
@@ -1732,6 +1789,72 @@ private:
 	[self postNotificationOnMainThread:notification];
 }
 
+@end
+
+@implementation NSArray (LeapScreenList)
+- (LeapScreen *)closestScreenHit:(LeapPointable *)pointable
+{
+    return [self closestScreenHit:[pointable tipPosition] direction:[pointable direction]];
+}
+- (LeapScreen *)closestScreenHit:(const LeapVector *)position direction:(const LeapVector *)direction
+{
+    static const float dotThresh = 0.999f;
+    float minDistSq = FLT_MAX;
+    int minDistIdx = -1;
+    float maxDot = -FLT_MAX;
+    int maxDotIdx = -1;
+    NSUInteger num = [self count];
+    for (int i=0; i<num; i++) {
+        // Perform a ray-cast projection onto each screen in the given direction
+        LeapScreen *screen =[self objectAtIndex:i];
+        LeapVector *result = [screen intersect:position direction:direction normalize:NO clampRatio:1.0f];
+        LeapVector *diff = [result minus:position];
+        // Find the projected point closest to the direction ray
+        float curDot = [[diff normalized] dot:direction];
+        if (curDot > maxDot) {
+            maxDotIdx = i;
+            maxDot = curDot;
+        }
+        // Find the projected screen point closest to the position
+        float curDistSq = [diff magnitudeSquared];
+        if (curDistSq < minDistSq && curDot > dotThresh) {
+            minDistIdx = i;
+            minDistSq = curDistSq;
+        }
+    }
+    // This case means no screen was directly hit
+    if (maxDot >= 0 && maxDot < dotThresh) {
+        return [self objectAtIndex:maxDotIdx];
+    }
+    // This case means we directly hit a screen
+    else if (minDistSq < FLT_MAX) {
+        return [self objectAtIndex:minDistIdx];
+    }
+    return [LeapScreen invalid];
+}
+
+- (LeapScreen *)closestScreen:(LeapVector *)position
+{
+    float minDistSq = FLT_MAX;
+    int minDistIdx = -1;
+    NSUInteger num = [self count];
+    for (int i=0; i<num; i++) {
+        // Perform a perpendicular projection onto each screen
+        LeapScreen *screen =[self objectAtIndex:i];
+        LeapVector *result = [screen project:position normalize:NO clampRatio:1.0f];
+        // Find the projected screen point closest to the position
+        float curDistSq = [[result minus:position] magnitudeSquared];
+        if (curDistSq < minDistSq) {
+            minDistIdx = i;
+            minDistSq = curDistSq;
+        }
+    }
+    // Sanity check -- should always be true
+    if (minDistSq < FLT_MAX) {
+        return [self objectAtIndex:minDistIdx];
+    }
+    return [LeapScreen invalid];
+}
 @end
 
 const float LEAP_PI = Leap::PI;

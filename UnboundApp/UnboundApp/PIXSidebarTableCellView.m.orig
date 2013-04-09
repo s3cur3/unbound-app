@@ -9,9 +9,12 @@
 #import "PIXSidebarTableCellView.h"
 #import "PIXAlbum.h"
 #import "PIXDefines.h"
+<<<<<<< HEAD
+#import "PIXAlbumGridViewItem.h"
+=======
 #import "PIXFileManager.h"
 #import "NSColor+CNGridViewPalette.h"
-#import "PIXAlbumGridViewItem.h"
+>>>>>>> 72e9b82f8c2c0006e0809364dcca0e92c855d6e7
 
 @implementation PIXSidebarTableCellView
 
@@ -148,7 +151,7 @@
     NSString * deleteString = @"Delete Album";
 
     NSString *warningMessage = [NSString stringWithFormat:@"%@ will be deleted immediately.\nAre you sure you want to continue?", deleteString];
-    if (NSRunAlertPanel(@"Delete Album?", warningMessage, @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
+    if (NSRunCriticalAlertPanel(warningMessage, @"You cannot undo this action.", @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
         
         [[PIXFileManager sharedInstance] recycleAlbums:itemsToDelete];
         
@@ -255,10 +258,7 @@
     //[self.layer setBackgroundColor:color];
     [self.layer setBorderWidth:2.0f];
     [self.layer setBorderColor:color];
-    [self.layer setCornerRadius:4];
-    
-    CGColorRelease(color);
-    
+    [self.layer setCornerRadius:2.5];
 //    [super drawFocusRingMask];
 //    //self.backgroundStyle =
 //    [self.detailTextLabel setStringValue:@"Context menu..."];

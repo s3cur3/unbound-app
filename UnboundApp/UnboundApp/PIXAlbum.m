@@ -473,80 +473,80 @@ static NSString *const kItemsKey = @"photos";
     if(![self unboundFileIsChanged]) return;
     
     
-         NSMutableDictionary * unboundMetaDictionary = [self readUnboundFile];
-            
-        [unboundMetaDictionary setObject:@"1.0" forKey:@"unboundFileVersion"];
+     NSMutableDictionary * unboundMetaDictionary = [self readUnboundFile];
         
-        // loop through the photos and populate the captions
-        NSDictionary * photosDictionary = [unboundMetaDictionary objectForKey:@"photos"];
-        
-        if(photosDictionary)
+    [unboundMetaDictionary setObject:@"1.0" forKey:@"unboundFileVersion"];
+    
+    // loop through the photos and populate the captions
+    NSDictionary * photosDictionary = [unboundMetaDictionary objectForKey:@"photos"];
+    
+    if(photosDictionary)
+    {
+        for(PIXPhoto * aPhoto in self.photos)
         {
-            for(PIXPhoto * aPhoto in self.photos)
+            NSDictionary * photoInfoDict = [photosDictionary objectForKey:[aPhoto name]];
+            
+            if(photoInfoDict)
             {
-                NSDictionary * photoInfoDict = [photosDictionary objectForKey:[aPhoto name]];
-                
-                if(photoInfoDict)
+                NSString * caption = [photoInfoDict objectForKey:@"caption"];
+                if([caption isKindOfClass:[NSString class]])
                 {
-                    NSString * caption = [photoInfoDict objectForKey:@"caption"];
-                    if([caption isKindOfClass:[NSString class]])
+                    // if we're changing the caption
+                    if(![aPhoto.caption isEqualToString:[photoInfoDict objectForKey:@"caption"]])
                     {
-                        // if we're changing the caption
-                        if(![aPhoto.caption isEqualToString:[photoInfoDict objectForKey:@"caption"]])
-                        {
-                            NSManagedObjectID * photoID = [aPhoto objectID];
+                        NSManagedObjectID * photoID = [aPhoto objectID];
+                        
+                        // update the photo on the main thread
+                        dispatch_async(dispatch_get_main_queue(), ^{
                             
-                            // update the photo on the main thread
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                
-                                // get the mainthread context and find the photo
-                                NSManagedObjectContext * mainContext = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
-                                NSString * newCaption = [photoInfoDict objectForKey:@"caption"];
-                                
-                                PIXPhoto * mainThreadPhoto = (PIXPhoto *)[mainContext existingObjectWithID:photoID error:nil];
-                                
-                                if(mainThreadPhoto)
-                                {
-                                    // update the photo's caption
-                                    [mainThreadPhoto setCaption:newCaption];
-                
-                                    // also update the views
-                                    [mainThreadPhoto postPhotoUpdatedNote];
-                                }
-                            });
-                        }
+                            // get the mainthread context and find the photo
+                            NSManagedObjectContext * mainContext = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
+                            NSString * newCaption = [photoInfoDict objectForKey:@"caption"];
+                            
+                            PIXPhoto * mainThreadPhoto = (PIXPhoto *)[mainContext existingObjectWithID:photoID error:nil];
+                            
+                            if(mainThreadPhoto)
+                            {
+                                // update the photo's caption
+                                [mainThreadPhoto setCaption:newCaption];
+            
+                                // also update the views
+                                [mainThreadPhoto postPhotoUpdatedNote];
+                            }
+                        });
                     }
                 }
             }
         }
+    }
+    
+    NSDateFormatter *datFormatter = [[NSDateFormatter alloc] init];
+    [datFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss Z"];
+    
+    BOOL wasChanged = NO;
+    
+    if(self.albumDate != nil)
+    {
+        NSString * newDateString = [datFormatter stringFromDate:[self albumDate]];
+        NSString * oldDateString = [unboundMetaDictionary objectForKey:@"albumDate"];
         
-        NSDateFormatter *datFormatter = [[NSDateFormatter alloc] init];
-        [datFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss Z"];
-        
-        BOOL wasChanged = NO;
-        
-        if(self.albumDate != nil)
+        if(![oldDateString isEqualToString:newDateString])
         {
-            NSString * newDateString = [datFormatter stringFromDate:[self albumDate]];
-            NSString * oldDateString = [unboundMetaDictionary objectForKey:@"albumDate"];
-            
-            if(![oldDateString isEqualToString:newDateString])
-            {
-                [unboundMetaDictionary setObject:newDateString forKey:@"albumDate"];
-                wasChanged = YES;
-            }
+            [unboundMetaDictionary setObject:newDateString forKey:@"albumDate"];
+            wasChanged = YES;
         }
-        
-        //DLog(@"after: %@", unboundMetaDictionary);
-        
-        if(wasChanged)
-        {
-            [self writeUnboundFile:unboundMetaDictionary];
-        }
-        
-        [self.managedObjectContext save:nil];
-
-
+    }
+    
+    //DLog(@"after: %@", unboundMetaDictionary);
+    
+    if(wasChanged)
+    {
+        [self writeUnboundFile:unboundMetaDictionary];
+    }
+    
+    [self.managedObjectContext save:nil];
+    
+    
 }
 
 -(void) setUnboundFileCaptionForPhoto:(PIXPhoto *)photo

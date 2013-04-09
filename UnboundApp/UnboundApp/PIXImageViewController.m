@@ -113,6 +113,8 @@
 
 -(void)twoFingerPinchStart
 {
+    if(![self.view.window isKeyWindow]) return;
+    
     self.startPinchZoom = [self.scrollView magnification];
     
     CGRect bounds = [[self.scrollView contentView] bounds];
@@ -123,8 +125,28 @@
 
 -(void)twoFingerPinchPosition:(NSPoint)position andScale:(CGFloat)scale
 {
-    // scale the view
-    [self.scrollView setMagnification:self.startPinchZoom * scale];
+    if(![self.view.window isKeyWindow]) return;
+    
+    
+    float magnification = self.startPinchZoom * scale;
+    
+    /*
+    if(magnification < self.scrollView.minMagnification)
+    {
+        magnification = self.scrollView.minMagnification;
+    }
+    
+    if(magnification > self.scrollView.maxMagnification)
+    {
+        magnification = self.scrollView.maxMagnification;
+    }*/
+    
+    if(!isnan(magnification))
+    {
+        [self.scrollView setMagnification:magnification];
+    }
+    
+    
     
     
     CGRect bounds = [[self.scrollView contentView] bounds];
@@ -136,7 +158,13 @@
     NSPoint newScrollPosition =  NSMakePoint(self.startPinchPosition.x - (bounds.size.width / 2) - scaledPosition.x,
                                              self.startPinchPosition.y - (bounds.size.height / 2) - scaledPosition.y);
     
-    [[self.scrollView documentView] scrollPoint:newScrollPosition];
+    
+    if(!isnan(newScrollPosition.x) && !isnan(newScrollPosition.y))
+    {
+        DLog(@"scrollPosition: %f, %f", newScrollPosition.x, newScrollPosition.y);
+        [[self.scrollView documentView] scrollPoint:newScrollPosition];
+    }
+    
     
 
     
