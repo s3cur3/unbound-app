@@ -89,7 +89,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 #pragma mark CNGridView
 
 
-@interface CNGridView () <leapResponder> {
+@interface CNGridView () <PIXLeapResponder> {
     NSMutableDictionary *keyedVisibleItems;
     NSMutableDictionary *reuseableItems;
     NSMutableDictionary *selectedItemsBySelectionFrame;
@@ -1500,7 +1500,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
 
 #pragma mark - Leap Responder
--(void)singleFingerPoint:(NSPoint)normalizedPosition
+-(void)leapPointerPosition:(NSPoint)normalizedPosition
 {
     if(self.window == nil) return;
     
@@ -1560,7 +1560,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     
 }
 
--(void)singleFingerSelect:(NSPoint)normalizedPosition
+-(void)leapPointerSelect:(NSPoint)normalizedPosition
 {
     if(self.window == nil) return;
     

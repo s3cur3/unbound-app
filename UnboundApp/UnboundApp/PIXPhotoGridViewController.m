@@ -23,7 +23,7 @@
 #import "PIXShareManager.h"
 #import "PIXLeapInputManager.h"
 
-@interface PIXPhotoGridViewController () <leapResponder>
+@interface PIXPhotoGridViewController () <PIXLeapResponder>
 
 @property(nonatomic,strong) NSDateFormatter * titleDateFormatter;
 @property CGFloat startPinchZoom;
@@ -108,7 +108,7 @@
 #pragma mark -
 #pragma mark Leap Thumb Size Adjustment
 
--(void)twoFingerPinchStart
+-(void)leapPanZoomStart
 {
     if(![self.view.window isKeyWindow]) return;
     
@@ -118,7 +118,7 @@
 
 
 
--(void)twoFingerPinchPosition:(NSPoint)position andScale:(CGFloat)scale
+-(void)leapPanZoomPosition:(NSPoint)position andScale:(CGFloat)scale
 {
     if(![self.view.window isKeyWindow]) return;
     

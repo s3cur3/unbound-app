@@ -18,7 +18,7 @@
 #import "PIXShareManager.h"
 #import "PIXDefines.h"
 
-@interface PIXSplitViewController () <leapResponder>
+@interface PIXSplitViewController () <PIXLeapResponder>
 
 @property (nonatomic, strong) PIXSidebarViewController *sidebarViewController;
 @property (nonatomic, strong) PIXPhotoGridViewController *imageBrowserViewController;
@@ -94,7 +94,7 @@
     
     // become a leap responder to watch for the back swipe
     [[PIXLeapInputManager sharedInstance] addResponder:self];
-    [[PIXLeapInputManager sharedInstance] addResponder:(id<leapResponder>)self.imageBrowserViewController.gridView];
+    [[PIXLeapInputManager sharedInstance] addResponder:(id<PIXLeapResponder>)self.imageBrowserViewController.gridView];
 }
 
 -(void)willHidePIXView
@@ -103,7 +103,7 @@
     [self.imageBrowserViewController willHidePIXView];
     
     [[PIXLeapInputManager sharedInstance] removeResponder:self];
-    [[PIXLeapInputManager sharedInstance] removeResponder:(id<leapResponder>)self.imageBrowserViewController.gridView];
+    [[PIXLeapInputManager sharedInstance] removeResponder:(id<PIXLeapResponder>)self.imageBrowserViewController.gridView];
 }
 
 -(void)setupToolbar
@@ -324,7 +324,7 @@
 }
 
 
--(void)multiFingerSwipeUp
+-(void)leapSwipeUp
 {
     if(self.view.window == nil) return;
     

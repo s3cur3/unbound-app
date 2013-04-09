@@ -13,7 +13,7 @@
 
 #import "PIXLeapInputManager.h"
 
-@interface PIXImageViewController () <leapResponder>
+@interface PIXImageViewController () <PIXLeapResponder>
 
 @property CGFloat startPinchZoom;
 @property NSPoint startPinchPosition;
@@ -111,7 +111,7 @@
     }
 }
 
--(void)twoFingerPinchStart
+-(void)leapPanZoomStart
 {
     if(![self.view.window isKeyWindow]) return;
     
@@ -123,7 +123,7 @@
                                          bounds.origin.y + (bounds.size.height / 2));
 }
 
--(void)twoFingerPinchPosition:(NSPoint)position andScale:(CGFloat)scale
+-(void)leapPanZoomPosition:(NSPoint)position andScale:(CGFloat)scale
 {
     if(![self.view.window isKeyWindow]) return;
     

@@ -28,7 +28,7 @@
 #import "PIXViewController.h"
 #import "PIXFileManager.h"
 
-@interface PIXPageViewController () <leapResponder, PIXSlideshowOptonsDelegate, NSMenuDelegate>
+@interface PIXPageViewController () <PIXLeapResponder, PIXSlideshowOptonsDelegate, NSMenuDelegate>
 
 @property NSArray * viewControllers;
 
@@ -551,18 +551,18 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
--(void)multiFingerSwipeUp
+-(void)leapSwipeUp
 {
     [self.navigationViewController popViewController];
 }
 
--(void)multiFingerSwipeRight
+-(void)leapSwipeRight
 {
     [self.pageController navigateBack:nil];
     [self restartNextSlideIfNeeded];
 }
 
--(void)multiFingerSwipeLeft
+-(void)leapSwipeLeft
 {
     [self.pageController navigateForward:nil];
     [self restartNextSlideIfNeeded];

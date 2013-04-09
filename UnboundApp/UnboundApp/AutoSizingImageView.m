@@ -13,7 +13,7 @@
 //#import "ImageViewController.h"
 //#import "PageViewController.h"
 
-@interface AutoSizingImageView () <leapResponder>
+@interface AutoSizingImageView () <PIXLeapResponder>
 
 @end
 
@@ -36,9 +36,32 @@
 -(void)rightMouseDown:(NSEvent *)theEvent {
     DLog(@"rightMouseDown:%@", theEvent);
     [[self nextResponder] rightMouseDown:theEvent];
-    //    NSMenu *theMenu = [[NSMenu alloc] initWithTitle:@"Options"];
-    //    [theMenu insertItemWithTitle:@"Set As Desktop Background" action:@selector(setDesktopImage:) keyEquivalent:@""atIndex:0];
-    //    [NSMenu popUpContextMenu:theMenu withEvent:theEvent forView:self.imageView];
+}
+
+-(void)mouseDown:(NSEvent *)theEvent{
+    DLog(@"mouseDown:%@", theEvent);
+    [[self nextResponder] mouseDown:theEvent];
+    
+    if (theEvent.clickCount ==2) {
+        NSScrollView *scrollView = [self enclosingScrollView];
+        CGFloat curMagnification = [scrollView magnification];
+        CGFloat maxMagnification = [scrollView maxMagnification];
+        if (maxMagnification<=0) {
+            maxMagnification = 4.0f;
+        }
+        CGFloat thresholdMagnification = maxMagnification/2.0f;
+        DLog(@"double click received. curMagnification : %f - maxMagnification : %f", curMagnification, maxMagnification);
+        if (curMagnification < thresholdMagnification) {
+            DLog(@"zooming to max magnification : %f", maxMagnification);
+            
+            [scrollView setMagnification:maxMagnification centeredAtPoint:(NSPoint)theEvent.locationInWindow];
+            
+        } else {
+            [scrollView magnifyToFitRect:self.bounds];
+        }
+    }
+
+    
 }
 
 @end

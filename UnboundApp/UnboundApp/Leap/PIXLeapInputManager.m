@@ -57,7 +57,7 @@
 }
 
 
-- (void)addResponder:(id<leapResponder>)aResponder
+- (void)addResponder:(id<PIXLeapResponder>)aResponder
 {
     if(aResponder == nil)return;
     
@@ -75,7 +75,7 @@
     self.pinchStartPosition = NSZeroPoint;
 }
 
-- (void)removeResponder:(id<leapResponder>)aResponder
+- (void)removeResponder:(id<PIXLeapResponder>)aResponder
 {
     NSUInteger index = [self.leapResponders indexOfObject:aResponder];
     while(index != NSNotFound)
@@ -244,11 +244,11 @@
                                                     normalizedPoint.y - self.pinchStartPosition.y);
                 
                 // loop through the responders
-                for(id<leapResponder> responder in self.leapResponders)
+                for(id<PIXLeapResponder> responder in self.leapResponders)
                 {
-                    if([responder respondsToSelector:@selector(twoFingerPinchPosition:andScale:)])
+                    if([responder respondsToSelector:@selector(leapPanZoomPosition:andScale:)])
                     {
-                        [responder twoFingerPinchPosition:positionDelta andScale:scaleDelta];
+                        [responder leapPanZoomPosition:positionDelta andScale:scaleDelta];
                         break; // do nothing else after we hit the first responder
                     }
                 }
@@ -263,11 +263,11 @@
                 self.pinchStartPosition = normalizedPoint;
                 
                 // loop through the responders
-                for(id<leapResponder> responder in self.leapResponders)
+                for(id<PIXLeapResponder> responder in self.leapResponders)
                 {
-                    if([responder respondsToSelector:@selector(twoFingerPinchStart)])
+                    if([responder respondsToSelector:@selector(leapPanZoomStart)])
                     {
-                        [responder twoFingerPinchStart];
+                        [responder leapPanZoomStart];
                         break; // do nothing else after we hit the first responder
                     }
                 }
@@ -287,11 +287,11 @@
         if([fingers count] < 3)
         {
             // loop through the responders
-            for(id<leapResponder> responder in self.leapResponders)
+            for(id<PIXLeapResponder> responder in self.leapResponders)
             {
-                if([responder respondsToSelector:@selector(singleFingerPoint:)])
+                if([responder respondsToSelector:@selector(leapPointerPosition:)])
                 {
-                    [responder singleFingerPoint:normalizedPoint];
+                    [responder leapPointerPosition:normalizedPoint];
                     break; // do nothing else after we hit the first responder
                 }
             }
@@ -344,11 +344,11 @@
                                                 normalizedPoint.y - self.pinchStartPosition.y);
             
             // loop through the responders
-            for(id<leapResponder> responder in self.leapResponders)
+            for(id<PIXLeapResponder> responder in self.leapResponders)
             {
-                if([responder respondsToSelector:@selector(twoFingerPinchPosition:andScale:)])
+                if([responder respondsToSelector:@selector(leapPanZoomPosition:andScale:)])
                 {
-                    [responder twoFingerPinchPosition:positionDelta andScale:scaleDelta];
+                    [responder leapPanZoomPosition:positionDelta andScale:scaleDelta];
                     break; // do nothing else after we hit the first responder
                 }
             }
@@ -363,11 +363,11 @@
             self.pinchStartPosition = normalizedPoint;
             
             // loop through the responders
-            for(id<leapResponder> responder in self.leapResponders)
+            for(id<PIXLeapResponder> responder in self.leapResponders)
             {
-                if([responder respondsToSelector:@selector(twoFingerPinchStart)])
+                if([responder respondsToSelector:@selector(leapPanZoomStart)])
                 {
-                    [responder twoFingerPinchStart];
+                    [responder leapPanZoomStart];
                     break; // do nothing else after we hit the first responder
                 }
             }
@@ -405,11 +405,11 @@
                 if(circleGesture.progress > 0.7 && circleGesture.radius < 10.0 && circleGesture.state == LEAP_GESTURE_STATE_STOP)
                 {
                     // loop through the responders
-                    for(id<leapResponder> responder in self.leapResponders)
+                    for(id<PIXLeapResponder> responder in self.leapResponders)
                     {
-                        if([responder respondsToSelector:@selector(singleFingerSelect:)])
+                        if([responder respondsToSelector:@selector(leapPointerSelect:)])
                         {
-                            [responder singleFingerSelect:normalizedPoint];
+                            [responder leapPointerSelect:normalizedPoint];
                             break; // no need to keep going down the responder chain
                         }
                     }
@@ -463,11 +463,11 @@
                 if(screenTapGesture.state == LEAP_GESTURE_STATE_STOP)
                 {
                     // loop through the responders
-                    for(id<leapResponder> responder in self.leapResponders)
+                    for(id<PIXLeapResponder> responder in self.leapResponders)
                     {
-                        if([responder respondsToSelector:@selector(singleFingerSelect:)])
+                        if([responder respondsToSelector:@selector(leapPointerSelect:)])
                         {
-                            [responder singleFingerSelect:normalizedPoint];
+                            [responder leapPointerSelect:normalizedPoint];
                             break; // no need to keep going down the responder chain
                         }
                     }
@@ -492,15 +492,17 @@
     LeapVector * direction = swipeGesture.direction;
     BOOL didswipe = NO;
     
+    if(fabs(direction.z) > 0.19) return;
+    
     // figure out the gesture direction
     if(direction.y > 0.7) // this is the up direction
     {
         // loop through the responders
-        for(id<leapResponder> responder in self.leapResponders)
+        for(id<PIXLeapResponder> responder in self.leapResponders)
         {
-            if([responder respondsToSelector:@selector(multiFingerSwipeUp)])
+            if([responder respondsToSelector:@selector(leapSwipeUp)])
             {
-                [responder multiFingerSwipeUp];
+                [responder leapSwipeUp];
                 break; // no need to keep going down the responder chain
             }
         }
@@ -511,11 +513,11 @@
     else if(direction.y < -0.7) // this is the down direction
     {
         // loop through the responders
-        for(id<leapResponder> responder in self.leapResponders)
+        for(id<PIXLeapResponder> responder in self.leapResponders)
         {
-            if([responder respondsToSelector:@selector(multiFingerSwipeDown)])
+            if([responder respondsToSelector:@selector(leapSwipeDown)])
             {
-                [responder multiFingerSwipeDown];
+                [responder leapSwipeDown];
                 break; // no need to keep going down the responder chain
             }
         }
@@ -526,11 +528,11 @@
     else if(direction.x > 0.7) // this is the right direction
     {
         // loop through the responders
-        for(id<leapResponder> responder in self.leapResponders)
+        for(id<PIXLeapResponder> responder in self.leapResponders)
         {
-            if([responder respondsToSelector:@selector(multiFingerSwipeRight)])
+            if([responder respondsToSelector:@selector(leapSwipeRight)])
             {
-                [responder multiFingerSwipeRight];
+                [responder leapSwipeRight];
                 break; // no need to keep going down the responder chain
             }
         }
@@ -541,11 +543,11 @@
     else if(direction.x < -0.7) // this is the left direction
     {
         // loop through the responders
-        for(id<leapResponder> responder in self.leapResponders)
+        for(id<PIXLeapResponder> responder in self.leapResponders)
         {
-            if([responder respondsToSelector:@selector(multiFingerSwipeLeft)])
+            if([responder respondsToSelector:@selector(leapSwipeLeft)])
             {
-                [responder multiFingerSwipeLeft];
+                [responder leapSwipeLeft];
                 break; // no need to keep going down the responder chain
             }
         }

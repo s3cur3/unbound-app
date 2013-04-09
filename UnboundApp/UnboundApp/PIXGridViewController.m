@@ -205,9 +205,9 @@ static NSString *kContentTitleKey, *kContentImageKey;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Context Menu Support
 
--(BOOL)verifyActionFoItemsWithMessage:(NSString *)warningMessage
+-(BOOL)verifyActionForItemsWithTitle:(NSString *)aTitle message:(NSString *)warningMessage
 {
-    if (NSRunAlertPanel(@"Confirm Action", warningMessage, @"OK", @"Cancel", nil) == NSAlertDefaultReturn) {
+    if (NSRunAlertPanel(aTitle, warningMessage, @"OK", @"Cancel", nil) == NSAlertDefaultReturn) {
         return YES;
     } else {
         return NO;
@@ -246,8 +246,9 @@ static NSString *kContentTitleKey, *kContentImageKey;
     }
     
     NSString *warningTitle = [NSString stringWithFormat:@"Delete %@?", deleteString];
+    NSString *warningButtonConfirm = [NSString stringWithFormat:@"Delete %@", deleteString];
     NSString *warningMessage = [NSString stringWithFormat:@"%@ will be deleted immediately.\nAre you sure you want to continue?", deleteString];
-    if (NSRunAlertPanel(warningTitle, warningMessage, @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
+    if (NSRunAlertPanel(warningTitle, warningMessage, warningButtonConfirm, @"Cancel", nil) == NSAlertDefaultReturn) {
         
         if ([[itemsToDelete lastObject] class] == [PIXAlbum class]) {
             [[PIXFileManager sharedInstance] recycleAlbums:itemsToDelete];
@@ -268,10 +269,13 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 - (IBAction) openInApp:(id)sender
 {
+    id representedObj = [sender representedObject];
     NSUInteger fileCount = self.selectedItems.count;
-    if (fileCount>9) {
-        NSString *msg = [NSString stringWithFormat:@"Are you sure you want to open an app window for each of the %ld selected files?", fileCount];
-        if (![self verifyActionFoItemsWithMessage:msg]) {
+    if (fileCount>9 &&
+        ([representedObj isKindOfClass:[PIXPhoto class]])) {
+        NSString *msg = [NSString stringWithFormat:@"Are you sure you want to open %ld selected photos?", fileCount];
+        NSString *aTitle = [NSString stringWithFormat:@"Open %ld Photos", fileCount];
+        if (![self verifyActionForItemsWithTitle:aTitle message:msg]) {
             return;
         }
     }
@@ -316,6 +320,20 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 - (IBAction) revealInFinder:(id)inSender
 {
+    id incomingItem = [inSender representedObject];
+    //Do a check for albums as they can open many finder windows (photos are usually in the same directory)
+    if ([incomingItem isKindOfClass:[PIXAlbum class]])
+    {
+        NSUInteger fileCount = self.selectedItems.count;
+        if (fileCount>6) {
+            NSString *msg = [NSString stringWithFormat:@"Are you sure you want to open multiple finder windows for %ld selected albums?", fileCount];
+            NSString *aTitle = [NSString stringWithFormat:@"Show %ld Albums", fileCount];
+            if (![self verifyActionForItemsWithTitle:aTitle message:msg]) {
+                return;
+            }
+        }
+    }
+
     NSSet *aSet = [self.selectedItems copy];
     [aSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
         
@@ -330,8 +348,9 @@ static NSString *kContentTitleKey, *kContentImageKey;
 {
     NSUInteger fileCount = self.selectedItems.count;
     if (fileCount>6) {
-        NSString *msg = [NSString stringWithFormat:@"Are you sure you want to open a separate info window for each of the %ld selected files?", fileCount];
-        if (![self verifyActionFoItemsWithMessage:msg]) {
+        NSString *msg = [NSString stringWithFormat:@"Are you sure you want to open multiple info windows for %ld selected %@s?", fileCount, self.selectedItemsName];
+        NSString *aTitle = [NSString stringWithFormat:@"Get Info For %ld %@s", fileCount, self.selectedItemsName];
+        if (![self verifyActionForItemsWithTitle:aTitle message:msg]) {
             return;
         }
     }

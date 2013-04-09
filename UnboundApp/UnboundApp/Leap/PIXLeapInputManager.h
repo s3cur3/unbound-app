@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol leapResponder;
+@protocol PIXLeapResponder;
 
 @interface PIXLeapInputManager : NSObject
 
@@ -16,27 +16,27 @@
 
 +(PIXLeapInputManager *)sharedInstance;
 
--(void)addResponder:(id<leapResponder>)aResponder;
-- (void)removeResponder:(id<leapResponder>)aResponder;
+-(void)addResponder:(id<PIXLeapResponder>)aResponder;
+- (void)removeResponder:(id<PIXLeapResponder>)aResponder;
 
 @property BOOL isConnected;
 
 @end
 
-@protocol leapResponder <NSObject>
+@protocol PIXLeapResponder <NSObject>
 
 @optional
 
--(void)singleFingerPoint:(NSPoint)normalizedPosition;
--(void)singleFingerSelect:(NSPoint)normalizedPosition;
+-(void)leapPointerPosition:(NSPoint)normalizedPosition;
+-(void)leapPointerSelect:(NSPoint)normalizedPosition;
 
--(void)twoFingerPinchStart;
--(void)twoFingerPinchPosition:(NSPoint)position andScale:(CGFloat)scale;
+-(void)leapPanZoomStart;
+-(void)leapPanZoomPosition:(NSPoint)position andScale:(CGFloat)scale;
 
--(void)multiFingerSwipeUp;
--(void)multiFingerSwipeDown;
--(void)multiFingerSwipeRight;
--(void)multiFingerSwipeLeft;
+-(void)leapSwipeUp;
+-(void)leapSwipeDown;
+-(void)leapSwipeRight;
+-(void)leapSwipeLeft;
 
 
 @end
