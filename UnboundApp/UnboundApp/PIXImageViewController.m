@@ -161,7 +161,7 @@
     
     if(!isnan(newScrollPosition.x) && !isnan(newScrollPosition.y))
     {
-        DLog(@"scrollPosition: %f, %f", newScrollPosition.x, newScrollPosition.y);
+        //DLog(@"scrollPosition: %f, %f", newScrollPosition.x, newScrollPosition.y);
         [[self.scrollView documentView] scrollPoint:newScrollPosition];
     }
     
