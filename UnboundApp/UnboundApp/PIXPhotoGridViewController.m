@@ -300,7 +300,23 @@
     
     pageViewController.album = self.album;
     
+    pageViewController.delegate = self;
+    
     [self.navigationViewController pushViewController:pageViewController];
+}
+
+//PIXPageViewControllerDelegate callback
+-(void)pagerDidMoveToPhotoAtIndex:(NSUInteger)index;
+{
+    PIXPhoto * photo = nil;
+    [self.selectedItems removeAllObjects];
+    
+    if(index < [self.items count])
+    {
+        photo = [self.items objectAtIndex:index];
+        [self.selectedItems addObject:photo];
+        [self.gridView scrollToAndReturnItemAtIndex:index animated:YES];
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

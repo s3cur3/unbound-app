@@ -135,6 +135,12 @@
     
     [self updateTitle];
     
+    double delayInSeconds = 0.1;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self.delegate pagerDidMoveToPhotoAtIndex:self.pageController.selectedIndex];
+    });
+    
 }
 /*
 -(void)setupToolbar
@@ -567,6 +573,8 @@
     [self.pageController removeObserver:self forKeyPath:@"selectedIndex"];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    self.delegate = nil;
 }
 
 -(void)leapSwipeUp
