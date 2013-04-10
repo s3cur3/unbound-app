@@ -217,6 +217,8 @@
 
 -(void)albumChanged:(NSNotification *)note
 {
+    if([self.album isReallyDeleted]) return;
+    
     [self setItemTitle:[self.album title]];
     
     self.albumThumb = nil;

@@ -11,7 +11,7 @@
 #import "PIXAppDelegate.h"
 #import "PIXMainWindowController.h"
 #import "LeapObjectiveC.h"
-
+#import "PIXLeapTutorialWindowController.h"
 
 @interface PIXLeapInputManager( )<LeapListener, LeapDelegate>
 
@@ -110,11 +110,25 @@
     
     self.isConnected = YES;
     
+    /*
     // stop the old timer
     [self.connectionTimer invalidate];
     
     // start a new timer
     self.connectionTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(checkConnection:) userInfo:nil repeats:YES];
+    */
+    
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"LeapTutorialHasShown"])
+    {
+        
+        PIXLeapTutorialWindowController * tutorial = [[PIXLeapTutorialWindowController alloc] initWithWindowNibName:@"PIXLeapTutorialWindowController"];
+        [tutorial showWindow:self];
+        
+        // only show this tutorial once. It's also accessible from the preferences window
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"LeapTutorialHasShown"];
+    }
+    
+    
     
 }
 
@@ -304,10 +318,11 @@
     
     // handle palm grab zoom
     if([fingers count] == 0 && [hands count] == 1 &&
-       [[hands lastObject] sphereRadius] <= 70.0)
+       [[hands lastObject] sphereRadius] <= 70.0 &&
+       !self.swipeGestureFlag)
     {
         
-        DLog(@"Hand Radius: %f", [[hands lastObject] sphereRadius]);
+        //DLog(@"Hand Radius: %f", [[hands lastObject] sphereRadius]);
         
         normalizedPoint.x = (avgPalmPos.x - self.screenRect.origin.x)/self.screenRect.size.width;
         normalizedPoint.y = (avgPalmPos.y - self.screenRect.origin.y)/self.screenRect.size.height;

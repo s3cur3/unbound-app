@@ -10,4 +10,10 @@
 
 @interface PIXLeapTutorialWindowController : NSWindowController
 
+- (void)restartTutorial;
+
+- (IBAction)skipTutorial:(id)sender;
+- (IBAction)nextSlide:(id)sender;
+- (IBAction)lastSlide:(id)sender;
+
 @end

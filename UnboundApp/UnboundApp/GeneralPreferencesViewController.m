@@ -4,6 +4,7 @@
 #import "PIXAppDelegate.h"
 #import "PIXDefines.h"
 #import "PIXLeapInputManager.h"
+#import "PIXLeapTutorialWindowController.h"
 
 @interface GeneralPreferencesViewController ()
 
@@ -15,6 +16,8 @@
 @property (weak) IBOutlet NSTextField * leapStatusText;
 
 @property (strong) IBOutlet NSProgressIndicator * workingSpinner;
+
+@property (strong) PIXLeapTutorialWindowController * leapTutorial;
 
 @end
 
@@ -38,6 +41,8 @@
                      toObject:[PIXFileParser sharedFileParser]
                   withKeyPath:@"isWorking"
                       options: nil]; //@{NSValueTransformerNameBindingOption : NSNegateBooleanTransformerName}];
+    
+    
 }
 
 -(void)updateFolderFeild
@@ -180,6 +185,18 @@
     [[PIXAppDelegate sharedAppDelegate] clearDatabase];
     [[PIXFileParser sharedFileParser] scanFullDirectory];
 }
+
+- (IBAction)showLeapTutorial:(id)sender
+{    
+    if(self.leapTutorial == nil)
+    {
+        self.leapTutorial = [[PIXLeapTutorialWindowController alloc] initWithWindowNibName:@"PIXLeapTutorialWindowController"];
+    }
+    
+    [self.leapTutorial restartTutorial];
+    [self.leapTutorial showWindow:self];
+}
+
 
 -(void)dealloc
 {

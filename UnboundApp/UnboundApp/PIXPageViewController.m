@@ -386,6 +386,13 @@
         
         [self fullscreenChanged:nil];
         
+        
+        // stop any current timed control fades
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(tryFadeControls) object:nil];
+        
+        // start another timer
+        [self performSelector:@selector(tryFadeControls) withObject:nil afterDelay:3];
+        
     });
 }
 
