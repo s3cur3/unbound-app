@@ -11,6 +11,7 @@
 #import "CNGridViewItemLayout.h"
 
 #import "PIXAppDelegate.h"
+#import "PIXMainWindowController.h"
 #import "PIXDefines.h"
 
 #import "PIXAlbum.h"
@@ -127,6 +128,8 @@
     
     
     [[PIXFileParser sharedFileParser] addObserver:self forKeyPath:@"fullScanProgress" options:NSKeyValueObservingOptionNew context:nil];
+    
+    [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] setTitle:@"Unbound"];
 }
 
 // this is called when the full scan progress changes

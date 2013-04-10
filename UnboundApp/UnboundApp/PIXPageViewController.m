@@ -9,6 +9,7 @@
 
 #import "PIXPageViewController.h"
 #import "PIXAppDelegate.h"
+#import "PIXMainWindowController.h"
 #import "PIXAlbum.h"
 #import "PIXPhoto.h"
 #import "PIXImageViewController.h"
@@ -131,6 +132,8 @@
     
     // update the HUD (caption view)
     [self.controlView setPhoto:thisPhoto];
+    
+    [self updateTitle];
     
 }
 /*
@@ -396,12 +399,20 @@
     });
 }
 
+-(void)updateTitle
+{
+    NSString * title = [NSString stringWithFormat:@"%@ - %ld of %ld", self.album.title, self.pageController.selectedIndex+1, [self.pagerData count]];
+    
+    [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] setTitle:title];
+}
+
 -(void)fullscreenChanged:(id)sender
 {
     // set the right icon on the expand/contract button
     if([self.view.window styleMask] & NSFullScreenWindowMask)
     {
         self.fullscreenButton.image = [NSImage imageNamed:@"contract"];
+        [self.controlWindow setHasMouse:NO]; // the window loses the m
     }
     
     else

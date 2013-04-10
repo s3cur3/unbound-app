@@ -95,6 +95,8 @@
     // become a leap responder to watch for the back swipe
     [[PIXLeapInputManager sharedInstance] addResponder:self];
     [[PIXLeapInputManager sharedInstance] addResponder:(id<PIXLeapResponder>)self.imageBrowserViewController.gridView];
+    
+    [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] setTitle:[self.selectedAlbum title]];
 }
 
 -(void)willHidePIXView
