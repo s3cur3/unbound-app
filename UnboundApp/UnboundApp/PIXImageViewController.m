@@ -130,16 +130,6 @@
     
     float magnification = self.startPinchZoom * scale;
     
-    /*
-    if(magnification < self.scrollView.minMagnification)
-    {
-        magnification = self.scrollView.minMagnification;
-    }
-    
-    if(magnification > self.scrollView.maxMagnification)
-    {
-        magnification = self.scrollView.maxMagnification;
-    }*/
     
     if(!isnan(magnification))
     {
@@ -161,18 +151,8 @@
     
     if(!isnan(newScrollPosition.x) && !isnan(newScrollPosition.y))
     {
-        //DLog(@"scrollPosition: %f, %f", newScrollPosition.x, newScrollPosition.y);
         [[self.scrollView documentView] scrollPoint:newScrollPosition];
     }
-    
-    
-
-    
-    //DLog(@"Bounds height to: %f", [[self.scrollView contentView] bounds].size.width);
-    
-    //[self.scrollView.documentView scaleBy:currentZoom*scaleDelta];
-    //[self.scrollView.documentView setFrame:NSMakeRect(0, 0, frame.size.width * zoomFactor, frame.size.height * zoomFactor)];
-    //[[self.scrollView documentView] scrollPoint:newrect.origin];
     
     [self.scrollView setNeedsDisplay:YES];
 }

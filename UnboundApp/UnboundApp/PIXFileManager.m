@@ -608,6 +608,81 @@ typedef NSUInteger PIXOverwriteStrategy;
         return NO;
     }
     
+    // check if the extention is changing
+    
+    NSString * oldExtension = [aPhoto.path pathExtension];
+    NSString * newExtension = [aNewName pathExtension];
+    
+    if(![oldExtension isEqualToString:newExtension])
+    {
+        NSAlert* alert = [[NSAlert alloc] init];
+        NSUInteger alertResult;
+        
+        
+        
+        //[alert setInformativeText: @"Do you want to replace it?"];
+        
+        if([newExtension isEqualToString:@""])
+        {
+            [alert addButtonWithTitle:@"Don't Remove"];
+            [alert addButtonWithTitle:@"Remove"];
+            
+            
+            [alert setMessageText: [NSString stringWithFormat: @"Are you sure you want to remove the extension \".%@\"?", oldExtension]];
+            [alert setInformativeText:@"If you make this change, your document may open in a different application."];
+        }
+        
+        else if([oldExtension isEqualToString:@""])
+        {
+            [alert addButtonWithTitle:@"Don't Add"];
+            [alert addButtonWithTitle:@"Add"];
+            
+            
+            [alert setMessageText: [NSString stringWithFormat: @"Are you sure you want to add the extension \".%@\"?", newExtension]];
+            [alert setInformativeText:@"If you make this change, your document may open in a different application."];
+        }
+
+        else
+        {
+            [alert addButtonWithTitle:[NSString stringWithFormat:@"Keep .%@", oldExtension]];
+            [alert addButtonWithTitle:[NSString stringWithFormat:@"Use .%@", newExtension]];
+            
+            
+            [alert setMessageText: [NSString stringWithFormat: @"Are you sure you want to change the extension from \".%@\" to \".%@\"?", oldExtension, newExtension]];
+            [alert setInformativeText:@"If you make this change, your document may open in a different application."];
+        }
+        
+        
+        
+        
+        [alert setAlertStyle: NSWarningAlertStyle];
+        
+        //			alertResult = NSRunAlertPanel(
+        //                                              @"Output file already exists.",
+        //                                              [NSString stringWithFormat:@"\"%@\" already exists. Do you want to replace it?",
+        //                                               name],
+        //                                              @"Cancel All",
+        //                                              @"Yes to All",
+        //                                              nil
+        //                                              );
+        
+    
+        alertResult = [alert runModal];
+        
+        if (alertResult == NSAlertFirstButtonReturn)	// Keep
+        {
+            // change the name back if they chose keep
+            aNewName = [[aNewName stringByDeletingPathExtension] stringByAppendingPathExtension:oldExtension];
+            
+            // if they're the same now do nothing
+            if([aNewName isEqualToString:aPhoto.name])
+            {
+                return NO;
+            }
+            
+        }
+    }
+    
     // validate filename
     NSError *error = NULL;
     
