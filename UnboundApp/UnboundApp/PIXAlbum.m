@@ -362,7 +362,12 @@ static NSString *const kItemsKey = @"photos";
         
         [self updateUnboundFileinBackground];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:AlbumStackDidChangeNotification object:self];
+        
+        NSNotification * note = [NSNotification notificationWithName:AlbumDidChangeNotification object:self];
+        
+        // enqueue these notes on the sender so if a few album stack images load right after each other it doesn't have to redraw multiple times
+        [[NSNotificationQueue defaultQueue] enqueueNotification:note postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnSender forModes:nil];
     }
 }
 
@@ -478,7 +483,16 @@ static NSString *const kItemsKey = @"photos";
         
         [threadAlbum updateUnboundFile];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:AlbumStackDidChangeNotification object:self];
+            
+            NSNotification * note = [NSNotification notificationWithName:AlbumDidChangeNotification object:self];
+            
+            // enqueue these notes on the sender so if a few album stack images load right after each other it doesn't have to redraw multiple times
+            [[NSNotificationQueue defaultQueue] enqueueNotification:note postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnSender forModes:nil];
+        });
+        
         
     });
 }

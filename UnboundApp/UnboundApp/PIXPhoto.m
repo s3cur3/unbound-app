@@ -646,16 +646,6 @@ const CGFloat kThumbnailSize = 370.0f;
     return _thumbnailImage;
 }
 
--(void)setThumbAndNotify:(NSImage *)thumb
-{
-    //self.thumbnailImage = thumb;
-    [[NSNotificationCenter defaultCenter] postNotificationName:PhotoThumbDidChangeNotification object:self];
-    
-    if(self.stackPhotoAlbum) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self.album];
-    }
-}
-
 -(void)setDateCreated:(NSDate *)dateCreated
 {
     // if the sort date isn't set yet
@@ -1063,7 +1053,7 @@ const CGFloat kThumbnailSize = 370.0f;
     if(self.stackPhotoAlbum)
     {
         //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self.album];
-        NSNotification * note = [NSNotification notificationWithName:AlbumDidChangeNotification object:self.album];
+        NSNotification * note = [NSNotification notificationWithName:AlbumStackDidChangeNotification object:self.album];
         
         // enqueue these notes on the sender so if a few album stack images load right after each other it doesn't have to redraw multiple times
          [[NSNotificationQueue defaultQueue] enqueueNotification:note postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnSender forModes:nil];

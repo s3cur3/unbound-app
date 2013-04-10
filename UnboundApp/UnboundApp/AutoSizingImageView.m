@@ -23,6 +23,8 @@
 // the bounds of the clipView. We need to do this manually because auto-layout would try
 // to size the view to the bounds of the clipview effectively nulling the magnification.
 //
+
+
 - (void)setFrameSize:(NSSize)newSize {
 
     NSScrollView *scrollView = [self enclosingScrollView];

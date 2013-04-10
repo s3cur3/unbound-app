@@ -117,11 +117,11 @@
     if (newAlbum!=_album)
     {
         if (_album != nil) {
-            [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:_album];
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumStackDidChangeNotification object:_album];
         }
         _album = newAlbum;
         if (_album != nil) {
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAlbumView:) name:AlbumDidChangeNotification object:_album];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAlbumView:) name:AlbumStackDidChangeNotification object:_album];
             //            [[NSNotificationCenter defaultCenter] addObserverForName:AlbumPhotoCountDidChangeNotification object:self queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
             //                [self.detailTextLabel setStringValue:[_album imageSubtitle]];
             //            }];

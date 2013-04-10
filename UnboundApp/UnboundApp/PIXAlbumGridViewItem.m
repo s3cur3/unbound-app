@@ -183,7 +183,7 @@
         
         if (_album != nil)
         {
-            [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:_album];
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumStackDidChangeNotification object:_album];
         }
 
         _album = album;
@@ -206,7 +206,7 @@
         self.stackThumb2Rotate = (CGFloat)(random % 183)/1300 - .07 - self.stackThumb1Rotate;
 
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(albumChanged:) name:AlbumDidChangeNotification object:_album];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(albumChanged:) name:AlbumStackDidChangeNotification object:_album];
         
         [self displayIfNeeded];
         
@@ -553,7 +553,7 @@
     if (self.album )  {
         [self.album cancelThumbnailLoading];
         
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:self.album];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumStackDidChangeNotification object:self.album];
         _album = nil;
     }
     
