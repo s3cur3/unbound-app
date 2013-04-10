@@ -165,7 +165,6 @@ byB5b3Uga2VlcCB5b3VyIHBob3Rvcz8</string>
 									<string key="NSFrame">{{20, 18}, {192, 25}}</string>
 									<reference key="NSSuperview" ref="389537172"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="714307014">
