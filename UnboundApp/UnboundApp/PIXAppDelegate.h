@@ -70,6 +70,7 @@
 -(NSOperationQueue *) globalBackgroundSaveQueue;
 
 - (NSURL *)applicationFilesDirectory;
+- (NSURL *)thumbSorageDirectory;
 
 //NSWindowDelegate methods
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window;

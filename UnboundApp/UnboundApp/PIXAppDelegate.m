@@ -294,9 +294,11 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 // Returns the directory the application uses to store the Core Data store file. This code uses a directory named "com.pixite.UnboundCoreDataUtility" in the user's Application Support directory.
 - (NSURL *)applicationFilesDirectory
 {
+    return [[NSURL fileURLWithPath:NSHomeDirectory()] URLByAppendingPathComponent:@"files"];
+    /*
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSURL *appSupportURL = [[fileManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject];
-    return [appSupportURL URLByAppendingPathComponent:@"com.pixite.UnboundApp"];
+    return [appSupportURL URLByAppendingPathComponent:@"com.pixite.UnboundApp"];*/
 }
 
 // Creates if necessary and returns the managed object model for the application.
@@ -388,10 +390,18 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
             }
         }
         
+        // also delete the thumbnails
+        [fileManager removeItemAtURL:[self thumbSorageDirectory] error:nil];
+        
     }
     _persistentStoreCoordinator = coordinator;
     
     return _persistentStoreCoordinator;
+}
+
+-(NSURL *)thumbSorageDirectory
+{
+    return [[self applicationFilesDirectory] URLByAppendingPathComponent:@"/thumbnails/"];
 }
 
 // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.)
@@ -453,6 +463,9 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     if (![fileManager removeItemAtPath:url.path error:&error]) {
         NSLog(@"Failed to remove database file: %@", url);
     }
+    
+    // also delete the thumbnails
+    [fileManager removeItemAtURL:[self thumbSorageDirectory] error:nil];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
 }

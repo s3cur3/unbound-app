@@ -31,9 +31,10 @@
 @property (nonatomic, retain) PIXAlbum *album;
 @property (nonatomic, retain) PIXAlbum *datePhotoAlbum;
 @property (nonatomic, retain) PIXAlbum *stackPhotoAlbum;
-@property (nonatomic, retain) PIXThumbnail *thumbnail;
 @property (nonatomic, retain) NSDictionary * exifData;
 @property (nonatomic, retain) NSNumber * fileSize;
+
+@property (nonatomic, retain) NSString * thumbnailFilePath;
 
 @property (nonatomic, retain) NSNumber * latitude;
 @property (nonatomic, retain) NSNumber * longitude;
@@ -52,6 +53,8 @@
 //PIXThumbnailLoadingDelegate methods
 -(NSImage *)thumbnailImage;
 -(void)cancelThumbnailLoading;
+
+-(void)clearFiles;
 
 //Image pre-loading from disk methods
 -(NSImage *)fullsizeImage;

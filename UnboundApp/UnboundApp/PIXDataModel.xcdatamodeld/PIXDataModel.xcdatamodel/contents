@@ -12,7 +12,6 @@
         <attribute name="path" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="startDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="subtitle" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="thumbnail" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="account" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="PIXAccount" inverseName="albums" inverseEntity="PIXAccount" syncable="YES"/>
         <relationship name="datePhoto" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="PIXPhoto" inverseName="datePhotoAlbum" inverseEntity="PIXPhoto" syncable="YES"/>
@@ -32,20 +31,14 @@
         <attribute name="name" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="path" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="sortDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="thumbnailData" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="thumbnailFilePath" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="album" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="PIXAlbum" inverseName="photos" inverseEntity="PIXAlbum" syncable="YES"/>
         <relationship name="datePhotoAlbum" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="PIXAlbum" inverseName="datePhoto" inverseEntity="PIXAlbum" syncable="YES"/>
         <relationship name="stackPhotoAlbum" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="PIXAlbum" inverseName="stackPhotos" inverseEntity="PIXAlbum" syncable="YES"/>
-        <relationship name="thumbnail" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="PIXThumbnail" inverseName="photo" inverseEntity="PIXThumbnail" syncable="YES"/>
-    </entity>
-    <entity name="PIXThumbnail" representedClassName="PIXThumbnail" syncable="YES">
-        <attribute name="imageData" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
-        <relationship name="photo" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="PIXPhoto" inverseName="thumbnail" inverseEntity="PIXPhoto" syncable="YES"/>
     </entity>
     <elements>
         <element name="PIXAccount" positionX="0" positionY="0" width="128" height="90"/>
-        <element name="PIXAlbum" positionX="0" positionY="0" width="128" height="225"/>
-        <element name="PIXPhoto" positionX="0" positionY="0" width="128" height="300"/>
-        <element name="PIXThumbnail" positionX="0" positionY="0" width="128" height="75"/>
+        <element name="PIXAlbum" positionX="0" positionY="0" width="128" height="210"/>
+        <element name="PIXPhoto" positionX="0" positionY="0" width="128" height="285"/>
     </elements>
 </model>

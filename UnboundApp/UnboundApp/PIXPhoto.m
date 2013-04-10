@@ -40,7 +40,7 @@ const CGFloat kThumbnailSize = 370.0f;
 @dynamic path;
 @dynamic caption;
 @dynamic album;
-@dynamic thumbnail;
+@dynamic thumbnailFilePath;
 @dynamic datePhotoAlbum;
 @dynamic stackPhotoAlbum;
 @dynamic exifData;
@@ -137,13 +137,15 @@ const CGFloat kThumbnailSize = 370.0f;
         //While full image is loading show the thumbnail stretched
         if (_thumbnailImage!=nil) {
             return _thumbnailImage;
-        } else if (self.thumbnail.imageData) {
-            NSImage *thumbImage = [[NSImage alloc] initWithData:self.thumbnail.imageData];
+        } else if (self.thumbnailFilePath) {
+            
+            NSData * thumbData = [NSData dataWithContentsOfFile:self.thumbnailFilePath];
+            NSImage *thumbImage = [[NSImage alloc] initWithData:thumbData];
             [self setThumbnailImage:thumbImage];
             return _thumbnailImage;
         } else {
             //use placeholder as a last resort
-            return [NSImage imageNamed:@"nophoto"]; 
+            return nil;
         }
     } 
     return _fullsizeImage;
@@ -550,8 +552,9 @@ const CGFloat kThumbnailSize = 370.0f;
     
 }
 
-
+/*
 - (void)mainThreadComputePreviewThumbnailFinished:(NSData *)data {
+    
     if (self.cancelThumbnailLoadOperation==YES || self.managedObjectContext == nil) {
         //DLog(@"5)thumbnail operation was canceled - return?");
         _thumbnailImageIsLoading = NO;
@@ -569,7 +572,7 @@ const CGFloat kThumbnailSize = 370.0f;
     
     [self postPhotoUpdatedNote];
     
-}
+}*/
 
 -(void)cancelThumbnailLoading;
 {
@@ -583,9 +586,8 @@ const CGFloat kThumbnailSize = 370.0f;
     
     if (_thumbnailImage == nil && !_thumbnailImageIsLoading)
     {
-        NSData *imgData = self.thumbnail.imageData;
-        
-        if (imgData != nil) {
+        NSString * imagePath = self.thumbnailFilePath;
+        if (imagePath != nil) {
             
             
            // _thumbnailImage = [[NSImage alloc] initWithData:imgData];
@@ -594,9 +596,14 @@ const CGFloat kThumbnailSize = 370.0f;
             _thumbnailImageIsLoading = YES;
             __weak PIXPhoto *weakSelf = self;
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                
-                
+            
+                // this seems to perform a little faster than [NSImage initWithContentsOfFile:] 
+                NSData * imgData = [NSData dataWithContentsOfFile:imagePath];
                 NSImage * thumb = [[NSImage alloc] initWithData:imgData];
+                
+                
+                //NSImage * thumb = [[NSImage alloc] initWithContentsOfFile:imagePath];
+                
                 self.thumbnailImage = thumb;
                 
                 if(thumb != nil)
@@ -612,6 +619,8 @@ const CGFloat kThumbnailSize = 370.0f;
                 // if we still havent found the thumb then laod from original image
                 else
                 {
+                    [weakSelf clearFiles];
+                    
                     weakSelf.cancelThumbnailLoadOperation = NO;
                     [weakSelf loadThumbnailImage];
                     
@@ -633,7 +642,7 @@ const CGFloat kThumbnailSize = 370.0f;
     
     // TODO: figure out why this case isn't working -- scott
     // the load seems to have been cancelled before the thumb was saved to disk
-    if(!_thumbnailImageIsLoading && self.thumbnail == nil)
+    if(!_thumbnailImageIsLoading && self.thumbnailFilePath == nil)
     {
         // try relaoding here, the load may have been cancelled before the image was saved
         self.cancelThumbnailLoadOperation = NO;
@@ -867,6 +876,42 @@ const CGFloat kThumbnailSize = 370.0f;
     return _sharedThumbnailFullLoadQueue;
 }
 
++(NSString *)randomThumbPath
+{
+    static NSString * mainThumbDir = nil;
+    
+    if(mainThumbDir == nil)
+    {
+        mainThumbDir = [[[PIXAppDelegate sharedAppDelegate] thumbSorageDirectory] path];
+    }
+    
+    NSString * random = [NSString stringWithFormat:@"%d/%d/",(rand() % 1000 + 1), (rand() % 1000 + 1), nil];
+    
+    
+    NSString * path = [mainThumbDir stringByAppendingPathComponent:random];
+    
+    
+    NSFileManager * fm = [NSFileManager new];
+    
+    NSError * error = nil;
+    [fm createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error];
+    
+    if(error)
+    {
+        DLog(@"Error creating directory: %@", [error description]);
+        return nil;
+    }
+    
+    NSString * newThumbPath = nil;
+    
+    // make sure there isn't already a file there:
+    do {
+        newThumbPath = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.jpg", (rand() % 100000 + 1), nil]];
+    } while ([fm fileExistsAtPath:newThumbPath]);
+    
+    return newThumbPath;
+}
+
 
 -(void)loadThumbnailImage
 {
@@ -1004,16 +1049,43 @@ const CGFloat kThumbnailSize = 370.0f;
                 }
                 
                 
+                // create a new thumb path
+                NSString * newThumbPath = [PIXPhoto randomThumbPath];
+                [data writeToFile:newThumbPath atomically:YES];
+                
+                
+                //////////////// option 1 save in bg
+                
+//                NSManagedObjectContext * threadSafeContext = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];
+//                
+//                PIXPhoto * threadPhoto = (PIXPhoto *)[threadSafeContext existingObjectWithID:[weakSelf objectID] error:nil];
+//                
+//                [threadPhoto forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
+//                [threadPhoto setThumbnailFilePath:newThumbPath];
+//                
+//                [threadSafeContext save:nil];
+//                
+//                [[PIXFileParser sharedFileParser] decrementWorking];
+                
+                
+                
+                //////////////// option 2 save by dispatching to main
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
                     [self forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
                     
+                    [self setThumbnailFilePath:newThumbPath];
+                    
+                    //[self.managedObjectContext save:nil];
+                    
                     // set the thumbnail data (this will save the data into core data, the ui has already been updated)
-                    [weakSelf mainThreadComputePreviewThumbnailFinished:data];
+                    //[weakSelf mainThreadComputePreviewThumbnailFinished:data];
                     
                     [[PIXFileParser sharedFileParser] decrementWorking];
                     
                 });
+                
+                //////////////// end options
                 
                 // clean up
                 if(cfDict) CFRelease(cfDict);
@@ -1032,6 +1104,31 @@ const CGFloat kThumbnailSize = 370.0f;
             [[PIXFileParser sharedFileParser] decrementWorking];
         }
     }];
+}
+
+- (void)prepareForDeletion
+{
+	[self clearFiles];
+	return [super prepareForDeletion];
+}
+
+
+-(void)clearFiles
+{
+    NSFileManager * fileManager = [NSFileManager defaultManager];
+    
+    if([self thumbnailFilePath] && [fileManager fileExistsAtPath:[self thumbnailFilePath]])
+    {
+        NSError * error = nil;
+        [fileManager removeItemAtPath:[self thumbnailFilePath] error:&error];
+        
+        if(error)
+        {
+            DLog(@"Error Deleting file: %@", [error description]);
+        }
+        
+        self.thumbnailFilePath = nil;
+    }
 }
 
 -(void)postPhotoUpdatedNote

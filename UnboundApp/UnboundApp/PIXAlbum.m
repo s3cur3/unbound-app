@@ -23,7 +23,6 @@ static NSString *const kItemsKey = @"photos";
 @dynamic dateReadUnboundFile;
 @dynamic path;
 @dynamic subtitle;
-@dynamic thumbnail;
 @dynamic title;
 @dynamic account;
 @dynamic datePhoto;

@@ -44,7 +44,6 @@ typedef enum {
 @property (nonatomic, retain) NSDate * dateReadUnboundFile;
 @property (nonatomic, retain) NSString * path;
 @property (nonatomic, retain) NSString * subtitle;
-@property (nonatomic, retain) NSData * thumbnail;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) PIXAccount *account;
 @property (nonatomic, retain) PIXPhoto *datePhoto;

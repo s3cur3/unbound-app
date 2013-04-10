@@ -899,7 +899,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
     if([photo dateLastModified] != nil && [[photo dateLastModified] compare:dateModified] == NSOrderedAscending)
     {
         
-        [photo setThumbnail:nil];
+        [photo clearFiles];
         [photo setExifData:nil];
         
         NSManagedObjectID * objectID = [photo objectID];
@@ -910,7 +910,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
             PIXPhoto * mainThreadPhoto = (PIXPhoto *)[mainThreadContext existingObjectWithID:objectID error:nil];
             
             [mainThreadPhoto setThumbnailImage:nil];
-            [mainThreadPhoto setThumbnail:nil];
+            [mainThreadPhoto clearFiles];
             [mainThreadPhoto setExifData:nil];
             
             [mainThreadPhoto postPhotoUpdatedNote];
