@@ -29,6 +29,7 @@
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="name" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="needsDateScan" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="path" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="sortDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="thumbnailFilePath" optional="YES" attributeType="String" syncable="YES"/>
@@ -39,6 +40,6 @@
     <elements>
         <element name="PIXAccount" positionX="0" positionY="0" width="128" height="90"/>
         <element name="PIXAlbum" positionX="0" positionY="0" width="128" height="210"/>
-        <element name="PIXPhoto" positionX="0" positionY="0" width="128" height="285"/>
+        <element name="PIXPhoto" positionX="0" positionY="0" width="128" height="300"/>
     </elements>
 </model>

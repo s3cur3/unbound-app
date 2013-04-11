@@ -28,6 +28,7 @@ static NSString *const kItemsKey = @"photos";
 @dynamic datePhoto;
 @dynamic photos;
 @dynamic stackPhotos;
+@dynamic needsDateScan;
 
 +(NSArray *)sortedAlbums
 {
@@ -321,22 +322,28 @@ static NSString *const kItemsKey = @"photos";
 
 -(void) checkDates
 {    
-    // create a dispatch queue so dispatches will happen in order
-    dispatch_queue_t myQueue = dispatch_queue_create("com.pixite.albumDates", DISPATCH_QUEUE_SERIAL);
-    // loop through all this album's photos
-    for(PIXPhoto * aPhoto in self.photos)
-    {
-        // only try to get exif data if it's needed
-        if(aPhoto.exifData == nil)
-        {
-            // this will dispatch async to pull the data from the file and then set the data on the main thread
-            // this method will only do anything if exif is nil
-            [aPhoto findExifDataUsingDispatchQueue:myQueue];
-        }
-    }
     
-    // add this to the same queue so it will execute after all exif fetches are complete
-    dispatch_async(myQueue, ^{
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        
+        NSManagedObjectContext * threadSafeContext = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];
+        
+        PIXAlbum * threadAlbum = (PIXAlbum *)[threadSafeContext existingObjectWithID:[self objectID] error:nil];
+        
+        // loop through all this album's photos
+        for(PIXPhoto * aPhoto in threadAlbum.photos)
+        {
+            // only try to get exif data if it's needed
+            if(aPhoto.exifData == nil)
+            {
+                // this will dispatch async to pull the data from the file and then set the data on the main thread
+                // this method will only do anything if exif is nil
+                [aPhoto findExifData];
+            }
+        }
+        
+        // save the context back to the main thread
+        [threadSafeContext save:nil];
         
         // dispatch async again to keep the execution after the main thread settings of the exif data
         dispatch_async(dispatch_get_main_queue(), ^{

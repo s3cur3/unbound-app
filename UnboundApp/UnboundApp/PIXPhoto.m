@@ -715,34 +715,27 @@ const CGFloat kThumbnailSize = 370.0f;
     return self.dateCreated;
 }
 
--(void)findExifDataUsingDispatchQueue:(dispatch_queue_t)aQueue
+-(void)findExifData
 {
     if(self.exifData != nil) return;
     
     NSURL * imageURL = [NSURL fileURLWithPath:self.path];
+        
+    CGImageSourceRef imageSrc = CGImageSourceCreateWithURL((__bridge CFURLRef)imageURL, nil);
     
-    dispatch_async(aQueue, ^{
+    if (imageSrc!=nil)
+    {
+        // get the exif data
+        CFDictionaryRef cfDict = CGImageSourceCopyPropertiesAtIndex(imageSrc, 0, nil);
+        NSDictionary * exif = (__bridge NSDictionary *)(cfDict);
         
-        CGImageSourceRef imageSrc = CGImageSourceCreateWithURL((__bridge CFURLRef)imageURL, nil);
-        
-        if (imageSrc!=nil)
-        {
-            // get the exif data
-            CFDictionaryRef cfDict = CGImageSourceCopyPropertiesAtIndex(imageSrc, 0, nil);
-            NSDictionary * exif = (__bridge NSDictionary *)(cfDict);
-            
-            // now set it on the main thread
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                [self forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
-                
-            });
-            
-            
-            CFRelease(imageSrc);
-            if(cfDict) CFRelease(cfDict);
-        }
-    });
+        // now set it
+        [self forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
+ 
+        CFRelease(imageSrc);
+        if(cfDict) CFRelease(cfDict);
+    }
+
 }
 
 -(void)forceSetExifData:(NSDictionary *)newExifData

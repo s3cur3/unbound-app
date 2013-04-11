@@ -391,7 +391,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
         }
         
         // also delete the thumbnails
-        [fileManager removeItemAtURL:[self thumbSorageDirectory] error:nil];
+        [self clearThumbSorageDirectory];
         
     }
     _persistentStoreCoordinator = coordinator;
@@ -402,6 +402,24 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 -(NSURL *)thumbSorageDirectory
 {
     return [[self applicationFilesDirectory] URLByAppendingPathComponent:@"/thumbnails/"];
+}
+
+-(BOOL)clearThumbSorageDirectory
+{
+    NSFileManager * fileManager = [NSFileManager defaultManager];
+    
+    NSURL * deleteingThumbsDir = [[self applicationFilesDirectory] URLByAppendingPathComponent:@"/thumbnails-deleting"];
+    
+    [fileManager moveItemAtURL:[self thumbSorageDirectory] toURL:deleteingThumbsDir error:nil];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        
+        // also delete the thumbnails
+        [fileManager removeItemAtURL:deleteingThumbsDir error:nil];
+        
+    });
+    
+    return YES;
 }
 
 // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.)
@@ -464,8 +482,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
         NSLog(@"Failed to remove database file: %@", url);
     }
     
-    // also delete the thumbnails
-    [fileManager removeItemAtURL:[self thumbSorageDirectory] error:nil];
+    [self clearThumbSorageDirectory];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
 }

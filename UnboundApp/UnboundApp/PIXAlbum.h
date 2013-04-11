@@ -49,6 +49,7 @@ typedef enum {
 @property (nonatomic, retain) PIXPhoto *datePhoto;
 @property (nonatomic, retain) NSSet *photos;
 @property (nonatomic, retain) NSOrderedSet *stackPhotos;
+@property (nonatomic, retain) NSNumber *needsDateScan;
 @end
 
 @interface PIXAlbum (CoreDataGeneratedAccessors)

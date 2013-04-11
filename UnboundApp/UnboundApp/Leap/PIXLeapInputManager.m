@@ -105,7 +105,7 @@
     NSWindow * mainwindow = [[[PIXAppDelegate sharedAppDelegate] mainWindowController] window];
     
     // present the hud message that the leap connected
-    PIXHUDMessageController * messageHUD = [PIXHUDMessageController windowWithTitle:@"Leap Connected" andIcon:[NSImage imageNamed:@"leapconnected"]];
+    PIXHUDMessageController * messageHUD = [PIXHUDMessageController windowWithTitle:@"Leap Motion Controller Connected" andIcon:[NSImage imageNamed:@"leapconnected"]];
     [messageHUD presentInParentWindow:mainwindow forTimeInterval:3.0];
     
     self.isConnected = YES;
@@ -150,7 +150,7 @@
     NSWindow * mainwindow = [[[PIXAppDelegate sharedAppDelegate] mainWindowController] window];
     
     // present the hud message that the leap connected
-    PIXHUDMessageController * messageHUD = [PIXHUDMessageController windowWithTitle:@"Leap Disconnected" andIcon:[NSImage imageNamed:@"leapconnected"]];
+    PIXHUDMessageController * messageHUD = [PIXHUDMessageController windowWithTitle:@"Leap Motion Controller Disconnected" andIcon:[NSImage imageNamed:@"leapconnected"]];
     [messageHUD presentInParentWindow:mainwindow forTimeInterval:3.0];
     
     self.isConnected = NO;
@@ -163,7 +163,7 @@
     NSWindow * mainwindow = [[[PIXAppDelegate sharedAppDelegate] mainWindowController] window];
     
     // present the hud message that the leap connected
-    PIXHUDMessageController * messageHUD = [PIXHUDMessageController windowWithTitle:@"Leap Exited" andIcon:[NSImage imageNamed:@"leapconnected"]];
+    PIXHUDMessageController * messageHUD = [PIXHUDMessageController windowWithTitle:@"Leap Motion Controller Exited" andIcon:[NSImage imageNamed:@"leapconnected"]];
     [messageHUD presentInParentWindow:mainwindow forTimeInterval:3.0];
     
     self.isConnected = NO;

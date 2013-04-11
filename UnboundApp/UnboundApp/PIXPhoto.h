@@ -65,7 +65,7 @@
 
 -(NSDate *)findDisplayDate;
 
--(void)findExifDataUsingDispatchQueue:(dispatch_queue_t)aQueue;
+-(void)findExifData;
 
 -(void)postPhotoUpdatedNote;
 

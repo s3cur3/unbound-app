@@ -83,13 +83,13 @@
     if([[PIXLeapInputManager sharedInstance] isConnected])
     {
         [self.leapStatus setImage:[NSImage imageNamed:@"greendot"]];
-        [self.leapStatusText setStringValue:@"Leap Connected"];
+        [self.leapStatusText setStringValue:@"Leap Motion Controller Connected"];
     }
     
     else
     {
         [self.leapStatus setImage:[NSImage imageNamed:@"graydot"]];
-        [self.leapStatusText setStringValue:@"Leap Not Connected"];
+        [self.leapStatusText setStringValue:@"Leap Motion Controller Not Connected"];
     }
 }
 

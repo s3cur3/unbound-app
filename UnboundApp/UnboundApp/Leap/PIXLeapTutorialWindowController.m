@@ -169,6 +169,8 @@
 
 -(void)leapSwipeLeft
 {
+    if(![self.window isKeyWindow]) return;
+    
     if(self.currentSlide == 0 || self.currentSlide == 3)
     {
         // animate the transition
@@ -186,6 +188,8 @@
 
 -(void)leapSwipeUp
 {
+    if(![self.window isKeyWindow]) return;
+    
     if(self.currentSlide == 2)
     {
         // animate the transition
@@ -203,6 +207,8 @@
 
 -(void)leapPointerSelect:(NSPoint)normalizedPosition
 {
+    if(![self.window isKeyWindow]) return;
+    
     if(self.currentSlide == 1)
     {
         // animate the transition
@@ -226,7 +232,7 @@
         
         */
         [animation setType:kCATransitionMoveIn];
-        [animation setSubtype:kCATransitionFromBottom];
+        [animation setSubtype:kCATransitionFromTop];
         
         [self.movieView.layer addAnimation:animation forKey:@"slideShowFade"];
         
@@ -237,17 +243,22 @@
 
 -(void)leapSwipeRight
 {
+    if(![self.window isKeyWindow]) return;
+    
     [self lastSlide:self];
 }
 
 -(void)leapPanZoomStart
 {
+    if(![self.window isKeyWindow]) return;
     
     self.windowStartPosition = self.window.frame.origin;
 }
 
 -(void)leapPanZoomPosition:(NSPoint)position andScale:(CGFloat)scale
 {
+    if(![self.window isKeyWindow]) return;
+    
     if(self.currentSlide == 3)
     {
         NSRect screenFrame = self.window.screen.frame;
