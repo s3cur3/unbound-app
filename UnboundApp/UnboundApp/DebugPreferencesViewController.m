@@ -122,7 +122,7 @@
         [photo thumbnailImage];
     }
     
-    [context save:nil];
+    [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
     
     [self updateCounts:nil];
 }

@@ -40,6 +40,7 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize managedObjectContext = _managedObjectContext;
+@synthesize privateWriterContext = _privateWriterContext;
 
 //static PIXAppDelegate * _sharedAppDelegate = nil;
 
@@ -438,15 +439,48 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
         [[NSApplication sharedApplication] presentError:error];
         return nil;
     }
+    
+    // use the background saving context oulined here:
+    // http://www.cocoanetics.com/2012/07/multi-context-coredata/
+    
+    // create writer MOC
+    _privateWriterContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    [_privateWriterContext setPersistentStoreCoordinator:_persistentStoreCoordinator];
+    
+    // overwrite the database with updates from this context
+    [_privateWriterContext setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
+    
     _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-    [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+    [_managedObjectContext setParentContext:_privateWriterContext];
+    
+    // overwrite the database with updates from this context
+    [_managedObjectContext setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mergeContext:) name:NSManagedObjectContextDidSaveNotification object:nil];
     return _managedObjectContext;
 }
 
+-(BOOL)saveDBToDisk:(NSError **)error
+{
+    if (![self.managedObjectContext save:error])
+    {
+        return NO;
+    }
+        
+    // now save to disk on a bg thread
+    [self.privateWriterContext performBlock:^{
+        if (![self.privateWriterContext save:error])
+        {
+            DLog(@"ERROR SAVING IN BG THREAD: %@", [*error description])
+        }
+    }];
+    
+    return YES;
+}
+
 -(NSManagedObjectContext *)threadSafeManagedObjectContext
 {
-    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] init];
+    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
     
     //-------------------------------------------------------
     //    Setting the undo manager to nil means that:
@@ -458,7 +492,9 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     
     
     //set it to the App Delegates persistant store coordinator
-    [context setPersistentStoreCoordinator:[self persistentStoreCoordinator]];
+    //[context setPersistentStoreCoordinator:[self persistentStoreCoordinator]];
+    
+    [context setParentContext:self.managedObjectContext];
     
     // overwrite the database with updates from this context
     [context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
@@ -542,8 +578,25 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
         return NSTerminateNow;
     }
     
-    NSError *error = nil;
-    if (![[self managedObjectContext] save:&error]) {
+    __block NSError *error = nil;
+    
+    __block BOOL saveResult = YES;
+    
+    if (![self.managedObjectContext save:&error])
+    {
+        saveResult = NO;
+    }
+    
+    // now save to disk on a bg thread
+    [self.privateWriterContext performBlockAndWait:^{
+        if (![self.privateWriterContext save:&error])
+        {
+            saveResult = NO;
+        }
+    }];
+    
+    
+    if (!saveResult) {
         
         // Customize this code block to include application-specific recovery steps.
         BOOL result = [sender presentError:error];

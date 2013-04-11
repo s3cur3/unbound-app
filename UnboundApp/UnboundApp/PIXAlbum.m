@@ -579,7 +579,7 @@ static NSString *const kItemsKey = @"photos";
         [self writeUnboundFile:unboundMetaDictionary];
     }
     
-    [self.managedObjectContext save:nil];
+    [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
     
     
 }
