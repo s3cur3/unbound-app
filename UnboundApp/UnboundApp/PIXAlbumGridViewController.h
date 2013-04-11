@@ -9,7 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "PIXViewController.h"
 #import "PIXGridViewController.h"
+#import "PIXSplitViewController.h"
 
-@interface PIXAlbumGridViewController : PIXGridViewController <NSTextFieldDelegate>
+@interface PIXAlbumGridViewController : PIXGridViewController <NSTextFieldDelegate, PIXSplitViewControllerDelegate>
+
+//PIXSplitViewControllerDelegate
+-(void)albumSelected:(PIXAlbum *)anAlbum atIndex:(NSUInteger)index;
 
 @end

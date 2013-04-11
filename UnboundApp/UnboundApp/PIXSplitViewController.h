@@ -11,7 +11,15 @@
 @class Album;
 @class PIXAlbum;
 
+@protocol PIXSplitViewControllerDelegate <NSObject>
+
+-(void)albumSelected:(PIXAlbum *)anAlbum atIndex:(NSUInteger)index;
+
+@end
+
 @interface PIXSplitViewController : PIXViewController <NSSplitViewDelegate>
+
+@property (nonatomic,weak) id <PIXSplitViewControllerDelegate> delegate;
 
 @property (nonatomic,weak) IBOutlet NSSplitView *splitView;
 @property (nonatomic,weak) IBOutlet NSView *leftPane;
@@ -25,5 +33,6 @@
 
 -(IBAction)backBarSegmentChanged:(id)sender;
 -(IBAction)sliderValueChanged:(id)sender;
+
 
 @end

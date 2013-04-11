@@ -482,8 +482,8 @@
 
 -(void)outlineViewSelectionDidChange:(NSNotification *)notification {
     if ([self.outlineView selectedRow] != -1) {
-
-        PIXAlbum *anAlbum =  [self.outlineView itemAtRow:[self.outlineView selectedRow]];
+        NSInteger aSelectedRow = [self.outlineView selectedRow];
+        PIXAlbum *anAlbum =  [self.outlineView itemAtRow:aSelectedRow];
         if (anAlbum!=nil)
         {
             //DLog(@"New album selected");

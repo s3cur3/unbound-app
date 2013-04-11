@@ -308,16 +308,17 @@
 }
 
 //PIXPageViewControllerDelegate callback
--(void)pagerDidMoveToPhotoAtIndex:(NSUInteger)index;
+-(void)pagerDidMoveToPhotoWithPath:(NSString *)aPhotoPath atIndex:(NSUInteger)index;
 {
-    PIXPhoto * photo = nil;
-    [self.selectedItems removeAllObjects];
-    
     if(index < [self.items count])
     {
+        PIXPhoto * photo = nil;
         photo = [self.items objectAtIndex:index];
-        [self.selectedItems addObject:photo];
-        [self.gridView scrollToAndReturnItemAtIndex:index animated:YES];
+        if ([photo.path isEqualToString:aPhotoPath]) {
+            [self.selectedItems removeAllObjects];
+            [self.selectedItems addObject:photo];
+            [self.gridView scrollToAndReturnItemAtIndex:index animated:YES];
+        }
     }
 }
 
