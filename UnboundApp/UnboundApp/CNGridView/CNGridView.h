@@ -32,6 +32,7 @@
 #import "CNGridViewDefinitions.h"
 #import "CNGridViewDelegate.h"
 #import "CNGridViewItem.h"
+#import "PIXLeapInputManager.h"
 #import "CNLog.h"
 
 
@@ -42,7 +43,7 @@
  */
 
 
-@interface CNGridView : NSView
+@interface CNGridView : NSView <PIXLeapResponder>
 
 #pragma mark - Initializing a CNGridView Object
 /** @name Initializing a CNGridView Object */

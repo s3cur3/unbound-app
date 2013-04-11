@@ -85,12 +85,14 @@
     });
     
     [[PIXLeapInputManager sharedInstance] addResponder:self];
+    [[PIXLeapInputManager sharedInstance] addResponder:self.gridView];
     
 }
 
 -(void)willHidePIXView
 {
     [[PIXLeapInputManager sharedInstance] removeResponder:self];
+    [[PIXLeapInputManager sharedInstance] removeResponder:self.gridView];
 }
 
 

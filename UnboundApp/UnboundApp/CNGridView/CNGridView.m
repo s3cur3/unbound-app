@@ -89,7 +89,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 #pragma mark CNGridView
 
 
-@interface CNGridView () <PIXLeapResponder> {
+@interface CNGridView () {
     NSMutableDictionary *keyedVisibleItems;
     NSMutableDictionary *reuseableItems;
     NSMutableDictionary *selectedItemsBySelectionFrame;
@@ -208,7 +208,6 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
                                                  name:NSViewBoundsDidChangeNotification
                                                object:clipView];
     
-    [[PIXLeapInputManager sharedInstance] addResponder:self];
     
     [self setTranslatesAutoresizingMaskIntoConstraints:YES];
     
@@ -1497,6 +1496,18 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     lastSelectedItemIndex = newIndex;
 }
 
+
+// do this so leap tutorial in seperate window will respond to swipes better
+-(BOOL)respondsToSelector:(SEL)aSelector
+{
+    if(aSelector == @selector(leapPointerPosition:))
+    {
+        if(self.window == nil) return NO;
+        if(![self.window isKeyWindow]) return NO;
+    }
+    
+    return [super respondsToSelector:aSelector];
+}
 
 
 #pragma mark - Leap Responder

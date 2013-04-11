@@ -171,6 +171,8 @@
 
 - (void)onFrame:(NSNotification *)notification;
 {
+    
+    BOOL suppressSwipe = NO;
     LeapController *aController = (LeapController *)[notification object];
 
     // Get the most recent frame and report some basic information
@@ -306,6 +308,12 @@
                 if([responder respondsToSelector:@selector(leapPointerPosition:)])
                 {
                     [responder leapPointerPosition:normalizedPoint];
+                    
+                    if([fingers count] < 2)
+                    {
+                        suppressSwipe = YES;
+                    }
+                    
                     break; // do nothing else after we hit the first responder
                 }
             }
@@ -318,11 +326,11 @@
     
     // handle palm grab zoom
     if([fingers count] == 0 && [hands count] == 1 &&
-       [[hands lastObject] sphereRadius] <= 70.0 &&
+       [[hands lastObject] sphereRadius] <= 110.0 &&
        !self.swipeGestureFlag)
     {
         
-        //DLog(@"Hand Radius: %f", [[hands lastObject] sphereRadius]);
+       // DLog(@"Hand Radius: %f", [[hands lastObject] sphereRadius]);
         
         normalizedPoint.x = (avgPalmPos.x - self.screenRect.origin.x)/self.screenRect.size.width;
         normalizedPoint.y = (avgPalmPos.y - self.screenRect.origin.y)/self.screenRect.size.height;
@@ -341,7 +349,8 @@
             
             CGFloat depthChange = pinchDepth - self.pinchStartDepth;
             
-            depthChange = (-depthChange / 150.0) + 1;
+            // adjust sensitivity
+            depthChange = (-depthChange / 100.0) + 1;
             
             
             // never allow 0
@@ -364,6 +373,7 @@
                 if([responder respondsToSelector:@selector(leapPanZoomPosition:andScale:)])
                 {
                     [responder leapPanZoomPosition:positionDelta andScale:scaleDelta];
+                    //suppressSwipe = YES;
                     break; // do nothing else after we hit the first responder
                 }
             }
@@ -383,6 +393,7 @@
                 if([responder respondsToSelector:@selector(leapPanZoomStart)])
                 {
                     [responder leapPanZoomStart];
+                    //suppressSwipe = YES;
                     break; // do nothing else after we hit the first responder
                 }
             }
@@ -444,7 +455,7 @@
                 if (swipeGesture.state == LEAP_GESTURE_STATE_START) {
 
                     
-                    if(!self.swipeGestureFlag)
+                    if(!self.swipeGestureFlag && !suppressSwipe)
                     {
                         [self handleSwipe:(LeapSwipeGesture *)swipeGesture];
                         
@@ -505,12 +516,14 @@
 -(void)handleSwipe:(LeapSwipeGesture *)swipeGesture
 {
     LeapVector * direction = swipeGesture.direction;
+    direction = direction.normalized;
+    
     BOOL didswipe = NO;
     
-    if(fabs(direction.z) > 0.19) return;
+    //if(fabs(direction.z) > 0.25) return;
     
     // figure out the gesture direction
-    if(direction.y > 0.7) // this is the up direction
+    if(direction.y > 0.65) // this is the up direction
     {
         // loop through the responders
         for(id<PIXLeapResponder> responder in self.leapResponders)
@@ -525,7 +538,7 @@
         didswipe = YES;
     }
     
-    else if(direction.y < -0.7) // this is the down direction
+    else if(direction.y < -0.65) // this is the down direction
     {
         // loop through the responders
         for(id<PIXLeapResponder> responder in self.leapResponders)
@@ -540,7 +553,7 @@
         didswipe = YES;
     }
     
-    else if(direction.x > 0.7) // this is the right direction
+    else if(direction.x > 0.65) // this is the right direction
     {
         // loop through the responders
         for(id<PIXLeapResponder> responder in self.leapResponders)
@@ -555,7 +568,7 @@
         didswipe = YES;
     }
     
-    else if(direction.x < -0.7) // this is the left direction
+    else if(direction.x < -0.65) // this is the left direction
     {
         // loop through the responders
         for(id<PIXLeapResponder> responder in self.leapResponders)

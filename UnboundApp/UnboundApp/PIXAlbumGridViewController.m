@@ -127,6 +127,8 @@
     });
     
     
+    [[PIXLeapInputManager sharedInstance] addResponder:self.gridView];
+    
     [[PIXFileParser sharedFileParser] addObserver:self forKeyPath:@"fullScanProgress" options:NSKeyValueObservingOptionNew context:nil];
     
     [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] setTitle:@"Unbound"];
@@ -160,6 +162,8 @@
 -(void)willHidePIXView
 {
     [super willHidePIXView];
+    
+    [[PIXLeapInputManager sharedInstance] removeResponder:self.gridView];
     
     [[PIXFileParser sharedFileParser] removeObserver:self forKeyPath:@"fullScanProgress"];
 }

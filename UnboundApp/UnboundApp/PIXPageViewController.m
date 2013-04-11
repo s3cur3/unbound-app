@@ -128,7 +128,7 @@
         
     }
     
-    DLog(@"New Photo Index = %ld", self.pageController.selectedIndex);
+    //DLog(@"New Photo Index = %ld", self.pageController.selectedIndex);
     
     // update the HUD (caption view)
     [self.controlView setPhoto:thisPhoto];
@@ -140,6 +140,14 @@
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [self.delegate pagerDidMoveToPhotoAtIndex:self.pageController.selectedIndex];
     });
+    
+    
+    [self.currentImageVC setIsCurrentView:NO];
+    
+    self.currentImageVC = (PIXImageViewController *)[self.pageController selectedViewController];
+    
+    [self.currentImageVC setIsCurrentView:YES];
+    
     
 }
 /*
@@ -579,19 +587,35 @@
 
 -(void)leapSwipeUp
 {
+    if(![self.view.window isKeyWindow]) return;
+    
     [self.navigationViewController popViewController];
 }
 
 -(void)leapSwipeRight
 {
+    if(![self.view.window isKeyWindow]) return;
+    
     [self.pageController navigateBack:nil];
     [self restartNextSlideIfNeeded];
 }
 
 -(void)leapSwipeLeft
 {
+    if(![self.view.window isKeyWindow]) return;
+    
     [self.pageController navigateForward:nil];
     [self restartNextSlideIfNeeded];
+}
+
+-(void)leapPanZoomStart
+{
+    [[self currentImageVC] leapPanZoomStart];
+}
+
+-(void)leapPanZoomPosition:(NSPoint)position andScale:(CGFloat)scale
+{
+    [[self currentImageVC] leapPanZoomPosition:position andScale:scale];
 }
 
 -(void)keyDown:(NSEvent *)theEvent
@@ -1040,12 +1064,7 @@
      
      });*/
     
-    [self.currentImageVC setIsCurrentView:NO];
     
-    self.currentImageVC = (PIXImageViewController *)[pageController selectedViewController];
-    
-    
-    [self.currentImageVC setIsCurrentView:YES];
     
     
     [self performSelector:@selector(startPreloadForController:) withObject:pageController afterDelay:0.0f];

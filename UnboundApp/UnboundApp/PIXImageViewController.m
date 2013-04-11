@@ -13,7 +13,7 @@
 
 #import "PIXLeapInputManager.h"
 
-@interface PIXImageViewController () <PIXLeapResponder>
+@interface PIXImageViewController ()
 
 @property CGFloat startPinchZoom;
 @property NSPoint startPinchPosition;
@@ -98,16 +98,6 @@
     if(_isCurrentView != value)
     {
         _isCurrentView = value;
-        
-        if(_isCurrentView)
-        {
-            [[PIXLeapInputManager sharedInstance] addResponder:self];
-        }
-        
-        else
-        {
-            [[PIXLeapInputManager sharedInstance] removeResponder:self];
-        }
     }
 }
 
@@ -136,8 +126,9 @@
         [self.scrollView setMagnification:magnification];
     }
     
-    
-    
+    // tweak the position depen
+    position.x *= 1.0 + (([self.scrollView magnification]-1.0) / 3.0);
+    position.y *= 1.0 + (([self.scrollView magnification]-1.0) / 3.0);
     
     CGRect bounds = [[self.scrollView contentView] bounds];
     

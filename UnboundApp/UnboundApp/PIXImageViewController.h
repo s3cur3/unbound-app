@@ -7,11 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "PIXLeapInputManager.h"
 
 @class PIXPageViewController;
 @class AutoSizingImageView;
+@protocol PIXLeapResponder;
 
-@interface PIXImageViewController : NSViewController
+@interface PIXImageViewController : NSViewController <PIXLeapResponder>
 
 @property (nonatomic, assign) PIXPageViewController *pageViewController;
 @property (nonatomic, strong) IBOutlet NSScrollView * scrollView;
