@@ -985,8 +985,31 @@
     
     _aSplitViewController = [[PIXSplitViewController alloc] initWithNibName:@"PIXSplitViewController" bundle:nil];
     
+    _aSplitViewController.delegate = self;
+    
     return _aSplitViewController;
 
+}
+
+//PIXSplitViewControllerDelegate
+-(void)albumSelected:(PIXAlbum *)anAlbum atIndex:(NSUInteger)index;
+{
+    PIXAlbum *myAlbum = [self albumForIndex:index];
+    if (![myAlbum.path isEqualToString:anAlbum.path]) {
+        DLog(@"Albums at same indexes don't match between split and album view controllers. index : %ld", index);
+        index = [self indexForAlbum:anAlbum];
+        if (index!= NSNotFound) {
+            DLog(@"Found index at %ld", index);
+        } else {
+            index = -1;
+        }
+    }
+    
+    if (index != -1) {
+        [self.selectedItems removeAllObjects];
+        [self.selectedItems addObject:myAlbum];
+        [self.gridView scrollToAndReturnItemAtIndex:index animated:YES];
+    }
 }
 
 

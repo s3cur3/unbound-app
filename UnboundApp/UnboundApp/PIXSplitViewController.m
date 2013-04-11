@@ -254,12 +254,18 @@
     return _backButtonSegmentItem;
 }
 
+-(void)popViewAndUpdateAlbumSelectionForDelegate
+{
+    NSInteger index = self.sidebarViewController.outlineView.selectedRow;
+    [self.delegate albumSelected:self.selectedAlbum atIndex:index];
+    [self.navigationViewController popViewController];
+}
 
 -(IBAction)backBarSegmentChanged:(id)sender
 {
     if([sender selectedSegment] == 0)
     {
-        [self.navigationViewController popViewController];
+        [self popViewAndUpdateAlbumSelectionForDelegate];
     }
     
     if([sender selectedSegment] == 1)
@@ -330,7 +336,8 @@
 {
     if(self.view.window == nil) return;
     
-    [self.navigationViewController popViewController];
+    [self popViewAndUpdateAlbumSelectionForDelegate];
+    //[self.navigationViewController popViewController];
 }
 
 -(void)toggleSidebar
@@ -401,12 +408,13 @@
     if (!selectedAlbum) {
         NSAssert(selectedAlbum!=nil, @"SplitViewController setAlbum called with nil value");
     } else if (selectedAlbum == _selectedAlbum) {
-       // DLog(@"Same album selected, skip reloading");
+        // DLog(@"Same album selected, skip reloading");
         return;
     }
     _selectedAlbum = selectedAlbum;
     [self.imageBrowserViewController setAlbum:self.selectedAlbum];
     [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] setTitle:[self.selectedAlbum title]];
+
 }
 
 

@@ -10,17 +10,18 @@
 
 @class Album;
 @class PIXAlbum;
+@class PIXPhoto;
 @class PIXViewController;
 
 @protocol PIXPageViewControllerDelegate <NSObject>
 
--(void)pagerDidMoveToPhotoAtIndex:(NSUInteger)index;
+-(void)pagerDidMoveToPhotoWithPath:(NSString *)aPhotoPath atIndex:(NSUInteger)index;
 
 @end
 
 @interface PIXPageViewController : PIXViewController <NSPageControllerDelegate>
 
-@property id <PIXPageViewControllerDelegate> delegate;
+@property (nonatomic,weak) id <PIXPageViewControllerDelegate> delegate;
 
 @property (nonatomic, strong) IBOutlet PIXAlbum *album;
 @property (weak) IBOutlet NSPageController *pageController;
