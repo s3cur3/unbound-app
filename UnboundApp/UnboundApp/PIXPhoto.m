@@ -1049,35 +1049,35 @@ const CGFloat kThumbnailSize = 370.0f;
                 
                 //////////////// option 1 save in bg
                 
-//                NSManagedObjectContext * threadSafeContext = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];
-//                
-//                PIXPhoto * threadPhoto = (PIXPhoto *)[threadSafeContext existingObjectWithID:[weakSelf objectID] error:nil];
-//                
-//                [threadPhoto forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
-//                [threadPhoto setThumbnailFilePath:newThumbPath];
-//                
-//                [threadSafeContext save:nil];
-//                
-//                [[PIXFileParser sharedFileParser] decrementWorking];
+                NSManagedObjectContext * threadSafeContext = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];
+                
+                PIXPhoto * threadPhoto = (PIXPhoto *)[threadSafeContext existingObjectWithID:[weakSelf objectID] error:nil];
+                
+                [threadPhoto forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
+                [threadPhoto setThumbnailFilePath:newThumbPath];
+                
+                [threadSafeContext save:nil];
+                
+                [[PIXFileParser sharedFileParser] decrementWorking];
                 
                 
                 
                 //////////////// option 2 save by dispatching to main
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                    [self forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
-                    
-                    [self setThumbnailFilePath:newThumbPath];
-                    
-                    //[self.managedObjectContext save:nil];
-                    
-                    // set the thumbnail data (this will save the data into core data, the ui has already been updated)
-                    //[weakSelf mainThreadComputePreviewThumbnailFinished:data];
-                    
-                    [[PIXFileParser sharedFileParser] decrementWorking];
-                    
-                });
-                
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    
+//                    [self forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
+//                    
+//                    [self setThumbnailFilePath:newThumbPath];
+//                    
+//                    //[self.managedObjectContext save:nil];
+//                    
+//                    // set the thumbnail data (this will save the data into core data, the ui has already been updated)
+//                    //[weakSelf mainThreadComputePreviewThumbnailFinished:data];
+//                    
+//                    [[PIXFileParser sharedFileParser] decrementWorking];
+//                    
+//                });
+//                
                 //////////////// end options
                 
                 // clean up

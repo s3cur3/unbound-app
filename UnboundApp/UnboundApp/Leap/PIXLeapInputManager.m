@@ -336,18 +336,9 @@
         switch (gesture.type) {
             case LEAP_GESTURE_TYPE_CIRCLE: {
                 LeapCircleGesture *circleGesture = (LeapCircleGesture *)gesture;
-                // Calculate the angle swept since the last frame
-                //float sweptAngle = 0;
-                if(circleGesture.state != LEAP_GESTURE_STATE_START) {
-                    //LeapCircleGesture *previousUpdate = (LeapCircleGesture *)[[aController frame:1] gesture:gesture.id];
-                    //sweptAngle = (circleGesture.progress - previousUpdate.progress) * 2 * LEAP_PI;
-                }
+
                 
-//                NSLog(@"Circle id: %d, %@, progress: %f, radius %f, angle: %f degrees",
-//                      circleGesture.id, [PIXLeapInputManager stringForState:gesture.state],
-//                      circleGesture.progress, circleGesture.radius, sweptAngle * LEAP_RAD_TO_DEG);
-                
-                if(circleGesture.progress > 0.7 && circleGesture.radius < 10.0 && circleGesture.state == LEAP_GESTURE_STATE_STOP && !suppressSelect)
+                if(circleGesture.progress > 0.7 && circleGesture.radius < 10.0 && !suppressSelect)
                 {
                     // loop through the responders
                     for(id<PIXLeapResponder> responder in self.leapResponders)
@@ -559,15 +550,8 @@
     
     float angle = [avgFingerDirection angleTo:swipeGesture.direction.normalized];
     
-    // this is 
-    if(angle < 1.4 || angle > 1.70)
-    {
-        
-        return;
-        
-        
-    }
-
+    // this is the key to easy swiping. Make sure the fingers are generally pointed at a right angle to the direction of the swipe.
+    if(angle < 1.4 || angle > 1.70) return;
     
     if(self.swipeGestureFlag == YES) return; // delay between swipes
     
