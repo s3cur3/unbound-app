@@ -23,6 +23,7 @@
 
 @property CGFloat pinchStartWidth;
 @property CGFloat pinchStartDepth;
+@property CGFloat pinchLastDepth;
 @property NSPoint pinchStartPosition;
 
 @property (strong) NSTimer * connectionTimer;
@@ -171,8 +172,10 @@
 
 - (void)onFrame:(NSNotification *)notification;
 {
-    
+    BOOL useFist = YES;
     BOOL suppressSwipe = NO;
+    BOOL suppressSelect = NO;
+    
     LeapController *aController = (LeapController *)[notification object];
 
     // Get the most recent frame and report some basic information
@@ -223,81 +226,84 @@
         if(normalizedPoint.x > 1.0) normalizedPoint.x = 1.0;
         if(normalizedPoint.y > 1.0) normalizedPoint.y = 1.0;
         
-        /*
-        // handle two finger pinch
-        if([fingers count] == 2)
+        if(!useFist)
         {
-            LeapFinger *finger1 = [fingers objectAtIndex:0];
-            LeapFinger *finger2 = [fingers objectAtIndex:1];
-            
-            CGFloat deltax= finger2.tipPosition.x - finger1.tipPosition.x;
-            CGFloat deltay= finger2.tipPosition.y - finger1.tipPosition.y;
-            CGFloat deltaz= finger2.tipPosition.z - finger1.tipPosition.z;
-            
-            CGFloat pinchDistance = sqrt((deltax*deltax)+(deltay*deltay)+(deltaz*deltaz));
-            CGFloat pinchDepth = avgPos.z;
-           
-            // if this is mid pinch, call the responder with the deltas
-            if(self.pinchStartWidth > 0)
+            // handle two finger pinch
+            if([fingers count] == 2 && avgPos.z < 50.0)
             {
-                // scale change in depth:
-                CGFloat distanceChange = pinchDistance / self.pinchStartWidth;
+                LeapFinger *finger1 = [fingers objectAtIndex:0];
+                LeapFinger *finger2 = [fingers objectAtIndex:1];
                 
-                // make this a bit less sensitive
-                //distanceChange = ((distanceChange - 1.0) / 10.0)+1.0;
+                CGFloat deltax= finger2.tipPosition.x - finger1.tipPosition.x;
+                CGFloat deltay= finger2.tipPosition.y - finger1.tipPosition.y;
+                CGFloat deltaz= finger2.tipPosition.z - finger1.tipPosition.z;
                 
-                CGFloat depthChange = pinchDepth - self.pinchStartDepth;
-                
-                depthChange = (-depthChange / 200.0) + 1;
-                
-                
-                // 
-                
-                
-                CGFloat scaleDelta =  distanceChange * depthChange;
-                
-                NSPoint positionDelta = NSMakePoint(normalizedPoint.x - self.pinchStartPosition.x,
-                                                    normalizedPoint.y - self.pinchStartPosition.y);
-                
-                // loop through the responders
-                for(id<PIXLeapResponder> responder in self.leapResponders)
+                CGFloat pinchDistance = sqrt((deltax*deltax)+(deltay*deltay)+(deltaz*deltaz));
+                CGFloat pinchDepth = avgPos.z;
+               
+                // if this is mid pinch, call the responder with the deltas
+                if(self.pinchStartWidth > 0)
                 {
-                    if([responder respondsToSelector:@selector(leapPanZoomPosition:andScale:)])
+                    // scale change in depth:
+                    CGFloat distanceChange = pinchDistance / self.pinchStartWidth;
+                    
+                    // make this a bit less sensitive
+                    //distanceChange = ((distanceChange - 1.0) / 10.0)+1.0;
+                    
+                    CGFloat depthChange = pinchDepth - self.pinchStartDepth;
+                    
+                    depthChange = (-depthChange / 80.0) + 1;
+                    
+                    
+                    // 
+                    
+                    
+                    CGFloat scaleDelta =  distanceChange * depthChange;
+                    
+                    NSPoint positionDelta = NSMakePoint(normalizedPoint.x - self.pinchStartPosition.x,
+                                                        normalizedPoint.y - self.pinchStartPosition.y);
+                    
+                    // loop through the responders
+                    for(id<PIXLeapResponder> responder in self.leapResponders)
                     {
-                        [responder leapPanZoomPosition:positionDelta andScale:scaleDelta];
-                        break; // do nothing else after we hit the first responder
+                        if([responder respondsToSelector:@selector(leapPanZoomPosition:andScale:)])
+                        {
+                            [responder leapPanZoomPosition:positionDelta andScale:scaleDelta];
+                            break; // do nothing else after we hit the first responder
+                        }
+                    }
+                    
+                }
+                
+                // this will always be called at the start
+                else
+                {
+                    self.pinchStartWidth = pinchDistance;
+                    self.pinchStartDepth = pinchDepth;
+                    self.pinchStartPosition = normalizedPoint;
+                    
+                    // loop through the responders
+                    for(id<PIXLeapResponder> responder in self.leapResponders)
+                    {
+                        if([responder respondsToSelector:@selector(leapPanZoomStart)])
+                        {
+                            [responder leapPanZoomStart];
+                            break; // do nothing else after we hit the first responder
+                        }
                     }
                 }
                 
             }
             
-            // this will always be called at the start
             else
             {
-                self.pinchStartWidth = pinchDistance;
-                self.pinchStartDepth = pinchDepth;
-                self.pinchStartPosition = normalizedPoint;
-                
-                // loop through the responders
-                for(id<PIXLeapResponder> responder in self.leapResponders)
-                {
-                    if([responder respondsToSelector:@selector(leapPanZoomStart)])
-                    {
-                        [responder leapPanZoomStart];
-                        break; // do nothing else after we hit the first responder
-                    }
-                }
+                // clear out any pinch gesture values
+                self.pinchStartWidth = -1;
+                self.pinchStartDepth = -1;
+                self.pinchStartPosition = NSZeroPoint;
             }
             
         }
-        
-        else
-        {
-            // clear out any pinch gesture values
-            self.pinchStartWidth = -1;
-            self.pinchStartDepth = -1;
-            self.pinchStartPosition = NSZeroPoint;
-        }*/
         
         // handle the single or two finger point
         if([fingers count] < 3)
@@ -323,94 +329,7 @@
     }
     
     
-    
-    // handle palm grab zoom
-    if([fingers count] == 0 && [hands count] == 1 &&
-       [[hands lastObject] sphereRadius] <= 110.0 &&
-       !self.swipeGestureFlag)
-    {
         
-       // DLog(@"Hand Radius: %f", [[hands lastObject] sphereRadius]);
-        
-        normalizedPoint.x = (avgPalmPos.x - self.screenRect.origin.x)/self.screenRect.size.width;
-        normalizedPoint.y = (avgPalmPos.y - self.screenRect.origin.y)/self.screenRect.size.height;
-        
-        if(normalizedPoint.x < 0.0) normalizedPoint.x = 0.0;
-        if(normalizedPoint.y < 0.0) normalizedPoint.y = 0.0;
-        if(normalizedPoint.x > 1.0) normalizedPoint.x = 1.0;
-        if(normalizedPoint.y > 1.0) normalizedPoint.y = 1.0;
-        
-        CGFloat pinchDepth = -avgPalmPos.z;
-        
-        // if this is mid pinch, call the responder with the deltas
-        if(self.pinchStartWidth > 0)
-        {
-
-            
-            CGFloat depthChange = pinchDepth - self.pinchStartDepth;
-            
-            // adjust sensitivity
-            depthChange = (-depthChange / 100.0) + 1;
-            
-            
-            // never allow 0
-            if(depthChange == 0)
-            {
-                depthChange = 0.01;
-            }
-            
-            
-            CGFloat scaleDelta =   depthChange;
-            
-            
-            
-            NSPoint positionDelta = NSMakePoint(normalizedPoint.x - self.pinchStartPosition.x,
-                                                normalizedPoint.y - self.pinchStartPosition.y);
-            
-            // loop through the responders
-            for(id<PIXLeapResponder> responder in self.leapResponders)
-            {
-                if([responder respondsToSelector:@selector(leapPanZoomPosition:andScale:)])
-                {
-                    [responder leapPanZoomPosition:positionDelta andScale:scaleDelta];
-                    //suppressSwipe = YES;
-                    break; // do nothing else after we hit the first responder
-                }
-            }
-            
-        }
-        
-        // this will always be called at the start
-        else
-        {
-            self.pinchStartWidth = 1.0;
-            self.pinchStartDepth = pinchDepth;
-            self.pinchStartPosition = normalizedPoint;
-            
-            // loop through the responders
-            for(id<PIXLeapResponder> responder in self.leapResponders)
-            {
-                if([responder respondsToSelector:@selector(leapPanZoomStart)])
-                {
-                    [responder leapPanZoomStart];
-                    //suppressSwipe = YES;
-                    break; // do nothing else after we hit the first responder
-                }
-            }
-        }
-        
-    }
-    
-    else
-    {
-        // clear out any pinch gesture values
-        self.pinchStartWidth = -1;
-        self.pinchStartDepth = -1;
-        self.pinchStartPosition = NSZeroPoint;
-    }
-  
-    
-    
     NSArray *gestures = [frame gestures:nil];
     for (int g = 0; g < [gestures count]; g++) {
         LeapGesture *gesture = [gestures objectAtIndex:g];
@@ -428,7 +347,7 @@
 //                      circleGesture.id, [PIXLeapInputManager stringForState:gesture.state],
 //                      circleGesture.progress, circleGesture.radius, sweptAngle * LEAP_RAD_TO_DEG);
                 
-                if(circleGesture.progress > 0.7 && circleGesture.radius < 10.0 && circleGesture.state == LEAP_GESTURE_STATE_STOP)
+                if(circleGesture.progress > 0.7 && circleGesture.radius < 10.0 && circleGesture.state == LEAP_GESTURE_STATE_STOP && !suppressSelect)
                 {
                     // loop through the responders
                     for(id<PIXLeapResponder> responder in self.leapResponders)
@@ -452,17 +371,16 @@
                 
                 
                 
-                if (swipeGesture.state == LEAP_GESTURE_STATE_START) {
+                //if (swipeGesture.state == LEAP_GESTURE_STATE_START) {
 
                     
-                    if(!self.swipeGestureFlag && !suppressSwipe)
+                    if(!suppressSwipe)
                     {
-                        [self handleSwipe:(LeapSwipeGesture *)swipeGesture];
-                        
+                        [self handleSwipe:(LeapSwipeGesture *)swipeGesture onFrame:frame];
                     }
                     
                     
-                }
+                //}
                 
                 if(swipeGesture.state == LEAP_GESTURE_STATE_STOP || swipeGesture.state == LEAP_GESTURE_STATE_INVALID)
                 {
@@ -486,7 +404,7 @@
 //                      screenTapGesture.id, [PIXLeapInputManager stringForState:screenTapGesture.state],
 //                      screenTapGesture.position, screenTapGesture.direction);
                 
-                if(screenTapGesture.state == LEAP_GESTURE_STATE_STOP)
+                if(screenTapGesture.state == LEAP_GESTURE_STATE_STOP && !suppressSelect)
                 {
                     // loop through the responders
                     for(id<PIXLeapResponder> responder in self.leapResponders)
@@ -509,21 +427,163 @@
     
     
     
-    
+    if(useFist)
+    {
+        // handle palm grab zoom
+        if([fingers count] == 0 && [hands count] == 1 &&
+           [[hands lastObject] sphereRadius] <= 110.0 &&
+           !self.swipeGestureFlag)
+        {
+            //LeapHand * hand = [hands lastObject];
+            // DLog(@"Hand Radius: %f", [[hands lastObject] sphereRadius]);
+            
+            normalizedPoint.x = (avgPalmPos.x - self.screenRect.origin.x)/self.screenRect.size.width;
+            normalizedPoint.y = (avgPalmPos.y - self.screenRect.origin.y)/self.screenRect.size.height;
+            
+            /*
+             if(normalizedPoint.x < 0.0) normalizedPoint.x = 0.0;
+             if(normalizedPoint.y < 0.0) normalizedPoint.y = 0.0;
+             if(normalizedPoint.x > 1.0) normalizedPoint.x = 1.0;
+             if(normalizedPoint.y > 1.0) normalizedPoint.y = 1.0;
+             */
+            
+            CGFloat pinchDepth = -avgPalmPos.z;
+            
+            // if this is mid pinch, call the responder with the deltas
+            if(self.pinchStartWidth > 0)
+            {
+                
+                CGFloat depthChange = pinchDepth - self.pinchStartDepth;
+                
+                /*
+                 // if we're panning instead of zooming lock the zoom by moving the start depth
+                 LeapVector * palmVelocity = hand.palmVelocity;
+                 if(fabs(palmVelocity.normalized.z) < 0.3å)
+                 {
+                 depthChange = self.pinchLastDepth;
+                 self.pinchStartDepth += (pinchDepth - self.pinchStartDepth) - self.pinchLastDepth;
+                 
+                 }
+                 
+                 else
+                 {
+                 self.pinchLastDepth = depthChange;
+                 }
+                 */
+                
+                
+                
+                // adjust sensitivity
+                depthChange = (-depthChange / 50.0) + 1;
+                
+                
+                // never allow 0
+                if(depthChange == 0)
+                {
+                    depthChange = 0.01;
+                }
+                
+                
+                CGFloat scaleDelta =   depthChange;
+                
+                
+                
+                NSPoint positionDelta = NSMakePoint(normalizedPoint.x - self.pinchStartPosition.x,
+                                                    normalizedPoint.y - self.pinchStartPosition.y);
+                
+                // loop through the responders
+                for(id<PIXLeapResponder> responder in self.leapResponders)
+                {
+                    if([responder respondsToSelector:@selector(leapPanZoomPosition:andScale:)])
+                    {
+                        [responder leapPanZoomPosition:positionDelta andScale:scaleDelta];
+                        //suppressSwipe = YES;
+                        //suppressSelect = YES;
+                        break; // do nothing else after we hit the first responder
+                    }
+                }
+                
+            }
+            
+            // this will initiate a grab
+            else if(avgPalmPos.z < 50) // only start grabs is
+            {
+                self.pinchStartWidth = 1.0;
+                self.pinchStartDepth = pinchDepth;
+                self.pinchStartPosition = normalizedPoint;
+                
+                // loop through the responders
+                for(id<PIXLeapResponder> responder in self.leapResponders)
+                {
+                    if([responder respondsToSelector:@selector(leapPanZoomStart)])
+                    {
+                        [responder leapPanZoomStart];
+                        //suppressSwipe = YES;
+                        break; // do nothing else after we hit the first responder
+                    }
+                }
+            }
+            
+        }
+        
+        else
+        {
+            // clear out any pinch gesture values
+            self.pinchStartWidth = -1;
+            self.pinchStartDepth = -1;
+            self.pinchStartPosition = NSZeroPoint;
+        }
+        
+    }
+
 
 }
 
--(void)handleSwipe:(LeapSwipeGesture *)swipeGesture
+-(void)handleSwipe:(LeapSwipeGesture *)swipeGesture onFrame:(LeapFrame *)frame
 {
+    
+    LeapVector *avgFingerDirection = [[LeapVector alloc] init];
+    int vectorCount = 0;
+    
+    
+    for(LeapHand * hand in [frame hands])
+    {
+        for(LeapFinger * finger in [hand fingers])
+        {
+            avgFingerDirection = [avgFingerDirection plus:finger.direction.normalized];
+            vectorCount ++;
+        }
+    }
+    
+    [avgFingerDirection divide:vectorCount];
+    
+    float angle = [avgFingerDirection angleTo:swipeGesture.direction.normalized];
+    
+    if(angle < 1.0 || angle > 2.14)
+    {
+        DLog(@"Angle To: %f", angle);
+        return;
+        
+        
+    }
+    
+    
+    
+    if(self.swipeGestureFlag == YES) return; // delay between swipes
+    
     LeapVector * direction = swipeGesture.direction;
     direction = direction.normalized;
     
+    DLog(@"Swipe Velocity: %f", swipeGesture.speed)
+    
     BOOL didswipe = NO;
     
-    //if(fabs(direction.z) > 0.25) return;
+    //if(swipeGesture.speed < 2000.0) return;
+    
+    //if(direction.z > 0) return;
     
     // figure out the gesture direction
-    if(direction.y > 0.65) // this is the up direction
+    if(direction.y > 0.7) // this is the up direction
     {
         // loop through the responders
         for(id<PIXLeapResponder> responder in self.leapResponders)
@@ -588,7 +648,7 @@
     {
         self.swipeGestureFlag = YES;
         
-        double delayInSeconds = 0.7;
+        double delayInSeconds = 0.5;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             self.swipeGestureFlag = NO;

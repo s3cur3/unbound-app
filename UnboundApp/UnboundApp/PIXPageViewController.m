@@ -596,7 +596,17 @@
 {
     if(![self.view.window isKeyWindow]) return;
     
-    [self.pageController navigateBack:nil];
+    if(self.pageController.selectedIndex-1 < [self.pagerData count])
+    {
+        [self.pageController navigateBack:nil];
+    }
+    
+    else
+    {
+        [[NSSound soundNamed:@"Ping"] play];
+    }
+    
+    
     [self restartNextSlideIfNeeded];
 }
 
@@ -604,7 +614,16 @@
 {
     if(![self.view.window isKeyWindow]) return;
     
-    [self.pageController navigateForward:nil];
+    if(self.pageController.selectedIndex+1 < [self.pagerData count])
+    {
+        [self.pageController navigateForward:nil];
+    }
+    
+    else
+    {
+        [[NSSound soundNamed:@"Ping"] play];
+    }
+    
     [self restartNextSlideIfNeeded];
 }
 
@@ -663,6 +682,11 @@
     {
         [self.pageController setSelectedIndex:currentIndex];
     }
+    
+    else
+    {
+        [[NSSound soundNamed:@"Ping"] play];
+    }
     //[self.pageController navigateForward:nil];
     
     [self restartNextSlideIfNeeded];
@@ -674,8 +698,13 @@
     currentIndex--;
     
     if(currentIndex < [self.pagerData count])
-    {
+    {        
         [self.pageController setSelectedIndex:currentIndex];
+    }
+    
+    else
+    {
+        [[NSSound soundNamed:@"Ping"] play];
     }
     
     //[self.pageController navigateBack:nil];

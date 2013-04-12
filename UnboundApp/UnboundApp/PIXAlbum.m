@@ -578,10 +578,6 @@ static NSString *const kItemsKey = @"photos";
     {
         [self writeUnboundFile:unboundMetaDictionary];
     }
-    
-    [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
-    
-    
 }
 
 -(void) setUnboundFileCaptionForPhoto:(PIXPhoto *)photo

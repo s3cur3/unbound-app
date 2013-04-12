@@ -460,6 +460,13 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 DLog(@"There was a problem trying to delete old objects");
             }
             
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
+                
+            });
+            
+            
             
             self.fullScanProgress = 1.0;
             

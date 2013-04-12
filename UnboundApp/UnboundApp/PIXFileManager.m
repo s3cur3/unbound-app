@@ -334,7 +334,7 @@ typedef NSUInteger PIXOverwriteStrategy;
                     [anAlbum flush];
                 }
                 
-                [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] save:nil];
+                [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
                 
@@ -386,7 +386,7 @@ typedef NSUInteger PIXOverwriteStrategy;
                 [anAlbum flush];
             }
 
-            [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] save:nil];
+            [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
             
@@ -842,7 +842,7 @@ typedef NSUInteger PIXOverwriteStrategy;
 //                    [anAlbum flush];
 //                }
                 
-                [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] save:nil];
+                [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
                 
@@ -877,7 +877,7 @@ typedef NSUInteger PIXOverwriteStrategy;
                 return;
             }
             
-            [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] save:nil];
+            [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
             
