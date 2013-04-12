@@ -559,22 +559,24 @@
     
     float angle = [avgFingerDirection angleTo:swipeGesture.direction.normalized];
     
-    if(angle < 1.0 || angle > 2.14)
+    // this is 
+    if(angle < 1.4 || angle > 1.70)
     {
-        DLog(@"Angle To: %f", angle);
+        
         return;
         
         
     }
-    
-    
+
     
     if(self.swipeGestureFlag == YES) return; // delay between swipes
+    
+    DLog(@"Angle To: %f", angle);
     
     LeapVector * direction = swipeGesture.direction;
     direction = direction.normalized;
     
-    DLog(@"Swipe Velocity: %f", swipeGesture.speed)
+    //DLog(@"Swipe Velocity: %f", swipeGesture.speed)
     
     BOOL didswipe = NO;
     

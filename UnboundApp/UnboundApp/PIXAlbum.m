@@ -350,6 +350,8 @@ static NSString *const kItemsKey = @"photos";
             
             [self setPhotos:self.photos updateCoverImage:YES];
             [self flush];
+            
+            [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
  
         });
         
