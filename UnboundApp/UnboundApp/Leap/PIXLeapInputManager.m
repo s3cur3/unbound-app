@@ -20,6 +20,7 @@
 @property NSRect screenRect;
 
 @property BOOL swipeGestureFlag;
+@property BOOL selectGestureFlag;
 
 @property CGFloat pinchStartWidth;
 @property CGFloat pinchStartDepth;
@@ -345,7 +346,7 @@
                 LeapCircleGesture *circleGesture = (LeapCircleGesture *)gesture;
 
                 
-                if(circleGesture.progress > 0.7 && circleGesture.radius < 10.0 && !suppressSelect)
+                if(circleGesture.progress > 0.7 && circleGesture.radius < 10.0 && !suppressSelect && !self.selectGestureFlag)
                 {
                     // loop through the responders
                     for(id<PIXLeapResponder> responder in self.leapResponders)
@@ -356,6 +357,15 @@
                             break; // no need to keep going down the responder chain
                         }
                     }
+                    
+                    // add a delay so this only fires once every half second
+                    self.selectGestureFlag = YES;
+                    
+                    double delayInSeconds = 1.0;
+                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                        self.selectGestureFlag = NO;
+                    });
                 }
                 
                 return;
@@ -402,7 +412,7 @@
 //                      screenTapGesture.id, [PIXLeapInputManager stringForState:screenTapGesture.state],
 //                      screenTapGesture.position, screenTapGesture.direction);
                 
-                if(screenTapGesture.state == LEAP_GESTURE_STATE_STOP && !suppressSelect)
+                if(screenTapGesture.state == LEAP_GESTURE_STATE_STOP && !suppressSelect && !self.selectGestureFlag)
                 {
                     // loop through the responders
                     for(id<PIXLeapResponder> responder in self.leapResponders)
@@ -413,6 +423,15 @@
                             break; // no need to keep going down the responder chain
                         }
                     }
+                    
+                    // add a delay so this only fires once every half second
+                    self.selectGestureFlag = YES;
+                    
+                    double delayInSeconds = 1.0;
+                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                        self.selectGestureFlag = NO;
+                    });
                 }
                 
                 break;
