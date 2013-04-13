@@ -216,7 +216,7 @@
     NSString * gridTitle = nil;
     
     // if we've got more than one photo then display the whole date range
-    if([self.items count] > 2)
+    if([self.items count] >= 2)
     {
         NSDate * startDate = [self.album startDate];
         NSDate * endDate = [self.album albumDate];
