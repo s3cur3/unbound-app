@@ -117,7 +117,7 @@ static NSString *const kItemsKey = @"photos";
 {
     for(PIXPhoto * stackPhoto in self.stackPhotos)
     {
-        stackPhoto.cancelThumbnailLoadOperation = YES;
+        [stackPhoto cancelThumbnailLoading];
     }
 }
 

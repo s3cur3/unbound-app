@@ -67,7 +67,6 @@
 							</set>
 							<string key="NSFrame">{{0, -5}, {507, 303}}</string>
 							<reference key="NSSuperview" ref="1006"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="389537172"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
@@ -96,7 +95,6 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{17, 214}, {163, 24}}</string>
 									<reference key="NSSuperview" ref="389537172"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="605816471"/>
 									<string key="NSReuseIdentifierKey">_NS:1535</string>
 									<bool key="NSEnabled">YES</bool>
@@ -137,7 +135,6 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{17, 76}, {225, 138}}</string>
 									<reference key="NSSuperview" ref="389537172"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="502223253"/>
 									<string key="NSReuseIdentifierKey">_NS:1535</string>
 									<bool key="NSEnabled">YES</bool>
@@ -164,7 +161,6 @@ byB5b3Uga2VlcCB5b3VyIHBob3Rvcz8</string>
 									<array class="NSMutableArray" key="NSSubviews"/>
 									<string key="NSFrame">{{20, 18}, {219, 25}}</string>
 									<reference key="NSSuperview" ref="389537172"/>
-									<reference key="NSWindow"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="714307014">
@@ -193,7 +189,6 @@ byB5b3Uga2VlcCB5b3VyIHBob3Rvcz8</string>
 									<array class="NSMutableArray" key="NSSubviews"/>
 									<string key="NSFrame">{{20, 48}, {219, 25}}</string>
 									<reference key="NSSuperview" ref="389537172"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="880740699"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
@@ -216,7 +211,6 @@ byB5b3Uga2VlcCB5b3VyIHBob3Rvcz8</string>
 							</array>
 							<string key="NSFrame">{{222, 20}, {259, 258}}</string>
 							<reference key="NSSuperview" ref="1006"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="813523663"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<string key="NSClassName">PIXRoundRectView</string>
@@ -224,7 +218,6 @@ byB5b3Uga2VlcCB5b3VyIHBob3Rvcz8</string>
 					</array>
 					<string key="NSFrameSize">{501, 298}</string>
 					<reference key="NSSuperview"/>
-					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="898497235"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1680, 1028}}</string>

@@ -151,6 +151,8 @@ extern NSString *CNGridViewDeSelectAllItemsNotification;
 
 - (void)drawRect:(NSRect)rect
 {
+    NSDisableScreenUpdates();
+    
     NSRect dirtyRect = self.bounds;
 
     // decide which layout we have to use
@@ -211,6 +213,7 @@ extern NSString *CNGridViewDeSelectAllItemsNotification;
         [self.itemTitle drawInRect:textRect withAttributes:self.currentLayout.itemTitleTextAttributes];
     }
 
+    NSEnableScreenUpdates();
 }
 
 

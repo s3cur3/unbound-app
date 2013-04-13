@@ -18,7 +18,6 @@
 @interface PIXAlbumGridViewItem() <NSTextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet NSTextField *mainLabel;
-@property (strong, nonatomic) IBOutlet NSTextField * detailLabel;
 
 @property (strong, nonatomic) NSImage * albumThumb;
 
@@ -183,6 +182,7 @@
         
         if (_album != nil)
         {
+            [_album cancelThumbnailLoading];
             [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumStackDidChangeNotification object:_album];
         }
 
@@ -548,18 +548,18 @@
 
 - (void)prepareForReuse
 {
-    [super prepareForReuse];
-    
     if (self.album )  {
-        [self.album cancelThumbnailLoading];
         
+        [self.album cancelThumbnailLoading];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumStackDidChangeNotification object:self.album];
-        _album = nil;
+        self.album = nil;
     }
     
     self.stackThumb1 = [NSImage imageNamed:@"temp"];
     self.stackThumb2 = [NSImage imageNamed:@"temp-portrait"];
     self.stackThumb3 = [NSImage imageNamed:@"temp"];
+    
+    [super prepareForReuse];
 
 }
 

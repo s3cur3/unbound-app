@@ -26,6 +26,9 @@
 @property CGFloat pinchLastDepth;
 @property NSPoint pinchStartPosition;
 
+@property NSPoint smoothedNormalizedPalmPoint;
+@property CGFloat smoothedPalmDepth;
+
 @property (strong) NSTimer * connectionTimer;
 
 @end
@@ -96,12 +99,16 @@
 - (void)onConnect:(NSNotification *)notification;
 {
     DLog(@"Leap Connected");
+    
     LeapController *aController = (LeapController *)[notification object];
     [aController enableGesture:LEAP_GESTURE_TYPE_CIRCLE enable:YES];
     [aController enableGesture:LEAP_GESTURE_TYPE_KEY_TAP enable:YES];
     [aController enableGesture:LEAP_GESTURE_TYPE_SCREEN_TAP enable:YES];
     [aController enableGesture:LEAP_GESTURE_TYPE_SWIPE enable:YES];
     
+    //[[aController config] setFloat:@"Gesture.Swipe.MinLength" value:150];
+    [[aController config] setFloat:@"Gesture.Swipe.MinVelocity" value:2000];
+    [[aController config] save];
     
     NSWindow * mainwindow = [[[PIXAppDelegate sharedAppDelegate] mainWindowController] window];
     
@@ -420,16 +427,23 @@
     
     if(useFist)
     {
+        
         // handle palm grab zoom
         if([fingers count] == 0 && [hands count] == 1 &&
-           [[hands lastObject] sphereRadius] <= 110.0 &&
+           //[[hands lastObject] sphereRadius] <= 110.0 &&
            !self.swipeGestureFlag)
         {
             //LeapHand * hand = [hands lastObject];
-            // DLog(@"Hand Radius: %f", [[hands lastObject] sphereRadius]);
+            //if([[[hands lastObject] palmVelocity] magnitude] > 50.0)
+            //{
+            //    DLog(@"Palm Velocity: %f", [[[hands lastObject] palmVelocity] magnitude]);
+            //}
             
             normalizedPoint.x = (avgPalmPos.x - self.screenRect.origin.x)/self.screenRect.size.width;
             normalizedPoint.y = (avgPalmPos.y - self.screenRect.origin.y)/self.screenRect.size.height;
+            
+            self.smoothedNormalizedPalmPoint = NSMakePoint((self.smoothedNormalizedPalmPoint.x * 0.8) + ((normalizedPoint.x) * 0.2),
+                                                           (self.smoothedNormalizedPalmPoint.y * 0.8) + ((normalizedPoint.y) * 0.2));
             
             /*
              if(normalizedPoint.x < 0.0) normalizedPoint.x = 0.0;
@@ -438,7 +452,9 @@
              if(normalizedPoint.y > 1.0) normalizedPoint.y = 1.0;
              */
             
-            CGFloat pinchDepth = -avgPalmPos.z;
+            
+            CGFloat pinchDepth = (self.smoothedPalmDepth * 0.8) + ((-avgPalmPos.z) * 0.2);
+            self.smoothedPalmDepth = pinchDepth;
             
             // if this is mid pinch, call the responder with the deltas
             if(self.pinchStartWidth > 0)
@@ -497,10 +513,14 @@
             }
             
             // this will initiate a grab
-            else if(avgPalmPos.z < 50) // only start grabs is
+            else if(avgPalmPos.z < 100 // only start grab if it's well into the view area
+                    //&& [[hands lastObject] sphereRadius] <= 100.0
+                    && [[[hands lastObject] palmVelocity] magnitude] < 100)
             {
+                self.smoothedPalmDepth = -avgPalmPos.z;
+                self.smoothedNormalizedPalmPoint = normalizedPoint;
                 self.pinchStartWidth = 1.0;
-                self.pinchStartDepth = pinchDepth;
+                self.pinchStartDepth = -avgPalmPos.z;
                 self.pinchStartPosition = normalizedPoint;
                 
                 // loop through the responders
@@ -551,7 +571,7 @@
     float angle = [avgFingerDirection angleTo:swipeGesture.direction.normalized];
     
     // this is the key to easy swiping. Make sure the fingers are generally pointed at a right angle to the direction of the swipe.
-    if(angle < 1.4 || angle > 1.70) return;
+    //if(angle < 1.4 || angle > 1.74) return;
     
     if(self.swipeGestureFlag == YES) return; // delay between swipes
     

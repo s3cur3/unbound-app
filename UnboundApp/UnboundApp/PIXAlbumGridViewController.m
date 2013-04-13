@@ -60,7 +60,7 @@
         self.selectedItemsName = @"album";
         
         // don't make the 
-        [self.view setWantsLayer:NO];
+        //[self.view setWantsLayer:NO];
         
     }
     
@@ -203,7 +203,7 @@
 
 -(void)setupToolbar
 {
-    NSArray * items = @[self.navigationViewController.activityIndicator, self.navigationViewController.middleSpacer, self.newAlbumButton, self.searchBar, self.sortButton];
+    NSArray * items = @[/*self.navigationViewController.activityIndicator, */self.navigationViewController.middleSpacer, self.newAlbumButton, self.searchBar, self.sortButton];
     
     [self.navigationViewController setToolbarItems:items];
     
@@ -962,12 +962,19 @@
 
 -(void)albumsChanged:(NSNotification *)note
 {
-    self.albums = nil;
+    // retain the old set of albums so they won't be released on change
+    NSArray * oldAlbums = self.albums;
+    
+    // set the new one
+    self.albums = [PIXAlbum sortedAlbums];
     //[self.gridView reloadData]; // the updateSearch call will reload data always so no need to call this
     [self updateGridTitle];
     
     self.lastSearch = nil; // clear this out because we need to do a new search when all the albums change
     [self updateSearch];
+    
+    // this does nothing and is just to keep the old albums retained during the execution of this method
+    [oldAlbums count];
 }
 
 -(NSArray *)albums

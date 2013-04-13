@@ -45,13 +45,15 @@
             self.isWorking = YES;
         }
     });
-    
-
 }
 
 -(void)decrementWorking
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
+    // deley this slightly so the spinner doens't flash constanly
+    double delayInSeconds = 0.3;
+    
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         self.isWorkingCounter--;
         
         if(self.isWorkingCounter <= 0)
@@ -350,7 +352,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
     // set this to a high priority queue so it doens't get blocked by the thumbs loading
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         
-        
+        dispatch_group_t deletionWaitGroup = dispatch_group_create();
         
         if(self.scansCancelledFlag)
         {
@@ -435,7 +437,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 
                 // start parsing photos we've found (this will dispatch to another bg thread)
                 // pass nil as the deletionblock because we're not ready to delete any files yet
-                [self parsePhotos:photoFiles withDeletionBlock:nil];
+                // use a dispatch group for this so the final delete can wait on these finishing
+                [self parsePhotos:photoFiles withDeletionBlock:nil andGroup:deletionWaitGroup];
                 
                 // clear out the list since these have been parsed (don't removeAllObjects because this will mutate the array we sent to the parser)
                 photoFiles = [NSMutableArray new];
@@ -448,6 +451,9 @@ NSDictionary * dictionaryForURL(NSURL * url)
         
         // start parsing photos we've found (this will dispatch to another bg thread)
         [self parsePhotos:photoFiles withDeletionBlock:^(NSManagedObjectContext *context) {
+            
+            // make sure all other parsePhotos dispatches are done running before executing the deletes
+            dispatch_group_wait(deletionWaitGroup, DISPATCH_TIME_FOREVER);
             
             // go through and delete any photos/albums that weren't updated and should have been
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dateLastUpdated == NULL || dateLastUpdated < %@", startScanTime, nil];
@@ -471,7 +477,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
             self.fullScanProgress = 1.0;
             
             
-        }];
+        } andGroup:NULL];
         
         [self decrementWorking];
         
@@ -642,7 +648,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 }
             }
             
-        }];
+        } andGroup:NULL];
         
         if(recursionMode == PIXFileParserRecursionSemi)
         {
@@ -717,7 +723,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
 #pragma mark - Methods for Parsing into Core Data
 
 
--(void)parsePhotos:(NSArray *)photos withDeletionBlock:(void(^)(NSManagedObjectContext * context))deletionBlock
+-(void)parsePhotos:(NSArray *)photos withDeletionBlock:(void(^)(NSManagedObjectContext * context))deletionBlock andGroup:(dispatch_group_t)dispatchGroup
 {
     self.fullScanProgress = (float)self.fullScannProgressCurrent / (float)self.fullScannProgressTotal;
     
@@ -726,8 +732,10 @@ NSDictionary * dictionaryForURL(NSURL * url)
     
     [self incrementWorking];
     
-    //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
-    dispatch_async([self sharedParsingQueue], ^(void) {
+    void (^dispatchBlock)(void) = ^(void) {
+    
+    //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
+    //dispatch_async([self sharedParsingQueue], ^(void) {
         
         // create a thread-safe context (may want to make this a child context down the road)
         NSManagedObjectContext *context = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];
@@ -886,8 +894,17 @@ NSDictionary * dictionaryForURL(NSURL * url)
         
         [self decrementWorking];
         
-    });
+    };
     
+    if(dispatchGroup == NULL)
+    {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), dispatchBlock);
+    }
+    
+    else
+    {
+        dispatch_group_async(dispatchGroup, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), dispatchBlock);
+    }
     
 }
 

@@ -127,7 +127,7 @@
     
     float magnification = self.startPinchZoom + (scale - 1.0);
     
-    //magnification = magnification * 4;
+    magnification = magnification * 0.5;
     
     if(magnification < 0.0) magnification = 0.0;
     if(magnification > 1.0) magnification = 1.0;

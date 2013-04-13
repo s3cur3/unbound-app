@@ -19,28 +19,20 @@
 %include "stdint.i"
 %include "attribute.i"
 
+################################################################################
+# Ignore constructors for internal use only                                    #
+################################################################################
+
 %ignore Leap::Pointable::Pointable(PointableImplementation*);
 %ignore Leap::Pointable::Pointable(FingerImplementation*);
 %ignore Leap::Pointable::Pointable(ToolImplementation*);
 %ignore Leap::Finger::Finger(FingerImplementation*);
 %ignore Leap::Tool::Tool(ToolImplementation*);
 %ignore Leap::Hand::Hand(HandImplementation*);
+%ignore Leap::Gesture::Gesture(GestureImplementation*);
+%ignore Leap::Screen::Screen(ScreenImplementation*);
 %ignore Leap::Frame::Frame(FrameImplementation*);
-%ignore Leap::Controller(ControllerImplementation*);
-%ignore Leap::Screen(ScreenImplementation*);
-%ignore Leap::ConstListIterator::operator++;
-%ignore Leap::Interface::operator=;
-
-# Due to issues with the SWIG generated code for these functions, remove them for now
-%ignore Leap::Config::getInt64Array(const std::string&) const;
-%ignore Leap::Config::getUInt64Array(const std::string&) const;
-
-%template(BoolArray) std::vector<bool>;
-%template(Int32Array) std::vector<int32_t>;
-%template(UInt32Array) std::vector<uint32_t>;
-%template(FloatArray) std::vector<float>;
-%template(DoubleArray) std::vector<double>;
-%template(StringArray) std::vector<std::string>;
+%ignore Leap::Controller::Controller(ControllerImplementation*);
 
 #####################################################################################
 # Set Attributes (done after functions are uppercased, but before vars are lowered) #
@@ -141,28 +133,49 @@
 %constattrib( Leap::KeyTapGesture, float, progress );
 %leapattrib( Leap::KeyTapGesture, Pointable, pointable );
 
-
+# Count is made a const attribute in C# but renamed to __len__ in Python
 #if SWIGCSHARP
 %constattrib( Leap::PointableList, int, count );
 %constattrib( Leap::FingerList, int, count );
 %constattrib( Leap::ToolList, int, count );
-%constattrib( Leap::GestureList, int, count );
 %constattrib( Leap::HandList, int, count );
+%constattrib( Leap::GestureList, int, count );
 %constattrib( Leap::ScreenList, int, count );
 #endif
+
+%constattrib( Leap::PointableList, bool, isEmpty );
+%constattrib( Leap::FingerList, bool, isEmpty );
+%constattrib( Leap::ToolList, bool, isEmpty );
+%constattrib( Leap::HandList, bool, isEmpty );
+%constattrib( Leap::GestureList, bool, isEmpty );
+%constattrib( Leap::ScreenList, bool, isEmpty );
+
 %constattrib( Leap::PointableList, bool, empty );
 %constattrib( Leap::FingerList, bool, empty );
 %constattrib( Leap::ToolList, bool, empty );
-%constattrib( Leap::GestureList, bool, empty );
 %constattrib( Leap::HandList, bool, empty );
+%constattrib( Leap::GestureList, bool, empty );
 %constattrib( Leap::ScreenList, bool, empty );
+
+%leapattrib( Leap::PointableList, Pointable, leftmost );
+%leapattrib( Leap::PointableList, Pointable, rightmost );
+%leapattrib( Leap::PointableList, Pointable, frontmost );
+%leapattrib( Leap::FingerList, Finger, leftmost );
+%leapattrib( Leap::FingerList, Finger, rightmost );
+%leapattrib( Leap::FingerList, Finger, frontmost );
+%leapattrib( Leap::ToolList, Tool, leftmost );
+%leapattrib( Leap::ToolList, Tool, rightmost );
+%leapattrib( Leap::ToolList, Tool, frontmost );
+%leapattrib( Leap::HandList, Hand, leftmost );
+%leapattrib( Leap::HandList, Hand, rightmost );
+%leapattrib( Leap::HandList, Hand, frontmost );
 
 %constattrib( Leap::Frame, int64_t, id );
 %constattrib( Leap::Frame, int64_t, timestamp );
-%leapattrib( Leap::Frame, HandList, hands );
 %leapattrib( Leap::Frame, PointableList, pointables );
 %leapattrib( Leap::Frame, FingerList, fingers );
 %leapattrib( Leap::Frame, ToolList, tools );
+%leapattrib( Leap::Frame, HandList, hands );
 %constattrib( Leap::Frame, bool, isValid );
 
 %constattrib( Leap::Screen, int32_t, id );
@@ -180,10 +193,10 @@
 %staticattrib( Leap::Pointable, static const Pointable&, invalid);
 %staticattrib( Leap::Finger, static const Finger&, invalid);
 %staticattrib( Leap::Tool, static const Tool&, invalid);
-%staticattrib( Leap::Gesture, static const Gesture&, invalid);
 %staticattrib( Leap::Hand, static const Hand&, invalid);
-%staticattrib( Leap::Frame, static const Frame&, invalid);
+%staticattrib( Leap::Gesture, static const Gesture&, invalid);
 %staticattrib( Leap::Screen, static const Screen&, invalid );
+%staticattrib( Leap::Frame, static const Frame&, invalid);
 
 %constattrib( Leap::Vector, float, magnitude );
 %constattrib( Leap::Vector, float, magnitudeSquared );
@@ -193,7 +206,9 @@
 %leapattrib( Leap::Vector, Vector, normalized );
 
 %constattrib( Leap::Controller, bool, isConnected );
+%constattrib( Leap::Controller, bool, hasFocus );
 %leapattrib( Leap::Controller, Config, config );
+%leapattrib( Leap::Controller, ScreenList, locatedScreens );
 %leapattrib( Leap::Controller, ScreenList, calibratedScreens );
 
 %staticattrib( Leap::Vector, static const Vector&, zero );
@@ -349,6 +364,7 @@ extern "C" BOOL WINAPI DllMain(
 %ignore Leap::Vector::toFloatPointer;
 %ignore Leap::Matrix::toArray3x3;
 %ignore Leap::Matrix::toArray4x4;
+%ignore Leap::FloatArray;
 
 %rename(Equals) *::operator ==;
 %rename(_operator_add) *::operator +;
@@ -427,9 +443,17 @@ extern "C" BOOL WINAPI DllMain(
   }
 %}
 
-%ignore Leap::FloatArray;
-
 #elif SWIGJAVA
+
+%ignore *::operator+=;
+%ignore *::operator-=;
+%ignore *::operator*=;
+%ignore *::operator/=;
+%ignore *::operator!=;
+%ignore Leap::Vector::toFloatPointer;
+%ignore Leap::Matrix::toArray3x3;
+%ignore Leap::Matrix::toArray4x4;
+%ignore Leap::FloatArray;
 
 %rename(plus) *::operator+;
 %rename(minus) *::operator-;
@@ -439,15 +463,6 @@ extern "C" BOOL WINAPI DllMain(
 %rename(get) *::operator [];
 %rename(equals) *::operator==;
 
-%ignore Leap::Vector::toFloatPointer;
-%ignore Leap::Matrix::toArray3x3;
-%ignore Leap::Matrix::toArray4x4;
-%ignore *::operator+=;
-%ignore *::operator-=;
-%ignore *::operator*=;
-%ignore *::operator/=;
-%ignore *::operator!=;
-%ignore Leap::FloatArray;
 %typemap(javacode) Leap::Vector
 %{
   public float[] toFloatArray() {
@@ -492,11 +507,15 @@ extern "C" BOOL WINAPI DllMain(
 
 #elif SWIGPYTHON
 
-%rename(__getitem__) *::operator [];
+%ignore Leap::Interface::operator=;
+%ignore Leap::ConstListIterator::operator++;
 %ignore Leap::Vector::toFloatPointer;
 %ignore Leap::Matrix::toArray3x3;
 %ignore Leap::Matrix::toArray4x4;
 %ignore Leap::FloatArray;
+
+%rename(__getitem__) *::operator [];
+
 %extend Leap::Vector {
 %pythoncode {
   def to_float_array(self): return [self.x, self.y, self.z]
@@ -638,64 +657,42 @@ extern "C" BOOL WINAPI DllMain(
 
 #if SWIGPYTHON
 
+// Use dynamic typing to get or set any type of config value with one function
 %extend Leap::Config {
 %pythoncode {
   def get(self, *args):
     type = LeapPython.Config_type(self, *args)
-    if LeapPython.Config_is_array(self, *args):
-      if type == LeapPython.Config_TYPE_BOOLEAN:
-        return LeapPython.Config_get_bool_array(self, *args)
-      elif type == LeapPython.Config_TYPE_INT32:
-        return LeapPython.Config_get_int_32array(self, *args)
-      elif type == LeapPython.Config_TYPE_INT64:
-        return LeapPython.Config_get_int_32array(self, *args)
-      elif type == LeapPython.Config_TYPE_UINT32:
-        return LeapPython.Config_get_uint_32array(self, *args)
-      elif type == LeapPython.Config_TYPE_UINT64:
-        return LeapPython.Config_get_uint_32array(self, *args)
-      elif type == LeapPython.Config_TYPE_FLOAT:
-        return LeapPython.Config_get_float_array(self, *args)
-      elif type == LeapPython.Config_TYPE_DOUBLE:
-        return LeapPython.Config_get_double_array(self, *args)
-      elif type == LeapPython.Config_TYPE_STRING:
-        return LeapPython.Config_get_string_array(self, *args)
-    else:
-      if type == LeapPython.Config_TYPE_BOOLEAN:
-        return LeapPython.Config_get_bool(self, *args)
-      elif type == LeapPython.Config_TYPE_INT32:
-        return LeapPython.Config_get_int_32(self, *args)
-      elif type == LeapPython.Config_TYPE_INT64:
-        return LeapPython.Config_get_int_64(self, *args)
-      elif type == LeapPython.Config_TYPE_UINT32:
-        return LeapPython.Config_get_uint_32(self, *args)
-      elif type == LeapPython.Config_TYPE_UINT64:
-        return LeapPython.Config_get_uint_64(self, *args)
-      elif type == LeapPython.Config_TYPE_FLOAT:
-        return LeapPython.Config_get_float(self, *args)
-      elif type == LeapPython.Config_TYPE_DOUBLE:
-        return LeapPython.Config_get_double(self, *args)
-      elif type == LeapPython.Config_TYPE_STRING:
-        return LeapPython.Config_get_string(self, *args)
+    if type == LeapPython.Config_TYPE_BOOLEAN:
+      return LeapPython.Config_get_bool(self, *args)
+    elif type == LeapPython.Config_TYPE_INT32:
+      return LeapPython.Config_get_int_32(self, *args)
+    elif type == LeapPython.Config_TYPE_FLOAT:
+      return LeapPython.Config_get_float(self, *args)
+    elif type == LeapPython.Config_TYPE_STRING:
+      return LeapPython.Config_get_string(self, *args)
     return None
+  def set(self, *args):
+    type = LeapPython.Config_type(self, *args[:-1])  # Do not pass value through
+    if type == LeapPython.Config_TYPE_BOOLEAN:
+      return LeapPython.Config_set_bool(self, *args)
+    elif type == LeapPython.Config_TYPE_INT32:
+      return LeapPython.Config_set_int_32(self, *args)
+    elif type == LeapPython.Config_TYPE_FLOAT:
+      return LeapPython.Config_set_float(self, *args)
+    elif type == LeapPython.Config_TYPE_STRING:
+      return LeapPython.Config_set_string(self, *args)
+    return False
 %}}
+// Ignore methods that are unnecessary due to get and set functions defined above
 %feature("shadow") Leap::Config::type(const std::string& key) const %{%}
-%feature("shadow") Leap::Config::isArray(const std::string& key) const %{%}
-%feature("shadow") Leap::Config::getBool(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getInt32(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getInt64(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getUInt32(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getUInt64(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getFloat(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getDouble(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getString(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getBoolArray(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getInt32Array(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getInt64Array(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getUInt32Array(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getUInt64Array(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getFloatArray(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getDoubleArray(const std::string&) const %{%}
-%feature("shadow") Leap::Config::getStringArray(const std::string&) const %{%}
+%feature("shadow") Leap::Config::getBool(const std::string& key) const %{%}
+%feature("shadow") Leap::Config::setBool(const std::string& key, bool value) %{%}
+%feature("shadow") Leap::Config::getInt32(const std::string& key) const %{%}
+%feature("shadow") Leap::Config::setInt32(const std::string& key, int32_t value) %{%}
+%feature("shadow") Leap::Config::getFloat(const std::string& key) const %{%}
+%feature("shadow") Leap::Config::setFloat(const std::string& key, float value) %{%}
+%feature("shadow") Leap::Config::getString(const std::string& key) const %{%}
+%feature("shadow") Leap::Config::setString(const std::string& key, const std::string& value) %{%}
 
 #endif
 

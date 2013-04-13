@@ -138,6 +138,7 @@
 		8C72FE6E1713EAAA00AA72B0 /* greendot.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE6A1713EAAA00AA72B0 /* greendot.png */; };
 		8C72FE6F1713EAAA00AA72B0 /* greendot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE6B1713EAAA00AA72B0 /* greendot@2x.png */; };
 		8C7ABBBE16C42A3D00784BDA /* PIXGradientBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7ABBBD16C42A3D00784BDA /* PIXGradientBarView.m */; };
+		8C82A85F1718E28B009DD803 /* MainMenu-original.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C82A85D1718E28A009DD803 /* MainMenu-original.xib */; };
 		8C85AC1916FA98470021ADB4 /* PIXShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C85AC1816FA98470021ADB4 /* PIXShareManager.m */; };
 		8C8EE92B16C46AB800F16C49 /* PIXAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE92A16C46AB800F16C49 /* PIXAlbum.m */; };
 		8C8EE93416CACA7900F16C49 /* ArchDirectoryObservationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE92F16CACA7900F16C49 /* ArchDirectoryObservationCenter.m */; };
@@ -398,6 +399,7 @@
 		8C72FE6B1713EAAA00AA72B0 /* greendot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greendot@2x.png"; sourceTree = "<group>"; };
 		8C7ABBBC16C42A3D00784BDA /* PIXGradientBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXGradientBarView.h; sourceTree = "<group>"; };
 		8C7ABBBD16C42A3D00784BDA /* PIXGradientBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXGradientBarView.m; sourceTree = "<group>"; };
+		8C82A85E1718E28B009DD803 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/MainMenu-original.xib"; sourceTree = "<group>"; };
 		8C85AC1716FA98470021ADB4 /* PIXShareManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXShareManager.h; sourceTree = "<group>"; };
 		8C85AC1816FA98470021ADB4 /* PIXShareManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXShareManager.m; sourceTree = "<group>"; };
 		8C8EE92916C46AB800F16C49 /* PIXAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXAlbum.h; sourceTree = "<group>"; };
@@ -517,6 +519,7 @@
 			isa = PBXGroup;
 			children = (
 				1DB2F863167ABE87008AC0F7 /* MainMenu.xib */,
+				8C82A85D1718E28A009DD803 /* MainMenu-original.xib */,
 				1D4A1DCA167AE1A500C9A895 /* PIXMainWindowController.h */,
 				1D4A1DCB167AE1A500C9A895 /* PIXMainWindowController.m */,
 				1D4A1DC3167ADA2400C9A895 /* PIXMainWindow.xib */,
@@ -1090,6 +1093,7 @@
 				8C1469341714B442009ECCC5 /* LeapTutorial1.mov in Resources */,
 				8C3580901714D99E00352870 /* LeapTutorial2.mov in Resources */,
 				8C3580911714D99E00352870 /* LeapTutorial3.mov in Resources */,
+				8C82A85F1718E28B009DD803 /* MainMenu-original.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1201,6 +1205,14 @@
 				1DB2F864167ABE87008AC0F7 /* en */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		8C82A85D1718E28A009DD803 /* MainMenu-original.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8C82A85E1718E28B009DD803 /* en */,
+			);
+			name = "MainMenu-original.xib";
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
