@@ -340,6 +340,7 @@
     //[self.navigationViewController popViewController];
 }
 
+
 -(void)toggleSidebar
 {
     // disable window flushing to keep views from rendering half way

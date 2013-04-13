@@ -621,7 +621,7 @@
     
     else
     {
-        [[NSSound soundNamed:@"Ping"] play];
+        [[NSSound soundNamed:@"Frog"] play];
     }
     
     [self restartNextSlideIfNeeded];
@@ -641,6 +641,11 @@
 {
     [self interpretKeyEvents:@[theEvent]];
     
+}
+
+-(void)cancelOperation:(id)sender
+{
+    [self.navigationViewController popViewController];
 }
 
 -(void)moveForward:(id)sender
@@ -685,7 +690,8 @@
     
     else
     {
-        [[NSSound soundNamed:@"Ping"] play];
+        NSBeep();
+        //[[NSSound soundNamed:@"Morse"] play];
     }
     //[self.pageController navigateForward:nil];
     
@@ -704,7 +710,8 @@
     
     else
     {
-        [[NSSound soundNamed:@"Ping"] play];
+        NSBeep();
+        //[[NSSound soundNamed:@"Morse"] play];
     }
     
     //[self.pageController navigateBack:nil];

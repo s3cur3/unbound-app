@@ -1276,6 +1276,12 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
                 localEvent = YES;
             }
             
+            // handle arrow keys as well
+            if(pressedUnichar >= 63232 &&pressedUnichar <= 63235)
+            {
+                localEvent = YES;
+            }
+            
             // map space to newline as well (open it)
             if(pressedUnichar == ' ')
             {

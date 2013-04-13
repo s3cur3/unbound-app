@@ -75,6 +75,7 @@
     [self.gridView reloadSelection];
     
     
+    
     // this will allow droping files into the larger grid view
     [self.gridView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
     
@@ -86,6 +87,33 @@
     
     [[PIXLeapInputManager sharedInstance] addResponder:self];
     [[PIXLeapInputManager sharedInstance] addResponder:self.gridView];
+    
+    [self.gridView setNextResponder:self];
+    
+}
+
+
+// handle escape key here if needed
+-(void)keyDown:(NSEvent *)event
+{    
+    if ([event type] == NSKeyDown)
+    {
+        NSString* pressedChars = [event characters];
+        if ([pressedChars length] == 1)
+        {
+            unichar pressedUnichar = [pressedChars characterAtIndex:0];
+            
+            if (pressedUnichar == 0x001B)  // escape key
+            {
+                [self.navigationViewController popViewController];
+                return;
+            }
+            
+        }
+    }
+    
+ 
+    [super keyDown:event];
     
 }
 
@@ -321,6 +349,7 @@
         }
     }
 }
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - CNGridView Delegate
