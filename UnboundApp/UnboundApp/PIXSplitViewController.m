@@ -74,7 +74,7 @@
     [self.sidebarViewController willShowPIXView];
     [self.imageBrowserViewController willShowPIXView];
     [self.sidebarViewController.outlineView setNextKeyView:self.imageBrowserViewController.gridView];
-    [self.imageBrowserViewController.gridView setNextKeyView:self.sidebarViewController.searchField];
+    [self.imageBrowserViewController.scrollView setNextKeyView:self.sidebarViewController.searchField];
     [self.sidebarViewController.searchField setNextKeyView:self.sidebarViewController.outlineView];
     
     [self.imageBrowserViewController setThumbSize:self.sizeSlider.floatValue];
@@ -90,6 +90,8 @@
         {
             [self.view.window makeFirstResponder:self.sidebarViewController.outlineView];
         }
+        
+        
     });
     
     // become a leap responder to watch for the back swipe

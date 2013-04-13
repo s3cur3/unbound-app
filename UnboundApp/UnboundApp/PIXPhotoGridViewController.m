@@ -88,8 +88,9 @@
     [[PIXLeapInputManager sharedInstance] addResponder:self];
     [[PIXLeapInputManager sharedInstance] addResponder:self.gridView];
     
-    [self.scrollView setNextResponder:self];
-    
+    [self.gridView setNextResponder:self];
+    [self setNextResponder:self.scrollView];
+
 }
 
 
