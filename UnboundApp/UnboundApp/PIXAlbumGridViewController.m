@@ -60,7 +60,7 @@
         self.selectedItemsName = @"album";
         
         // don't make the 
-        //[self.view setWantsLayer:NO];
+        [self.view setWantsLayer:NO];
         
     }
     
@@ -203,7 +203,7 @@
 
 -(void)setupToolbar
 {
-    NSArray * items = @[/*self.navigationViewController.activityIndicator, */self.navigationViewController.middleSpacer, self.newAlbumButton, self.searchBar, self.sortButton];
+    NSArray * items = @[self.navigationViewController.activityIndicator, self.navigationViewController.middleSpacer, self.newAlbumButton, self.searchBar, self.sortButton];
     
     [self.navigationViewController setToolbarItems:items];
     
