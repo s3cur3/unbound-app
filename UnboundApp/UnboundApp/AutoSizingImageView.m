@@ -66,4 +66,20 @@
     
 }
 
+-(void)setImage:(NSImage *)newImage
+{
+    if(newImage == nil)
+    {
+        newImage = [NSImage imageNamed:@"fullnophoto"];
+        [self setImageScaling:NSImageScaleProportionallyDown];
+    }
+    
+    else
+    {
+        [self setImageScaling:NSImageScaleProportionallyUpOrDown];
+    }
+    
+    [super setImage:newImage];
+}
+
 @end
