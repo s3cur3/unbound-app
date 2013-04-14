@@ -1183,14 +1183,14 @@ const CGFloat kThumbnailSize = 370.0f;
     {
         //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self.album];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:AlbumStackDidChangeNotification object:self.album];
+        //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumStackDidChangeNotification object:self.album];
         
         
-        /*
+        
         NSNotification * note = [NSNotification notificationWithName:AlbumStackDidChangeNotification object:self.album];
         
         // enqueue these notes on the sender so if a few album stack images load right after each other it doesn't have to redraw multiple times
-         [[NSNotificationQueue defaultQueue] enqueueNotification:note postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnSender forModes:nil];*/
+         [[NSNotificationQueue defaultQueue] enqueueNotification:note postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnSender forModes:nil];
         
     }
 }
