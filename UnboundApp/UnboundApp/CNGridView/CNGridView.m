@@ -219,6 +219,18 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     return YES;
 }
 
+-(BOOL)becomeFirstResponder
+{
+    self.isFirstResponder = YES;
+    return [super becomeFirstResponder];
+}
+
+-(BOOL)resignFirstResponder
+{
+    self.isFirstResponder = NO;
+    return [super resignFirstResponder];
+}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Accessors
@@ -1264,6 +1276,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     if ([event type] == NSKeyDown)
     {
         NSString* pressedChars = [event characters];
+        
         if ([pressedChars length] == 1)
         {
             unichar pressedUnichar =
@@ -1280,6 +1293,26 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
             if(pressedUnichar >= 63232 &&pressedUnichar <= 63235)
             {
                 localEvent = YES;
+                
+                switch (pressedUnichar) {
+                    case 63232:
+                        [self moveUp:event];
+                        break;
+                    case 63233:
+                        [self moveDown:event];
+                        break;
+                    case 63234:
+                        [self moveLeft:event];
+                        break;
+                    case 63235:
+                        [self moveRight:event];
+                        break;
+                        
+                    default:
+                        break;
+                }
+                
+                return;
             }
             
             // map space to newline as well (open it)

@@ -71,13 +71,25 @@
         NSString* pressedChars = [theEvent characters];
         if ([pressedChars length] == 1)
         {
+            PIXSidebarViewController *sidebar = (PIXSidebarViewController *)self.delegate;
             unichar pressedUnichar = [pressedChars characterAtIndex:0];
             if(pressedUnichar == 63235) // right arrow goes to grid view
             {
-                PIXSidebarViewController *sidebar = (PIXSidebarViewController *)self.delegate;
+                
                 if([sidebar respondsToSelector:@selector(moveRight:)])
                 {
                     [sidebar moveRight:theEvent];
+                    return;
+                }
+            }
+            
+            // escape or space goes back to stacks view
+            if(pressedUnichar == ' ' || pressedUnichar == 0x001B)
+            {
+                if([sidebar respondsToSelector:@selector(cancelOperation:)])
+                {
+                    [sidebar cancelOperation:theEvent];
+                    return;
                 }
             }
         }

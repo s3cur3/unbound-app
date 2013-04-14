@@ -18,6 +18,7 @@
 #import "PIXDefines.h"
 #import "PIXMainWindowController.h"
 #import "PIXAlbumGridViewItem.h"
+#import "PIXNavigationController.h"
 
 @interface PIXSidebarViewController ()
 
@@ -405,6 +406,11 @@
     // make the image grid the first responder
     [self.view.window makeFirstResponder:self.splitViewController.imageBrowserViewController.gridView];
     [self.splitViewController.imageBrowserViewController.gridView moveRight:sender];
+}
+
+-(void)cancelOperation:(id)sender
+{
+    [self.splitViewController.navigationViewController popViewController];
 }
 
 

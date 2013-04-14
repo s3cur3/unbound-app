@@ -52,6 +52,8 @@
 #pragma mark - Managing the Delegate and the Data Source
 /** @name Managing the Delegate and the Data Source */
 
+@property (nonatomic, assign) BOOL isFirstResponder;
+
 /**
  Property for the receiver's delegate.
  */

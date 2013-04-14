@@ -129,7 +129,8 @@
 -(void)moveLeft:(id)sender
 {
     // make the album view the first responder if it's open
-    if(![self.splitViewController.splitView isSubviewCollapsed:self.splitViewController.leftPane])
+    if(![self.splitViewController.splitView isSubviewCollapsed:self.splitViewController.leftPane] &&
+       [self.selectedItems count] == 1) // make sure only one item is selected
     {
         [self.view.window makeFirstResponder:self.splitViewController.sidebarViewController.outlineView];
         [self selectNone:sender];

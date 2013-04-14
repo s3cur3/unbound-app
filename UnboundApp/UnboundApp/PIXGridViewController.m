@@ -671,7 +671,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
             [self.toolbarTitle setStringValue:[NSString stringWithFormat:@"1 %@ selected", self.selectedItemsName]];
         }
         
-        double delayInSeconds = 0.2;
+        double delayInSeconds = 0.25;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [self showToolbar:YES];
@@ -681,7 +681,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
     
     else
     {
-        double delayInSeconds = 0.2;
+        double delayInSeconds = 0.25;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [self hideToolbar:YES];

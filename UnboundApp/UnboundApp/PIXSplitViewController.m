@@ -29,6 +29,7 @@
 @property (nonatomic, strong) NSToolbarItem * sortButton;
 
 @property float lastSplitviewWidth;
+@property BOOL gridWasLastResponder;
 
 @end
 
@@ -82,7 +83,7 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        if([self.splitView isSubviewCollapsed:self.leftPane])
+        if([self.splitView isSubviewCollapsed:self.leftPane] || self.gridWasLastResponder)
         {
             [self.view.window makeFirstResponder:self.imageBrowserViewController.gridView];
         }
@@ -102,18 +103,19 @@
     [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] setTitle:[self.selectedAlbum title]];
 }
 
--(void)keyDown:(NSEvent *)theEvent
-{
-    
-}
-
--(void)moveRight:(id)sender
-{
-    
-}
 
 -(void)willHidePIXView
 {
+    if([self.imageBrowserViewController.gridView isFirstResponder])
+    {
+        self.gridWasLastResponder = YES;
+    }
+    
+    else
+    {
+        self.gridWasLastResponder = NO;
+    }
+    
     [self.sidebarViewController willHidePIXView];
     [self.imageBrowserViewController willHidePIXView];
     

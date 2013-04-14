@@ -637,16 +637,35 @@
     [[self currentImageVC] leapPanZoomPosition:position andScale:scale];
 }
 
+
 -(void)keyDown:(NSEvent *)theEvent
 {
+    
+    if ([theEvent type] == NSKeyDown)
+    {
+        NSString* pressedChars = [theEvent characters];
+        if ([pressedChars length] == 1)
+        {
+            unichar pressedUnichar = [pressedChars characterAtIndex:0];
+            if(pressedUnichar == ' ') // space is the same as cancle
+            {
+                [self cancelOperation:theEvent];
+                return;
+            }
+        }
+    }
+    
     [self interpretKeyEvents:@[theEvent]];
     
 }
+
 
 -(void)cancelOperation:(id)sender
 {
     [self.navigationViewController popViewController];
 }
+
+
 
 -(void)moveForward:(id)sender
 {
