@@ -51,6 +51,7 @@
 @property (nonatomic, strong) NSButton * infoButton;
 
 @property (nonatomic, strong) PIXImageViewController * currentImageVC;
+@property (weak) PIXSlideshowOptonsViewController *slideshowOptionsVC;
 
 @property BOOL hasMouse;
 
@@ -218,6 +219,8 @@
     [popover setContentViewController:controller];
     
     controller.myPopover = popover;
+    
+    self.slideshowOptionsVC = controller;
     
     [popover setAnimates:YES];
     [popover setBehavior:NSPopoverBehaviorTransient];
@@ -887,7 +890,7 @@
 
 -(void)tryFadeControls
 {
-    if(!([self.controlWindow hasMouse] || [self.controlView isTextEditing]))
+    if(!([self.controlWindow hasMouse] || [self.controlView isTextEditing] || self.slideshowOptionsVC))
     {
         [self.controlWindow hideAnimated:YES];
         
