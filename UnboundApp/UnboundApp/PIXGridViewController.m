@@ -394,7 +394,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
      @selector(getInfo:) keyEquivalent:@""];
     
     // Show in Finder
-    [menu addItemWithTitle:[NSString stringWithFormat:@"Show In Finder"] action:
+    [menu addItemWithTitle:[NSString stringWithFormat:@"Show in Finder"] action:
      @selector(revealInFinder:) keyEquivalent:@""];
     
     [menu addItem:[NSMenuItem separatorItem]];
@@ -415,7 +415,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
         NSArray *filePaths = [[self.selectedItems allObjects] valueForKey:@"path"];
         NSMenu *openWithMenu = [[PIXFileManager sharedInstance] openWithMenuItemForFiles:filePaths];
         NSMenuItem *openWithMenuItem = [[NSMenuItem alloc] init];
-        [openWithMenuItem setTitle:@"Open With"];
+        [openWithMenuItem setTitle:@"Open with"];
         [openWithMenuItem setSubmenu:openWithMenu];
         [menu addItem:openWithMenuItem];
         
