@@ -348,8 +348,8 @@ static NSString *kContentTitleKey, *kContentImageKey;
 {
     NSUInteger fileCount = self.selectedItems.count;
     if (fileCount>6) {
-        NSString *msg = [NSString stringWithFormat:@"Are you sure you want to open multiple info windows for %ld selected %@s?", fileCount, self.selectedItemsName];
-        NSString *aTitle = [NSString stringWithFormat:@"Get Info For %ld %@s", fileCount, self.selectedItemsName];
+        NSString *msg = [NSString stringWithFormat:@"Are you sure you want to open multiple Info windows for the %ld selected %@s?", fileCount, self.selectedItemsName];
+        NSString *aTitle = [NSString stringWithFormat:@"Get Info for %ld %@s", fileCount, [self.selectedItemsName capitalizedString]];
         if (![self verifyActionForItemsWithTitle:aTitle message:msg]) {
             return;
         }
