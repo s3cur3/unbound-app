@@ -400,6 +400,13 @@
     }
 }
 
+-(void)moveRight:(id)sender
+{
+    // make the image grid the first responder
+    [self.view.window makeFirstResponder:self.splitViewController.imageBrowserViewController.gridView];
+    [self.splitViewController.imageBrowserViewController.gridView moveRight:sender];
+}
+
 
 -(void)dealloc
 {

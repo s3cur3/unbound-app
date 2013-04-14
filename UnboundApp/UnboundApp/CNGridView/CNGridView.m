@@ -1401,7 +1401,12 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         
         else
         {
-            return; // do nothing if we're at the furthest left column
+            if([self.nextResponder respondsToSelector:@selector(moveLeft:)])
+            {
+                [self.nextResponder moveLeft:sender];
+            }
+            
+            return; // do nothing and pass along the message if we're at the furthest left column
         }
         
         newIndex = lastSelectedPoint.column-1 + ((lastSelectedPoint.row-1) * self.columnsInGridView);

@@ -141,6 +141,8 @@
 		8C82A85F1718E28B009DD803 /* MainMenu-original.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C82A85D1718E28A009DD803 /* MainMenu-original.xib */; };
 		8C82A86217192798009DD803 /* fullnophoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C82A86017192798009DD803 /* fullnophoto.png */; };
 		8C82A86317192798009DD803 /* fullnophoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C82A86117192798009DD803 /* fullnophoto@2x.png */; };
+		8C82A867171A5138009DD803 /* PIXAboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C82A865171A5138009DD803 /* PIXAboutWindowController.m */; };
+		8C82A868171A5138009DD803 /* PIXAboutWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C82A866171A5138009DD803 /* PIXAboutWindowController.xib */; };
 		8C85AC1916FA98470021ADB4 /* PIXShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C85AC1816FA98470021ADB4 /* PIXShareManager.m */; };
 		8C8EE92B16C46AB800F16C49 /* PIXAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE92A16C46AB800F16C49 /* PIXAlbum.m */; };
 		8C8EE93416CACA7900F16C49 /* ArchDirectoryObservationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE92F16CACA7900F16C49 /* ArchDirectoryObservationCenter.m */; };
@@ -404,6 +406,9 @@
 		8C82A85E1718E28B009DD803 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/MainMenu-original.xib"; sourceTree = "<group>"; };
 		8C82A86017192798009DD803 /* fullnophoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fullnophoto.png; sourceTree = "<group>"; };
 		8C82A86117192798009DD803 /* fullnophoto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fullnophoto@2x.png"; sourceTree = "<group>"; };
+		8C82A864171A5138009DD803 /* PIXAboutWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXAboutWindowController.h; sourceTree = "<group>"; };
+		8C82A865171A5138009DD803 /* PIXAboutWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXAboutWindowController.m; sourceTree = "<group>"; };
+		8C82A866171A5138009DD803 /* PIXAboutWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXAboutWindowController.xib; sourceTree = "<group>"; };
 		8C85AC1716FA98470021ADB4 /* PIXShareManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXShareManager.h; sourceTree = "<group>"; };
 		8C85AC1816FA98470021ADB4 /* PIXShareManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXShareManager.m; sourceTree = "<group>"; };
 		8C8EE92916C46AB800F16C49 /* PIXAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXAlbum.h; sourceTree = "<group>"; };
@@ -532,6 +537,9 @@
 				1D4A1DCF167AE22A00C9A895 /* PIXInfoWindowController.xib */,
 				8C24A40916F94ED100703F97 /* PIXRoundRectView.h */,
 				8C24A40A16F94ED100703F97 /* PIXRoundRectView.m */,
+				8C82A864171A5138009DD803 /* PIXAboutWindowController.h */,
+				8C82A865171A5138009DD803 /* PIXAboutWindowController.m */,
+				8C82A866171A5138009DD803 /* PIXAboutWindowController.xib */,
 			);
 			name = Windows;
 			sourceTree = "<group>";
@@ -1102,6 +1110,7 @@
 				8C82A85F1718E28B009DD803 /* MainMenu-original.xib in Resources */,
 				8C82A86217192798009DD803 /* fullnophoto.png in Resources */,
 				8C82A86317192798009DD803 /* fullnophoto@2x.png in Resources */,
+				8C82A868171A5138009DD803 /* PIXAboutWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1185,6 +1194,7 @@
 				8C33D5191711FC8700647F95 /* PIXRoundedProgressIndicator.m in Sources */,
 				8C72FE6217134BEE00AA72B0 /* PIXHUDMessageController.m in Sources */,
 				8C14692817149A92009ECCC5 /* PIXLeapTutorialWindowController.m in Sources */,
+				8C82A867171A5138009DD803 /* PIXAboutWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

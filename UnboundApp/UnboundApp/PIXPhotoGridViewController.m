@@ -22,6 +22,8 @@
 #import "PIXFileParser.h"
 #import "PIXShareManager.h"
 #import "PIXLeapInputManager.h"
+#import "PIXSplitViewController.h"
+#import "PIXSidebarViewController.h"
 
 @interface PIXPhotoGridViewController () <PIXLeapResponder>
 
@@ -124,6 +126,16 @@
     [[PIXLeapInputManager sharedInstance] removeResponder:self.gridView];
 }
 
+-(void)moveLeft:(id)sender
+{
+    // make the album view the first responder if it's open
+    if(![self.splitViewController.splitView isSubviewCollapsed:self.splitViewController.leftPane])
+    {
+        [self.view.window makeFirstResponder:self.splitViewController.sidebarViewController.outlineView];
+        [self selectNone:sender];
+    }
+}
+
 
 
 // send a size between 0 and 1 (will be transformed into appropriate sizes)
@@ -133,7 +145,10 @@
     float transformedSize = 140+(260.0 * size);
     [self.gridView setItemSize:CGSizeMake(transformedSize, transformedSize)];
     
-    [self.gridView setScrollElasticity:YES];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.gridView setScrollElasticity:YES];
+    });
+    
 }
 
 #pragma mark -

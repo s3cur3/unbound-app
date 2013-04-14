@@ -10,6 +10,7 @@
 
 @class PIXInfoWindowController;
 @class PIXMainWindowController;
+@class PIXAboutWindowController;
 @class PIXFileParser;
 
 @interface PIXAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate>
@@ -20,6 +21,7 @@
     @public
     
     PIXInfoWindowController *showIntroWindow;
+    PIXAboutWindowController *showAboutWindow;
 
 }
 
@@ -28,6 +30,7 @@
 
 - (IBAction)showMainWindow:(id)sender;
 - (IBAction)showIntroWindow:(id)sender;
+- (IBAction)showAboutWindow:(id)sender;
 
 @property (nonatomic, strong) IBOutlet NSMenuItem * progressItem;
 // for MASPreferences class:

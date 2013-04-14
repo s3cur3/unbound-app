@@ -10,6 +10,8 @@
 
 @class Album;
 @class PIXAlbum;
+@class PIXSidebarViewController;
+@class PIXPhotoGridViewController;
 
 @protocol PIXSplitViewControllerDelegate <NSObject>
 
@@ -20,6 +22,9 @@
 @interface PIXSplitViewController : PIXViewController <NSSplitViewDelegate>
 
 @property (nonatomic,weak) id <PIXSplitViewControllerDelegate> delegate;
+
+@property (nonatomic, strong) PIXSidebarViewController *sidebarViewController;
+@property (nonatomic, strong) PIXPhotoGridViewController *imageBrowserViewController;
 
 @property (nonatomic,weak) IBOutlet NSSplitView *splitView;
 @property (nonatomic,weak) IBOutlet NSView *leftPane;

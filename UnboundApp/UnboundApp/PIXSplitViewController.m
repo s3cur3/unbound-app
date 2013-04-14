@@ -20,8 +20,7 @@
 
 @interface PIXSplitViewController () <PIXLeapResponder>
 
-@property (nonatomic, strong) PIXSidebarViewController *sidebarViewController;
-@property (nonatomic, strong) PIXPhotoGridViewController *imageBrowserViewController;
+
 @property (nonatomic, strong) NSViewController *mainViewController;
 
 @property (nonatomic, strong) NSToolbarItem * backButtonSegmentItem;
@@ -54,7 +53,7 @@
         self.sidebarViewController.splitViewController = self;
         
         self.imageBrowserViewController = [[PIXPhotoGridViewController alloc] initWithNibName:@"PIXGridViewController" bundle:nil];
-        
+        self.imageBrowserViewController.splitViewController = self;
         
         
         [self.splitView adjustSubviews];
@@ -76,6 +75,8 @@
     [self.sidebarViewController.outlineView setNextKeyView:self.imageBrowserViewController.gridView];
     [self.imageBrowserViewController.scrollView setNextKeyView:self.sidebarViewController.searchField];
     [self.sidebarViewController.searchField setNextKeyView:self.sidebarViewController.outlineView];
+    
+    [self.sidebarViewController.view setNextResponder:self];
     
     [self.imageBrowserViewController setThumbSize:self.sizeSlider.floatValue];
     
@@ -99,6 +100,16 @@
     [[PIXLeapInputManager sharedInstance] addResponder:(id<PIXLeapResponder>)self.imageBrowserViewController.gridView];
     
     [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] setTitle:[self.selectedAlbum title]];
+}
+
+-(void)keyDown:(NSEvent *)theEvent
+{
+    
+}
+
+-(void)moveRight:(id)sender
+{
+    
 }
 
 -(void)willHidePIXView

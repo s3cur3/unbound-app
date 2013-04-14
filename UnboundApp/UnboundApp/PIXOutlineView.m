@@ -63,4 +63,28 @@
     DLog(@"rightMouseDown : %@", theEvent);
 }
 
+-(void)keyDown:(NSEvent *)theEvent
+{
+    
+    if ([theEvent type] == NSKeyDown)
+    {
+        NSString* pressedChars = [theEvent characters];
+        if ([pressedChars length] == 1)
+        {
+            unichar pressedUnichar = [pressedChars characterAtIndex:0];
+            if(pressedUnichar == 63235) // right arrow goes to grid view
+            {
+                PIXSidebarViewController *sidebar = (PIXSidebarViewController *)self.delegate;
+                if([sidebar respondsToSelector:@selector(moveRight:)])
+                {
+                    [sidebar moveRight:theEvent];
+                }
+            }
+        }
+    }
+    
+    [super keyDown:theEvent];
+
+}
+
 @end

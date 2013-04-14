@@ -9,6 +9,7 @@
 #import "PIXAppDelegate.h"
 //#import "PIXAppDelegate+CoreDataUtils.h"
 #import "PIXInfoWindowController.h"
+#import "PIXAboutWindowController.h"
 #import "PIXMainWindowController.h"
 
 #import "PIXNavigationController.h"
@@ -203,6 +204,16 @@
     }
     
     [showIntroWindow showWindow:self];
+}
+
+- (IBAction)showAboutWindow:(id)sender
+{
+    if (showAboutWindow == nil)
+    {
+        showAboutWindow = [[PIXAboutWindowController alloc] initWithWindowNibName:@"PIXAboutWindowController"];
+    }
+    
+    [showAboutWindow showWindow:self];
 }
 
 #pragma mark - MASPreferences Class methods:

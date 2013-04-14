@@ -10,10 +10,12 @@
 #import "PIXPageViewController.h"
 
 @class PIXAlbum;
+@class PIXSplitViewController;
 
 @interface PIXPhotoGridViewController : PIXGridViewController <PIXPageViewControllerDelegate>
 
 @property (nonatomic, strong) PIXAlbum *album;
+@property (nonatomic, weak) PIXSplitViewController *splitViewController;
 
 // send a size between 0 and 1 (will be transformed into appropriate sizes)
 -(void)setThumbSize:(CGFloat)size;
