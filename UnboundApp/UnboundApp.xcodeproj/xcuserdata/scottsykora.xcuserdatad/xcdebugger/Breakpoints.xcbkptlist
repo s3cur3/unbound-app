@@ -177,11 +177,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXAlbumGridViewController.m"
-         timestampString = "387493441.863038"
+         timestampString = "387644575.307397"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "965"
-         endingLineNumber = "965"
+         startingLineNumber = "967"
+         endingLineNumber = "967"
          landmarkName = "-albumsChanged:"
          landmarkType = "5">
       </FileBreakpoint>

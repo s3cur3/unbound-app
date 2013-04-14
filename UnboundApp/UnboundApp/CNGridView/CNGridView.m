@@ -825,6 +825,11 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         CNGridViewItem *selectedItem = [keyedVisibleItems objectForKey:[NSNumber numberWithInteger:idx]];
         selectedItem.selected = [self gridView:self itemIsSelectedAtIndex:idx inSection:0];
         
+        if(selectedItem.selected)
+        {
+            lastSelectedItemIndex = idx;
+        }
+        
     }];
     
 }
