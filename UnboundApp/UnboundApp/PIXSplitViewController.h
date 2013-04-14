@@ -38,6 +38,7 @@
 
 -(IBAction)backBarSegmentChanged:(id)sender;
 -(IBAction)sliderValueChanged:(id)sender;
+-(void)popViewAndUpdateAlbumSelectionForDelegate;
 
 
 @end

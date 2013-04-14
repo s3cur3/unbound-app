@@ -410,7 +410,7 @@
 
 -(void)cancelOperation:(id)sender
 {
-    [self.splitViewController.navigationViewController popViewController];
+    [self.splitViewController popViewAndUpdateAlbumSelectionForDelegate];
 }
 
 
