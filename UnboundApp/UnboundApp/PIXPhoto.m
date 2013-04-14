@@ -29,6 +29,10 @@ const CGFloat kThumbnailSize = 370.0f;
 
 @property (nonatomic, assign, readwrite) BOOL cancelThumbnailLoadOperationDelayFlag;
 
+@property (retain) NSBlockOperation * slowThumbLoad;
+@property (retain) NSBlockOperation * fastThumbLoad;
+@property BOOL fasterThumbLoad;
+
 @end
 
 @implementation PIXPhoto
@@ -56,6 +60,10 @@ const CGFloat kThumbnailSize = 370.0f;
 
 @synthesize cancelFullsizeLoadOperation;
 @synthesize fullsizeImage = _fullsizeImage;
+
+@synthesize slowThumbLoad, fastThumbLoad;
+
+@synthesize fasterThumbLoad;
 
 
 //TODO: make this a real attribute?
@@ -593,9 +601,17 @@ const CGFloat kThumbnailSize = 370.0f;
     if(self.cancelThumbnailLoadOperationDelayFlag == YES)
     {
         self.cancelThumbnailLoadOperation = YES;
+        [self.fastThumbLoad cancel];
+        [self.slowThumbLoad cancel];
     }
     
     self.cancelThumbnailLoadOperationDelayFlag = NO;
+}
+
+-(NSImage *)thumbnailImageFast
+{
+    self.fasterThumbLoad = YES;
+    return [self thumbnailImage];
 }
 
 
@@ -679,7 +695,7 @@ const CGFloat kThumbnailSize = 370.0f;
     return _thumbnailImage;
 }
 
-- (NSOperationQueue *)sharedThumbnailFastLoadQueue
+- (NSOperationQueue *)sharedThumbnailLoadQueue
 {
     
     static NSOperationQueue * _sharedThumbnailFastLoadQueue = nil;
@@ -690,32 +706,13 @@ const CGFloat kThumbnailSize = 370.0f;
         dispatch_once(&onceToken, ^{
             _sharedThumbnailFastLoadQueue = [[NSOperationQueue alloc] init];
             [_sharedThumbnailFastLoadQueue setName:@"com.pixite.thumbnailfast.generator"];
-            //[_backgroundSaveQueue setMaxConcurrentOperationCount:NSOperationQueueDefaultMaxConcurrentOperationCount];
-            [_sharedThumbnailFastLoadQueue setMaxConcurrentOperationCount:6];
+            [_sharedThumbnailFastLoadQueue setMaxConcurrentOperationCount:12];//NSOperationQueueDefaultMaxConcurrentOperationCount];
         });
         
     }
     return _sharedThumbnailFastLoadQueue;
 }
 
-- (NSOperationQueue *)sharedThumbnailFullLoadQueue
-{
-    
-    static NSOperationQueue * _sharedThumbnailFullLoadQueue = nil;
-    
-    if (_sharedThumbnailFullLoadQueue == NULL)
-    {
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            _sharedThumbnailFullLoadQueue = [[NSOperationQueue alloc] init];
-            [_sharedThumbnailFullLoadQueue setName:@"com.pixite.thumbnailfull.generator"];
-            //[_backgroundSaveQueue setMaxConcurrentOperationCount:NSOperationQueueDefaultMaxConcurrentOperationCount];
-            [_sharedThumbnailFullLoadQueue setMaxConcurrentOperationCount:3];
-        });
-        
-    }
-    return _sharedThumbnailFullLoadQueue;
-}
 
 +(NSString *)randomThumbPath
 {
@@ -767,7 +764,7 @@ const CGFloat kThumbnailSize = 370.0f;
     NSString *aPath = self.path;
     __weak PIXPhoto *weakSelf = self;
     
-    [[self sharedThumbnailFastLoadQueue] addOperationWithBlock:^{
+    self.fastThumbLoad = [NSBlockOperation blockOperationWithBlock:^{
         
         
         if (weakSelf == nil || aPath==nil || weakSelf.cancelThumbnailLoadOperation==YES) {
@@ -809,7 +806,7 @@ const CGFloat kThumbnailSize = 370.0f;
             [self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
             
             // we've finished updating the ui with the image, do everythinge else at a lower priority
-            [[self sharedThumbnailFullLoadQueue] addOperationWithBlock:^{
+            self.slowThumbLoad = [NSBlockOperation blockOperationWithBlock:^{
                 
                 // if the load was cancelled then bail
                 if (weakSelf.cancelThumbnailLoadOperation==YES) {
@@ -943,8 +940,11 @@ const CGFloat kThumbnailSize = 370.0f;
                     _thumbnailImageIsLoading = NO;
                 });
                 
-                
             }];
+            
+            [self.slowThumbLoad setQueuePriority:NSOperationQueuePriorityLow];
+            
+            [[self sharedThumbnailLoadQueue] addOperation:self.slowThumbLoad];
         }
         
         else
@@ -952,6 +952,19 @@ const CGFloat kThumbnailSize = 370.0f;
             [[PIXFileParser sharedFileParser] decrementWorking];
         }
     }];
+    
+    // if this is a faster thumb load image (for the top images in album stacks)
+    if(self.fasterThumbLoad)
+    {
+        [self.fastThumbLoad setQueuePriority:NSOperationQueuePriorityHigh];
+    }
+    
+    else
+    {
+        [self.fastThumbLoad setQueuePriority:NSOperationQueuePriorityNormal];
+    }
+    
+    [[self sharedThumbnailLoadQueue] addOperation:self.fastThumbLoad];
 }
 
 

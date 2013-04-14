@@ -47,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXPhoto.m"
-         timestampString = "387491218.131514"
+         timestampString = "387596787.498223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "672"
-         endingLineNumber = "672"
+         startingLineNumber = "688"
+         endingLineNumber = "688"
          landmarkName = "-thumbnailImage"
          landmarkType = "5">
       </FileBreakpoint>
@@ -60,11 +60,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXPhoto.m"
-         timestampString = "387491353.233105"
+         timestampString = "387596787.498223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "639"
-         endingLineNumber = "639"
+         startingLineNumber = "655"
+         endingLineNumber = "655"
          landmarkName = "-thumbnailImage"
          landmarkType = "5">
       </FileBreakpoint>
@@ -73,11 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXPhoto.m"
-         timestampString = "387491365.675204"
+         timestampString = "387596787.498223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "635"
-         endingLineNumber = "635"
+         startingLineNumber = "651"
+         endingLineNumber = "651"
          landmarkName = "-thumbnailImage"
          landmarkType = "5">
       </FileBreakpoint>
@@ -86,11 +86,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXPhoto.m"
-         timestampString = "387491374.541794"
+         timestampString = "387596787.498223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "660"
-         endingLineNumber = "660"
+         startingLineNumber = "676"
+         endingLineNumber = "676"
          landmarkName = "-thumbnailImage"
          landmarkType = "5">
       </FileBreakpoint>
@@ -99,11 +99,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXPhoto.m"
-         timestampString = "387491673.334394"
+         timestampString = "387596787.498223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1137"
-         endingLineNumber = "1137"
+         startingLineNumber = "1150"
+         endingLineNumber = "1150"
          landmarkName = "-clearFiles"
          landmarkType = "5">
       </FileBreakpoint>
@@ -112,11 +112,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXPhoto.m"
-         timestampString = "387491653.554026"
+         timestampString = "387596787.498223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "940"
-         endingLineNumber = "940"
+         startingLineNumber = "937"
+         endingLineNumber = "937"
          landmarkName = "-loadThumbnailImage"
          landmarkType = "5">
       </FileBreakpoint>
@@ -125,20 +125,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXPhoto.m"
-         timestampString = "387492166.643576"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "663"
-         endingLineNumber = "663"
-         landmarkName = "-thumbnailImage"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "UnboundApp/PIXPhoto.m"
-         timestampString = "387492170.995584"
+         timestampString = "387596787.498223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "679"
@@ -151,11 +138,24 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXPhoto.m"
-         timestampString = "387492460.821265"
+         timestampString = "387596787.498223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1143"
-         endingLineNumber = "1143"
+         startingLineNumber = "695"
+         endingLineNumber = "695"
+         landmarkName = "-thumbnailImage"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "UnboundApp/PIXPhoto.m"
+         timestampString = "387596787.498223"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "1156"
+         endingLineNumber = "1156"
          landmarkName = "-postPhotoUpdatedNote"
          landmarkType = "5">
       </FileBreakpoint>
@@ -190,11 +190,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXPhoto.m"
-         timestampString = "387493570.035741"
+         timestampString = "387596787.498223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "636"
-         endingLineNumber = "636"
+         startingLineNumber = "652"
+         endingLineNumber = "652"
          landmarkName = "-thumbnailImage"
          landmarkType = "5">
       </FileBreakpoint>
@@ -203,11 +203,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXPhoto.m"
-         timestampString = "387493578.949734"
+         timestampString = "387596787.498223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "851"
-         endingLineNumber = "851"
+         startingLineNumber = "848"
+         endingLineNumber = "848"
          landmarkName = "-loadThumbnailImage"
          landmarkType = "5">
       </FileBreakpoint>

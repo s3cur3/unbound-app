@@ -377,6 +377,8 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 		 */
         
 		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        
+        // if there was an unrecoverable error delete the db and reload
 		
 		NSFileManager *fileManager = [NSFileManager defaultManager];
 		if (![fileManager removeItemAtPath:url.path error:&error]) {
@@ -393,6 +395,11 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
         
         // also delete the thumbnails
         [self clearThumbSorageDirectory];
+        
+        [[PIXFileParser sharedFileParser] scanFullDirectory];
+        
+        
+        // and rescan the root directories
         
     }
     _persistentStoreCoordinator = coordinator;

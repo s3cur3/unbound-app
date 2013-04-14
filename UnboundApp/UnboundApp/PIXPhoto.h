@@ -52,6 +52,8 @@
 
 //PIXThumbnailLoadingDelegate methods
 -(NSImage *)thumbnailImage;
+// if this is a faster thumb load image (for the top images in album stacks, so they load at a higher priority)
+-(NSImage *)thumbnailImageFast;
 -(void)cancelThumbnailLoading;
 
 -(void)clearFiles;

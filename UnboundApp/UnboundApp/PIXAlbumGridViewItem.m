@@ -53,7 +53,7 @@
     
     if([[topAlbum stackPhotos] count])
     {
-        image1 = [[[topAlbum stackPhotos] objectAtIndex:0] thumbnailImage];
+        image1 = [[[topAlbum stackPhotos] objectAtIndex:0] thumbnailImage]; // load this one at a higher priority
         
         if([[topAlbum stackPhotos] count] > 1)
         {
@@ -227,7 +227,7 @@
     if([[self.album stackPhotos] count] > 0)
     {
         
-        self.albumThumb = [(PIXPhoto *)[[self.album stackPhotos] objectAtIndex:0] thumbnailImage];
+        self.albumThumb = [(PIXPhoto *)[[self.album stackPhotos] objectAtIndex:0] thumbnailImageFast];
         
         // we'll check for a nil photo outside of this if because albums with no photos should still have one placeholder thumb
         
@@ -394,16 +394,16 @@
     CGContextSaveGState(context);
     
     CGContextTranslateCTM(context, self.bounds.size.width/2, self.bounds.size.height/2);
-    CGContextRotateCTM(context, self.stackThumb1Rotate);
-    CGContextTranslateCTM(context, -self.bounds.size.width/2, -self.bounds.size.height/2);
-    
-    [[self class] drawBorderedPhoto:self.stackThumb1 inRect:albumFrame];
-    
-    CGContextTranslateCTM(context, self.bounds.size.width/2, self.bounds.size.height/2);
     CGContextRotateCTM(context, self.stackThumb2Rotate);
     CGContextTranslateCTM(context, -self.bounds.size.width/2, -self.bounds.size.height/2);
     
     [[self class] drawBorderedPhoto:self.stackThumb2 inRect:albumFrame];
+    
+    CGContextTranslateCTM(context, self.bounds.size.width/2, self.bounds.size.height/2);
+    CGContextRotateCTM(context, self.stackThumb1Rotate);
+    CGContextTranslateCTM(context, -self.bounds.size.width/2, -self.bounds.size.height/2);
+    
+    [[self class] drawBorderedPhoto:self.stackThumb1 inRect:albumFrame];
     
     CGContextRestoreGState(context);
     
