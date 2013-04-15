@@ -144,6 +144,7 @@
 		8C82A867171A5138009DD803 /* PIXAboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C82A865171A5138009DD803 /* PIXAboutWindowController.m */; };
 		8C82A868171A5138009DD803 /* PIXAboutWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C82A866171A5138009DD803 /* PIXAboutWindowController.xib */; };
 		8C85AC1916FA98470021ADB4 /* PIXShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C85AC1816FA98470021ADB4 /* PIXShareManager.m */; };
+		8C8B6DEF171BBC4C00AB230F /* pixite-logo-wide.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C8B6DEE171BBC4C00AB230F /* pixite-logo-wide.png */; };
 		8C8EE92B16C46AB800F16C49 /* PIXAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE92A16C46AB800F16C49 /* PIXAlbum.m */; };
 		8C8EE93416CACA7900F16C49 /* ArchDirectoryObservationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE92F16CACA7900F16C49 /* ArchDirectoryObservationCenter.m */; };
 		8C8EE93516CACA7900F16C49 /* NSURL+DirectoryObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE93316CACA7900F16C49 /* NSURL+DirectoryObserver.m */; };
@@ -411,6 +412,7 @@
 		8C82A866171A5138009DD803 /* PIXAboutWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXAboutWindowController.xib; sourceTree = "<group>"; };
 		8C85AC1716FA98470021ADB4 /* PIXShareManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXShareManager.h; sourceTree = "<group>"; };
 		8C85AC1816FA98470021ADB4 /* PIXShareManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXShareManager.m; sourceTree = "<group>"; };
+		8C8B6DEE171BBC4C00AB230F /* pixite-logo-wide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pixite-logo-wide.png"; sourceTree = "<group>"; };
 		8C8EE92916C46AB800F16C49 /* PIXAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXAlbum.h; sourceTree = "<group>"; };
 		8C8EE92A16C46AB800F16C49 /* PIXAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXAlbum.m; sourceTree = "<group>"; };
 		8C8EE92E16CACA7900F16C49 /* ArchDirectoryObservationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArchDirectoryObservationCenter.h; sourceTree = "<group>"; };
@@ -584,6 +586,7 @@
 				8CFC13BC16FD2B21004CA7D5 /* expand.png */,
 				8CFC13C216FD6111004CA7D5 /* play.png */,
 				8CFC13C316FD6111004CA7D5 /* play@2x.png */,
+				8C8B6DEE171BBC4C00AB230F /* pixite-logo-wide.png */,
 				8CFC13BD16FD2B21004CA7D5 /* expand@2x.png */,
 				8C24A40716F94C1100703F97 /* intro_bg.jpg */,
 				8CE460D716CB650600CDFA04 /* btn-roundrect-down.png */,
@@ -1111,6 +1114,7 @@
 				8C82A86217192798009DD803 /* fullnophoto.png in Resources */,
 				8C82A86317192798009DD803 /* fullnophoto@2x.png in Resources */,
 				8C82A868171A5138009DD803 /* PIXAboutWindowController.xib in Resources */,
+				8C8B6DEF171BBC4C00AB230F /* pixite-logo-wide.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

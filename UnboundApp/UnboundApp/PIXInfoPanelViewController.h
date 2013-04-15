@@ -11,7 +11,7 @@
 @class PIXPhoto;
 @class PIXPageViewController;
 
-@interface PIXInfoPanelViewController : NSViewController
+@interface PIXInfoPanelViewController : NSViewController <NSTableViewDataSource, NSTableViewDelegate>
 
 @property (nonatomic, strong) PIXPhoto * photo;
 @property (weak) IBOutlet PIXPageViewController * pageView;

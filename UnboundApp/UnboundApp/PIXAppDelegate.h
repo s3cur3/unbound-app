@@ -31,6 +31,7 @@
 - (IBAction)showMainWindow:(id)sender;
 - (IBAction)showIntroWindow:(id)sender;
 - (IBAction)showAboutWindow:(id)sender;
+- (IBAction)moreAppsPressed:(id)sender;
 
 @property (nonatomic, strong) IBOutlet NSMenuItem * progressItem;
 // for MASPreferences class:

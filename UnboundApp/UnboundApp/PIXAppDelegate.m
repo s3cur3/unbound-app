@@ -216,6 +216,14 @@
     [showAboutWindow showWindow:self];
 }
 
+
+- (IBAction)moreAppsPressed:(id)sender
+{
+    NSURL * url = [NSURL URLWithString:@"http://www.pixiteapps.com/more"];
+    [[NSWorkspace sharedWorkspace] openURL:url];
+}
+
+
 #pragma mark - MASPreferences Class methods:
 
 - (IBAction)openPreferences:(id)sender
