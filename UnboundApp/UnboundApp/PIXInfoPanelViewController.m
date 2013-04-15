@@ -202,6 +202,22 @@
     [self.mapView setDelegate:nil];
 }
 
+-(IBAction)moreExifAction:(id)sender
+{
+    
+}
+
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
+{
+    return 3;
+}
+
+- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
+{
+    return @"Hello...";
+}
+
 
 
 @end

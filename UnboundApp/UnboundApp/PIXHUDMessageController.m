@@ -101,7 +101,7 @@
     [self.title setStringValue:self.titleString];
     [self.icon setImage:self.iconImage];
     
-    [self.window setAlphaValue:0.8];
+    
     
     // Turn off opacity so that the parts of the window that are not drawn into are transparent.
     [self.window setOpaque:NO];
@@ -129,11 +129,18 @@
         centerOrigin.x += parentWindow.frame.origin.x;
         centerOrigin.y += parentWindow.frame.origin.y;
         
+        // if the window is less than 500 px high then center the view vertically
+        if(parentWindow.frame.size.height < 500)
+        {
+            centerOrigin.y += (self.window.frame.size.height/2);
+        }
+        
         [self.window setFrameTopLeftPoint:centerOrigin];
         
         [self.window setViewsNeedDisplay:YES];
     }
     
+    [self.window setAlphaValue:1.0];
     
     double delayInSeconds = timeInterval;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
@@ -145,14 +152,29 @@
         [self.window.animator setAlphaValue:0.0];
         
         
-        double delayToClose = 1.5;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayToClose * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            
-            // close the window after the fade is complete
-            [self close];
-            
-        });
+        [self performSelector:@selector(close) withObject:nil afterDelay:1.5];
+        
+    });
+}
+
+-(void)rewakeForTimeInterval:(NSTimeInterval)timeInterval
+{
+    [[NSAnimationContext currentContext] setDuration:0.0];
+    [self.window.animator setAlphaValue:1.0];
+    
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(close) object:nil];
+    
+    double delayInSeconds = timeInterval;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+        // fade the window for 1 second
+        //[self.window.animator setDuration:1.0];
+        [[NSAnimationContext currentContext] setDuration:1.5];
+        [self.window.animator setAlphaValue:0.0];
+        
+        [self performSelector:@selector(close) withObject:nil afterDelay:1.5];
+        
         
     });
 }

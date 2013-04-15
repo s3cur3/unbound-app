@@ -101,6 +101,8 @@
 		8C4B9CA616DC30FE00F6BADD /* PIXMiniExifViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B9CA416DC30FB00F6BADD /* PIXMiniExifViewController.m */; };
 		8C4B9CA716DC30FE00F6BADD /* PIXMiniExifViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4B9CA516DC30FD00F6BADD /* PIXMiniExifViewController.xib */; };
 		8C4B9CAA16DC436B00F6BADD /* PIXExifBGView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B9CA916DC436B00F6BADD /* PIXExifBGView.m */; };
+		8C5019C6171C7A4600829914 /* softtap.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8C5019C5171C7A4600829914 /* softtap.wav */; };
+		8C5019CA171C803F00829914 /* click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8C5019C9171C803F00829914 /* click.wav */; };
 		8C53DFE816FB76E9008EF8B1 /* PIXInfoPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C53DFE716FB76E8008EF8B1 /* PIXInfoPanelViewController.m */; };
 		8C53DFEE16FB7C36008EF8B1 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFED16FB7C36008EF8B1 /* MapKit.framework */; };
 		8C53DFF216FB7CED008EF8B1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFF116FB7CED008EF8B1 /* CoreFoundation.framework */; };
@@ -154,6 +156,8 @@
 		8C9AA2BA16FFE39500D989CA /* captionbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9AA2B816FFE39500D989CA /* captionbutton@2x.png */; };
 		8C9AA2BE1700A5C100D989CA /* PIXSlideshowOptonsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9AA2BC1700A5C000D989CA /* PIXSlideshowOptonsViewController.m */; };
 		8C9AA2BF1700A5C100D989CA /* PIXSlideshowOptonsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C9AA2BD1700A5C000D989CA /* PIXSlideshowOptonsViewController.xib */; };
+		8CC94925171C92E900EC1431 /* success.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC94923171C92E900EC1431 /* success.png */; };
+		8CC94926171C92E900EC1431 /* success@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC94924171C92E900EC1431 /* success@2x.png */; };
 		8CE460DB16CB650600CDFA04 /* btn-roundrect-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D716CB650600CDFA04 /* btn-roundrect-down.png */; };
 		8CE460DC16CB650600CDFA04 /* btn-roundrect-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D816CB650600CDFA04 /* btn-roundrect-down@2x.png */; };
 		8CE460DD16CB650600CDFA04 /* btn-roundrect-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D916CB650600CDFA04 /* btn-roundrect-up.png */; };
@@ -362,6 +366,8 @@
 		8C4B9CA516DC30FD00F6BADD /* PIXMiniExifViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXMiniExifViewController.xib; sourceTree = "<group>"; };
 		8C4B9CA816DC436A00F6BADD /* PIXExifBGView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXExifBGView.h; sourceTree = "<group>"; };
 		8C4B9CA916DC436B00F6BADD /* PIXExifBGView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXExifBGView.m; sourceTree = "<group>"; };
+		8C5019C5171C7A4600829914 /* softtap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = softtap.wav; path = "../../../git-test/sounds/softtap.wav"; sourceTree = "<group>"; };
+		8C5019C9171C803F00829914 /* click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = click.wav; sourceTree = "<group>"; };
 		8C53DFE616FB76E8008EF8B1 /* PIXInfoPanelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXInfoPanelViewController.h; sourceTree = "<group>"; };
 		8C53DFE716FB76E8008EF8B1 /* PIXInfoPanelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXInfoPanelViewController.m; sourceTree = "<group>"; };
 		8C53DFED16FB7C36008EF8B1 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = UnboundApp/MapKit.framework; sourceTree = "<group>"; };
@@ -430,6 +436,8 @@
 		8C9AA2BB1700A5BF00D989CA /* PIXSlideshowOptonsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXSlideshowOptonsViewController.h; sourceTree = "<group>"; };
 		8C9AA2BC1700A5C000D989CA /* PIXSlideshowOptonsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSlideshowOptonsViewController.m; sourceTree = "<group>"; };
 		8C9AA2BD1700A5C000D989CA /* PIXSlideshowOptonsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXSlideshowOptonsViewController.xib; sourceTree = "<group>"; };
+		8CC94923171C92E900EC1431 /* success.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = success.png; sourceTree = "<group>"; };
+		8CC94924171C92E900EC1431 /* success@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success@2x.png"; sourceTree = "<group>"; };
 		8CE460D716CB650600CDFA04 /* btn-roundrect-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-roundrect-down.png"; sourceTree = "<group>"; };
 		8CE460D816CB650600CDFA04 /* btn-roundrect-down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-roundrect-down@2x.png"; sourceTree = "<group>"; };
 		8CE460D916CB650600CDFA04 /* btn-roundrect-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-roundrect-up.png"; sourceTree = "<group>"; };
@@ -562,6 +570,8 @@
 		1D4A1D97167AD90200C9A895 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8C5019C9171C803F00829914 /* click.wav */,
+				8C5019C5171C7A4600829914 /* softtap.wav */,
 				1DB2F86C167AC07F008AC0F7 /* icon.icns */,
 				1DB2F86D167AC07F008AC0F7 /* unbound_icon_512x512.png */,
 				8C1469301714B1C7009ECCC5 /* Leap Tutorial Videos */,
@@ -584,6 +594,8 @@
 				8CFC13BA16FD2B21004CA7D5 /* contract.png */,
 				8CFC13BB16FD2B21004CA7D5 /* contract@2x.png */,
 				8CFC13BC16FD2B21004CA7D5 /* expand.png */,
+				8CC94923171C92E900EC1431 /* success.png */,
+				8CC94924171C92E900EC1431 /* success@2x.png */,
 				8CFC13C216FD6111004CA7D5 /* play.png */,
 				8CFC13C316FD6111004CA7D5 /* play@2x.png */,
 				8C8B6DEE171BBC4C00AB230F /* pixite-logo-wide.png */,
@@ -1115,6 +1127,10 @@
 				8C82A86317192798009DD803 /* fullnophoto@2x.png in Resources */,
 				8C82A868171A5138009DD803 /* PIXAboutWindowController.xib in Resources */,
 				8C8B6DEF171BBC4C00AB230F /* pixite-logo-wide.png in Resources */,
+				8C5019C6171C7A4600829914 /* softtap.wav in Resources */,
+				8C5019CA171C803F00829914 /* click.wav in Resources */,
+				8CC94925171C92E900EC1431 /* success.png in Resources */,
+				8CC94926171C92E900EC1431 /* success@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

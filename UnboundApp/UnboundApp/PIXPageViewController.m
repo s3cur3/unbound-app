@@ -592,6 +592,8 @@
 {
     if(![self.view.window isKeyWindow]) return;
     
+    [(NSSound *)[NSSound soundNamed:@"Blow"] play];
+    
     [self.navigationViewController popViewController];
 }
 
@@ -606,7 +608,7 @@
     
     else
     {
-        [[NSSound soundNamed:@"Ping"] play];
+        NSBeep();
     }
     
     
@@ -624,8 +626,57 @@
     
     else
     {
-        [[NSSound soundNamed:@"Frog"] play];
+        NSBeep();
     }
+    
+    [self restartNextSlideIfNeeded];
+}
+
+-(void)leapPointerSelect:(NSPoint)normalizedPosition
+{
+    if(![self.view.window isKeyWindow]) return;
+    
+    if(normalizedPosition.x < 0.4)
+    {
+        if(self.pageController.selectedIndex-1 < [self.pagerData count])
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                
+                    [self.pageController navigateBack:nil];
+                
+            });
+            
+            [[NSSound soundNamed:@"click"] play];
+        }
+        
+        else
+        {
+            NSBeep();
+        }
+    }
+    
+    else
+    {
+        if(self.pageController.selectedIndex+1 < [self.pagerData count])
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                
+                [self.pageController navigateForward:nil];
+                
+            });
+            
+            [[NSSound soundNamed:@"click"] play];
+        }
+        
+        else
+        {
+            NSBeep();
+        }
+    }
+    
+    
     
     [self restartNextSlideIfNeeded];
 }

@@ -9,6 +9,8 @@
 #import <QTKit/QTKit.h>
 #import "PIXLeapTutorialWindowController.h"
 #import "PIXLeapInputManager.h"
+#import "PIXHUDMessageController.h"
+#import <AppKit/AppKit.h>
 
 @interface PIXLeapTutorialWindowController () <PIXLeapResponder>
 
@@ -21,6 +23,8 @@
 @property (weak) IBOutlet NSButton * lastButton;
 
 @property (weak) IBOutlet NSTextField * textField;
+
+@property (weak) PIXHUDMessageController * hudMessage;
 
 @property NSPoint windowStartPosition;
 
@@ -171,19 +175,17 @@
 {
     if(![self.window isKeyWindow]) return;
     
-    if(self.currentSlide == 0 || self.currentSlide == 3)
-    {
-        // animate the transition
-        CATransition *animation = [CATransition animation];
-        [animation setDuration:0.5];
-        
-        [animation setType:kCATransitionPush];
-        [animation setSubtype:kCATransitionFromRight];
-        
-        [self.movieView.layer addAnimation:animation forKey:@"slideShowFade"];
-        
-        [self nextSlide:nil];
-    }
+    // animate the transition
+    CATransition *animation = [CATransition animation];
+    [animation setDuration:0.5];
+    
+    [animation setType:kCATransitionPush];
+    [animation setSubtype:kCATransitionFromRight];
+    
+    [self.movieView.layer addAnimation:animation forKey:@"slideShowFade"];
+    
+    [self nextSlide:nil];
+    
 }
 
 -(void)leapSwipeUp
@@ -192,16 +194,24 @@
     
     if(self.currentSlide == 2)
     {
-        // animate the transition
-        CATransition *animation = [CATransition animation];
-        [animation setDuration:0.5];
         
-        [animation setType:kCATransitionReveal];
-        [animation setSubtype:kCATransitionFromBottom];
+        if(!self.hudMessage)
+        {
+            // present the hud message that the leap connected
+            PIXHUDMessageController * messageHUD = [PIXHUDMessageController windowWithTitle:@"You Swiped Up!" andIcon:[NSImage imageNamed:@"success"]];
+            [messageHUD presentInParentWindow:self.window forTimeInterval:0.7];
+            self.hudMessage = messageHUD;
+        }
         
-        [self.movieView.layer addAnimation:animation forKey:@"slideShowFade"];
+        else
+        {
+            [self.hudMessage rewakeForTimeInterval:0.7];
+        }
         
-        [self nextSlide:nil];
+        [(NSSound *)[NSSound soundNamed:@"Blow"] play];
+        
+        
+        
     }
 }
 
@@ -211,32 +221,22 @@
     
     if(self.currentSlide == 1)
     {
-        // animate the transition
-        CATransition *animation = [CATransition animation];
-        [animation setDuration:0.5];
         
-        /*
-        //NSData *shadingBitmapData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"restrictedshine" ofType:@"tiff"]]; // took from Apple's example
-        //NSBitmapImageRep *shadingBitmap = [[NSBitmapImageRep alloc] initWithData:shadingBitmapData];
-        //CIImage *inputShadingImage = [[CIImage alloc] initWithBitmapImageRep:shadingBitmap];
-        CIFilter *transitionFilter = [CIFilter filterWithName:@"CIRippleTransition"];
-        [transitionFilter setDefaults];
-        [transitionFilter setValue:[CIVector vectorWithX:NSMidX(self.movieView.bounds) Y:NSMidY(self.movieView.bounds)] forKey:@"inputCenter"];
-        [transitionFilter setValue:[CIVector vectorWithX:self.movieView.bounds.origin.x
-                                                       Y:self.movieView.bounds.origin.y
-                                                       Z:self.movieView.bounds.size.width
-                                                       W:self.movieView.bounds.size.height]
-                            forKey:@"inputExtent"];
+        if(!self.hudMessage)
+        {
+            // present the hud message that the leap connected
+            PIXHUDMessageController * messageHUD = [PIXHUDMessageController windowWithTitle:@"You Tapped!" andIcon:[NSImage imageNamed:@"success"]];
+            [messageHUD presentInParentWindow:self.window forTimeInterval:0.7];
+            self.hudMessage = messageHUD;
+        }
         
-        //[transitionFilter setValue:inputShadingImage forKey:@"inputShadingImage"];
+        else
+        {
+            [self.hudMessage rewakeForTimeInterval:0.7];
+        }
+            
+        [(NSSound *)[NSSound soundNamed:@"click"] play];
         
-        */
-        [animation setType:kCATransitionMoveIn];
-        [animation setSubtype:kCATransitionFromTop];
-        
-        [self.movieView.layer addAnimation:animation forKey:@"slideShowFade"];
-        
-        [self nextSlide:nil];
     }
 }
 
@@ -252,7 +252,24 @@
 {
     if(![self.window isKeyWindow]) return;
     
-    self.windowStartPosition = self.window.frame.origin;
+    if(self.currentSlide == 3)
+    {
+        self.windowStartPosition = self.window.frame.origin;
+        
+        if(!self.hudMessage)
+        {
+            // present the hud message that the leap connected
+            PIXHUDMessageController * messageHUD = [PIXHUDMessageController windowWithTitle:@"Grab Started! Now move your fist." andIcon:[NSImage imageNamed:@"success"]];
+            [messageHUD presentInParentWindow:self.window forTimeInterval:1.5];
+            self.hudMessage = messageHUD;
+        }
+        
+        else
+        {
+            [self.hudMessage rewakeForTimeInterval:0.7];
+        }
+        
+    }
 }
 
 -(void)leapPanZoomPosition:(NSPoint)position andScale:(CGFloat)scale

@@ -1399,10 +1399,12 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         
         else
         {
-            return; // do nothing if we're at the furthest right column
+            lastSelectedPoint.column = 0;
+            lastSelectedPoint.row++;
         }
         
         newIndex = lastSelectedPoint.column-1 + ((lastSelectedPoint.row-1) * self.columnsInGridView);
+        
         
         if(newIndex >= numberOfItems)
         {
@@ -1625,6 +1627,8 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     if(self.window == nil) return;
     
     if(![self.window isKeyWindow]) return;
+    
+    [[NSSound soundNamed:@"click"] play];
     
     //static NSUInteger lastPointed = -1;
     

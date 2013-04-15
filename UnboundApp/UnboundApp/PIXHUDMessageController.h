@@ -23,5 +23,8 @@
 
 -(void)presentInParentWindow:(NSWindow *)parentWindow forTimeInterval:(NSTimeInterval)timeInterval;
 
+-(void)rewakeForTimeInterval:(NSTimeInterval)timeInterval;
+
+
 @end
 

@@ -27,6 +27,7 @@
 @property CGFloat pinchLastDepth;
 @property NSPoint pinchStartPosition;
 
+@property NSPoint smoothedNormalizedPoint;
 @property NSPoint smoothedNormalizedPalmPoint;
 @property CGFloat smoothedPalmDepth;
 
@@ -234,6 +235,14 @@
         if(normalizedPoint.x > 1.0) normalizedPoint.x = 1.0;
         if(normalizedPoint.y > 1.0) normalizedPoint.y = 1.0;
         
+        if(self.smoothedNormalizedPoint.y < 0)
+        {
+            self.smoothedNormalizedPoint = normalizedPoint;
+        }
+        
+        self.smoothedNormalizedPoint = CGPointMake((self.smoothedNormalizedPoint.x * 0.8) + (normalizedPoint.x * 0.2),
+                                                   (self.smoothedNormalizedPoint.y * 0.94) + (normalizedPoint.y * 0.06));
+        
         if(!useFist)
         {
             // handle two finger pinch
@@ -321,7 +330,7 @@
             {
                 if([responder respondsToSelector:@selector(leapPointerPosition:)])
                 {
-                    [responder leapPointerPosition:normalizedPoint];
+                    [responder leapPointerPosition:self.smoothedNormalizedPoint];
                     
                     if([fingers count] < 2)
                     {
@@ -336,13 +345,22 @@
         
     }
     
+    else
+    {
+        self.smoothedNormalizedPoint = NSMakePoint(-1, -1);
+    }
+    
     
         
     NSArray *gestures = [frame gestures:nil];
     for (int g = 0; g < [gestures count]; g++) {
         LeapGesture *gesture = [gestures objectAtIndex:g];
         switch (gesture.type) {
+                
+                /*
             case LEAP_GESTURE_TYPE_CIRCLE: {
+                
+                
                 LeapCircleGesture *circleGesture = (LeapCircleGesture *)gesture;
 
                 
@@ -369,8 +387,12 @@
                 }
                 
                 return;
+                
+                
                 break;
             }
+                 
+                 */
             case LEAP_GESTURE_TYPE_SWIPE: {
                 LeapSwipeGesture *swipeGesture = (LeapSwipeGesture *)gesture;
 //                NSLog(@"Swipe id: %d, %@, position: %@, direction: %@, speed: %f",
@@ -399,13 +421,25 @@
                 break;
             }
             case LEAP_GESTURE_TYPE_KEY_TAP: {
-                //LeapKeyTapGesture *keyTapGesture = (LeapKeyTapGesture *)gesture;
-//                NSLog(@"Key Tap id: %d, %@, position: %@, direction: %@",
-//                      keyTapGesture.id, [PIXLeapInputManager stringForState:keyTapGesture.state],
-//                      keyTapGesture.position, keyTapGesture.direction);
+               
+                LeapKeyTapGesture *keytapGesture = (LeapKeyTapGesture *)gesture;
+                if([fingers count] < 3)
+                {
+                    // loop through the responders & fire
+                    for(id<PIXLeapResponder> responder in self.leapResponders)
+                    {
+                        if([responder respondsToSelector:@selector(leapPointerSelect:)])
+                        {
+                            [responder leapPointerSelect:normalizedPoint];
+                            break; // no need to keep going down the responder chain
+                        }
+                    }
+                }
                 
                 break;
             }
+                
+                /*
             case LEAP_GESTURE_TYPE_SCREEN_TAP: {
                 LeapScreenTapGesture *screenTapGesture = (LeapScreenTapGesture *)gesture;
                 //NSLog(@"Screen Tap id: %d, %@, position: %@, direction: %@",
@@ -435,7 +469,7 @@
                 }
                 
                 break;
-            }
+            } */
             default:
                 //NSLog(@"Unknown gesture type");
                 break;
@@ -533,8 +567,8 @@
             
             // this will initiate a grab
             else if(avgPalmPos.z < 100 // only start grab if it's well into the view area
-                    //&& [[hands lastObject] sphereRadius] <= 100.0
-                    && [[[hands lastObject] palmVelocity] magnitude] < 100)
+                    && [[hands lastObject] sphereRadius] <= 100.0
+                    && [[[hands lastObject] palmVelocity] magnitude] < 100.0)
             {
                 self.smoothedPalmDepth = -avgPalmPos.z;
                 self.smoothedNormalizedPalmPoint = normalizedPoint;

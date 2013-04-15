@@ -15,8 +15,13 @@
 
 @property (nonatomic, strong) PIXPhoto * photo;
 @property (weak) IBOutlet PIXPageViewController * pageView;
+@property (weak) IBOutlet NSButton * moreExifButton;
+
+@property (weak) IBOutlet NSScrollView * exifScrollView;
 
 -(IBAction)fileNameAction:(id)sender;
+
+-(IBAction)moreExifAction:(id)sender;
 
 
 @end
