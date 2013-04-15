@@ -348,8 +348,8 @@ static NSString *kContentTitleKey, *kContentImageKey;
 {
     NSUInteger fileCount = self.selectedItems.count;
     if (fileCount>6) {
-        NSString *msg = [NSString stringWithFormat:@"Are you sure you want to open multiple info windows for %ld selected %@s?", fileCount, self.selectedItemsName];
-        NSString *aTitle = [NSString stringWithFormat:@"Get Info For %ld %@s", fileCount, self.selectedItemsName];
+        NSString *msg = [NSString stringWithFormat:@"Are you sure you want to open multiple Info windows for the %ld selected %@s?", fileCount, self.selectedItemsName];
+        NSString *aTitle = [NSString stringWithFormat:@"Get Info for %ld %@s", fileCount, [self.selectedItemsName capitalizedString]];
         if (![self verifyActionForItemsWithTitle:aTitle message:msg]) {
             return;
         }
@@ -394,7 +394,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
      @selector(getInfo:) keyEquivalent:@""];
     
     // Show in Finder
-    [menu addItemWithTitle:[NSString stringWithFormat:@"Show In Finder"] action:
+    [menu addItemWithTitle:[NSString stringWithFormat:@"Show in Finder"] action:
      @selector(revealInFinder:) keyEquivalent:@""];
     
     [menu addItem:[NSMenuItem separatorItem]];
@@ -415,7 +415,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
         NSArray *filePaths = [[self.selectedItems allObjects] valueForKey:@"path"];
         NSMenu *openWithMenu = [[PIXFileManager sharedInstance] openWithMenuItemForFiles:filePaths];
         NSMenuItem *openWithMenuItem = [[NSMenuItem alloc] init];
-        [openWithMenuItem setTitle:@"Open With"];
+        [openWithMenuItem setTitle:@"Open with"];
         [openWithMenuItem setSubmenu:openWithMenu];
         [menu addItem:openWithMenuItem];
         

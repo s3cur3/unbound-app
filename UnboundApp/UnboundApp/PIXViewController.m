@@ -60,7 +60,7 @@
      @selector(getInfo:) keyEquivalent:@""];
     
     // Show in Finder
-    [menu addItemWithTitle:[NSString stringWithFormat:@"Show In Finder"] action:
+    [menu addItemWithTitle:[NSString stringWithFormat:@"Show in Finder"] action:
      @selector(revealInFinder:) keyEquivalent:@""];
     
     [menu addItem:[NSMenuItem separatorItem]];
@@ -81,7 +81,7 @@
         NSArray *filePaths = [objects valueForKey:@"path"];
         NSMenu *openWithMenu = [[PIXFileManager sharedInstance] openWithMenuItemForFiles:filePaths];
         NSMenuItem *openWithMenuItem = [[NSMenuItem alloc] init];
-        [openWithMenuItem setTitle:@"Open With"];
+        [openWithMenuItem setTitle:@"Open with"];
         [openWithMenuItem setSubmenu:openWithMenu];
         [menu addItem:openWithMenuItem];
         
@@ -186,7 +186,7 @@
 //     @selector(getInfo:) keyEquivalent:@""];
 //    
 //    // Show in Finder
-//    [menu addItemWithTitle:[NSString stringWithFormat:@"Show In Finder"] action:
+//    [menu addItemWithTitle:[NSString stringWithFormat:@"Show in Finder"] action:
 //     @selector(revealInFinder:) keyEquivalent:@""];
 //    
 //    for (NSMenuItem * anItem in [menu itemArray])
