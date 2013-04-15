@@ -53,7 +53,7 @@
 {
     // hard coded screen position:
     
-    self.screenRect = CGRectMake(-120, 130, 240, 200);
+    self.screenRect = CGRectMake(-160, 130, 320, 230);
     
     self.controller = [[LeapController alloc] init];
     [self.controller addListener:self];
