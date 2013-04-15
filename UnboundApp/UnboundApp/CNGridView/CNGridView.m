@@ -1395,15 +1395,16 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         if(lastSelectedPoint.column < self.columnsInGridView)
         {
             lastSelectedPoint.column++;
+            newIndex = lastSelectedPoint.column-1 + ((lastSelectedPoint.row-1) * self.columnsInGridView);
         }
         
         else
         {
-            lastSelectedPoint.column = 0;
-            lastSelectedPoint.row++;
+            newIndex = lastSelectedPoint.column-1 + ((lastSelectedPoint.row-1) * self.columnsInGridView);
+            newIndex++;
         }
         
-        newIndex = lastSelectedPoint.column-1 + ((lastSelectedPoint.row-1) * self.columnsInGridView);
+        
         
         
         if(newIndex >= numberOfItems)
@@ -1437,6 +1438,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         if(lastSelectedPoint.column > 1)
         {
             lastSelectedPoint.column--;
+            newIndex = lastSelectedPoint.column-1 + ((lastSelectedPoint.row-1) * self.columnsInGridView);
         }
         
         else
@@ -1444,12 +1446,17 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
             if([self.nextResponder respondsToSelector:@selector(moveLeft:)])
             {
                 [self.nextResponder moveLeft:sender];
+                return; // do nothing and pass along the message if we're at the furthest left column
             }
             
-            return; // do nothing and pass along the message if we're at the furthest left column
+            // if theres no responder for left then go up a row
+            newIndex = lastSelectedPoint.column-1 + ((lastSelectedPoint.row-1) * self.columnsInGridView);
+            newIndex--;
+            
+            
         }
         
-        newIndex = lastSelectedPoint.column-1 + ((lastSelectedPoint.row-1) * self.columnsInGridView);
+        
         
     }
     
