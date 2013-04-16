@@ -10,11 +10,9 @@
 
 @interface PIXHUDMessageController ()
 
-@property (strong) NSString * titleString;
-@property (strong) NSImage * iconImage;
 
-@property IBOutlet NSTextField * title;
-@property IBOutlet NSImageView * icon;
+@property IBOutlet NSTextField * titleFeild;
+@property IBOutlet NSImageView * iconView;
 
 @end
 
@@ -75,8 +73,8 @@
 {
     PIXHUDMessageController * hudWindow = [[PIXHUDMessageController alloc] initWithWindowNibName:@"PIXHUDMessageController"];
     
-    [hudWindow setTitleString:title];
-    [hudWindow setIconImage:icon];
+    [hudWindow setTitle:title];
+    [hudWindow setIcon:icon];
     
     
     return hudWindow;
@@ -98,8 +96,8 @@
 - (void)windowDidLoad
 {
         
-    [self.title setStringValue:self.titleString];
-    [self.icon setImage:self.iconImage];
+    [self.titleFeild setStringValue:self.title];
+    [self.iconView setImage:self.icon];
     
     
     
@@ -177,6 +175,18 @@
         
         
     });
+}
+
+-(void)setIcon:(NSImage *)icon
+{
+    _icon = icon;
+    [self.iconView setImage:_icon];
+}
+
+-(void)setTitle:(NSString *)title
+{
+    _title = title;    
+    [self.titleFeild setStringValue:_title];
 }
 
 @end

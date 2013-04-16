@@ -25,6 +25,9 @@
 
 -(void)rewakeForTimeInterval:(NSTimeInterval)timeInterval;
 
+@property (strong, nonatomic) NSString * title;
+@property (strong, nonatomic) NSImage * icon;
+
 
 @end
 

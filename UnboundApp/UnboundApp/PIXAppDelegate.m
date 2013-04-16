@@ -223,6 +223,25 @@
     [[NSWorkspace sharedWorkspace] openURL:url];
 }
 
+- (IBAction)unboundWebsitePressed:(id)sender
+{
+    NSURL * url = [NSURL URLWithString:@"http://www.pixiteapps.com/more"];
+    [[NSWorkspace sharedWorkspace] openURL:url];
+}
+
+- (IBAction)coolLeapAppsPressed:(id)sender
+{
+    NSURL * url = [NSURL URLWithString:@"http://www.unboundformac.com/coolleapapps.html"];
+    [[NSWorkspace sharedWorkspace] openURL:url];
+}
+
+- (IBAction)helpPressed:(id)sender
+{
+    NSURL * url = [NSURL URLWithString:@"mailto:info@unboundformac.com?subject=Unbound%20for%20Mac%20Support"];
+    [[NSWorkspace sharedWorkspace] openURL:url];
+}
+
+
 
 #pragma mark - MASPreferences Class methods:
 

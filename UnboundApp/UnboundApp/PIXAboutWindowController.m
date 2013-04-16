@@ -39,7 +39,7 @@
 
 -(IBAction)unboundLearnMore:(id)sender
 {
-    NSURL * url = [NSURL URLWithString:@"http://www.pixiteapps.com"];
+    NSURL * url = [NSURL URLWithString:@"http://www.pixiteapps.com/more"];
     [[NSWorkspace sharedWorkspace] openURL:url];
 }
 

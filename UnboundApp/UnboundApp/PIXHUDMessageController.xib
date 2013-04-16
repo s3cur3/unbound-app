@@ -134,19 +134,19 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">title</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="569797195"/>
-					</object>
-					<int key="connectionID">28</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">icon</string>
+						<string key="label">iconView</string>
 						<reference key="source" ref="1001"/>
 						<reference key="destination" ref="25334815"/>
 					</object>
-					<int key="connectionID">29</int>
+					<int key="connectionID">43</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">titleFeild</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="569797195"/>
+					</object>
+					<int key="connectionID">44</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -414,7 +414,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">42</int>
+			<int key="maxID">44</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -430,16 +430,16 @@
 					<string key="className">PIXHUDMessageController</string>
 					<string key="superclassName">NSWindowController</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="icon">NSImageView</string>
-						<string key="title">NSTextField</string>
+						<string key="iconView">NSImageView</string>
+						<string key="titleFeild">NSTextField</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="icon">
-							<string key="name">icon</string>
+						<object class="IBToOneOutletInfo" key="iconView">
+							<string key="name">iconView</string>
 							<string key="candidateClassName">NSImageView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="title">
-							<string key="name">title</string>
+						<object class="IBToOneOutletInfo" key="titleFeild">
+							<string key="name">titleFeild</string>
 							<string key="candidateClassName">NSTextField</string>
 						</object>
 					</dictionary>

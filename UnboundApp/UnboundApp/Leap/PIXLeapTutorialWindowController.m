@@ -23,6 +23,8 @@
 @property (weak) IBOutlet NSButton * lastButton;
 
 @property (weak) IBOutlet NSTextField * textField;
+@property (weak) IBOutlet NSTextField * actionField;
+@property (weak) IBOutlet NSTextField * titleField;
 
 @property (weak) PIXHUDMessageController * hudMessage;
 
@@ -86,25 +88,45 @@
         
         switch (self.currentSlide) {
             case 0:
-                self.textField.stringValue = @"The Leap Motion Controller\rlets you browse your photos\rwith simple hand motions.\r\rSwipe left or click 'next' to learn more.";
+                self.titleField.stringValue = @"A Quick Tutorial";
+                self.textField.stringValue = @"The Leap Motion Controller\rlets you browse your photos\rwith simple hand motions.";
+                self.actionField.stringValue = @"Swipe left or click 'next' to learn more.";
+                
                 
                 [self.nextButton setTitle:@"Next"];
                 [self.lastButton setHidden:YES];
                 break;
                 
             case 1:
-                self.textField.stringValue = @"Point at an item you want to open.\rTap into the screen or make a small\rcircle to select.\rTry tapping into the screen now.";
+                
+                self.titleField.stringValue = @"Tap to Select";
+                self.textField.stringValue = @"Point at an item you want to open.\rMake a quick 'Key Tap' gesture to select.";
+                self.actionField.stringValue = @"Try the 'Key Tap' now.";
                 
                 [self.lastButton setHidden:NO];
                 break;
                 
             case 2:
-                self.textField.stringValue = @"Swipe upwards with an open\rhand to go 'back' from any screen.\rTry it now.";
-                [self.nextButton setTitle:@"Next"];
+                
+                self.titleField.stringValue = @"Swipe Up to go Back";
+                self.textField.stringValue = @"Swipe upwards with an open\rhand to go 'back' from any screen.";
+                self.actionField.stringValue = @"Try the swipe now.";
+                
                 break;
                 
             case 3:
-                self.textField.stringValue = @"Swipe right and left to navigate photos.\r'Grab' to pan and zoom.\rTry grabbing now. Swipe left to finish.";
+                
+                self.titleField.stringValue = @"Tap to Navigate";
+                self.textField.stringValue = @"Move back and forth through photos by doing the 'Key Tap' to the right or left of the screen.";
+                self.actionField.stringValue = @"Try tapping forward and back now.";
+                [self.nextButton setTitle:@"Next"];
+                
+                break;
+                
+            case 4:
+                self.titleField.stringValue = @"Grab to Zoom";
+                self.textField.stringValue = @"'Grab' with a closed fist to pan and zoom fullscreen photos.";
+                self.actionField.stringValue = @"Try grabbing now. Swipe left to finish.";
                 
                 [self.nextButton setTitle:@"Done"];
                 break;
@@ -126,7 +148,7 @@
 
 - (IBAction)nextSlide:(id)sender
 {
-    if(sender != nil)
+    if(self.currentSlide < 4)
     {
         // animate the transition
         CATransition *animation = [CATransition animation];
@@ -136,10 +158,8 @@
         [animation setSubtype:kCATransitionFromRight];
         
         [self.movieView.layer addAnimation:animation forKey:@"slideShowFade"];
-    
-    }
-    if(self.currentSlide < 3)
-    {
+
+        
         self.currentSlide++;
         [self configureSlide];
     }
@@ -153,21 +173,24 @@
 
 - (IBAction)lastSlide:(id)sender
 {
-
-    // animate the transition
-    CATransition *animation = [CATransition animation];
-    [animation setDuration:0.5];
-    
-    [animation setType:kCATransitionPush];
-    [animation setSubtype:kCATransitionFromLeft];
-    
-    [self.movieView.layer addAnimation:animation forKey:@"slideShowFade"];
-    
-    
     if(self.currentSlide > 0)
     {
+        // animate the transition
+        CATransition *animation = [CATransition animation];
+        [animation setDuration:0.5];
+        
+        [animation setType:kCATransitionPush];
+        [animation setSubtype:kCATransitionFromLeft];
+        
+        [self.movieView.layer addAnimation:animation forKey:@"slideShowFade"];
+        
         self.currentSlide--;
         [self configureSlide];
+    }
+    
+    else
+    {
+        NSBeep();
     }
 }
 
@@ -175,14 +198,6 @@
 {
     if(![self.window isKeyWindow]) return;
     
-    // animate the transition
-    CATransition *animation = [CATransition animation];
-    [animation setDuration:0.5];
-    
-    [animation setType:kCATransitionPush];
-    [animation setSubtype:kCATransitionFromRight];
-    
-    [self.movieView.layer addAnimation:animation forKey:@"slideShowFade"];
     
     [self nextSlide:nil];
     
@@ -238,6 +253,49 @@
         [(NSSound *)[NSSound soundNamed:@"click"] play];
         
     }
+    
+    if(self.currentSlide == 3)
+    {
+        
+        if(normalizedPosition.x > 0.5)
+        {
+            if(!self.hudMessage)
+            {
+                // present the hud message that the leap connected
+                PIXHUDMessageController * messageHUD = [PIXHUDMessageController windowWithTitle:@"You Tapped Forward!" andIcon:[NSImage imageNamed:@"success-forward"]];
+                [messageHUD presentInParentWindow:self.window forTimeInterval:0.7];
+                self.hudMessage = messageHUD;
+            }
+            
+            else
+            {
+                [self.hudMessage setTitle:@"You Tapped Forward!"];
+                [self.hudMessage setIcon:[NSImage imageNamed:@"success-forward"]];
+                [self.hudMessage rewakeForTimeInterval:0.7];
+            }
+        }
+        
+        else
+        {
+            if(!self.hudMessage)
+            {
+                // present the hud message that the leap connected
+                PIXHUDMessageController * messageHUD = [PIXHUDMessageController windowWithTitle:@"You Tapped Back!" andIcon:[NSImage imageNamed:@"success-backward"]];
+                [messageHUD presentInParentWindow:self.window forTimeInterval:0.7];
+                self.hudMessage = messageHUD;
+            }
+            
+            else
+            {
+                [self.hudMessage setTitle:@"You Tapped Back!"];
+                [self.hudMessage setIcon:[NSImage imageNamed:@"success-backward"]];
+                [self.hudMessage rewakeForTimeInterval:0.7];
+            }
+        }
+        
+        [(NSSound *)[NSSound soundNamed:@"click"] play];
+        
+    }
 }
 
 
@@ -252,7 +310,7 @@
 {
     if(![self.window isKeyWindow]) return;
     
-    if(self.currentSlide == 3)
+    if(self.currentSlide == 4)
     {
         self.windowStartPosition = self.window.frame.origin;
         
@@ -276,7 +334,7 @@
 {
     if(![self.window isKeyWindow]) return;
     
-    if(self.currentSlide == 3)
+    if(self.currentSlide == 4)
     {
         NSRect screenFrame = self.window.screen.frame;
         
