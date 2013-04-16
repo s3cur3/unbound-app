@@ -20,7 +20,13 @@
 @property (weak) IBOutlet NSTextField * resolution;
 @property (weak) IBOutlet NSTextField * filesize;
 
+@property (weak) IBOutlet NSLayoutConstraint * exifHeight;
+
 @property (weak) IBOutlet MKMapView * mapView;
+
+@property (strong) NSMutableArray * exifStringArray;
+
+@property BOOL isShowingMoreExif;
 
 
 @end
@@ -56,6 +62,11 @@
         
         [self updateLabels];
         [self updateMap];
+        
+        if(self.isShowingMoreExif)
+        {
+            [self convertAndRefreshExif];
+        }
     }
 }
 
@@ -204,18 +215,138 @@
 
 -(IBAction)moreExifAction:(id)sender
 {
+    if(self.isShowingMoreExif)
+    {
+        self.isShowingMoreExif = NO;
+        [self.exifHeight.animator setConstant:92];
+        
+        self.moreExifButton.title = @"More ▾";
+        
+        [self.exifScrollView removeFromSuperview];
+    }
     
+    else
+    {
+        self.isShowingMoreExif = YES;
+        [self.exifHeight.animator setConstant:500];
+    
+        self.moreExifButton.title = @"Less ▴";
+        
+        [self convertAndRefreshExif];
+        
+        // add the scroll view to the exif view
+        
+        [self.exifHolder addSubview:self.exifScrollView];
+        [self.exifScrollView setTranslatesAutoresizingMaskIntoConstraints:NO];
+        
+        NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(_exifScrollView);
+        
+        NSArray *horizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_exifScrollView]-4-|"
+                                                                                 options:0
+                                                                                 metrics:nil
+                                                                                   views:viewsDictionary];
+        
+        NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-92-[_exifScrollView]-8-|"
+                                                                                 options:0
+                                                                                 metrics:nil
+                                                                                   views:viewsDictionary];
+        
+        [self.exifHolder addConstraints:horizontalConstraints];
+        [self.exifHolder addConstraints:verticalConstraints];
+        
+        
+    }
+    
+    
+}
+
+-(void)convertAndRefreshExif
+{
+    self.exifStringArray = [self exifDictToStringArray:self.photo.exifData];
+    
+    [self.exifTableView reloadData];
+}
+
+-(NSMutableArray *)exifDictToStringArray:(NSDictionary *)inputDict
+{
+    NSMutableArray * outputArray = [NSMutableArray new];
+    
+    [inputDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        if ([obj isKindOfClass:[NSDictionary class]]) {
+            
+            if([(NSDictionary *)obj count] > 0)
+            {
+                [outputArray addObject:@{@"left": key}];
+                [outputArray addObjectsFromArray:[self exifDictToStringArray:(NSDictionary *)obj]];
+            }
+        }
+        else if ([obj isKindOfClass:[NSString class]])
+        {
+            [outputArray addObject:@{@"right": obj, @"left": [NSString stringWithFormat:@" %@",key]}];
+        } else if ([obj respondsToSelector:@selector(stringValue)])
+        {
+            [outputArray addObject:@{@"right": [obj stringValue], @"left": [NSString stringWithFormat:@" %@",key]}];
+        }
+    }];
+        
+    return outputArray;
 }
 
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-    return 3;
+    [aTableView setDelegate:self];
+    
+    NSInteger count = [self.exifStringArray count];
+    return count;
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-    return @"Hello...";
+    if(rowIndex < [self.exifStringArray count])
+    {
+        NSDictionary * rowDict = [self.exifStringArray objectAtIndex:rowIndex];
+        
+        NSString * exifString = [rowDict objectForKey:aTableColumn.identifier];
+        return exifString;
+        
+        
+    }
+
+    return @"";
+}
+
+
+-(void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex {
+    // Maybe a test on the table column is recommanded if some cells should not be modified
+
+    NSDictionary * rowDict = [self.exifStringArray objectAtIndex:rowIndex];
+    
+    if ([rowDict objectForKey:@"right"]) {
+        [aCell setFont:[NSFont fontWithName:@"Helvetica" size:10]];
+    } else {
+        [aCell setFont:[NSFont fontWithName:@"Helvetica bold" size:11]];
+    }
+}
+
+- (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
+    // Grab the fully prepared cell with our content filled in. Note that in IB the cell's Layout is set to Wraps.
+    NSCell *cell = [self.exifTableView preparedCellAtColumn:1 row:row];
+    
+    // See how tall it naturally would want to be if given a restricted with, but unbound height
+    CGFloat theWidth = [(NSTableColumn *)[[self.exifTableView tableColumns] objectAtIndex:1] width];
+    NSRect constrainedBounds = NSMakeRect(0, 0, theWidth, CGFLOAT_MAX);
+    NSSize naturalSize = [cell cellSizeForBounds:constrainedBounds];
+    
+    // compute and return row height
+    CGFloat result;
+    // Make sure we have a minimum height -- use the table's set height as the minimum.
+    if (naturalSize.height > [self.exifTableView rowHeight]) {
+        result = naturalSize.height;
+    } else {
+        result = [self.exifTableView rowHeight];
+    }
+    return result;
 }
 
 
