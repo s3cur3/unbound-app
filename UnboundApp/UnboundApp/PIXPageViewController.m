@@ -579,6 +579,10 @@
     //self.controlWindow = nil;
     //self.controlView = nil;
     
+    if (self.isPlayingSlideshow) {
+        [self stopSlideShow:nil];
+    }
+    
     [[PIXLeapInputManager sharedInstance] removeResponder:self];
     
     [self.pageController removeObserver:self forKeyPath:@"selectedIndex"];
@@ -986,6 +990,69 @@
     _album = album;
 }
 
+-(void)preloadNextImagesForShuffledSlideshowAtIndex:(NSUInteger)anIndex
+{
+    //NSCParameterAssert(self.currentSlide==anIndex);
+    NSCParameterAssert(self.isPlayingSlideshow);
+    NSCParameterAssert([[NSUserDefaults standardUserDefaults] boolForKey:@"slideshowShouldShuffle"]);
+    
+    int currentSelectedIndex = [[self.slideshowPhotoIndexes objectAtIndex:self.currentSlide] intValue];
+    DLog(@"Current selected photo index : %d", currentSelectedIndex);
+    for (int i = (int)self.currentSlide; i<self.slideshowPhotoIndexes.count; i++)
+    {
+        PIXPhoto *aNewPhoto = [self.pagerData objectAtIndex:i];
+        [(PIXPhoto *)aNewPhoto fullsizeImageStartLoadingIfNeeded:YES];
+        DLog(@"Pre-loading photo at shuffled index %d", i);
+        if (i-(int)self.currentSlide >= 5) {
+            DLog(@"Started loading 5 images.");
+            break;
+        }
+    }
+    
+    
+//    PIXPhoto *aPhoto = (PIXPhoto *)[self.pagerData objectAtIndex:anIndex];
+//    [(PIXPhoto *)aPhoto fullsizeImageStartLoadingIfNeeded:YES];
+    
+//    NSUInteger pagerDataCount = [self.pagerData count];
+//    NSUInteger startIndex = anIndex>=1 ? anIndex-1 : 0;
+//    
+//    NSUInteger rangeLength = 5;
+//    if (startIndex+5 > pagerDataCount) {
+//        rangeLength = pagerDataCount-startIndex;
+//    }
+//    
+//    NSRange nearbyItemsRange = NSMakeRange(startIndex, rangeLength);
+    //NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
+   
+
+
+//    int rangeLength = (int)self.slideshowPhotoIndexes.count-(currentSelectedIndex+1);
+//    if (rangeLength > 5) {
+//        rangeLength = 5;
+//    }
+    //NSArray *subArray = [self.slideshowPhotoIndexes subarrayWithRange:NSMakeRange(currentSelectedIndex, rangeLength)];
+    
+
+//    for (id aShuffledPhotoIndex in subArray)
+//    {
+//        [indexSet addIndex:[aShuffledPhotoIndex intValue]];
+//    }
+//    DLog(@"indexSet : %@", indexSet);
+//    NSSet *newPhotosToPreload = [NSSet setWithArray:[self.pagerData objectsAtIndexes:indexSet]];
+////    for (id aPreloadPhoto in newPhotosToPreload) {
+////        [(PIXPhoto *)aPreloadPhoto fullsizeImageStartLoadingIfNeeded:YES];
+////    }
+//    
+//    [newPhotosToPreload enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+//        //
+//        [(PIXPhoto *)obj fullsizeImageStartLoadingIfNeeded:YES];
+//    }];
+    
+
+
+    
+}
+
 -(void)preloadNextImagesForIndex:(NSUInteger)anIndex
 {
     PIXPhoto *aPhoto = (PIXPhoto *)[self.pagerData objectAtIndex:anIndex];
@@ -1001,17 +1068,23 @@
     
     NSRange nearbyItemsRange = NSMakeRange(startIndex, rangeLength);
     NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSetWithIndexesInRange:nearbyItemsRange];
+    DLog(@"indexSet : %@", indexSet);
     
-    // if we're playing a slideshow and we're in shuffle, then also preload the next two shuffle photos
-    if(self.isPlayingSlideshow && [[NSUserDefaults standardUserDefaults] boolForKey:@"slideshowShouldShuffle"])
-    {
-        int slideToLoad = (int)self.currentSlide+1;
-        
-        if(slideToLoad < self.slideshowPhotoIndexes.count)
-        {
-            [indexSet addIndex:[[self.slideshowPhotoIndexes objectAtIndex:slideToLoad] intValue]];
-        }
-    }
+//    // if we're playing a slideshow and we're in shuffle, then also preload the next two shuffle photos
+//    if(self.isPlayingSlideshow && [[NSUserDefaults standardUserDefaults] boolForKey:@"slideshowShouldShuffle"])
+//    {
+//        [indexSet removeAllIndexes];
+//        
+//        int slideToLoad = (int)self.currentSlide+1;
+//        
+//        if(slideToLoad < self.slideshowPhotoIndexes.count)
+//        {
+//            [indexSet addIndex:[[self.slideshowPhotoIndexes objectAtIndex:slideToLoad] intValue]];
+//        }
+//        DLog(@"Slideshow shuffled indexSet : %@", indexSet);
+//    } else if (self.isPlayingSlideshow) {
+//        DLog(@"Slideshow not shuffled indexSet : %@", indexSet);
+//    }
     
     NSSet *newPhotosToPreload = [NSSet setWithArray:[self.pagerData objectsAtIndexes:indexSet]];
     
@@ -1033,7 +1106,7 @@
         [(PIXPhoto *)obj fullsizeImageStartLoadingIfNeeded:YES];
     }];
     
-    NSRange previousFarItemsRange = NSMakeRange(0, startIndex);
+    NSRange previousFarItemsRange = NSMakeRange(0, startIndex); 
     NSIndexSet *previndexSet = [NSIndexSet indexSetWithIndexesInRange:previousFarItemsRange];
     NSSet *prevItemsToRelease = [NSSet setWithArray:[self.pagerData objectsAtIndexes:previndexSet]];
     [prevItemsToRelease enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
@@ -1073,7 +1146,11 @@
 -(void)startPreloadForController:(NSPageController *)pageController
 {
     //[self preloadNextImagesForIndex:pageController.selectedIndex];
-    [self preloadNextImagesForIndex:pageController.selectedIndex];
+    if (self.isPlayingSlideshow && [[NSUserDefaults standardUserDefaults] boolForKey:@"slideshowShouldShuffle"]) {
+        [self preloadNextImagesForShuffledSlideshowAtIndex:pageController.selectedIndex];
+    } else {
+        [self preloadNextImagesForIndex:pageController.selectedIndex];
+    }
 //    double delayInSeconds = 0.1;
 //    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
 //    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
