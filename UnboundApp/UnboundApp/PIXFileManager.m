@@ -544,7 +544,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     if ([[NSFileManager defaultManager]
          fileExistsAtPath: newFilePath])
     {
-        NSString *errMsg = [NSString stringWithFormat:@"There's already a directory with the name \"%@\" at this album's location. Please enter a new name.", aNewName];
+        NSString *errMsg = [NSString stringWithFormat:@"There's already a directory with the name \"%@\" at this album's location. Please enter a different name.", aNewName];
         NSRunAlertPanel(@"Duplicate Album Name", errMsg, @"OK", nil, nil);
         return NO;
     }
@@ -709,7 +709,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     if ([[NSFileManager defaultManager]
          fileExistsAtPath: newFilePath])
     {
-        NSString *errMsg = [NSString stringWithFormat:@"There's already a photo with the name \"%@\" at this album's location. Please enter a new name.", aNewName];
+        NSString *errMsg = [NSString stringWithFormat:@"There's already a photo with the name \"%@\" at this album's location. Please enter a different name.", aNewName];
         NSRunAlertPanel(@"Duplicate Photo Name", errMsg, @"OK", nil, nil);
         return NO;
     }
