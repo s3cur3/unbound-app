@@ -203,11 +203,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXInfoPanelViewController.m"
-         timestampString = "387773118.39734"
+         timestampString = "387789490.039444"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "310"
-         endingLineNumber = "310"
+         startingLineNumber = "326"
+         endingLineNumber = "326"
          landmarkName = "-tableView:objectValueForTableColumn:row:"
          landmarkType = "5">
       </FileBreakpoint>

@@ -276,7 +276,23 @@
             
             if([(NSDictionary *)obj count] > 0)
             {
-                [outputArray addObject:@{@"left": key}];
+                // trip {}'s from exif section titles
+                NSString * sectionTitle = (NSString * )key;
+                
+                if([sectionTitle hasPrefix:@"{"])
+                {
+                    sectionTitle = [sectionTitle substringFromIndex:1];
+                }
+                
+                if([sectionTitle hasSuffix:@"}"])
+                {
+                    sectionTitle = [sectionTitle substringToIndex:[sectionTitle length]-1];
+                }
+                
+                
+                [outputArray addObject:@{@"left": sectionTitle}];
+                
+                // recursively traverse section
                 [outputArray addObjectsFromArray:[self exifDictToStringArray:(NSDictionary *)obj]];
             }
         }
