@@ -841,11 +841,11 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     NSPoint point = [self rectForItemAtIndex:index].origin;
     point.x = 0;
     
-    
+    CGFloat currentY = self.clippedRect.origin.y;
     CGFloat scrollY = -1;
     
     // if we need to scroll
-    if (point.y-self.headerSpace < self.clippedRect.origin.y)
+    if (point.y-self.headerSpace < currentY)
     {
         scrollY = point.y - self.headerSpace;
     }
@@ -854,6 +854,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     {
         scrollY = (point.y+self.itemSize.height)-self.clippedRect.size.height;
     }
+    
     
     if(scrollY != -1)
     {
@@ -1051,24 +1052,34 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
 - (void)setFrame:(NSRect)frameRect
 {
-    [CATransaction begin];
-    [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+    if(NSEqualRects(frameRect, self.frame)) return;
     
-    CGFloat viewPosition = (self.clippedRect.origin.y+(self.clippedRect.size.height/2)) / self.bounds.size.height;
-    
-   // BOOL animated = (self.frame.size.width == frameRect.size.width ? NO: YES);
-    [super setFrame:frameRect];
-    
-    [self refreshGridViewAnimated:NO];
-    
-    // if we're not at the top then stay centered when resizing
-    if(self.clippedRect.origin.y != 0) // stay at top if we're at the top
+    if(self.window)
     {
-        viewPosition = (viewPosition * self.bounds.size.height)-(self.clippedRect.size.height/2);
-        [self scrollPoint:NSMakePoint(0, viewPosition)];
+        [CATransaction begin];
+        [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+        
+        CGFloat viewPosition = (self.clippedRect.origin.y+(self.clippedRect.size.height/2)) / self.bounds.size.height;
+        
+       // BOOL animated = (self.frame.size.width == frameRect.size.width ? NO: YES);
+        [super setFrame:frameRect];
+        
+        [self refreshGridViewAnimated:NO];
+        
+        // if we're not at the top then stay centered when resizing
+        if(self.clippedRect.origin.y != 0) // stay at top if we're at the top
+        {
+            viewPosition = (viewPosition * self.bounds.size.height)-(self.clippedRect.size.height/2);
+            [self scrollPoint:NSMakePoint(0, viewPosition)];
+        }
+        
+        [CATransaction commit];
     }
     
-    [CATransaction commit];
+    else
+    {
+        [super setFrame:frameRect];
+    }
 }
 
 - (void)updateTrackingAreas

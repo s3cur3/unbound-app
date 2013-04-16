@@ -225,7 +225,7 @@
 
 - (IBAction)unboundWebsitePressed:(id)sender
 {
-    NSURL * url = [NSURL URLWithString:@"http://www.pixiteapps.com/more"];
+    NSURL * url = [NSURL URLWithString:@"http://www.unboundformac.com"];
     [[NSWorkspace sharedWorkspace] openURL:url];
 }
 

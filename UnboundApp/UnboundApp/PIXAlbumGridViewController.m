@@ -1038,7 +1038,14 @@
     if (index != -1) {
         [self.selectedItems removeAllObjects];
         [self.selectedItems addObject:myAlbum];
-        [self.gridView scrollToAndReturnItemAtIndex:index animated:YES];
+        
+        [self.gridView reloadSelection];
+        
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.gridView scrollToAndReturnItemAtIndex:index animated:NO];
+        });
+        
     }
 }
 
