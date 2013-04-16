@@ -706,6 +706,12 @@
                 [self cancelOperation:theEvent];
                 return;
             }
+            
+            if(pressedUnichar == 'f') // f should togge fullscreen
+            {
+                [self.view.window toggleFullScreen:theEvent];
+                return;
+            }
         }
     }
     

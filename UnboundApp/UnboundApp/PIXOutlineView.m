@@ -92,6 +92,12 @@
                     return;
                 }
             }
+            
+            if(pressedUnichar == 'f') // f should togge fullscreen
+            {
+                [self.window toggleFullScreen:theEvent];
+                return;
+            }
         }
     }
     

@@ -349,7 +349,7 @@
     // Grab the fully prepared cell with our content filled in. Note that in IB the cell's Layout is set to Wraps.
     NSCell *cell = [self.exifTableView preparedCellAtColumn:1 row:row];
     
-    // See how tall it naturally would want to be if given a restricted with, but unbound height
+    // See how tall it naturally would want to be if given a restricted width, but unbound height
     CGFloat theWidth = [(NSTableColumn *)[[self.exifTableView tableColumns] objectAtIndex:1] width];
     NSRect constrainedBounds = NSMakeRect(0, 0, theWidth, CGFLOAT_MAX);
     NSSize naturalSize = [cell cellSizeForBounds:constrainedBounds];

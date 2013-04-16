@@ -101,6 +101,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         // make ourselves the first responder after we're added
         [self.view.window makeFirstResponder:self.gridView];
+        [self.view setNextResponder:self];
     });
     
     
@@ -696,6 +697,29 @@
     
 }
 
+-(void)keyDown:(NSEvent *)event
+{
+    if ([event type] == NSKeyDown)
+    {
+        NSString* pressedChars = [event characters];
+        if ([pressedChars length] == 1)
+        {
+            unichar pressedUnichar = [pressedChars characterAtIndex:0];
+            
+            if(pressedUnichar == 'f') // f should togge fullscreen
+            {
+                [self.view.window toggleFullScreen:event];
+                return;
+            }
+            
+        }
+    }
+    
+    
+    [super keyDown:event];
+    
+}
+
 -(void)showPhotosForAlbum:(id)anAlbum
 {
     self.aSplitViewController.selectedAlbum = anAlbum;
@@ -958,9 +982,6 @@
     
     return YES;
 }
-
-
-
 
 -(void)albumsChanged:(NSNotification *)note
 {
