@@ -241,7 +241,7 @@
         
         NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(_exifScrollView);
         
-        NSArray *horizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_exifScrollView]-4-|"
+        NSArray *horizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_exifScrollView]-0-|"
                                                                                  options:0
                                                                                  metrics:nil
                                                                                    views:viewsDictionary];
