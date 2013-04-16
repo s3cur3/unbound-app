@@ -247,7 +247,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
     
     NSString *warningTitle = [NSString stringWithFormat:@"Delete %@?", deleteString];
     NSString *warningButtonConfirm = [NSString stringWithFormat:@"Delete %@", deleteString];
-    NSString *warningMessage = [NSString stringWithFormat:@"%@ will be deleted immediately.\nAre you sure you want to continue?", deleteString];
+    NSString *warningMessage = [NSString stringWithFormat:@"The %@ will be moved to the trash.\nAre you sure you want to continue?", deleteString.lowercaseString];
     if (NSRunAlertPanel(warningTitle, warningMessage, warningButtonConfirm, @"Cancel", nil) == NSAlertDefaultReturn) {
         
         if ([[itemsToDelete lastObject] class] == [PIXAlbum class]) {
@@ -326,7 +326,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
     {
         NSUInteger fileCount = self.selectedItems.count;
         if (fileCount>6) {
-            NSString *msg = [NSString stringWithFormat:@"Are you sure you want to open multiple finder windows for %ld selected albums?", fileCount];
+            NSString *msg = [NSString stringWithFormat:@"Are you sure you want to open multiple finder windows for the %ld selected albums?", fileCount];
             NSString *aTitle = [NSString stringWithFormat:@"Show %ld Albums", fileCount];
             if (![self verifyActionForItemsWithTitle:aTitle message:msg]) {
                 return;
