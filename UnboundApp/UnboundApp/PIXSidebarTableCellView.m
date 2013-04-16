@@ -145,9 +145,9 @@
     
     NSMutableArray *itemsToDelete = [NSArray arrayWithObject:self.album];
 
-    NSString * deleteString = @"Delete Album";
+    // NSString * deleteString = @"Delete Album";
 
-    NSString *warningMessage = [NSString stringWithFormat:@"%@ will be deleted immediately.\nAre you sure you want to continue?", deleteString];
+    NSString *warningMessage = [NSString stringWithFormat:@"This album will be moved to the trash.\nAre you sure you want to continue?", nil];
     if (NSRunAlertPanel(@"Delete Album?", warningMessage, @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
         
         [[PIXFileManager sharedInstance] recycleAlbums:itemsToDelete];
