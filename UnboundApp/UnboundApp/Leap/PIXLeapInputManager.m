@@ -567,7 +567,7 @@
             
             // this will initiate a grab
             else if(avgPalmPos.z < 100 // only start grab if it's well into the view area
-                    && [[hands lastObject] sphereRadius] <= 100.0
+                    //&& [[hands lastObject] sphereRadius] <= 100.0
                     && [[[hands lastObject] palmVelocity] magnitude] < 100.0)
             {
                 self.smoothedPalmDepth = -avgPalmPos.z;
