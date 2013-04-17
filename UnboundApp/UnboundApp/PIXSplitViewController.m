@@ -351,7 +351,7 @@
 {
     if(self.view.window == nil) return;
     
-    [(NSSound *)[NSSound soundNamed:@"Blow"] play];
+    [(NSSound *)[NSSound soundNamed:@"Pop"] play];
     
     [self popViewAndUpdateAlbumSelectionForDelegate];
     //[self.navigationViewController popViewController];

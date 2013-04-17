@@ -89,8 +89,8 @@
         switch (self.currentSlide) {
             case 0:
                 self.titleField.stringValue = @"A Quick Tutorial";
-                self.textField.stringValue = @"The Leap Motion Controller\rlets you browse your photos\rwith simple hand motions.";
-                self.actionField.stringValue = @"Swipe left or click 'next' to learn more.";
+                self.textField.stringValue = @"The Leap Motion Controller\rlets you browse your photos with simple hand motions.";
+                self.actionField.stringValue = @"Swipe left or right to navigate.";
                 
                 
                 [self.nextButton setTitle:@"Next"];
@@ -99,34 +99,34 @@
                 
             case 1:
                 
-                self.titleField.stringValue = @"Tap to Select";
-                self.textField.stringValue = @"Point at an item you want to open.\rMake a quick 'Key Tap' gesture to select.";
-                self.actionField.stringValue = @"Try the 'Key Tap' now.";
+                self.titleField.stringValue = @"Key Tap to Select";
+                self.textField.stringValue = @"Point at an item you want to open. Make a quick Key Tap gesture to select.";
+                self.actionField.stringValue = @"Try the Key Tap now.";
                 
                 [self.lastButton setHidden:NO];
                 break;
                 
             case 2:
                 
-                self.titleField.stringValue = @"Swipe Up to go Back";
-                self.textField.stringValue = @"Swipe upwards with an open\rhand to go 'back' from any screen.";
-                self.actionField.stringValue = @"Try the swipe now.";
+                self.titleField.stringValue = @"Swipe Up to Go Back";
+                self.textField.stringValue = @"Swipe Up with an open hand to go back from any screen.";
+                self.actionField.stringValue = @"Try the Swipe Up now.";
                 
                 break;
                 
             case 3:
                 
                 self.titleField.stringValue = @"Tap to Navigate";
-                self.textField.stringValue = @"Move back and forth through photos by doing the 'Key Tap' to the right or left of the screen.";
+                self.textField.stringValue = @"Move back and forth through photos by doing the Key Tap to the right or left of the screen.";
                 self.actionField.stringValue = @"Try tapping forward and back now.";
                 [self.nextButton setTitle:@"Next"];
                 
                 break;
                 
             case 4:
-                self.titleField.stringValue = @"Grab to Zoom";
-                self.textField.stringValue = @"'Grab' with a closed fist to pan and zoom fullscreen photos.";
-                self.actionField.stringValue = @"Try grabbing now. Swipe left to finish.";
+                self.titleField.stringValue = @"Grab to Pan and Zoom";
+                self.textField.stringValue = @"Grab with a closed fist to pan and zoom fullscreen photos.";
+                self.actionField.stringValue = @"Try the Grab now. Swipe left to finish.";
                 
                 [self.nextButton setTitle:@"Done"];
                 break;
@@ -223,7 +223,7 @@
             [self.hudMessage rewakeForTimeInterval:0.7];
         }
         
-        [(NSSound *)[NSSound soundNamed:@"Blow"] play];
+        [(NSSound *)[NSSound soundNamed:@"Pop"] play];
         
         
         
@@ -317,7 +317,7 @@
         if(!self.hudMessage)
         {
             // present the hud message that the leap connected
-            PIXHUDMessageController * messageHUD = [PIXHUDMessageController windowWithTitle:@"Grab Started! Now move your fist." andIcon:[NSImage imageNamed:@"success"]];
+            PIXHUDMessageController * messageHUD = [PIXHUDMessageController windowWithTitle:@"Grab Started! Now pan with your fist." andIcon:[NSImage imageNamed:@"success"]];
             [messageHUD presentInParentWindow:self.window forTimeInterval:1.5];
             self.hudMessage = messageHUD;
         }
@@ -350,6 +350,14 @@
         if(newOrigin.x > maxx) newOrigin.x = maxx;
         
         [self.window setFrameOrigin:newOrigin];
+        
+        if(scale < 1.0)
+        {
+            
+            //[self.movieView.layer setTransform:CATransform3DScale(CATransform3DIdentity, scale, scale, 1.0)];
+        }
+        
+        
     }
 }
 

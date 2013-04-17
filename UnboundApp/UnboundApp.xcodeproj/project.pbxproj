@@ -162,6 +162,7 @@
 		8CC9492E171DF00000EC1431 /* success-backward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC9492A171DF00000EC1431 /* success-backward@2x.png */; };
 		8CC9492F171DF00000EC1431 /* success-forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC9492B171DF00000EC1431 /* success-forward.png */; };
 		8CC94930171DF00000EC1431 /* success-forward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC9492C171DF00000EC1431 /* success-forward@2x.png */; };
+		8CC94932171E145A00EC1431 /* LeapTutorial4.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8CC94931171E145A00EC1431 /* LeapTutorial4.mov */; };
 		8CE460DB16CB650600CDFA04 /* btn-roundrect-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D716CB650600CDFA04 /* btn-roundrect-down.png */; };
 		8CE460DC16CB650600CDFA04 /* btn-roundrect-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D816CB650600CDFA04 /* btn-roundrect-down@2x.png */; };
 		8CE460DD16CB650600CDFA04 /* btn-roundrect-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D916CB650600CDFA04 /* btn-roundrect-up.png */; };
@@ -446,6 +447,7 @@
 		8CC9492A171DF00000EC1431 /* success-backward@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success-backward@2x.png"; sourceTree = "<group>"; };
 		8CC9492B171DF00000EC1431 /* success-forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success-forward.png"; sourceTree = "<group>"; };
 		8CC9492C171DF00000EC1431 /* success-forward@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success-forward@2x.png"; sourceTree = "<group>"; };
+		8CC94931171E145A00EC1431 /* LeapTutorial4.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = LeapTutorial4.mov; sourceTree = "<group>"; };
 		8CE460D716CB650600CDFA04 /* btn-roundrect-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-roundrect-down.png"; sourceTree = "<group>"; };
 		8CE460D816CB650600CDFA04 /* btn-roundrect-down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-roundrect-down@2x.png"; sourceTree = "<group>"; };
 		8CE460D916CB650600CDFA04 /* btn-roundrect-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-roundrect-up.png"; sourceTree = "<group>"; };
@@ -914,6 +916,7 @@
 				8C1469331714B442009ECCC5 /* LeapTutorial1.mov */,
 				8C35808E1714D99E00352870 /* LeapTutorial2.mov */,
 				8C35808F1714D99E00352870 /* LeapTutorial3.mov */,
+				8CC94931171E145A00EC1431 /* LeapTutorial4.mov */,
 			);
 			path = "Leap Tutorial Videos";
 			sourceTree = SOURCE_ROOT;
@@ -1147,6 +1150,7 @@
 				8CC9492E171DF00000EC1431 /* success-backward@2x.png in Resources */,
 				8CC9492F171DF00000EC1431 /* success-forward.png in Resources */,
 				8CC94930171DF00000EC1431 /* success-forward@2x.png in Resources */,
+				8CC94932171E145A00EC1431 /* LeapTutorial4.mov in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

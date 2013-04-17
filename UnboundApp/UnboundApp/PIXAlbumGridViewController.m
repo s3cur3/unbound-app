@@ -101,7 +101,8 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         // make ourselves the first responder after we're added
         [self.view.window makeFirstResponder:self.gridView];
-        [self.view setNextResponder:self];
+        [self setNextResponder:self.scrollView];
+        [self.gridView setNextResponder:self];
     });
     
     
@@ -714,6 +715,7 @@
             
         }
     }
+    
     
     
     [super keyDown:event];

@@ -596,7 +596,7 @@
 {
     if(![self.view.window isKeyWindow]) return;
     
-    [(NSSound *)[NSSound soundNamed:@"Blow"] play];
+    [(NSSound *)[NSSound soundNamed:@"Pop"] play];
     
     [self.navigationViewController popViewController];
 }

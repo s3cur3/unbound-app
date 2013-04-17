@@ -53,7 +53,7 @@
 {
     // hard coded screen position:
     
-    self.screenRect = CGRectMake(-160, 130, 320, 230);
+    self.screenRect = CGRectMake(-150, 130, 300, 200);
     
     self.controller = [[LeapController alloc] init];
     [self.controller addListener:self];
@@ -642,7 +642,7 @@
     //if(direction.z > 0) return;
     
     // figure out the gesture direction
-    if(direction.y > 0.7) // this is the up direction
+    if(direction.y > 0.65) // this is the up direction
     {
         // loop through the responders
         for(id<PIXLeapResponder> responder in self.leapResponders)
@@ -650,11 +650,12 @@
             if([responder respondsToSelector:@selector(leapSwipeUp)])
             {
                 [responder leapSwipeUp];
+                didswipe = YES;
                 break; // no need to keep going down the responder chain
             }
         }
         
-        didswipe = YES;
+        
     }
     
     else if(direction.y < -0.65) // this is the down direction
@@ -665,11 +666,11 @@
             if([responder respondsToSelector:@selector(leapSwipeDown)])
             {
                 [responder leapSwipeDown];
+                didswipe = YES;
                 break; // no need to keep going down the responder chain
             }
         }
         
-        didswipe = YES;
     }
     
     else if(direction.x > 0.65) // this is the right direction
@@ -680,11 +681,12 @@
             if([responder respondsToSelector:@selector(leapSwipeRight)])
             {
                 [responder leapSwipeRight];
+                didswipe = YES;
+
                 break; // no need to keep going down the responder chain
             }
         }
         
-        didswipe = YES;
     }
     
     else if(direction.x < -0.65) // this is the left direction
@@ -695,11 +697,12 @@
             if([responder respondsToSelector:@selector(leapSwipeLeft)])
             {
                 [responder leapSwipeLeft];
+                didswipe = YES;
+
                 break; // no need to keep going down the responder chain
             }
         }
         
-        didswipe = YES;
     }
     
     
@@ -707,7 +710,7 @@
     {
         self.swipeGestureFlag = YES;
         
-        double delayInSeconds = 0.5;
+        double delayInSeconds = 0.4;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             self.swipeGestureFlag = NO;
