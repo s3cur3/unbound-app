@@ -606,17 +606,18 @@ const CGFloat kThumbnailSize = 370.0f;
         {
             [self.fastThumbLoad cancel];
             [[PIXFileParser sharedFileParser] decrementWorking];
-            _thumbnailImageIsLoading = NO;
+            
         }
         
         if(self.slowThumbLoad && ![self.slowThumbLoad isExecuting])
         {
             [self.slowThumbLoad cancel];
             [[PIXFileParser sharedFileParser] decrementWorking];
-            _thumbnailImageIsLoading = NO;
+              
         }
     }
     
+    _thumbnailImageIsLoading = NO;
     self.cancelThumbnailLoadOperationDelayFlag = NO;
 }
 
