@@ -13,7 +13,7 @@
 @class PIXAboutWindowController;
 @class PIXFileParser;
 
-@interface PIXAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate>
+@interface PIXAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSAlertDelegate>
 {
     //Used to indiciate that core data loading should cease
     BOOL loadingWasCanceled;
@@ -43,6 +43,7 @@
 @property (nonatomic, strong) NSWindowController *preferencesWindowController;
 @property (nonatomic) NSInteger focusedAdvancedControlIndex;
 - (IBAction)openPreferences:(id)sender;
+@property (weak) IBOutlet NSMenuItem *prefsMenuItem;
 
 
 
@@ -85,5 +86,7 @@
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window;
 
 - (void)clearDatabase;
+
+- (void)openAlert:(NSString *)title withMessage:(NSString *)message;
 
 @end

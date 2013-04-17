@@ -50,6 +50,8 @@ static Preferences * instance = nil;
 	[defaults setValue:@"" forKey:@"lastFolder"];
     
     [defaults setValue:[NSNumber numberWithBool:YES] forKey:kAppFirstRun];
+    
+    [defaults setValue:[NSNumber numberWithBool:NO] forKey:kAppObservedDirectoryUnavailable];
 
 	// last step : register the default parameters
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];

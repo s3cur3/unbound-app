@@ -34,7 +34,7 @@
 #define kAppFirstRun @"appFirstRun"
 
 #define kAppObservedDirectoryUnavailable @"observedDirectoryUnavailable"
-
+#define kRootFolderUnavailableDetailMessage @"The root folder specified for your photos is unavailable. Would you like to change this setting in your preferences?"
 
 // key for obtaining the current scan count
 #define kScanCountKey @"scanCount"

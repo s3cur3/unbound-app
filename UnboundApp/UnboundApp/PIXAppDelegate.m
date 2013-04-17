@@ -30,6 +30,9 @@
 //extern NSString *kSearchDidFinishNotification;
 
 @interface PIXAppDelegate()
+{
+    BOOL suppressAlertsForFolderNA;
+}
 
 @property (readonly, strong, atomic) NSOperationQueue *backgroundSaveQueue;
 
@@ -516,7 +519,9 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     [self.privateWriterContext performBlock:^{
         if (![self.privateWriterContext save:error])
         {
-            DLog(@"ERROR SAVING IN BG THREAD: %@", [*error description])
+            if(error!=nil) {
+                DLog(@"ERROR SAVING IN BG THREAD: %@", [*error description])
+            }
         }
     }];
     
@@ -669,6 +674,165 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     return NSTerminateNow;
 }
 
+#pragma mark - AlertView
+
+// -------------------------------------------------------------------------------
+//	handleResult:withResult
+//
+//	Used to handle the result for both sheet and modal alert cases.
+// -------------------------------------------------------------------------------
+-(void)handleResult:(NSAlert *)alert withResult:(NSInteger)result
+{
+    // suppression button only exists in 10.5 and later
+    if ([alert showsSuppressionButton])
+    {
+        if ([[[alert suppressionButton] cell] state]) {
+            DLog(@"suppress alert: YES");
+            suppressAlertsForFolderNA = YES;
+        } else {
+            suppressAlertsForFolderNA = NO;
+            DLog(@"suppress alert: NO");
+        }
+    }
+
+	// report which button was clicked
+	switch(result)
+	{
+		case NSAlertDefaultReturn:
+			DLog(@"result: NSAlertDefaultReturn");
+            [self performSelector:@selector(openPreferences:) withObject:self.prefsMenuItem afterDelay:0.25f];
+
+			break;
+            
+		case NSAlertAlternateReturn:
+			DLog(@"result: NSAlertAlternateReturn");
+            [self rescanAction:nil];
+			break;
+            
+		case NSAlertOtherReturn:
+			DLog(@"result: NSAlertOtherReturn");
+            //User chose ignore
+			break;
+            
+        default:
+            break;
+	}
+    
+
+	
+
+}
+
+// -------------------------------------------------------------------------------
+//	alertDidEnd:returnCode:contextInfo
+//
+//	This method is called only when a the sheet version of this alert is dismissed.
+// -------------------------------------------------------------------------------
+- (void)alertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+#pragma unused (contextInfo)
+	[[alert window] orderOut:self];
+	[self handleResult:alert withResult:returnCode];
+}
+
+
+// -------------------------------------------------------------------------------
+//	alertShowHelp
+//
+//	The delegate method for displaying alert help.
+//// -------------------------------------------------------------------------------
+//- (BOOL)alertShowHelp:(NSAlert *)alert
+//{
+//	// get the localized name of our help book
+//    //
+//    // to make this work, the help book name needs to be defined in your InfoPlist.strings
+//    // file with an entry for "CFBundleHelpBookName"
+//    //
+//    NSString *helpBookName = [[[NSBundle mainBundle] localizedInfoDictionary] objectForKey:@"CFBundleHelpBookName"];
+//    
+//	[[NSHelpManager sharedHelpManager] openHelpAnchor:[alert helpAnchor] inBook:helpBookName];
+//    
+//	return YES;
+//}
+
+// -------------------------------------------------------------------------------
+//	testAction:
+//
+//	The user clicked the "Test" button from the accessory view.
+// -------------------------------------------------------------------------------
+- (IBAction)rescanAction:(id)sender
+{
+	DLog(@"Re-scan button was clicked.");
+    self.fileParser = [PIXFileParser sharedFileParser];
+    if (![self.fileParser canAccessObservedDirectories])
+    {
+        [self.fileParser incrementWorking];
+        double delayInSeconds = 2.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self openAlert:@"Re-scan Failed" withMessage:kRootFolderUnavailableDetailMessage];
+            [self.fileParser decrementWorking];
+        });
+    } else {
+        [self startFileSystemLoading];
+    }
+}
+
+// -------------------------------------------------------------------------------
+//	openAlert:
+//
+//	The user clicked the "Open…" button.
+// -------------------------------------------------------------------------------
+- (void)openAlert:(NSString *)title withMessage:(NSString *)message
+{
+    if (suppressAlertsForFolderNA) {
+        DLog(@"Alert suppression was checked - don't warn again.");
+        return;
+    }
+	NSString *useSecondButtonStr = @"Ignore";
+	NSString *useAlternateButtonStr = @"Re-scan";    
+    NSString *defaultButtonTitle = @"Open Preferences";
+	
+	NSAlert *testAlert = [NSAlert alertWithMessageText:message
+                                         defaultButton:defaultButtonTitle
+                                       alternateButton:useAlternateButtonStr
+                                           otherButton:useSecondButtonStr
+                             informativeTextWithFormat:@"%@", title];
+    
+
+	[testAlert setAlertStyle:NSWarningAlertStyle];
+    
+    NSImage* image = [NSImage imageNamed:@"icon.icns"];
+    [testAlert setIcon: image];
+	
+	// determine if we should use the help button
+//	[testAlert setShowsHelp:useHelpButtonState];
+//	if (useHelpButtonState)
+//		[testAlert setHelpAnchor:kHelpAnchor];	// use this anchor as a direction point to our help book
+	
+	[testAlert setDelegate:(id<NSAlertDelegate>)self];	// this allows "alertShowHelp" to be called when the user clicks the help button
+    
+	// note: accessoryView and suppression checkbox are available in 10.5 on up
+    [testAlert setShowsSuppressionButton:YES];
+    [[testAlert suppressionButton] setTitle:@"Don't ask again."];
+    
+    // use a custom accessory view?
+//    if (useAccessoryViewState)
+//        [testAlert setAccessoryView:accessoryView];
+    BOOL useSheet = YES;
+	if (useSheet)	// sheet or modal alert?
+	{
+		[testAlert beginSheetModalForWindow:[self window]
+                              modalDelegate:self
+                             didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:)
+                                contextInfo:nil];
+	}
+//	else
+//	{
+//		NSInteger result = [testAlert runModal];
+//		[self handleResult:testAlert withResult:result];
+//	}
+}
 
 
 @end
