@@ -729,10 +729,12 @@ const CGFloat kThumbnailSize = 370.0f;
 +(NSString *)randomThumbPath
 {
     static NSString * mainThumbDir = nil;
+    static NSLock * mainThumbDirLock = nil;
     
     if(mainThumbDir == nil)
     {
         mainThumbDir = [[[PIXAppDelegate sharedAppDelegate] thumbSorageDirectory] path];
+        mainThumbDirLock = [[NSLock alloc] init];
     }
     
     NSString * random = [NSString stringWithFormat:@"%d/%d/",(rand() % 1000 + 1), (rand() % 1000 + 1), nil];
@@ -754,10 +756,16 @@ const CGFloat kThumbnailSize = 370.0f;
     
     NSString * newThumbPath = nil;
     
+    [mainThumbDirLock lock];
+    
     // make sure there isn't already a file there:
     do {
         newThumbPath = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.jpg", (rand() % 100000 + 1), nil]];
     } while ([fm fileExistsAtPath:newThumbPath]);
+    
+    [fm createFileAtPath:newThumbPath contents:nil attributes:nil];
+    
+    [mainThumbDirLock unlock];
     
     return newThumbPath;
 }
@@ -921,21 +929,21 @@ const CGFloat kThumbnailSize = 370.0f;
                 
                 
                 //////////////// option 2 save by dispatching to main
-                //                dispatch_async(dispatch_get_main_queue(), ^{
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//
+//                    [self forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
+//
+//                    [self setThumbnailFilePath:newThumbPath];
+//
+//                    //[self.managedObjectContext save:nil];
+//
+//                    // set the thumbnail data (this will save the data into core data, the ui has already been updated)
+//                    //[weakSelf mainThreadComputePreviewThumbnailFinished:data];
+//
+//                    [[PIXFileParser sharedFileParser] decrementWorking];
+//                    
+//                });
                 //
-                //                    [self forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
-                //
-                //                    [self setThumbnailFilePath:newThumbPath];
-                //
-                //                    //[self.managedObjectContext save:nil];
-                //
-                //                    // set the thumbnail data (this will save the data into core data, the ui has already been updated)
-                //                    //[weakSelf mainThreadComputePreviewThumbnailFinished:data];
-                //
-                //                    [[PIXFileParser sharedFileParser] decrementWorking];
-                //                    
-                //                });
-                //                
                 //////////////// end options
                 
                 // clean up
@@ -943,6 +951,8 @@ const CGFloat kThumbnailSize = 370.0f;
                 CFRelease(imageSource);
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    [self forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
                     
                     if([self thumbnailFilePath] == nil)
                     {
