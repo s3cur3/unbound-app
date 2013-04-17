@@ -328,7 +328,12 @@ static NSString *const kItemsKey = @"photos";
         
         NSManagedObjectContext * threadSafeContext = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];
         
-        PIXAlbum * threadAlbum = (PIXAlbum *)[threadSafeContext existingObjectWithID:[self objectID] error:nil];
+        PIXAlbum * threadAlbum = (PIXAlbum *)[threadSafeContext objectWithID:[self objectID]];
+        
+        if([threadAlbum isReallyDeleted])
+        {
+            threadAlbum = nil;
+        }
         
         // loop through all this album's photos
         for(PIXPhoto * aPhoto in threadAlbum.photos)
@@ -485,9 +490,10 @@ static NSString *const kItemsKey = @"photos";
         
         // get a bg thread context and find the album object
         NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];
-        PIXAlbum * threadAlbum = (PIXAlbum *)[context existingObjectWithID:thisID error:nil];
+        PIXAlbum * threadAlbum = (PIXAlbum *)[context objectWithID:thisID];
         
-        if(threadAlbum == nil) return;
+        
+        if(threadAlbum == nil || [threadAlbum isReallyDeleted]) return;
         
         [threadAlbum updateUnboundFile];
         
@@ -540,9 +546,9 @@ static NSString *const kItemsKey = @"photos";
                             NSManagedObjectContext * mainContext = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
                             NSString * newCaption = [photoInfoDict objectForKey:@"caption"];
                             
-                            PIXPhoto * mainThreadPhoto = (PIXPhoto *)[mainContext existingObjectWithID:photoID error:nil];
+                            PIXPhoto * mainThreadPhoto = (PIXPhoto *)[mainContext objectWithID:photoID];
                             
-                            if(mainThreadPhoto)
+                            if(mainThreadPhoto && ![mainThreadPhoto isReallyDeleted])
                             {
                                 // update the photo's caption
                                 [mainThreadPhoto setCaption:newCaption];

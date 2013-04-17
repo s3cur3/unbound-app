@@ -410,7 +410,10 @@
 
 -(void)cancelOperation:(id)sender
 {
-    [self.splitViewController popViewAndUpdateAlbumSelectionForDelegate];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.splitViewController popViewAndUpdateAlbumSelectionForDelegate];
+    });
+    
 }
 
 

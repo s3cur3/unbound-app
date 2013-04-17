@@ -763,6 +763,7 @@ const CGFloat kThumbnailSize = 370.0f;
         newThumbPath = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.jpg", (rand() % 100000 + 1), nil]];
     } while ([fm fileExistsAtPath:newThumbPath]);
     
+    // create a file within this lock so another thumb doesn't overwrite the file before the thumb is generated
     [fm createFileAtPath:newThumbPath contents:nil attributes:nil];
     
     [mainThumbDirLock unlock];
@@ -778,6 +779,7 @@ const CGFloat kThumbnailSize = 370.0f;
     //    }
     
     [[PIXFileParser sharedFileParser] incrementWorking];
+    NSManagedObjectID * photoID = [self objectID];
     
     _thumbnailImageIsLoading = YES;
     
@@ -916,13 +918,18 @@ const CGFloat kThumbnailSize = 370.0f;
                 
                 NSManagedObjectContext * threadSafeContext = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];
                 
-                PIXPhoto * threadPhoto = (PIXPhoto *)[threadSafeContext existingObjectWithID:[weakSelf objectID] error:nil];
+                PIXPhoto * threadPhoto = (PIXPhoto *)[threadSafeContext objectWithID:photoID];
+                
+                if([threadPhoto isReallyDeleted])
+                {
+                    threadPhoto = nil;
+                }
                 
                 [threadPhoto forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
                 [threadPhoto setThumbnailFilePath:newThumbPath];
                 
-                
-                [threadSafeContext save:nil];
+                NSError * error = nil;
+                [threadSafeContext save:&error];
                 
                 [[PIXFileParser sharedFileParser] decrementWorking];
                 
@@ -952,13 +959,12 @@ const CGFloat kThumbnailSize = 370.0f;
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
-                    [self forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
+                    /*[self forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
                     
                     if([self thumbnailFilePath] == nil)
                     {
                         [self setThumbnailFilePath:newThumbPath];
-                    }
-                    
+                    }*/
                     _thumbnailImageIsLoading = NO;
                 });
                 

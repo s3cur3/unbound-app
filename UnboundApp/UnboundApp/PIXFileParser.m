@@ -931,13 +931,17 @@ NSDictionary * dictionaryForURL(NSURL * url)
         dispatch_async(dispatch_get_main_queue(), ^{
             
             NSManagedObjectContext * mainThreadContext = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
-            PIXPhoto * mainThreadPhoto = (PIXPhoto *)[mainThreadContext existingObjectWithID:objectID error:nil];
+            PIXPhoto * mainThreadPhoto = (PIXPhoto *)[mainThreadContext objectWithID:objectID];
             
-            [mainThreadPhoto setThumbnailImage:nil];
-            [mainThreadPhoto clearFiles];
-            [mainThreadPhoto setExifData:nil];
+            if(mainThreadPhoto && ![mainThreadPhoto isReallyDeleted])
+            {
             
-            [mainThreadPhoto postPhotoUpdatedNote];
+                [mainThreadPhoto setThumbnailImage:nil];
+                [mainThreadPhoto clearFiles];
+                [mainThreadPhoto setExifData:nil];
+                
+                [mainThreadPhoto postPhotoUpdatedNote];
+            }
             
         });
         

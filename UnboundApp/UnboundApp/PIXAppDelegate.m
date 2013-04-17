@@ -542,7 +542,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     [context setParentContext:self.managedObjectContext];
     
     // overwrite the database with updates from this context
-    [context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
+    //[context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
     
     return context;
 }
