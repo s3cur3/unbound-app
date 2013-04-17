@@ -778,7 +778,9 @@ const CGFloat kThumbnailSize = 370.0f;
     //        return;
     //    }
     
+    // increment once for each bg operation (each will decrement itself
     [[PIXFileParser sharedFileParser] incrementWorking];
+    
     NSManagedObjectID * photoID = [self objectID];
     
     _thumbnailImageIsLoading = YES;
@@ -966,19 +968,23 @@ const CGFloat kThumbnailSize = 370.0f;
                         [self setThumbnailFilePath:newThumbPath];
                     }*/
                     _thumbnailImageIsLoading = NO;
+                    self.slowThumbLoad = nil;
                 });
                 
             }];
             
+            [[PIXFileParser sharedFileParser] incrementWorking];
             [self.slowThumbLoad setQueuePriority:NSOperationQueuePriorityLow];
-            
             [[self sharedThumbnailLoadQueue] addOperation:self.slowThumbLoad];
+            [[PIXFileParser sharedFileParser] decrementWorking];
         }
         
         else
         {
             [[PIXFileParser sharedFileParser] decrementWorking];
         }
+        
+        self.fastThumbLoad = nil;
     }];
     
     // if this is a faster thumb load image (for the top images in album stacks)
