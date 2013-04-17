@@ -9,6 +9,7 @@
 
 #import "PIXPageViewController.h"
 #import "PIXAppDelegate.h"
+#import "PIXDefines.h"
 #import "PIXMainWindowController.h"
 #import "PIXAlbum.h"
 #import "PIXPhoto.h"
@@ -267,7 +268,7 @@
         self.slideshowPhotoIndexes = photoIndexes;
         self.currentSlide = [self.pageController selectedIndex];
         
-        CGFloat interval = [[NSUserDefaults standardUserDefaults] floatForKey:@"slideshowTimeInterval"];
+        CGFloat interval = [[NSUserDefaults standardUserDefaults] floatForKey:kSlideshowTimeInterval];
         [self performSelector:@selector(nextSlide) withObject:nil afterDelay:interval];
     }
 
@@ -297,7 +298,7 @@
         self.currentSlide = self.pageController.selectedIndex;
     }
     
-    CGFloat interval = [[NSUserDefaults standardUserDefaults] floatForKey:@"slideshowTimeInterval"];
+    CGFloat interval = [[NSUserDefaults standardUserDefaults] floatForKey:kSlideshowTimeInterval];
     [self performSelector:@selector(nextSlide) withObject:nil afterDelay:interval];
 }
 
@@ -307,7 +308,7 @@
     
     if(self.currentSlide < self.slideshowPhotoIndexes.count)
     {
-        CGFloat interval = [[NSUserDefaults standardUserDefaults] floatForKey:@"slideshowTimeInterval"];
+        CGFloat interval = [[NSUserDefaults standardUserDefaults] floatForKey:kSlideshowTimeInterval];
         NSNumber * nextIndex = [self.slideshowPhotoIndexes objectAtIndex:self.currentSlide];
         
         

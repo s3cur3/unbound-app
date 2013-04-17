@@ -65,6 +65,9 @@
 // NSNotification name to tell the Window controller an image file as found
 #define kLoadImageDidFinish @"LoadImageDidFinish"
 
+// key for the length of time in between transitions in the slideshow
+#define kSlideshowTimeInterval @"slideshowTimeInterval"
+
 #define FFString(msg, description) NSLocalizedStringFromTableInBundle(msg, @"Unbound", [NSBundle bundleForClass:[PIXMainWindowController class]], description)
 
 // ===========================
