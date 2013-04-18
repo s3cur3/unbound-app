@@ -28,7 +28,10 @@
 #import "PIXSlideshowOptonsViewController.h"
 
 #import "PIXViewController.h"
+
 #import "PIXFileManager.h"
+
+#import "PIXPageView.h"
 
 @interface PIXPageViewController () <PIXLeapResponder, PIXSlideshowOptonsDelegate, NSMenuDelegate>
 
@@ -339,15 +342,24 @@
                 break;
         }
         
+        
         CATransition *animation = [CATransition animation];
         [animation setDuration:0.5+(interval/10.0)];
+        PIXPageView *aPageView = (PIXPageView *)self.pageController.view;
+        NSUInteger fiterCount = aPageView.transitions.count;
+        NSUInteger filterIndex = self.currentSlide % fiterCount;
+        DLog(@"Using filter at index : %ld", filterIndex);
+        CIFilter *aFilter = [aPageView.transitions objectAtIndex:filterIndex];
         
-        [animation setType:type];
-        [animation setSubtype:kCATransitionFromRight];
+        DLog(@"Using filter with name : %@", aFilter.name);
+        [animation setFilter:aFilter];
+        
+        //[animation setType:type];
+        //[animation setSubtype:kCATransitionFromRight];
         
         // dispatch the transition so it goes a little smoother
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.pageController.view.layer addAnimation:animation forKey:@"slideShowFade"];
+            [self.pageController.view.layer addAnimation:animation forKey:@" "];
             [self.pageController setSelectedIndex:[nextIndex intValue]];
         });
         

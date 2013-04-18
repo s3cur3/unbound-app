@@ -22,6 +22,9 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
+        thumbnailWidth  = frame.size.width;
+        thumbnailHeight = frame.size.height;
+        [self setupTransitions];
     }
     
     return self;
@@ -30,6 +33,7 @@
 - (void)setFrame:(NSRect)frameRect
 {
     [super setFrame:frameRect];
+    [self setupTransitions];
 }
 
 -(void)drawRect:(NSRect)dirtyRect
@@ -83,6 +87,51 @@
     // grab the first responder on mouse down
     [self.window makeFirstResponder:self.viewController];
     [super mouseDown:theEvent];
+}
+
+//
+
+- (void)awakeFromNib
+{
+//    thumbnailWidth  = self.frame.size.width;
+//    thumbnailHeight = self.frame.size.height;
+    
+//    NSURL *URL = [[NSBundle mainBundle] URLForResource:@"Rose" withExtension:@"jpg"];
+//    [self setSourceImage: [CIImage imageWithContentsOfURL:URL]];
+//    
+//    URL = [[NSBundle mainBundle] URLForResource:@"Frog" withExtension:@"jpg"];
+//    [self setTargetImage: [CIImage imageWithContentsOfURL:URL]];
+    
+
+}
+
+- (CIImage *)shadingImage
+{
+    if (!_shadingImage) {
+        NSURL *URL = [[NSBundle mainBundle] URLForResource:@"Shading" withExtension:@"tiff"];
+        _shadingImage = [[CIImage alloc] initWithContentsOfURL:URL];
+    }
+    return _shadingImage;
+}
+
+
+- (CIImage *)blankImage
+{
+    if (!_blankImage) {
+        NSURL *URL = [[NSBundle mainBundle] URLForResource:@"Blank" withExtension:@"jpg"];
+        _blankImage = [[CIImage alloc] initWithContentsOfURL:URL];
+    }
+    return _blankImage;
+}
+
+
+- (CIImage *)maskImage
+{
+    if (!_maskImage) {
+        NSURL *URL = [[NSBundle mainBundle] URLForResource:@"Mask" withExtension:@"jpg"];
+        _maskImage = [[CIImage alloc] initWithContentsOfURL:URL];
+    }
+    return _maskImage;
 }
 
 
