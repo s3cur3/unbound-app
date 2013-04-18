@@ -34,7 +34,9 @@
 #define kAppFirstRun @"appFirstRun"
 
 #define kAppObservedDirectoryUnavailable @"observedDirectoryUnavailable"
-#define kRootFolderUnavailableDetailMessage @"The root folder specified for your photos is unavailable. Would you like to change this setting in your preferences?"
+#define kAppObservedDirectoryUnavailableSupressAlert @"observedDirectoryUnavailableSupressAlert"
+#define kRootFolderUnavailableDetailMessage @"Unbound cannot access your photos folder. Make sure that your network drives are connected or open the Preferences to load another folder. "
+#define kRootFolderUnavailableTitle @"Check Your Photos Folder"
 
 // key for obtaining the current scan count
 #define kScanCountKey @"scanCount"

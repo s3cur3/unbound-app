@@ -180,11 +180,11 @@
     if (![self.fileParser canAccessObservedDirectories])
     {
         DLog(@"can't access observed directories");
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kAppObservedDirectoryUnavailable];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kAppObservedDirectoryUnavailable];
         [[NSUserDefaults standardUserDefaults] synchronize];
         return;
     } else {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kAppObservedDirectoryUnavailable];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kAppObservedDirectoryUnavailable];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     if (!self.isObservingFileSystem)
@@ -689,6 +689,8 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
         if ([[[alert suppressionButton] cell] state]) {
             DLog(@"suppress alert: YES");
             suppressAlertsForFolderNA = YES;
+            [[NSUserDefaults standardUserDefaults] setBool:suppressAlertsForFolderNA forKey:kAppObservedDirectoryUnavailableSupressAlert];
+            [[NSUserDefaults standardUserDefaults] synchronize];
         } else {
             suppressAlertsForFolderNA = NO;
             DLog(@"suppress alert: NO");
@@ -706,7 +708,8 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
             
 		case NSAlertAlternateReturn:
 			DLog(@"result: NSAlertAlternateReturn");
-            [self rescanAction:nil];
+            //[self rescanAction:nil];
+            //User chose ignore
 			break;
             
 		case NSAlertOtherReturn:
@@ -717,9 +720,6 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
         default:
             break;
 	}
-    
-
-	
 
 }
 
@@ -737,66 +737,29 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 
 
 // -------------------------------------------------------------------------------
-//	alertShowHelp
-//
-//	The delegate method for displaying alert help.
-//// -------------------------------------------------------------------------------
-//- (BOOL)alertShowHelp:(NSAlert *)alert
-//{
-//	// get the localized name of our help book
-//    //
-//    // to make this work, the help book name needs to be defined in your InfoPlist.strings
-//    // file with an entry for "CFBundleHelpBookName"
-//    //
-//    NSString *helpBookName = [[[NSBundle mainBundle] localizedInfoDictionary] objectForKey:@"CFBundleHelpBookName"];
-//    
-//	[[NSHelpManager sharedHelpManager] openHelpAnchor:[alert helpAnchor] inBook:helpBookName];
-//    
-//	return YES;
-//}
-
-// -------------------------------------------------------------------------------
-//	testAction:
-//
-//	The user clicked the "Test" button from the accessory view.
-// -------------------------------------------------------------------------------
-- (IBAction)rescanAction:(id)sender
-{
-	DLog(@"Re-scan button was clicked.");
-    self.fileParser = [PIXFileParser sharedFileParser];
-    if (![self.fileParser canAccessObservedDirectories])
-    {
-        [self.fileParser incrementWorking];
-        double delayInSeconds = 2.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [self openAlert:@"Re-scan Failed" withMessage:kRootFolderUnavailableDetailMessage];
-            [self.fileParser decrementWorking];
-        });
-    } else {
-        [self startFileSystemLoading];
-    }
-}
-
-// -------------------------------------------------------------------------------
 //	openAlert:
 //
 //	The user clicked the "Open…" button.
 // -------------------------------------------------------------------------------
 - (void)openAlert:(NSString *)title withMessage:(NSString *)message
 {
-    if (suppressAlertsForFolderNA) {
+    if (suppressAlertsForFolderNA ||
+        [[NSUserDefaults standardUserDefaults] boolForKey:kAppObservedDirectoryUnavailableSupressAlert] == YES) {
         DLog(@"Alert suppression was checked - don't warn again.");
         return;
+    } else if ([[NSUserDefaults standardUserDefaults] boolForKey:kAppFirstRun]) {
+        DLog(@"Don't show alert on first run.");
+        return;
     }
-	NSString *useSecondButtonStr = @"Ignore";
-	NSString *useAlternateButtonStr = @"Re-scan";    
+	NSString *useSecondButtonStr = @"Cancel";
+    //Possibly offer ability to re-check from alert view?
+	//NSString *useAlternateButtonStr = @"Re-scan";
     NSString *defaultButtonTitle = @"Open Preferences";
 	
 	NSAlert *testAlert = [NSAlert alertWithMessageText:message
                                          defaultButton:defaultButtonTitle
-                                       alternateButton:useAlternateButtonStr
-                                           otherButton:useSecondButtonStr
+                                       alternateButton:useSecondButtonStr
+                                           otherButton:nil
                              informativeTextWithFormat:@"%@", title];
     
 
@@ -814,25 +777,57 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     
 	// note: accessoryView and suppression checkbox are available in 10.5 on up
     [testAlert setShowsSuppressionButton:YES];
-    [[testAlert suppressionButton] setTitle:@"Don't ask again."];
+    [[testAlert suppressionButton] setTitle:@"Don't ask again"];
     
-    // use a custom accessory view?
-//    if (useAccessoryViewState)
-//        [testAlert setAccessoryView:accessoryView];
-    BOOL useSheet = YES;
-	if (useSheet)	// sheet or modal alert?
-	{
-		[testAlert beginSheetModalForWindow:[self window]
-                              modalDelegate:self
-                             didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:)
-                                contextInfo:nil];
-	}
-//	else
-//	{
-//		NSInteger result = [testAlert runModal];
-//		[self handleResult:testAlert withResult:result];
-//	}
+    [testAlert beginSheetModalForWindow:[self window]
+                          modalDelegate:self
+                         didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:)
+                            contextInfo:nil];
 }
+
+
+//TODO: possibly add a link to the help file in certain Alert Views
+// -------------------------------------------------------------------------------
+//	alertShowHelp
+//
+//	The delegate method for displaying alert help.
+//// -------------------------------------------------------------------------------
+//- (BOOL)alertShowHelp:(NSAlert *)alert
+//{
+//	// get the localized name of our help book
+//    //
+//    // to make this work, the help book name needs to be defined in your InfoPlist.strings
+//    // file with an entry for "CFBundleHelpBookName"
+//    //
+//    NSString *helpBookName = [[[NSBundle mainBundle] localizedInfoDictionary] objectForKey:@"CFBundleHelpBookName"];
+//
+//	[[NSHelpManager sharedHelpManager] openHelpAnchor:[alert helpAnchor] inBook:helpBookName];
+//
+//	return YES;
+//}
+
+// -------------------------------------------------------------------------------
+//	rescanAction:
+//
+//	The user clicked the "Rescan" button from the Alert View - UNUSED.
+// -------------------------------------------------------------------------------
+//- (IBAction)rescanAction:(id)sender
+//{
+//	DLog(@"Re-scan button was clicked.");
+//    self.fileParser = [PIXFileParser sharedFileParser];
+//    if (![self.fileParser canAccessObservedDirectories])
+//    {
+//        [self.fileParser incrementWorking];
+//        double delayInSeconds = 2.0;
+//        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//            [self openAlert:@"Re-scan Failed" withMessage:kRootFolderUnavailableDetailMessage];
+//            [self.fileParser decrementWorking];
+//        });
+//    } else {
+//        [self startFileSystemLoading];
+//    }
+//}
 
 
 @end

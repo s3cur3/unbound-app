@@ -54,13 +54,15 @@
     
     //        [self openAlert:@"Root Folder Unavailable"
     //            withMessage:@"The folder specified for your photos is unavailable. Would you like to change the root folder in your preferences?"];
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:kAppObservedDirectoryUnavailable])
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kAppObservedDirectoryUnavailable] &&
+        ![[NSUserDefaults standardUserDefaults] boolForKey:kAppObservedDirectoryUnavailableSupressAlert] &&
+        ![[NSUserDefaults standardUserDefaults] boolForKey:kAppFirstRun])
     {
         __weak id weakDelegate = [PIXAppDelegate sharedAppDelegate];
         double delayInSeconds = 1.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [(PIXAppDelegate *)weakDelegate openAlert:@"Root Folder Unavailable"
+            [(PIXAppDelegate *)weakDelegate openAlert:kRootFolderUnavailableTitle
                     withMessage:kRootFolderUnavailableDetailMessage];
         });
         
