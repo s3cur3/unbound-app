@@ -22,9 +22,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
-        thumbnailWidth  = frame.size.width;
-        thumbnailHeight = frame.size.height;
-        [self setupTransitions];
     }
     
     return self;
@@ -33,7 +30,6 @@
 - (void)setFrame:(NSRect)frameRect
 {
     [super setFrame:frameRect];
-    [self setupTransitions];
 }
 
 -(void)drawRect:(NSRect)dirtyRect
@@ -52,6 +48,7 @@
 
 -(void)updateTrackingAreas
 {
+    [self setupTransitions];
     
     if(self.boundsTrackingArea != nil) {
         [self removeTrackingArea:self.boundsTrackingArea];
@@ -93,6 +90,10 @@
 
 - (void)awakeFromNib
 {
+    //load images used in transitions
+    [self shadingImage];
+    [self blankImage];
+    [self maskImage];
 //    thumbnailWidth  = self.frame.size.width;
 //    thumbnailHeight = self.frame.size.height;
     

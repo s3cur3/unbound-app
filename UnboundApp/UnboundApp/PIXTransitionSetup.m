@@ -52,121 +52,51 @@
 @implementation PIXPageView (PIXTransitionSetup)
 
 
--(NSMutableArray *)availableFilterNames
+-(void)logAllFilters
 {
-    NSMutableArray *popupChoices = [NSMutableArray arrayWithObjects:
-                                    // Core Animation's four built-in transition types
-                                    kCATransitionFade,
-                                    kCATransitionMoveIn,
-                                    kCATransitionPush,
-                                    kCATransitionReveal,
-                                    nil];
-
-    NSArray *allTransitions = [CIFilter filterNamesInCategories:[NSArray arrayWithObject:kCICategoryTransition]];
-    if (allTransitions.count > 0)
+    NSArray* filters = [CIFilter filterNamesInCategories:nil];
+    for (NSString* filterName in filters)
     {
-        NSString *transition;
-        for (transition in allTransitions) {
-            [popupChoices addObject:transition];
-            DLog(@"Found Filter: %@", transition);
-        }
+        NSLog(@"Filter: %@", filterName);
+        NSLog(@"Parameters: %@", [[CIFilter filterWithName:filterName] attributes]);
     }
-    DLog(@"All Available Transitions : %@", popupChoices);
-    return popupChoices;
-
 }
+
+
+-(NSArray *)coreImageTransitionNames
+{
+    if (_coreImageTransitionNames == nil) {
+        NSArray *filterNames = @[@"CIPageCurlTransition", @"CIModTransition", @"CIDisintegrateWithMaskTransition", @"CIRippleTransition"];
+        _coreImageTransitionNames = filterNames;
+    }
+    return _coreImageTransitionNames;
+}
+
 
 -(void)setupTransitions
 {
-    NSMutableArray *transitions = [[NSMutableArray alloc] init];
-    NSArray *filterNames = [self availableFilterNames];
-    for (NSString *aFilterName in filterNames) {
+#ifdef DEBUG
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [self logAllFilters];
+    });
+#endif
+    
+    NSMutableArray *transitions = [[NSMutableArray alloc] initWithCapacity:self.coreImageTransitionNames.count];
+    //NSArray *filterNames = [self availableFilterNames];
+    for (NSString *aFilterName in self.coreImageTransitionNames) {
         CIFilter *myFilter = [self filterForTransitionNamed:aFilterName];
         if (myFilter!=nil) {
             [transitions addObject:myFilter];
+        } else {
+            DLog(@"No CIFilter found for : '%@'", aFilterName);
         }
     }
     DLog(@"transitions = %@", transitions);
     self.transitions = transitions;
 }
 
-- (void)setupTransitionsOld
-{
-    
-    [self availableFilterNames];
-    
-    NSMutableArray *transitions = [[NSMutableArray alloc] init];
-    
-    //CIVector  *extent = [CIVector vectorWithX:0  Y:0  Z:thumbnailWidth  W:thumbnailHeight];
-    CIVector  *extent = [CIVector vectorWithX:0  Y:0  Z:thumbnailWidth  W:thumbnailHeight];
 
-    [transitions addObject:[CIFilter filterWithName: @"CISwipeTransition"
-            keysAndValues: @"inputExtent", extent,
-                @"inputColor", [CIColor colorWithRed:0  green:0 blue:0  alpha:0],
-                @"inputAngle", @(0.3*M_PI),
-                @"inputWidth", @80.0,
-                @"inputOpacity", @0.0, nil]];
-
-    [transitions addObject:[CIFilter filterWithName: @"CIDissolveTransition"]];
-    
-    [transitions addObject:[CIFilter filterWithName: @"CISwipeTransition"			// Repeated filter type.
-            keysAndValues: @"inputExtent", extent,
-                @"inputColor", [CIColor colorWithRed:0  green:0 blue:0  alpha:0],
-                @"inputAngle", @(M_PI_2),
-                @"inputWidth", @(2.0),
-                @"inputOpacity", @(0.2), nil]];
-
-    [transitions addObject:[CIFilter filterWithName: @"CIModTransition"
-            keysAndValues:
-                @"inputCenter",[CIVector vectorWithX:0.5*thumbnailWidth Y:0.5*thumbnailHeight],
-                @"inputAngle", @(M_PI*0.1),
-                @"inputRadius", @30.0,
-                @"inputCompression", @10.0, nil]];
-
-    [transitions addObject:[CIFilter filterWithName: @"CIFlashTransition"
-            keysAndValues: @"inputExtent", extent,
-                @"inputCenter",[CIVector vectorWithX:0.3*thumbnailWidth Y:0.7*thumbnailHeight],
-                @"inputColor", [CIColor colorWithRed:1.0 green:0.8 blue:0.6 alpha:1],
-                @"inputMaxStriationRadius", @2.5,
-                @"inputStriationStrength", @0.5,
-                @"inputStriationContrast", @1.37,
-                @"inputFadeThreshold", @0.85, nil]];
-
-    [transitions addObject:[CIFilter filterWithName: @"CIDisintegrateWithMaskTransition"
-            keysAndValues:
-                @"inputMaskImage", [self maskImage],
-				@"inputShadowRadius", @10.0,
-                @"inputShadowDensity", @0.7,
-                @"inputShadowOffset", [CIVector vectorWithX:0.0  Y:-0.05*thumbnailHeight], nil]];
-
-
-    
-    [transitions addObject:[CIFilter filterWithName: @"CIPageCurlTransition"
-                                      keysAndValues: @"inputExtent", extent,
-                            @"inputShadingImage", [self shadingImage],
-                            @"inputBacksideImage", [self blankImage],
-                            @"inputAngle", @(-0.2*M_PI),
-                            @"inputRadius", @70.0, nil]];
-
-    [transitions addObject:[CIFilter filterWithName: @"CICopyMachineTransition"
-            keysAndValues: @"inputExtent", extent,
-                @"inputColor", [CIColor colorWithRed:.6 green:1 blue:.8 alpha:1],
-                @"inputAngle", @0.0,
-                @"inputWidth", @40.0,
-                @"inputOpacity", @1.0, nil]];
-    
-    [transitions addObject:[CIFilter filterWithName: @"CIRippleTransition"
-                                      keysAndValues: @"inputExtent", extent,
-                            @"inputShadingImage", [self shadingImage],
-                            @"inputCenter",[CIVector vectorWithX:0.5*thumbnailWidth Y:0.5*thumbnailHeight],
-                            @"inputWidth", @80.0,
-                            @"inputScale", @30.0, nil]];
-    
-
-
-    
-    self.transitions = transitions;
-}
 
 // -------------------------------------------------------------------------------
 //	filterForTransitionNamed:(NSString *)transitionName
@@ -182,13 +112,8 @@
     transitionFilter = [CIFilter filterWithName:transition];
     [transitionFilter setDefaults];
     
-    if ([transition isEqualToString:@"CICopyMachineTransition"])
-    {
-        [transitionFilter setValue:
-         [CIVector vectorWithX:rect.origin.x Y:rect.origin.y Z:rect.size.width W:rect.size.height]
-                            forKey:@"inputExtent"];
-    }
-    else if ([transition isEqualToString:@"CIDisintegrateWithMaskTransition"])
+
+    if ([transition isEqualToString:@"CIDisintegrateWithMaskTransition"])
     {
         // scale our mask image to match the transition area size, and set the scaled result as the
         // "inputMaskImage" to the transitionFilter.
@@ -204,11 +129,7 @@
         
         [transitionFilter setValue:[maskScalingFilter valueForKey:@"outputImage"] forKey:@"inputMaskImage"];
     }
-    else if ([transition isEqualToString:@"CIFlashTransition"])
-    {
-        [transitionFilter setValue:[CIVector vectorWithX:NSMidX(rect) Y:NSMidY(rect)] forKey:@"inputCenter"];
-        [transitionFilter setValue:[CIVector vectorWithX:rect.origin.x Y:rect.origin.y Z:rect.size.width W:rect.size.height] forKey:@"inputExtent"];
-    }
+
     else if ([transition isEqualToString:@"CIModTransition"])
     {
         [transitionFilter setValue:[CIVector vectorWithX:NSMidX(rect) Y:NSMidY(rect)] forKey:@"inputCenter"];
@@ -226,9 +147,117 @@
         [transitionFilter setValue:[CIVector vectorWithX:rect.origin.x Y:rect.origin.y Z:rect.size.width W:rect.size.height] forKey:@"inputExtent"];
         [transitionFilter setValue:self.shadingImage forKey:@"inputShadingImage"];
     }
+    //    else if ([transition isEqualToString:@"CICopyMachineTransition"])
+    //    {
+    //        [transitionFilter setValue:
+    //         [CIVector vectorWithX:rect.origin.x Y:rect.origin.y Z:rect.size.width W:rect.size.height]
+    //                            forKey:@"inputExtent"];
+    //    }
+    //    else if ([transition isEqualToString:@"CIFlashTransition"])
+    //    {
+    //        [transitionFilter setValue:[CIVector vectorWithX:NSMidX(rect) Y:NSMidY(rect)] forKey:@"inputCenter"];
+    //        [transitionFilter setValue:[CIVector vectorWithX:rect.origin.x Y:rect.origin.y Z:rect.size.width W:rect.size.height] forKey:@"inputExtent"];
+    //    }
+    else {
+        transitionFilter = nil;
+    }
     
     return transitionFilter;
 }
+
+//-(NSMutableArray *)availableFilterNames
+//{
+////    NSMutableArray *popupChoices = [NSMutableArray arrayWithObjects:
+////                                    // Core Animation's four built-in transition types
+////                                    kCATransitionFade,
+////                                    kCATransitionMoveIn,
+////                                    kCATransitionPush,
+////                                    kCATransitionReveal,
+////                                    nil];
+//
+//    NSMutableArray *popupChoices = [NSMutableArray new];
+//
+//    NSArray *allTransitions = [CIFilter filterNamesInCategories:[NSArray arrayWithObject:kCICategoryTransition]];
+//    if (allTransitions.count > 0)
+//    {
+//        NSString *transition;
+//        for (transition in allTransitions) {
+//            [popupChoices addObject:transition];
+//            DLog(@"Found Filter: %@", transition);
+//        }
+//    }
+//    DLog(@"All Available Transitions : %@", popupChoices);
+//    return popupChoices;
+//
+//}
+
+//- (void)setupTransitions_ALL
+//{
+//    CIVector  *extent;
+//    int        i;
+//    NSRect		rect = [self bounds];
+//    thumbnailWidth = rect.size.width;
+//    thumbnailHeight = rect.size.height;
+//
+//    NSMutableArray *transitions = self.transitions;
+//
+//    if(!transitions)
+//    {
+//		// get all the transition filters
+//		NSArray	*foundTransitions = [CIFilter filterNamesInCategories:[NSArray arrayWithObject:kCICategoryTransition]];
+//
+//		if(!foundTransitions)
+//			return;
+//		i = (int)[foundTransitions count];
+//
+//		extent = [CIVector vectorWithX: 0  Y: 0  Z: thumbnailWidth  W: thumbnailHeight];
+//
+//        extent = [CIVector vectorWithX: 0  Y: 0  Z: thumbnailWidth  W: thumbnailHeight];
+//
+//		transitions = [[NSMutableArray alloc] initWithCapacity:i];
+//		while(--i >= 0)
+//		{
+//			CIFilter	*theTransition = [CIFilter filterWithName:[foundTransitions objectAtIndex:i]];	    // create the filter
+//
+//			[theTransition setDefaults];    // initialize the filter with its defaults, as we might not set every value ourself
+//
+//			// setup environment maps and other static parameters of the filters
+//			NSArray		*filterKeys = [theTransition inputKeys];
+//			NSDictionary	*filterAttributes = [theTransition attributes];
+//			if(filterKeys)
+//			{
+//				NSEnumerator	*enumerator = [filterKeys objectEnumerator];
+//				NSString		*currentKey;
+//				NSDictionary	*currentInputAttributes;
+//
+//				while(currentKey = [enumerator nextObject])
+//				{
+//					if([currentKey compare:@"inputExtent"] == NSOrderedSame)		    // set the rendering extent to the size of the thumbnail
+//						[theTransition setValue:extent forKey:currentKey];
+//					else {
+//						currentInputAttributes = [filterAttributes objectForKey:currentKey];
+//
+//						NSString		    *classType = [currentInputAttributes objectForKey:kCIAttributeClass];
+//
+//						if([classType compare:@"CIImage"] == NSOrderedSame)
+//						{
+//							if([currentKey compare:@"inputShadingImage"] == NSOrderedSame)	// if there is a shading image, use our shading image
+//								[theTransition setValue:[self shadingImage] forKey:currentKey];
+//							else if ([currentKey compare:@"inputBacksideImage"] == NSOrderedSame)	// this is for the page curl transition
+//								[theTransition setValue:[self sourceImage] forKey:currentKey];
+//							else
+//								[theTransition setValue:[self maskImage] forKey:currentKey];
+//						}
+//					}
+//				}
+//			}
+//			[transitions addObject:theTransition];
+//		}
+//
+//        self.transitions = transitions;
+//    }
+//}
+
 
 
 @end
