@@ -53,6 +53,7 @@ static Preferences * instance = nil;
     
     [defaults setValue:[NSNumber numberWithBool:NO] forKey:kAppObservedDirectoryUnavailable];
     [defaults setValue:[NSNumber numberWithBool:NO] forKey:kAppObservedDirectoryUnavailableSupressAlert];
+    
 
 	// last step : register the default parameters
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];

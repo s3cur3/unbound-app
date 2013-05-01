@@ -24,6 +24,7 @@
 #import "DebugPrefrencesViewController.h"
 #import "PIXLeapInputManager.h"
 
+#import <Sparkle/Sparkle.h>
 
 
 //extern NSString *kLoadImageDidFinish;
@@ -35,6 +36,8 @@
 }
 
 @property (readonly, strong, atomic) NSOperationQueue *backgroundSaveQueue;
+
+@property (strong) SUUpdater * sparkleUpdater;
 
 @end
 
@@ -148,7 +151,22 @@
     [[PIXLeapInputManager sharedInstance] run];
 
     
+#ifdef ENABLE_SPARKLE
+    self.showSparkleMenu = YES;
+    self.sparkleUpdater = [SUUpdater new];
+#endif
+    
+    
 }
+
+- (IBAction)checkForUpdates:(id)sender
+{
+    
+#ifdef ENABLE_SPARKLE
+    [self.sparkleUpdater checkForUpdates:sender];
+#endif
+}
+
 
 
 - (void)setupProgressIndicator

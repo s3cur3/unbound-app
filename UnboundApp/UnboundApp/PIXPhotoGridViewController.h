@@ -21,6 +21,6 @@
 -(void)setThumbSize:(CGFloat)size;
 
 //PIXPageViewControllerDelegate
--(void)pagerDidMoveToPhotoAtIndex:(NSUInteger)index;
+//-(void)pagerDidMoveToPhotoAtIndex:(NSUInteger)index;
 
 @end

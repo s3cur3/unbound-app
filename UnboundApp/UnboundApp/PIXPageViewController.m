@@ -344,7 +344,7 @@
         
         
         CATransition *animation = [CATransition animation];
-        [animation setDuration:0.5+(interval/10.0)];
+        [animation setDuration:1.5+(interval/10.0)];
         PIXPageView *aPageView = (PIXPageView *)self.pageController.view;
         NSUInteger fiterCount = aPageView.transitions.count;
         NSUInteger filterIndex = self.currentSlide % fiterCount;

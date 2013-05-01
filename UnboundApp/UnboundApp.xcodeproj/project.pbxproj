@@ -92,6 +92,191 @@
 		8C249E9116AB8DF600CB97AF /* PIXGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E9016AB8DF600CB97AF /* PIXGridViewItem.m */; };
 		8C24A40816F94C1100703F97 /* intro_bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8C24A40716F94C1100703F97 /* intro_bg.jpg */; };
 		8C24A40B16F94ED100703F97 /* PIXRoundRectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C24A40A16F94ED100703F97 /* PIXRoundRectView.m */; };
+		8C28605B17308566009A0B35 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2F85A167ABE87008AC0F7 /* main.m */; };
+		8C28605C17308566009A0B35 /* PIXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2F861167ABE87008AC0F7 /* PIXAppDelegate.m */; };
+		8C28605D17308566009A0B35 /* PIXMainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DCB167AE1A500C9A895 /* PIXMainWindowController.m */; };
+		8C28605E17308566009A0B35 /* PIXInfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DCE167AE22A00C9A895 /* PIXInfoWindowController.m */; };
+		8C28605F17308566009A0B35 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DD3167AEEDE00C9A895 /* Preferences.m */; };
+		8C28606017308566009A0B35 /* PIXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DFF167BEAF200C9A895 /* PIXViewController.m */; };
+		8C28606117308566009A0B35 /* PIXNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E02167BEC1700C9A895 /* PIXNavigationController.m */; };
+		8C28606217308566009A0B35 /* PIXSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E2E167D2D8E00C9A895 /* PIXSplitViewController.m */; };
+		8C28606317308566009A0B35 /* PIXSidebarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E34167D365900C9A895 /* PIXSidebarViewController.m */; };
+		8C28606417308566009A0B35 /* PIXSidebarTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E39167D36E100C9A895 /* PIXSidebarTableCellView.m */; };
+		8C28606517308566009A0B35 /* SquareImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E3C167D372600C9A895 /* SquareImageView.m */; };
+		8C28606617308566009A0B35 /* PIXPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D0834F9167D6478003D557A /* PIXPageViewController.m */; };
+		8C28606717308566009A0B35 /* PIXImageBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D0834FF167D6678003D557A /* PIXImageBrowserViewController.m */; };
+		8C28606817308566009A0B35 /* PIXImageBrowserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D083512167D785F003D557A /* PIXImageBrowserView.m */; };
+		8C28606917308566009A0B35 /* PIXImageBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D083515167D78AD003D557A /* PIXImageBrowserCell.m */; };
+		8C28606A17308566009A0B35 /* AutoSizingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D083518167DCA71003D557A /* AutoSizingImageView.m */; };
+		8C28606B17308566009A0B35 /* PIXPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D08351F167E7C80003D557A /* PIXPageView.m */; };
+		8C28606C17308566009A0B35 /* PIXImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D08352C167E8B2B003D557A /* PIXImageViewController.m */; };
+		8C28606D17308566009A0B35 /* PIXModifierSwitchedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */; };
+		8C28606E17308566009A0B35 /* PIXDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF81D169D2D9F00C0D303 /* PIXDataModel.xcdatamodeld */; };
+		8C28606F17308566009A0B35 /* PIXThumbnail.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF827169D2FE800C0D303 /* PIXThumbnail.m */; };
+		8C28607017308566009A0B35 /* PIXPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF82D169D2FE800C0D303 /* PIXPhoto.m */; };
+		8C28607117308566009A0B35 /* PIXAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF82F169D2FE800C0D303 /* PIXAccount.m */; };
+		8C28607217308566009A0B35 /* GetPathsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF836169D34A400C0D303 /* GetPathsOperation.m */; };
+		8C28607317308566009A0B35 /* LoadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF838169D34A400C0D303 /* LoadOperation.m */; };
+		8C28607417308566009A0B35 /* MakeThumbnailOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF842169D3CF300C0D303 /* MakeThumbnailOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C28607517308566009A0B35 /* PIXAlbumGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E6D16AB426A00CB97AF /* PIXAlbumGridViewController.m */; };
+		8C28607617308566009A0B35 /* CNGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7216AB429E00CB97AF /* CNGridView.m */; };
+		8C28607717308566009A0B35 /* CNGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7616AB429E00CB97AF /* CNGridViewItem.m */; };
+		8C28607817308566009A0B35 /* CNGridViewItemLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7816AB429E00CB97AF /* CNGridViewItemLayout.m */; };
+		8C28607917308566009A0B35 /* NSColor+CNGridViewPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7A16AB429E00CB97AF /* NSColor+CNGridViewPalette.m */; };
+		8C28607A17308566009A0B35 /* NSView+CNGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7C16AB429E00CB97AF /* NSView+CNGridView.m */; };
+		8C28607B17308566009A0B35 /* PIXAlbumGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E8516AB467100CB97AF /* PIXAlbumGridViewItem.m */; };
+		8C28607C17308566009A0B35 /* PIXGridViewItemLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8CD7E716AB4D220072D516 /* PIXGridViewItemLayout.m */; };
+		8C28607D17308566009A0B35 /* PIXGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8CD7ED16AB6EC70072D516 /* PIXGridViewController.m */; };
+		8C28607E17308566009A0B35 /* PIXPhotoGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8CD7F316AB76E20072D516 /* PIXPhotoGridViewController.m */; };
+		8C28607F17308566009A0B35 /* PIXGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E9016AB8DF600CB97AF /* PIXGridViewItem.m */; };
+		8C28608017308566009A0B35 /* PIXPhotoGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B80E716B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.m */; };
+		8C28608117308566009A0B35 /* PIXLoadAlbumOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5F9D5A16AEF4A3008F8C80 /* PIXLoadAlbumOperation.m */; };
+		8C28608217308566009A0B35 /* PIXGetAlbumPathsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5F9D5E16AEF814008F8C80 /* PIXGetAlbumPathsOperation.m */; };
+		8C28608317308566009A0B35 /* GeneralPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B80F616BB3D8A00C7E8F4 /* GeneralPreferencesViewController.m */; };
+		8C28608417308566009A0B35 /* AdvancedPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B80F916BB3D8A00C7E8F4 /* AdvancedPreferencesViewController.m */; };
+		8C28608517308566009A0B35 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CF2C5E216BB458900F906F1 /* MASPreferencesWindowController.m */; };
+		8C28608617308566009A0B35 /* DebugPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE8F62316BD8C9E00DC6014 /* DebugPreferencesViewController.m */; };
+		8C28608717308566009A0B35 /* PIXGradientBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7ABBBD16C42A3D00784BDA /* PIXGradientBarView.m */; };
+		8C28608817308566009A0B35 /* PIXAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE92A16C46AB800F16C49 /* PIXAlbum.m */; };
+		8C28608917308566009A0B35 /* ArchDirectoryObservationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE92F16CACA7900F16C49 /* ArchDirectoryObservationCenter.m */; };
+		8C28608A17308566009A0B35 /* NSURL+DirectoryObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE93316CACA7900F16C49 /* NSURL+DirectoryObserver.m */; };
+		8C28608B17308566009A0B35 /* PIXFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DBFD55516CAE415001944A9 /* PIXFileManager.m */; };
+		8C28608C17308566009A0B35 /* PIXCustomButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE460E016CB674700CDFA04 /* PIXCustomButtonCell.m */; };
+		8C28608D17308566009A0B35 /* PIXCustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE460E316CD5A3000CDFA04 /* PIXCustomButton.m */; };
+		8C28608E17308566009A0B35 /* PIXCustomShareSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE460E616CD7BB300CDFA04 /* PIXCustomShareSheetViewController.m */; };
+		8C28608F17308566009A0B35 /* PIXFileParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C097D2616D57D0700E0E134 /* PIXFileParser.m */; };
+		8C28609017308566009A0B35 /* PIXSidebarClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B9C9E16DADA2100F6BADD /* PIXSidebarClipView.m */; };
+		8C28609117308566009A0B35 /* PIXSidebarScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B9CA116DADA9500F6BADD /* PIXSidebarScrollView.m */; };
+		8C28609217308566009A0B35 /* PIXMiniExifViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B9CA416DC30FB00F6BADD /* PIXMiniExifViewController.m */; };
+		8C28609317308566009A0B35 /* PIXExifBGView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B9CA916DC436B00F6BADD /* PIXExifBGView.m */; };
+		8C28609417308566009A0B35 /* LeapObjectiveC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8C031CCF16E926F7009B7F38 /* LeapObjectiveC.mm */; };
+		8C28609517308566009A0B35 /* PIXLeapInputManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C031CD216E926F7009B7F38 /* PIXLeapInputManager.m */; };
+		8C28609617308566009A0B35 /* PIXSelectionLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68246A16F596BB00245F09 /* PIXSelectionLayer.m */; };
+		8C28609717308566009A0B35 /* NSBezierPath+pathUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68246D16F599FD00245F09 /* NSBezierPath+pathUtilities.m */; };
+		8C28609817308566009A0B35 /* PIXPageHUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68247016F6850B00245F09 /* PIXPageHUDView.m */; };
+		8C28609917308566009A0B35 /* PIXPageHUDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68247316F6A75000245F09 /* PIXPageHUDWindow.m */; };
+		8C28609A17308566009A0B35 /* PIXInfoPanelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CF9CE4716F8B4A9003B0933 /* PIXInfoPanelView.m */; };
+		8C28609B17308566009A0B35 /* PIXRoundRectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C24A40A16F94ED100703F97 /* PIXRoundRectView.m */; };
+		8C28609C17308566009A0B35 /* PIXShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C85AC1816FA98470021ADB4 /* PIXShareManager.m */; };
+		8C28609D17308566009A0B35 /* PIXInfoPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C53DFE716FB76E8008EF8B1 /* PIXInfoPanelViewController.m */; };
+		8C28609E17308566009A0B35 /* PIXSlideshowOptonsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9AA2BC1700A5C000D989CA /* PIXSlideshowOptonsViewController.m */; };
+		8C28609F17308566009A0B35 /* PIXFileTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8F4353170534610040562D /* PIXFileTextField.m */; };
+		8C2860A017308566009A0B35 /* PIXOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D91D13B1709DB1C00747629 /* PIXOutlineView.m */; };
+		8C2860A117308566009A0B35 /* PIXRoundedProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C33D5181711FC8700647F95 /* PIXRoundedProgressIndicator.m */; };
+		8C2860A217308566009A0B35 /* PIXHUDMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C72FE6017134BEE00AA72B0 /* PIXHUDMessageController.m */; };
+		8C2860A317308566009A0B35 /* PIXLeapTutorialWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C14692617149A92009ECCC5 /* PIXLeapTutorialWindowController.m */; };
+		8C2860A417308566009A0B35 /* PIXAboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C82A865171A5138009DD803 /* PIXAboutWindowController.m */; };
+		8C2860A517308566009A0B35 /* PIXTransitionSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D23CC151720604E00C7FF70 /* PIXTransitionSetup.m */; };
+		8C2860A717308566009A0B35 /* MapKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFED16FB7C36008EF8B1 /* MapKit.framework */; };
+		8C2860A817308566009A0B35 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8C286055172F590D009A0B35 /* Sparkle.framework */; };
+		8C2860AA17308566009A0B35 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C14692E1714A5CC009ECCC5 /* QTKit.framework */; };
+		8C2860AB17308566009A0B35 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C14692C1714A5BB009ECCC5 /* QuickTime.framework */; };
+		8C2860AC17308566009A0B35 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFF116FB7CED008EF8B1 /* CoreFoundation.framework */; };
+		8C2860AD17308566009A0B35 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4A1E2A167D2A4C00C9A895 /* Quartz.framework */; };
+		8C2860AE17308566009A0B35 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4A1E07167C056C00C9A895 /* QuartzCore.framework */; };
+		8C2860AF17308566009A0B35 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DB2F84E167ABE87008AC0F7 /* Cocoa.framework */; };
+		8C2860B017308566009A0B35 /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C031CD016E926F7009B7F38 /* libLeap.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
+		8C2860B117308566009A0B35 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFED16FB7C36008EF8B1 /* MapKit.framework */; };
+		8C2860B217308566009A0B35 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C286055172F590D009A0B35 /* Sparkle.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		8C2860B417308566009A0B35 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F857167ABE87008AC0F7 /* InfoPlist.strings */; };
+		8C2860B517308566009A0B35 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F85D167ABE87008AC0F7 /* Credits.rtf */; };
+		8C2860B617308566009A0B35 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F863167ABE87008AC0F7 /* MainMenu.xib */; };
+		8C2860B717308566009A0B35 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F86C167AC07F008AC0F7 /* icon.icns */; };
+		8C2860B817308566009A0B35 /* unbound_icon_512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F86D167AC07F008AC0F7 /* unbound_icon_512x512.png */; };
+		8C2860B917308566009A0B35 /* dark_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1D9A167AD93400C9A895 /* dark_bg.png */; };
+		8C2860BA17308566009A0B35 /* dark_bg@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1D9B167AD93400C9A895 /* dark_bg@2X.png */; };
+		8C2860BB17308566009A0B35 /* nophoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DA8167AD93400C9A895 /* nophoto.png */; };
+		8C2860BC17308566009A0B35 /* nophoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DA9167AD93400C9A895 /* nophoto@2x.png */; };
+		8C2860BD17308566009A0B35 /* temp-portrait.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DAA167AD93400C9A895 /* temp-portrait.jpg */; };
+		8C2860BE17308566009A0B35 /* temp-portrait@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DAB167AD93400C9A895 /* temp-portrait@2x.jpg */; };
+		8C2860BF17308566009A0B35 /* temp.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DAC167AD93400C9A895 /* temp.jpg */; };
+		8C2860C017308566009A0B35 /* temp@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DAD167AD93400C9A895 /* temp@2x.jpg */; };
+		8C2860C117308566009A0B35 /* PIXMainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DC3167ADA2400C9A895 /* PIXMainWindow.xib */; };
+		8C2860C217308566009A0B35 /* PIXInfoWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DCF167AE22A00C9A895 /* PIXInfoWindowController.xib */; };
+		8C2860C317308566009A0B35 /* PIXSplitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1E2F167D2D8E00C9A895 /* PIXSplitViewController.xib */; };
+		8C2860C417308566009A0B35 /* PIXSidebarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1E35167D365900C9A895 /* PIXSidebarViewController.xib */; };
+		8C2860C517308566009A0B35 /* PIXPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D0834FA167D6478003D557A /* PIXPageViewController.xib */; };
+		8C2860C617308566009A0B35 /* PIXImageBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D083500167D6678003D557A /* PIXImageBrowserViewController.xib */; };
+		8C2860C717308566009A0B35 /* AutoSizingImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D083525167E7EEE003D557A /* AutoSizingImageView.xib */; };
+		8C2860C817308566009A0B35 /* nophoto_200x200.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1DA66CAF16AA2ED00060D796 /* nophoto_200x200.jpg */; };
+		8C2860C917308566009A0B35 /* PIXGridViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8CD7EE16AB6EC70072D516 /* PIXGridViewController.xib */; };
+		8C2860CA17308566009A0B35 /* GeneralPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4B80F716BB3D8A00C7E8F4 /* GeneralPreferencesView.xib */; };
+		8C2860CB17308566009A0B35 /* AdvancedPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4B80FA16BB3D8A00C7E8F4 /* AdvancedPreferencesView.xib */; };
+		8C2860CC17308566009A0B35 /* MASPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CF2C5DF16BB458900F906F1 /* MASPreferencesWindow.xib */; };
+		8C2860CD17308566009A0B35 /* DebugPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CE8F62216BD8C9E00DC6014 /* DebugPreferencesView.xib */; };
+		8C2860CE17308566009A0B35 /* btn-roundrect-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D716CB650600CDFA04 /* btn-roundrect-down.png */; };
+		8C2860CF17308566009A0B35 /* btn-roundrect-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D816CB650600CDFA04 /* btn-roundrect-down@2x.png */; };
+		8C2860D017308566009A0B35 /* btn-roundrect-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D916CB650600CDFA04 /* btn-roundrect-up.png */; };
+		8C2860D117308566009A0B35 /* btn-roundrect-up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460DA16CB650600CDFA04 /* btn-roundrect-up@2x.png */; };
+		8C2860D217308566009A0B35 /* PIXCustomShareSheetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460E716CD7BB300CDFA04 /* PIXCustomShareSheetViewController.xib */; };
+		8C2860D317308566009A0B35 /* PIXMiniExifViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4B9CA516DC30FD00F6BADD /* PIXMiniExifViewController.xib */; };
+		8C2860D417308566009A0B35 /* buttongrid_copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247516F8089400245F09 /* buttongrid_copy.png */; };
+		8C2860D517308566009A0B35 /* buttongrid_copy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247616F8089400245F09 /* buttongrid_copy@2x.png */; };
+		8C2860D617308566009A0B35 /* buttongrid_email.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247716F8089400245F09 /* buttongrid_email.png */; };
+		8C2860D717308566009A0B35 /* buttongrid_email@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247816F8089400245F09 /* buttongrid_email@2x.png */; };
+		8C2860D817308566009A0B35 /* buttongrid_emaillink.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247916F8089400245F09 /* buttongrid_emaillink.png */; };
+		8C2860D917308566009A0B35 /* buttongrid_emaillink@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247A16F8089400245F09 /* buttongrid_emaillink@2x.png */; };
+		8C2860DA17308566009A0B35 /* buttongrid_facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247B16F8089400245F09 /* buttongrid_facebook.png */; };
+		8C2860DB17308566009A0B35 /* buttongrid_facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247C16F8089400245F09 /* buttongrid_facebook@2x.png */; };
+		8C2860DC17308566009A0B35 /* buttongrid_print.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247D16F8089400245F09 /* buttongrid_print.png */; };
+		8C2860DD17308566009A0B35 /* buttongrid_print@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247E16F8089400245F09 /* buttongrid_print@2x.png */; };
+		8C2860DE17308566009A0B35 /* buttongrid_share.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247F16F8089400245F09 /* buttongrid_share.png */; };
+		8C2860DF17308566009A0B35 /* buttongrid_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68248016F8089400245F09 /* buttongrid_share@2x.png */; };
+		8C2860E017308566009A0B35 /* buttongrid_twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68248116F8089400245F09 /* buttongrid_twitter.png */; };
+		8C2860E117308566009A0B35 /* buttongrid_twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68248216F8089400245F09 /* buttongrid_twitter@2x.png */; };
+		8C2860E217308566009A0B35 /* arrow-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CF9CE3E16F8200A003B0933 /* arrow-left.png */; };
+		8C2860E317308566009A0B35 /* arrow-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CF9CE3F16F8200A003B0933 /* arrow-left@2x.png */; };
+		8C2860E417308566009A0B35 /* arrow-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CF9CE4016F8200A003B0933 /* arrow-right.png */; };
+		8C2860E517308566009A0B35 /* arrow-right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CF9CE4116F8200A003B0933 /* arrow-right@2x.png */; };
+		8C2860E617308566009A0B35 /* intro_bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8C24A40716F94C1100703F97 /* intro_bg.jpg */; };
+		8C2860E717308566009A0B35 /* MapViewAdditions.css in Resources */ = {isa = PBXBuildFile; fileRef = 8C53DFF616FB8319008EF8B1 /* MapViewAdditions.css */; };
+		8C2860E817308566009A0B35 /* contract.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13BA16FD2B21004CA7D5 /* contract.png */; };
+		8C2860E917308566009A0B35 /* contract@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13BB16FD2B21004CA7D5 /* contract@2x.png */; };
+		8C2860EA17308566009A0B35 /* expand.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13BC16FD2B21004CA7D5 /* expand.png */; };
+		8C2860EB17308566009A0B35 /* expand@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13BD16FD2B21004CA7D5 /* expand@2x.png */; };
+		8C2860EC17308566009A0B35 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13C216FD6111004CA7D5 /* play.png */; };
+		8C2860ED17308566009A0B35 /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13C316FD6111004CA7D5 /* play@2x.png */; };
+		8C2860EE17308566009A0B35 /* captionbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9AA2B716FFE39500D989CA /* captionbutton.png */; };
+		8C2860EF17308566009A0B35 /* captionbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9AA2B816FFE39500D989CA /* captionbutton@2x.png */; };
+		8C2860F017308566009A0B35 /* PIXSlideshowOptonsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C9AA2BD1700A5C000D989CA /* PIXSlideshowOptonsViewController.xib */; };
+		8C2860F117308566009A0B35 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C5D757217015A5C0008CC00 /* pause.png */; };
+		8C2860F217308566009A0B35 /* pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C5D757317015A5C0008CC00 /* pause@2x.png */; };
+		8C2860F317308566009A0B35 /* sortbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C23026217056E6E001A5510 /* sortbutton.png */; };
+		8C2860F417308566009A0B35 /* sortbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C23026317056E6E001A5510 /* sortbutton@2x.png */; };
+		8C2860F517308566009A0B35 /* addbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C23026617057400001A5510 /* addbutton.png */; };
+		8C2860F617308566009A0B35 /* addbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C23026717057400001A5510 /* addbutton@2x.png */; };
+		8C2860F717308566009A0B35 /* preferences_dark_theme.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE561712843B00AA72B0 /* preferences_dark_theme.png */; };
+		8C2860F817308566009A0B35 /* preferences_light_theme.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE571712843B00AA72B0 /* preferences_light_theme.png */; };
+		8C2860F917308566009A0B35 /* PIXHUDMessageController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE6117134BEE00AA72B0 /* PIXHUDMessageController.xib */; };
+		8C2860FA17308566009A0B35 /* leapconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE641713701200AA72B0 /* leapconnected.png */; };
+		8C2860FB17308566009A0B35 /* leapconnected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE651713701200AA72B0 /* leapconnected@2x.png */; };
+		8C2860FC17308566009A0B35 /* graydot.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE681713EAAA00AA72B0 /* graydot.png */; };
+		8C2860FD17308566009A0B35 /* graydot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE691713EAAA00AA72B0 /* graydot@2x.png */; };
+		8C2860FE17308566009A0B35 /* greendot.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE6A1713EAAA00AA72B0 /* greendot.png */; };
+		8C2860FF17308566009A0B35 /* greendot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE6B1713EAAA00AA72B0 /* greendot@2x.png */; };
+		8C28610017308566009A0B35 /* PIXLeapTutorialWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C14692717149A92009ECCC5 /* PIXLeapTutorialWindowController.xib */; };
+		8C28610117308566009A0B35 /* LeapTutorial0.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C1469311714B1C7009ECCC5 /* LeapTutorial0.mov */; };
+		8C28610217308566009A0B35 /* LeapTutorial1.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C1469331714B442009ECCC5 /* LeapTutorial1.mov */; };
+		8C28610317308566009A0B35 /* LeapTutorial2.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C35808E1714D99E00352870 /* LeapTutorial2.mov */; };
+		8C28610417308566009A0B35 /* LeapTutorial3.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C35808F1714D99E00352870 /* LeapTutorial3.mov */; };
+		8C28610517308566009A0B35 /* MainMenu-original.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C82A85D1718E28A009DD803 /* MainMenu-original.xib */; };
+		8C28610617308566009A0B35 /* fullnophoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C82A86017192798009DD803 /* fullnophoto.png */; };
+		8C28610717308566009A0B35 /* fullnophoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C82A86117192798009DD803 /* fullnophoto@2x.png */; };
+		8C28610817308566009A0B35 /* PIXAboutWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C82A866171A5138009DD803 /* PIXAboutWindowController.xib */; };
+		8C28610917308566009A0B35 /* pixite-logo-wide.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C8B6DEE171BBC4C00AB230F /* pixite-logo-wide.png */; };
+		8C28610A17308566009A0B35 /* click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8C5019C9171C803F00829914 /* click.wav */; };
+		8C28610B17308566009A0B35 /* success.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC94923171C92E900EC1431 /* success.png */; };
+		8C28610C17308566009A0B35 /* success@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC94924171C92E900EC1431 /* success@2x.png */; };
+		8C28610D17308566009A0B35 /* softtap.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8CC94927171CDC5E00EC1431 /* softtap.wav */; };
+		8C28610E17308566009A0B35 /* success-backward.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC94929171DF00000EC1431 /* success-backward.png */; };
+		8C28610F17308566009A0B35 /* success-backward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC9492A171DF00000EC1431 /* success-backward@2x.png */; };
+		8C28611017308566009A0B35 /* success-forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC9492B171DF00000EC1431 /* success-forward.png */; };
+		8C28611117308566009A0B35 /* success-forward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC9492C171DF00000EC1431 /* success-forward@2x.png */; };
+		8C28611217308566009A0B35 /* LeapTutorial4.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8CC94931171E145A00EC1431 /* LeapTutorial4.mov */; };
+		8C28611317308566009A0B35 /* Blank.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1D23CC17172095E000C7FF70 /* Blank.jpg */; };
+		8C28611417308566009A0B35 /* Mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1D23CC18172095E000C7FF70 /* Mask.jpg */; };
+		8C28611517308566009A0B35 /* Shading.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 1D23CC19172095E000C7FF70 /* Shading.tiff */; };
+		8C28611717308566009A0B35 /* libLeap.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8C031CD016E926F7009B7F38 /* libLeap.dylib */; };
 		8C33D5191711FC8700647F95 /* PIXRoundedProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C33D5181711FC8700647F95 /* PIXRoundedProgressIndicator.m */; };
 		8C3580901714D99E00352870 /* LeapTutorial2.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C35808E1714D99E00352870 /* LeapTutorial2.mov */; };
 		8C3580911714D99E00352870 /* LeapTutorial3.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C35808F1714D99E00352870 /* LeapTutorial3.mov */; };
@@ -193,6 +378,28 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		8C2860A617308566009A0B35 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8C2860A717308566009A0B35 /* MapKit.framework in Copy Frameworks */,
+				8C2860A817308566009A0B35 /* Sparkle.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8C28611617308566009A0B35 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				8C28611717308566009A0B35 /* libLeap.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8C53DFF316FB7DF4008EF8B1 /* Copy Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -358,6 +565,9 @@
 		8C24A40716F94C1100703F97 /* intro_bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = intro_bg.jpg; sourceTree = "<group>"; };
 		8C24A40916F94ED100703F97 /* PIXRoundRectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXRoundRectView.h; sourceTree = "<group>"; };
 		8C24A40A16F94ED100703F97 /* PIXRoundRectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXRoundRectView.m; sourceTree = "<group>"; };
+		8C286055172F590D009A0B35 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
+		8C28611B17308566009A0B35 /* Unbound.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unbound.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C28611C17308566009A0B35 /* Unbound copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Unbound copy-Info.plist"; path = "/Users/scottsykora/Documents/Docs/WebAlbums/code/unbound_osx/UnboundApp/Unbound copy-Info.plist"; sourceTree = "<absolute>"; };
 		8C33D5171711FC8700647F95 /* PIXRoundedProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXRoundedProgressIndicator.h; sourceTree = "<group>"; };
 		8C33D5181711FC8700647F95 /* PIXRoundedProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXRoundedProgressIndicator.m; sourceTree = "<group>"; };
 		8C35808E1714D99E00352870 /* LeapTutorial2.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = LeapTutorial2.mov; sourceTree = "<group>"; };
@@ -501,6 +711,22 @@
 				1DB2F84F167ABE87008AC0F7 /* Cocoa.framework in Frameworks */,
 				8C031CD416E926F7009B7F38 /* libLeap.dylib in Frameworks */,
 				8C53DFEE16FB7C36008EF8B1 /* MapKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8C2860A917308566009A0B35 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8C2860AA17308566009A0B35 /* QTKit.framework in Frameworks */,
+				8C2860AB17308566009A0B35 /* QuickTime.framework in Frameworks */,
+				8C2860AC17308566009A0B35 /* CoreFoundation.framework in Frameworks */,
+				8C2860AD17308566009A0B35 /* Quartz.framework in Frameworks */,
+				8C2860AE17308566009A0B35 /* QuartzCore.framework in Frameworks */,
+				8C2860AF17308566009A0B35 /* Cocoa.framework in Frameworks */,
+				8C2860B017308566009A0B35 /* libLeap.dylib in Frameworks */,
+				8C2860B117308566009A0B35 /* MapKit.framework in Frameworks */,
+				8C2860B217308566009A0B35 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -789,6 +1015,7 @@
 				1DB2F854167ABE87008AC0F7 /* UnboundApp */,
 				1DB2F84D167ABE87008AC0F7 /* Frameworks */,
 				1DB2F84B167ABE87008AC0F7 /* Products */,
+				8C28611C17308566009A0B35 /* Unbound copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -796,6 +1023,7 @@
 			isa = PBXGroup;
 			children = (
 				1DB2F84A167ABE87008AC0F7 /* Unbound.app */,
+				8C28611B17308566009A0B35 /* Unbound.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -867,6 +1095,7 @@
 		1DB2F871167AC0DF008AC0F7 /* 3rdParty */ = {
 			isa = PBXGroup;
 			children = (
+				8C286055172F590D009A0B35 /* Sparkle.framework */,
 				8C031CD016E926F7009B7F38 /* libLeap.dylib */,
 				8C53DFED16FB7C36008EF8B1 /* MapKit.framework */,
 			);
@@ -1036,6 +1265,25 @@
 			productReference = 1DB2F84A167ABE87008AC0F7 /* Unbound.app */;
 			productType = "com.apple.product-type.application";
 		};
+		8C28605917308566009A0B35 /* Unbound Trial */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8C28611817308566009A0B35 /* Build configuration list for PBXNativeTarget "Unbound Trial" */;
+			buildPhases = (
+				8C28605A17308566009A0B35 /* Sources */,
+				8C2860A617308566009A0B35 /* Copy Frameworks */,
+				8C2860A917308566009A0B35 /* Frameworks */,
+				8C2860B317308566009A0B35 /* Resources */,
+				8C28611617308566009A0B35 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Unbound Trial";
+			productName = UnboundApp;
+			productReference = 8C28611B17308566009A0B35 /* Unbound.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1059,6 +1307,7 @@
 			projectRoot = "";
 			targets = (
 				1DB2F849167ABE87008AC0F7 /* Unbound */,
+				8C28605917308566009A0B35 /* Unbound Trial */,
 			);
 		};
 /* End PBXProject section */
@@ -1169,6 +1418,111 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8C2860B317308566009A0B35 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8C2860B417308566009A0B35 /* InfoPlist.strings in Resources */,
+				8C2860B517308566009A0B35 /* Credits.rtf in Resources */,
+				8C2860B617308566009A0B35 /* MainMenu.xib in Resources */,
+				8C2860B717308566009A0B35 /* icon.icns in Resources */,
+				8C2860B817308566009A0B35 /* unbound_icon_512x512.png in Resources */,
+				8C2860B917308566009A0B35 /* dark_bg.png in Resources */,
+				8C2860BA17308566009A0B35 /* dark_bg@2X.png in Resources */,
+				8C2860BB17308566009A0B35 /* nophoto.png in Resources */,
+				8C2860BC17308566009A0B35 /* nophoto@2x.png in Resources */,
+				8C2860BD17308566009A0B35 /* temp-portrait.jpg in Resources */,
+				8C2860BE17308566009A0B35 /* temp-portrait@2x.jpg in Resources */,
+				8C2860BF17308566009A0B35 /* temp.jpg in Resources */,
+				8C2860C017308566009A0B35 /* temp@2x.jpg in Resources */,
+				8C2860C117308566009A0B35 /* PIXMainWindow.xib in Resources */,
+				8C2860C217308566009A0B35 /* PIXInfoWindowController.xib in Resources */,
+				8C2860C317308566009A0B35 /* PIXSplitViewController.xib in Resources */,
+				8C2860C417308566009A0B35 /* PIXSidebarViewController.xib in Resources */,
+				8C2860C517308566009A0B35 /* PIXPageViewController.xib in Resources */,
+				8C2860C617308566009A0B35 /* PIXImageBrowserViewController.xib in Resources */,
+				8C2860C717308566009A0B35 /* AutoSizingImageView.xib in Resources */,
+				8C2860C817308566009A0B35 /* nophoto_200x200.jpg in Resources */,
+				8C2860C917308566009A0B35 /* PIXGridViewController.xib in Resources */,
+				8C2860CA17308566009A0B35 /* GeneralPreferencesView.xib in Resources */,
+				8C2860CB17308566009A0B35 /* AdvancedPreferencesView.xib in Resources */,
+				8C2860CC17308566009A0B35 /* MASPreferencesWindow.xib in Resources */,
+				8C2860CD17308566009A0B35 /* DebugPreferencesView.xib in Resources */,
+				8C2860CE17308566009A0B35 /* btn-roundrect-down.png in Resources */,
+				8C2860CF17308566009A0B35 /* btn-roundrect-down@2x.png in Resources */,
+				8C2860D017308566009A0B35 /* btn-roundrect-up.png in Resources */,
+				8C2860D117308566009A0B35 /* btn-roundrect-up@2x.png in Resources */,
+				8C2860D217308566009A0B35 /* PIXCustomShareSheetViewController.xib in Resources */,
+				8C2860D317308566009A0B35 /* PIXMiniExifViewController.xib in Resources */,
+				8C2860D417308566009A0B35 /* buttongrid_copy.png in Resources */,
+				8C2860D517308566009A0B35 /* buttongrid_copy@2x.png in Resources */,
+				8C2860D617308566009A0B35 /* buttongrid_email.png in Resources */,
+				8C2860D717308566009A0B35 /* buttongrid_email@2x.png in Resources */,
+				8C2860D817308566009A0B35 /* buttongrid_emaillink.png in Resources */,
+				8C2860D917308566009A0B35 /* buttongrid_emaillink@2x.png in Resources */,
+				8C2860DA17308566009A0B35 /* buttongrid_facebook.png in Resources */,
+				8C2860DB17308566009A0B35 /* buttongrid_facebook@2x.png in Resources */,
+				8C2860DC17308566009A0B35 /* buttongrid_print.png in Resources */,
+				8C2860DD17308566009A0B35 /* buttongrid_print@2x.png in Resources */,
+				8C2860DE17308566009A0B35 /* buttongrid_share.png in Resources */,
+				8C2860DF17308566009A0B35 /* buttongrid_share@2x.png in Resources */,
+				8C2860E017308566009A0B35 /* buttongrid_twitter.png in Resources */,
+				8C2860E117308566009A0B35 /* buttongrid_twitter@2x.png in Resources */,
+				8C2860E217308566009A0B35 /* arrow-left.png in Resources */,
+				8C2860E317308566009A0B35 /* arrow-left@2x.png in Resources */,
+				8C2860E417308566009A0B35 /* arrow-right.png in Resources */,
+				8C2860E517308566009A0B35 /* arrow-right@2x.png in Resources */,
+				8C2860E617308566009A0B35 /* intro_bg.jpg in Resources */,
+				8C2860E717308566009A0B35 /* MapViewAdditions.css in Resources */,
+				8C2860E817308566009A0B35 /* contract.png in Resources */,
+				8C2860E917308566009A0B35 /* contract@2x.png in Resources */,
+				8C2860EA17308566009A0B35 /* expand.png in Resources */,
+				8C2860EB17308566009A0B35 /* expand@2x.png in Resources */,
+				8C2860EC17308566009A0B35 /* play.png in Resources */,
+				8C2860ED17308566009A0B35 /* play@2x.png in Resources */,
+				8C2860EE17308566009A0B35 /* captionbutton.png in Resources */,
+				8C2860EF17308566009A0B35 /* captionbutton@2x.png in Resources */,
+				8C2860F017308566009A0B35 /* PIXSlideshowOptonsViewController.xib in Resources */,
+				8C2860F117308566009A0B35 /* pause.png in Resources */,
+				8C2860F217308566009A0B35 /* pause@2x.png in Resources */,
+				8C2860F317308566009A0B35 /* sortbutton.png in Resources */,
+				8C2860F417308566009A0B35 /* sortbutton@2x.png in Resources */,
+				8C2860F517308566009A0B35 /* addbutton.png in Resources */,
+				8C2860F617308566009A0B35 /* addbutton@2x.png in Resources */,
+				8C2860F717308566009A0B35 /* preferences_dark_theme.png in Resources */,
+				8C2860F817308566009A0B35 /* preferences_light_theme.png in Resources */,
+				8C2860F917308566009A0B35 /* PIXHUDMessageController.xib in Resources */,
+				8C2860FA17308566009A0B35 /* leapconnected.png in Resources */,
+				8C2860FB17308566009A0B35 /* leapconnected@2x.png in Resources */,
+				8C2860FC17308566009A0B35 /* graydot.png in Resources */,
+				8C2860FD17308566009A0B35 /* graydot@2x.png in Resources */,
+				8C2860FE17308566009A0B35 /* greendot.png in Resources */,
+				8C2860FF17308566009A0B35 /* greendot@2x.png in Resources */,
+				8C28610017308566009A0B35 /* PIXLeapTutorialWindowController.xib in Resources */,
+				8C28610117308566009A0B35 /* LeapTutorial0.mov in Resources */,
+				8C28610217308566009A0B35 /* LeapTutorial1.mov in Resources */,
+				8C28610317308566009A0B35 /* LeapTutorial2.mov in Resources */,
+				8C28610417308566009A0B35 /* LeapTutorial3.mov in Resources */,
+				8C28610517308566009A0B35 /* MainMenu-original.xib in Resources */,
+				8C28610617308566009A0B35 /* fullnophoto.png in Resources */,
+				8C28610717308566009A0B35 /* fullnophoto@2x.png in Resources */,
+				8C28610817308566009A0B35 /* PIXAboutWindowController.xib in Resources */,
+				8C28610917308566009A0B35 /* pixite-logo-wide.png in Resources */,
+				8C28610A17308566009A0B35 /* click.wav in Resources */,
+				8C28610B17308566009A0B35 /* success.png in Resources */,
+				8C28610C17308566009A0B35 /* success@2x.png in Resources */,
+				8C28610D17308566009A0B35 /* softtap.wav in Resources */,
+				8C28610E17308566009A0B35 /* success-backward.png in Resources */,
+				8C28610F17308566009A0B35 /* success-backward@2x.png in Resources */,
+				8C28611017308566009A0B35 /* success-forward.png in Resources */,
+				8C28611117308566009A0B35 /* success-forward@2x.png in Resources */,
+				8C28611217308566009A0B35 /* LeapTutorial4.mov in Resources */,
+				8C28611317308566009A0B35 /* Blank.jpg in Resources */,
+				8C28611417308566009A0B35 /* Mask.jpg in Resources */,
+				8C28611517308566009A0B35 /* Shading.tiff in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1251,6 +1605,88 @@
 				8C14692817149A92009ECCC5 /* PIXLeapTutorialWindowController.m in Sources */,
 				8C82A867171A5138009DD803 /* PIXAboutWindowController.m in Sources */,
 				1D23CC161720604E00C7FF70 /* PIXTransitionSetup.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8C28605A17308566009A0B35 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8C28605B17308566009A0B35 /* main.m in Sources */,
+				8C28605C17308566009A0B35 /* PIXAppDelegate.m in Sources */,
+				8C28605D17308566009A0B35 /* PIXMainWindowController.m in Sources */,
+				8C28605E17308566009A0B35 /* PIXInfoWindowController.m in Sources */,
+				8C28605F17308566009A0B35 /* Preferences.m in Sources */,
+				8C28606017308566009A0B35 /* PIXViewController.m in Sources */,
+				8C28606117308566009A0B35 /* PIXNavigationController.m in Sources */,
+				8C28606217308566009A0B35 /* PIXSplitViewController.m in Sources */,
+				8C28606317308566009A0B35 /* PIXSidebarViewController.m in Sources */,
+				8C28606417308566009A0B35 /* PIXSidebarTableCellView.m in Sources */,
+				8C28606517308566009A0B35 /* SquareImageView.m in Sources */,
+				8C28606617308566009A0B35 /* PIXPageViewController.m in Sources */,
+				8C28606717308566009A0B35 /* PIXImageBrowserViewController.m in Sources */,
+				8C28606817308566009A0B35 /* PIXImageBrowserView.m in Sources */,
+				8C28606917308566009A0B35 /* PIXImageBrowserCell.m in Sources */,
+				8C28606A17308566009A0B35 /* AutoSizingImageView.m in Sources */,
+				8C28606B17308566009A0B35 /* PIXPageView.m in Sources */,
+				8C28606C17308566009A0B35 /* PIXImageViewController.m in Sources */,
+				8C28606D17308566009A0B35 /* PIXModifierSwitchedEvent.m in Sources */,
+				8C28606E17308566009A0B35 /* PIXDataModel.xcdatamodeld in Sources */,
+				8C28606F17308566009A0B35 /* PIXThumbnail.m in Sources */,
+				8C28607017308566009A0B35 /* PIXPhoto.m in Sources */,
+				8C28607117308566009A0B35 /* PIXAccount.m in Sources */,
+				8C28607217308566009A0B35 /* GetPathsOperation.m in Sources */,
+				8C28607317308566009A0B35 /* LoadOperation.m in Sources */,
+				8C28607417308566009A0B35 /* MakeThumbnailOperation.m in Sources */,
+				8C28607517308566009A0B35 /* PIXAlbumGridViewController.m in Sources */,
+				8C28607617308566009A0B35 /* CNGridView.m in Sources */,
+				8C28607717308566009A0B35 /* CNGridViewItem.m in Sources */,
+				8C28607817308566009A0B35 /* CNGridViewItemLayout.m in Sources */,
+				8C28607917308566009A0B35 /* NSColor+CNGridViewPalette.m in Sources */,
+				8C28607A17308566009A0B35 /* NSView+CNGridView.m in Sources */,
+				8C28607B17308566009A0B35 /* PIXAlbumGridViewItem.m in Sources */,
+				8C28607C17308566009A0B35 /* PIXGridViewItemLayout.m in Sources */,
+				8C28607D17308566009A0B35 /* PIXGridViewController.m in Sources */,
+				8C28607E17308566009A0B35 /* PIXPhotoGridViewController.m in Sources */,
+				8C28607F17308566009A0B35 /* PIXGridViewItem.m in Sources */,
+				8C28608017308566009A0B35 /* PIXPhotoGridViewItem.m in Sources */,
+				8C28608117308566009A0B35 /* PIXLoadAlbumOperation.m in Sources */,
+				8C28608217308566009A0B35 /* PIXGetAlbumPathsOperation.m in Sources */,
+				8C28608317308566009A0B35 /* GeneralPreferencesViewController.m in Sources */,
+				8C28608417308566009A0B35 /* AdvancedPreferencesViewController.m in Sources */,
+				8C28608517308566009A0B35 /* MASPreferencesWindowController.m in Sources */,
+				8C28608617308566009A0B35 /* DebugPreferencesViewController.m in Sources */,
+				8C28608717308566009A0B35 /* PIXGradientBarView.m in Sources */,
+				8C28608817308566009A0B35 /* PIXAlbum.m in Sources */,
+				8C28608917308566009A0B35 /* ArchDirectoryObservationCenter.m in Sources */,
+				8C28608A17308566009A0B35 /* NSURL+DirectoryObserver.m in Sources */,
+				8C28608B17308566009A0B35 /* PIXFileManager.m in Sources */,
+				8C28608C17308566009A0B35 /* PIXCustomButtonCell.m in Sources */,
+				8C28608D17308566009A0B35 /* PIXCustomButton.m in Sources */,
+				8C28608E17308566009A0B35 /* PIXCustomShareSheetViewController.m in Sources */,
+				8C28608F17308566009A0B35 /* PIXFileParser.m in Sources */,
+				8C28609017308566009A0B35 /* PIXSidebarClipView.m in Sources */,
+				8C28609117308566009A0B35 /* PIXSidebarScrollView.m in Sources */,
+				8C28609217308566009A0B35 /* PIXMiniExifViewController.m in Sources */,
+				8C28609317308566009A0B35 /* PIXExifBGView.m in Sources */,
+				8C28609417308566009A0B35 /* LeapObjectiveC.mm in Sources */,
+				8C28609517308566009A0B35 /* PIXLeapInputManager.m in Sources */,
+				8C28609617308566009A0B35 /* PIXSelectionLayer.m in Sources */,
+				8C28609717308566009A0B35 /* NSBezierPath+pathUtilities.m in Sources */,
+				8C28609817308566009A0B35 /* PIXPageHUDView.m in Sources */,
+				8C28609917308566009A0B35 /* PIXPageHUDWindow.m in Sources */,
+				8C28609A17308566009A0B35 /* PIXInfoPanelView.m in Sources */,
+				8C28609B17308566009A0B35 /* PIXRoundRectView.m in Sources */,
+				8C28609C17308566009A0B35 /* PIXShareManager.m in Sources */,
+				8C28609D17308566009A0B35 /* PIXInfoPanelViewController.m in Sources */,
+				8C28609E17308566009A0B35 /* PIXSlideshowOptonsViewController.m in Sources */,
+				8C28609F17308566009A0B35 /* PIXFileTextField.m in Sources */,
+				8C2860A017308566009A0B35 /* PIXOutlineView.m in Sources */,
+				8C2860A117308566009A0B35 /* PIXRoundedProgressIndicator.m in Sources */,
+				8C2860A217308566009A0B35 /* PIXHUDMessageController.m in Sources */,
+				8C2860A317308566009A0B35 /* PIXLeapTutorialWindowController.m in Sources */,
+				8C2860A417308566009A0B35 /* PIXAboutWindowController.m in Sources */,
+				8C2860A517308566009A0B35 /* PIXTransitionSetup.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1359,6 +1795,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UnboundApp/UnboundApp-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "UnboundApp/UnboundApp-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1384,6 +1821,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UnboundApp/UnboundApp-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = "UnboundApp/UnboundApp-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1391,6 +1829,66 @@
 					"\"$(SRCROOT)/UnboundApp/MapKit.framework\"/**",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		8C28611917308566009A0B35 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
+				CODE_SIGN_ENTITLEMENTS = Unbound.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/UnboundApp\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UnboundApp/UnboundApp-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"ENABLE_SPARKLE=1",
+					"TRIAL_MODE=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "UnboundApp/UnboundApp-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
+					"\"$(SRCROOT)/UnboundApp/MapKit.framework\"/**",
+				);
+				PRODUCT_NAME = Unbound;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		8C28611A17308566009A0B35 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
+				CODE_SIGN_ENTITLEMENTS = Unbound.entitlements;
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/UnboundApp\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UnboundApp/UnboundApp-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"ENABLE_SPARKLE=1",
+					"TRIAL_MODE=1",
+				);
+				INFOPLIST_FILE = "UnboundApp/UnboundApp-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
+					"\"$(SRCROOT)/UnboundApp/MapKit.framework\"/**",
+				);
+				PRODUCT_NAME = Unbound;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1413,6 +1911,15 @@
 			buildConfigurations = (
 				1DB2F869167ABE87008AC0F7 /* Debug */,
 				1DB2F86A167ABE87008AC0F7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8C28611817308566009A0B35 /* Build configuration list for PBXNativeTarget "Unbound Trial" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8C28611917308566009A0B35 /* Debug */,
+				8C28611A17308566009A0B35 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

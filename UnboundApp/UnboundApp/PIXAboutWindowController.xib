@@ -65,7 +65,6 @@
 							</set>
 							<string key="NSFrame">{{20, 141}, {96, 96}}</string>
 							<reference key="NSSuperview" ref="1006"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="382870698"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSImageCell" key="NSCell" id="121968041">
@@ -88,7 +87,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{128, 203}, {87, 25}}</string>
 							<reference key="NSSuperview" ref="1006"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="175924659"/>
 							<string key="NSReuseIdentifierKey">_NS:1535</string>
 							<bool key="NSEnabled">YES</bool>
@@ -124,7 +122,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{128, 122}, {144, 80}}</string>
 							<reference key="NSSuperview" ref="1006"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="262802671"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<string key="NSAntiCompressionPriority">{250, 750}</string>
@@ -154,7 +151,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{68, 30}, {154, 19}}</string>
 							<reference key="NSSuperview" ref="1006"/>
-							<reference key="NSWindow"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="755527110">
@@ -182,7 +178,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{58, 57}, {175, 57}}</string>
 							<reference key="NSSuperview" ref="1006"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="548977306"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
@@ -213,7 +208,6 @@
 					</array>
 					<string key="NSFrameSize">{289, 257}</string>
 					<reference key="NSSuperview"/>
-					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="999528761"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1680, 1028}}</string>

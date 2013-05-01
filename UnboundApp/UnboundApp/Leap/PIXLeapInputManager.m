@@ -183,7 +183,7 @@
 {
     BOOL useFist = YES;
     BOOL suppressSwipe = NO;
-    BOOL suppressSelect = NO;
+    //BOOL suppressSelect = NO;
     
     LeapController *aController = (LeapController *)[notification object];
 
@@ -422,7 +422,7 @@
             }
             case LEAP_GESTURE_TYPE_KEY_TAP: {
                
-                LeapKeyTapGesture *keytapGesture = (LeapKeyTapGesture *)gesture;
+                //LeapKeyTapGesture *keytapGesture = (LeapKeyTapGesture *)gesture;
                 if([fingers count] < 3)
                 {
                     // loop through the responders & fire
@@ -621,14 +621,14 @@
     
     [avgFingerDirection divide:vectorCount];
     
-    float angle = [avgFingerDirection angleTo:swipeGesture.direction.normalized];
+    //float angle = [avgFingerDirection angleTo:swipeGesture.direction.normalized];
     
     // this is the key to easy swiping. Make sure the fingers are generally pointed at a right angle to the direction of the swipe.
     //if(angle < 1.4 || angle > 1.74) return;
     
     if(self.swipeGestureFlag == YES) return; // delay between swipes
     
-    DLog(@"Angle To: %f", angle);
+    //DLog(@"Angle To: %f", angle);
     
     LeapVector * direction = swipeGesture.direction;
     direction = direction.normalized;

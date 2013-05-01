@@ -15,6 +15,10 @@
 
 @interface PIXMainWindowController ()
 
+@property (weak) IBOutlet NSView * trialExpireView;
+@property (weak) IBOutlet NSTextField * trialExpireText;
+@property int trialSecondsLeft;
+
 @end
 
 @implementation PIXMainWindowController
@@ -76,7 +80,110 @@
 
     [self.navigationViewController pushViewController:self.albumViewController];
     
+#ifdef TRIAL_MODE
     
+    NSDate * today = [NSDate date];
+    
+    // set the target date to June 30
+    NSDate * targetDate = [NSDate dateWithString:@"2013-06-30 00:00:00 -0000"];
+    
+    if([[NSUserDefaults standardUserDefaults] objectForKey:kTrialExpirationDate] == nil)
+    {
+        // this should only be run the first launch
+        // 10 days from now:
+        NSDate * tenDaysFromNow = [NSDate dateWithTimeIntervalSinceNow:60*60*24*11];
+        [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithDouble:[tenDaysFromNow timeIntervalSince1970]] forKey:kTrialExpirationDate];
+    }
+    
+    
+    double trialInterval = [[NSUserDefaults standardUserDefaults] doubleForKey:kTrialExpirationDate];
+    
+    NSDate * installTargetDate = [NSDate dateWithTimeIntervalSince1970:trialInterval];
+    
+    // rewrite this so it stays the same (in case it was in the initial values level of defaults)
+    [[NSUserDefaults standardUserDefaults] setDouble:trialInterval forKey:kTrialExpirationDate];
+    
+    // in case they installed near the end of the beta period, always give at least 10 days;
+    if([installTargetDate compare:targetDate] == NSOrderedDescending)
+    {
+        targetDate = installTargetDate;
+    }
+    
+    // find the difference in days
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents * difference = [calendar components:NSDayCalendarUnit
+                                               fromDate:today toDate:targetDate options:0];
+    
+    // add the text view to the title bar
+    self.trialExpireText.stringValue = [NSString stringWithFormat:@"Unbound Beta expires in %ld days", (long)difference.day];
+    
+    NSView *frameView = [[self.window contentView] superview];
+    NSRect frame = [frameView frame];
+    
+    NSRect otherFrame = [self.trialExpireView frame];
+    otherFrame.origin.x = NSMaxX( frame ) - NSWidth( otherFrame )-25;
+    otherFrame.origin.y = NSMaxY( frame ) - NSHeight( otherFrame )-4;
+    [self.trialExpireView setFrame: otherFrame];
+    
+    [frameView addSubview: self.trialExpireView];
+    
+    [self.trialExpireView setAutoresizingMask:NSViewMinXMargin | NSViewMinYMargin];
+    
+    
+    
+    
+    // present an alert and quit the app if this as expired (with a 5 minute gracec period
+    if (![[today laterDate:targetDate] isEqualToDate:targetDate])
+    {
+        self.trialExpireText.stringValue = @"This Beta has expired. 5:00 remaining";
+
+        if(NSRunAlertPanel(@"This beta has expired.", @"This app will run for 5 minutes before quiting.", @"Learn More", @"OK", nil))
+        {
+            NSURL * url = [NSURL URLWithString:@"http://www.unboundformac.com"];
+            [[NSWorkspace sharedWorkspace] openURL:url];
+        }
+        
+        
+        self.trialSecondsLeft = 5 * 60; // 5 minute grace period
+        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(advanceTrialExpiredTimer:) userInfo:nil repeats:YES];
+        
+        double delayInSeconds = (double)self.trialSecondsLeft;
+        
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            
+            if(NSRunAlertPanel(@"This beta has expired.", @"Please download a new version.", @"Learn More", @"OK", nil))
+            {
+                NSURL * url = [NSURL URLWithString:@"http://www.unboundformac.com"];
+                [[NSWorkspace sharedWorkspace] openURL:url];
+            }
+            
+            [[NSApplication sharedApplication] terminate:self];
+            
+        });        
+    }
+    
+    
+#endif
+    
+    
+}
+
+- (void)advanceTrialExpiredTimer:(NSTimer *)timer
+{
+    self.trialSecondsLeft--;
+    
+    if(self.trialSecondsLeft >= 0)
+    {
+        self.trialExpireText.stringValue = [NSString stringWithFormat:@"This Beta has expired. %d:%02d remaining",
+                                            self.trialSecondsLeft/60,
+                                            self.trialSecondsLeft % 60];
+    }
+    
+    else
+    {
+        self.trialExpireText.stringValue = @"This Beta has expired.";
+    }
 }
 
 //- (void)windowDidLoad

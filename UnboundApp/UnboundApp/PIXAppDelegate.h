@@ -36,6 +36,9 @@
 - (IBAction)coolLeapAppsPressed:(id)sender;
 - (IBAction)helpPressed:(id)sender;
 
+@property BOOL showSparkleMenu;
+- (IBAction)checkForUpdates:(id)sender;
+
 @property (nonatomic, strong) IBOutlet NSMenuItem * progressItem;
 // for MASPreferences class:
 @property (nonatomic, strong) PIXMainWindowController *mainWindowController;
