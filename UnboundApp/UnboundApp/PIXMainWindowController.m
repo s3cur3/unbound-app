@@ -89,7 +89,7 @@
     
     if([[NSUserDefaults standardUserDefaults] objectForKey:kTrialExpirationDate] == nil)
     {
-        // this should only be run the first launch
+        // this will only be run the first launch
         // 10 days from now:
         NSDate * tenDaysFromNow = [NSDate dateWithTimeIntervalSinceNow:60*60*24*11];
         [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithDouble:[tenDaysFromNow timeIntervalSince1970]] forKey:kTrialExpirationDate];

@@ -13,7 +13,8 @@
 
 @interface PIXPageView : NSView
 {
-    float thumbnailWidth, thumbnailHeight;
+    //float thumbnailWidth, thumbnailHeight;
+    NSArray *_coreImageTransitionNames;
 }
 
 @property (nonatomic, strong) CIImage *sourceImage;
@@ -24,13 +25,14 @@
 
 @property (nonatomic, strong) NSMutableArray *transitions;
 
+
 @property (weak) IBOutlet PIXPageViewController * viewController;
 
 @end
 
 
 @interface PIXPageView (PIXTransitionSetup)
-
+@property (nonatomic, strong, readonly) NSArray* coreImageTransitionNames;
 - (void)setupTransitions;
 - (CIFilter *)filterForTransitionNamed:(NSString *)transitionName;
 

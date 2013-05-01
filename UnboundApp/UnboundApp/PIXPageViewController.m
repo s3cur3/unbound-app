@@ -328,7 +328,15 @@
         
         // animate the transition
         NSString *type = nil;
+        CIFilter *coreImageFilter = nil;
+        PIXPageView *aPageView = (PIXPageView *)self.pageController.view;
+        
         NSInteger transition = [[NSUserDefaults standardUserDefaults] integerForKey:@"slideshowTransitionStyle"];
+        if (transition ==7) {
+            NSUInteger fiterCount = aPageView.transitions.count+3;
+            NSUInteger filterIndex = self.currentSlide % fiterCount;
+            transition = filterIndex;
+        }
         switch (transition)
         {
             case 0:
@@ -340,22 +348,43 @@
             case 2:
                 type = kCATransitionReveal;
                 break;
+                
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+                coreImageFilter = [aPageView filterForTransitionNamed:(NSString *)[aPageView.coreImageTransitionNames objectAtIndex:transition-3]];
+                break;
+            
+            default:
+                DLog(@"Undexpected value for transition index : '%ld', Using Fade as a fallback.", transition);
+#ifdef DEBUG
+                NSCParameterAssert(transition!=7);
+#endif
+                type = kCATransitionFade;
+                break;
         }
         
         
         CATransition *animation = [CATransition animation];
-        [animation setDuration:1.5+(interval/10.0)];
-        PIXPageView *aPageView = (PIXPageView *)self.pageController.view;
-        NSUInteger fiterCount = aPageView.transitions.count;
-        NSUInteger filterIndex = self.currentSlide % fiterCount;
-        DLog(@"Using filter at index : %ld", filterIndex);
-        CIFilter *aFilter = [aPageView.transitions objectAtIndex:filterIndex];
         
-        DLog(@"Using filter with name : %@", aFilter.name);
-        [animation setFilter:aFilter];
         
-        //[animation setType:type];
-        //[animation setSubtype:kCATransitionFromRight];
+        if (type==nil) {
+            [animation setFilter:coreImageFilter];
+            [animation setDuration:0.5+(interval/4.0)];
+//            NSUInteger fiterCount = aPageView.transitions.count;
+//            NSUInteger filterIndex = self.currentSlide % fiterCount;
+//            DLog(@"Using filter at index : %ld", filterIndex);
+//            CIFilter *aFilter = [aPageView.transitions objectAtIndex:filterIndex];
+//            [animation setFilter:aFilter];
+//            [animation setDuration:2.0+(interval/10.0)];
+        } else {
+            [animation setType:type];
+            [animation setSubtype:kCATransitionFromRight];
+            [animation setDuration:0.5+(interval/10.0)];
+        }
+        
+
         
         // dispatch the transition so it goes a little smoother
         dispatch_async(dispatch_get_main_queue(), ^{
