@@ -12,6 +12,9 @@
 #import "PIXAppDelegate.h"
 #import "PIXFileParser.h"
 
+#import "PIXLeapTutorialWindowController.h"
+#import "PIXLeapInputManager.h"
+
 @interface PIXInfoWindowController () <NSOpenSavePanelDelegate>
 
 @property IBOutlet NSButton * dbFolderButton;
@@ -71,6 +74,21 @@
     {
         [[PIXAppDelegate sharedAppDelegate] showMainWindow:nil];
         [self close];
+    }
+}
+
+-(void)close
+{
+    [super close];
+    
+    if([[PIXLeapInputManager sharedInstance] isConnected] && ![[NSUserDefaults standardUserDefaults] boolForKey:@"LeapTutorialHasShown"])
+    {
+            
+            PIXLeapTutorialWindowController * tutorial = [[PIXLeapTutorialWindowController alloc] initWithWindowNibName:@"PIXLeapTutorialWindowController"];
+            [tutorial showWindow:self];
+            
+            // only show this tutorial once. It's also accessible from the preferences window
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"LeapTutorialHasShown"];
     }
 }
 

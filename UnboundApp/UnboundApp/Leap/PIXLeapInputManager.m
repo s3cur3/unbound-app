@@ -130,12 +130,16 @@
     
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"LeapTutorialHasShown"])
     {
+        // if we're not currently showing the intro window then pop the leap tutorial (the intro window will check and present this when closed)
+        if(![[[PIXAppDelegate sharedAppDelegate] introWindow].window isVisible])
+        {
         
-        PIXLeapTutorialWindowController * tutorial = [[PIXLeapTutorialWindowController alloc] initWithWindowNibName:@"PIXLeapTutorialWindowController"];
-        [tutorial showWindow:self];
-        
-        // only show this tutorial once. It's also accessible from the preferences window
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"LeapTutorialHasShown"];
+            PIXLeapTutorialWindowController * tutorial = [[PIXLeapTutorialWindowController alloc] initWithWindowNibName:@"PIXLeapTutorialWindowController"];
+            [tutorial showWindow:self];
+            
+            // only show this tutorial once. It's also accessible from the preferences window
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"LeapTutorialHasShown"];
+        }
     }
     
     

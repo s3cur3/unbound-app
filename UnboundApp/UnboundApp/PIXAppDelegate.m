@@ -225,12 +225,17 @@
 // -------------------------------------------------------------------------------
 - (IBAction)showIntroWindow:(id)sender
 {
-    if (showIntroWindow == nil)
+    PIXInfoWindowController * localIntroWindow = nil;
+    
+    if (self.introWindow == nil)
     {
-        showIntroWindow = [[PIXInfoWindowController alloc] initWithWindowNibName:@"PIXInfoWindowController"];
+        localIntroWindow = [[PIXInfoWindowController alloc] initWithWindowNibName:@"PIXInfoWindowController"];
     }
     
-    [showIntroWindow showWindow:self];
+    [localIntroWindow showWindow:self];
+    
+    self.introWindow = localIntroWindow;
+    
 }
 
 - (IBAction)showAboutWindow:(id)sender

@@ -42,6 +42,7 @@
 @property (nonatomic, strong) IBOutlet NSMenuItem * progressItem;
 // for MASPreferences class:
 @property (nonatomic, strong) PIXMainWindowController *mainWindowController;
+@property (nonatomic, strong) NSWindowController * introWindow;
 
 @property (nonatomic, strong) NSWindowController *preferencesWindowController;
 @property (nonatomic) NSInteger focusedAdvancedControlIndex;

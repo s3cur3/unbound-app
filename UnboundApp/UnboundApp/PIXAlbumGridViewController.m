@@ -90,7 +90,7 @@
     
     [self setBGColor];
     
-    
+    [self albumsChanged:nil];
     
 }
 
@@ -122,7 +122,7 @@
         [self.searchField setStringValue:@""];
     }
     
-    [self albumsChanged:nil];
+    [self updateSearch];
     
     [self hideToolbar:NO];
     
