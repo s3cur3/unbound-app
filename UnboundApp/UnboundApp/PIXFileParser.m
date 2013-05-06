@@ -349,6 +349,9 @@ NSDictionary * dictionaryForURL(NSURL * url)
     
     self.fullScanProgress = 0.0;
     
+    // use this flag so the deep scan will restart if the app crashes half way through
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDeepScanIncompleteKey];
+    
     // set this to a high priority queue so it doens't get blocked by the thumbs loading
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         
@@ -469,6 +472,9 @@ NSDictionary * dictionaryForURL(NSURL * url)
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
+                
+                // use this flag so the deep scan will restart if the app closes half way through
+                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kDeepScanIncompleteKey];
                 
             });
             
@@ -1191,6 +1197,71 @@ NSDictionary * dictionaryForURL(NSURL * url)
     NSURL *cameraUploadsLocation = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/Camera Uploads", dropboxHomePath]];
     
     return cameraUploadsLocation;
+}
+
+
+#pragma mark - 
+#pragma ui helpers for init and settings screens
+
+-(BOOL)userChooseFolderDialog
+{
+    // Create the File Open Dialog class.
+    NSOpenPanel* openPanel = [NSOpenPanel openPanel];
+    
+    [openPanel setAllowsMultipleSelection:NO];
+    [openPanel setCanChooseDirectories:YES];
+    [openPanel setCanChooseFiles:NO];
+    
+    [openPanel setCanCreateDirectories:YES];
+    [openPanel setDirectoryURL:[NSURL fileURLWithPath:@"~/"]];
+    
+    [openPanel runModal];
+    
+    if([[openPanel URLs] count] == 1)
+    {
+        // use this flag so the deep scan will restart if the app crashes half way through
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDeepScanIncompleteKey];
+        
+        [self stopObserving];
+        
+        [self setObservedURLs:[openPanel URLs]];
+        
+        [[PIXAppDelegate sharedAppDelegate] clearDatabase];
+        
+        [self scanFullDirectory];
+        
+        [self startObserving];
+        
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kAppFirstRun];
+        
+        return YES;
+    }
+    
+    return NO;
+}
+
+-(void)userChoseDropboxPhotosFolder
+{
+    // use this flag so the deep scan will restart if the app crashes half way through
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDeepScanIncompleteKey];
+    
+    [[PIXFileParser sharedFileParser] stopObserving];
+    
+    NSURL * dropboxPhotosFolder = [[PIXFileParser sharedFileParser] defaultDBFolder];
+    NSURL * dropboxCUFolder = [[PIXFileParser sharedFileParser] defaultDBCameraUploadsFolder];
+    
+    
+    [[PIXFileParser sharedFileParser] setObservedURLs:@[dropboxPhotosFolder, dropboxCUFolder]];
+    
+    [[PIXAppDelegate sharedAppDelegate] clearDatabase];
+    
+    [[PIXFileParser sharedFileParser] scanFullDirectory];
+    
+    [[PIXFileParser sharedFileParser] startObserving];
+    
+    
+    
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kAppFirstRun];
 }
 
 @end

@@ -69,13 +69,9 @@
     if(![isDirectory boolValue] || [[dropboxPhotosFolder path] isEqualToString:self.folderDisplay.stringValue])
     {
         [self.dbFolderButton setHidden:YES];
-        self.pickerStartURL = [NSURL fileURLWithPath:@"~/"];
     }
     
-    else
-    {
-        self.pickerStartURL = [NSURL fileURLWithPath:@"~/Dropbox/"];
-    }
+
 }
 
 -(void)updateLeapInfo
@@ -126,62 +122,21 @@
 
 - (IBAction)useDBDefaults:(id)sender
 {
-    [[PIXFileParser sharedFileParser] stopObserving];
-    
-    NSURL * dropboxPhotosFolder = [[PIXFileParser sharedFileParser] defaultDBFolder];
-    NSURL * dropboxCUFolder = [[PIXFileParser sharedFileParser] defaultDBCameraUploadsFolder];
-    
-    
-    [[PIXFileParser sharedFileParser] setObservedURLs:@[dropboxPhotosFolder, dropboxCUFolder]];
-    
-    [[PIXAppDelegate sharedAppDelegate] clearDatabase];
-    
-    [[PIXFileParser sharedFileParser] scanFullDirectory];
-    
-    [[PIXFileParser sharedFileParser] startObserving];
-    
-    
-    
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kAppFirstRun];
-        
+    [[PIXFileParser sharedFileParser] userChoseDropboxPhotosFolder];
     [self updateFolderFeild];
-    
 }
 
 - (IBAction)chooseFolder:(id)sender
 {
-    // Create the File Open Dialog class.
-    NSOpenPanel* openPanel = [NSOpenPanel openPanel];
-    
-    [openPanel setAllowsMultipleSelection:NO];
-    [openPanel setCanChooseDirectories:YES];
-    [openPanel setCanChooseFiles:NO];
-    
-    [openPanel setCanCreateDirectories:YES];
-    [openPanel setDirectoryURL:self.pickerStartURL];
-        
-    [openPanel runModal];
-    
-    if([[openPanel URLs] count] == 1)
-    {
-        [[PIXFileParser sharedFileParser] stopObserving];
-        
-        [[PIXFileParser sharedFileParser] setObservedURLs:[openPanel URLs]];
-        
-        [[PIXAppDelegate sharedAppDelegate] clearDatabase];
-        
-        [[PIXFileParser sharedFileParser] scanFullDirectory];
-        
-        [[PIXFileParser sharedFileParser] startObserving];
-        
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kAppFirstRun];
-                
-        [self updateFolderFeild];
-    }
+    [[PIXFileParser sharedFileParser] userChooseFolderDialog];    
+    [self updateFolderFeild];
 }
 
 - (IBAction)reloadFiles:(id)sender
 {
+    // use this flag so the deep scan will restart if the app crashes half way through
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDeepScanIncompleteKey];
+    
     [[PIXAppDelegate sharedAppDelegate] clearDatabase];
     [[PIXFileParser sharedFileParser] scanFullDirectory];
 }

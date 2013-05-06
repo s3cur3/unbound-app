@@ -41,6 +41,8 @@
 // key for obtaining the current scan count
 #define kScanCountKey @"scanCount"
 
+#define kDeepScanIncompleteKey @"deepScanIncomplete"
+
 // key for obtaining the path of an image field
 #define kPathKey @"path"
 

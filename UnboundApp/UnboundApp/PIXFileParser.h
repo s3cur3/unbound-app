@@ -87,4 +87,9 @@ typedef enum {
 
 -(BOOL)canAccessObservedDirectories;
 
+
+-(BOOL)userChooseFolderDialog;
+
+-(void)userChoseDropboxPhotosFolder;
+
 @end

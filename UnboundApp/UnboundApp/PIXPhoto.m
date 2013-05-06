@@ -607,17 +607,32 @@ const CGFloat kThumbnailSize = 370.0f;
             [self.fastThumbLoad cancel];
             [[PIXFileParser sharedFileParser] decrementWorking];
             
+            if([[self sharedThumbnailLoadQueue].operations indexOfObject:self.fastThumbLoad] == NSNotFound)
+            {
+                self.fastThumbLoad = nil;
+            }
+            
         }
         
         if(self.slowThumbLoad && ![self.slowThumbLoad isExecuting])
         {
             [self.slowThumbLoad cancel];
             [[PIXFileParser sharedFileParser] decrementWorking];
+            
+            if([[self sharedThumbnailLoadQueue].operations indexOfObject:self.slowThumbLoad] == NSNotFound)
+            {
+                self.slowThumbLoad = nil;
+            }
               
         }
     }
     
-    _thumbnailImageIsLoading = NO;
+    // only mark this as not loading if we were actually able to cancel both operations
+    if(self.slowThumbLoad == nil && self.fastThumbLoad == nil)
+    {
+        _thumbnailImageIsLoading = NO;
+    }
+    
     self.cancelThumbnailLoadOperationDelayFlag = NO;
 }
 
@@ -976,6 +991,7 @@ const CGFloat kThumbnailSize = 370.0f;
             
             [[PIXFileParser sharedFileParser] incrementWorking];
             [self.slowThumbLoad setQueuePriority:NSOperationQueuePriorityLow];
+            
             [[self sharedThumbnailLoadQueue] addOperation:self.slowThumbLoad];
             [[PIXFileParser sharedFileParser] decrementWorking];
         }

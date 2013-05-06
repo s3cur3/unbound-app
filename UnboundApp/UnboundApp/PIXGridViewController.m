@@ -30,6 +30,8 @@
 
 #import "PIXFileManager.h"
 
+#import "PIXFileParser.h"
+
 
 #import <Quartz/Quartz.h>
 
@@ -204,6 +206,11 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Context Menu Support
+
+-(IBAction)chooseFolderButtonPressed:(id)sender
+{
+    [[PIXFileParser sharedFileParser] userChooseFolderDialog];
+}
 
 -(BOOL)verifyActionForItemsWithTitle:(NSString *)aTitle message:(NSString *)warningMessage
 {

@@ -59,58 +59,18 @@
 
 - (IBAction)useDBDefaults:(id)sender
 {
-    [[PIXFileParser sharedFileParser] stopObserving];
-    
-    NSURL * dropboxPhotosFolder = [[PIXFileParser sharedFileParser] defaultDBFolder];
-    NSURL * dropboxCUFolder = [[PIXFileParser sharedFileParser] defaultDBCameraUploadsFolder];
-    
-    
-    [[PIXFileParser sharedFileParser] setObservedURLs:@[dropboxPhotosFolder, dropboxCUFolder]];
-    
-    [[PIXFileParser sharedFileParser] scanFullDirectory];
-    
-    [[PIXFileParser sharedFileParser] startObserving];
-    
-    
-    
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kAppFirstRun];
-    
-    [[PIXAppDelegate sharedAppDelegate] showMainWindow:nil];
+    // use this flag so the deep scan will restart if the app crashes half way through
+    [[PIXFileParser sharedFileParser] userChoseDropboxPhotosFolder];
     
     [self close];
 }
 
 - (IBAction)chooseFolder:(id)sender
 {
-    // Create the File Open Dialog class.
-    NSOpenPanel* openPanel = [NSOpenPanel openPanel];
-    
-    [openPanel setAllowsMultipleSelection:NO];
-    [openPanel setCanChooseDirectories:YES];
-    [openPanel setCanChooseFiles:NO];
-    
-    [openPanel setCanCreateDirectories:YES];
-    [openPanel setDirectoryURL:self.pickerStartURL];
-    
-    [openPanel setDelegate:self];
-    
-    [openPanel runModal];
-    
-    if([[openPanel URLs] count] == 1)
+    if([[PIXFileParser sharedFileParser] userChooseFolderDialog])
     {
-        [[PIXFileParser sharedFileParser] stopObserving];
-        
-        [[PIXFileParser sharedFileParser] setObservedURLs:[openPanel URLs]];
-        
-        [[PIXFileParser sharedFileParser] scanFullDirectory];
-        
-        [[PIXFileParser sharedFileParser] startObserving];
-        
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kAppFirstRun];
-        
         [[PIXAppDelegate sharedAppDelegate] showMainWindow:nil];
         [self close];
-        
     }
 }
 

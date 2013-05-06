@@ -26,7 +26,8 @@
 @property (strong) IBOutlet NSScrollView * scrollView;
 @property (strong) IBOutlet NSView * layerBackedView;
 
-@property (strong) IBOutlet NSView * mountDisconnectedView;
+@property (strong) IBOutlet NSView * centerStatusView;
+@property (strong) IBOutlet NSTextField * centerStatusViewTextField;
 
 @property (strong) IBOutlet NSProgressIndicator * progressIndicator;
 
@@ -41,5 +42,7 @@
 -(IBAction)toggleSelection:(id)sender;
 
 - (IBAction) deleteItems:(id )inSender;
+
+-(IBAction)chooseFolderButtonPressed:(id)sender;
 
 @end

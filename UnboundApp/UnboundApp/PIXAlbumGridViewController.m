@@ -108,6 +108,8 @@
     
     [[self.view window] setTitle:@"Unbound"];
     
+    
+    
     NSString * searchString = [[NSUserDefaults standardUserDefaults] objectForKey:@"PIX_AlbumSearchString"];
     
     if(searchString != nil)
@@ -120,7 +122,7 @@
         [self.searchField setStringValue:@""];
     }
     
-    [self updateSearch];
+    [self albumsChanged:nil];
     
     [self hideToolbar:NO];
     
@@ -134,6 +136,7 @@
     [[PIXFileParser sharedFileParser] addObserver:self forKeyPath:@"fullScanProgress" options:NSKeyValueObservingOptionNew context:nil];
     
     [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] setTitle:@"Unbound"];
+    
     
     [self.gridView reloadSelection];
 }
@@ -1000,6 +1003,18 @@
     
     // this does nothing and is just to keep the old albums retained during the execution of this method
     [oldAlbums count];
+    
+    
+    if([self.albums count] == 0 && ![[NSUserDefaults standardUserDefaults] boolForKey:kDeepScanIncompleteKey])
+    {
+        [self.centerStatusView setHidden:NO];
+    }
+    
+    else
+    {
+        [self.centerStatusView setHidden:YES];
+    }
+    
 }
 
 -(NSArray *)albums
