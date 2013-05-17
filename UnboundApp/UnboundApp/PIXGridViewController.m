@@ -254,7 +254,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
     
     NSString *warningTitle = [NSString stringWithFormat:@"Delete %@?", deleteString];
     NSString *warningButtonConfirm = [NSString stringWithFormat:@"Delete %@", deleteString];
-    NSString *warningMessage = [NSString stringWithFormat:@"The %@ will be moved to the trash.\nAre you sure you want to continue?", deleteString.lowercaseString];
+    NSString *warningMessage = [NSString stringWithFormat:@"The %@ will be deleted from your file system and moved to the trash.\n\nAre you sure you want to continue?", deleteString.lowercaseString];
     if (NSRunAlertPanel(warningTitle, warningMessage, warningButtonConfirm, @"Cancel", nil) == NSAlertDefaultReturn) {
         
         if ([[itemsToDelete lastObject] class] == [PIXAlbum class]) {

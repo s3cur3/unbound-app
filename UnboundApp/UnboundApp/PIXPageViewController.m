@@ -899,7 +899,7 @@
 
 - (IBAction) deleteItems:(id )inSender
 {
-    NSString *warningMessage = [NSString stringWithFormat:@"This photo will be moved to the trash.\nAre you sure you want to continue?"];
+    NSString *warningMessage = [NSString stringWithFormat:@"This photo will be deleted from your file system and moved to the trash.\n\nAre you sure you want to continue?"];
     if (NSRunAlertPanel(@"Delete Photo?", warningMessage, @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
         
         PIXPhoto *aPhoto = [self.pagerData objectAtIndex:self.pageController.selectedIndex];

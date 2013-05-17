@@ -147,7 +147,7 @@
 
     // NSString * deleteString = @"Delete Album";
 
-    NSString *warningMessage = [NSString stringWithFormat:@"This album will be moved to the trash.\nAre you sure you want to continue?", nil];
+    NSString *warningMessage = [NSString stringWithFormat:@"This album and its corresponding folder will be deleted from your file system and moved moved to the trash.\n\nAre you sure you want to continue?", nil];
     if (NSRunAlertPanel(@"Delete Album?", warningMessage, @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
         
         [[PIXFileManager sharedInstance] recycleAlbums:itemsToDelete];
