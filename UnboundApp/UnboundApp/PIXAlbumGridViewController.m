@@ -350,13 +350,15 @@
     _newAlbumButton = [[NSToolbarItem alloc] initWithItemIdentifier:@"NewAlbumButton"];
     //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
     
-    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 100, 25)];
     buttonView.image = [NSImage imageNamed:@"addbutton"];
     [buttonView.image setTemplate:YES];
-    [buttonView setImagePosition:NSImageOnly];
+    [buttonView setImagePosition:NSImageLeft];
     [buttonView setBordered:YES];
     [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
-    [buttonView setTitle:nil];
+    [buttonView setTitle:@"New Album"];
+    
+    [buttonView setFont:[NSFont fontWithName:@"Helvetica" size:13]];
     
     _newAlbumButton.view = buttonView;
     

@@ -17,8 +17,6 @@
 
 @property (strong) IBOutlet NSProgressIndicator * workingSpinner;
 
-@property (strong) PIXLeapTutorialWindowController * leapTutorial;
-
 @end
 
 @implementation GeneralPreferencesViewController
@@ -143,13 +141,7 @@
 
 - (IBAction)showLeapTutorial:(id)sender
 {    
-    if(self.leapTutorial == nil)
-    {
-        self.leapTutorial = [[PIXLeapTutorialWindowController alloc] initWithWindowNibName:@"PIXLeapTutorialWindowController"];
-    }
-    
-    [self.leapTutorial restartTutorial];
-    [self.leapTutorial showWindow:self];
+    [[PIXAppDelegate sharedAppDelegate] showLeapTutorialPressed:sender];
 }
 
 

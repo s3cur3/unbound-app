@@ -34,7 +34,10 @@
 - (IBAction)unboundWebsitePressed:(id)sender;
 - (IBAction)moreAppsPressed:(id)sender;
 - (IBAction)coolLeapAppsPressed:(id)sender;
+- (IBAction)showLeapTutorialPressed:(id)sender;
 - (IBAction)helpPressed:(id)sender;
+
+- (IBAction)chooseFolder:(id)sender;
 
 @property BOOL showSparkleMenu;
 - (IBAction)checkForUpdates:(id)sender;

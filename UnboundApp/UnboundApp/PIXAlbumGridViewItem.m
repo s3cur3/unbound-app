@@ -280,6 +280,8 @@
     }
     
     
+    
+    
     [self setNeedsDisplay:YES];
 }
 

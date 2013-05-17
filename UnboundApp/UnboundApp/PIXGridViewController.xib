@@ -66,6 +66,7 @@
 								<string key="NSFrame">{{171, 6}, {24, 24}}</string>
 								<reference key="NSSuperview" ref="870606621"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<string key="NSHuggingPriority">{451, 750}</string>
 								<bool key="NSEnabled">YES</bool>
@@ -96,6 +97,7 @@
 								<string key="NSFrame">{{100, 6}, {65, 24}}</string>
 								<reference key="NSSuperview" ref="870606621"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<string key="NSHuggingPriority">{537, 750}</string>
 								<string key="NSAntiCompressionPriority">{1, 750}</string>
@@ -177,6 +179,7 @@ A</bytes>
 								<string key="NSFrame">{{6, 6}, {88, 24}}</string>
 								<reference key="NSSuperview" ref="870606621"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<string key="NSHuggingPriority">{373, 750}</string>
 								<string key="NSAntiCompressionPriority">{1, 750}</string>
@@ -313,7 +316,7 @@ A</bytes>
 														<object class="NSTextFieldCell" key="NSCell" id="639949215">
 															<int key="NSCellFlags">67108864</int>
 															<int key="NSCellFlags2">171970560</int>
-															<string key="NSContents">Add a folder using the + button or choose a different root folder.</string>
+															<string key="NSContents">Add a folder using the + button or choose a different photos folder.</string>
 															<object class="NSFont" key="NSSupport" id="999406895">
 																<string key="NSName">Helvetica</string>
 																<double key="NSSize">16</double>
@@ -368,7 +371,7 @@ A</bytes>
 										<string key="NSFrameSize">{596, 380}</string>
 										<reference key="NSSuperview" ref="327978358"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="716836090"/>
+										<reference key="NSNextKeyView" ref="787941817"/>
 										<string key="NSClassName">CNGridView</string>
 									</object>
 								</array>
@@ -387,6 +390,7 @@ A</bytes>
 								<string key="NSFrame">{{580, 0}, {16, 377}}</string>
 								<reference key="NSSuperview" ref="237789261"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:26</string>
 								<bool key="NSEnabled">YES</bool>
 								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -413,7 +417,7 @@ A</bytes>
 						<string key="NSFrameSize">{596, 377}</string>
 						<reference key="NSSuperview" ref="188159124"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="327978358"/>
+						<reference key="NSNextKeyView" ref="716836090"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<int key="NSsFlags">158288</int>
 						<reference key="NSVScroller" ref="552710492"/>

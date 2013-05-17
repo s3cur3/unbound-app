@@ -24,6 +24,8 @@
 #import "DebugPrefrencesViewController.h"
 #import "PIXLeapInputManager.h"
 
+#import "PIXLeapTutorialWindowController.h"
+
 #import <Sparkle/Sparkle.h>
 
 
@@ -36,6 +38,8 @@
 }
 
 @property (readonly, strong, atomic) NSOperationQueue *backgroundSaveQueue;
+
+@property (strong) PIXLeapTutorialWindowController * leapTutorial;
 
 @property (strong) SUUpdater * sparkleUpdater;
 
@@ -267,10 +271,29 @@
     [[NSWorkspace sharedWorkspace] openURL:url];
 }
 
+- (IBAction)showLeapTutorialPressed:(id)sender
+{
+    if(self.leapTutorial == nil)
+    {
+        self.leapTutorial = [[PIXLeapTutorialWindowController alloc] initWithWindowNibName:@"PIXLeapTutorialWindowController"];
+    }
+    
+    [self.leapTutorial restartTutorial];
+    [self.leapTutorial showWindow:self];
+}
+
 - (IBAction)helpPressed:(id)sender
 {
     NSURL * url = [NSURL URLWithString:@"mailto:info@unboundformac.com?subject=Unbound%20for%20Mac%20Support"];
     [[NSWorkspace sharedWorkspace] openURL:url];
+}
+
+- (IBAction)chooseFolder:(id)sender
+{
+    if([[PIXFileParser sharedFileParser] userChooseFolderDialog])
+    {
+        [self showMainWindow:nil];
+    }
 }
 
 

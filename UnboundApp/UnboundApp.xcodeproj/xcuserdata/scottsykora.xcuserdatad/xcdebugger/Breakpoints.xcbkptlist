@@ -21,12 +21,38 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXAppDelegate.m"
-         timestampString = "389566819.977978"
+         timestampString = "390419721.712825"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "233"
-         endingLineNumber = "233"
+         startingLineNumber = "237"
+         endingLineNumber = "237"
          landmarkName = "-showIntroWindow:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "UnboundApp/PIXPhoto.m"
+         timestampString = "390421615.915599"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "720"
+         endingLineNumber = "720"
+         landmarkName = "-thumbnailImage"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "UnboundApp/PIXPhoto.m"
+         timestampString = "390510698.021616"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "798"
+         endingLineNumber = "798"
+         landmarkName = "-loadThumbnailImage"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

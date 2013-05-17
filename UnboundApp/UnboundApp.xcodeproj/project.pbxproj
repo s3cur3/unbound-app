@@ -280,6 +280,7 @@
 		8C33D5191711FC8700647F95 /* PIXRoundedProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C33D5181711FC8700647F95 /* PIXRoundedProgressIndicator.m */; };
 		8C3580901714D99E00352870 /* LeapTutorial2.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C35808E1714D99E00352870 /* LeapTutorial2.mov */; };
 		8C3580911714D99E00352870 /* LeapTutorial3.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C35808F1714D99E00352870 /* LeapTutorial3.mov */; };
+		8C43CCF117385A9700A4395F /* UnboundTrial.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 8C43CCF017385A9700A4395F /* UnboundTrial.entitlements */; };
 		8C4B80E816B9D9FD00C7E8F4 /* PIXPhotoGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B80E716B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.m */; };
 		8C4B80FB16BB3D8A00C7E8F4 /* GeneralPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B80F616BB3D8A00C7E8F4 /* GeneralPreferencesViewController.m */; };
 		8C4B80FC16BB3D8A00C7E8F4 /* GeneralPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4B80F716BB3D8A00C7E8F4 /* GeneralPreferencesView.xib */; };
@@ -506,7 +507,6 @@
 		1DB2F860167ABE87008AC0F7 /* PIXAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PIXAppDelegate.h; sourceTree = "<group>"; };
 		1DB2F861167ABE87008AC0F7 /* PIXAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PIXAppDelegate.m; sourceTree = "<group>"; };
 		1DB2F864167ABE87008AC0F7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		1DB2F86B167ABF4F008AC0F7 /* UnboundApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = UnboundApp.entitlements; sourceTree = "<group>"; };
 		1DB2F86C167AC07F008AC0F7 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = SOURCE_ROOT; };
 		1DB2F86D167AC07F008AC0F7 /* unbound_icon_512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unbound_icon_512x512.png; sourceTree = SOURCE_ROOT; };
 		1DBFD55516CAE415001944A9 /* PIXFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXFileManager.m; sourceTree = "<group>"; };
@@ -572,6 +572,7 @@
 		8C33D5181711FC8700647F95 /* PIXRoundedProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXRoundedProgressIndicator.m; sourceTree = "<group>"; };
 		8C35808E1714D99E00352870 /* LeapTutorial2.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = LeapTutorial2.mov; sourceTree = "<group>"; };
 		8C35808F1714D99E00352870 /* LeapTutorial3.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = LeapTutorial3.mov; sourceTree = "<group>"; };
+		8C43CCF017385A9700A4395F /* UnboundTrial.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = UnboundTrial.entitlements; sourceTree = "<group>"; };
 		8C4B80E616B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPhotoGridViewItem.h; sourceTree = "<group>"; };
 		8C4B80E716B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhotoGridViewItem.m; sourceTree = "<group>"; };
 		8C4B80F516BB3D8900C7E8F4 /* GeneralPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralPreferencesViewController.h; sourceTree = "<group>"; };
@@ -1012,6 +1013,7 @@
 			isa = PBXGroup;
 			children = (
 				1D69E646170DD7B70031AF73 /* Unbound.entitlements */,
+				8C43CCF017385A9700A4395F /* UnboundTrial.entitlements */,
 				1DB2F854167ABE87008AC0F7 /* UnboundApp */,
 				1DB2F84D167ABE87008AC0F7 /* Frameworks */,
 				1DB2F84B167ABE87008AC0F7 /* Products */,
@@ -1056,7 +1058,6 @@
 		1DB2F854167ABE87008AC0F7 /* UnboundApp */ = {
 			isa = PBXGroup;
 			children = (
-				1DB2F86B167ABF4F008AC0F7 /* UnboundApp.entitlements */,
 				1DB2F870167AC0A6008AC0F7 /* Sources */,
 				1D4A1D97167AD90200C9A895 /* Resources */,
 				1DB2F855167ABE87008AC0F7 /* Supporting Files */,
@@ -1415,6 +1416,7 @@
 				1D23CC1A172095E000C7FF70 /* Blank.jpg in Resources */,
 				1D23CC1B172095E000C7FF70 /* Mask.jpg in Resources */,
 				1D23CC1C172095E000C7FF70 /* Shading.tiff in Resources */,
+				8C43CCF117385A9700A4395F /* UnboundTrial.entitlements in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1838,7 +1840,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CODE_SIGN_ENTITLEMENTS = Unbound.entitlements;
+				CODE_SIGN_ENTITLEMENTS = UnboundTrial.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1868,7 +1870,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CODE_SIGN_ENTITLEMENTS = Unbound.entitlements;
+				CODE_SIGN_ENTITLEMENTS = UnboundTrial.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (

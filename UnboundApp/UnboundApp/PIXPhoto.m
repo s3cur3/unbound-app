@@ -605,11 +605,13 @@ const CGFloat kThumbnailSize = 370.0f;
         if(self.fastThumbLoad && ![self.fastThumbLoad isExecuting])
         {
             [self.fastThumbLoad cancel];
-            [[PIXFileParser sharedFileParser] decrementWorking];
             
+            
+            // make sure it's actually been removed from the queue (sometimes it starts executing before we cancel)
             if([[self sharedThumbnailLoadQueue].operations indexOfObject:self.fastThumbLoad] == NSNotFound)
             {
                 self.fastThumbLoad = nil;
+                [[PIXFileParser sharedFileParser] decrementWorking];
             }
             
         }
@@ -617,21 +619,25 @@ const CGFloat kThumbnailSize = 370.0f;
         if(self.slowThumbLoad && ![self.slowThumbLoad isExecuting])
         {
             [self.slowThumbLoad cancel];
-            [[PIXFileParser sharedFileParser] decrementWorking];
             
+            
+            // make sure it's actually been removed from the queue (sometimes it starts executing before we cancel)
             if([[self sharedThumbnailLoadQueue].operations indexOfObject:self.slowThumbLoad] == NSNotFound)
             {
                 self.slowThumbLoad = nil;
+                [[PIXFileParser sharedFileParser] decrementWorking];
             }
               
         }
+        
+        // only mark this as not loading if we were actually able to cancel both operations
+        if(self.slowThumbLoad == nil && self.fastThumbLoad == nil)
+        {
+            _thumbnailImageIsLoading = NO;
+        }
     }
     
-    // only mark this as not loading if we were actually able to cancel both operations
-    if(self.slowThumbLoad == nil && self.fastThumbLoad == nil)
-    {
-        _thumbnailImageIsLoading = NO;
-    }
+    
     
     self.cancelThumbnailLoadOperationDelayFlag = NO;
 }
@@ -654,6 +660,7 @@ const CGFloat kThumbnailSize = 370.0f;
     
     if (_thumbnailImage == nil && !_thumbnailImageIsLoading)
     {
+        // if we've pregenerated a thumb load the file
         NSString * imagePath = self.thumbnailFilePath;
         if (imagePath != nil) {
             
@@ -669,9 +676,6 @@ const CGFloat kThumbnailSize = 370.0f;
                 NSData * imgData = [NSData dataWithContentsOfFile:imagePath];
                 NSImage * thumb = [[NSImage alloc] initWithData:imgData];
                 
-                
-                //NSImage * thumb = [[NSImage alloc] initWithContentsOfFile:imagePath];
-                
                 weakSelf.thumbnailImage = thumb;
                 
                 if(thumb != nil)
@@ -684,7 +688,7 @@ const CGFloat kThumbnailSize = 370.0f;
                     });
                 }
                 
-                // if we still havent found the thumb then laod from original image
+                // if we still haven't found the thumb then laod from original image
                 else
                 {
                     [weakSelf clearFiles];
@@ -695,20 +699,21 @@ const CGFloat kThumbnailSize = 370.0f;
                 }
             });
             
-            return nil;
+            return _thumbnailImage;
             
         }
         
-        if (_thumbnailImage == nil)
+        // if there is no pregenerated thumb then load it from the original file
+        else
         {
             self.cancelThumbnailLoadOperation = NO;
             _thumbnailImageIsLoading = YES;
             [self loadThumbnailImage];
-            return nil;
+            return _thumbnailImage;
         }
     }
     
-    // TODO: figure out why this case isn't working -- scott
+    
     // the load seems to have been cancelled before the thumb was saved to disk
     if(!_thumbnailImageIsLoading && self.thumbnailFilePath == nil)
     {
