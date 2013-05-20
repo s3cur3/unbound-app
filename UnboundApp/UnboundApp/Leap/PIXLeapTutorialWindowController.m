@@ -117,7 +117,7 @@
             case 3:
                 
                 self.titleField.stringValue = @"Tap to Navigate";
-                self.textField.stringValue = @"Move back and forth through photos by doing the Key Tap to the right or left of the screen.";
+                self.textField.stringValue = @"Move back and forth through photos by using the Key Tap to the right or left of the screen.";
                 self.actionField.stringValue = @"Try tapping forward and back now.";
                 [self.nextButton setTitle:@"Next"];
                 
