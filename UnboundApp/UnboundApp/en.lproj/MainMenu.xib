@@ -191,15 +191,16 @@
 						<object class="NSMenu" key="NSSubmenu" id="58943312">
 							<string key="NSTitle">File</string>
 							<array class="NSMutableArray" key="NSMenuItems">
-								<object class="NSMenuItem" id="70041809">
+								<object class="NSMenuItem" id="80141585">
 									<reference key="NSMenu" ref="58943312"/>
 									<string key="NSTitle">Import Photos</string>
-									<string key="NSKeyEquiv"/>
+									<string key="NSKeyEquiv">i</string>
+									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="35465992"/>
 									<reference key="NSMixedImage" ref="502551668"/>
 								</object>
-								<object class="NSMenuItem" id="781168727">
+								<object class="NSMenuItem" id="533885476">
 									<reference key="NSMenu" ref="58943312"/>
 									<bool key="NSIsDisabled">YES</bool>
 									<bool key="NSIsSeparator">YES</bool>
@@ -609,7 +610,7 @@
 					<object class="IBActionConnection" key="connection">
 						<string key="label">importPhotosPressed:</string>
 						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="70041809"/>
+						<reference key="destination" ref="80141585"/>
 					</object>
 					<int key="connectionID">630</int>
 				</object>
@@ -988,8 +989,8 @@
 						<reference key="object" ref="58943312"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="948825143"/>
-							<reference ref="781168727"/>
-							<reference ref="70041809"/>
+							<reference ref="533885476"/>
+							<reference ref="80141585"/>
 						</array>
 						<reference key="parent" ref="442561506"/>
 					</object>
@@ -1000,12 +1001,12 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">627</int>
-						<reference key="object" ref="781168727"/>
+						<reference key="object" ref="533885476"/>
 						<reference key="parent" ref="58943312"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">628</int>
-						<reference key="object" ref="70041809"/>
+						<reference key="object" ref="80141585"/>
 						<reference key="parent" ref="58943312"/>
 					</object>
 				</array>
@@ -1106,7 +1107,6 @@
 						<string key="chooseFolder:">id</string>
 						<string key="coolLeapAppsPressed:">id</string>
 						<string key="helpPressed:">id</string>
-						<string key="importFolderPressed:">id</string>
 						<string key="importPhotosPressed:">id</string>
 						<string key="moreAppsPressed:">id</string>
 						<string key="openPreferences:">id</string>
@@ -1131,10 +1131,6 @@
 						</object>
 						<object class="IBActionInfo" key="helpPressed:">
 							<string key="name">helpPressed:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="importFolderPressed:">
-							<string key="name">importFolderPressed:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="importPhotosPressed:">
