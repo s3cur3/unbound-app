@@ -16,6 +16,7 @@
  
 #import "Preferences.h"
 #import "PIXFileParser.h"
+#import "PIXFileManager.h"
 #import "PIXDefines.h"
 
 #import "MASPreferencesWindowController.h"
@@ -295,6 +296,12 @@
         [self showMainWindow:nil];
     }
 }
+
+-(IBAction)importPhotosPressed:(id)sender
+{
+    [[PIXFileManager sharedInstance] importPhotosToAlbum:self.currentlySelectedAlbum allowDirectories:YES];
+}
+
 
 
 

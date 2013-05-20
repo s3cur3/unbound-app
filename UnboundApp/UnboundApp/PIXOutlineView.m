@@ -10,6 +10,7 @@
 #import "PIXSidebarTableCellView.h"
 #import "PIXSidebarViewController.h"
 #import "PIXViewController.h"
+#import "PIXAppDelegate.h"
 
 @implementation PIXOutlineView
 
@@ -62,6 +63,7 @@
     }
     DLog(@"rightMouseDown : %@", theEvent);
 }
+
 
 -(void)keyDown:(NSEvent *)theEvent
 {

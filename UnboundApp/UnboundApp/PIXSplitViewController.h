@@ -40,5 +40,7 @@
 -(IBAction)sliderValueChanged:(id)sender;
 -(void)popViewAndUpdateAlbumSelectionForDelegate;
 
+-(void)importPhotosPressed:(id)sender;
+
 
 @end

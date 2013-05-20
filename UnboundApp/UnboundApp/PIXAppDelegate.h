@@ -12,6 +12,7 @@
 @class PIXMainWindowController;
 @class PIXAboutWindowController;
 @class PIXFileParser;
+@class PIXAlbum;
 
 @interface PIXAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSAlertDelegate>
 {
@@ -38,6 +39,7 @@
 - (IBAction)helpPressed:(id)sender;
 
 - (IBAction)chooseFolder:(id)sender;
+-(IBAction)importPhotosPressed:(id)sender;
 
 @property BOOL showSparkleMenu;
 - (IBAction)checkForUpdates:(id)sender;
@@ -52,7 +54,7 @@
 - (IBAction)openPreferences:(id)sender;
 @property (weak) IBOutlet NSMenuItem *prefsMenuItem;
 
-
+@property (weak) PIXAlbum * currentlySelectedAlbum;
 
 -(void)startFileSystemLoading;
 
@@ -74,7 +76,7 @@
 //The file parsing system (keeps file system in sync)
 @property (nonatomic, strong) PIXFileParser *fileParser;
 
-@property (strong, nonatomic) NSUndoManager *undoManager;
+@property (strong, nonatomic) IBOutlet NSUndoManager *undoManager;
 
 
 //find or create helpers

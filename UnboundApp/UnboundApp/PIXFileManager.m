@@ -19,6 +19,10 @@
 #import "PIXDefines.h"
 #import "PIXMainWindowController.h"
 
+#import "PIXNavigationController.h"
+
+#import "PIXProgressWindowController.h"
+
 //#define DEBUG_DELETE_ITEMS 1
 
 enum {
@@ -897,14 +901,141 @@ typedef NSUInteger PIXOverwriteStrategy;
 
 -(BOOL)directoryIsSubpathOfObservedDirectories:(NSString *)aDirectoryPath
 {
+    
+    
     NSArray *observedDirectories = [[[PIXFileParser sharedFileParser] observedDirectories] valueForKey:@"path"];
     for (NSString *observedPath in observedDirectories)
     {
         if ([aDirectoryPath hasPrefix:observedPath]==YES) {
+            
+            // if we're dragging from something that is inside a package then it's not observed
+            
+            NSURL * subURL = [NSURL fileURLWithPath:aDirectoryPath];
+            
+            // while we're still in the observedPath check all parent folders and see if they are a package
+            while ([subURL.path hasPrefix:observedPath]==YES) {
+                
+                NSNumber * isPackage;
+                
+                [subURL getResourceValue:&isPackage forKey:NSURLIsPackageKey error:nil];
+                
+                if([isPackage boolValue])
+                {
+                    // return no, this file is not observed
+                    return NO;
+                }
+                
+                subURL = [subURL URLByDeletingLastPathComponent];
+                
+            }
+            
             return YES;
         }
     }
     return NO;
+}
+
+#pragma mark -
+#pragma mark Photo import
+
+-(IBAction)importPhotosToAlbum:(PIXAlbum *)album allowDirectories:(BOOL)allowDirectories
+{
+    NSOpenPanel * panel = [NSOpenPanel openPanel];
+    
+    
+    [panel setCanChooseDirectories:allowDirectories];
+    [panel setAllowsMultipleSelection:YES];
+    
+    // if we have an album to import photos into...    
+    if(album && ![album isReallyDeleted])
+    {
+        panel.prompt = @"Import";
+        
+        if(allowDirectories)
+        {
+            panel.message = @"Choose photo files or folders to import. Selecting folders will create new albums with the same name.";
+        }
+        
+        else
+        {
+            panel.message = @"Choose photo files to import.";
+        }
+        
+        [panel setCanChooseFiles:YES];
+        
+        [panel setAllowedFileTypes:@[@"public.image"]];
+    }
+    
+    else
+    {
+        album = nil;
+        panel.prompt = @"Import Folders";
+        panel.message = @"Choose folders to import. To import photo files select an ablum before importing.";
+        [panel setCanChooseFiles:NO];    
+    }
+    
+    NSWindow * mainWindow = [[[PIXAppDelegate sharedAppDelegate] mainWindowController] window];
+    
+    [panel beginSheetModalForWindow:mainWindow completionHandler:^(NSInteger result) {
+        
+        // if the user pressed ok, then copy the files into the correct folder
+        if(result == NSFileHandlingPanelOKButton)
+        {
+            // go through selected items and create the copy items array
+            BOOL containsDirectories = NO;
+                        
+            
+            NSMutableArray * items = [[NSMutableArray alloc] initWithCapacity:[panel.URLs count]];
+            
+            for(NSURL * aURL in panel.URLs)
+            {
+                // if the user is importing from the observed directory alert them and stop the import
+                if([self directoryIsSubpathOfObservedDirectories:[aURL path]])
+                {
+                    NSAlert* alert = [[NSAlert alloc] init];
+                    
+                    [alert addButtonWithTitle:@"OK"];
+                    
+                    
+                    [alert setMessageText: @"Cannot import from main photos folder"];
+                    [alert setInformativeText:@"The files you chose to import are already accessable through Unbound."];
+                     
+                    [alert beginSheetModalForWindow:mainWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
+                     
+                     // don't do anything if the user did this
+                     [items removeAllObjects];
+                     break;
+                }
+                
+                NSNumber * isFolder = [NSNumber numberWithBool:NO];
+                [aURL getResourceValue:&isFolder forKey:NSURLIsDirectoryKey error:NULL];
+                
+                if([isFolder boolValue])
+                {
+                    containsDirectories = YES;
+                    [items addObject:@{@"source" : [aURL path], @"destination" : [self defaultPhotosPath], @"isDirectory": [NSNumber numberWithBool:YES]}];
+                }
+                
+                else
+                {
+                    [items addObject:@{@"source" : [aURL path], @"destination" : [album path]}];
+                }
+                
+            }
+            
+            if([items count] > 0)
+            {
+                // if we're adding directories then navigate to the root view
+                if(containsDirectories)
+                {
+                    [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] navigationViewController] popToRootViewController];
+                }
+                
+                [self copyFiles:items];
+            }
+        }
+        
+    }];
 }
 
 //TODO: background thread these operations
@@ -972,83 +1103,186 @@ typedef NSUInteger PIXOverwriteStrategy;
     
     NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
     [undoManager registerUndoWithTarget:self selector:@selector(moveFiles:) object:undoArray];
+    [undoManager setActionName:@"Move Files"];
 }
+
 
 //TODO: background thread these operations
 -(void)copyFiles:(NSArray *)items;
 {
-    DLog(@"copying %ld files...", items.count);
+    // present a progress sheet while copying files (this can be slow with lots of files)
     
-    NSString *aDestinationPath = [[items lastObject] valueForKey:@"destination"];
-    NSURL *destinationURL = [NSURL fileURLWithPath:aDestinationPath isDirectory:YES];
-    //NSArray *srcPaths = [items valueForKey:@"source"];
-//    NSMutableArray *srcFileNames = [NSMutableArray arrayWithCapacity:srcPaths.count];
-//    for (NSString *srcPath in srcPaths)
-//    {
-//        [srcFileNames addObject:[srcPath stringByDeletingLastPathComponent]];
-//    }
-    NSArray *newItems = [self userValidatedFiles:items forDestination:destinationURL];
-    if (newItems.count == 0) {
-        return;
-    } else {//if (newItems.count != items.count) {
-        //Update items based on user's replace preferences
-        DLog(@"\nOld destinations : %@", [items valueForKey:@"destination"]);
-        DLog(@"\nNew destinations : %@", [newItems valueForKey:@"destination"]);
-    }
-    items = newItems;
-
-    NSString *trashFolder = [[PIXFileManager sharedInstance] trashFolderPath];
-    NSMutableArray *undoArray = [NSMutableArray arrayWithCapacity:items.count];
-    NSMutableSet *albumPaths = [[NSMutableSet alloc] init];
-    for (id aDict in items)
+    PIXProgressWindowController * progressSheet = [[PIXProgressWindowController alloc] initWithWindowNibName:@"PIXProgressWindowController"];
+    
+    progressSheet.messageText = @"Copying Files";
+    [progressSheet.progressBar startAnimation:self];
+    
+    NSWindow * mainWindow = [[[PIXAppDelegate sharedAppDelegate] mainWindowController] window];
+    [[NSApplication sharedApplication] beginSheet:progressSheet.window modalForWindow:mainWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
+    
+    if(items.count > 2)
     {
+        [progressSheet.progressBar setIndeterminate:NO];
+    }
+    
+    else
+    {
+        [progressSheet.progressBar setIndeterminate:YES];
+        [progressSheet.progressBar startAnimation:self];
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        DLog(@"copying %ld files...", items.count);
+        
+        
+        
+        
+        NSString *aDestinationPath = [[items lastObject] valueForKey:@"destination"];
+        NSURL *destinationURL = [NSURL fileURLWithPath:aDestinationPath isDirectory:YES];
+        //NSArray *srcPaths = [items valueForKey:@"source"];
+        //    NSMutableArray *srcFileNames = [NSMutableArray arrayWithCapacity:srcPaths.count];
+        //    for (NSString *srcPath in srcPaths)
+        //    {
+        //        [srcFileNames addObject:[srcPath stringByDeletingLastPathComponent]];
+        //    }
+        NSArray *validatedItems = [self userValidatedFiles:items forDestination:destinationURL];
+        if (validatedItems.count == 0) {
+            
+            [NSApp endSheet:[progressSheet window] returnCode:NSOKButton];
+            [[progressSheet window] orderOut:self];
+            
+            return;
+        } else {//if (newItems.count != items.count) {
+            //Update items based on user's replace preferences
+            DLog(@"\nOld destinations : %@", [items valueForKey:@"destination"]);
+            DLog(@"\nNew destinations : %@", [validatedItems valueForKey:@"destination"]);
+        }
+        
+        
+        NSString *trashFolder = [[PIXFileManager sharedInstance] trashFolderPath];
+        
+        // use these to keep track of which albums to refresh
+        NSMutableSet *albumPaths = [[NSMutableSet alloc] init];
+        NSMutableSet *recursiveAlbumPaths = [[NSMutableSet alloc] init];
+        
+        float itemCount = validatedItems.count;
+        float currentItem = 0;
+        
+        for (id aDict in validatedItems)
+        {
+            BOOL destintationWasRenamed = NO;
+            NSString *src = [aDict valueForKey:@"source"];
+            NSString *dest = [aDict valueForKey:@"destination"];
+            NSString *filename = [src lastPathComponent];
+            
+            
+            if ([aDict objectForKey:@"destinationFileName"]!=nil)
+            {
+                destintationWasRenamed = YES;
+                filename = [aDict objectForKey:@"destinationFileName"];
+            }
+            
+            NSString *fullDestPath = [dest stringByAppendingPathComponent:filename];
+            
+            
+            if([[aDict objectForKey:@"isDirectory"] boolValue])
+            {
+                [recursiveAlbumPaths addObject:fullDestPath];
+            }
+            
+            else
+            {
+                [albumPaths addObject:dest];
+            }
+            
+            
+            
+            if (!destintationWasRenamed)
+            {
+                [[NSWorkspace sharedWorkspace]
+                 performFileOperation:NSWorkspaceCopyOperation
+                 source: [src stringByDeletingLastPathComponent]
+                 destination:dest
+                 files:[NSArray arrayWithObject:[src lastPathComponent]]
+                 tag:nil];
+            } else {
+                
+                NSError *error = nil;
+                [[NSFileManager defaultManager] copyItemAtPath:src toPath:fullDestPath error:&error];
+            }
+        
+            currentItem++;
+            progressSheet.progress = currentItem/itemCount;
+        }
+        
+        for (NSString *albumPath in albumPaths)
+        {
+            if (![albumPath isEqualToString:trashFolder] && [self directoryIsSubpathOfObservedDirectories:albumPath]) {
+                [[PIXFileParser sharedFileParser] scanPath:albumPath withRecursion:PIXFileParserRecursionNone];
+            }
+        }
+        
+        for (NSString *albumPath in recursiveAlbumPaths)
+        {
+            if (![albumPath isEqualToString:trashFolder] && [self directoryIsSubpathOfObservedDirectories:albumPath]) {
+                [[PIXFileParser sharedFileParser] scanPath:albumPath withRecursion:PIXFileParserRecursionFull];
+            }
+        }
+        
+        NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
+        [undoManager registerUndoWithTarget:self selector:@selector(undoCopyFiles:) object:validatedItems];
+        [undoManager setActionName:@"Copy Files"];
+        
+        [NSApp endSheet:[progressSheet window] returnCode:NSOKButton];
+        [[progressSheet window] orderOut:self];
+    });
+    
+}
+
+// undo copy will just delete the items (no move to trash in this case (was causing conflicts))
+-(void)undoCopyFiles:(NSArray *)items;
+{
+    NSMutableSet *albumPaths = [[NSMutableSet alloc] init];
+    
+    for (id aDict in items)
+    {        
         BOOL destintationWasRenamed = NO;
         NSString *src = [aDict valueForKey:@"source"];
         NSString *dest = [aDict valueForKey:@"destination"];
         NSString *filename = [src lastPathComponent];
+        
+        [albumPaths addObject:dest];
+        
         if ([aDict objectForKey:@"destinationFileName"]!=nil)
         {
             destintationWasRenamed = YES;
             filename = [aDict objectForKey:@"destinationFileName"];
         }
         
+        NSError *error = nil;
+        [[NSFileManager defaultManager] removeItemAtPath:[dest stringByAppendingPathComponent:filename] error:&error];
         
-        //[albumPaths addObject:[src stringByDeletingLastPathComponent]];
-        [albumPaths addObject:dest];
-        
-        NSString *undoSrc = [NSString stringWithFormat:@"%@/%@", dest, filename];
-        //NSString *undoDest = [src stringByDeletingLastPathComponent];
-        
-        [undoArray addObject:@{@"source" : undoSrc, @"destination" : trashFolder}];
-        
-        
-        if (!destintationWasRenamed)
+        if(error)
         {
-            [[NSWorkspace sharedWorkspace]
-             performFileOperation:NSWorkspaceCopyOperation
-             source: [src stringByDeletingLastPathComponent]
-             destination:dest
-             files:[NSArray arrayWithObject:[src lastPathComponent]]
-             tag:nil];
-        } else {
-            NSString *fullDestPath = [NSString stringWithFormat:@"%@/%@", dest, filename];
-            NSError *error = nil;
-            [[NSFileManager defaultManager] copyItemAtPath:src toPath:fullDestPath error:&error];
+            NSLog(@"Error undoing copy: %@", [error description]);
         }
+        
+        
+        
     }
     
     for (NSString *albumPath in albumPaths)
     {
-        if (![albumPath isEqualToString:trashFolder] && [self directoryIsSubpathOfObservedDirectories:albumPath]) {
+        if ([self directoryIsSubpathOfObservedDirectories:albumPath]) {
             [[PIXFileParser sharedFileParser] scanPath:albumPath withRecursion:PIXFileParserRecursionNone];
         }
     }
     
+    
     NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
-    [undoManager registerUndoWithTarget:self selector:@selector(moveFiles:) object:undoArray];
+    [undoManager registerUndoWithTarget:self selector:@selector(copyFiles:) object:items];
+    [undoManager setActionName:@"Copy Files"];
 }
-
-
 
 
 
@@ -1106,7 +1340,17 @@ typedef NSUInteger PIXOverwriteStrategy;
 		
 		NSString *basePath = [outputPath stringByDeletingPathExtension];
 		NSString *extension = [outputPath pathExtension];
-		return [NSString stringWithFormat:@"%@ %u.%@", basePath, pathNumbering, extension];
+        
+        // if we have an extention, add it
+        if(extension.length)
+        {
+            return [NSString stringWithFormat:@"%@ %u.%@", basePath, pathNumbering, extension];
+        }
+        
+        else
+        {
+            return [NSString stringWithFormat:@"%@ %u", basePath, pathNumbering];
+        }
         
 	} else
 		return outputPath;

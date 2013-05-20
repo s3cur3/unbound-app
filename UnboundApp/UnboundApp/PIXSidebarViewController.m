@@ -35,10 +35,13 @@
     if (self) {
         // Initialization code here.
         //self.topLevelItems = [[[PIXDataSource fileSystemDataSource] albums] mutableCopy];
+        
     }
     
     return self;
 }
+
+
 
 
 -(NSArray *)albums

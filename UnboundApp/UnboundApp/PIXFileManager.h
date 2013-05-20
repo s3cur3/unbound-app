@@ -38,4 +38,7 @@
 
 -(NSArray *)itemsForDraggingInfo:(id <NSDraggingInfo>) draggingInfo forDestination:(NSString *)destPath;
 
+
+-(IBAction)importPhotosToAlbum:(PIXAlbum *)album allowDirectories:(BOOL)allowDirectories;
+
 @end

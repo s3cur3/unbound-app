@@ -21,25 +21,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXAppDelegate.m"
-         timestampString = "390419721.712825"
+         timestampString = "390610048.622833"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "237"
-         endingLineNumber = "237"
+         startingLineNumber = "238"
+         endingLineNumber = "238"
          landmarkName = "-showIntroWindow:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "UnboundApp/PIXPhoto.m"
-         timestampString = "390421615.915599"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "720"
-         endingLineNumber = "720"
-         landmarkName = "-thumbnailImage"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -53,6 +40,19 @@
          startingLineNumber = "798"
          endingLineNumber = "798"
          landmarkName = "-loadThumbnailImage"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "UnboundApp/PIXFileManager.m"
+         timestampString = "390720473.763567"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "1015"
+         endingLineNumber = "1015"
+         landmarkName = "-importPhotosToAlbum:allowDirectories:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

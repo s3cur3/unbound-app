@@ -16,6 +16,7 @@
 #import "PIXLeapInputManager.h"
 #import "PIXCustomShareSheetViewController.h"
 #import "PIXShareManager.h"
+#import "PIXFileManager.h"
 #import "PIXDefines.h"
 
 @interface PIXSplitViewController () <PIXLeapResponder>
@@ -26,6 +27,7 @@
 @property (nonatomic, strong) NSToolbarItem * backButtonSegmentItem;
 @property (nonatomic, strong) NSToolbarItem * sliderItem;
 @property (nonatomic, strong) NSToolbarItem * shareItem;
+@property (nonatomic, strong) NSToolbarItem * importItem;
 @property (nonatomic, strong) NSToolbarItem * sortButton;
 
 @property float lastSplitviewWidth;
@@ -78,6 +80,7 @@
     [self.sidebarViewController.searchField setNextKeyView:self.sidebarViewController.outlineView];
     
     [self.sidebarViewController.view setNextResponder:self];
+    [self setNextResponder:self.view];
     
     [self.imageBrowserViewController setThumbSize:self.sizeSlider.floatValue];
     
@@ -131,7 +134,7 @@
     [self.backButtonSegment setSelected:![self.splitView isSubviewCollapsed:self.leftPane]
                              forSegment:1];
     
-    NSArray * items = @[self.backButtonSegmentItem, self.navigationViewController.activityIndicator, self.navigationViewController.middleSpacer, self.sliderItem, self.sortButton];
+    NSArray * items = @[self.backButtonSegmentItem, self.importItem, self.navigationViewController.activityIndicator, self.navigationViewController.middleSpacer, self.sliderItem, self.sortButton];
     
     [self.navigationViewController setNavBarHidden:NO];
     [self.navigationViewController setToolbarItems:items];
@@ -255,6 +258,10 @@
         
     [self.backButtonSegment setSelected:![self.splitView isSubviewCollapsed:self.leftPane]
                              forSegment:1];
+    
+    CGRect frame = self.backButtonSegment.frame;
+    frame.size.height = 25;
+    self.backButtonSegment.frame = frame;
 
     
     _backButtonSegmentItem.view = self.backButtonSegment;
@@ -325,6 +332,9 @@
     
 }
 
+
+
+
 -(IBAction)shareButtonPressed:(id)sender
 {
     
@@ -346,6 +356,43 @@
      */
 }
 
+- (NSToolbarItem *)importItem
+{
+    if(_importItem != nil) return _importItem;
+    
+    _importItem = [[NSToolbarItem alloc] initWithItemIdentifier:@"importAlbumButton"];
+    //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
+    
+    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, -2, 60, 25)];
+    
+    [buttonView setImage:nil];
+    [buttonView setImagePosition:NSImageLeft];
+    [buttonView setBordered:YES];
+    [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
+    [buttonView setTitle:@"Import"];
+    
+    _importItem.view = buttonView;
+    
+    [_importItem setLabel:@"Import"];
+    [_importItem setPaletteLabel:@"Import"];
+    
+    
+    // Set up a reasonable tooltip, and image
+    // you will likely want to localize many of the item's properties
+    [_importItem setToolTip:@"Import photos"];
+    
+    // Tell the item what message to send when it is clicked
+    [buttonView setTarget:self];
+    [buttonView setAction:@selector(importPhotosPressed:)];
+    
+    return _importItem;
+    
+}
+
+-(void)importPhotosPressed:(id)sender
+{
+    [[PIXFileManager sharedInstance] importPhotosToAlbum:self.selectedAlbum allowDirectories:NO];
+}
 
 -(void)leapSwipeUp
 {
@@ -432,6 +479,8 @@
     _selectedAlbum = selectedAlbum;
     [self.imageBrowserViewController setAlbum:self.selectedAlbum];
     [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] setTitle:[self.selectedAlbum title]];
+    
+    [[PIXAppDelegate sharedAppDelegate] setCurrentlySelectedAlbum:self.selectedAlbum];
 
 }
 

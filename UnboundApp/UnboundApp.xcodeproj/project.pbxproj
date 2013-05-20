@@ -318,6 +318,8 @@
 		8C68248E16F8089400245F09 /* buttongrid_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68248016F8089400245F09 /* buttongrid_share@2x.png */; };
 		8C68248F16F8089400245F09 /* buttongrid_twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68248116F8089400245F09 /* buttongrid_twitter.png */; };
 		8C68249016F8089400245F09 /* buttongrid_twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68248216F8089400245F09 /* buttongrid_twitter@2x.png */; };
+		8C72089B1749B1720074705D /* PIXProgressWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7208991749B1720074705D /* PIXProgressWindowController.m */; };
+		8C72089C1749B1720074705D /* PIXProgressWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C72089A1749B1720074705D /* PIXProgressWindowController.xib */; };
 		8C72FE581712843B00AA72B0 /* preferences_dark_theme.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE561712843B00AA72B0 /* preferences_dark_theme.png */; };
 		8C72FE591712843B00AA72B0 /* preferences_light_theme.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE571712843B00AA72B0 /* preferences_light_theme.png */; };
 		8C72FE6217134BEE00AA72B0 /* PIXHUDMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C72FE6017134BEE00AA72B0 /* PIXHUDMessageController.m */; };
@@ -620,6 +622,9 @@
 		8C68248016F8089400245F09 /* buttongrid_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttongrid_share@2x.png"; sourceTree = "<group>"; };
 		8C68248116F8089400245F09 /* buttongrid_twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttongrid_twitter.png; sourceTree = "<group>"; };
 		8C68248216F8089400245F09 /* buttongrid_twitter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttongrid_twitter@2x.png"; sourceTree = "<group>"; };
+		8C7208981749B1720074705D /* PIXProgressWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXProgressWindowController.h; sourceTree = "<group>"; };
+		8C7208991749B1720074705D /* PIXProgressWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXProgressWindowController.m; sourceTree = "<group>"; };
+		8C72089A1749B1720074705D /* PIXProgressWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXProgressWindowController.xib; sourceTree = "<group>"; };
 		8C72FE561712843B00AA72B0 /* preferences_dark_theme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = preferences_dark_theme.png; sourceTree = "<group>"; };
 		8C72FE571712843B00AA72B0 /* preferences_light_theme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = preferences_light_theme.png; sourceTree = "<group>"; };
 		8C72FE5F17134BEE00AA72B0 /* PIXHUDMessageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXHUDMessageController.h; sourceTree = "<group>"; };
@@ -796,6 +801,9 @@
 				8C82A864171A5138009DD803 /* PIXAboutWindowController.h */,
 				8C82A865171A5138009DD803 /* PIXAboutWindowController.m */,
 				8C82A866171A5138009DD803 /* PIXAboutWindowController.xib */,
+				8C7208981749B1720074705D /* PIXProgressWindowController.h */,
+				8C7208991749B1720074705D /* PIXProgressWindowController.m */,
+				8C72089A1749B1720074705D /* PIXProgressWindowController.xib */,
 			);
 			name = Windows;
 			sourceTree = "<group>";
@@ -1417,6 +1425,7 @@
 				1D23CC1B172095E000C7FF70 /* Mask.jpg in Resources */,
 				1D23CC1C172095E000C7FF70 /* Shading.tiff in Resources */,
 				8C43CCF117385A9700A4395F /* UnboundTrial.entitlements in Resources */,
+				8C72089C1749B1720074705D /* PIXProgressWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1607,6 +1616,7 @@
 				8C14692817149A92009ECCC5 /* PIXLeapTutorialWindowController.m in Sources */,
 				8C82A867171A5138009DD803 /* PIXAboutWindowController.m in Sources */,
 				1D23CC161720604E00C7FF70 /* PIXTransitionSetup.m in Sources */,
+				8C72089B1749B1720074705D /* PIXProgressWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
