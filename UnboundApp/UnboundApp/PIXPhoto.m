@@ -1094,9 +1094,14 @@ const CGFloat kThumbnailSize = 370.0f;
 {
     if(self.exifData != nil) return;
     
-    NSURL * imageURL = [NSURL fileURLWithPath:self.path];
-        
-    CGImageSourceRef imageSrc = CGImageSourceCreateWithURL((__bridge CFURLRef)imageURL, nil);
+    NSURL * imageURL = nil;
+    CGImageSourceRef imageSrc = nil;
+    
+    if(self.path)
+    {
+        imageURL = [NSURL fileURLWithPath:self.path];
+        imageSrc = CGImageSourceCreateWithURL((__bridge CFURLRef)imageURL, nil);
+    }
     
     if (imageSrc!=nil)
     {

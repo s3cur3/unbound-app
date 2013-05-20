@@ -607,6 +607,11 @@ NSDictionary * dictionaryForURL(NSURL * url)
         
         if(self.scansCancelledFlag)
         {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
+            });
+            
             [self decrementWorking];
             return;
         }
@@ -691,6 +696,11 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 
             });
         }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
+        });
         
         // always go back and decrement the loading
         [self decrementWorking];
