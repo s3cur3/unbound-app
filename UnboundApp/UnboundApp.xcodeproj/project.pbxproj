@@ -62,7 +62,6 @@
 		1DB2F86F167AC07F008AC0F7 /* unbound_icon_512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F86D167AC07F008AC0F7 /* unbound_icon_512x512.png */; };
 		1DBFD55716CAE415001944A9 /* PIXFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DBFD55516CAE415001944A9 /* PIXFileManager.m */; };
 		1DDEF823169D2D9F00C0D303 /* PIXDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF81D169D2D9F00C0D303 /* PIXDataModel.xcdatamodeld */; };
-		1DDEF828169D2FE800C0D303 /* PIXThumbnail.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF827169D2FE800C0D303 /* PIXThumbnail.m */; };
 		1DDEF82E169D2FE800C0D303 /* PIXPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF82D169D2FE800C0D303 /* PIXPhoto.m */; };
 		1DDEF830169D2FE800C0D303 /* PIXAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF82F169D2FE800C0D303 /* PIXAccount.m */; };
 		1DDEF839169D34A400C0D303 /* GetPathsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF836169D34A400C0D303 /* GetPathsOperation.m */; };
@@ -112,7 +111,6 @@
 		8C28606C17308566009A0B35 /* PIXImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D08352C167E8B2B003D557A /* PIXImageViewController.m */; };
 		8C28606D17308566009A0B35 /* PIXModifierSwitchedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */; };
 		8C28606E17308566009A0B35 /* PIXDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF81D169D2D9F00C0D303 /* PIXDataModel.xcdatamodeld */; };
-		8C28606F17308566009A0B35 /* PIXThumbnail.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF827169D2FE800C0D303 /* PIXThumbnail.m */; };
 		8C28607017308566009A0B35 /* PIXPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF82D169D2FE800C0D303 /* PIXPhoto.m */; };
 		8C28607117308566009A0B35 /* PIXAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF82F169D2FE800C0D303 /* PIXAccount.m */; };
 		8C28607217308566009A0B35 /* GetPathsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF836169D34A400C0D303 /* GetPathsOperation.m */; };
@@ -514,8 +512,6 @@
 		1DBFD55516CAE415001944A9 /* PIXFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXFileManager.m; sourceTree = "<group>"; };
 		1DBFD55616CAE415001944A9 /* PIXFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXFileManager.h; sourceTree = "<group>"; };
 		1DDEF81E169D2D9F00C0D303 /* PIXDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PIXDataModel.xcdatamodel; sourceTree = "<group>"; };
-		1DDEF826169D2FE800C0D303 /* PIXThumbnail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXThumbnail.h; sourceTree = "<group>"; };
-		1DDEF827169D2FE800C0D303 /* PIXThumbnail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXThumbnail.m; sourceTree = "<group>"; };
 		1DDEF82C169D2FE800C0D303 /* PIXPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPhoto.h; sourceTree = "<group>"; };
 		1DDEF82D169D2FE800C0D303 /* PIXPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhoto.m; sourceTree = "<group>"; };
 		1DDEF82F169D2FE800C0D303 /* PIXAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXAccount.m; sourceTree = "<group>"; };
@@ -664,6 +660,7 @@
 		8C9AA2BB1700A5BF00D989CA /* PIXSlideshowOptonsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXSlideshowOptonsViewController.h; sourceTree = "<group>"; };
 		8C9AA2BC1700A5C000D989CA /* PIXSlideshowOptonsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSlideshowOptonsViewController.m; sourceTree = "<group>"; };
 		8C9AA2BD1700A5C000D989CA /* PIXSlideshowOptonsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXSlideshowOptonsViewController.xib; sourceTree = "<group>"; };
+		8CA459CF174D68A1002BF431 /* PIXAccount.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PIXAccount.h; sourceTree = "<group>"; };
 		8CC94923171C92E900EC1431 /* success.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = success.png; sourceTree = "<group>"; };
 		8CC94924171C92E900EC1431 /* success@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success@2x.png"; sourceTree = "<group>"; };
 		8CC94927171CDC5E00EC1431 /* softtap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = softtap.wav; path = "../Leap Tutorial Videos/softtap.wav"; sourceTree = "<group>"; };
@@ -1117,11 +1114,10 @@
 				1DDEF81D169D2D9F00C0D303 /* PIXDataModel.xcdatamodeld */,
 				8C8EE92916C46AB800F16C49 /* PIXAlbum.h */,
 				8C8EE92A16C46AB800F16C49 /* PIXAlbum.m */,
+				8CA459CF174D68A1002BF431 /* PIXAccount.h */,
 				1DDEF82F169D2FE800C0D303 /* PIXAccount.m */,
 				1DDEF82C169D2FE800C0D303 /* PIXPhoto.h */,
 				1DDEF82D169D2FE800C0D303 /* PIXPhoto.m */,
-				1DDEF826169D2FE800C0D303 /* PIXThumbnail.h */,
-				1DDEF827169D2FE800C0D303 /* PIXThumbnail.m */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -1561,7 +1557,6 @@
 				1D08352D167E8B2B003D557A /* PIXImageViewController.m in Sources */,
 				8C972CB41680FE8B00358913 /* PIXModifierSwitchedEvent.m in Sources */,
 				1DDEF823169D2D9F00C0D303 /* PIXDataModel.xcdatamodeld in Sources */,
-				1DDEF828169D2FE800C0D303 /* PIXThumbnail.m in Sources */,
 				1DDEF82E169D2FE800C0D303 /* PIXPhoto.m in Sources */,
 				1DDEF830169D2FE800C0D303 /* PIXAccount.m in Sources */,
 				1DDEF839169D34A400C0D303 /* GetPathsOperation.m in Sources */,
@@ -1644,7 +1639,6 @@
 				8C28606C17308566009A0B35 /* PIXImageViewController.m in Sources */,
 				8C28606D17308566009A0B35 /* PIXModifierSwitchedEvent.m in Sources */,
 				8C28606E17308566009A0B35 /* PIXDataModel.xcdatamodeld in Sources */,
-				8C28606F17308566009A0B35 /* PIXThumbnail.m in Sources */,
 				8C28607017308566009A0B35 /* PIXPhoto.m in Sources */,
 				8C28607117308566009A0B35 /* PIXAccount.m in Sources */,
 				8C28607217308566009A0B35 /* GetPathsOperation.m in Sources */,

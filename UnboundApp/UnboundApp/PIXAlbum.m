@@ -9,7 +9,6 @@
 #import "PIXAlbum.h"
 #import "PIXAccount.h"
 #import "PIXPhoto.h"
-#import "PIXThumbnail.h"
 #import "PIXDefines.h"
 #import "PIXAppDelegate.h"
 
@@ -39,7 +38,9 @@ static NSString *const kItemsKey = @"photos";
     [fetchRequest setFetchBatchSize:100];
     
     // prefetch stack photos. These are used in the album-level views
-    [fetchRequest setRelationshipKeyPathsForPrefetching:@[@"stackPhotos"]];
+    //[fetchRequest setRelationshipKeyPathsForPrefetching:@[@"stackPhotos"]];
+    
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"path != NULL"]];
     
     PIXAlbumSort currentSort = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"PIXAlbumSort"];
     
@@ -113,13 +114,7 @@ static NSString *const kItemsKey = @"photos";
     return nil; // this is just here for the protocol
 }
 
--(void)cancelThumbnailLoading;
-{
-    for(PIXPhoto * stackPhoto in self.stackPhotos)
-    {
-        [stackPhoto cancelThumbnailLoading];
-    }
-}
+
 
 
 
@@ -235,6 +230,7 @@ static NSString *const kItemsKey = @"photos";
         }
 
         // set the stackphotos
+        //NSUInteger stackRange = photoCount>=1 ? 1 : photoCount;
         NSUInteger stackRange = photoCount>=3 ? 3 : photoCount;
         NSRange indexRange = NSMakeRange(0, stackRange);
         NSIndexSet *stackSet = [NSIndexSet indexSetWithIndexesInRange:indexRange];
@@ -325,6 +321,7 @@ static NSString *const kItemsKey = @"photos";
     NSOrderedSet *stackPhotos = [self primitiveValueForKey:@"stackPhotos"];
     [self didAccessValueForKey:@"stackPhotos"];
     
+    /*
     // if for some reason the stack photos got broken, fix them
     if(stackPhotos.count == 0 && self.photos.count > 0)
     {
@@ -334,7 +331,7 @@ static NSString *const kItemsKey = @"photos";
             
             [[NSNotificationCenter defaultCenter] postNotificationName:AlbumStackDidChangeNotification object:self];
         });
-    }
+    }*/
     
     
     return stackPhotos;
@@ -403,6 +400,8 @@ static NSString *const kItemsKey = @"photos";
         
         // enqueue these notes on the sender so if a few album stack images load right after each other it doesn't have to redraw multiple times
         [[NSNotificationQueue defaultQueue] enqueueNotification:note postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnSender forModes:nil];
+        
+        //[[PIXAppDelegate sharedAppDelegate] saveDBToDiskWithRateLimit];
     }
 }
 
@@ -492,9 +491,7 @@ static NSString *const kItemsKey = @"photos";
         _sharedUnboundQueue  = dispatch_queue_create("com.pixite.ub.unboundFileParsingQueue", 0);
         
         // set this to a high priority queue so it doens't get blocked by the thumbs loading
-        dispatch_set_target_queue(_sharedUnboundQueue, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0));
-        
-        
+        dispatch_set_target_queue(_sharedUnboundQueue, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0));        
         
     });
     
@@ -527,6 +524,8 @@ static NSString *const kItemsKey = @"photos";
             
             // enqueue these notes on the sender so if a few album stack images load right after each other it doesn't have to redraw multiple times
             [[NSNotificationQueue defaultQueue] enqueueNotification:note postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnSender forModes:nil];
+            
+            [[PIXAppDelegate sharedAppDelegate] saveDBToDiskWithRateLimit];
         });
         
         
@@ -578,6 +577,7 @@ static NSString *const kItemsKey = @"photos";
                                 // also update the views
                                 [mainThreadPhoto postPhotoUpdatedNote];
                             }
+                            
                         });
                     }
                 }

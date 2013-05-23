@@ -571,12 +571,29 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     // overwrite the database with updates from this context
     [_managedObjectContext setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mergeContext:) name:NSManagedObjectContextDidSaveNotification object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mergeContext:) name:NSManagedObjectContextDidSaveNotification object:nil];
     return _managedObjectContext;
+}
+
+-(void)saveDBToDiskWithRateLimit
+{
+    // cancel any previous delayed calls to this method
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(saveDBToDisk:) object:nil];
+    
+    [self performSelector:@selector(saveDBToDisk:)  withObject:nil afterDelay:5.0];
+    
 }
 
 -(BOOL)saveDBToDisk:(NSError **)error
 {
+    // perform this on the main thread if needed
+    if(![NSThread isMainThread])
+        
+    {
+        [self performSelectorOnMainThread:@selector(saveDBToDisk:) withObject:nil waitUntilDone:NO];
+        return YES;
+    }
+    
     if (![self.managedObjectContext save:error])
     {
         return NO;
@@ -712,7 +729,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
         }
     }];
     
-    
+    /*
     if (!saveResult) {
         
         // Customize this code block to include application-specific recovery steps.
@@ -736,7 +753,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
         if (answer == NSAlertAlternateReturn) {
             return NSTerminateCancel;
         }
-    }
+    }*/
     
     return NSTerminateNow;
 }

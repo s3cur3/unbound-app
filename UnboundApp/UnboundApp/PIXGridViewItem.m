@@ -43,7 +43,10 @@ static CGSize kDefaultItemSizeCustomized;
 - (void)prepareForReuse
 {
     if (self.representedObject )  {
-        [self.representedObject cancelThumbnailLoading];
+        if([self.representedObject respondsToSelector:@selector(cancelThumbnailLoading)])
+        {
+            [self.representedObject cancelThumbnailLoading];
+        }
     }
     self.itemImage = nil;
     self.itemTitle = @"";

@@ -1246,7 +1246,6 @@ typedef NSUInteger PIXOverwriteStrategy;
     
     for (id aDict in items)
     {        
-        BOOL destintationWasRenamed = NO;
         NSString *src = [aDict valueForKey:@"source"];
         NSString *dest = [aDict valueForKey:@"destination"];
         NSString *filename = [src lastPathComponent];
@@ -1255,7 +1254,6 @@ typedef NSUInteger PIXOverwriteStrategy;
         
         if ([aDict objectForKey:@"destinationFileName"]!=nil)
         {
-            destintationWasRenamed = YES;
             filename = [aDict objectForKey:@"destinationFileName"];
         }
         

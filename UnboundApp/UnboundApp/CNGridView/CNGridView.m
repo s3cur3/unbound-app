@@ -1308,7 +1308,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
             // handle arrow keys as well
             if(pressedUnichar >= 63232 &&pressedUnichar <= 63235)
             {
-                localEvent = YES;
+                //localEvent = YES;
                 
                 switch (pressedUnichar) {
                     case 63232:

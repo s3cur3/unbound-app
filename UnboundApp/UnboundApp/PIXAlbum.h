@@ -87,8 +87,6 @@ typedef enum {
 -(NSArray *)sortedPhotos;
 -(NSArray *)photoSortDescriptors;
 
--(void)cancelThumbnailLoading;
-
 -(void)updateDatePhoto;
 //-(void)updateAlbumBecausePhotosDidChange;
 

@@ -9,7 +9,6 @@
 #import <Quartz/Quartz.h>
 #import "PIXPhoto.h"
 #import "PIXAlbum.h"
-#import "PIXThumbnail.h"
 #import "PIXAppDelegate.h"
 //#import "PIXAppDelegate+CoreDataUtils.h"
 #import "MakeThumbnailOperation.h"
@@ -83,7 +82,10 @@ const CGFloat kThumbnailSize = 370.0f;
     }
     
     // do nothing if we're not changing the value
-    if([userCaption isEqualToString:self.caption]) return;
+    if([userCaption isEqualToString:self.caption])
+    {
+        return;
+    }
     
     // set the caption in the db
     self.caption = userCaption;
@@ -92,12 +94,13 @@ const CGFloat kThumbnailSize = 370.0f;
     [self.album setUnboundFileCaptionForPhoto:self];
 }
 
+/*
 -(void)setCaption:(NSString *)caption
 {
     [self willChangeValueForKey:@"caption"];
     [self setPrimitiveValue:caption forKey:@"caption"];
     [self didChangeValueForKey:@"caption"];
-}
+}*/
 
 //TODO: get rid of this
 -(NSURL *)filePath;
@@ -587,6 +590,10 @@ const CGFloat kThumbnailSize = 370.0f;
 
 -(void)cancelThumbnailLoading;
 {
+    
+    // do nothing if we're not loading
+    if(_thumbnailImageIsLoading == NO) return;
+    
     // delay this sliglty in case we start loading again
     if(self.cancelThumbnailLoadOperationDelayFlag == NO)
     {
@@ -594,6 +601,7 @@ const CGFloat kThumbnailSize = 370.0f;
         [self performSelector:@selector(delayedCancelThumbnailLoading) withObject:nil afterDelay:0.2];
     }
     //self.cancelThumbnailLoadOperation = YES;
+     
 }
 
 -(void)delayedCancelThumbnailLoading
@@ -636,9 +644,8 @@ const CGFloat kThumbnailSize = 370.0f;
             _thumbnailImageIsLoading = NO;
         }
     }
-    
-    
-    
+
+    // unset this flag so it will re-start the timer if it's cancelled again
     self.cancelThumbnailLoadOperationDelayFlag = NO;
 }
 
@@ -653,6 +660,7 @@ const CGFloat kThumbnailSize = 370.0f;
 {
     //[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(delayedCancelThumbnailLoading) object:nil];
     //return nil;
+    
     
     // uncancel the loads
     self.cancelThumbnailLoadOperation = NO;
@@ -676,16 +684,19 @@ const CGFloat kThumbnailSize = 370.0f;
                 NSData * imgData = [NSData dataWithContentsOfFile:imagePath];
                 NSImage * thumb = [[NSImage alloc] initWithData:imgData];
                 
-                weakSelf.thumbnailImage = thumb;
+                
                 
                 if(thumb != nil)
                 {
-                    // use performSelector instead of dispatch here because it updates the ui much faster
+                    // set the thumbnail in memory
+                    weakSelf.thumbnailImage = thumb;
+                    
+                    // use performSelector instead of dispatch here because it updates the ui much faster                    
                     [weakSelf performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
                     
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        _thumbnailImageIsLoading = NO;
-                    });
+                    //dispatch_async(dispatch_get_main_queue(), ^{
+                    _thumbnailImageIsLoading = NO;
+                    //});
                 }
                 
                 // if we still haven't found the thumb then laod from original image
@@ -722,8 +733,7 @@ const CGFloat kThumbnailSize = 370.0f;
         _thumbnailImageIsLoading = YES;
         [self loadThumbnailImage];
     }
-    
-    
+  
 
     return _thumbnailImage;
 }
@@ -844,11 +854,17 @@ const CGFloat kThumbnailSize = 370.0f;
             image = [[weakSelf class] makeThumbnailImageFromImageSource:imageSource always:NO];
             //NSBitmapImageRep *rep = [[image representations] objectAtIndex: 0];
             
-            // save the thubm to memory
-            [weakSelf setThumbnailImage:image];
+            
             
             // tell the ui to update
-            [self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
+            
+            if(image)
+            {
+                // save the thubm to memory
+                [weakSelf setThumbnailImage:image];
+                
+                [self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
+            }
             
             // we've finished updating the ui with the image, do everythinge else at a lower priority
             self.slowThumbLoad = [NSBlockOperation blockOperationWithBlock:^{
@@ -886,11 +902,16 @@ const CGFloat kThumbnailSize = 370.0f;
                     image = [[weakSelf class] makeThumbnailImageFromImageSource:imageSource always:YES];
                     //NSBitmapImageRep *rep = [[image representations] objectAtIndex: 0];
                     
-                    // save the thumb to memory
-                    [weakSelf setThumbnailImage:image];
+                    
                     
                     // tell the main thread we're done
-                    [self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
+                    if(image)
+                    {
+                        // save the thumb to memory
+                        [weakSelf setThumbnailImage:image];
+                        
+                        [self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
+                    }
                 }
                 
                 //                // if the load was cancelled then bail
@@ -1022,7 +1043,6 @@ const CGFloat kThumbnailSize = 370.0f;
     
     [[self sharedThumbnailLoadQueue] addOperation:self.fastThumbLoad];
 }
-
 
 -(void)setDateCreated:(NSDate *)dateCreated
 {
@@ -1220,6 +1240,7 @@ const CGFloat kThumbnailSize = 370.0f;
 
 -(void)postPhotoUpdatedNote
 {
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:PhotoThumbDidChangeNotification object:self];
     
     /*
@@ -1238,14 +1259,17 @@ const CGFloat kThumbnailSize = 370.0f;
     {
         //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self.album];
         
-        //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumStackDidChangeNotification object:self.album];
+        PIXAlbum * analbum = self.stackPhotoAlbum;
+        analbum.path; // make it unfault itself
         
-        
-        
+        [[NSNotificationCenter defaultCenter] postNotificationName:AlbumStackDidChangeNotification object:analbum];
+
+        /*
         NSNotification * note = [NSNotification notificationWithName:AlbumStackDidChangeNotification object:self.album];
         
         // enqueue these notes on the sender so if a few album stack images load right after each other it doesn't have to redraw multiple times
          [[NSNotificationQueue defaultQueue] enqueueNotification:note postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnSender forModes:nil];
+         */
         
     }
 }

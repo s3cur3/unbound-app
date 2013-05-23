@@ -71,6 +71,15 @@
 @property (readonly, strong, nonatomic) NSManagedObjectContext *privateWriterContext;
 
 -(NSManagedObjectContext *)threadSafeManagedObjectContext;
+
+// this will save the db to the disk in the background after a 1second delay.
+// If it is called again within one second it will cancel the last call and only save once
+// this should be used when a loop or when save could be called a bunch of times in quick succession
+-(void)saveDBToDiskWithRateLimit;
+
+
+// this will save the db to the disk in the background
+// note error and return value will only be populated if this is called from the main thread
 -(BOOL)saveDBToDisk:(NSError **)error;
 
 //The file parsing system (keeps file system in sync)

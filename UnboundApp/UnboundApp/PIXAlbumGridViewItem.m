@@ -19,6 +19,8 @@
 
 @property (strong, nonatomic) IBOutlet NSTextField *mainLabel;
 
+@property (strong) NSOrderedSet * loadingPhotos;
+
 @property (strong, nonatomic) NSImage * albumThumb;
 
 @property (strong, nonatomic) NSImage * stackThumb1;
@@ -179,14 +181,20 @@
     if(_album != album)
     {
 
-        
+        // stop watching for old album updates
         if (_album != nil)
         {
-            [_album cancelThumbnailLoading];
+            [self cancelThumbnailLoading];
             [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumStackDidChangeNotification object:_album];
         }
 
         _album = album;
+        
+        // start watching for new album updates
+        if(_album != nil)
+        {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(albumChanged:) name:AlbumStackDidChangeNotification object:_album];
+        }
         
         [self albumChanged:nil];
         
@@ -206,9 +214,8 @@
         self.stackThumb2Rotate = (CGFloat)(random % 183)/1300 - .07 - self.stackThumb1Rotate;
 
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(albumChanged:) name:AlbumStackDidChangeNotification object:_album];
         
-        [self displayIfNeeded];
+        //[self displayIfNeeded];
         
 
     }
@@ -221,13 +228,26 @@
     
     [self setItemTitle:[self.album title]];
     
+    
+    
+    
+    
     self.albumThumb = nil;
+    self.loadingPhotos = [self.album stackPhotos];
     
     // if we've got one stack photo
     if([[self.album stackPhotos] count] > 0)
     {
         
-        self.albumThumb = [(PIXPhoto *)[[self.album stackPhotos] objectAtIndex:0] thumbnailImageFast];
+        PIXPhoto * thumbPhoto = [[self.album stackPhotos] objectAtIndex:0];
+        //[thumbPhoto setStackPhotoAlbum:self.album];
+        
+        NSImage * newThumb = [thumbPhoto thumbnailImageFast];
+        
+        if(newThumb)
+        {
+            self.albumThumb = newThumb;
+        }
         
         // we'll check for a nil photo outside of this if because albums with no photos should still have one placeholder thumb
         
@@ -235,7 +255,10 @@
         // if we have two stack photos get both
         if([[self.album stackPhotos] count] > 1)
         {
-            self.stackThumb1 = [(PIXPhoto *)[[self.album stackPhotos] objectAtIndex:1] thumbnailImage];
+            PIXPhoto * thumbPhoto2 = [[self.album stackPhotos] objectAtIndex:1];
+            //[thumbPhoto2 setStackPhotoAlbum:self.album];
+            
+            self.stackThumb1 = [thumbPhoto2 thumbnailImage];
             
             if(self.stackThumb1 == nil)
             {
@@ -245,7 +268,10 @@
             // if we have three stack photos get all three
             if([[self.album stackPhotos] count] > 2)
             {
-                self.stackThumb2 = [(PIXPhoto *)[[self.album stackPhotos] objectAtIndex:2] thumbnailImage];
+                PIXPhoto * thumbPhoto3 = [[self.album stackPhotos] objectAtIndex:2];
+                //[thumbPhoto3 setStackPhotoAlbum:self.album];
+                
+                self.stackThumb2 = [thumbPhoto3 thumbnailImage];
                 
                 if(self.stackThumb2 == nil)
                 {
@@ -517,6 +543,11 @@
     }
     
     [[self nextResponder] mouseDown:theEvent];
+    
+    
+    // DEBUG STUFF
+    
+    [self albumChanged:nil];
 }
 
 -(void)mouseDragged:(NSEvent *)theEvent
@@ -550,10 +581,9 @@
 
 - (void)prepareForReuse
 {
+    
     if (self.album )  {
         
-        [self.album cancelThumbnailLoading];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumStackDidChangeNotification object:self.album];
         self.album = nil;
     }
     
@@ -565,16 +595,19 @@
 
 }
 
+-(void)cancelThumbnailLoading
+{
+    for(PIXPhoto * photo in self.loadingPhotos)
+    {
+        [photo cancelThumbnailLoading];
+    }
+    
+    self.loadingPhotos = nil;
+}
+
 -(id)representedObject
 {
     return self.album;
-}
-
-
-
--(void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 

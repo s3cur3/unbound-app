@@ -8,6 +8,7 @@
 
 #import "PIXSidebarTableCellView.h"
 #import "PIXAlbum.h"
+#import "PIXPhoto.h"
 #import "PIXDefines.h"
 #import "PIXFileManager.h"
 #import "NSColor+CNGridViewPalette.h"
@@ -88,7 +89,10 @@
     
     if([self.album.stackPhotos count] > 0)
     {
-        NSImage * thumb = [[self.album.stackPhotos objectAtIndex:0] thumbnailImage];
+        PIXPhoto * thumbPhoto = [self.album.stackPhotos objectAtIndex:0];
+        //thumbPhoto.stackPhotoAlbum = self.album;
+        
+        NSImage * thumb = [thumbPhoto thumbnailImage];
         [self.imageView setImage:thumb];
     }
     
@@ -120,6 +124,7 @@
             [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumStackDidChangeNotification object:_album];
         }
         _album = newAlbum;
+        
         if (_album != nil) {
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAlbumView:) name:AlbumStackDidChangeNotification object:_album];
             //            [[NSNotificationCenter defaultCenter] addObserverForName:AlbumPhotoCountDidChangeNotification object:self queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {

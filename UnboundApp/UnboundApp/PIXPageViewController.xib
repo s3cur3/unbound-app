@@ -74,7 +74,7 @@
 										<reference key="NSNextResponder" ref="289126915"/>
 										<int key="NSvFlags">268</int>
 										<array class="NSMutableArray" key="NSSubviews"/>
-										<string key="NSFrame">{{89, 2}, {47, 19}}</string>
+										<string key="NSFrame">{{89, 5}, {47, 17}}</string>
 										<reference key="NSSuperview" ref="289126915"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView"/>
@@ -547,20 +547,8 @@
 									<object class="NSLayoutManager" key="NSLayoutManager">
 										<object class="NSTextStorage" key="NSTextStorage">
 											<object class="NSMutableString" key="NSString">
-												<characters key="NS.bytes">test</characters>
+												<characters key="NS.bytes"/>
 											</object>
-											<dictionary key="NSAttributes">
-												<reference key="NSColor" ref="588707238"/>
-												<object class="NSFont" key="NSFont">
-													<string key="NSName">Helvetica</string>
-													<double key="NSSize">18</double>
-													<int key="NSfFlags">16</int>
-												</object>
-												<object class="NSMutableParagraphStyle" key="NSParagraphStyle">
-													<int key="NSAlignment">2</int>
-													<nil key="NSTabStops"/>
-												</object>
-											</dictionary>
 											<nil key="NSDelegate"/>
 										</object>
 										<array class="NSMutableArray" key="NSTextContainers">
@@ -630,8 +618,7 @@
 						<reference key="NSDocView" ref="19162105"/>
 						<reference key="NSBGColor" ref="588707238"/>
 						<object class="NSCursor" key="NSCursor">
-							<string key="NSHotSpot">{5, 5}</string>
-							<bool key="NSOnMouseExited">YES</bool>
+							<string key="NSHotSpot">{1, -1}</string>
 							<int key="NSCursorType">0</int>
 						</object>
 						<int key="NScvFlags">2</int>

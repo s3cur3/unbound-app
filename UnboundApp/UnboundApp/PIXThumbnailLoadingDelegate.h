@@ -12,6 +12,9 @@
 @protocol PIXThumbnailLoadingDelegate
 
 -(NSImage *)thumbnailImage;
+
+@optional
+
 -(void)cancelThumbnailLoading;
 
 @end

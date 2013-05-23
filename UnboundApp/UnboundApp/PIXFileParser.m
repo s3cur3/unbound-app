@@ -476,6 +476,15 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 // use this flag so the deep scan will restart if the app closes half way through
                 [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kDeepScanIncompleteKey];
                 
+                
+//                double delayInSeconds = 1.2;
+//                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//                    
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
+//                    
+//                });
+                
             });
             
             
@@ -607,10 +616,6 @@ NSDictionary * dictionaryForURL(NSURL * url)
         
         if(self.scansCancelledFlag)
         {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
-            });
             
             [self decrementWorking];
             return;
@@ -697,13 +702,12 @@ NSDictionary * dictionaryForURL(NSURL * url)
             });
         }
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
-        });
+        
         
         // always go back and decrement the loading
         [self decrementWorking];
+        
+        [[PIXAppDelegate sharedAppDelegate] saveDBToDiskWithRateLimit];
         
     });
 }
@@ -803,6 +807,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 {
                     lastAlbum = [NSEntityDescription insertNewObjectForEntityForName:@"PIXAlbum" inManagedObjectContext:context];
                     [lastAlbum setValue:aPath forKey:@"path"];
+                    
                 }
                 
                 else
@@ -875,7 +880,9 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 
                 // save the context and send a UI update notification every 500 loops
                 if (i%500==0) {
+                    
                     [context save:nil];
+                    
                     
                     // update flush albums and the UI with a notification
                     // use performSelector instead of dispatch async because it's faster
@@ -1024,6 +1031,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
 // this should always be called on the main thread
 -(void)flushAlbumsWithIDS:(NSSet *)albumIDs
 {
+    
     // fetch any the albums with these ids
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kAlbumEntityName];
     [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(self IN %@)", albumIDs]];
@@ -1043,6 +1051,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
     NSNotification *albumNotification = [NSNotification notificationWithName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
     [[NSNotificationQueue defaultQueue] enqueueNotification:albumNotification postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnName forModes:nil];
     
+
     //[[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
      
 }

@@ -192,11 +192,12 @@
     
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(fixCaptionSpace) object:nil];
     [self performSelector:@selector(fixCaptionSpace) withObject:nil afterDelay:0.5];
-
+    
 }
 
 -(void)fixCaptionSpace
 {
+    
     CGFloat newHeight = 55;
     
     if(self.captionIsBelow)
