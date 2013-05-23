@@ -543,11 +543,6 @@
     }
     
     [[self nextResponder] mouseDown:theEvent];
-    
-    
-    // DEBUG STUFF
-    
-    [self albumChanged:nil];
 }
 
 -(void)mouseDragged:(NSEvent *)theEvent
