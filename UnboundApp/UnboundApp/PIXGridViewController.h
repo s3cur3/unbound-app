@@ -43,6 +43,7 @@
 
 - (IBAction) deleteItems:(id )inSender;
 
+-(IBAction)importPhotosButtonPressed:(id)sender;
 -(IBAction)chooseFolderButtonPressed:(id)sender;
 
 @end

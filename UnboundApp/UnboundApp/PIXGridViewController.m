@@ -212,6 +212,11 @@ static NSString *kContentTitleKey, *kContentImageKey;
     [[PIXFileParser sharedFileParser] userChooseFolderDialog];
 }
 
+-(IBAction)importPhotosButtonPressed:(id)sender
+{
+    [[PIXFileManager sharedInstance] importPhotosToAlbum:nil allowDirectories:YES];
+}
+
 -(BOOL)verifyActionForItemsWithTitle:(NSString *)aTitle message:(NSString *)warningMessage
 {
     if (NSRunAlertPanel(aTitle, warningMessage, @"OK", @"Cancel", nil) == NSAlertDefaultReturn) {
