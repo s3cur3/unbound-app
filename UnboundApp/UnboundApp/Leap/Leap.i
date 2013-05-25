@@ -207,6 +207,7 @@
 
 %constattrib( Leap::Controller, bool, isConnected );
 %constattrib( Leap::Controller, bool, hasFocus );
+%constattrib( Leap::Controller, Controller::PolicyFlag, policyFlags );
 %leapattrib( Leap::Controller, Config, config );
 %leapattrib( Leap::Controller, ScreenList, locatedScreens );
 %leapattrib( Leap::Controller, ScreenList, calibratedScreens );

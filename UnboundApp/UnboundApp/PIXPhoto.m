@@ -1260,7 +1260,6 @@ const CGFloat kThumbnailSize = 370.0f;
         //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self.album];
         
         PIXAlbum * analbum = self.stackPhotoAlbum;
-        analbum.path; // make it unfault itself
         
         [[NSNotificationCenter defaultCenter] postNotificationName:AlbumStackDidChangeNotification object:analbum];
 

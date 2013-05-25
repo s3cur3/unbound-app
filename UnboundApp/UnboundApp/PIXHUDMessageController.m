@@ -116,6 +116,8 @@
 
 -(void)presentInParentWindow:(NSWindow *)parentWindow forTimeInterval:(NSTimeInterval)timeInterval
 {
+    if(parentWindow && ![parentWindow isVisible]) return; // don't show if the parent window is hidden
+    
     if(parentWindow)
     {        
         [parentWindow addChildWindow:self.window ordered:NSWindowAbove];

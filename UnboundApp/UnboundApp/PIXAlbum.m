@@ -38,7 +38,7 @@ static NSString *const kItemsKey = @"photos";
     [fetchRequest setFetchBatchSize:100];
     
     // prefetch stack photos. These are used in the album-level views
-    //[fetchRequest setRelationshipKeyPathsForPrefetching:@[@"stackPhotos"]];
+    [fetchRequest setRelationshipKeyPathsForPrefetching:@[@"stackPhotos"]];
     
     [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"path != NULL"]];
     

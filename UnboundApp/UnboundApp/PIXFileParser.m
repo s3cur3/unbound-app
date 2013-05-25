@@ -1238,6 +1238,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
     
     if([[openPanel URLs] count] == 1)
     {
+        [[PIXAppDelegate sharedAppDelegate] showMainWindow:nil];
+        
         // use this flag so the deep scan will restart if the app crashes half way through
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDeepScanIncompleteKey];
         
@@ -1261,6 +1263,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
 
 -(void)userChoseDropboxPhotosFolder
 {
+    [[PIXAppDelegate sharedAppDelegate] showMainWindow:nil];
+    
     // use this flag so the deep scan will restart if the app crashes half way through
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDeepScanIncompleteKey];
     

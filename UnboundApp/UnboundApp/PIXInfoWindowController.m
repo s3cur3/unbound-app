@@ -72,7 +72,6 @@
 {
     if([[PIXFileParser sharedFileParser] userChooseFolderDialog])
     {
-        [[PIXAppDelegate sharedAppDelegate] showMainWindow:nil];
         [self close];
     }
 }

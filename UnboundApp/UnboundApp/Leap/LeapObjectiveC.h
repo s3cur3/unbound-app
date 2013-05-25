@@ -566,6 +566,14 @@ typedef enum LeapGestureState {
     LEAP_GESTURE_STATE_STOP = 3, /**< The gesture has completed or stopped. */
 } LeapGestureState;
 
+/**
+ * The supported controller policies.
+ */
+typedef enum LeapPolicyFlag {
+    LEAP_POLICY_DEFAULT = 0,                 /**< The default policy. */
+    LEAP_POLICY_BACKGROUND_FRAMES = (1 << 0) /**< Receive background frames. */
+} LeapPolicyFlag;
+
 //////////////////////////////////////////////////////////////////////////
 //POINTABLE
 @class LeapFrame;
@@ -1117,21 +1125,21 @@ typedef enum LeapGestureState {
  * The member of the list that is farthest to the left within the standard
  * Leap frame of reference (i.e has the smallest X coordinate).
  * 
- * Returns an invalid object if the NSArray is empty.
+ * Returns nil if the NSArray is empty.
  */
 - (id)leftmost;
 /**
  * The member of the list that is farthest to the right within the standard
  * Leap frame of reference (i.e has the largest X coordinate).
  *
- * Returns an invalid object if the NSArray is empty.
+ * Returns nil if the NSArray is empty.
  */
 - (id)rightmost;
 /**
  * The member of the list that is farthest to the front within the standard
  * Leap frame of reference (i.e has the smallest Z coordinate).
  *
- * Returns an invalid object if the NSArray is empty.
+ * Returns nil if the NSArray is empty.
  */
 - (id)frontmost;
 
@@ -1614,15 +1622,15 @@ typedef enum LeapGestureState {
  * Key string | Value type | Default value | Units
  * -----------|------------|---------------|------
  * Gesture.Circle.MinRadius | float | 5.0 | mm
- * Gesture.Circle.MinArc | float | 1.5 | radians
+ * Gesture.Circle.MinArc | float | 1.5*pi | radians
  * Gesture.Swipe.MinLength | float | 150 | mm
  * Gesture.Swipe.MinVelocity | float | 1000 | mm/s
  * Gesture.KeyTap.MinDownVelocity | float | 50 | mm/s
  * Gesture.KeyTap.HistorySeconds | float | 0.1 | s
- * Gesture.KeyTap.MinDistance | float | 3.0 | mm
+ * Gesture.KeyTap.MinDistance | float | 5.0 | mm
  * Gesture.ScreenTap.MinForwardVelocity  | float | 50 | mm/s
  * Gesture.ScreenTap.HistorySeconds | float | 0.1 | s
- * Gesture.ScreenTap.MinDistance | float | 5.0 | mm
+ * Gesture.ScreenTap.MinDistance | float | 3.0 | mm
  */
 @interface LeapGesture : NSObject
 /**
@@ -1864,7 +1872,7 @@ typedef enum LeapGestureState {
  * Key string | Value type | Default value | Units
  * -----------|------------|---------------|------
  * Gesture.Circle.MinRadius | float | 5.0 | mm
- * Gesture.Circle.MinArc | float | 1.5 | radians
+ * Gesture.Circle.MinArc | float | 1.5*pi | radians
  *
  * The following example demonstrates how to set the circle configuration
  * parameters:
@@ -1953,7 +1961,7 @@ typedef enum LeapGestureState {
  * -----------|------------|---------------|------
  * Gesture.ScreenTap.MinForwardVelocity  | float | 50 | mm/s
  * Gesture.ScreenTap.HistorySeconds | float | 0.1 | s
- * Gesture.ScreenTap.MinDistance | float | 5.0 | mm
+ * Gesture.ScreenTap.MinDistance | float | 3.0 | mm
  *
  * The following example demonstrates how to set the screen tap configuration
  * parameters:
@@ -2023,7 +2031,7 @@ typedef enum LeapGestureState {
  * -----------|------------|---------------|------
  * Gesture.KeyTap.MinDownVelocity | float | 50 | mm/s
  * Gesture.KeyTap.HistorySeconds | float | 0.1 | s
- * Gesture.KeyTap.MinDistance | float | 3.0 | mm
+ * Gesture.KeyTap.MinDistance | float | 5.0 | mm
  *
  * The following example demonstrates how to set the key tap configuration
  * parameters:
@@ -2434,15 +2442,19 @@ typedef enum {
  * Key string | Value type | Default value | Units
  * -----------|------------|---------------|------
  * Gesture.Circle.MinRadius | float | 5.0 | mm
- * Gesture.Circle.MinArc | float | 1.5 | radians
+ * Gesture.Circle.MinArc | float | 1.5*pi | radians
  * Gesture.Swipe.MinLength | float | 150 | mm
  * Gesture.Swipe.MinVelocity | float | 1000 | mm/s
  * Gesture.KeyTap.MinDownVelocity | float | 50 | mm/s
  * Gesture.KeyTap.HistorySeconds | float | 0.1 | s
- * Gesture.KeyTap.MinDistance | float | 3.0 | mm
+ * Gesture.KeyTap.MinDistance | float | 5.0 | mm
  * Gesture.ScreenTap.MinForwardVelocity  | float | 50 | mm/s
  * Gesture.ScreenTap.HistorySeconds | float | 0.1 | s
- * Gesture.ScreenTap.MinDistance | float | 5.0 | mm
+ * Gesture.ScreenTap.MinDistance | float | 3.0 | mm
+ *
+ * After setting a configuration value, you must call the <[Config save]> method
+ * to commit the changes. The configuration value changes are not persistent;
+ * your application needs to set the values everytime it runs.
  *
  * @see <LeapCircleGesture>
  * @see <LeapKeyTapGesture>
@@ -2495,9 +2507,10 @@ typedef enum {
 /** 
  * Saves the current state of the config.
  *
- * Call <[LeapConfig save:]> after making a set of configurtation changes. The
- * <[LeapConfig save:]> function transfers the configuration changes to the Leap
- * application.
+ * Call [LeapConfig save:] after making a set of configuration changes. The
+ * [LeapConfig save:] function transfers the configuration changes to the Leap
+ * application. The configuration value changes are not persistent; your
+ * application needs to set the values everytime it runs.
  *
  * @returns TRUE on success, NO on failure.
  */
@@ -2588,6 +2601,58 @@ typedef enum {
  * @param listener An object adopting the <LeapListener> protocol.
  */
 - (id)initWithListener:(id)listener;
+/**
+ * Gets the active policy settings.
+ *
+ * Use this function to determine the current policy state.
+ * Keep in mind that setting a policy flag is asynchronous, so changes are
+ * not effective immediately after calling <[LeapController setPolicyFlag]>. In addition, a
+ * policy request can be declined by the user. You should always set the
+ * policy flags required by your application at startup and check that the
+ * policy change request was successful after an appropriate interval.
+ *
+ * If the controller object is not connected to the Leap, then the default
+ * policy state is returned.
+ *
+ * @returns The current policy flags.
+ */
+- (LeapPolicyFlag)policyFlags;
+/**
+ * Requests a change in policy.
+ *
+ * A request to change a policy is subject to user approval and a policy
+ * can be changed by the user at any time (using the Leap settings window).
+ * The desired policy flags must be set every time an application runs.
+ *
+ * Policy changes are completed asynchronously and, because they are subject
+ * to user approval, may not complete successfully. Call
+ * <[LeapController policyFlags]> after a suitable interval to test whether
+ * the change was accepted.
+ *
+ * Currently, the background frames policy is the only policy supported.
+ * The background frames policy determines whether an application
+ * receives frames of tracking data while in the background. By
+ * default, the Leap only sends tracking data to the foreground application.
+ * Only applications that need this ability should request the background
+ * frames policy.
+ *
+ * At this time, you can use the Leap applications Settings window to
+ * globally enable or disable the background frames policy. However,
+ * each application that needs tracking data while in the background
+ * must also set the policy flag using this function.
+ *
+ * This function can be called before the LeapController object is connected,
+ * but the request will be sent to the Leap after the controller connects.
+ *
+ * @param flags A PolicyFlag value indicating the policies to request. Must be 
+ * a member of the LeapPolicyFlags enumeration:
+ * 
+ * * LEAP_POLICY_DEFAULT -- restore the default policy configuration for this 
+ * application (do not receive frames while in the background).
+ * * LEAP_POLICY_BACKGROUND_FRAMES -- the application should receive frames of
+ * motion tracking data while in the background.
+ */
+- (void)setPolicyFlags:(LeapPolicyFlag)flags;
 /**
  * Adds a listener to this LeapController.
  *

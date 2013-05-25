@@ -1051,7 +1051,7 @@
 -(void)albumsChanged:(NSNotification *)note
 {
     // retain the old set of albums so they won't be released on change
-    NSArray * oldAlbums = nil;//self.albums;
+    NSArray * oldAlbums = self.albums;
     
     // set the new one
     self.albums = [PIXAlbum sortedAlbums];
@@ -1062,7 +1062,7 @@
     [self updateSearch];
     
     // this does nothing and is just to keep the old albums retained during the execution of this method
-    //[oldAlbums count];
+    [oldAlbums count];
     
     
     if([self.albums count] == 0 && ![[NSUserDefaults standardUserDefaults] boolForKey:kDeepScanIncompleteKey])

@@ -570,9 +570,9 @@
             }
             
             // this will initiate a grab
-            else if(avgPalmPos.z < 100 // only start grab if it's well into the view area
+            else if(avgPalmPos.z < 150 // only start grab if it's well into the view area
                     //&& [[hands lastObject] sphereRadius] <= 100.0
-                    && [[[hands lastObject] palmVelocity] magnitude] < 100.0)
+                    && [[[hands lastObject] palmVelocity] magnitude] < 250.0)
             {
                 self.smoothedPalmDepth = -avgPalmPos.z;
                 self.smoothedNormalizedPalmPoint = normalizedPoint;
@@ -590,6 +590,11 @@
                         break; // do nothing else after we hit the first responder
                     }
                 }
+            }
+            
+            else
+            {
+                DLog(@"Ignored grab with postion: %f and velocity %f", avgPalmPos.z, [[[hands lastObject] palmVelocity] magnitude] );
             }
             
         }

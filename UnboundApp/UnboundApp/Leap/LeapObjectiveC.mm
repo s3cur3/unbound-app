@@ -1711,6 +1711,16 @@ private:
     return self;
 }
 
+- (LeapPolicyFlag)policyFlags
+{
+    return (LeapPolicyFlag)_controller->policyFlags();
+}
+
+- (void)setPolicyFlags:(LeapPolicyFlag)flags
+{
+    _controller->setPolicyFlags((Leap::Controller::PolicyFlag)flags);
+}
+ 
 - (BOOL)addListener:(id<LeapListener>)listener
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
@@ -1868,7 +1878,9 @@ private:
 
 - (id)leftmost
 {
-    NSAssert([self count] > 0, @"Cannot use this Objective-C category on an empty NSArray");
+    if ([self count] == 0) {
+        return nil;
+    }
     float minX = FLT_MAX;
     NSUInteger minPosition = NSUIntegerMax;
     for (NSUInteger i = 0; i < [self count]; i++) {
@@ -1886,7 +1898,9 @@ private:
 
 - (id)rightmost
 {
-    NSAssert([self count] > 0, @"Cannot use this Objective-C category on an empty NSArray");
+    if ([self count] == 0) {
+        return nil;
+    }
     float maxX = -FLT_MAX;
     NSUInteger maxPosition = NSUIntegerMax;
     for (NSUInteger i = 0; i < [self count]; i++) {
@@ -1894,7 +1908,6 @@ private:
         float x = (([obj isKindOfClass:[LeapHand class]] == YES) ?
                    [[obj palmPosition] x] :
                    [[obj tipPosition ] x]);
-        [[obj tipPosition ] x];
         if (x > maxX) {
             maxPosition = i;
             maxX = x;
@@ -1905,7 +1918,9 @@ private:
 
 - (id)frontmost
 {
-    NSAssert([self count] > 0, @"Cannot use this Objective-C category on an empty NSArray");
+    if ([self count] == 0) {
+        return nil;
+    }
     float minZ = FLT_MAX;
     NSUInteger minPosition = NSUIntegerMax;
     for (NSUInteger i = 0; i < [self count]; i++) {

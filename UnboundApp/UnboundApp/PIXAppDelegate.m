@@ -470,9 +470,35 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
      [[NSApplication sharedApplication] presentError:error];
      return nil;
      }*/
+    
+    
+    NSMutableDictionary *options = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                    [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
+                                    [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption,
+                                    nil];
+    
+    long launchCount = [[NSUserDefaults standardUserDefaults] integerForKey:@"PIX_PersistantStoreLaunchCount"];
+    launchCount ++;
+    
+    [[NSUserDefaults standardUserDefaults] setInteger:launchCount forKey:@"PIX_PersistantStoreLaunchCount"];
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    // only analyze every 10 launches
+    if(launchCount % 10 == 0)
+    {
+        [options setObject:[NSNumber numberWithBool:YES] forKey:NSSQLiteAnalyzeOption];
+    }
+    
+    // only vaccuum every 20 launches (offset this from analyze so they don't happen on the same launch.
+    if(launchCount % 20 == 5)
+    {
+        [options setObject:[NSNumber numberWithBool:YES] forKey:NSSQLiteManualVacuumOption];
+    }
+    
     NSURL *url = [applicationFilesDirectory URLByAppendingPathComponent:@"UnboundApp.sqlite"];
     NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mom];
-    if (![coordinator addPersistentStoreWithType:NSSQLiteStoreType/*NSXMLStoreType*/ configuration:nil URL:url options:nil error:&error]) {
+    if (![coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:options error:&error]) {
         /*
 		 Replace this implementation with code to handle the error appropriately.
 		 
@@ -494,22 +520,24 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
         }
         
         else {
-            if (![coordinator addPersistentStoreWithType:NSSQLiteStoreType/*NSXMLStoreType*/ configuration:nil URL:url options:nil error:&error])
+            if (![coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:options error:&error])
             {
                 NSLog(@"Failed to create/open database file: %@", url);
                 [[NSApplication sharedApplication] presentError:error];
             }
         }
         
-        // also delete the thumbnails
-        [self clearThumbSorageDirectory];
+        dispatch_async(dispatch_get_main_queue(), ^{
         
-        [[PIXFileParser sharedFileParser] scanFullDirectory];
-        
-        
-        // and rescan the root directories
-        
+            // also delete the thumbnails
+            [self clearThumbSorageDirectory];
+            
+            // and rescan the root directories
+            [[PIXFileParser sharedFileParser] scanFullDirectory];
+            
+        });
     }
+    
     _persistentStoreCoordinator = coordinator;
     
     return _persistentStoreCoordinator;
@@ -548,7 +576,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (!coordinator) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setValue:@"Failed to initialize the store" forKey:NSLocalizedDescriptionKey];
+        [dict setValue:@"Failed to initialize the database" forKey:NSLocalizedDescriptionKey];
         [dict setValue:@"There was an error building up the data file." forKey:NSLocalizedFailureReasonErrorKey];
         NSError *error = [NSError errorWithDomain:@"YOUR_ERROR_DOMAIN" code:9999 userInfo:dict];
         [[NSApplication sharedApplication] presentError:error];
