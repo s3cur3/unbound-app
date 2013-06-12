@@ -187,6 +187,8 @@ static void ArchDirectoryEventStreamCallback(
         context.version = 0;
         context.info = (__bridge void*)self;
         
+    // TODO: TRY: kFSEventStreamCreateFlagFileEvents
+        
         FSEventStreamCreateFlags flags = kFSEventStreamCreateFlagWatchRoot | kFSEventStreamCreateFlagUseCFTypes;
         CFTimeInterval latency = 5.0;
     

@@ -347,6 +347,10 @@
 		8C9AA2BF1700A5C100D989CA /* PIXSlideshowOptonsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C9AA2BD1700A5C000D989CA /* PIXSlideshowOptonsViewController.xib */; };
 		8CA459D8174E7FD9002BF431 /* PIXProgressWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7208991749B1720074705D /* PIXProgressWindowController.m */; };
 		8CA459D9174E7FD9002BF431 /* PIXProgressWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C72089A1749B1720074705D /* PIXProgressWindowController.xib */; };
+		8CA954601756A5AD0016AE23 /* leapnotconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CA9545E1756A5AD0016AE23 /* leapnotconnected.png */; };
+		8CA954611756A5AD0016AE23 /* leapnotconnected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CA9545F1756A5AD0016AE23 /* leapnotconnected@2x.png */; };
+		8CA954621756A5B50016AE23 /* leapnotconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CA9545E1756A5AD0016AE23 /* leapnotconnected.png */; };
+		8CA954631756A5B50016AE23 /* leapnotconnected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CA9545F1756A5AD0016AE23 /* leapnotconnected@2x.png */; };
 		8CC94925171C92E900EC1431 /* success.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC94923171C92E900EC1431 /* success.png */; };
 		8CC94926171C92E900EC1431 /* success@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC94924171C92E900EC1431 /* success@2x.png */; };
 		8CC94928171CDC5E00EC1431 /* softtap.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8CC94927171CDC5E00EC1431 /* softtap.wav */; };
@@ -663,6 +667,8 @@
 		8C9AA2BC1700A5C000D989CA /* PIXSlideshowOptonsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSlideshowOptonsViewController.m; sourceTree = "<group>"; };
 		8C9AA2BD1700A5C000D989CA /* PIXSlideshowOptonsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXSlideshowOptonsViewController.xib; sourceTree = "<group>"; };
 		8CA459CF174D68A1002BF431 /* PIXAccount.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PIXAccount.h; sourceTree = "<group>"; };
+		8CA9545E1756A5AD0016AE23 /* leapnotconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leapnotconnected.png; sourceTree = "<group>"; };
+		8CA9545F1756A5AD0016AE23 /* leapnotconnected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leapnotconnected@2x.png"; sourceTree = "<group>"; };
 		8CC94923171C92E900EC1431 /* success.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = success.png; sourceTree = "<group>"; };
 		8CC94924171C92E900EC1431 /* success@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success@2x.png"; sourceTree = "<group>"; };
 		8CC94927171CDC5E00EC1431 /* softtap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = softtap.wav; path = "../Leap Tutorial Videos/softtap.wav"; sourceTree = "<group>"; };
@@ -877,6 +883,8 @@
 				8C68247916F8089400245F09 /* buttongrid_emaillink.png */,
 				8C68247A16F8089400245F09 /* buttongrid_emaillink@2x.png */,
 				8C68247B16F8089400245F09 /* buttongrid_facebook.png */,
+				8CA9545E1756A5AD0016AE23 /* leapnotconnected.png */,
+				8CA9545F1756A5AD0016AE23 /* leapnotconnected@2x.png */,
 				8C68247C16F8089400245F09 /* buttongrid_facebook@2x.png */,
 				8C68247D16F8089400245F09 /* buttongrid_print.png */,
 				8C68247E16F8089400245F09 /* buttongrid_print@2x.png */,
@@ -1424,6 +1432,8 @@
 				1D23CC1C172095E000C7FF70 /* Shading.tiff in Resources */,
 				8C43CCF117385A9700A4395F /* UnboundTrial.entitlements in Resources */,
 				8C72089C1749B1720074705D /* PIXProgressWindowController.xib in Resources */,
+				8CA954601756A5AD0016AE23 /* leapnotconnected.png in Resources */,
+				8CA954611756A5AD0016AE23 /* leapnotconnected@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1530,6 +1540,8 @@
 				8C28611417308566009A0B35 /* Mask.jpg in Resources */,
 				8C28611517308566009A0B35 /* Shading.tiff in Resources */,
 				8CA459D9174E7FD9002BF431 /* PIXProgressWindowController.xib in Resources */,
+				8CA954621756A5B50016AE23 /* leapnotconnected.png in Resources */,
+				8CA954631756A5B50016AE23 /* leapnotconnected@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,6 +10,7 @@
 #import "PIXPhoto.h"
 #import "PIXAlbum.h"
 #import "PIXAppDelegate.h"
+#import "PIXMainWindowController.h"
 //#import "PIXAppDelegate+CoreDataUtils.h"
 #import "MakeThumbnailOperation.h"
 #import "PIXDefines.h"
@@ -306,10 +307,11 @@ const CGFloat kThumbnailSize = 370.0f;
                 return;
             }
             
-            //[image setCacheMode:NSImageCacheAlways];
+            [image setCacheMode:NSImageCacheNever];
             
-            [image lockFocus]; // call this to make sure the image loads ?
-            [image unlockFocus];
+            // use this to 'warm up' the image and get it loaded in the bg and ready for display
+            NSRect windowRect = [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] frame];
+            [image CGImageForProposedRect:&windowRect context:[NSGraphicsContext currentContext] hints:nil];
             
             [weakSelf performSelectorOnMainThread:@selector(mainThreadComputeFullsizePreviewFinished:) withObject:image waitUntilDone:YES];
             
@@ -688,6 +690,10 @@ const CGFloat kThumbnailSize = 370.0f;
                 
                 if(thumb != nil)
                 {
+                    
+                    // warm up the thumb nsimage so it draws faster
+                    [thumb CGImageForProposedRect:nil context:[NSGraphicsContext currentContext] hints:nil];
+                    
                     // set the thumbnail in memory
                     weakSelf.thumbnailImage = thumb;
                     
@@ -860,6 +866,9 @@ const CGFloat kThumbnailSize = 370.0f;
             
             if(image)
             {
+                // warm up the image file so it draws faster
+                [image CGImageForProposedRect:nil context:[NSGraphicsContext currentContext] hints:nil];
+                
                 // save the thubm to memory
                 [weakSelf setThumbnailImage:image];
                 
@@ -907,6 +916,10 @@ const CGFloat kThumbnailSize = 370.0f;
                     // tell the main thread we're done
                     if(image)
                     {
+                        
+                        // warm up the image file so it draws faster
+                        [image CGImageForProposedRect:nil context:[NSGraphicsContext currentContext] hints:nil];
+
                         // save the thumb to memory
                         [weakSelf setThumbnailImage:image];
                         

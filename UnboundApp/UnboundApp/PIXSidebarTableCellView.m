@@ -27,6 +27,7 @@
     //[self.imageView setImageFrameStyle:NSImagef:]
     [self.detailTextLabel setStringValue:@"Loading..."];
     
+    
     //[self setWantsLayer:NO];
     
     
