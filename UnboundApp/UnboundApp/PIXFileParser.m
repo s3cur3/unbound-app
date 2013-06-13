@@ -30,9 +30,12 @@
 @property float fullScannProgressCurrent;
 @property float fullScannProgressTotal;
 
+@property (strong) NSManagedObjectContext * parseContext;
+
 @end
 
 @implementation PIXFileParser
+
 
 
 -(void)incrementWorking
@@ -253,13 +256,14 @@ NSDictionary * dictionaryForURL(NSURL * url)
 // changedURL: the URL of the actual directory that changed. This could be a subdirectory.
 // historical: if YES, the event occured sometime before the observer was added.  If NO, it occurred just now.
 // resumeToken: the resume token to save if you want to pick back up from this event.
-- (void)observedDirectory:(NSURL*)observedURL childrenAtURLDidChange:(NSURL*)changedURL historical:(BOOL)historical resumeToken:(ArchDirectoryObservationResumeToken)resumeToken
-{
+- (void)observedDirectory:(NSURL*)observedURL childrenAtURLDidChange:(NSURL*)changedURL historical:(BOOL)historical resumeToken:(ArchDirectoryObservationResumeToken)resumeToken flags:(FSEventStreamEventFlags)flags;
+{    
     // update the resume token
     [self updateResumeToken:resumeToken forObservedDirectory:observedURL];
     
+    if(![self isURLInObservedDirectories:changedURL]) return; // if this item isn't supposed to be observed do nothing
     
-    // if the path is in a package or inside a package then don't traverse
+    // if the path is inside a package then don't traverse
     
     NSURL * subURL = changedURL;
     
@@ -281,20 +285,59 @@ NSDictionary * dictionaryForURL(NSURL * url)
         
     }
     
+
     
-    // do a shallow, semi-recursive scan of the directory
     
-    NSString * changedPath = changedURL.path;
-    
-    if (changedPath != nil && [self.loadingAlbumsDict objectForKey:changedPath]==nil) {
+    // if the item was renamed (both dir or file) then just scan the dir above it non-recursively    
+    if(flags & kFSEventStreamEventFlagItemRenamed)
+    {
+        subURL = [changedURL URLByDeletingLastPathComponent];
+        if([self isURLInObservedDirectories:subURL])
+        {
+            [self scanURLForChanges:subURL withRecursion:PIXFileParserRecursionNone];
+        }
         
-        //DLog(@"** Scanning file system at: %@", changedPath);
+        // if it's a dir we should also scan inside it
+        if(flags & kFSEventStreamEventFlagItemIsDir)
+        {
+            [self scanURLForChanges:changedURL withRecursion:PIXFileParserRecursionFull];
+        }
         
-        [self.loadingAlbumsDict setObject:changedURL forKey:changedPath];
-    
-        [self scanURLForChanges:changedURL withRecursion:PIXFileParserRecursionSemi];
+        return;
     }
+    
+    // if this is a file then handle deletions, creations and modifications
+    
+    if(flags & kFSEventStreamEventFlagItemIsFile)
+    {
+        if(flags & kFSEventStreamEventFlagItemRemoved)
+        {
+            [self deleteURL:changedURL];
+        }
+        
+        else
+        {
+            [self scanFile:changedURL];
+        }
+    }
+    
+    
+    
+    // do a fully recursive scan of the directory (this is a notification the requires subdirs)
+    if(flags & kFSEventStreamEventFlagMustScanSubDirs)
+    {
+        [self scanURLForChanges:changedURL withRecursion:PIXFileParserRecursionFull];
+    }
+    
+    // do a non recursive scan of the directory (this isn't a notification the requires subdirs)
+    else
+    {
+        [self scanURLForChanges:changedURL withRecursion:PIXFileParserRecursionNone];
+    }
+    
 }
+
+
 
 -(BOOL)isURLInObservedDirectories:(NSURL *)subURL
 {
@@ -345,6 +388,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
 
 - (void)scanFullDirectory
 {
+    self.parseContext = nil;
+    
     [self incrementWorking];
     
     self.fullScanProgress = 0.0;
@@ -713,6 +758,54 @@ NSDictionary * dictionaryForURL(NSURL * url)
 }
 
 
+// this is a convenience method to parse a single file
+-(void)scanFile:(NSURL *)fileURL
+{
+    // add the unbound file of the main directory if it exists
+    NSDictionary * info = dictionaryForURL(fileURL);
+    
+    // if this is a photo then parse it
+    if(info != nil)
+    {
+        // parse a single photo, no need for  a deletion block
+        [self parsePhotos:@[info] withDeletionBlock:^(NSManagedObjectContext *context) { } andGroup:nil];
+    }
+}
+
+// this will delete a photo or directory from the db if it exists
+-(void)deleteURL:(NSURL *)fileURL
+{
+    
+    NSNumber * isDirectoryValue;
+    [fileURL getResourceValue:&isDirectoryValue forKey:NSURLIsDirectoryKey error:nil];
+    
+    if([isDirectoryValue boolValue])
+    {
+        NSPredicate * predicate = [NSPredicate predicateWithFormat:@"path CONTAINS %@", fileURL.path, nil];
+
+        NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] threadSafeNonChildManagedObjectContext];
+        // be sure to delete albums first so there are less photos to iterate through in the second delete
+        if (![self deleteObjectsForEntityName:@"PIXAlbum" inContext:context withPredicate:predicate]) {
+            DLog(@"There was a problem trying to delete old objects");
+        }
+        
+        [context save:nil];
+    }
+    
+    else
+    {
+        NSPredicate * predicate = [NSPredicate predicateWithFormat:@"path == %@", fileURL.path, nil];
+        
+        NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] threadSafeNonChildManagedObjectContext];
+        // be sure to delete albums first so there are less photos to iterate through in the second delete
+        if (![self deleteObjectsForEntityName:@"PIXPhoto" inContext:context withPredicate:predicate]) {
+            DLog(@"There was a problem trying to delete old objects");
+        }
+        
+        [context save:nil];
+    }
+
+}
 
 
 // this will fetch albums matching the nstring paths in the paths array
@@ -743,6 +836,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
 #pragma mark - Methods for Parsing into Core Data
 
 
+
 -(void)parsePhotos:(NSArray *)photos withDeletionBlock:(void(^)(NSManagedObjectContext * context))deletionBlock andGroup:(dispatch_group_t)dispatchGroup
 {
     self.fullScanProgress = (float)self.fullScannProgressCurrent / (float)self.fullScannProgressTotal;
@@ -758,7 +852,12 @@ NSDictionary * dictionaryForURL(NSURL * url)
     //dispatch_async([self sharedParsingQueue], ^(void) {
         
         // create a thread-safe context (may want to make this a child context down the road)
-        NSManagedObjectContext *context = [[PIXAppDelegate sharedAppDelegate] threadSafeNonChildManagedObjectContext];
+        if(self.parseContext == nil)
+        {
+            self.parseContext = [[PIXAppDelegate sharedAppDelegate] threadSafeNonChildManagedObjectContext];
+        }
+        
+        NSManagedObjectContext *context = self.parseContext;
         
         
         // lastalbum will be used to cache the album fetch when looping through photos
@@ -921,12 +1020,12 @@ NSDictionary * dictionaryForURL(NSURL * url)
     
     if(dispatchGroup == NULL)
     {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), dispatchBlock);
+        dispatch_async([self sharedParsingQueue], dispatchBlock);
     }
     
     else
     {
-        dispatch_group_async(dispatchGroup, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), dispatchBlock);
+        dispatch_group_async(dispatchGroup, [self sharedParsingQueue], dispatchBlock);
     }
     
 }

@@ -508,10 +508,10 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
      }*/
     
     
-    NSMutableDictionary *options = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                    [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
-                                    [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption,
-                                    nil];
+    NSMutableDictionary *options = [@{NSMigratePersistentStoresAutomaticallyOption : [NSNumber numberWithBool:YES],
+                                    NSInferMappingModelAutomaticallyOption : [NSNumber numberWithBool:YES],
+                                    NSSQLitePragmasOption : @{@"journal_mode": @"WAL"}} mutableCopy];
+
     
     long launchCount = [[NSUserDefaults standardUserDefaults] integerForKey:@"PIX_PersistantStoreLaunchCount"];
     launchCount ++;

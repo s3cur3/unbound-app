@@ -35,7 +35,9 @@ typedef enum {
 // changedURL: the URL of the actual directory that changed. This could be a subdirectory.
 // historical: if YES, the event occured sometime before the observer was added.  If NO, it occurred just now.
 // resumeToken: the resume token to save if you want to pick back up from this event.
-- (void)observedDirectory:(NSURL*)observedURL childrenAtURLDidChange:(NSURL*)changedURL historical:(BOOL)historical resumeToken:(ArchDirectoryObservationResumeToken)resumeToken;
+- (void)observedDirectory:(NSURL*)observedURL childrenAtURLDidChange:(NSURL*)changedURL historical:(BOOL)historical resumeToken:(ArchDirectoryObservationResumeToken)resumeToken flags:(FSEventStreamEventFlags)flags;
+
+
 
 // At least one file somewhere inside--but not necessarily directly descended from--changedURL has changed.  You should examine the directory at changedURL and all subdirectories to see which files changed.
 // observedURL: the URL of the dorectory you're observing.

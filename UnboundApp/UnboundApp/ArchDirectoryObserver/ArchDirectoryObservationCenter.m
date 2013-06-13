@@ -168,8 +168,9 @@ static void ArchDirectoryEventStreamCallback(
         else if(thisEventFlags & kFSEventStreamEventFlagRootChanged) {
             [self.observer observedDirectory:self.URL ancestorAtURLDidChange:thisEventURL historical:self.historical resumeToken:thisResumeToken];
         }
+    
         else {
-            [self.observer observedDirectory:self.URL childrenAtURLDidChange:thisEventURL historical:self.historical resumeToken:thisResumeToken];
+            [self.observer observedDirectory:self.URL childrenAtURLDidChange:thisEventURL historical:self.historical resumeToken:thisResumeToken flags:thisEventFlags];
         }
     }
 }
@@ -189,7 +190,7 @@ static void ArchDirectoryEventStreamCallback(
         
     // TODO: TRY: kFSEventStreamCreateFlagFileEvents
         
-        FSEventStreamCreateFlags flags = kFSEventStreamCreateFlagWatchRoot | kFSEventStreamCreateFlagUseCFTypes;
+        FSEventStreamCreateFlags flags = kFSEventStreamCreateFlagWatchRoot | kFSEventStreamCreateFlagUseCFTypes | kFSEventStreamCreateFlagFileEvents;
         CFTimeInterval latency = 5.0;
     
         if(ignoresSelf) {
