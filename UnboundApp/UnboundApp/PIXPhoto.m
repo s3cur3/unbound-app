@@ -621,8 +621,10 @@ const CGFloat kThumbnailSize = 370.0f;
             if([[self sharedThumbnailLoadQueue].operations indexOfObject:self.fastThumbLoad] == NSNotFound)
             {
                 self.fastThumbLoad = nil;
-                [[PIXFileParser sharedFileParser] decrementWorking];
+                
             }
+            
+            [[PIXFileParser sharedFileParser] decrementWorking];
             
         }
         
@@ -635,8 +637,10 @@ const CGFloat kThumbnailSize = 370.0f;
             if([[self sharedThumbnailLoadQueue].operations indexOfObject:self.slowThumbLoad] == NSNotFound)
             {
                 self.slowThumbLoad = nil;
-                [[PIXFileParser sharedFileParser] decrementWorking];
+                
             }
+            
+            [[PIXFileParser sharedFileParser] decrementWorking];
               
         }
         
@@ -988,6 +992,7 @@ const CGFloat kThumbnailSize = 370.0f;
                 NSError * error = nil;
                 [threadSafeContext save:&error];
                 
+                // we've finished the fast load. decrement working
                 [[PIXFileParser sharedFileParser] decrementWorking];
                 
                 
@@ -1030,8 +1035,8 @@ const CGFloat kThumbnailSize = 370.0f;
             
             [[PIXFileParser sharedFileParser] incrementWorking];
             [self.slowThumbLoad setQueuePriority:NSOperationQueuePriorityLow];
-            
             [[self sharedThumbnailLoadQueue] addOperation:self.slowThumbLoad];
+            
             [[PIXFileParser sharedFileParser] decrementWorking];
         }
         

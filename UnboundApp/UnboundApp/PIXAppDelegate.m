@@ -748,7 +748,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 -(void)mergeContext:(NSNotification *)notification
 {
     NSManagedObjectContext *postingContext = [notification object];
-    if ([postingContext persistentStoreCoordinator] == [[self managedObjectContext] persistentStoreCoordinator] &&
+    if ([postingContext persistentStoreCoordinator] == [self persistentStoreCoordinator] &&
         postingContext.parentContext == nil &&
         postingContext != self.privateWriterContext) {
         // merge the changes
