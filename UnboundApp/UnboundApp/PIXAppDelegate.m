@@ -635,7 +635,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     // overwrite the database with updates from this context
     [_managedObjectContext setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
     
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mergeContext:) name:NSManagedObjectContextDidSaveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mergeContext:) name:NSManagedObjectContextDidSaveNotification object:nil];
     return _managedObjectContext;
 }
 
@@ -695,7 +695,31 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     [context setParentContext:self.managedObjectContext];
     
     // overwrite the database with updates from this context
-    //[context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
+    [context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
+    
+    return context;
+}
+
+-(NSManagedObjectContext *)threadSafeNonChildManagedObjectContext
+{
+    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
+    
+    //-------------------------------------------------------
+    //    Setting the undo manager to nil means that:
+    //
+    //    - You don’t waste effort recording undo actions for changes (such as insertions) that will not be undone;
+    //    - The undo manager doesn’t maintain strong references to changed objects and so prevent them from being deallocated
+    //-------------------------------------------------------
+    [context setUndoManager:nil];
+    
+    
+    //set it to the App Delegates persistant store coordinator
+    [context setPersistentStoreCoordinator:[self persistentStoreCoordinator]];
+    
+    //[context setParentContext:self.managedObjectContext];
+    
+    // overwrite the database with updates from this context
+    [context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
     
     return context;
 }
@@ -724,7 +748,9 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 -(void)mergeContext:(NSNotification *)notification
 {
     NSManagedObjectContext *postingContext = [notification object];
-    if ([postingContext persistentStoreCoordinator] == [[self managedObjectContext] persistentStoreCoordinator]) {
+    if ([postingContext persistentStoreCoordinator] == [[self managedObjectContext] persistentStoreCoordinator] &&
+        postingContext.parentContext == nil &&
+        postingContext != self.privateWriterContext) {
         // merge the changes
         [[self managedObjectContext] performSelectorOnMainThread:@selector(mergeChangesFromContextDidSaveNotification:) withObject:notification waitUntilDone:NO];
     }

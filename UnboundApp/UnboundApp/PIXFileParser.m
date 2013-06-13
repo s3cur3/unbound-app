@@ -720,7 +720,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
 {
     
     // create a thread-safe context (may want to make this a child context down the road)
-    NSManagedObjectContext *context = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];
+    NSManagedObjectContext *context = [[PIXAppDelegate sharedAppDelegate] threadSafeNonChildManagedObjectContext];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"PIXAlbum" inManagedObjectContext:context];
@@ -758,7 +758,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
     //dispatch_async([self sharedParsingQueue], ^(void) {
         
         // create a thread-safe context (may want to make this a child context down the road)
-        NSManagedObjectContext *context = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];
+        NSManagedObjectContext *context = [[PIXAppDelegate sharedAppDelegate] threadSafeNonChildManagedObjectContext];
         
         
         // lastalbum will be used to cache the album fetch when looping through photos

@@ -72,6 +72,8 @@
 
 -(NSManagedObjectContext *)threadSafeManagedObjectContext;
 
+-(NSManagedObjectContext *)threadSafeNonChildManagedObjectContext;
+
 // this will save the db to the disk in the background after a 1second delay.
 // If it is called again within one second it will cancel the last call and only save once
 // this should be used when a loop or when save could be called a bunch of times in quick succession

@@ -39,7 +39,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "814"
          endingLineNumber = "814"
-         landmarkName = "-loadFullsizeImage"
+         landmarkName = "-loadThumbnailImage"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -65,7 +65,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "728"
          endingLineNumber = "728"
-         landmarkName = "-loadFullsizeImage"
+         landmarkName = "-thumbnailImage"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -78,7 +78,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1238"
          endingLineNumber = "1238"
-         landmarkName = "-loadFullsizeImage"
+         landmarkName = "-clearFiles"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -91,7 +91,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "685"
          endingLineNumber = "685"
-         landmarkName = "-loadFullsizeImage"
+         landmarkName = "-thumbnailImage"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -104,7 +104,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "663"
          endingLineNumber = "663"
-         landmarkName = "-loadFullsizeImage"
+         landmarkName = "-thumbnailImage"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
