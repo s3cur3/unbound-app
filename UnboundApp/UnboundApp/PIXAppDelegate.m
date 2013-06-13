@@ -50,6 +50,7 @@
 
 
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize persistentStoreBackgroundCoordinator = _persistentStoreBackgroundCoordinator;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize privateWriterContext = _privateWriterContext;
@@ -579,6 +580,127 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     return _persistentStoreCoordinator;
 }
 
+// Returns the persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. (The directory for the store is created, if necessary.)
+- (NSPersistentStoreCoordinator *)persistentStoreBackgroundCoordinator
+{
+    if (_persistentStoreBackgroundCoordinator) {
+        return _persistentStoreBackgroundCoordinator;
+    }
+    
+    NSManagedObjectModel *mom = [self managedObjectModel];
+    if (!mom) {
+        NSLog(@"%@:%@ No model to generate a store from", [self class], NSStringFromSelector(_cmd));
+        return nil;
+    }
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSURL *applicationFilesDirectory = [self applicationFilesDirectory];
+    NSError *error = nil;
+    
+    NSDictionary *properties = [applicationFilesDirectory resourceValuesForKeys:@[NSURLIsDirectoryKey] error:&error];
+    
+    if (!properties) {
+        BOOL ok = NO;
+        if ([error code] == NSFileReadNoSuchFileError) {
+            ok = [fileManager createDirectoryAtPath:[applicationFilesDirectory path] withIntermediateDirectories:YES attributes:nil error:&error];
+        }
+        if (!ok) {
+            [[NSApplication sharedApplication] presentError:error];
+            return nil;
+        }
+    } else {
+        if (![properties[NSURLIsDirectoryKey] boolValue]) {
+            // Customize and localize this error.
+            NSString *failureDescription = [NSString stringWithFormat:@"Expected a folder to store application data, found a file (%@).", [applicationFilesDirectory path]];
+            
+            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+            [dict setValue:failureDescription forKey:NSLocalizedDescriptionKey];
+            error = [NSError errorWithDomain:@"com.pixite.unbound" code:101 userInfo:dict];
+            
+            [[NSApplication sharedApplication] presentError:error];
+            return nil;
+        }
+    }
+    
+    /*NSURL *url = [applicationFilesDirectory URLByAppendingPathComponent:@"UnboundCoreDataUtility.storedata"];
+     NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mom];
+     if (![coordinator addPersistentStoreWithType:NSXMLStoreType configuration:nil URL:url options:nil error:&error]) {
+     [[NSApplication sharedApplication] presentError:error];
+     return nil;
+     }*/
+    
+    
+    NSMutableDictionary *options = [@{NSMigratePersistentStoresAutomaticallyOption : [NSNumber numberWithBool:YES],
+                                    NSInferMappingModelAutomaticallyOption : [NSNumber numberWithBool:YES],
+                                    NSSQLitePragmasOption : @{@"journal_mode": @"WAL"}} mutableCopy];
+    
+    
+    long launchCount = [[NSUserDefaults standardUserDefaults] integerForKey:@"PIX_PersistantStoreLaunchCount"];
+    launchCount ++;
+    
+    [[NSUserDefaults standardUserDefaults] setInteger:launchCount forKey:@"PIX_PersistantStoreLaunchCount"];
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    // only analyze every 10 launches
+    if(launchCount % 10 == 0)
+    {
+        [options setObject:[NSNumber numberWithBool:YES] forKey:NSSQLiteAnalyzeOption];
+    }
+    
+    // only vaccuum every 20 launches (offset this from analyze so they don't happen on the same launch.
+    if(launchCount % 20 == 5)
+    {
+        [options setObject:[NSNumber numberWithBool:YES] forKey:NSSQLiteManualVacuumOption];
+    }
+    
+    NSURL *url = [applicationFilesDirectory URLByAppendingPathComponent:@"UnboundApp.sqlite"];
+    NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mom];
+    if (![coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:options error:&error]) {
+        /*
+		 Replace this implementation with code to handle the error appropriately.
+		 
+		 abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
+		 
+		 Typical reasons for an error here include:
+		 * The persistent store is not accessible
+		 * The schema for the persistent store is incompatible with current managed object model
+		 Check the error message to determine what the actual problem was.
+		 */
+        
+		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        
+        // if there was an unrecoverable error delete the db and reload
+		
+		NSFileManager *fileManager = [NSFileManager defaultManager];
+		if (![fileManager removeItemAtPath:url.path error:&error]) {
+            NSLog(@"Failed to remove database file: %@", url);
+        }
+        
+        else {
+            if (![coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:options error:&error])
+            {
+                NSLog(@"Failed to create/open database file: %@", url);
+                [[NSApplication sharedApplication] presentError:error];
+            }
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            // also delete the thumbnails
+            [self clearThumbSorageDirectory];
+            
+            // and rescan the root directories
+            [[PIXFileParser sharedFileParser] scanFullDirectory];
+            
+        });
+    }
+    
+    _persistentStoreBackgroundCoordinator = coordinator;
+    
+    return _persistentStoreBackgroundCoordinator;
+}
+
 -(NSURL *)thumbSorageDirectory
 {
     return [[self applicationFilesDirectory] URLByAppendingPathComponent:@"/thumbnails/"];
@@ -714,7 +836,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     
     
     //set it to the App Delegates persistant store coordinator
-    [context setPersistentStoreCoordinator:[self persistentStoreCoordinator]];
+    [context setPersistentStoreCoordinator:[self persistentStoreBackgroundCoordinator]];
     
     //[context setParentContext:self.managedObjectContext];
     
@@ -748,7 +870,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 -(void)mergeContext:(NSNotification *)notification
 {
     NSManagedObjectContext *postingContext = [notification object];
-    if ([postingContext persistentStoreCoordinator] == [self persistentStoreCoordinator] &&
+    if ([postingContext persistentStoreCoordinator] == [self persistentStoreBackgroundCoordinator] &&
         postingContext.parentContext == nil &&
         postingContext != self.privateWriterContext) {
         // merge the changes
