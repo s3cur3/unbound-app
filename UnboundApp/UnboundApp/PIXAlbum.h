@@ -30,7 +30,7 @@ typedef enum {
     
 } PIXPhotoSort;
 
-@interface PIXAlbum : NSManagedObject<PIXThumbnailLoadingDelegate, NSPasteboardWriting>
+@interface PIXAlbum : NSManagedObject<PIXThumbnailLoadingDelegate>
 {
     //    @private
     //    PIXPhoto *_mostRecentPhoto;

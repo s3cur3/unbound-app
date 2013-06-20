@@ -34,6 +34,8 @@ typedef enum {
 
 @property float fullScanProgress;
 
+@property (strong) NSManagedObjectContext * parseContext;
+
 /**
  * This is a singleton accessor to get the shared instance of this 
  * class. We should only ever use this instance

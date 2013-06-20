@@ -30,8 +30,6 @@
 @property float fullScannProgressCurrent;
 @property float fullScannProgressTotal;
 
-@property (strong) NSManagedObjectContext * parseContext;
-
 @end
 
 @implementation PIXFileParser
@@ -387,7 +385,10 @@ NSDictionary * dictionaryForURL(NSURL * url)
  */
 
 - (void)scanFullDirectory
-{
+{    
+    // force a new context to be used
+    [self.parseContext rollback];
+    
     self.parseContext = nil;
     
     [self incrementWorking];
@@ -839,6 +840,16 @@ NSDictionary * dictionaryForURL(NSURL * url)
 
 -(void)parsePhotos:(NSArray *)photos withDeletionBlock:(void(^)(NSManagedObjectContext * context))deletionBlock andGroup:(dispatch_group_t)dispatchGroup
 {
+    if(self.scansCancelledFlag) return;
+    
+    if(self.parseContext == nil)
+    {
+        self.parseContext = [[PIXAppDelegate sharedAppDelegate] threadSafeNonChildManagedObjectContext];
+    }
+    
+    NSManagedObjectContext *context = self.parseContext;
+    
+    
     self.fullScanProgress = (float)self.fullScannProgressCurrent / (float)self.fullScannProgressTotal;
     
     // recored an initial fetch date to use when deleting items that weren't found
@@ -847,17 +858,19 @@ NSDictionary * dictionaryForURL(NSURL * url)
     [self incrementWorking];
     
     void (^dispatchBlock)(void) = ^(void) {
+        
+        // if the parse context has changed then this is an old parse that we're no longer using
+        if(context != self.parseContext)
+        {
+            [self decrementWorking];
+            return;
+        }
     
     //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
     //dispatch_async([self sharedParsingQueue], ^(void) {
         
         // create a thread-safe context (may want to make this a child context down the road)
-        if(self.parseContext == nil)
-        {
-            self.parseContext = [[PIXAppDelegate sharedAppDelegate] threadSafeNonChildManagedObjectContext];
-        }
         
-        NSManagedObjectContext *context = self.parseContext;
         
         
         // lastalbum will be used to cache the album fetch when looping through photos
@@ -906,7 +919,6 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 {
                     lastAlbum = [NSEntityDescription insertNewObjectForEntityForName:@"PIXAlbum" inManagedObjectContext:context];
                     [lastAlbum setValue:aPath forKey:@"path"];
-                    
                 }
                 
                 else
@@ -981,7 +993,6 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 if (i%500==0) {
                     
                     [context save:nil];
-                    
                     
                     // update flush albums and the UI with a notification
                     // use performSelector instead of dispatch async because it's faster

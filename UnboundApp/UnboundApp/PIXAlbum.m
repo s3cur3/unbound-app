@@ -203,7 +203,7 @@ static NSString *const kItemsKey = @"photos";
         
     }];
     */
-    
+    if([self isReallyDeleted]) return;
     
     self.photos = photos;
     

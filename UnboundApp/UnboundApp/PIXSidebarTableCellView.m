@@ -149,7 +149,7 @@
     // if we have nothing to delete then do nothing
     if(!self.album) return;
     
-    NSMutableArray *itemsToDelete = [NSArray arrayWithObject:self.album];
+    NSArray *itemsToDelete = [NSArray arrayWithObject:self.album];
 
     // NSString * deleteString = @"Delete Album";
 

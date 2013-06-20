@@ -73,7 +73,6 @@
 		8C097D2716D57D0700E0E134 /* PIXFileParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C097D2616D57D0700E0E134 /* PIXFileParser.m */; };
 		8C14692817149A92009ECCC5 /* PIXLeapTutorialWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C14692617149A92009ECCC5 /* PIXLeapTutorialWindowController.m */; };
 		8C14692917149A92009ECCC5 /* PIXLeapTutorialWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C14692717149A92009ECCC5 /* PIXLeapTutorialWindowController.xib */; };
-		8C14692D1714A5BC009ECCC5 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C14692C1714A5BB009ECCC5 /* QuickTime.framework */; };
 		8C14692F1714A5CC009ECCC5 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C14692E1714A5CC009ECCC5 /* QTKit.framework */; };
 		8C1469321714B1C7009ECCC5 /* LeapTutorial0.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C1469311714B1C7009ECCC5 /* LeapTutorial0.mov */; };
 		8C1469341714B442009ECCC5 /* LeapTutorial1.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C1469331714B442009ECCC5 /* LeapTutorial1.mov */; };
@@ -168,7 +167,6 @@
 		8C2860A717308566009A0B35 /* MapKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFED16FB7C36008EF8B1 /* MapKit.framework */; };
 		8C2860A817308566009A0B35 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8C286055172F590D009A0B35 /* Sparkle.framework */; };
 		8C2860AA17308566009A0B35 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C14692E1714A5CC009ECCC5 /* QTKit.framework */; };
-		8C2860AB17308566009A0B35 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C14692C1714A5BB009ECCC5 /* QuickTime.framework */; };
 		8C2860AC17308566009A0B35 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFF116FB7CED008EF8B1 /* CoreFoundation.framework */; };
 		8C2860AD17308566009A0B35 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4A1E2A167D2A4C00C9A895 /* Quartz.framework */; };
 		8C2860AE17308566009A0B35 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4A1E07167C056C00C9A895 /* QuartzCore.framework */; };
@@ -359,6 +357,8 @@
 		8CC9492F171DF00000EC1431 /* success-forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC9492B171DF00000EC1431 /* success-forward.png */; };
 		8CC94930171DF00000EC1431 /* success-forward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC9492C171DF00000EC1431 /* success-forward@2x.png */; };
 		8CC94932171E145A00EC1431 /* LeapTutorial4.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8CC94931171E145A00EC1431 /* LeapTutorial4.mov */; };
+		8CDD1ADF177259B700EB6E63 /* PIXSeperatedSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CDD1ADE177259B700EB6E63 /* PIXSeperatedSpinnerView.m */; };
+		8CDD1AE0177259B700EB6E63 /* PIXSeperatedSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CDD1ADE177259B700EB6E63 /* PIXSeperatedSpinnerView.m */; };
 		8CE460DB16CB650600CDFA04 /* btn-roundrect-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D716CB650600CDFA04 /* btn-roundrect-down.png */; };
 		8CE460DC16CB650600CDFA04 /* btn-roundrect-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D816CB650600CDFA04 /* btn-roundrect-down@2x.png */; };
 		8CE460DD16CB650600CDFA04 /* btn-roundrect-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D916CB650600CDFA04 /* btn-roundrect-up.png */; };
@@ -539,7 +539,6 @@
 		8C14692517149A92009ECCC5 /* PIXLeapTutorialWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXLeapTutorialWindowController.h; sourceTree = "<group>"; };
 		8C14692617149A92009ECCC5 /* PIXLeapTutorialWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXLeapTutorialWindowController.m; sourceTree = "<group>"; };
 		8C14692717149A92009ECCC5 /* PIXLeapTutorialWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXLeapTutorialWindowController.xib; sourceTree = "<group>"; };
-		8C14692C1714A5BB009ECCC5 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
 		8C14692E1714A5CC009ECCC5 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
 		8C1469311714B1C7009ECCC5 /* LeapTutorial0.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = LeapTutorial0.mov; sourceTree = "<group>"; };
 		8C1469331714B442009ECCC5 /* LeapTutorial1.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = LeapTutorial1.mov; sourceTree = "<group>"; };
@@ -677,6 +676,8 @@
 		8CC9492B171DF00000EC1431 /* success-forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success-forward.png"; sourceTree = "<group>"; };
 		8CC9492C171DF00000EC1431 /* success-forward@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success-forward@2x.png"; sourceTree = "<group>"; };
 		8CC94931171E145A00EC1431 /* LeapTutorial4.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = LeapTutorial4.mov; sourceTree = "<group>"; };
+		8CDD1ADD177259B700EB6E63 /* PIXSeperatedSpinnerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXSeperatedSpinnerView.h; sourceTree = "<group>"; };
+		8CDD1ADE177259B700EB6E63 /* PIXSeperatedSpinnerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSeperatedSpinnerView.m; sourceTree = "<group>"; };
 		8CE460D716CB650600CDFA04 /* btn-roundrect-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-roundrect-down.png"; sourceTree = "<group>"; };
 		8CE460D816CB650600CDFA04 /* btn-roundrect-down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-roundrect-down@2x.png"; sourceTree = "<group>"; };
 		8CE460D916CB650600CDFA04 /* btn-roundrect-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-roundrect-up.png"; sourceTree = "<group>"; };
@@ -715,7 +716,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C14692F1714A5CC009ECCC5 /* QTKit.framework in Frameworks */,
-				8C14692D1714A5BC009ECCC5 /* QuickTime.framework in Frameworks */,
 				8C53DFF216FB7CED008EF8B1 /* CoreFoundation.framework in Frameworks */,
 				1D4A1E2B167D2A4D00C9A895 /* Quartz.framework in Frameworks */,
 				1D4A1E08167C056D00C9A895 /* QuartzCore.framework in Frameworks */,
@@ -730,7 +730,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C2860AA17308566009A0B35 /* QTKit.framework in Frameworks */,
-				8C2860AB17308566009A0B35 /* QuickTime.framework in Frameworks */,
 				8C2860AC17308566009A0B35 /* CoreFoundation.framework in Frameworks */,
 				8C2860AD17308566009A0B35 /* Quartz.framework in Frameworks */,
 				8C2860AE17308566009A0B35 /* QuartzCore.framework in Frameworks */,
@@ -1058,7 +1057,6 @@
 			isa = PBXGroup;
 			children = (
 				8C14692E1714A5CC009ECCC5 /* QTKit.framework */,
-				8C14692C1714A5BB009ECCC5 /* QuickTime.framework */,
 				8C53DFF116FB7CED008EF8B1 /* CoreFoundation.framework */,
 				1D4A1E2A167D2A4C00C9A895 /* Quartz.framework */,
 				1D4A1E07167C056C00C9A895 /* QuartzCore.framework */,
@@ -1216,6 +1214,8 @@
 				8C72FE5F17134BEE00AA72B0 /* PIXHUDMessageController.h */,
 				8C72FE6017134BEE00AA72B0 /* PIXHUDMessageController.m */,
 				8C72FE6117134BEE00AA72B0 /* PIXHUDMessageController.xib */,
+				8CDD1ADD177259B700EB6E63 /* PIXSeperatedSpinnerView.h */,
+				8CDD1ADE177259B700EB6E63 /* PIXSeperatedSpinnerView.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1306,7 +1306,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = PIX;
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Pixite Apps LLC";
 			};
 			buildConfigurationList = 1DB2F844167ABE87008AC0F7 /* Build configuration list for PBXProject "UnboundApp" */;
@@ -1627,6 +1627,7 @@
 				8C82A867171A5138009DD803 /* PIXAboutWindowController.m in Sources */,
 				1D23CC161720604E00C7FF70 /* PIXTransitionSetup.m in Sources */,
 				8C72089B1749B1720074705D /* PIXProgressWindowController.m in Sources */,
+				8CDD1ADF177259B700EB6E63 /* PIXSeperatedSpinnerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1709,6 +1710,7 @@
 				8C2860A417308566009A0B35 /* PIXAboutWindowController.m in Sources */,
 				8C2860A517308566009A0B35 /* PIXTransitionSetup.m in Sources */,
 				8CA459D8174E7FD9002BF431 /* PIXProgressWindowController.m in Sources */,
+				8CDD1AE0177259B700EB6E63 /* PIXSeperatedSpinnerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1754,7 +1756,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1784,7 +1786,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;

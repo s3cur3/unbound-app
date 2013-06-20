@@ -60,9 +60,7 @@
         // Initialization code here.
         self.selectedItemsName = @"album";
         
-        // don't make the 
-        [self.view setWantsLayer:NO];
-        
+
     }
     
     return self;
@@ -72,7 +70,7 @@
 {
     [super awakeFromNib];
     
-    [self.gridView setItemSize:CGSizeMake(190, 210)];
+    [self.gridView setItemSize:NSMakeSize(190, 210)];
     [self.gridView setAllowsMultipleSelection:YES];
     [self.gridView reloadData];
     [self.gridView setUseHover:NO];

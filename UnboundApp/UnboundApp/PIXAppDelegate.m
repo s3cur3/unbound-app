@@ -741,10 +741,14 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
         return nil;
     }
     
+    
+    // remove any old persistant stores
+    
+    
     // use the background saving context oulined here:
     // http://www.cocoanetics.com/2012/07/multi-context-coredata/
     
-    // create writer MOC
+    // create new writer MOC
     _privateWriterContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     [_privateWriterContext setPersistentStoreCoordinator:_persistentStoreCoordinator];
     
@@ -850,9 +854,40 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 {
     // pop to the root vc
     [[[self mainWindowController] navigationViewController] popToRootViewController];
+
+    /*
+    for(NSPersistentStore *aStore in _persistentStoreBackgroundCoordinator.persistentStores)
+    {
+        NSError * error = nil;
+        [_persistentStoreBackgroundCoordinator removePersistentStore:aStore error:&error];
+        
+        if(error)
+        {
+            NSLog(@"Error removing persistant store: %@", error.description);
+        }
+    }
+    
+    for(NSPersistentStore *aStore in _persistentStoreCoordinator.persistentStores)
+    {
+        NSError * error = nil;
+        [_persistentStoreCoordinator removePersistentStore:aStore error:&error];
+        
+        if(error)
+        {
+            NSLog(@"Error removing persistant store: %@", error.description);
+        }
+    }
+     [self.managedObjectContext setParentContext:nil];
+     */
+    
+    
     
     _managedObjectContext = nil;
+    _privateWriterContext = nil;
     _persistentStoreCoordinator = nil;
+    _persistentStoreBackgroundCoordinator = nil;
+    
+    [[PIXFileParser sharedFileParser] setParseContext:nil];
     
     NSURL *url = [[self applicationFilesDirectory] URLByAppendingPathComponent:@"UnboundApp.sqlite"];
     

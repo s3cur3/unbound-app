@@ -10,6 +10,7 @@
 #import "PIXViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "PIXFileParser.h"
+#import "PIXSeperatedSpinnerView.h"
 
 
 @interface PIXNavigationController ()
@@ -257,6 +258,14 @@
     //_trashbutton.image = [NSImage imageNamed:NSImageNameTrashEmpty];
     
     
+    PIXSeperatedSpinnerView * spinner = [[PIXSeperatedSpinnerView alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
+    
+    [spinner.indicator bind:@"animate"
+           toObject:[PIXFileParser sharedFileParser]
+        withKeyPath:@"isWorking"
+            options: nil];
+    
+    /*
     NSProgressIndicator * indicator = [[NSProgressIndicator alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
     [indicator setStyle:NSProgressIndicatorSpinningStyle];
     [indicator setIndeterminate:YES];
@@ -275,27 +284,9 @@
         withKeyPath:@"isWorking"
             options: nil]; //@{NSValueTransformerNameBindingOption : NSNegateBooleanTransformerName}];
     
-    /*
-     NSView * containerView = [[NSView alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
-     
-     
-     YRKSpinningProgressIndicatorLayer * progressIndicatorLayer = [[YRKSpinningProgressIndicatorLayer alloc] init];
-     progressIndicatorLayer.name = @"progressIndicatorLayer";
-     progressIndicatorLayer.anchorPoint = CGPointMake(0.0, 0.0);
-     progressIndicatorLayer.position = CGPointMake(0, 0);
-     progressIndicatorLayer.bounds = [[containerView layer] bounds];
-     progressIndicatorLayer.autoresizingMask = (kCALayerWidthSizable|kCALayerHeightSizable);
-     progressIndicatorLayer.zPosition = 10; // make sure it goes in front of the background layer
-     progressIndicatorLayer.hidden = YES;
-     
-     [containerView setLayer:progressIndicatorLayer];
-     [containerView setWantsLayer:YES];
-     
-     [progressIndicatorLayer startProgressAnimation];
-     
      */
     
-    _activityIndicator.view = indicator;
+    _activityIndicator.view = spinner;
     
     [_activityIndicator setLabel:@"Acitivity"];
     [_activityIndicator setPaletteLabel:@"Activity"];
