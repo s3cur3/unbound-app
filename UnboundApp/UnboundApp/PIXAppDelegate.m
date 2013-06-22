@@ -583,6 +583,9 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 // Returns the persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. (The directory for the store is created, if necessary.)
 - (NSPersistentStoreCoordinator *)persistentStoreBackgroundCoordinator
 {
+    
+    return self.persistentStoreCoordinator;
+    
     if (_persistentStoreBackgroundCoordinator) {
         return _persistentStoreBackgroundCoordinator;
     }
@@ -753,13 +756,13 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     [_privateWriterContext setPersistentStoreCoordinator:_persistentStoreCoordinator];
     
     // overwrite the database with updates from this context
-    [_privateWriterContext setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
+    [_privateWriterContext setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
     
     _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     [_managedObjectContext setParentContext:_privateWriterContext];
     
     // overwrite the database with updates from this context
-    [_managedObjectContext setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
+    [_managedObjectContext setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mergeContext:) name:NSManagedObjectContextDidSaveNotification object:nil];
     return _managedObjectContext;
@@ -909,7 +912,11 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
         postingContext.parentContext == nil &&
         postingContext != self.privateWriterContext) {
         // merge the changes
-        [[self managedObjectContext] performSelectorOnMainThread:@selector(mergeChangesFromContextDidSaveNotification:) withObject:notification waitUntilDone:NO];
+        
+        //[[self managedObjectContext] reset];
+        [self.privateWriterContext performSelectorOnMainThread:@selector(mergeChangesFromContextDidSaveNotification:) withObject:notification waitUntilDone:YES];
+        
+        //[self.managedObjectContext performSelectorOnMainThread:@selector(save:) withObject:nil waitUntilDone:YES];
     }
 }
 

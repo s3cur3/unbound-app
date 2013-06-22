@@ -1861,6 +1861,7 @@
 		8C28611917308566009A0B35 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = UnboundTrial.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
@@ -1891,6 +1892,7 @@
 		8C28611A17308566009A0B35 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = UnboundTrial.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";

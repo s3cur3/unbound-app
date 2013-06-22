@@ -72,7 +72,7 @@
 // key for the length of time in between transitions in the slideshow
 #define kSlideshowTimeInterval @"slideshowTimeInterval"
 
-// key for the trial perios expiration user default -- obfuscate this very slightly
+// key for the trial period expiration user default -- obfuscate this very slightly
 #define kTrialExpirationDate @"photoTimeInterval"
 
 #define FFString(msg, description) NSLocalizedStringFromTableInBundle(msg, @"Unbound", [NSBundle bundleForClass:[PIXMainWindowController class]], description)

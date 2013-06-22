@@ -85,7 +85,7 @@
     NSDate * today = [NSDate date];
     
     // set the target date to June 30
-    NSDate * targetDate = [NSDate dateWithString:@"2013-06-30 00:00:00 -0000"];
+    NSDate * targetDate = [NSDate dateWithString:@"2013-07-30 00:00:00 -0000"];
     
     if([[NSUserDefaults standardUserDefaults] objectForKey:kTrialExpirationDate] == nil)
     {

@@ -65,6 +65,22 @@ const CGFloat kThumbnailSize = 370.0f;
 
 @synthesize fasterThumbLoad;
 
+//__strong static NSDateFormatter * _exifDateFormatter = nil;
+
+// exif date formatter singleton for performance
++(NSDateFormatter *)exifDateFormatter
+{
+    
+    __strong static NSDateFormatter * _exifDateFormatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _exifDateFormatter = [[NSDateFormatter alloc] init];
+        [_exifDateFormatter setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
+    });
+    
+    return _exifDateFormatter;
+}
+
 
 //TODO: make this a real attribute?
 -(NSString *)title
@@ -1182,20 +1198,30 @@ const CGFloat kThumbnailSize = 370.0f;
         // set the exif data the normal way
         [self setExifData:newExifData];
         
+        //self.dateTaken = nil;
+        
+        
         // now also set attributes that are derived from the exif data
         NSString * dateTakenString = [[newExifData objectForKey:@"{Exif}"] objectForKey:@"DateTimeOriginal"];
         
         if(dateTakenString)
         {
-            NSDateFormatter* exifFormat = [[NSDateFormatter alloc] init];
-            [exifFormat setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
-            self.dateTaken = [exifFormat dateFromString:dateTakenString];
+            self.dateTaken = [[PIXPhoto exifDateFormatter] dateFromString:dateTakenString];
         }
         
-        else
+        NSString * secondDateString = [[newExifData objectForKey:@"{Exif}"] objectForKey:@"DateTimeDigitized"];
+        
+        if(secondDateString)
         {
-            self.dateTaken = nil;
+            NSDate * secondDate = [[PIXPhoto exifDateFormatter] dateFromString:secondDateString];
+            
+            if(self.dateTaken == nil || [self.dateTaken compare:secondDate] == NSOrderedDescending)
+            {
+                self.dateTaken = secondDate;
+            }
         }
+        
+       
         
         // set the lat and lon in the db (so we can fetch based on location)
         

@@ -345,7 +345,7 @@ static NSString *const kItemsKey = @"photos";
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         
-        NSManagedObjectContext * threadSafeContext = [[PIXAppDelegate sharedAppDelegate] threadSafeNonChildManagedObjectContext];
+        NSManagedObjectContext * threadSafeContext = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];
         
         PIXAlbum * threadAlbum = (PIXAlbum *)[threadSafeContext objectWithID:[self objectID]];
         
@@ -387,6 +387,7 @@ static NSString *const kItemsKey = @"photos";
 {
     if(self.managedObjectContext != nil && ![self isDeleted])
     {
+        [self.managedObjectContext refreshObject:self mergeChanges:NO];
         //self.subtitle = nil;
         
         // not sure if we need to send this. the all albums refresh is always sent after this
@@ -508,7 +509,7 @@ static NSString *const kItemsKey = @"photos";
     dispatch_async([self sharedUnboundQueue], ^{
         
         // get a bg thread context and find the album object
-        NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] threadSafeNonChildManagedObjectContext];
+        NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];
         PIXAlbum * threadAlbum = (PIXAlbum *)[context objectWithID:thisID];
         
         

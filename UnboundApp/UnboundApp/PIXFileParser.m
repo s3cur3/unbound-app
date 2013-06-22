@@ -570,7 +570,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
  *  current scans so new ones arent started
  */
 - (void)scanURLForChanges:(NSURL *)url withRecursion:(PIXFileParserRecursionOptions)recursionMode
-{
+{    
     self.scansCancelledFlag = NO;
     [self incrementWorking];
     
@@ -841,15 +841,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
 -(void)parsePhotos:(NSArray *)photos withDeletionBlock:(void(^)(NSManagedObjectContext * context))deletionBlock andGroup:(dispatch_group_t)dispatchGroup
 {
     if(self.scansCancelledFlag) return;
-    
-    if(self.parseContext == nil)
-    {
-        self.parseContext = [[PIXAppDelegate sharedAppDelegate] threadSafeNonChildManagedObjectContext];
-    }
-    
-    NSManagedObjectContext *context = self.parseContext;
-    
-    
+
     self.fullScanProgress = (float)self.fullScannProgressCurrent / (float)self.fullScannProgressTotal;
     
     // recored an initial fetch date to use when deleting items that weren't found
@@ -860,18 +852,17 @@ NSDictionary * dictionaryForURL(NSURL * url)
     void (^dispatchBlock)(void) = ^(void) {
         
         // if the parse context has changed then this is an old parse that we're no longer using
-        if(context != self.parseContext)
+        if(self.parseContext == nil)
         {
-            [self decrementWorking];
-            return;
+            self.parseContext = [[PIXAppDelegate sharedAppDelegate] threadSafeNonChildManagedObjectContext];
         }
+        
+        NSManagedObjectContext *context = self.parseContext;
     
     //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
     //dispatch_async([self sharedParsingQueue], ^(void) {
         
         // create a thread-safe context (may want to make this a child context down the road)
-        
-        
         
         // lastalbum will be used to cache the album fetch when looping through photos
         PIXAlbum *lastAlbum = nil;
@@ -1010,6 +1001,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
         // we've finished the loop. add the photos objects to the last album we were working with
         [lastAlbumsPhotos addObjectsFromArray:lastAlbumsExistingPhotos];
         [lastAlbum setPhotos:[NSSet setWithArray:lastAlbumsPhotos] updateCoverImage:YES];
+        ;
+        NSLog(@"scanned album %@ has %ld items", lastAlbum.title, lastAlbum.photos.count);
         
         if(deletionBlock)
         {
@@ -1021,7 +1014,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
         
         // update flush albums and the UI with a notification
         // use performSelector instead of dispatch async because it's faster
-        [self performSelectorOnMainThread:@selector(flushAlbumsWithIDS:) withObject:[editedAlbumObjectIDs copy] waitUntilDone:NO];
+        [self performSelectorOnMainThread:@selector(flushAlbumsWithIDs:) withObject:[editedAlbumObjectIDs copy] waitUntilDone:NO];
         
         self.fullScanProgress = (float)self.fullScannProgressCurrent / (float)self.fullScannProgressTotal;
         
@@ -1139,14 +1132,15 @@ NSDictionary * dictionaryForURL(NSURL * url)
 
 
 // this should always be called on the main thread
--(void)flushAlbumsWithIDS:(NSSet *)albumIDs
+-(void)flushAlbumsWithIDs:(NSSet *)albumIDS
 {
+    NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
+
     
     // fetch any the albums with these ids
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kAlbumEntityName];
-    [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(self IN %@)", albumIDs]];
+    [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(self IN %@)", albumIDS]];
     
-    NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
     
     NSError * error;
     
@@ -1155,6 +1149,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
     for(PIXAlbum * album in editedAlbums)
     {
         [album flush];
+        NSLog(@"flushed album %@ has %ld items", album.title, album.photos.count);
     }
    
     
