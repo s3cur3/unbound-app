@@ -46,6 +46,10 @@
 		1D4A1E3D167D372600C9A895 /* SquareImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E3C167D372600C9A895 /* SquareImageView.m */; };
 		1D5F9D5B16AEF4A3008F8C80 /* PIXLoadAlbumOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5F9D5A16AEF4A3008F8C80 /* PIXLoadAlbumOperation.m */; };
 		1D5F9D5F16AEF815008F8C80 /* PIXGetAlbumPathsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5F9D5E16AEF814008F8C80 /* PIXGetAlbumPathsOperation.m */; };
+		1D77F3701795DC0D00FCF0F5 /* videoview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D77F36F1795DC0C00FCF0F5 /* videoview.xib */; };
+		1D77F3711795DC0D00FCF0F5 /* videoview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D77F36F1795DC0C00FCF0F5 /* videoview.xib */; };
+		1D77F3741795EA2300FCF0F5 /* PIXVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D77F3731795EA2200FCF0F5 /* PIXVideoViewController.m */; };
+		1D77F3751795EA2300FCF0F5 /* PIXVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D77F3731795EA2200FCF0F5 /* PIXVideoViewController.m */; };
 		1D8CD7E816AB4D220072D516 /* PIXGridViewItemLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8CD7E716AB4D220072D516 /* PIXGridViewItemLayout.m */; };
 		1D8CD7EF16AB6EC70072D516 /* PIXGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8CD7ED16AB6EC70072D516 /* PIXGridViewController.m */; };
 		1D8CD7F016AB6EC70072D516 /* PIXGridViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8CD7EE16AB6EC70072D516 /* PIXGridViewController.xib */; };
@@ -490,6 +494,9 @@
 		1D5F9D5D16AEF814008F8C80 /* PIXGetAlbumPathsOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXGetAlbumPathsOperation.h; sourceTree = "<group>"; };
 		1D5F9D5E16AEF814008F8C80 /* PIXGetAlbumPathsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXGetAlbumPathsOperation.m; sourceTree = "<group>"; };
 		1D69E646170DD7B70031AF73 /* Unbound.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Unbound.entitlements; sourceTree = "<group>"; };
+		1D77F36F1795DC0C00FCF0F5 /* videoview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = videoview.xib; sourceTree = "<group>"; };
+		1D77F3721795EA2200FCF0F5 /* PIXVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXVideoViewController.h; sourceTree = "<group>"; };
+		1D77F3731795EA2200FCF0F5 /* PIXVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXVideoViewController.m; sourceTree = "<group>"; };
 		1D8CD7E716AB4D220072D516 /* PIXGridViewItemLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXGridViewItemLayout.m; sourceTree = "<group>"; };
 		1D8CD7EC16AB6EC70072D516 /* PIXGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXGridViewController.h; sourceTree = "<group>"; };
 		1D8CD7ED16AB6EC70072D516 /* PIXGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXGridViewController.m; sourceTree = "<group>"; };
@@ -746,6 +753,7 @@
 		1D0834F5167D63E5003D557A /* PageView */ = {
 			isa = PBXGroup;
 			children = (
+				1D77F36F1795DC0C00FCF0F5 /* videoview.xib */,
 				1D23CC151720604E00C7FF70 /* PIXTransitionSetup.m */,
 				1D0834F8167D6478003D557A /* PIXPageViewController.h */,
 				1D0834F9167D6478003D557A /* PIXPageViewController.m */,
@@ -769,6 +777,8 @@
 				8C9AA2BB1700A5BF00D989CA /* PIXSlideshowOptonsViewController.h */,
 				8C9AA2BC1700A5C000D989CA /* PIXSlideshowOptonsViewController.m */,
 				8C9AA2BD1700A5C000D989CA /* PIXSlideshowOptonsViewController.xib */,
+				1D77F3721795EA2200FCF0F5 /* PIXVideoViewController.h */,
+				1D77F3731795EA2200FCF0F5 /* PIXVideoViewController.m */,
 			);
 			name = PageView;
 			sourceTree = "<group>";
@@ -1434,6 +1444,7 @@
 				8C72089C1749B1720074705D /* PIXProgressWindowController.xib in Resources */,
 				8CA954601756A5AD0016AE23 /* leapnotconnected.png in Resources */,
 				8CA954611756A5AD0016AE23 /* leapnotconnected@2x.png in Resources */,
+				1D77F3701795DC0D00FCF0F5 /* videoview.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1542,6 +1553,7 @@
 				8CA459D9174E7FD9002BF431 /* PIXProgressWindowController.xib in Resources */,
 				8CA954621756A5B50016AE23 /* leapnotconnected.png in Resources */,
 				8CA954631756A5B50016AE23 /* leapnotconnected@2x.png in Resources */,
+				1D77F3711795DC0D00FCF0F5 /* videoview.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1628,6 +1640,7 @@
 				1D23CC161720604E00C7FF70 /* PIXTransitionSetup.m in Sources */,
 				8C72089B1749B1720074705D /* PIXProgressWindowController.m in Sources */,
 				8CDD1ADF177259B700EB6E63 /* PIXSeperatedSpinnerView.m in Sources */,
+				1D77F3741795EA2300FCF0F5 /* PIXVideoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1711,6 +1724,7 @@
 				8C2860A517308566009A0B35 /* PIXTransitionSetup.m in Sources */,
 				8CA459D8174E7FD9002BF431 /* PIXProgressWindowController.m in Sources */,
 				8CDD1AE0177259B700EB6E63 /* PIXSeperatedSpinnerView.m in Sources */,
+				1D77F3751795EA2300FCF0F5 /* PIXVideoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

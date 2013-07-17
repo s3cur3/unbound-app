@@ -14,6 +14,7 @@
 #import "PIXAlbum.h"
 #import "PIXPhoto.h"
 #import "PIXImageViewController.h"
+#import "PIXVideoViewController.h"
 #import "PIXLeapInputManager.h"
 #import "PIXNavigationController.h"
 
@@ -1209,32 +1210,33 @@
 //    if (object==nil) {
 //        DLog(@"identifierForObject has nil object");
 //    }
-    return @"picture";
+    //return @"picture";
     
-//    if (![[object imageRepresentationType] isEqualToString:IKImageBrowserQTMoviePathRepresentationType]) {
-//        return @"picture";
-//    }
-//    return @"video";
+    if (![[object imageRepresentationType] isEqualToString:IKImageBrowserQTMoviePathRepresentationType]) {
+        return @"picture";
+    }
+    return @"video";
 }
 
 - (NSViewController *)pageController:(NSPageController *)pageController viewControllerForIdentifier:(NSString *)identifier {
     //NSLog(@"pageController.selectedIndex : %ld", pageController.selectedIndex);
-    PIXImageViewController *aVC =  [[PIXImageViewController alloc] initWithNibName:@"AutoSizingImageView" bundle:nil];
-    [aVC.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-    aVC.pageViewController = self;
-    return aVC;
+//    PIXImageViewController *aVC =  [[PIXImageViewController alloc] initWithNibName:@"AutoSizingImageView" bundle:nil];
+//    [aVC.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+//    aVC.pageViewController = self;
+//    return aVC;
     
     //TODO: add video support
-//    if (![identifier isEqualToString:@"video"])
-//    {
-//        PIXImageViewController *aVC =  [[PIXImageViewController alloc] initWithNibName:@"AutoSizingImageView" bundle:nil];
-//        [aVC.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-//        aVC.pageViewController = self;
-//        return aVC;
-//    } else {
-//        NSViewController *videoView = [[NSViewController alloc] initWithNibName:@"videoview" bundle:nil];
-//        return videoView;
-//    }
+    if (![identifier isEqualToString:@"video"])
+    {
+        PIXImageViewController *aVC =  [[PIXImageViewController alloc] initWithNibName:@"AutoSizingImageView" bundle:nil];
+        [aVC.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+        aVC.pageViewController = self;
+        return aVC;
+    } else {
+        PIXVideoViewController *aVC = [[PIXVideoViewController alloc] initWithNibName:@"videoview" bundle:nil];
+        aVC.pageViewController = self;
+        return aVC;
+    }
 }
 
 -(void)pageController:(NSPageController *)pageController prepareViewController:(NSViewController *)viewController withObject:(id)object {
@@ -1250,7 +1252,9 @@
     
     BOOL isRepreparingOriginalView = (self.initialSelectedObject && self.initialSelectedObject == object) ? YES : NO;
     if (!isRepreparingOriginalView) {
-        [(NSScrollView*)viewController.view setMagnification:1.0];
+        if ([viewController.view respondsToSelector:@selector(setMagnification:)]) {
+            [(NSScrollView*)viewController.view setMagnification:1.0];
+        }
         //[self makeSelectedViewFirstResponder];
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(startPreloadForController:) object:pageController];
     }
