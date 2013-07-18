@@ -59,7 +59,6 @@
 										<string key="NSFrame">{{18, 0}, {545, 394}}</string>
 										<reference key="NSSuperview" ref="805948329"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<object class="NSColor" key="kCoderFillColor">
 											<int key="NSColorSpace">3</int>

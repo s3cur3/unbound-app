@@ -1863,7 +1863,8 @@ const CGFloat kThumbnailSize = 370.0f;
 {
     NSString * lowercasepath = [path lowercaseString];
     
-    if([lowercasepath hasSuffix:@".m4p"] ||
+    if([lowercasepath hasSuffix:@".mp4"] ||
+       [lowercasepath hasSuffix:@".m4p"] ||
        [lowercasepath hasSuffix:@".m4v"] ||
        [lowercasepath hasSuffix:@".mkv"] ||
        [lowercasepath hasSuffix:@".mov"])

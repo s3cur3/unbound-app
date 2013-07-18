@@ -46,6 +46,10 @@
 		1D4A1E3D167D372600C9A895 /* SquareImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E3C167D372600C9A895 /* SquareImageView.m */; };
 		1D5F9D5B16AEF4A3008F8C80 /* PIXLoadAlbumOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5F9D5A16AEF4A3008F8C80 /* PIXLoadAlbumOperation.m */; };
 		1D5F9D5F16AEF815008F8C80 /* PIXGetAlbumPathsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5F9D5E16AEF814008F8C80 /* PIXGetAlbumPathsOperation.m */; };
+		1D6C23EA17987E0900EC34F5 /* USA.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1D6C23E917987E0900EC34F5 /* USA.gif */; };
+		1D6C23EB17987E0900EC34F5 /* USA.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1D6C23E917987E0900EC34F5 /* USA.gif */; };
+		1D6C23EE179882AA00EC34F5 /* PIXPlayVideoHUDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6C23ED179882AA00EC34F5 /* PIXPlayVideoHUDWindow.m */; };
+		1D6C23EF179882AA00EC34F5 /* PIXPlayVideoHUDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6C23ED179882AA00EC34F5 /* PIXPlayVideoHUDWindow.m */; };
 		1D77F3701795DC0D00FCF0F5 /* videoview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D77F36F1795DC0C00FCF0F5 /* videoview.xib */; };
 		1D77F3711795DC0D00FCF0F5 /* videoview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D77F36F1795DC0C00FCF0F5 /* videoview.xib */; };
 		1D77F3741795EA2300FCF0F5 /* PIXVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D77F3731795EA2200FCF0F5 /* PIXVideoViewController.m */; };
@@ -65,6 +69,8 @@
 		1DB2F86E167AC07F008AC0F7 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F86C167AC07F008AC0F7 /* icon.icns */; };
 		1DB2F86F167AC07F008AC0F7 /* unbound_icon_512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F86D167AC07F008AC0F7 /* unbound_icon_512x512.png */; };
 		1DBFD55716CAE415001944A9 /* PIXFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DBFD55516CAE415001944A9 /* PIXFileManager.m */; };
+		1DCD7B2117987A5000DF9478 /* PIXVideoImageOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCD7B2017987A5000DF9478 /* PIXVideoImageOverlayView.m */; };
+		1DCD7B2217987A5000DF9478 /* PIXVideoImageOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCD7B2017987A5000DF9478 /* PIXVideoImageOverlayView.m */; };
 		1DDEF823169D2D9F00C0D303 /* PIXDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF81D169D2D9F00C0D303 /* PIXDataModel.xcdatamodeld */; };
 		1DDEF82E169D2FE800C0D303 /* PIXPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF82D169D2FE800C0D303 /* PIXPhoto.m */; };
 		1DDEF830169D2FE800C0D303 /* PIXAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF82F169D2FE800C0D303 /* PIXAccount.m */; };
@@ -494,6 +500,9 @@
 		1D5F9D5D16AEF814008F8C80 /* PIXGetAlbumPathsOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXGetAlbumPathsOperation.h; sourceTree = "<group>"; };
 		1D5F9D5E16AEF814008F8C80 /* PIXGetAlbumPathsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXGetAlbumPathsOperation.m; sourceTree = "<group>"; };
 		1D69E646170DD7B70031AF73 /* Unbound.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Unbound.entitlements; sourceTree = "<group>"; };
+		1D6C23E917987E0900EC34F5 /* USA.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = USA.gif; sourceTree = "<group>"; };
+		1D6C23EC179882AA00EC34F5 /* PIXPlayVideoHUDWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPlayVideoHUDWindow.h; sourceTree = "<group>"; };
+		1D6C23ED179882AA00EC34F5 /* PIXPlayVideoHUDWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPlayVideoHUDWindow.m; sourceTree = "<group>"; };
 		1D77F36F1795DC0C00FCF0F5 /* videoview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = videoview.xib; sourceTree = "<group>"; };
 		1D77F3721795EA2200FCF0F5 /* PIXVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXVideoViewController.h; sourceTree = "<group>"; };
 		1D77F3731795EA2200FCF0F5 /* PIXVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXVideoViewController.m; sourceTree = "<group>"; };
@@ -524,6 +533,8 @@
 		1DB2F86D167AC07F008AC0F7 /* unbound_icon_512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unbound_icon_512x512.png; sourceTree = SOURCE_ROOT; };
 		1DBFD55516CAE415001944A9 /* PIXFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXFileManager.m; sourceTree = "<group>"; };
 		1DBFD55616CAE415001944A9 /* PIXFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXFileManager.h; sourceTree = "<group>"; };
+		1DCD7B1F17987A5000DF9478 /* PIXVideoImageOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXVideoImageOverlayView.h; sourceTree = "<group>"; };
+		1DCD7B2017987A5000DF9478 /* PIXVideoImageOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXVideoImageOverlayView.m; sourceTree = "<group>"; };
 		1DDEF81E169D2D9F00C0D303 /* PIXDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PIXDataModel.xcdatamodel; sourceTree = "<group>"; };
 		1DDEF82C169D2FE800C0D303 /* PIXPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPhoto.h; sourceTree = "<group>"; };
 		1DDEF82D169D2FE800C0D303 /* PIXPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhoto.m; sourceTree = "<group>"; };
@@ -779,6 +790,10 @@
 				8C9AA2BD1700A5C000D989CA /* PIXSlideshowOptonsViewController.xib */,
 				1D77F3721795EA2200FCF0F5 /* PIXVideoViewController.h */,
 				1D77F3731795EA2200FCF0F5 /* PIXVideoViewController.m */,
+				1DCD7B1F17987A5000DF9478 /* PIXVideoImageOverlayView.h */,
+				1DCD7B2017987A5000DF9478 /* PIXVideoImageOverlayView.m */,
+				1D6C23EC179882AA00EC34F5 /* PIXPlayVideoHUDWindow.h */,
+				1D6C23ED179882AA00EC34F5 /* PIXPlayVideoHUDWindow.m */,
 			);
 			name = PageView;
 			sourceTree = "<group>";
@@ -838,6 +853,7 @@
 		1D4A1D97167AD90200C9A895 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1D6C23E917987E0900EC34F5 /* USA.gif */,
 				8C5019C9171C803F00829914 /* click.wav */,
 				8CC94927171CDC5E00EC1431 /* softtap.wav */,
 				1DB2F86C167AC07F008AC0F7 /* icon.icns */,
@@ -1445,6 +1461,7 @@
 				8CA954601756A5AD0016AE23 /* leapnotconnected.png in Resources */,
 				8CA954611756A5AD0016AE23 /* leapnotconnected@2x.png in Resources */,
 				1D77F3701795DC0D00FCF0F5 /* videoview.xib in Resources */,
+				1D6C23EA17987E0900EC34F5 /* USA.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1554,6 +1571,7 @@
 				8CA954621756A5B50016AE23 /* leapnotconnected.png in Resources */,
 				8CA954631756A5B50016AE23 /* leapnotconnected@2x.png in Resources */,
 				1D77F3711795DC0D00FCF0F5 /* videoview.xib in Resources */,
+				1D6C23EB17987E0900EC34F5 /* USA.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1641,6 +1659,8 @@
 				8C72089B1749B1720074705D /* PIXProgressWindowController.m in Sources */,
 				8CDD1ADF177259B700EB6E63 /* PIXSeperatedSpinnerView.m in Sources */,
 				1D77F3741795EA2300FCF0F5 /* PIXVideoViewController.m in Sources */,
+				1DCD7B2117987A5000DF9478 /* PIXVideoImageOverlayView.m in Sources */,
+				1D6C23EE179882AA00EC34F5 /* PIXPlayVideoHUDWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1725,6 +1745,8 @@
 				8CA459D8174E7FD9002BF431 /* PIXProgressWindowController.m in Sources */,
 				8CDD1AE0177259B700EB6E63 /* PIXSeperatedSpinnerView.m in Sources */,
 				1D77F3751795EA2300FCF0F5 /* PIXVideoViewController.m in Sources */,
+				1DCD7B2217987A5000DF9478 /* PIXVideoImageOverlayView.m in Sources */,
+				1D6C23EF179882AA00EC34F5 /* PIXPlayVideoHUDWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

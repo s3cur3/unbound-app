@@ -92,7 +92,7 @@
             DLog(@"No CIFilter found for : '%@'", aFilterName);
         }
     }
-    DLog(@"transitions = %@", transitions);
+    //DLog(@"transitions = %@", transitions);
     self.transitions = transitions;
 }
 

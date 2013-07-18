@@ -8,8 +8,12 @@
 
 #import "PIXVideoViewController.h"
 //#import "AutoSizingImageView.h"
+#import "PIXVideoImageOverlayView.h"
+#import "PIXPlayVideoHUDWindow.h"
 #import "PIXPhoto.h"
 #import "PIXDefines.h"
+#import "PIXAppDelegate.h"
+#import "PIXMainWindowController.h"
 
 #import "PIXLeapInputManager.h"
 #import <QTKit/QTKit.h>
@@ -93,13 +97,103 @@ static NSString *ResolveName(NSString *aName)
 
 -(void)awakeFromNib
 {
-    //self.imageView.delegate = self;
+    //[self displayOverlay];
 }
+
+-(void)playMoviePressed:(NSNotification *)notification
+{
+    DLog(@"playMoviePressed");
+    [self dismissOverlay];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieFinishedPlaying:) name:QTMovieDidEndNotification object:nil];//]self.movieView.movie];
+    [[self.movieView movie] play];
+}
+     
+-(void)movieFinishedPlaying:(NSNotification *)notification
+ {
+     if ([self isCurrentView]) {
+         [[NSNotificationCenter defaultCenter] removeObserver:self name:QTMovieDidEndNotification object:nil];
+         [self displayOverlay];
+     }
+ }
+
+-(void)dismissOverlay
+{
+    if (self.overlayWindow!=nil) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UB_PLAY_MOVIE_PRESSED" object:nil];
+        [self.myImageView removeFromSuperview];
+        self.myImageView = nil;
+        [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] removeChildWindow:self.overlayWindow];
+        self.overlayWindow = nil;
+    }
+}
+-(void)displayOverlay
+{
+    if (self.overlayWindow!=nil) {
+        return;
+    }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playMoviePressed:) name:@"UB_PLAY_MOVIE_PRESSED" object:nil];
+    //self.imageView.delegate = self;
+    NSPoint baseOrigin, screenOrigin;
+    QTMovieView *mMovieView = self.movieView;
+	baseOrigin = NSMakePoint([mMovieView frame].origin.x,
+                             [mMovieView frame].origin.y);
+    
+    // convert our QTMovieView coords from local coords to screen coords
+    // which we'll use when creating our NSWindow below
+	screenOrigin = [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] convertBaseToScreen:baseOrigin];
+    
+    // Create an overlay window which will be attached as a child
+    // window to our main window. We will create it directly on top
+    // of our main window, so when we draw things they will appear
+    // on top of our playing movie
+    CGRect movieFrame = [[[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] contentView] frame]; //[self.movieView frame]
+    
+    self.overlayWindow=[[PIXPlayVideoHUDWindow alloc] initWithContentRect:NSMakeRect(screenOrigin.x,screenOrigin.y,
+                                                                   movieFrame.size.width,
+                                                                   movieFrame.size.height)
+                                              styleMask:NSBorderlessWindowMask
+                                                backing:NSBackingStoreBuffered
+                                                  defer:NO];
+    [_overlayWindow setOpaque:NO];
+    [_overlayWindow setHasShadow:YES];
+    
+    // specify we can click through the to
+    // the window underneath.
+    [_overlayWindow setIgnoresMouseEvents:NO];
+    [_overlayWindow setAlphaValue:1.0];
+    [_overlayWindow setBackgroundColor:[NSColor clearColor]];
+    
+    NSRect	movieViewBounds, subViewRect;
+    
+    movieViewBounds = [[[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] contentView] bounds]; //[mMovieView bounds];
+    // our imaging NSView will occupy the upper portion
+    // of our underlying QTMovieView space
+    subViewRect = NSMakeRect(movieViewBounds.origin.x + movieViewBounds.size.width/2,
+                             movieViewBounds.origin.y + movieViewBounds.size.height/2,
+                             movieViewBounds.size.width/2,
+                             movieViewBounds.size.height/2);
+    // create a subView for drawing images
+	self.myImageView = [[PIXVideoImageOverlayView alloc] initWithFrame:subViewRect];
+    [[_overlayWindow contentView] addSubview:self.myImageView];
+    
+    
+    [_overlayWindow orderFront:self];
+    
+    // add our overlay window as a child window of our main window
+    [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] addChildWindow:_overlayWindow ordered:NSWindowAbove];
+    //[[mMovieView window] addChildWindow:overlayWindow ordered:NSWindowAbove];
+    
+    // mark our image NSView as needing display - this will cause its
+    // drawRect routine to get invoked
+	[self.myImageView setNeedsDisplay:YES];
+}
+
 
 -(void)dealloc
 {
     //self.imageView.delegate = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self dismissOverlay];
 }
 
 -(void)setRepresentedObject:(id)representedObject
@@ -150,6 +244,7 @@ static NSString *ResolveName(NSString *aName)
     } else if (newPhoto!=nil) {
         DLog(@"same non-nil representedObject being set.");
     }
+    
 }
 
 
@@ -158,6 +253,11 @@ static NSString *ResolveName(NSString *aName)
     if(_isCurrentView != value)
     {
         _isCurrentView = value;
+    }
+    if (!_isCurrentView) {
+        [self dismissOverlay];
+    } else {
+        [self displayOverlay];
     }
 }
 
