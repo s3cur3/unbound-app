@@ -7,6 +7,7 @@
 //
 
 #import <Quartz/Quartz.h>
+#import <QTKit/QTKit.h>
 #import "PIXPhoto.h"
 #import "PIXAlbum.h"
 #import "PIXAppDelegate.h"
@@ -356,8 +357,13 @@ const CGFloat kThumbnailSize = 370.0f;
                 self.cancelFullsizeLoadOperation = NO;
                return;
     }
-    NSCParameterAssert(result);
-    if (self.fullsizeImage == nil ) {
+    
+    //NSCParameterAssert(result);
+    if (result == nil) {
+        DLog(@"Load full size Photo was not successfull for photo : '%@'", self.path);
+        result = [NSImage imageNamed:@"nophoto"];
+    }
+    if (self.fullsizeImage == nil) {
         [self setFullsizeImage:(NSImage *)result];
     } 
     _fullsizeImageIsLoading = NO;
@@ -504,7 +510,11 @@ const CGFloat kThumbnailSize = 370.0f;
     }
 
     _fullsizeImageIsLoading = NO;
-    NSCParameterAssert(data);
+    //NSCParameterAssert(data);
+    if (data == nil) {
+        DLog(@"Load full size Photo was not successfull for photo : '%@'", self.path);
+        data = [NSImage imageNamed:@"nophoto"];
+    }
     self.fullsizeImage = (NSImage *)data;
     
 //    if ([data isKindOfClass:[NSData class]])
@@ -838,8 +848,311 @@ const CGFloat kThumbnailSize = 370.0f;
 }
 
 
+-(void)loadThumbnailImageFromVideo
+{
+    // increment once for each bg operation (each will decrement itself
+    [[PIXFileParser sharedFileParser] incrementWorking];
+    
+    NSManagedObjectID * photoID = [self objectID];
+    
+    _thumbnailImageIsLoading = YES;
+    
+    NSString *aPath = self.path;
+    __weak PIXPhoto *weakSelf = self;
+    
+    self.fastThumbLoad = [NSBlockOperation blockOperationWithBlock:^{
+        
+        
+        if (weakSelf == nil || aPath==nil || weakSelf.cancelThumbnailLoadOperation==YES) {
+            DLog(@"thumbnail operation completed after object was dealloced or canceled - return");
+            _thumbnailImageIsLoading = NO;
+            weakSelf.cancelThumbnailLoadOperation = NO;
+            
+            [[PIXFileParser sharedFileParser] decrementWorking];
+            return;
+        }
+        
+        
+        //NSLog(@"Loading thumbnail");
+        __block NSImage *image = nil;
+        NSURL *urlForImage = [NSURL fileURLWithPath:aPath];
+        
+        if (![[weakSelf class] isVideoPath:aPath]) {
+            DLog(@"Not a vidoe file - returning");
+            return;
+        }
+        NSError *anError;
+        [QTMovie enterQTKitOnThread];
+        QTMovie *aMovie = [QTMovie movieWithURL:urlForImage error:&anError];
+        NSImage *anImage = aMovie.posterImage;
+        if (anImage) {
+            DLog(@"Movie posterImage : %@", anImage);
+        } else {
+            DLog(@"Failed to generate thumbnail from QTMovie -posterImage for URL : %@", urlForImage);
+        }
+        [QTMovie exitQTKitOnThread];
+        NSData *rep = [anImage TIFFRepresentation];
+        CGImageSourceRef imageSource = CGImageSourceCreateWithData((__bridge CFDataRef)rep, nil);
+        if (imageSource) {
+            
+            if (weakSelf.cancelThumbnailLoadOperation==YES) {
+                //DLog(@"2)thumbnail operation was canceled - return");
+                CFRelease(imageSource);
+                _thumbnailImageIsLoading = NO;
+                weakSelf.cancelThumbnailLoadOperation = NO;
+                
+                [[PIXFileParser sharedFileParser] decrementWorking];
+                return;
+            }
+            
+            // Now, compute the thumbnail
+            image = [[weakSelf class] makeThumbnailImageFromImageSource:imageSource always:NO];
+            //NSBitmapImageRep *rep = [[image representations] objectAtIndex: 0];
+            
+            
+            
+            // tell the ui to update
+            
+            if(image)
+            {
+                // warm up the image file so it draws faster
+                [image CGImageForProposedRect:nil context:[NSGraphicsContext currentContext] hints:nil];
+                
+                // save the thubm to memory
+                [weakSelf setThumbnailImage:image];
+                
+                [self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
+            }
+        }
+        
+            
+        
+        
+        
+        //CGImageSourceRef imageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)urlForImage, nil);
+        if (imageSource) {
+            
+//            if (weakSelf.cancelThumbnailLoadOperation==YES) {
+//                //DLog(@"2)thumbnail operation was canceled - return");
+//                CFRelease(imageSource);
+//                _thumbnailImageIsLoading = NO;
+//                weakSelf.cancelThumbnailLoadOperation = NO;
+//                
+//                [[PIXFileParser sharedFileParser] decrementWorking];
+//                return;
+//            }
+//            
+//            // Now, compute the thumbnail
+//            image = [[weakSelf class] makeThumbnailImageFromImageSource:imageSource always:NO];
+//            //NSBitmapImageRep *rep = [[image representations] objectAtIndex: 0];
+//            
+//            
+//            
+//            // tell the ui to update
+//            
+//            if(image)
+//            {
+//                // warm up the image file so it draws faster
+//                [image CGImageForProposedRect:nil context:[NSGraphicsContext currentContext] hints:nil];
+//                
+//                // save the thubm to memory
+//                [weakSelf setThumbnailImage:image];
+//                
+//                [self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
+//            }
+//            
+            // we've finished updating the ui with the image, do everythinge else at a lower priority
+            self.slowThumbLoad = [NSBlockOperation blockOperationWithBlock:^{
+                
+                // if the load was cancelled then bail
+                if (weakSelf.cancelThumbnailLoadOperation==YES) {
+                    //DLog(@"3)thumbnail operation was canceled - return");
+                    CFRelease(imageSource);
+                    _thumbnailImageIsLoading = NO;
+                    weakSelf.cancelThumbnailLoadOperation = NO;
+                    
+                    [[PIXFileParser sharedFileParser] decrementWorking];
+                    return;
+                }
+                
+                // get the exif data
+                CFDictionaryRef cfDict = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil);
+                NSDictionary * exif = (__bridge NSDictionary *)(cfDict);
+                
+                // if the load was cancelled then bail
+                if (weakSelf.cancelThumbnailLoadOperation==YES) {
+                    //DLog(@"3)thumbnail operation was canceled - return");
+                    if(cfDict) CFRelease(cfDict);
+                    CFRelease(imageSource);
+                    _thumbnailImageIsLoading = NO;
+                    weakSelf.cancelThumbnailLoadOperation = NO;
+                    
+                    [[PIXFileParser sharedFileParser] decrementWorking];
+                    return;
+                }
+                
+                // if we need to make an even higher res thumb (using always flag) then create it now
+                if(image.size.height < kThumbnailSize && image.size.width < kThumbnailSize)
+                {
+                    image = [[weakSelf class] makeThumbnailImageFromImageSource:imageSource always:YES];
+                    //NSBitmapImageRep *rep = [[image representations] objectAtIndex: 0];
+                    
+                    
+                    
+                    // tell the main thread we're done
+                    if(image)
+                    {
+                        
+                        // warm up the image file so it draws faster
+                        [image CGImageForProposedRect:nil context:[NSGraphicsContext currentContext] hints:nil];
+                        
+                        // save the thumb to memory
+                        [weakSelf setThumbnailImage:image];
+                        
+                        [self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
+                    }
+                }
+                
+                //                // if the load was cancelled then bail
+                //                if (weakSelf.cancelThumbnailLoadOperation==YES) {
+                //                    //DLog(@"3)thumbnail operation was canceled - return");
+                //                    if(cfDict) CFRelease(cfDict);
+                //                    CFRelease(imageSource);
+                //                    _thumbnailImageIsLoading = NO;
+                //                    weakSelf.cancelThumbnailLoadOperation = NO;
+                //
+                //                    [[PIXFileParser sharedFileParser] decrementWorking];
+                //                    return;
+                //                }
+                
+                // get the bitmap data
+                NSData *data = [image TIFFRepresentation];
+                
+                
+                // now create a jpeg representation:
+                NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData:data];
+                
+                NSDictionary *imageProperties = @{NSImageCompressionFactor : [NSNumber numberWithFloat:0.6],
+                                                  //NSImageProgressive : [NSNumber numberWithBool:YES]
+                                                  };
+                
+                data = [imageRep representationUsingType:NSJPEGFileType properties:imageProperties];
+                
+                
+                //                // if the load was cancelled then bail
+                //                if (weakSelf.cancelThumbnailLoadOperation==YES) {
+                //                    //DLog(@"4)thumbnail operation was canceled - return");
+                //                    if(cfDict) CFRelease(cfDict);
+                //                    CFRelease(imageSource);
+                //                    _thumbnailImageIsLoading = NO;
+                //                    weakSelf.cancelThumbnailLoadOperation = NO;
+                //
+                //                    [[PIXFileParser sharedFileParser] decrementWorking];
+                //                    return;
+                //                }
+                
+                
+                // create a new thumb path
+                NSString * newThumbPath = [PIXPhoto randomThumbPath];
+                [data writeToFile:newThumbPath atomically:YES];
+                
+                
+                //////////////// option 1 save in bg
+                
+                NSManagedObjectContext * threadSafeContext = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];
+                
+                PIXPhoto * threadPhoto = (PIXPhoto *)[threadSafeContext objectWithID:photoID];
+                
+                if([threadPhoto isReallyDeleted])
+                {
+                    threadPhoto = nil;
+                }
+                
+                [threadPhoto forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
+                [threadPhoto setThumbnailFilePath:newThumbPath];
+                
+                NSError * error = nil;
+                [threadSafeContext save:&error];
+                
+                // we've finished the fast load. decrement working
+                [[PIXFileParser sharedFileParser] decrementWorking];
+                
+                
+                
+                //////////////// option 2 save by dispatching to main
+                //                dispatch_async(dispatch_get_main_queue(), ^{
+                //
+                //                    [self forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
+                //
+                //                    [self setThumbnailFilePath:newThumbPath];
+                //
+                //                    //[self.managedObjectContext save:nil];
+                //
+                //                    // set the thumbnail data (this will save the data into core data, the ui has already been updated)
+                //                    //[weakSelf mainThreadComputePreviewThumbnailFinished:data];
+                //
+                //                    [[PIXFileParser sharedFileParser] decrementWorking];
+                //
+                //                });
+                //
+                //////////////// end options
+                
+                // clean up
+                if(cfDict) CFRelease(cfDict);
+                CFRelease(imageSource);
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    /*[self forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
+                     
+                     if([self thumbnailFilePath] == nil)
+                     {
+                     [self setThumbnailFilePath:newThumbPath];
+                     }*/
+                    _thumbnailImageIsLoading = NO;
+                    self.slowThumbLoad = nil;
+                });
+                
+            }];
+            
+            [[PIXFileParser sharedFileParser] incrementWorking];
+            [self.slowThumbLoad setQueuePriority:NSOperationQueuePriorityLow];
+            [[self sharedThumbnailLoadQueue] addOperation:self.slowThumbLoad];
+            
+            [[PIXFileParser sharedFileParser] decrementWorking];
+        }
+        
+        else
+        {
+            [[PIXFileParser sharedFileParser] decrementWorking];
+        }
+        
+        self.fastThumbLoad = nil;
+    }];
+    
+
+    // if this is a faster thumb load image (for the top images in album stacks)
+    if(self.fasterThumbLoad)
+    {
+        [self.fastThumbLoad setQueuePriority:NSOperationQueuePriorityHigh];
+    }
+    
+    else
+    {
+        [self.fastThumbLoad setQueuePriority:NSOperationQueuePriorityNormal];
+    }
+    
+    [[self sharedThumbnailLoadQueue] addOperation:self.fastThumbLoad];
+
+}
+
 -(void)loadThumbnailImage
 {
+    if ([[self class] isVideoPath:self.path]) {
+        DLog(@"Found a vidoe file - get it's thumb from movie object");
+        [self loadThumbnailImageFromVideo];
+        return;
+    }
     //    if (_thumbnailImageIsLoading == YES) {
     //        return;
     //    }
@@ -870,6 +1183,56 @@ const CGFloat kThumbnailSize = 370.0f;
         //NSLog(@"Loading thumbnail");
         __block NSImage *image = nil;
         NSURL *urlForImage = [NSURL fileURLWithPath:aPath];
+        
+        if ([[weakSelf class] isVideoPath:aPath]) {
+            NSError *anError;
+            [QTMovie enterQTKitOnThread];
+            QTMovie *aMovie = [QTMovie movieWithURL:urlForImage error:&anError];
+            NSImage *anImage = aMovie.posterImage;
+            if (anImage) {
+                DLog(@"Movie posterImage : %@", anImage);
+            } else {
+                DLog(@"Failed to generate thumbnail from QTMovie -posterImage for URL : %@", urlForImage);
+            }
+            [QTMovie exitQTKitOnThread];
+            NSData *rep = [anImage TIFFRepresentation];
+            CGImageSourceRef movieImageSource = CGImageSourceCreateWithData((__bridge CFDataRef)rep, nil);
+            if (movieImageSource) {
+                
+                if (weakSelf.cancelThumbnailLoadOperation==YES) {
+                    //DLog(@"2)thumbnail operation was canceled - return");
+                    CFRelease(movieImageSource);
+                    _thumbnailImageIsLoading = NO;
+                    weakSelf.cancelThumbnailLoadOperation = NO;
+                    
+                    [[PIXFileParser sharedFileParser] decrementWorking];
+                    return;
+                }
+                
+                // Now, compute the thumbnail
+                image = [[weakSelf class] makeThumbnailImageFromImageSource:movieImageSource always:NO];
+                //NSBitmapImageRep *rep = [[image representations] objectAtIndex: 0];
+                
+                
+                
+                // tell the ui to update
+                
+                if(image)
+                {
+                    // warm up the image file so it draws faster
+                    [image CGImageForProposedRect:nil context:[NSGraphicsContext currentContext] hints:nil];
+                    
+                    // save the thubm to memory
+                    [weakSelf setThumbnailImage:image];
+                    
+                    [self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
+                }
+            }
+            [[PIXFileParser sharedFileParser] decrementWorking];
+            self.fastThumbLoad = nil;
+
+
+        }
         
         
         CGImageSourceRef imageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)urlForImage, nil);
@@ -1494,6 +1857,44 @@ const CGFloat kThumbnailSize = 370.0f;
 //}
 
 
+//Supported video types
+//.3gp, .3gpp, .3gpp2, .asf, .avi, .dv, .dvi, .flv, .m2t, .m4p, .m4v, .mkv, .mov, .mpeg, .mpg, .mts, .ts, .vob, .webm, .wmv
++ (BOOL) isVideoPath:(NSString *)path
+{
+    NSString * lowercasepath = [path lowercaseString];
+    
+    if([lowercasepath hasSuffix:@".mp4"] ||
+       [lowercasepath hasSuffix:@".m4p"] ||
+       [lowercasepath hasSuffix:@".m4v"] ||
+       [lowercasepath hasSuffix:@".mkv"] ||
+       [lowercasepath hasSuffix:@".mov"])
+//       [lowercasepath hasSuffix:@".3gp"] ||
+//       [lowercasepath hasSuffix:@".3gpp"] ||
+//       [lowercasepath hasSuffix:@".3gpp2"] ||
+//       [lowercasepath hasSuffix:@".asf"] ||
+//       [lowercasepath hasSuffix:@".avi"] ||
+//       [lowercasepath hasSuffix:@".dv"] ||
+//       [lowercasepath hasSuffix:@".dvi"] ||
+//       [lowercasepath hasSuffix:@".flv"] ||
+//       [lowercasepath hasSuffix:@".m2t"] ||
+//       [lowercasepath hasSuffix:@".m4p"] ||
+//       [lowercasepath hasSuffix:@".m4v"] ||
+//       [lowercasepath hasSuffix:@".mkv"] ||
+//       [lowercasepath hasSuffix:@".mov"] ||
+//       [lowercasepath hasSuffix:@".mpeg"] ||
+//       [lowercasepath hasSuffix:@".mpg"] ||
+//       [lowercasepath hasSuffix:@".mts"] ||
+//       [lowercasepath hasSuffix:@".ts"] ||
+//       [lowercasepath hasSuffix:@".vob"] ||
+//       [lowercasepath hasSuffix:@".webm"] ||
+//       [lowercasepath hasSuffix:@".wmv"])
+    {
+        return YES;
+    }
+    
+    return NO;
+}
+
 @end
 
 
@@ -1517,7 +1918,11 @@ const CGFloat kThumbnailSize = 370.0f;
  */
 - (NSString *) imageRepresentationType; /* required */
 {
-    return IKImageBrowserPathRepresentationType;
+    if (![PIXPhoto isVideoPath:self.path]) {
+        return IKImageBrowserPathRepresentationType;
+    } else {
+        return IKImageBrowserQTMoviePathRepresentationType;
+    }
 }
 
 /*!
