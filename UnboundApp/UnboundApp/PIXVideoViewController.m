@@ -120,10 +120,14 @@ static NSString *ResolveName(NSString *aName)
 {
     if (self.overlayWindow!=nil) {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UB_PLAY_MOVIE_PRESSED" object:nil];
+        [self.myImageView setHidden:YES];
+        [self.myImageView setNeedsDisplay:YES];
         [self.myImageView removeFromSuperview];
         self.myImageView = nil;
         [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] removeChildWindow:self.overlayWindow];
+        [self.overlayWindow close];
         self.overlayWindow = nil;
+        [[[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] contentView] setNeedsDisplay:YES];
     }
 }
 -(void)displayOverlay

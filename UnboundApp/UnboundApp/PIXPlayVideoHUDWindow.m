@@ -28,6 +28,7 @@
         [self setOpaque:NO];
         [self setBackgroundColor:[NSColor clearColor]];
         [self setHasShadow:YES];
+        [self setReleasedWhenClosed:NO];
         
     }
     return self;

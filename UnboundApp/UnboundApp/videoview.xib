@@ -37,7 +37,7 @@
 			</object>
 			<object class="NSCustomView" id="1005">
 				<reference key="NSNextResponder"/>
-				<int key="NSvFlags">268</int>
+				<int key="NSvFlags">286</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSBox" id="62232735">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -59,13 +59,14 @@
 										<string key="NSFrame">{{18, 0}, {545, 394}}</string>
 										<reference key="NSSuperview" ref="805948329"/>
 										<reference key="NSWindow"/>
+										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<object class="NSColor" key="kCoderFillColor">
 											<int key="NSColorSpace">3</int>
 											<bytes key="NSWhite">MAA</bytes>
 										</object>
 										<boolean value="YES" key="kCoderControllerVisible"/>
-										<boolean value="NO" key="kCoderPreservesAspectRatio"/>
+										<boolean value="YES" key="kCoderPreservesAspectRatio"/>
 										<nil key="kCoderMovie"/>
 										<boolean value="NO" key="kCoderEditable"/>
 									</object>
