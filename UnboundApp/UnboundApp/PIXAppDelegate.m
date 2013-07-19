@@ -257,7 +257,7 @@
 
 - (IBAction)moreAppsPressed:(id)sender
 {
-    NSURL * url = [NSURL URLWithString:@"http://www.pixiteapps.com/more"];
+    NSURL * url = [NSURL URLWithString:@"http://www.pixiteapps.com"];
     [[NSWorkspace sharedWorkspace] openURL:url];
 }
 
