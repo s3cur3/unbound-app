@@ -14,7 +14,7 @@
 #import "PIXDefines.h"
 #import "PIXAppDelegate.h"
 #import "PIXMainWindowController.h"
-
+#import "PIXPageViewController.h"
 #import "PIXLeapInputManager.h"
 #import <QTKit/QTKit.h>
 
@@ -145,39 +145,62 @@ static NSString *ResolveName(NSString *aName)
     // convert our QTMovieView coords from local coords to screen coords
     // which we'll use when creating our NSWindow below
 	screenOrigin = [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] convertBaseToScreen:baseOrigin];
+    NSLog(@"screenOrigin : x: %f y: %f , baseOrigin : x: %f y: %f ", screenOrigin.x, screenOrigin.y, baseOrigin.x, baseOrigin.y);
     
+    NSLog(@"mMovieView : %@", mMovieView);
     // Create an overlay window which will be attached as a child
     // window to our main window. We will create it directly on top
     // of our main window, so when we draw things they will appear
     // on top of our playing movie
-    CGRect movieFrame = [[[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] contentView] frame]; //[self.movieView frame]
+    //GRect movieFrame = [[[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] contentView] frame]; //[self.movieView frame]
+    CGRect movieFrame = [self.movieView frame];
+//    self.overlayWindow=[[PIXPlayVideoHUDWindow alloc] initWithContentRect:NSMakeRect(screenOrigin.x,screenOrigin.y,
+//                                                                   movieFrame.size.width,
+//                                                                   movieFrame.size.height)
+//                                              styleMask:NSBorderlessWindowMask
+//                                                backing:NSBackingStoreBuffered
+//                                                  defer:NO];
     
-    self.overlayWindow=[[PIXPlayVideoHUDWindow alloc] initWithContentRect:NSMakeRect(screenOrigin.x,screenOrigin.y,
-                                                                   movieFrame.size.width,
-                                                                   movieFrame.size.height)
-                                              styleMask:NSBorderlessWindowMask
-                                                backing:NSBackingStoreBuffered
-                                                  defer:NO];
+    CGRect playButtonWindowFrame = NSMakeRect((screenOrigin.x+(movieFrame.size.width/2))-100.0,
+                                        (screenOrigin.y+(movieFrame.size.height/2))-100.0,
+                                        200.0,
+                                        200.0);
+    
+//    CGRect playButtonViewFrame = NSMakeRect((screenOrigin.x+(movieFrame.size.width/2))-100.0,
+//                                        (screenOrigin.y+(movieFrame.size.height/2))-100.0,
+//                                        200.0,
+//                                        200.0);
+    
+    
+    CGRect playButtonViewFrame = NSMakeRect(50.0f,
+                                            50.0f,
+                                            100.0f,
+                                            100.0f);
+    self.overlayWindow=[[PIXPlayVideoHUDWindow alloc] initWithContentRect:playButtonWindowFrame
+                                                                styleMask:NSBorderlessWindowMask
+                                                                  backing:NSBackingStoreBuffered
+                                                                    defer:NO];
+    [self.overlayWindow setParentView:self.pageViewController.view];
     [_overlayWindow setOpaque:NO];
     [_overlayWindow setHasShadow:YES];
     
     // specify we can click through the to
     // the window underneath.
     [_overlayWindow setIgnoresMouseEvents:NO];
-    [_overlayWindow setAlphaValue:1.0];
-    [_overlayWindow setBackgroundColor:[NSColor clearColor]];
+    //[_overlayWindow setAlphaValue:0.3];
+    //[_overlayWindow setBackgroundColor:[NSColor clearColor]];
     
-    NSRect	movieViewBounds, subViewRect;
-    
-    movieViewBounds = [[[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] contentView] bounds]; //[mMovieView bounds];
-    // our imaging NSView will occupy the upper portion
-    // of our underlying QTMovieView space
-    subViewRect = NSMakeRect(movieViewBounds.origin.x + movieViewBounds.size.width/2,
-                             movieViewBounds.origin.y + movieViewBounds.size.height/2,
-                             movieViewBounds.size.width/2,
-                             movieViewBounds.size.height/2);
+//    NSRect	movieViewBounds, subViewRect;
+//    
+//    movieViewBounds = [[[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] contentView] bounds]; //[mMovieView bounds];
+//    // our imaging NSView will occupy the upper portion
+//    // of our underlying QTMovieView space
+//    subViewRect = NSMakeRect(movieViewBounds.origin.x + movieViewBounds.size.width/2,
+//                             movieViewBounds.origin.y + movieViewBounds.size.height/2,
+//                             movieViewBounds.size.width/2,
+//                             movieViewBounds.size.height/2);
     // create a subView for drawing images
-	self.myImageView = [[PIXVideoImageOverlayView alloc] initWithFrame:subViewRect];
+	self.myImageView = [[PIXVideoImageOverlayView alloc] initWithFrame:playButtonViewFrame];
     [[_overlayWindow contentView] addSubview:self.myImageView];
     
     

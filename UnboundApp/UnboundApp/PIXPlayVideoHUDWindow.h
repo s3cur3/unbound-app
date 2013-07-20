@@ -12,11 +12,11 @@
 
 //@property (nonatomic) BOOL hasMouse;
 //
-//-(void)setParentView:(NSView *)view;
+-(void)setParentView:(NSView *)view;
 //
 //-(void)showAnimated:(BOOL)animated;
 //-(void)hideAnimated:(BOOL)animated;
 //
-//-(void)positionWindowWithSize:(NSSize)size animated:(BOOL)animated;
+-(void)positionWindowWithSize:(NSSize)size animated:(BOOL)animated;
 
 @end

@@ -14,6 +14,7 @@
 @protocol PIXLeapResponder;
 @class QTMovieView;
 @class PIXVideoImageOverlayView;
+@class PIXPlayVideoHUDWindow;
 
 @interface PIXVideoViewController : NSViewController <PIXLeapResponder>
 {
@@ -28,7 +29,7 @@
 
 @property (nonatomic) BOOL isCurrentView;
 
-@property (nonatomic,strong) NSWindow *overlayWindow;
+@property (nonatomic,strong) PIXPlayVideoHUDWindow *overlayWindow;
 @property (nonatomic,strong) PIXVideoImageOverlayView *myImageView;
 
 -(void)dismissOverlay;

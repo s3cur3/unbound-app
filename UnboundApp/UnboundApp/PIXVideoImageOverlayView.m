@@ -44,7 +44,7 @@
     }
     
     int opts = (NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways | NSTrackingMouseMoved);
-    NSPoint buttonPoint = NSMakePoint(60,30);
+    NSPoint buttonPoint = NSMakePoint(27,27);
     NSRect trackingBounds = CGRectMake(buttonPoint.x, buttonPoint.y, 100.0, 100.0);//[self bounds]
     self.boundsTrackingArea = [ [NSTrackingArea alloc] initWithRect:trackingBounds
                                                             options:opts
@@ -66,19 +66,19 @@
 {
     // create an NSImage for our image file
 	//NSString *filePath = [[NSBundle mainBundle] pathForResource:@"play" ofType:@"png"];
-	drawImage = [NSImage imageNamed:@"play"];//[[NSImage alloc] initWithContentsOfFile:filePath];
+	drawImage = [NSImage imageNamed:@"playbutton"];//[[NSImage alloc] initWithContentsOfFile:filePath];
     
     // Set up attributed text which we will draw into our view
-    NSFont *font = [NSFont fontWithName:@"Helvetica" size:36.0];
-    NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
-    
-    [attrs setObject:font forKey:NSFontAttributeName];
-    [attrs setObject:[NSColor greenColor]
-              forKey:NSForegroundColorAttributeName];
-    
-    textString = [ [NSMutableAttributedString alloc]
-                  initWithString:@"Play"
-                  attributes:attrs];
+//    NSFont *font = [NSFont fontWithName:@"Helvetica" size:36.0];
+//    NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
+//    
+//    [attrs setObject:font forKey:NSFontAttributeName];
+//    [attrs setObject:[NSColor greenColor]
+//              forKey:NSForegroundColorAttributeName];
+//    
+//    textString = [ [NSMutableAttributedString alloc]
+//                  initWithString:@"Play"
+//                  attributes:attrs];
     
 }
 
@@ -131,7 +131,8 @@
 	[[NSColor clearColor] set];
 	NSRectFill([self bounds]);
     
-	[drawImage compositeToPoint:NSMakePoint(60,30) operation:NSCompositeSourceOver];
+	[drawImage compositeToPoint:NSMakePoint(27,27) operation:NSCompositeSourceOver];
+    //[drawImage drawAtPoint:NSMakePoint(27,27) fromRect:rect operation:NSCompositeSourceOver fraction:1.0f];
     
 	//[textString drawAtPoint:NSMakePoint(50,5)];
 }

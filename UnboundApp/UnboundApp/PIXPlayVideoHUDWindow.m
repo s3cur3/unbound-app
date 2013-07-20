@@ -8,6 +8,12 @@
 
 #import "PIXPlayVideoHUDWindow.h"
 
+@interface PIXPlayVideoHUDWindow()
+
+@property (weak, nonatomic) NSView * parentView;
+
+@end
+
 @implementation PIXPlayVideoHUDWindow
 
 /*
@@ -27,11 +33,60 @@
         // Turn off opacity so that the parts of the window that are not drawn into are transparent.
         [self setOpaque:NO];
         [self setBackgroundColor:[NSColor clearColor]];
-        [self setHasShadow:YES];
+        [self setHasShadow:NO];
         [self setReleasedWhenClosed:NO];
         
     }
     return self;
+}
+
+-(void)setParentView:(NSView *)view
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSViewFrameDidChangeNotification object:_parentView];
+    
+    _parentView = view;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parentFrameChaged:) name:NSViewFrameDidChangeNotification object:_parentView];
+    
+    //[self setPositionAnimated:NO];
+    [self positionWindowWithSize:self.frame.size animated:NO];
+    
+}
+
+
+-(void)parentFrameChaged:(NSNotificationCenter *)note
+{
+    DLog(@"%@", note);
+    //[self setPositionAnimated:NO];
+    [self positionWindowWithSize:self.frame.size animated:NO];
+}
+
+-(void)positionWindowWithSize:(NSSize)size animated:(BOOL)animated
+{
+    CGRect viewFrame = [self.parentView.window convertRectToScreen:self.parentView.frame];
+    CGRect selfFrame = self.frame;
+    selfFrame.size = size;
+    
+    //selfFrame.size.height -= self.hudView.heightChange;
+    
+    CGRect newFrame = CGRectZero;
+    
+    newFrame = CGRectMake(viewFrame.origin.x + (viewFrame.size.width /2) - (selfFrame.size.width/2),
+                          viewFrame.origin.y + (viewFrame.size.height /2) - (selfFrame.size.height/2),
+                          selfFrame.size.width,
+                          selfFrame.size.height);
+    
+    
+    // Move the window to the new location
+    if(animated)
+    {
+        [self setFrame:newFrame display:YES animate:YES];
+    }
+    
+    else
+    {
+        [self setFrame:newFrame display:YES animate:NO];
+    }
 }
 
 
