@@ -1542,7 +1542,7 @@ const CGFloat kThumbnailSize = 370.0f;
         if(cfDict) CFRelease(cfDict);
     }
 
-}
+ }
 
 -(void)forceSetExifData:(NSDictionary *)newExifData
 {

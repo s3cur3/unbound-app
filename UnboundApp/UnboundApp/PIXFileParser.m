@@ -30,6 +30,8 @@
 @property float fullScannProgressCurrent;
 @property float fullScannProgressTotal;
 
+@property (strong, strong) NSMutableDictionary * pendingFolderScanPaths;
+
 @end
 
 @implementation PIXFileParser
@@ -294,7 +296,29 @@ NSDictionary * dictionaryForURL(NSURL * url)
         subURL = [changedURL URLByDeletingLastPathComponent];
         if([self isURLInObservedDirectories:subURL])
         {
-            [self scanURLForChanges:subURL withRecursion:PIXFileParserRecursionNone];
+            // we may be scanning a url a bunch of times so delay by a little in case there are more scans to do
+            
+            // if we're not already going to scan this path
+            if(self.pendingFolderScanPaths[subURL] == nil) 
+            {
+                // set a dummy object in this dictionary
+                self.pendingFolderScanPaths[subURL] = [NSNumber numberWithBool:YES];
+                
+                // delay for half a second so any other scans of the same folder don't get done
+                double delayInSeconds = 0.5;
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    
+                    [self.pendingFolderScanPaths removeObjectForKey:subURL];
+                    
+                    // start the scan of the url
+                    [self scanURLForChanges:subURL withRecursion:PIXFileParserRecursionNone];
+                    
+                });
+            }
+            
+            
+            
         }
         
         // if it's a dir we should also scan inside it
@@ -989,7 +1013,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                     
                     // update flush albums and the UI with a notification
                     // use performSelector instead of dispatch async because it's faster
-                    [self performSelectorOnMainThread:@selector(flushAlbumsWithIDS:) withObject:[editedAlbumObjectIDs copy] waitUntilDone:NO];
+                    [self performSelectorOnMainThread:@selector(flushAlbumsWithIDs:) withObject:[editedAlbumObjectIDs copy] waitUntilDone:NO];
                     
                     // we've flushed these already so clear them out
                     [editedAlbumObjectIDs removeAllObjects];
@@ -1325,6 +1349,16 @@ NSDictionary * dictionaryForURL(NSURL * url)
     return cameraUploadsLocation;
 }
 
+-(NSMutableDictionary *)pendingFolderScanPaths
+{
+    if(_pendingFolderScanPaths) return _pendingFolderScanPaths;
+    
+    
+    _pendingFolderScanPaths = [NSMutableDictionary new];
+    
+    return _pendingFolderScanPaths;
+}
+
 
 #pragma mark - 
 #pragma ui helpers for init and settings screens
@@ -1358,6 +1392,12 @@ NSDictionary * dictionaryForURL(NSURL * url)
         
         [self scanFullDirectory];
         
+        for(NSURL * pathURL in self.observedDirectories)
+        {
+            NSString *tokenKeyString = [NSString stringWithFormat:@"resumeToken-%@", pathURL.path];
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:tokenKeyString];
+        }
+        
         [self startObserving];
         
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kAppFirstRun];
@@ -1386,6 +1426,12 @@ NSDictionary * dictionaryForURL(NSURL * url)
     [[PIXAppDelegate sharedAppDelegate] clearDatabase];
     
     [[PIXFileParser sharedFileParser] scanFullDirectory];
+    
+    for(NSURL * pathURL in self.observedDirectories)
+    {
+        NSString *tokenKeyString = [NSString stringWithFormat:@"resumeToken-%@", pathURL.path];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:tokenKeyString];
+    }
     
     [[PIXFileParser sharedFileParser] startObserving];
     

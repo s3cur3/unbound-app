@@ -619,6 +619,11 @@
 {
     //[self.view.window removeChildWindow:self.controlWindow];
     [self.controlWindow close];
+    
+    id currentPageController = self.pageController.selectedViewController;
+    if ([currentPageController respondsToSelector:@selector(dismissOverlay)]) {
+        [currentPageController dismissOverlay];
+    }
     //self.controlWindow = nil;
     //self.controlView = nil;
     

@@ -31,5 +31,8 @@
 @property (nonatomic,strong) NSWindow *overlayWindow;
 @property (nonatomic,strong) PIXVideoImageOverlayView *myImageView;
 
+-(void)dismissOverlay;
+-(void)displayOverlay;
+
 
 @end
