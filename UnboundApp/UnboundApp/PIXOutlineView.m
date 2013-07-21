@@ -15,6 +15,11 @@
 @implementation PIXOutlineView
 
 - (void)mouseDown:(NSEvent *)theEvent {
+    
+    // not sure why, but we need to manually support ctrl+click for right mouse
+    if (theEvent.modifierFlags & NSControlKeyMask)
+        return [self rightMouseDown:theEvent];
+    
     [super mouseDown:theEvent];
     
 //    // Only take effect for double clicks; remove to allow for single clicks
