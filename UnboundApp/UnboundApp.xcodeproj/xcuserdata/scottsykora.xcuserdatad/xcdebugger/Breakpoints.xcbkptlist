@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXFileParser.m"
-         timestampString = "395881779.092964"
+         timestampString = "396067644.803024"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "678"
-         endingLineNumber = "678"
+         startingLineNumber = "679"
+         endingLineNumber = "679"
          landmarkName = "-scanURLForChanges:withRecursion:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXAppDelegate.m"
-         timestampString = "393404774.49824"
+         timestampString = "396067417.623912"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "915"
-         endingLineNumber = "915"
+         startingLineNumber = "920"
+         endingLineNumber = "920"
          landmarkName = "-mergeContext:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -92,6 +92,19 @@
          startingLineNumber = "1652"
          endingLineNumber = "1652"
          landmarkName = "-createAlbumAtPath:withName:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "UnboundApp/PIXAlbumGridViewController.m"
+         timestampString = "396067578.82864"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "1065"
+         endingLineNumber = "1065"
+         landmarkName = "-albumsChanged:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

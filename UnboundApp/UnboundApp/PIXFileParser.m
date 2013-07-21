@@ -548,6 +548,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 // use this flag so the deep scan will restart if the app closes half way through
                 [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kDeepScanIncompleteKey];
                 
+                [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
                 
 //                double delayInSeconds = 1.2;
 //                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
@@ -1373,11 +1374,11 @@ NSDictionary * dictionaryForURL(NSURL * url)
     [openPanel setCanChooseFiles:NO];
     
     [openPanel setCanCreateDirectories:YES];
-    [openPanel setDirectoryURL:[NSURL fileURLWithPath:@"~/"]];
+    //[openPanel setDirectoryURL:[NSURL fileURLWithPath:@"~/"]];
     
-    [openPanel runModal];
+    NSInteger result = [openPanel runModal];
     
-    if([[openPanel URLs] count] == 1)
+    if(result == NSFileHandlingPanelOKButton && [[openPanel URLs] count] == 1)
     {
         [[PIXAppDelegate sharedAppDelegate] showMainWindow:nil];
         
@@ -1438,6 +1439,25 @@ NSDictionary * dictionaryForURL(NSURL * url)
     
     
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kAppFirstRun];
+}
+
+-(void)rescanFiles
+{
+    // use this flag so the deep scan will restart if the app crashes half way through
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDeepScanIncompleteKey];
+    
+    //[[PIXAppDelegate sharedAppDelegate] clearDatabase];
+    [[PIXFileParser sharedFileParser] scanFullDirectory];
+    
+    [[PIXFileParser sharedFileParser] stopObserving];
+    
+    for(NSURL * pathURL in self.observedDirectories)
+    {
+        NSString *tokenKeyString = [NSString stringWithFormat:@"resumeToken-%@", pathURL.path];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:tokenKeyString];
+    }
+    
+    [[PIXFileParser sharedFileParser] startObserving];
 }
 
 @end

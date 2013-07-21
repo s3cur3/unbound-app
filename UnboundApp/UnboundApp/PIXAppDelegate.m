@@ -298,6 +298,11 @@
     }
 }
 
+- (IBAction)rescanPhotosPressed:(id)sender
+{
+    [[PIXFileParser sharedFileParser] rescanFiles];
+}
+
 -(IBAction)importPhotosPressed:(id)sender
 {
     BOOL allowDirectories = NO;

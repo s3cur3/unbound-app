@@ -94,4 +94,6 @@ typedef enum {
 
 -(void)userChoseDropboxPhotosFolder;
 
+-(void)rescanFiles;
+
 @end
