@@ -1066,6 +1066,17 @@
     if([self.albums count] == 0 && ![[NSUserDefaults standardUserDefaults] boolForKey:kDeepScanIncompleteKey])
     {
         [self.centerStatusView setHidden:NO];
+        
+        NSArray * directoryURLs = [[PIXFileParser sharedFileParser] observedDirectories];
+        
+        NSString * rootFolderInfo = nil;
+        
+        if([directoryURLs count])
+        {
+            rootFolderInfo = [NSString stringWithFormat:@"Current Folder: %@", [(NSURL *)[directoryURLs objectAtIndex:0] path]];
+        }
+ 
+        [self.centerStatusViewSubTextField setStringValue:rootFolderInfo];
     }
     
     else
