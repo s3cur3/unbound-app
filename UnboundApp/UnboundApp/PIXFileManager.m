@@ -970,7 +970,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     {
         album = nil;
         panel.prompt = @"Import Folders";
-        panel.message = @"Choose folders to import. To import photo files select an ablum before importing.";
+        panel.message = @"Choose folders to import. To import photo files select an album before importing.";
         [panel setCanChooseFiles:NO];    
     }
     
