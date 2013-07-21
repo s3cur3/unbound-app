@@ -73,12 +73,25 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXFileManager.m"
-         timestampString = "396064215.923224"
+         timestampString = "396065404.221663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1104"
-         endingLineNumber = "1104"
+         startingLineNumber = "1122"
+         endingLineNumber = "1122"
          landmarkName = "-moveFiles:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "UnboundApp/PIXFileManager.m"
+         timestampString = "396065404.221663"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "1652"
+         endingLineNumber = "1652"
+         landmarkName = "-createAlbumAtPath:withName:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

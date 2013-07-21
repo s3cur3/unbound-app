@@ -521,6 +521,9 @@ typedef NSUInteger PIXOverwriteStrategy;
 
 -(BOOL)renameAlbum:(PIXAlbum *)anAlbum withName:(NSString *)aNewName
 {
+    
+    if([anAlbum isReallyDeleted]) return NO;
+    
     if ([aNewName length]==0 || [aNewName isEqualToString:anAlbum.title])
     {
         DLog(@"renaming to empty string or same name disallowed.");
@@ -529,7 +532,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     
     // validate filename
     NSError *error = NULL;
-    // after looking into this, it seems macosx supports all unicode characters in filenames. I'll test for / and leave this in just in case we want ot add more.
+    // after looking into this, it seems macosx supports all unicode characters in filenames. I'll test for / and leave this in just in case we want to add more.
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"[/]"
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:&error];
@@ -576,10 +579,25 @@ typedef NSUInteger PIXOverwriteStrategy;
         [[NSApplication sharedApplication] presentError:error];
         return NO;
     }
+    
+    // save all the way back to the persistant store
+    [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
+    
+    [anAlbum flush];
+    
     NSString *oldAlbumPath = [NSString stringWithFormat:@"%@/%@", parentFolderPath, oldAlbumName];
     //[[PIXFileParser sharedFileParser] scanPath:parentFolderPath withRecursion:PIXFileParserRecursionFull];
-    [[PIXFileParser sharedFileParser] scanPath:oldAlbumPath withRecursion:PIXFileParserRecursionFull];
-    [[PIXFileParser sharedFileParser] scanPath:anAlbum.path withRecursion:PIXFileParserRecursionSemi];
+    
+    // scan the album paths after a short delay
+    double delayInSeconds = 0.5;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+        [[PIXFileParser sharedFileParser] scanPath:oldAlbumPath withRecursion:PIXFileParserRecursionNone];
+        [[PIXFileParser sharedFileParser] scanPath:anAlbum.path withRecursion:PIXFileParserRecursionSemi];
+    });
+    
+    
     //[[PIXFileParser sharedFileParser] scanFullDirectory];
     
     
@@ -1627,6 +1645,9 @@ NSString * UserHomeDirectory();
     [newAlbum setDateLastUpdated:[NSDate date]];
     
     [newAlbum updateUnboundFile];
+    
+    [aContext save:nil];
+    [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
     
