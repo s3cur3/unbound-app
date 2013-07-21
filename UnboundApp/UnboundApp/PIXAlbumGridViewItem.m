@@ -368,9 +368,9 @@
     NSRect srcRect = NSZeroRect;
     srcRect.size = self.itemImage.size;
     
-    NSRect textRect = NSMakeRect(bounds.origin.x + 3,
+    NSRect textRect = NSMakeRect(bounds.origin.x + 13,
                           NSHeight(bounds) - 50,
-                          NSWidth(bounds) - 6,
+                          NSWidth(bounds) - 26,
                           20);
     
     NSRect subTitleRect = NSMakeRect(bounds.origin.x + 3,
