@@ -328,12 +328,15 @@ typedef NSUInteger PIXOverwriteStrategy;
                 for (PIXPhoto *anItem in items)
                 {
                     [albumsToUpdate addObject:[(PIXPhoto *)anItem album]];
+                    
+                    // delete the photos from the database                
                     [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] deleteObject:anItem];
                 }
                 
+                [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] save:nil];
+                
                 for (PIXAlbum *anAlbum in albumsToUpdate)
                 {
-                    //[anAlbum updateAlbumBecausePhotosDidChange];
                     [[PIXFileParser sharedFileParser] scanPath:anAlbum.path withRecursion:PIXFileParserRecursionNone];
                     [anAlbum flush];
                 }
@@ -1055,6 +1058,11 @@ typedef NSUInteger PIXOverwriteStrategy;
     
     NSMutableArray *undoArray = [NSMutableArray arrayWithCapacity:items.count];
     NSMutableSet *albumPaths = [[NSMutableSet alloc] init];
+    
+    NSMutableSet * changedAlbums = [[NSMutableSet alloc] init];
+    
+    NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
+    
     for (id aDict in items)
     {
         NSString *src = [aDict valueForKey:@"source"];
@@ -1083,17 +1091,48 @@ typedef NSUInteger PIXOverwriteStrategy;
             [[NSApplication sharedApplication] presentError:error];
         }
         
-//        [[NSWorkspace sharedWorkspace]
-//         performFileOperation:NSWorkspaceMoveOperation
-//         source: [src stringByDeletingLastPathComponent]
-//         destination:dest
-//         files:[NSArray arrayWithObject:[src lastPathComponent]]
-//         tag:nil];
+        // if we have the source photo in the database update it now
+        PIXPhoto * srcPhoto = [[[PIXFileParser sharedFileParser] fetchPhotosWithPaths:@[src]] lastObject];
+        PIXAlbum * dstAlbum = [[[PIXFileParser sharedFileParser] fetchAlbumsWithPaths:@[dest]] lastObject];
+        if(srcPhoto && dstAlbum)
+        {
+            [changedAlbums addObject:srcPhoto.album];
+            [changedAlbums addObject:dstAlbum];
+            
+            // delete the source photo since it's getting moved somewhere else
+            [context deleteObject:srcPhoto];
+            /*
+            srcPhoto.path = fullDestPath;
+            
+            [srcPhoto.album removePhotosObject:srcPhoto];
+            
+            srcPhoto.album = dstAlbum;
+             */
+        }
     }
     
-    //[[[PIXAppDelegate sharedAppDelegate] dataSource] startLoadingAllAlbumsAndPhotosInObservedDirectories];
-    //    MainWindowController *mainWindowController = [AppDelegate mainWindowController] ;
-    //    FileSystemEventController *fileSystemEventController = mainWindowController.fileSystemEventController;
+//    for(PIXAlbum * anAlbum in changedAlbums)
+//    {
+//        [anAlbum flush];
+//    }
+    
+    // save the context so the db is updated
+    
+    [context save:nil];
+    
+    //issue a notification to update the ui
+    
+    // update any albums views
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
+    
+    for(PIXAlbum * anAlbum in changedAlbums)
+    {
+        [anAlbum flush];
+        //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumStackDidChangeNotification object:self];
+        //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
+    }
+    
+
     for (NSString *albumPath in albumPaths)
     {
         if (![albumPath isEqualToString:[self trashFolderPath]] && [self directoryIsSubpathOfObservedDirectories:albumPath]) {
