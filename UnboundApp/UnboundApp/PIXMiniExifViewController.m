@@ -9,6 +9,7 @@
 #import "PIXMiniExifViewController.h"
 #import "PIXPhoto.h"
 #import "PIXFileManager.h"
+#import <QTKit/QTKit.h>
 
 @interface PIXMiniExifViewController () <NSTextFieldDelegate>
 
@@ -99,6 +100,14 @@
     
     
     NSString * modelString = [[[self.photo exifData] objectForKey:@"{TIFF}"] objectForKey:@"Model"];
+    
+    if ([self.photo isVideo]) {
+        NSError *anError;
+        QTMovie *aMovie = [QTMovie movieWithFile:self.photo.path error:&anError];
+        if (!anError) {
+            modelString = QTStringFromTime([aMovie duration]);//[NSString stringWithFormat:@"%f", [aMovie duration]];
+        }
+    }
     
     if(modelString == nil)
     {

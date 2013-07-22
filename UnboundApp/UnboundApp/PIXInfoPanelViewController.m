@@ -11,6 +11,7 @@
 #import "PIXPhoto.h"
 #import "PIXPageViewController.h"
 #import "PIXFileManager.h"
+#import <QTKit/QTKit.h>
 
 @interface PIXInfoPanelViewController () <MKMapViewDelegate, NSTextFieldDelegate>
 
@@ -72,61 +73,86 @@
 
 -(void)updateLabels
 {
-    NSString * nameString = [self.photo name];
-    
-    if(nameString == nil) nameString = @"";
-    
-    [self.photoName setStringValue:nameString];
-    
-    NSDateFormatter * dateFormatter = [NSDateFormatter new];
-    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-    [dateFormatter setDateStyle:NSDateFormatterShortStyle];
-    
-    NSString * dateString = nil;
-    if([self.photo dateTaken])
-    {
-        dateString = [dateFormatter stringFromDate:[self.photo dateTaken]];
+    BOOL useVideoLabels = [self.photo isVideo];
+    NSDictionary *videoAttributes = nil;
+    if (useVideoLabels) {
+        videoAttributes = [self.photo videoAttributes];
+        [self.photoName setStringValue:[videoAttributes objectForKey:@"Name"]];
+        
+        NSUInteger * byteCount = [[videoAttributes objectForKey:@"Size"] unsignedIntegerValue];
+        NSString * sizeString = nil;
+        if(byteCount)
+        {
+            sizeString = [NSByteCountFormatter stringFromByteCount:byteCount countStyle:NSByteCountFormatterCountStyleFile];
+        }
+        
+        if(sizeString == nil) sizeString = @"";
+        self.filesize.stringValue = sizeString;
+        
+        NSString *dateString = [videoAttributes objectForKey:@"Created"];
+        [self.dateTaken setStringValue:dateString];
+        
+        self.cameraModel.stringValue = [videoAttributes objectForKey:@"Duration"];
+    } else {
+
+        NSString * nameString = [self.photo name];
+        
+        if(nameString == nil) nameString = @"";
+        
+        [self.photoName setStringValue:nameString];
+        
+        NSDateFormatter * dateFormatter = [NSDateFormatter new];
+        [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+        [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+        
+        NSString * dateString = nil;
+        if([self.photo dateTaken])
+        {
+            dateString = [dateFormatter stringFromDate:[self.photo dateTaken]];
+        }
+        
+        else if([self.photo dateCreated])
+        {
+            dateString = [dateFormatter stringFromDate:[self.photo dateCreated]];
+        }
+        
+        if(dateString == nil) dateString = @"";
+        [self.dateTaken setStringValue:dateString];
+        
+        NSString * resolutionString = nil;
+        NSString * pixelHeight = [[self.photo exifData] objectForKey:@"PixelHeight"];
+        NSString * pixelWidth = [[self.photo exifData] objectForKey:@"PixelWidth"];
+        
+        if(pixelHeight && pixelWidth)
+        {
+            resolutionString = [NSString stringWithFormat:@"%@ x %@", pixelWidth, pixelHeight];
+        }
+        
+        if(resolutionString == nil) resolutionString = @"";
+        self.resolution.stringValue = resolutionString;
+        
+        NSUInteger * byteCount = [[self.photo fileSize] unsignedIntegerValue];
+        
+        NSString * sizeString = nil;
+        if(byteCount)
+        {
+            sizeString = [NSByteCountFormatter stringFromByteCount:byteCount countStyle:NSByteCountFormatterCountStyleFile];
+        }
+        
+        if(sizeString == nil) sizeString = @"";
+        self.filesize.stringValue = sizeString;
+        
+        NSString * modelString = [[[self.photo exifData] objectForKey:@"{TIFF}"] objectForKey:@"Model"];
+
+        
+        
+        if(modelString == nil)
+        {
+            modelString = @"";
+        }
+        self.cameraModel.stringValue = modelString;
+        
     }
-    
-    else if([self.photo dateCreated])
-    {
-        dateString = [dateFormatter stringFromDate:[self.photo dateCreated]];
-    }
-    
-    if(dateString == nil) dateString = @"";
-    [self.dateTaken setStringValue:dateString];
-    
-    NSString * resolutionString = nil;
-    NSString * pixelHeight = [[self.photo exifData] objectForKey:@"PixelHeight"];
-    NSString * pixelWidth = [[self.photo exifData] objectForKey:@"PixelWidth"];
-    
-    if(pixelHeight && pixelWidth)
-    {
-        resolutionString = [NSString stringWithFormat:@"%@ x %@", pixelWidth, pixelHeight];
-    }
-    
-    if(resolutionString == nil) resolutionString = @"";
-    self.resolution.stringValue = resolutionString;
-    
-    NSUInteger * byteCount = [[self.photo fileSize] unsignedIntegerValue];
-    
-    NSString * sizeString = nil;
-    if(byteCount)
-    {
-        sizeString = [NSByteCountFormatter stringFromByteCount:byteCount countStyle:NSByteCountFormatterCountStyleFile];
-    }
-    
-    if(sizeString == nil) sizeString = @"";
-    self.filesize.stringValue = sizeString;
-    
-    
-    NSString * modelString = [[[self.photo exifData] objectForKey:@"{TIFF}"] objectForKey:@"Model"];
-    
-    if(modelString == nil)
-    {
-        modelString = @"";
-    }
-    self.cameraModel.stringValue = modelString;
     
     [self.view setNeedsUpdateConstraints:YES];
     DLog(@"%@", self.photo);
@@ -262,7 +288,12 @@
 
 -(void)convertAndRefreshExif
 {
-    self.exifStringArray = [self exifDictToStringArray:self.photo.exifData];
+    if ([self.photo isVideo]) {
+        self.exifStringArray = [self exifDictToStringArray:[self.photo videoAttributes]];
+    } else {
+        self.exifStringArray = [self exifDictToStringArray:self.photo.exifData];
+    }
+    
     
     [self.exifTableView reloadData];
 }

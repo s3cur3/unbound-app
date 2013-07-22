@@ -28,6 +28,8 @@ const CGFloat kThumbnailSize = 370.0f;
 //- (void)thumbnailCommitImage:(NSImage *)image isPlaceholder:(BOOL)isPlaceholder;
 //- (void)thumbnailCommitImageData:(NSImage *)image;
 
+@property (nonatomic, retain) QTMovie * videoFile;
+
 @property (nonatomic, assign, readwrite) BOOL cancelThumbnailLoadOperationDelayFlag;
 
 @property (retain) NSBlockOperation * slowThumbLoad;
@@ -65,6 +67,8 @@ const CGFloat kThumbnailSize = 370.0f;
 @synthesize slowThumbLoad, fastThumbLoad;
 
 @synthesize fasterThumbLoad;
+
+@synthesize videoFile = _videoFile;
 
 //__strong static NSDateFormatter * _exifDateFormatter = nil;
 
@@ -1893,6 +1897,60 @@ const CGFloat kThumbnailSize = 370.0f;
     }
     
     return NO;
+}
+
+-(BOOL)isVideo;
+{
+    return [[self class] isVideoPath:self.path];
+}
+
+-(QTMovie *)videoFile
+{
+    if (_videoFile!=nil) {
+        return _videoFile;
+    }
+    [QTMovie enterQTKitOnThread];
+    NSError *anError;
+    QTMovie *aMovie = [QTMovie movieWithFile:self.path error:&anError];
+    if (!anError) {
+        _videoFile = aMovie;
+    } else {
+        DLog(@"Unable to load movie file at path : %@, error : %@", self.path, anError);
+    }
+    [QTMovie exitQTKitOnThread];
+    
+    return _videoFile;
+}
+
+-(NSDictionary *)videoAttributes;
+{
+    if (![self isVideo]) {
+        return nil;
+    }
+    NSDictionary *videoAttributesDict = [[self videoFile] movieAttributes];
+    NSDictionary *displayKeysDict = @{QTMovieDisplayNameAttribute : @"Name", QTMovieCreationTimeAttribute : @"Created", QTMovieDataSizeAttribute : @"Size", QTMovieDurationAttribute : @"Duration"};
+    NSArray *displayKeys = [displayKeysDict allKeys];
+    NSMutableDictionary *videoAttributesForDisplayDict = [NSMutableDictionary dictionary];
+    for (NSString *aKey in displayKeys) {
+        if ([[videoAttributesDict allKeys] containsObject:aKey]) {
+            id aValue = [videoAttributesDict objectForKey:aKey];
+            if (![aValue isKindOfClass:[NSString class]]) {
+                if ([aValue respondsToSelector:@selector(stringValue)] && ![aValue isKindOfClass:[NSNumber class]]) {
+                    aValue = [aValue stringValue];
+                } else if ([aValue isKindOfClass:[NSDate class]]) {
+                    aValue = [[[self class] exifDateFormatter] stringFromDate:aValue];
+                } else if ([aKey isEqualToString:QTMovieDurationAttribute]) {
+                    QTTime aTime = [[self videoFile] duration];//[(NSValue *) aValue nonretainedObjectValue];
+                    aValue = QTStringFromTime((QTTime)aTime);
+                } else {
+                    DLog(@"parsing video data unexpected type for key: %@ and value : %@", aKey, aValue);
+                }
+            }
+            [videoAttributesForDisplayDict setObject:aValue forKey:[displayKeysDict objectForKey:aKey]];
+        }
+    }
+    
+    return videoAttributesForDisplayDict;
 }
 
 @end

@@ -11,6 +11,8 @@
 #import <MapKit/MapKit.h>
 #import "PIXThumbnailLoadingDelegate.h"
 
+@class QTMovie;
+
 @class PIXAlbum, PIXThumbnail;
 @class MakeThumbnailOperation;
 
@@ -72,6 +74,11 @@
 -(void)postPhotoUpdatedNote;
 
 -(void)userSetCaption:(NSString *)userCaption;
+
+-(BOOL)isVideo;
+
+-(QTMovie *)videoFile;
+-(NSDictionary *)videoAttributes;
 
 @end
 
