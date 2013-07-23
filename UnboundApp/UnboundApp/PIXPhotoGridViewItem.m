@@ -19,9 +19,14 @@
 @property CALayer * imageLayer;
 @property (nonatomic, strong) CALayer * selectionLayer;
 
+@property (nonatomic, retain) NSImageView * videoLayover;
+
+
 @end
 
 @implementation PIXPhotoGridViewItem
+
+@synthesize videoLayover = _videoLayover;
 
 - (id)initWithFrame:(NSRect)frame
 {
@@ -150,8 +155,17 @@
     {
         self.itemImage = [NSImage imageNamed:@"temp"];
     }
-    
+
     [self updateLayer];
+    if([self.photo isVideo])
+    {
+        [self.layer addSublayer:self.videoLayover.layer];
+    }
+    else
+    {
+        [_videoLayover.layer removeFromSuperlayer];
+        self.videoLayover = nil;
+    }
     [self setNeedsDisplay:YES];
 }
 
@@ -173,7 +187,62 @@
 {
     [super setFrame:frameRect];
     [_selectionLayer setFrame:self.bounds];
+
+    if (_videoLayover!=nil) {
+        //DLog(@"self.frame.origin.x: %f, self.frame.origin.y: %f, self.frame.size.height: %f, self.frame.size.width: %f", frameRect.origin.x, frameRect.origin.y, frameRect.size.height, frameRect.size.width);
+        NSImage * photo = self.itemImage;
+        CGRect rect = CGRectInset(self.bounds, 15, 15);
+        
+        // calculate the proportional image frame
+        CGSize imageSize = [photo size];
+        
+        CGRect imageFrame = self.bounds;//CGRectMake(0, 0, 40, 40);
+        
+        if(imageSize.width > 0 && imageSize.height > 0)
+        {
+            if(imageSize.width / imageSize.height > rect.size.width / rect.size.height)
+            {
+                float mulitplier = rect.size.width / imageSize.width;
+                
+                imageFrame.size.width = rint(mulitplier * imageFrame.size.width);
+                imageFrame.size.height = rint(mulitplier * imageFrame.size.height);
+                
+                imageFrame.origin.y = rint((rect.size.height - imageFrame.size.height)/2 + rect.origin.y);
+                imageFrame.origin.x = rint((rect.size.width - imageFrame.size.width)/2 + rect.origin.x);
+            }
+            
+            else
+            {
+                float mulitplier = rect.size.height / imageSize.height;
+                
+                imageFrame.size.width = rint(mulitplier * imageFrame.size.width);
+                imageFrame.size.height = rint(mulitplier * imageFrame.size.height);
+                
+                imageFrame.origin.y = rint((rect.size.height - imageFrame.size.height)/2 + rect.origin.y);
+                imageFrame.origin.x = rint((rect.size.width - imageFrame.size.width)/2 + rect.origin.x);
+            }
+        }
+        [_videoLayover setFrame:imageFrame];
+        //[_videoLayover setNeedsDisplay];
+    }
+
     [self updateLayer];
+}
+
+-(NSImageView *)videoLayover
+{
+	if(_videoLayover != nil) return _videoLayover;
+	
+	_videoLayover = [[NSImageView alloc] init];
+    _videoLayover.image = [NSImage imageNamed:@"playbutton"];
+    [_videoLayover setAutoresizesSubviews:YES];
+    [_videoLayover.image setScalesWhenResized:YES];
+    [_videoLayover setImageScaling:NSImageScaleProportionallyDown];
+    
+    [_videoLayover setWantsLayer:YES];
+    
+	return _videoLayover;
+	
 }
 
 
