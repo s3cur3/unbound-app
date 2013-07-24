@@ -181,6 +181,7 @@
     // only set it if it's different
     if(_album != album)
     {
+        self.topLevelThumbIsVideo = NO;
 
         // stop watching for old album updates
         if (_album != nil)
@@ -230,7 +231,7 @@
     [self setItemTitle:[self.album title]];
     
     
-    
+    //self.topLevelThumbIsVideo = NO;
     
     
     self.albumThumb = nil;

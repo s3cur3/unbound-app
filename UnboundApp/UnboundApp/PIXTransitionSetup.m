@@ -75,12 +75,12 @@
 
 -(void)setupTransitions
 {
-#ifdef DEBUG
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        [self logAllFilters];
-    });
-#endif
+//#ifdef DEBUG
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        [self logAllFilters];
+//    });
+//#endif
     
     NSMutableArray *transitions = [[NSMutableArray alloc] initWithCapacity:self.coreImageTransitionNames.count];
     //NSArray *filterNames = [self availableFilterNames];
