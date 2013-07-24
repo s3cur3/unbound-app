@@ -31,6 +31,7 @@
 @property CGFloat stackThumb2Rotate;
 
 @property BOOL isDraggingOver;
+@property BOOL topLevelThumbIsVideo;
 
 @property CGRect titleEditFrame;
 @property (strong) NSTextField * titleEditField;
@@ -247,6 +248,11 @@
         if(newThumb)
         {
             self.albumThumb = newThumb;
+            if ([thumbPhoto isVideo]) {
+                self.topLevelThumbIsVideo = YES;
+            } else {
+                self.topLevelThumbIsVideo = NO;
+            }
         }
         
         // we'll check for a nil photo outside of this if because albums with no photos should still have one placeholder thumb
@@ -437,7 +443,22 @@
     
     
     // draw the top image
-    [[self class] drawBorderedPhoto:self.albumThumb inRect:albumFrame];
+    CGRect imageFrame = [[self class] drawBorderedPhoto:self.albumThumb inRect:albumFrame];
+    //PIXPhoto * thumbPhoto = [[self.album stackPhotos] objectAtIndex:0];
+    if (self.topLevelThumbIsVideo) {
+        CGRect imageRect = CGRectInset(imageFrame, 6, 6);
+        
+        // make a smaller border when the photos are smaller
+        if(imageFrame.size.width < 120)
+        {
+            imageRect = CGRectInset(imageFrame, 3, 3);
+        }
+        //[photo drawInRect:imageRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+        NSImage *playButtonImage = [NSImage imageNamed:@"playbutton"];
+        [playButtonImage setScalesWhenResized:YES];
+        CGRect playButtonRect = CGRectMake(CGRectGetMidX(imageRect)-20.0, CGRectGetMidY(imageRect)-20.0, 40.0, 40.0);//CGRectApplyAffineTransform(imageRect, CGAffineTransformMakeScale(0.33, 0.33));
+        [playButtonImage drawInRect:playButtonRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];
+    }
     
     
     // include the title area in the contentFrame so clicks there will select the item

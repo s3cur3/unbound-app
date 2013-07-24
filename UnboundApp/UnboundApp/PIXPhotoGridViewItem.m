@@ -223,7 +223,6 @@
             }
         }
         [_videoLayover setFrame:imageFrame];
-        //[_videoLayover setNeedsDisplay];
     }
 
     [self updateLayer];
