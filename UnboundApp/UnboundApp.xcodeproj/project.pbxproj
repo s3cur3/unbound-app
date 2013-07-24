@@ -60,6 +60,8 @@
 		1D77F3711795DC0D00FCF0F5 /* videoview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D77F36F1795DC0C00FCF0F5 /* videoview.xib */; };
 		1D77F3741795EA2300FCF0F5 /* PIXVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D77F3731795EA2200FCF0F5 /* PIXVideoViewController.m */; };
 		1D77F3751795EA2300FCF0F5 /* PIXVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D77F3731795EA2200FCF0F5 /* PIXVideoViewController.m */; };
+		1D7BDD9A17A02E0200E2CD16 /* AutoSizingVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D7BDD9917A02E0100E2CD16 /* AutoSizingVideoView.m */; };
+		1D7BDD9B17A02E0200E2CD16 /* AutoSizingVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D7BDD9917A02E0100E2CD16 /* AutoSizingVideoView.m */; };
 		1D8CD7E816AB4D220072D516 /* PIXGridViewItemLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8CD7E716AB4D220072D516 /* PIXGridViewItemLayout.m */; };
 		1D8CD7EF16AB6EC70072D516 /* PIXGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8CD7ED16AB6EC70072D516 /* PIXGridViewController.m */; };
 		1D8CD7F016AB6EC70072D516 /* PIXGridViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8CD7EE16AB6EC70072D516 /* PIXGridViewController.xib */; };
@@ -515,6 +517,8 @@
 		1D77F36F1795DC0C00FCF0F5 /* videoview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = videoview.xib; sourceTree = "<group>"; };
 		1D77F3721795EA2200FCF0F5 /* PIXVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXVideoViewController.h; sourceTree = "<group>"; };
 		1D77F3731795EA2200FCF0F5 /* PIXVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXVideoViewController.m; sourceTree = "<group>"; };
+		1D7BDD9817A02E0100E2CD16 /* AutoSizingVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoSizingVideoView.h; sourceTree = "<group>"; };
+		1D7BDD9917A02E0100E2CD16 /* AutoSizingVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoSizingVideoView.m; sourceTree = "<group>"; };
 		1D8CD7E716AB4D220072D516 /* PIXGridViewItemLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXGridViewItemLayout.m; sourceTree = "<group>"; };
 		1D8CD7EC16AB6EC70072D516 /* PIXGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXGridViewController.h; sourceTree = "<group>"; };
 		1D8CD7ED16AB6EC70072D516 /* PIXGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXGridViewController.m; sourceTree = "<group>"; };
@@ -773,6 +777,8 @@
 		1D0834F5167D63E5003D557A /* PageView */ = {
 			isa = PBXGroup;
 			children = (
+				1D7BDD9817A02E0100E2CD16 /* AutoSizingVideoView.h */,
+				1D7BDD9917A02E0100E2CD16 /* AutoSizingVideoView.m */,
 				1D77F36F1795DC0C00FCF0F5 /* videoview.xib */,
 				1D23CC151720604E00C7FF70 /* PIXTransitionSetup.m */,
 				1D0834F8167D6478003D557A /* PIXPageViewController.h */,
@@ -1679,6 +1685,7 @@
 				1D77F3741795EA2300FCF0F5 /* PIXVideoViewController.m in Sources */,
 				1DCD7B2117987A5000DF9478 /* PIXVideoImageOverlayView.m in Sources */,
 				1D6C23EE179882AA00EC34F5 /* PIXPlayVideoHUDWindow.m in Sources */,
+				1D7BDD9A17A02E0200E2CD16 /* AutoSizingVideoView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1765,6 +1772,7 @@
 				1D77F3751795EA2300FCF0F5 /* PIXVideoViewController.m in Sources */,
 				1DCD7B2217987A5000DF9478 /* PIXVideoImageOverlayView.m in Sources */,
 				1D6C23EF179882AA00EC34F5 /* PIXPlayVideoHUDWindow.m in Sources */,
+				1D7BDD9B17A02E0200E2CD16 /* AutoSizingVideoView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

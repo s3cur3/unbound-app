@@ -14,7 +14,7 @@
 
 -(void)mouseDown:(NSEvent *)theEvent
 {
-    DLog(@"mouseEntered");
+    DLog(@"mouseDown");
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UB_PLAY_MOVIE_PRESSED" object:nil];
 }
 
