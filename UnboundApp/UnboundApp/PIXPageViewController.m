@@ -1330,6 +1330,12 @@
 //        DLog(@"pageControllerDidEndLiveTransition fullsizeImage not loaded : %@", aPhoto);
 //    }
     [aPageController completeTransition];
+
+    [self.currentImageVC setIsCurrentView:NO];
+    
+    self.currentImageVC = (PIXImageViewController *)[self.pageController selectedViewController];
+    
+    [self.currentImageVC setIsCurrentView:YES];
     
 
     [self restartNextSlideIfNeeded];
