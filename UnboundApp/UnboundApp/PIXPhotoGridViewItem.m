@@ -196,7 +196,7 @@
         // calculate the proportional image frame
         CGSize imageSize = [photo size];
         
-        CGRect imageFrame = self.bounds;//CGRectMake(0, 0, 40, 40);
+        CGRect imageFrame = CGRectMake(0, 0, 100, 100);
         
         if(imageSize.width > 0 && imageSize.height > 0)
         {

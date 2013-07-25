@@ -993,7 +993,15 @@
 
 -(void)unfadeControls
 {
-    [self.controlWindow showAnimated:NO];
+    if ([self.pageController.selectedViewController respondsToSelector:@selector(movieView)]) {
+        DLog(@"Don't unfadeControls if page view is movie and it is playing.");
+        PIXVideoViewController *aVideoViewController = (PIXVideoViewController *)self.pageController.selectedViewController;
+        if (aVideoViewController.overlayWindow!=nil) {
+            [self.controlWindow showAnimated:NO];
+        }
+    } else {
+        [self.controlWindow showAnimated:NO];
+    }
     [self.navigationViewController setNavBarHidden:NO];
 }
 

@@ -103,6 +103,7 @@ static NSString *ResolveName(NSString *aName)
 -(void)playMoviePressed:(NSNotification *)notification
 {
     DLog(@"playMoviePressed");
+    [[self pageViewController] tryFadeControls];
     [self dismissOverlay];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieFinishedPlaying:) name:QTMovieDidEndNotification object:nil];//]self.movieView.movie];
     [[self.movieView movie] play];
@@ -161,6 +162,13 @@ static NSString *ResolveName(NSString *aName)
 //                                                backing:NSBackingStoreBuffered
 //                                                  defer:NO];
     
+    //NSImage *playButtonImage = [NSImage imageNamed:@"playbutton"];
+    //[playButtonImage setScalesWhenResized:YES];
+    CGRect playButtonRect = CGRectMake(CGRectGetMidX(movieFrame)-100.0, CGRectGetMidY(movieFrame)-100.0, 200.0, 200.0);//
+    
+//    CGRect playButtonRect = CGRectApplyAffineTransform(imageRect, CGAffineTransformMakeScale(0.33, 0.33));
+//    [playButtonRect drawInRect:playButtonRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];
+    
     CGRect playButtonWindowFrame = NSMakeRect((screenOrigin.x+(movieFrame.size.width/2))-100.0,
                                         (screenOrigin.y+(movieFrame.size.height/2))-100.0,
                                         200.0,
@@ -172,10 +180,10 @@ static NSString *ResolveName(NSString *aName)
 //                                        200.0);
     
     
-    CGRect playButtonViewFrame = NSMakeRect(50.0f,
-                                            50.0f,
-                                            100.0f,
-                                            100.0f);
+    CGRect playButtonViewFrame = NSMakeRect(0.0f,
+                                            0.0f,
+                                            200.0f,
+                                            200.0f);
     self.overlayWindow=[[PIXPlayVideoHUDWindow alloc] initWithContentRect:playButtonWindowFrame
                                                                 styleMask:NSBorderlessWindowMask
                                                                   backing:NSBackingStoreBuffered
@@ -221,6 +229,7 @@ static NSString *ResolveName(NSString *aName)
     //self.imageView.delegate = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self dismissOverlay];
+    [self.movieView.movie stop];
 }
 
 -(void)setRepresentedObject:(id)representedObject

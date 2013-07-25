@@ -40,4 +40,6 @@
 
 -(IBAction)toggleFullScreen:(id)sender;
 
+-(void)tryFadeControls;
+
 @end

@@ -44,8 +44,8 @@
     }
     
     int opts = (NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways | NSTrackingMouseMoved);
-    NSPoint buttonPoint = NSMakePoint(27,27);
-    NSRect trackingBounds = CGRectMake(buttonPoint.x, buttonPoint.y, 100.0, 100.0);//[self bounds]
+    NSPoint buttonPoint = NSMakePoint(0,0);
+    NSRect trackingBounds = CGRectMake(buttonPoint.x, buttonPoint.y, 74.0, 74.0);//[self bounds]
     self.boundsTrackingArea = [ [NSTrackingArea alloc] initWithRect:trackingBounds
                                                             options:opts
                                                               owner:self
@@ -131,8 +131,11 @@
 	[[NSColor clearColor] set];
 	NSRectFill([self bounds]);
     
-	[drawImage compositeToPoint:NSMakePoint(27,27) operation:NSCompositeSourceOver];
-    //[drawImage drawAtPoint:NSMakePoint(27,27) fromRect:rect operation:NSCompositeSourceOver fraction:1.0f];
+	//[drawImage compositeToPoint:NSMakePoint(0,0) operation:NSCompositeSourceOver];
+    CGSize size = [drawImage size];
+    CGFloat xval = CGRectGetMidX(rect)-(size.width/2);
+    CGFloat yval = CGRectGetMidY(rect);//(size.height/2);
+    [drawImage drawAtPoint:NSMakePoint(xval,yval) fromRect:rect operation:NSCompositeSourceOver fraction:1.0f];
     
 	//[textString drawAtPoint:NSMakePoint(50,5)];
 }

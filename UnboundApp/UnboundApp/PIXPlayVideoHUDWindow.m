@@ -63,7 +63,9 @@
 
 -(void)positionWindowWithSize:(NSSize)size animated:(BOOL)animated
 {
-    CGRect viewFrame = [self.parentView.window convertRectToScreen:self.parentView.frame];
+    NSView *videoPlayerView = [self.parentView.subviews objectAtIndex:0];
+    DLog(@"videoPlayerView : %@", videoPlayerView);
+    CGRect viewFrame = [self.parentView.window convertRectToScreen:videoPlayerView.frame];
     CGRect selfFrame = self.frame;
     selfFrame.size = size;
     
