@@ -255,7 +255,6 @@
     if(_activityIndicator != nil) return _activityIndicator;
     
     _activityIndicator = [[NSToolbarItem alloc] initWithItemIdentifier:@"activityIndicator"];
-    //_trashbutton.image = [NSImage imageNamed:NSImageNameTrashEmpty];
     
     
     PIXSeperatedSpinnerView * spinner = [[PIXSeperatedSpinnerView alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
@@ -265,28 +264,9 @@
         withKeyPath:@"isWorking"
             options: nil];
     
-    /*
-    NSProgressIndicator * indicator = [[NSProgressIndicator alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
-    [indicator setStyle:NSProgressIndicatorSpinningStyle];
-    [indicator setIndeterminate:YES];
-    
-    [indicator setControlSize:NSSmallControlSize];
-    [indicator sizeToFit];
-    
-    [indicator setDisplayedWhenStopped:NO];
-    
-    [indicator setUsesThreadedAnimation:YES];
-    
-    //[indicator setCanDrawConcurrently:YES];
-    
-    [indicator bind:@"animate"
-           toObject:[PIXFileParser sharedFileParser]
-        withKeyPath:@"isWorking"
-            options: nil]; //@{NSValueTransformerNameBindingOption : NSNegateBooleanTransformerName}];
-    
-     */
-    
+  
     _activityIndicator.view = spinner;
+     
     
     [_activityIndicator setLabel:@"Acitivity"];
     [_activityIndicator setPaletteLabel:@"Activity"];
