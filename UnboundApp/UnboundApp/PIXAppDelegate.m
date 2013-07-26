@@ -765,6 +765,21 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     [_managedObjectContext setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mergeContext:) name:NSManagedObjectContextDidSaveNotification object:nil];
+    
+    // do a quick test fetch to see if the db is malformed
+    
+    NSError * error = nil;
+    NSFetchRequest * fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kPhotoEntityName];
+    [_managedObjectContext countForFetchRequest:fetchRequest error:&error];
+    
+    if(error)
+    {
+        [self clearDatabase];
+        return [self managedObjectContext];
+    }
+   
+
+    
     return _managedObjectContext;
 }
 
