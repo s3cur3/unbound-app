@@ -220,7 +220,7 @@ static NSString *ResolveName(NSString *aName)
                                                                 styleMask:NSBorderlessWindowMask
                                                                   backing:NSBackingStoreBuffered
                                                                     defer:NO];
-    [self.overlayWindow setParentView:self.pageViewController.view];
+    [self.overlayWindow setParentView:self.pageViewController.pageController.view];
     [_overlayWindow setOpaque:NO];
     [_overlayWindow setHasShadow:YES];
     

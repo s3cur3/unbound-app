@@ -994,7 +994,7 @@
 -(void)unfadeControls
 {
     if ([self.pageController.selectedViewController respondsToSelector:@selector(movieView)]) {
-        DLog(@"Don't unfadeControls if page view is movie and it is playing.");
+        //DLog(@"Don't unfadeControls if page view is movie and it is playing.");
         PIXVideoViewController *aVideoViewController = (PIXVideoViewController *)self.pageController.selectedViewController;
         if (aVideoViewController.overlayWindow!=nil ||
             [aVideoViewController movieIsPlaying]==NO) {
