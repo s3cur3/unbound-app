@@ -10,11 +10,15 @@
 #import "PIXPageHUDView.h"
 #import "PIXPhoto.h"
 
+#import "PIXPageViewController.h"
+//#import "PIXPageView.h"
+
 @interface  PIXPageHUDWindow ()
 
 @property (assign) NSPoint initialLocation;
 
 @property (weak, nonatomic) NSView * parentView;
+@property (weak) IBOutlet PIXPageViewController * pageViewController;
 @property (weak) IBOutlet PIXPageHUDView * hudView;
 
 @property NSUInteger position;
@@ -33,7 +37,7 @@
                   backing:(NSBackingStoreType)bufferingType
                     defer:(BOOL)flag {
     // Using NSBorderlessWindowMask results in a window without a title bar.
-    self = [super initWithContentRect:contentRect styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
+    self = [super initWithContentRect:contentRect styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:YES];
     if (self != nil) {
         // Start with no transparency for all drawing into the window
         [self setAlphaValue:1.0];
@@ -242,7 +246,13 @@
     
     if(_hasMouse)
     {
-        [self showAnimated:NO];
+        //If we've got a viewController, let it decide if window should be visible
+        //This is important mainly for not covering controls when a video is playing
+        if (self.pageViewController) {
+            [self.pageViewController unfadeControls];
+        } else {
+            [self showAnimated:NO];
+        }
     }
 }
 

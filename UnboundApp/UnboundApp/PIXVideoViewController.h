@@ -35,5 +35,7 @@
 -(void)dismissOverlay;
 -(void)displayOverlay;
 
+-(BOOL)movieIsPlaying;
+
 
 @end

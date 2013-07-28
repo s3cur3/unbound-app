@@ -41,5 +41,8 @@
 -(IBAction)toggleFullScreen:(id)sender;
 
 -(void)tryFadeControls;
+-(void)unfadeControls;
+
+-(BOOL)isPlayingVideo;
 
 @end

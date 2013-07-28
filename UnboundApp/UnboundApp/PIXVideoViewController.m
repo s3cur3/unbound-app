@@ -98,6 +98,7 @@ static NSString *ResolveName(NSString *aName)
 -(void)awakeFromNib
 {
     //[self displayOverlay];
+    DLog(@"awakeFromNib");
 }
 
 -(void)playMoviePressed:(NSNotification *)notification
@@ -105,7 +106,11 @@ static NSString *ResolveName(NSString *aName)
     DLog(@"playMoviePressed");
     [[self pageViewController] tryFadeControls];
     [self dismissOverlay];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieFinishedPlaying:) name:QTMovieDidEndNotification object:nil];//]self.movieView.movie];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieFinishedPlaying:) name:QTMovieDidEndNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieWillStopForWindowClose:) name:QTMovieCloseWindowRequestNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieRateChanged:) name:QTMovieRateDidChangeNotification object:nil];
     [[self.movieView movie] play];
 }
      
@@ -113,9 +118,36 @@ static NSString *ResolveName(NSString *aName)
  {
      if ([self isCurrentView]) {
          [[NSNotificationCenter defaultCenter] removeObserver:self name:QTMovieDidEndNotification object:nil];
+         [[NSNotificationCenter defaultCenter] removeObserver:self name:QTMovieCloseWindowRequestNotification object:nil];
+         [[NSNotificationCenter defaultCenter] removeObserver:self name:QTMovieRateDidChangeNotification object:nil];
          [self displayOverlay];
      }
  }
+
+-(void)movieRateChanged:(NSNotification *)notification
+{
+    DLog(@"note : %@", notification);
+    NSNumber *newRate = [notification.userInfo objectForKey:QTMovieRateDidChangeNotificationParameter];
+    DLog(@"newRate : %@", newRate);
+    if ([newRate boolValue]==NO) {
+        [self displayOverlay];
+    } else {
+        [self dismissOverlay];
+    }
+//    if ([self isCurrentView]) {
+//        [[NSNotificationCenter defaultCenter] removeObserver:self name:QTMovieDidEndNotification object:nil];
+//        [self displayOverlay];
+//    }
+}
+
+-(void)movieWillStopForWindowClose:(NSNotification *)notification
+{
+    DLog(@"note : %@", notification);
+    //    if ([self isCurrentView]) {
+    //        [[NSNotificationCenter defaultCenter] removeObserver:self name:QTMovieDidEndNotification object:nil];
+    //        [self displayOverlay];
+    //    }
+}
 
 -(void)dismissOverlay
 {
@@ -344,6 +376,17 @@ static NSString *ResolveName(NSString *aName)
     [self.scrollView setNeedsDisplay:YES];
 }
 
-
+-(BOOL)movieIsPlaying
+{
+    float rate = 0.0f;
+    BOOL isIdle = NO;
+    if (self.movieView.movie) {
+        rate = self.movieView.movie.rate;
+        isIdle = self.movieView.movie.isIdling;
+    }
+    DLog(@"rate : %f, isIdle : %d", rate, isIdle);
+    BOOL isPlaying = [[NSNumber numberWithFloat:rate] boolValue];
+    return isPlaying;
+}
 
 @end

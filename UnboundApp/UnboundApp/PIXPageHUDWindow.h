@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class PIXPageViewController;
+
 @interface PIXPageHUDWindow : NSPanel
 
 @property (nonatomic) BOOL hasMouse;

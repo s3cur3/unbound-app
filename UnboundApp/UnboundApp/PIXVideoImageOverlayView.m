@@ -18,23 +18,23 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UB_PLAY_MOVIE_PRESSED" object:nil];
 }
 
--(void)mouseEntered:(NSEvent *)theEvent
-{
-    DLog(@"mouseEntered");
-    //[(PIXPlayVideoHUDWindow *)[self window] setHasMouse:YES];
-}
+//-(void)mouseEntered:(NSEvent *)theEvent
+//{
+//    DLog(@"mouseEntered");
+//    //[(PIXPlayVideoHUDWindow *)[self window] setHasMouse:YES];
+//}
 
--(void)mouseMoved:(NSEvent *)theEvent
-{
-    //[(PIXPlayVideoHUDWindow *)[self window] setHasMouse:YES];
-}
+//-(void)mouseMoved:(NSEvent *)theEvent
+//{
+//    //[(PIXPlayVideoHUDWindow *)[self window] setHasMouse:YES];
+//}
 
 
--(void)mouseExited:(NSEvent *)theEvent
-{
-    DLog(@"mouseExited");
-    //[(PIXPlayVideoHUDWindow *)[self window] setHasMouse:NO];
-}
+//-(void)mouseExited:(NSEvent *)theEvent
+//{
+//    DLog(@"mouseExited");
+//    //[(PIXPlayVideoHUDWindow *)[self window] setHasMouse:NO];
+//}
 
 -(void)updateTrackingAreas
 {
