@@ -155,7 +155,7 @@
     }
     
     [self.view setNeedsUpdateConstraints:YES];
-    DLog(@"%@", self.photo);
+    //DLog(@"%@", self.photo);
 }
 
 -(void)updateMap
