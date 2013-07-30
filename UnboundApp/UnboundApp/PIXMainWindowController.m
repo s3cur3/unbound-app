@@ -85,7 +85,7 @@
     NSDate * today = [NSDate date];
     
     // set the target date to June 30
-    NSDate * targetDate = [NSDate dateWithString:@"2013-07-30 00:00:00 -0000"];
+    NSDate * targetDate = [NSDate dateWithString:@"2013-08-20 00:00:00 -0000"];
     
     if([[NSUserDefaults standardUserDefaults] objectForKey:kTrialExpirationDate] == nil)
     {
@@ -163,10 +163,23 @@
         });        
     }
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fullscreenEntered:) name:NSWindowDidEnterFullScreenNotification object:self.window];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fullscreenExited:) name:NSWindowDidExitFullScreenNotification object:self.window];
+    
     
 #endif
     
     
+}
+
+-(void)fullscreenEntered:(id)sender
+{
+    [self.trialExpireView setHidden:YES];
+}
+
+-(void)fullscreenExited:(id)sender
+{
+    [self.trialExpireView setHidden:NO];
 }
 
 - (void)advanceTrialExpiredTimer:(NSTimer *)timer
@@ -185,6 +198,8 @@
         self.trialExpireText.stringValue = @"This Beta has expired.";
     }
 }
+
+
 
 //- (void)windowDidLoad
 //{

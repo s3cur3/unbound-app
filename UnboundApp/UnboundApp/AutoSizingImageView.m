@@ -41,6 +41,11 @@
 }
 
 -(void)mouseDown:(NSEvent *)theEvent{
+    
+    // not sure why, but we need to manually support ctrl+click for right mouse
+    if (theEvent.modifierFlags & NSControlKeyMask)
+        return [self rightMouseDown:theEvent];
+    
     DLog(@"mouseDown:%@", theEvent);
     [[self nextResponder] mouseDown:theEvent];
     

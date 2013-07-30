@@ -28,6 +28,7 @@
 
 @property (strong) IBOutlet NSView * centerStatusView;
 @property (strong) IBOutlet NSTextField * centerStatusViewTextField;
+@property (strong) IBOutlet NSTextField * centerStatusViewSubTextField;
 
 @property (strong) IBOutlet NSProgressIndicator * progressIndicator;
 

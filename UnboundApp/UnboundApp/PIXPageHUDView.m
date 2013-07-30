@@ -80,13 +80,16 @@
 
 -(void)setPhoto:(PIXPhoto *)photo
 {
-    if(self.isTextEditing)
+    if(photo != _photo)
     {
-        [self textDidEndEditing:nil];
+        if(self.isTextEditing)
+        {
+            [self textDidEndEditing:nil];
+        }
+        
+        _photo = photo;
+        [self setupCaptionSpace];
     }
-    
-    _photo = photo;
-    [self setupCaptionSpace];    
 }
 
 #pragma mark -

@@ -178,63 +178,52 @@ static NSString *const kItemsKey = @"photos";
 
 -(void)setPhotos:(NSSet *)photos updateCoverImage:(BOOL)shouldUpdateCoverPhoto;
 {
-    /*
-    NSMutableOrderedSet *newPhotosSet = [photos mutableCopy];
-    
-    [newPhotosSet sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        PIXPhoto * photo1 = obj1;
-        PIXPhoto * photo2 = obj2;
-        
-        NSDate * photo1Date = [photo1 dateTaken];
-        NSDate * photo2Date = [photo2 dateTaken];
-        
-        
-        if(photo1Date == nil) photo1Date = [photo1 dateCreated];
-        if(photo2Date == nil) photo2Date = [photo2 dateCreated];
-         
-        
-//        if(photo2Date == nil || photo1Date == nil)
-//        {
-//            photo1Date = [photo1 dateCreated];
-//            photo2Date = [photo2 dateCreated];
-//        }
-    
-        return [photo1Date compare:photo2Date];
-        
-    }];
-    */
     if([self isReallyDeleted]) return;
     
     self.photos = photos;
     
+    if(shouldUpdateCoverPhoto)
+    {
+        [self fixCoverAndSubtitle];
+    }
+    
+    
+}
+
+-(void)fixCoverAndSubtitle
+{
+    if([self isReallyDeleted]) return;
+    
     NSUInteger photoCount = self.photos.count;
-    if (shouldUpdateCoverPhoto==YES && photoCount > 0)
+    if (photoCount > 0)
     {
         // sort the photos for setting up the dates and stacks
         NSSortDescriptor * sort1 = [[NSSortDescriptor alloc] initWithKey:@"sortDate" ascending:YES];
-
+        
         NSArray * datePhotos = [self.photos sortedArrayUsingDescriptors:@[sort1]];
-
+        
         // set the startDate of the album (used at the top of the thumb grid)
         PIXPhoto * firstPhoto = [datePhotos objectAtIndex:0];
         self.startDate = [firstPhoto findDisplayDate];
-
+        
         // set the datephoto and albumdate (maybe we don't need to store the datephoto relationship?)
         PIXPhoto *newDatePhoto = [datePhotos lastObject];
-
+        
         if (newDatePhoto != self.datePhoto) {
             self.datePhoto = newDatePhoto;
             
             self.albumDate = [self.datePhoto findDisplayDate];
             
         }
-
+        
         // set the stackphotos
         //NSUInteger stackRange = photoCount>=1 ? 1 : photoCount;
         NSUInteger stackRange = photoCount>=3 ? 3 : photoCount;
         NSRange indexRange = NSMakeRange(0, stackRange);
         NSIndexSet *stackSet = [NSIndexSet indexSetWithIndexesInRange:indexRange];
         NSArray *stackArray = [self.sortedPhotos objectsAtIndexes:stackSet];
+        
+        
         self.stackPhotos = [NSOrderedSet orderedSetWithArray:stackArray];
         
         
@@ -250,8 +239,6 @@ static NSString *const kItemsKey = @"photos";
     {
         self.subtitle = @"No Items";
     }
-    
-    
 }
 
 -(NSArray *)sortedPhotos
@@ -393,7 +380,9 @@ static NSString *const kItemsKey = @"photos";
         // not sure if we need to send this. the all albums refresh is always sent after this
         //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
         
+        
         [self updateUnboundFileinBackground];
+        [self fixCoverAndSubtitle];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:AlbumStackDidChangeNotification object:self];
         

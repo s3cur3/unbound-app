@@ -486,17 +486,21 @@
 {
     PIXPhoto * thisPhoto = [self.pagerData objectAtIndex:self.pageController.selectedIndex];
     
-    // update the info panel if it's visible
-    if(self.infoPanelShowing)
-    {
-        [self.infoPanelVC setPhoto:nil];
-        [self.infoPanelVC setPhoto:thisPhoto];
-        
-    }
     
-    // update the HUD (caption view)
-    [self.controlView setPhoto:nil];
-    [self.controlView setPhoto:thisPhoto];
+    if(thisPhoto == note.object)
+    {
+        // update the info panel if it's visible
+        if(self.infoPanelShowing)
+        {
+            [self.infoPanelVC setPhoto:nil];
+            [self.infoPanelVC setPhoto:thisPhoto];
+            
+        }
+        
+        // update the HUD (caption view)
+        [self.controlView setPhoto:nil];
+        [self.controlView setPhoto:thisPhoto];
+    }
 }
 
 -(void)setupToolbar

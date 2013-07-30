@@ -328,12 +328,15 @@ typedef NSUInteger PIXOverwriteStrategy;
                 for (PIXPhoto *anItem in items)
                 {
                     [albumsToUpdate addObject:[(PIXPhoto *)anItem album]];
+                    
+                    // delete the photos from the database                
                     [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] deleteObject:anItem];
                 }
                 
+                [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] save:nil];
+                
                 for (PIXAlbum *anAlbum in albumsToUpdate)
                 {
-                    //[anAlbum updateAlbumBecausePhotosDidChange];
                     [[PIXFileParser sharedFileParser] scanPath:anAlbum.path withRecursion:PIXFileParserRecursionNone];
                     [anAlbum flush];
                 }
@@ -518,6 +521,9 @@ typedef NSUInteger PIXOverwriteStrategy;
 
 -(BOOL)renameAlbum:(PIXAlbum *)anAlbum withName:(NSString *)aNewName
 {
+    
+    if([anAlbum isReallyDeleted]) return NO;
+    
     if ([aNewName length]==0 || [aNewName isEqualToString:anAlbum.title])
     {
         DLog(@"renaming to empty string or same name disallowed.");
@@ -526,7 +532,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     
     // validate filename
     NSError *error = NULL;
-    // after looking into this, it seems macosx supports all unicode characters in filenames. I'll test for / and leave this in just in case we want ot add more.
+    // after looking into this, it seems macosx supports all unicode characters in filenames. I'll test for / and leave this in just in case we want to add more.
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"[/]"
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:&error];
@@ -573,10 +579,25 @@ typedef NSUInteger PIXOverwriteStrategy;
         [[NSApplication sharedApplication] presentError:error];
         return NO;
     }
+    
+    // save all the way back to the persistant store
+    [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
+    
+    [anAlbum flush];
+    
     NSString *oldAlbumPath = [NSString stringWithFormat:@"%@/%@", parentFolderPath, oldAlbumName];
     //[[PIXFileParser sharedFileParser] scanPath:parentFolderPath withRecursion:PIXFileParserRecursionFull];
-    [[PIXFileParser sharedFileParser] scanPath:oldAlbumPath withRecursion:PIXFileParserRecursionFull];
-    [[PIXFileParser sharedFileParser] scanPath:anAlbum.path withRecursion:PIXFileParserRecursionSemi];
+    
+    // scan the album paths after a short delay
+    double delayInSeconds = 0.5;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+        [[PIXFileParser sharedFileParser] scanPath:oldAlbumPath withRecursion:PIXFileParserRecursionNone];
+        [[PIXFileParser sharedFileParser] scanPath:anAlbum.path withRecursion:PIXFileParserRecursionSemi];
+    });
+    
+    
     //[[PIXFileParser sharedFileParser] scanFullDirectory];
     
     
@@ -970,7 +991,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     {
         album = nil;
         panel.prompt = @"Import Folders";
-        panel.message = @"Choose folders to import. To import photo files select an ablum before importing.";
+        panel.message = @"Choose folders to import. To import photo files select an album before importing.";
         [panel setCanChooseFiles:NO];    
     }
     
@@ -1055,6 +1076,11 @@ typedef NSUInteger PIXOverwriteStrategy;
     
     NSMutableArray *undoArray = [NSMutableArray arrayWithCapacity:items.count];
     NSMutableSet *albumPaths = [[NSMutableSet alloc] init];
+    
+    NSMutableSet * changedAlbums = [[NSMutableSet alloc] init];
+    
+    NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
+    
     for (id aDict in items)
     {
         NSString *src = [aDict valueForKey:@"source"];
@@ -1083,17 +1109,48 @@ typedef NSUInteger PIXOverwriteStrategy;
             [[NSApplication sharedApplication] presentError:error];
         }
         
-//        [[NSWorkspace sharedWorkspace]
-//         performFileOperation:NSWorkspaceMoveOperation
-//         source: [src stringByDeletingLastPathComponent]
-//         destination:dest
-//         files:[NSArray arrayWithObject:[src lastPathComponent]]
-//         tag:nil];
+        // if we have the source photo in the database update it now
+        PIXPhoto * srcPhoto = [[[PIXFileParser sharedFileParser] fetchPhotosWithPaths:@[src]] lastObject];
+        PIXAlbum * dstAlbum = [[[PIXFileParser sharedFileParser] fetchAlbumsWithPaths:@[dest]] lastObject];
+        if(srcPhoto && dstAlbum)
+        {
+            [changedAlbums addObject:srcPhoto.album];
+            [changedAlbums addObject:dstAlbum];
+            
+            // delete the source photo since it's getting moved somewhere else
+            [context deleteObject:srcPhoto];
+            /*
+            srcPhoto.path = fullDestPath;
+            
+            [srcPhoto.album removePhotosObject:srcPhoto];
+            
+            srcPhoto.album = dstAlbum;
+             */
+        }
     }
     
-    //[[[PIXAppDelegate sharedAppDelegate] dataSource] startLoadingAllAlbumsAndPhotosInObservedDirectories];
-    //    MainWindowController *mainWindowController = [AppDelegate mainWindowController] ;
-    //    FileSystemEventController *fileSystemEventController = mainWindowController.fileSystemEventController;
+//    for(PIXAlbum * anAlbum in changedAlbums)
+//    {
+//        [anAlbum flush];
+//    }
+    
+    // save the context so the db is updated
+    
+    [context save:nil];
+    
+    //issue a notification to update the ui
+    
+    // update any albums views
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
+    
+    for(PIXAlbum * anAlbum in changedAlbums)
+    {
+        [anAlbum flush];
+        //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumStackDidChangeNotification object:self];
+        //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
+    }
+    
+
     for (NSString *albumPath in albumPaths)
     {
         if (![albumPath isEqualToString:[self trashFolderPath]] && [self directoryIsSubpathOfObservedDirectories:albumPath]) {
@@ -1588,6 +1645,9 @@ NSString * UserHomeDirectory();
     [newAlbum setDateLastUpdated:[NSDate date]];
     
     [newAlbum updateUnboundFile];
+    
+    [aContext save:nil];
+    [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
     

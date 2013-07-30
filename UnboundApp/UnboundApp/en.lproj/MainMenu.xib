@@ -2,9 +2,9 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1080</int>
-		<string key="IBDocument.SystemVersion">12D78</string>
+		<string key="IBDocument.SystemVersion">12E55</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
-		<string key="IBDocument.AppKitVersion">1187.37</string>
+		<string key="IBDocument.AppKitVersion">1187.39</string>
 		<string key="IBDocument.HIToolboxVersion">626.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -214,6 +214,14 @@
 								<object class="NSMenuItem" id="948825143">
 									<reference key="NSMenu" ref="58943312"/>
 									<string key="NSTitle">Change Main Photos Folder</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="35465992"/>
+									<reference key="NSMixedImage" ref="502551668"/>
+								</object>
+								<object class="NSMenuItem" id="819760938">
+									<reference key="NSMenu" ref="58943312"/>
+									<string key="NSTitle">Rescan Photos Folder</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="35465992"/>
@@ -615,6 +623,14 @@
 					<int key="connectionID">630</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">rescanPhotosPressed:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="819760938"/>
+					</object>
+					<int key="connectionID">636</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">hidden: values.LeapTutorialHasShown</string>
 						<reference key="source" ref="2864996"/>
@@ -991,6 +1007,7 @@
 							<reference ref="948825143"/>
 							<reference ref="533885476"/>
 							<reference ref="80141585"/>
+							<reference ref="819760938"/>
 						</array>
 						<reference key="parent" ref="442561506"/>
 					</object>
@@ -1007,6 +1024,11 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">628</int>
 						<reference key="object" ref="80141585"/>
+						<reference key="parent" ref="58943312"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">634</int>
+						<reference key="object" ref="819760938"/>
 						<reference key="parent" ref="58943312"/>
 					</object>
 				</array>
@@ -1059,13 +1081,14 @@
 				<string key="624.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="627.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="628.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="634.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="92.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">633</int>
+			<int key="maxID">636</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1110,6 +1133,8 @@
 						<string key="importPhotosPressed:">id</string>
 						<string key="moreAppsPressed:">id</string>
 						<string key="openPreferences:">id</string>
+						<string key="rescanPhotosPressed:">id</string>
+						<string key="saveAction:">id</string>
 						<string key="showAboutWindow:">id</string>
 						<string key="showIntroWindow:">id</string>
 						<string key="showLeapTutorialPressed:">id</string>
@@ -1143,6 +1168,14 @@
 						</object>
 						<object class="IBActionInfo" key="openPreferences:">
 							<string key="name">openPreferences:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="rescanPhotosPressed:">
+							<string key="name">rescanPhotosPressed:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="saveAction:">
+							<string key="name">saveAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="showAboutWindow:">
@@ -1223,6 +1256,7 @@
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="chooseFolderButtonPressed:">id</string>
 						<string key="deleteItems:">id</string>
+						<string key="importPhotosButtonPressed:">id</string>
 						<string key="selectAll:">id</string>
 						<string key="selectNone:">id</string>
 						<string key="toggleSelection:">id</string>
@@ -1234,6 +1268,10 @@
 						</object>
 						<object class="IBActionInfo" key="deleteItems:">
 							<string key="name">deleteItems:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="importPhotosButtonPressed:">
+							<string key="name">importPhotosButtonPressed:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="selectAll:">
@@ -1251,6 +1289,7 @@
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="centerStatusView">NSView</string>
+						<string key="centerStatusViewSubTextField">NSTextField</string>
 						<string key="centerStatusViewTextField">NSTextField</string>
 						<string key="gridView">CNGridView</string>
 						<string key="gridViewProgress">PIXRoundedProgressIndicator</string>
@@ -1266,6 +1305,10 @@
 						<object class="IBToOneOutletInfo" key="centerStatusView">
 							<string key="name">centerStatusView</string>
 							<string key="candidateClassName">NSView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="centerStatusViewSubTextField">
+							<string key="name">centerStatusViewSubTextField</string>
+							<string key="candidateClassName">NSTextField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="centerStatusViewTextField">
 							<string key="name">centerStatusViewTextField</string>

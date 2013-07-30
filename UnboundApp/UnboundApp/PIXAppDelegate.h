@@ -39,6 +39,7 @@
 - (IBAction)helpPressed:(id)sender;
 
 - (IBAction)chooseFolder:(id)sender;
+- (IBAction)rescanPhotosPressed:(id)sender;
 -(IBAction)importPhotosPressed:(id)sender;
 
 @property BOOL showSparkleMenu;
