@@ -72,6 +72,7 @@
     if(self.superview)
     {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parentFrameChaged:) name:NSViewFrameDidChangeNotification object:self.mainWindow.contentView];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parentFrameChaged:) name:NSWindowDidEnterFullScreenNotification object:self.window];
         
         
 
@@ -94,12 +95,18 @@
     NSRect newRect = [self convertRect:self.bounds toView:nil];
     newRect = [self.mainWindow convertRectToScreen:newRect];
     
+    if([self.mainWindow styleMask] & NSFullScreenWindowMask)
+    {
+        newRect.origin.y = self.mainWindow.frame.size.height - newRect.origin.y;
+    }
     
     //newRect.origin.x += self.mainWindow.frame.origin.x;
     //newRect.origin.y += self.mainWindow.frame.origin.y;
     
     [self.spinnerwindow setFrame:newRect display:YES];
     [self.spinnerwindow setAlphaValue:1.0];
+    
+    DLog(@"New Spinner Position: %f, %f", newRect.origin.x, newRect.origin.y);
 }
 
 -(void)windowWillClose:(NSNotificationCenter *)note
@@ -114,6 +121,8 @@
     [super removeFromSuperview];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSViewFrameDidChangeNotification object:self.mainWindow.contentView];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSWindowDidEnterFullScreenNotification object:self.window];
+    
     [self.spinnerwindow setAlphaValue:0.0];
 }
 
