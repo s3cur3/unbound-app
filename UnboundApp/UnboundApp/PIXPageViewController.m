@@ -998,9 +998,10 @@
 -(void)unfadeControls
 {
     if ([self.pageController.selectedViewController respondsToSelector:@selector(movieView)]) {
-        DLog(@"Don't unfadeControls if page view is movie and it is playing.");
+        //DLog(@"Don't unfadeControls if page view is movie and it is playing.");
         PIXVideoViewController *aVideoViewController = (PIXVideoViewController *)self.pageController.selectedViewController;
-        if (aVideoViewController.overlayWindow!=nil) {
+        if (aVideoViewController.overlayWindow!=nil ||
+            [aVideoViewController movieIsPlaying]==NO) {
             [self.controlWindow showAnimated:NO];
         }
     } else {
@@ -1218,7 +1219,22 @@
 //    });
 }
 
+-(BOOL)isPlayingVideo;
+{
+    BOOL isPlaying = NO;
+    if ([self.pageController.selectedViewController isKindOfClass:[PIXVideoViewController class]]) {
+        PIXVideoViewController *videoVC = (PIXVideoViewController *)self.pageController.selectedViewController;
+        if ([videoVC movieIsPlaying]) {
+            isPlaying = YES;
+        }
+    }
+    return isPlaying;
+}
 
+-(void)dealloc
+{
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(tryFadeControls) object:nil];
+}
 
 @end
 
@@ -1345,11 +1361,6 @@
     [self restartNextSlideIfNeeded];
     
     //[self makeSelectedViewFirstResponder];
-}
-
--(void)dealloc
-{
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(tryFadeControls) object:nil];
 }
 
 

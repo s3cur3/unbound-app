@@ -1556,7 +1556,8 @@ typedef NSUInteger PIXOverwriteStrategy;
     [url getResourceValue:&utiValue forKey:NSURLTypeIdentifierKey error:nil];
     if (utiValue)
     {
-        isImageFile = UTTypeConformsTo((__bridge CFStringRef)utiValue, kUTTypeImage);
+        isImageFile = UTTypeConformsTo((__bridge CFStringRef)utiValue, kUTTypeImage) ||
+                      UTTypeConformsTo((__bridge CFStringRef)utiValue, kUTTypeMovie);
     }
     return isImageFile;
 }
