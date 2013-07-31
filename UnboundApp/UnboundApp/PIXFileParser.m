@@ -216,6 +216,9 @@ NSDictionary * dictionaryForURL(NSURL * url)
         } else {
             canAccessAllDirectories = NO;
         }
+        if (!isDir) {
+            DLog(@"Unable to access file at path : '%@'\nisDirectory : %d", aDir.path, isDir);
+        }
     }
     return canAccessAllDirectories;
 }
@@ -1370,17 +1373,68 @@ NSDictionary * dictionaryForURL(NSURL * url)
 #pragma mark - 
 #pragma ui helpers for init and settings screens
 
--(BOOL)checkReadWriteAccess:(NSURL *)filePathURL
+//-(BOOL)checkReadWriteAccess:(NSURL *)filePathURL
+//{
+//    NSString *filePath = filePathURL.path;
+//    if (!filePath.length ||
+//        (access([filePath UTF8String], W_OK) != 0) ||
+//        (access([filePath UTF8String], R_OK) != 0)) {
+//            DLog(@"There's a problem with the file permissions on the new root folder : %@", filePathURL);
+//            return NO;
+//    }
+//    return YES;
+//        
+//}
+
+-(NSArray *) mountedVolumesInfo
+{
+    NSWorkspace   *ws = [NSWorkspace sharedWorkspace];
+    NSArray     *vols = [ws mountedLocalVolumePaths];
+    NSFileManager *fm = [NSFileManager defaultManager];
+    
+    NSMutableArray *volumeInfos = [NSMutableArray arrayWithCapacity:[vols count]];
+    
+    for (NSString *path in vols)
+    {
+        NSDictionary* fsAttributes;
+        NSString *description, *type, *name;
+        BOOL removable, writable, unmountable, res;
+        NSNumber *size;
+        
+        res = [ws getFileSystemInfoForPath:path
+                               isRemovable:&removable
+                                isWritable:&writable
+                             isUnmountable:&unmountable
+                               description:&description
+                                      type:&type];
+        if (!res) continue;
+        fsAttributes = [fm fileSystemAttributesAtPath:path];
+        name         = [fm displayNameAtPath:path];
+        size         = [fsAttributes objectForKey:NSFileSystemSize];
+        
+        DLog(@"path=%@\nname=%@\nremovable=%d\nwritable=%d\nunmountable=%d\n"
+              "description=%@\ntype=%@, size=%@\n\n",
+              path, name, removable, writable, unmountable, description, type, size);
+        NSDictionary *aVolumeInfoDict = @{@"path" : path,
+                                          @"name" : name,
+                                          @"removable" : [NSNumber numberWithBool:removable],
+                                          @"writable" : [NSNumber numberWithBool:writable],
+                                          @"unmountable" : [NSNumber numberWithBool:unmountable],
+                                          @"description" : description, @"type" : type, @"size" : size, @"fsAttributes" : fsAttributes};
+        [volumeInfos addObject:aVolumeInfoDict];
+    }
+    return volumeInfos;
+}
+
+-(BOOL)checWriteAccess:(NSURL *)filePathURL
 {
     NSString *filePath = filePathURL.path;
-    if (!filePath.length ||
-        (access([filePath UTF8String], W_OK) != 0) ||
-        (access([filePath UTF8String], R_OK) != 0)) {
-            DLog(@"There's a problem with the file permissions on the new root folder : %@", filePathURL);
-            return NO;
+    if (access([filePath UTF8String], W_OK) != 0) {
+        DLog(@"No write to file permissions on the new root folder : %@", filePathURL);
+        return NO;
     }
     return YES;
-        
+    
 }
 
 -(BOOL)userChooseFolderDialog
@@ -1400,8 +1454,11 @@ NSDictionary * dictionaryForURL(NSURL * url)
     if(result == NSFileHandlingPanelOKButton && [[openPanel URLs] count] == 1)
     {
         NSURL *selectedURL = [[openPanel URLs] lastObject];
-        if (![self checkReadWriteAccess:selectedURL]) {
-            NSString *warningMessage = [NSString stringWithFormat:@"The root folder you selected may be read only which may prevent some app features from functioning properly, continue with this folder anyway?"];
+        if (![self checWriteAccess:selectedURL]) {
+#ifdef DEBUG
+            [self mountedVolumesInfo];
+#endif
+            NSString *warningMessage = [NSString stringWithFormat:@"The root folder you selected is read-only which may prevent some app features from functioning properly, continue with this folder anyway?"];
             if (NSRunAlertPanel(@"Read & Write Permissions Are Required", warningMessage, @"OK", @"Cancel", nil) == NSAlertDefaultReturn) {
                 //User selected to continue with this folder - do nothing
             } else {
