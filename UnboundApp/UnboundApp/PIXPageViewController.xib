@@ -2,9 +2,9 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1080</int>
-		<string key="IBDocument.SystemVersion">12D78</string>
+		<string key="IBDocument.SystemVersion">12E55</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
-		<string key="IBDocument.AppKitVersion">1187.37</string>
+		<string key="IBDocument.AppKitVersion">1187.39</string>
 		<string key="IBDocument.HIToolboxVersion">626.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -60,7 +60,6 @@
 								<string key="NSFrame">{{10, 10}, {220, 280}}</string>
 								<reference key="NSSuperview" ref="391466079"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<string key="NSHuggingPriority">{250, 251}</string>
 								<string key="NSAntiCompressionPriority">{750, 749}</string>
@@ -77,7 +76,6 @@
 										<string key="NSFrame">{{89, 5}, {47, 17}}</string>
 										<reference key="NSSuperview" ref="289126915"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView"/>
 										<bool key="NSViewIsLayerTreeHost">YES</bool>
 										<double key="NSViewAlphaValue">0.70000000000000007</double>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -200,7 +198,6 @@
 										<string key="NSFrame">{{12, 38}, {200, 13}}</string>
 										<reference key="NSSuperview" ref="289126915"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<string key="NSOffsets">{0, 0}</string>
 										<object class="NSTextFieldCell" key="NSTitleCell">
@@ -355,7 +352,6 @@
 											<string key="NSFrame">{{193, 5}, {30, 30}}</string>
 											<reference key="NSSuperview" ref="709553619"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="275298754">
@@ -385,7 +381,6 @@
 											<string key="NSFrame">{{99, 10}, {20, 20}}</string>
 											<reference key="NSSuperview" ref="709553619"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="384458578">
@@ -415,7 +410,6 @@
 											<string key="NSFrame">{{287, 10}, {20, 20}}</string>
 											<reference key="NSSuperview" ref="709553619"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="612550428">
@@ -445,7 +439,6 @@
 											<string key="NSFrame">{{364, 0}, {52, 40}}</string>
 											<reference key="NSSuperview" ref="709553619"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="161425879">
@@ -475,7 +468,6 @@
 											<string key="NSFrameSize">{54, 40}</string>
 											<reference key="NSSuperview" ref="709553619"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="963271141">
@@ -523,12 +515,12 @@
 					<bool key="NSViewIsLayerTreeHost">YES</bool>
 					<string key="NSReuseIdentifierKey">_NS:21</string>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1680, 1028}}</string>
+				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
 			<object class="NSScrollView" id="899152318">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">8448</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSClipView" id="48831601">
@@ -540,8 +532,7 @@
 								<int key="NSvFlags">2322</int>
 								<string key="NSFrameSize">{411, 33}</string>
 								<reference key="NSSuperview" ref="48831601"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="467161435"/>
+								<reference key="NSNextKeyView" ref="217348392"/>
 								<string key="NSReuseIdentifierKey">_NS:13</string>
 								<object class="NSTextContainer" key="NSTextContainer" id="593840971">
 									<object class="NSLayoutManager" key="NSLayoutManager">
@@ -612,7 +603,6 @@
 						</array>
 						<string key="NSFrameSize">{411, 33}</string>
 						<reference key="NSSuperview" ref="899152318"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="19162105"/>
 						<string key="NSReuseIdentifierKey">_NS:11</string>
 						<reference key="NSDocView" ref="19162105"/>
@@ -628,8 +618,6 @@
 						<int key="NSvFlags">256</int>
 						<string key="NSFrame">{{395, 0}, {16, 33}}</string>
 						<reference key="NSSuperview" ref="899152318"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:83</string>
 						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 						<reference key="NSTarget" ref="899152318"/>
@@ -641,7 +629,6 @@
 						<int key="NSvFlags">-2147483392</int>
 						<string key="NSFrame">{{-100, -100}, {87, 18}}</string>
 						<reference key="NSSuperview" ref="899152318"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="48831601"/>
 						<string key="NSReuseIdentifierKey">_NS:33</string>
 						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -653,9 +640,7 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{411, 33}</string>
-				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="217348392"/>
+				<reference key="NSNextKeyView" ref="48831601"/>
 				<bool key="NSViewIsLayerTreeHost">YES</bool>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<int key="NSsFlags">137232</int>
@@ -667,7 +652,7 @@
 				<double key="NSMagnification">1</double>
 			</object>
 			<object class="NSScrollView" id="897716653">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSClipView" id="188140598">
@@ -679,7 +664,6 @@
 								<int key="NSvFlags">256</int>
 								<string key="NSFrameSize">{203, 152}</string>
 								<reference key="NSSuperview" ref="188140598"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="676239497"/>
 								<string key="NSReuseIdentifierKey">_NS:13</string>
 								<bool key="NSEnabled">YES</bool>
@@ -803,7 +787,6 @@
 						</array>
 						<string key="NSFrameSize">{203, 152}</string>
 						<reference key="NSSuperview" ref="897716653"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="954178574"/>
 						<string key="NSReuseIdentifierKey">_NS:11</string>
 						<reference key="NSDocView" ref="954178574"/>
@@ -818,7 +801,6 @@
 						<int key="NSvFlags">-2147483392</int>
 						<string key="NSFrame">{{224, 17}, {15, 102}}</string>
 						<reference key="NSSuperview" ref="897716653"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="930253546"/>
 						<string key="NSReuseIdentifierKey">_NS:58</string>
 						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -831,8 +813,6 @@
 						<int key="NSvFlags">-2147483392</int>
 						<string key="NSFrame">{{0, 136}, {208, 16}}</string>
 						<reference key="NSSuperview" ref="897716653"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:60</string>
 						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 						<int key="NSsFlags">1</int>
@@ -842,8 +822,6 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{203, 152}</string>
-				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="188140598"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<int key="NSsFlags">133680</int>
@@ -1016,6 +994,14 @@
 						<reference key="destination" ref="595009865"/>
 					</object>
 					<int key="connectionID">958</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">pageViewController</string>
+						<reference key="source" ref="584105313"/>
+						<reference key="destination" ref="1001"/>
+					</object>
+					<int key="connectionID">1053</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -3252,7 +3238,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1052</int>
+			<int key="maxID">1053</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3442,17 +3428,20 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">PIXPageHUDView</string>
 					<string key="superclassName">NSView</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">toggleCaptionEdit:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">toggleCaptionEdit:</string>
-						<object class="IBActionInfo" key="NS.object.0">
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="startEditingCaption:">id</string>
+						<string key="toggleCaptionEdit:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="startEditingCaption:">
+							<string key="name">startEditingCaption:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="toggleCaptionEdit:">
 							<string key="name">toggleCaptionEdit:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-					</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="bottomCaptionSpace">NSLayoutConstraint</string>
 						<string key="buttonHolderView">NSView</string>
@@ -3490,17 +3479,20 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">PIXPageHUDWindow</string>
 					<string key="superclassName">NSPanel</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">hudView</string>
-						<string key="NS.object.0">PIXPageHUDView</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">hudView</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="hudView">PIXPageHUDView</string>
+						<string key="pageViewController">PIXPageViewController</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="hudView">
 							<string key="name">hudView</string>
 							<string key="candidateClassName">PIXPageHUDView</string>
 						</object>
-					</object>
+						<object class="IBToOneOutletInfo" key="pageViewController">
+							<string key="name">pageViewController</string>
+							<string key="candidateClassName">PIXPageViewController</string>
+						</object>
+					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/PIXPageHUDWindow.h</string>
@@ -3529,18 +3521,58 @@
 					<string key="className">PIXPageViewController</string>
 					<string key="superclassName">PIXViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="deleteItems:">id</string>
+						<string key="getInfo:">id</string>
 						<string key="lastPage:">id</string>
 						<string key="nextPage:">id</string>
+						<string key="openInApp:">id</string>
+						<string key="playButtonPressed:">id</string>
+						<string key="revealInFinder:">id</string>
+						<string key="shareButtonPressed:">id</string>
+						<string key="startSlideShow:">id</string>
+						<string key="stopSlideShow:">id</string>
 						<string key="toggleFullScreen:">id</string>
 						<string key="toggleInfoPanel:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="deleteItems:">
+							<string key="name">deleteItems:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="getInfo:">
+							<string key="name">getInfo:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="lastPage:">
 							<string key="name">lastPage:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="nextPage:">
 							<string key="name">nextPage:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="openInApp:">
+							<string key="name">openInApp:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="playButtonPressed:">
+							<string key="name">playButtonPressed:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="revealInFinder:">
+							<string key="name">revealInFinder:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="shareButtonPressed:">
+							<string key="name">shareButtonPressed:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="startSlideShow:">
+							<string key="name">startSlideShow:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="stopSlideShow:">
+							<string key="name">stopSlideShow:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="toggleFullScreen:">
