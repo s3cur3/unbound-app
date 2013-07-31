@@ -17,6 +17,7 @@
 
 #include <sys/types.h>
 #include <pwd.h>
+#include <unistd.h>
 
 @interface PIXFileParser () <ArchDirectoryObserver>
 
@@ -1327,7 +1328,12 @@ NSDictionary * dictionaryForURL(NSURL * url)
     
     for(NSURL * url in direcoryURLs)
     {
-        [pathArray addObject:[url path]];
+        BOOL isDir = NO;
+        if ([[NSFileManager defaultManager] fileExistsAtPath:url.path isDirectory:&isDir] && isDir) {
+            [pathArray addObject:[url path]];
+        } else {
+            DLog(@"Can't observe file URL, either it doesn't exist or is not a directory : %@", url);
+        }
     }
     
     [[NSUserDefaults standardUserDefaults] setObject:pathArray forKey:@"PIX_ObservedDirectoriesKey"];
@@ -1364,6 +1370,19 @@ NSDictionary * dictionaryForURL(NSURL * url)
 #pragma mark - 
 #pragma ui helpers for init and settings screens
 
+-(BOOL)checkReadWriteAccess:(NSURL *)filePathURL
+{
+    NSString *filePath = filePathURL.path;
+    if (!filePath.length ||
+        (access([filePath UTF8String], W_OK) != 0) ||
+        (access([filePath UTF8String], R_OK) != 0)) {
+            DLog(@"There's a problem with the file permissions on the new root folder : %@", filePathURL);
+            return NO;
+    }
+    return YES;
+        
+}
+
 -(BOOL)userChooseFolderDialog
 {
     // Create the File Open Dialog class.
@@ -1380,6 +1399,16 @@ NSDictionary * dictionaryForURL(NSURL * url)
     
     if(result == NSFileHandlingPanelOKButton && [[openPanel URLs] count] == 1)
     {
+        NSURL *selectedURL = [[openPanel URLs] lastObject];
+        if (![self checkReadWriteAccess:selectedURL]) {
+            NSString *warningMessage = [NSString stringWithFormat:@"The root folder you selected may be read only which may prevent some app features from functioning properly, continue with this folder anyway?"];
+            if (NSRunAlertPanel(@"Read & Write Permissions Are Required", warningMessage, @"OK", @"Cancel", nil) == NSAlertDefaultReturn) {
+                //User selected to continue with this folder - do nothing
+            } else {
+                //If user cancels go back to the preferenes view without making a change
+                return NO;
+            }
+        }
         [[PIXAppDelegate sharedAppDelegate] showMainWindow:nil];
         
         // use this flag so the deep scan will restart if the app crashes half way through
