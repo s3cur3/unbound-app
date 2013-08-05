@@ -105,7 +105,7 @@
         
         if(self.photo.caption)
         {
-            [self.captionTextView setString:self.photo.caption];
+            [self.captionTextView setString:[self.photo.caption copy]];
         }
         
         else
@@ -432,14 +432,14 @@
 {
     if(self.captionEditCancelled == NO)
     {
-        [self.photo userSetCaption:self.captionTextView.string];
+        [self.photo userSetCaption:[self.captionTextView.string copy]];
     }
     
     else
     {
         if(self.photo.caption)
         {
-            [self.captionTextView setString:self.photo.caption];
+            [self.captionTextView setString:[self.photo.caption copy]];
         }
         
         else
