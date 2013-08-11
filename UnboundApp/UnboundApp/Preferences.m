@@ -2,6 +2,7 @@
 //#import "../Utils/Utils.h"
 
 #import "PIXDefines.h"
+#import "PIXAlbum.h"
 
 
 @implementation Preferences
@@ -53,6 +54,9 @@ static Preferences * instance = nil;
     
     [defaults setValue:[NSNumber numberWithBool:NO] forKey:kAppObservedDirectoryUnavailable];
     [defaults setValue:[NSNumber numberWithBool:NO] forKey:kAppObservedDirectoryUnavailableSupressAlert];
+    
+    [[NSUserDefaults standardUserDefaults] setInteger:PIXPhotoSortOldToNew forKey:@"PIXPhotoSort"];
+    [[NSUserDefaults standardUserDefaults] setInteger:PIXAlbumSortNewToOld forKey:@"PIXAlbumSort"];
     
 
 	// last step : register the default parameters
