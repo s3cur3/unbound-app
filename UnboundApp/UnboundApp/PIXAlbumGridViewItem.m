@@ -504,7 +504,9 @@
         return;
     }
     
-    BOOL success = [[PIXFileManager sharedInstance] renameAlbum:self.album withName:aTextField.stringValue];
+    PIXAlbum * thisAlbum = self.album;
+    
+    BOOL success = [[PIXFileManager sharedInstance] renameAlbum:thisAlbum withName:aTextField.stringValue];
     
     if (!success)
     {
@@ -514,7 +516,11 @@
         return;
     } else {
         //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:anAlbum];
-        DLog(@"Album was renamed successfuly : \"%@\"", self.album.path);
+        //DLog(@"Album was renamed successfuly : \"%@\"", self.album.path);
+        
+        // scroll to this album in the grid view
+        [[NSNotificationCenter defaultCenter] postNotificationName:AlbumWasRenamedNotification object:thisAlbum];
+        
     }
     
     // update the album

@@ -22,6 +22,7 @@
 
 #define AlbumCreatedNotification @"AlbumCreatedNotification"
 #define AlbumDidChangeNotification @"AlbumDidChangeNotification"
+#define AlbumWasRenamedNotification @"AlbumWasRenamedNotification"
 #define AlbumStackDidChangeNotification @"AlbumStackDidChangeNotification"
 #define AlbumDeletedNotification @"AlbumDeletedNotification"
 

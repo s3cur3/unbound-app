@@ -141,7 +141,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
     if (utiValue)
     {
         isImageFile = (UTTypeConformsTo((__bridge CFStringRef)utiValue, kUTTypeImage)) ||
-                       (UTTypeConformsTo((__bridge CFStringRef)utiValue, kUTTypeMovie));
+                      (UTTypeConformsTo((__bridge CFStringRef)utiValue, kUTTypeMovie));
         
     }
     

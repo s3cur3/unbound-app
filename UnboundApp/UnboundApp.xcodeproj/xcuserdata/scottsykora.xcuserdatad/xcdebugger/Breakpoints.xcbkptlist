@@ -60,11 +60,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXFileManager.m"
-         timestampString = "396065404.221663"
+         timestampString = "397954530.301756"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1122"
-         endingLineNumber = "1122"
+         startingLineNumber = "1139"
+         endingLineNumber = "1139"
          landmarkName = "-moveFiles:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -73,11 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXFileManager.m"
-         timestampString = "396065404.221663"
+         timestampString = "397954530.301756"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1652"
-         endingLineNumber = "1652"
+         startingLineNumber = "1669"
+         endingLineNumber = "1669"
          landmarkName = "-createAlbumAtPath:withName:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -86,13 +86,65 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UnboundApp/PIXAlbumGridViewController.m"
-         timestampString = "396067578.82864"
+         timestampString = "397955120.498663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1065"
-         endingLineNumber = "1065"
+         startingLineNumber = "1070"
+         endingLineNumber = "1070"
          landmarkName = "-albumsChanged:"
          landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "UnboundApp/PIXPageHUDView.m"
+         timestampString = "397422395.193903"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "87"
+         endingLineNumber = "87"
+         landmarkName = "-setPhoto:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "UnboundApp/PIXPhoto.m"
+         timestampString = "397422526.976963"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "113"
+         endingLineNumber = "113"
+         landmarkName = "-userSetCaption:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "UnboundApp/PIXPhoto.m"
+         timestampString = "397422555.847413"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "98"
+         endingLineNumber = "98"
+         landmarkName = "-userSetCaption:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "UnboundApp/PIXPhoto.m"
+         timestampString = "397422614.419906"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "122"
+         endingLineNumber = "122"
+         landmarkName = "@implementation PIXPhoto"
+         landmarkType = "3">
       </FileBreakpoint>
    </FileBreakpoints>
    <ExceptionBreakpoints>

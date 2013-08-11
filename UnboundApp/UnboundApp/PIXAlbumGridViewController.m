@@ -81,6 +81,11 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(albumRenamed:)
+                                                 name:AlbumWasRenamedNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(defaultThemeChanged:)
                                                  name:@"backgroundThemeChanged"
                                                object:nil];
@@ -1084,6 +1089,21 @@
         [self.centerStatusView setHidden:YES];
     }
     
+}
+
+-(void)albumRenamed:(NSNotification *)notification
+{
+    PIXAlbum * album = [notification object];
+    
+    if(album)
+    {
+        NSUInteger index = [self.albums indexOfObject:album];
+        
+        if(index != NSNotFound)
+        {
+            [self.gridView scrollToAndReturnItemAtIndex:index animated:YES];
+        }
+    }
 }
 
 -(NSArray *)albums

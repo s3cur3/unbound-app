@@ -110,7 +110,7 @@ const CGFloat kThumbnailSize = 370.0f;
     }
     
     // set the caption in the db
-    self.caption = userCaption;
+    self.caption = [userCaption copy];
     
     // write the caption to the unbound file
     [self.album setUnboundFileCaptionForPhoto:self];
@@ -120,7 +120,7 @@ const CGFloat kThumbnailSize = 370.0f;
 -(void)setCaption:(NSString *)caption
 {
     [self willChangeValueForKey:@"caption"];
-    [self setPrimitiveValue:caption forKey:@"caption"];
+    [self setPrimitiveValue:[caption copy] forKey:@"caption"];
     [self didChangeValueForKey:@"caption"];
 }*/
 

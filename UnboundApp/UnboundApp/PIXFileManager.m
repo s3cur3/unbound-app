@@ -548,6 +548,8 @@ typedef NSUInteger PIXOverwriteStrategy;
     }
     
     
+    NSString *oldAlbumPath = [anAlbum.path copy];
+    
     NSString *parentFolderPath = [anAlbum.path stringByDeletingLastPathComponent];
     NSString *oldAlbumName = [anAlbum.path lastPathComponent];
     NSString *newFilePath = [parentFolderPath stringByAppendingPathComponent:aNewName];
@@ -566,14 +568,39 @@ typedef NSUInteger PIXOverwriteStrategy;
         return NO;
     }
     
-    [anAlbum setPath:newFilePath];
-    for (PIXPhoto *aPhoto in anAlbum.photos)
+    // fetch any photos and albums with this path or subpath and change them:
+    
+    // first fetch albums
+    NSManagedObjectContext * context = anAlbum.managedObjectContext;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:kPhotoEntityName inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"path contains %@", oldAlbumPath];
+    [fetchRequest setPredicate:predicate];
+    
+    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+    
+    
+    for (PIXPhoto *aPhoto in fetchedObjects)
     {
-        NSString *photoFileName = [aPhoto.path lastPathComponent];
-        NSString *newPhotoPath = [NSString stringWithFormat:@"%@/%@", anAlbum.path, photoFileName];
+        
+        NSString *newPhotoPath = [aPhoto.path stringByReplacingOccurrencesOfString:oldAlbumPath withString:newFilePath];
+        //DLog(@"changing photo path from %@ to %@", aPhoto.path, newPhotoPath);
         aPhoto.path = newPhotoPath;
     }
     
+    [fetchRequest setEntity:[NSEntityDescription entityForName:kAlbumEntityName inManagedObjectContext:context]];
+    fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+     
+     for (PIXAlbum *eachAlbum in fetchedObjects)
+     {
+         
+         NSString *newAlbumPath = [eachAlbum.path stringByReplacingOccurrencesOfString:oldAlbumPath withString:newFilePath];
+         //DLog(@"changing album path from %@ to %@", eachAlbum.path, newAlbumPath);
+         eachAlbum.path = newAlbumPath;
+     }
+     
     if (![[[PIXAppDelegate sharedAppDelegate] managedObjectContext] save:&error]) {
         DLog(@"%@", error);
         [[NSApplication sharedApplication] presentError:error];
@@ -583,22 +610,12 @@ typedef NSUInteger PIXOverwriteStrategy;
     // save all the way back to the persistant store
     [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
     
-    [anAlbum flush];
-    
-    NSString *oldAlbumPath = [NSString stringWithFormat:@"%@/%@", parentFolderPath, oldAlbumName];
-    //[[PIXFileParser sharedFileParser] scanPath:parentFolderPath withRecursion:PIXFileParserRecursionFull];
-    
-    // scan the album paths after a short delay
-    double delayInSeconds = 0.5;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        
-        [[PIXFileParser sharedFileParser] scanPath:oldAlbumPath withRecursion:PIXFileParserRecursionNone];
-        [[PIXFileParser sharedFileParser] scanPath:anAlbum.path withRecursion:PIXFileParserRecursionSemi];
-    });
-    
-    
-    //[[PIXFileParser sharedFileParser] scanFullDirectory];
+    for (PIXAlbum *eachAlbum in fetchedObjects)
+    {
+        [eachAlbum flush];
+    }
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
     
     
     NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
