@@ -377,6 +377,10 @@
 		8CC94932171E145A00EC1431 /* LeapTutorial4.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8CC94931171E145A00EC1431 /* LeapTutorial4.mov */; };
 		8CDD1ADF177259B700EB6E63 /* PIXSeperatedSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CDD1ADE177259B700EB6E63 /* PIXSeperatedSpinnerView.m */; };
 		8CDD1AE0177259B700EB6E63 /* PIXSeperatedSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CDD1ADE177259B700EB6E63 /* PIXSeperatedSpinnerView.m */; };
+		8CDFEAA517B8896600BC5DD9 /* tempVideo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8CDFEAA317B8896600BC5DD9 /* tempVideo.jpg */; };
+		8CDFEAA617B8896600BC5DD9 /* tempVideo@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8CDFEAA417B8896600BC5DD9 /* tempVideo@2x.jpg */; };
+		8CDFEAA717B8896D00BC5DD9 /* tempVideo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8CDFEAA317B8896600BC5DD9 /* tempVideo.jpg */; };
+		8CDFEAA817B8896D00BC5DD9 /* tempVideo@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8CDFEAA417B8896600BC5DD9 /* tempVideo@2x.jpg */; };
 		8CE460DB16CB650600CDFA04 /* btn-roundrect-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D716CB650600CDFA04 /* btn-roundrect-down.png */; };
 		8CE460DC16CB650600CDFA04 /* btn-roundrect-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D816CB650600CDFA04 /* btn-roundrect-down@2x.png */; };
 		8CE460DD16CB650600CDFA04 /* btn-roundrect-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D916CB650600CDFA04 /* btn-roundrect-up.png */; };
@@ -709,6 +713,8 @@
 		8CC94931171E145A00EC1431 /* LeapTutorial4.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = LeapTutorial4.mov; sourceTree = "<group>"; };
 		8CDD1ADD177259B700EB6E63 /* PIXSeperatedSpinnerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXSeperatedSpinnerView.h; sourceTree = "<group>"; };
 		8CDD1ADE177259B700EB6E63 /* PIXSeperatedSpinnerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSeperatedSpinnerView.m; sourceTree = "<group>"; };
+		8CDFEAA317B8896600BC5DD9 /* tempVideo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tempVideo.jpg; sourceTree = "<group>"; };
+		8CDFEAA417B8896600BC5DD9 /* tempVideo@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "tempVideo@2x.jpg"; sourceTree = "<group>"; };
 		8CE460D716CB650600CDFA04 /* btn-roundrect-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-roundrect-down.png"; sourceTree = "<group>"; };
 		8CE460D816CB650600CDFA04 /* btn-roundrect-down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-roundrect-down@2x.png"; sourceTree = "<group>"; };
 		8CE460D916CB650600CDFA04 /* btn-roundrect-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-roundrect-up.png"; sourceTree = "<group>"; };
@@ -933,6 +939,8 @@
 				8C68247E16F8089400245F09 /* buttongrid_print@2x.png */,
 				8C68247F16F8089400245F09 /* buttongrid_share.png */,
 				8C68248016F8089400245F09 /* buttongrid_share@2x.png */,
+				8CDFEAA317B8896600BC5DD9 /* tempVideo.jpg */,
+				8CDFEAA417B8896600BC5DD9 /* tempVideo@2x.jpg */,
 				8C68248116F8089400245F09 /* buttongrid_twitter.png */,
 				8C9AA2B716FFE39500D989CA /* captionbutton.png */,
 				8C9AA2B816FFE39500D989CA /* captionbutton@2x.png */,
@@ -1483,6 +1491,8 @@
 				1D368179179A5AA5004538FA /* playbutton-tinted@2x.png in Resources */,
 				1D36817B179A5AA5004538FA /* playbutton.png in Resources */,
 				1D36817D179A5AA5004538FA /* playbutton@2x.png in Resources */,
+				8CDFEAA517B8896600BC5DD9 /* tempVideo.jpg in Resources */,
+				8CDFEAA617B8896600BC5DD9 /* tempVideo@2x.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1596,6 +1606,8 @@
 				1D36817A179A5AA5004538FA /* playbutton-tinted@2x.png in Resources */,
 				1D36817C179A5AA5004538FA /* playbutton.png in Resources */,
 				1D36817E179A5AA5004538FA /* playbutton@2x.png in Resources */,
+				8CDFEAA717B8896D00BC5DD9 /* tempVideo.jpg in Resources */,
+				8CDFEAA817B8896D00BC5DD9 /* tempVideo@2x.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

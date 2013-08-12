@@ -153,13 +153,23 @@
     
     if(self.itemImage == nil)
     {
-        self.itemImage = [NSImage imageNamed:@"temp"];
+        if([self.photo isVideo])
+        {
+            // no camera icon on videos
+            self.itemImage = [NSImage imageNamed:@"tempVideo"];
+        }
+        
+        else
+        {
+            self.itemImage = [NSImage imageNamed:@"temp"];
+        }
     }
 
     [self updateLayer];
     if([self.photo isVideo])
     {
         [self.layer addSublayer:self.videoLayover.layer];
+        [self setFrame:self.frame];
     }
     else
     {
@@ -188,6 +198,7 @@
     [super setFrame:frameRect];
     [_selectionLayer setFrame:self.bounds];
 
+    /*
     if (_videoLayover!=nil) {
         //DLog(@"self.frame.origin.x: %f, self.frame.origin.y: %f, self.frame.size.height: %f, self.frame.size.width: %f", frameRect.origin.x, frameRect.origin.y, frameRect.size.height, frameRect.size.width);
         NSImage * photo = self.itemImage;
@@ -222,9 +233,21 @@
                 imageFrame.origin.x = rint((rect.size.width - imageFrame.size.width)/2 + rect.origin.x);
             }
         }
+        
+        else
+        {
+            float mulitplier = 0.5;
+            
+            imageFrame.size.width = rint(mulitplier * imageFrame.size.width);
+            imageFrame.size.height = rint(mulitplier * imageFrame.size.height);
+            
+            imageFrame.origin.y = rint((rect.size.height - imageFrame.size.height)/2 + rect.origin.y);
+            imageFrame.origin.x = rint((rect.size.width - imageFrame.size.width)/2 + rect.origin.x);
+        }
+    
         [_videoLayover setFrame:imageFrame];
     }
-
+*/
     [self updateLayer];
 }
 
@@ -331,7 +354,34 @@
     
     self.imageLayer.borderWidth = borderThickness;
     
+    CGRect videoThumbFrame = CGRectMake(0, 0, 80, 80);
     
+    if(imageFrame.size.width > 0 && imageFrame.size.height >  0)
+    {
+        if(imageFrame.size.width / imageFrame.size.height > rect.size.width / rect.size.height)
+        {
+            float mulitplier = rect.size.width / 200.0;
+            
+            videoThumbFrame.size.width = rint(mulitplier * videoThumbFrame.size.width);
+            videoThumbFrame.size.height = rint(mulitplier * videoThumbFrame.size.height);
+            
+            videoThumbFrame.origin.y = rint((rect.size.height - videoThumbFrame.size.height)/2 + rect.origin.y);
+            videoThumbFrame.origin.x = rint((rect.size.width - videoThumbFrame.size.width)/2 + rect.origin.x);
+        }
+        
+        else
+        {
+            float mulitplier = rect.size.height / 200.0;
+            
+            videoThumbFrame.size.width = rint(mulitplier * videoThumbFrame.size.width);
+            videoThumbFrame.size.height = rint(mulitplier * videoThumbFrame.size.height);
+            
+            videoThumbFrame.origin.y = rint((rect.size.height - videoThumbFrame.size.height)/2 + rect.origin.y);
+            videoThumbFrame.origin.x = rint((rect.size.width - videoThumbFrame.size.width)/2 + rect.origin.x);
+        }
+    }
+    
+    [_videoLayover setFrame:videoThumbFrame];
     
     
     CGMutablePathRef path = CGPathCreateMutable();
@@ -345,6 +395,10 @@
     
     
     [self.imageLayer setContents:self.itemImage];
+    
+    // set the video layover frame:
+    
+    
     
     [CATransaction commit];
     
