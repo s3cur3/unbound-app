@@ -36,7 +36,7 @@
 @property (nonatomic, retain) NSDictionary * exifData;
 @property (nonatomic, retain) NSNumber * fileSize;
 
-@property (nonatomic, retain) NSString * thumbnailFilePath;
+@property (nonatomic, copy) NSString * thumbnailFilePath;
 
 @property (nonatomic, retain) NSNumber * latitude;
 @property (nonatomic, retain) NSNumber * longitude;

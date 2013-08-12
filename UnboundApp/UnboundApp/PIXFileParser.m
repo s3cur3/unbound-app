@@ -1180,7 +1180,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
     for(PIXAlbum * album in editedAlbums)
     {
         [album flush];
-        NSLog(@"flushed album %@ has %ld items", album.title, album.photos.count);
+        //NSLog(@"flushed album %@ has %ld items", album.title, album.photos.count);
     }
    
     

@@ -896,7 +896,13 @@ const CGFloat kThumbnailSize = 370.0f;
         }
         [QTMovie exitQTKitOnThread];
         NSData *rep = [anImage TIFFRepresentation];
-        CGImageSourceRef imageSource = CGImageSourceCreateWithData((__bridge CFDataRef)rep, nil);
+        CGImageSourceRef imageSource = nil;
+        
+        if(rep != nil)
+        {
+            imageSource = CGImageSourceCreateWithData((__bridge CFDataRef)rep, nil);
+        }
+
         if (imageSource) {
             
             if (weakSelf.cancelThumbnailLoadOperation==YES) {
@@ -1200,7 +1206,14 @@ const CGFloat kThumbnailSize = 370.0f;
             }
             [QTMovie exitQTKitOnThread];
             NSData *rep = [anImage TIFFRepresentation];
-            CGImageSourceRef movieImageSource = CGImageSourceCreateWithData((__bridge CFDataRef)rep, nil);
+            
+            CGImageSourceRef movieImageSource = nil;
+            
+            if(rep != nil)
+            {
+                movieImageSource = CGImageSourceCreateWithData((__bridge CFDataRef)rep, nil);
+            }
+            
             if (movieImageSource) {
                 
                 if (weakSelf.cancelThumbnailLoadOperation==YES) {
@@ -1642,6 +1655,8 @@ const CGFloat kThumbnailSize = 370.0f;
 
 -(void)clearFiles
 {
+    if([self isReallyDeleted]) return;
+    
     NSFileManager * fileManager = [NSFileManager defaultManager];
     
     if([self thumbnailFilePath] && [fileManager fileExistsAtPath:[self thumbnailFilePath]])

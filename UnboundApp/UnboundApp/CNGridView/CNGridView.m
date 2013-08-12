@@ -1,4 +1,4 @@
-//
+ //
 //  CNGridView.m
 //
 //  Created by cocoa:naut on 06.10.12.
@@ -844,12 +844,13 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     CGFloat currentY = self.clippedRect.origin.y;
     CGFloat scrollY = -1;
     
-    // if we need to scroll
+    // if we need to scroll up
     if (point.y-self.headerSpace < currentY)
     {
         scrollY = point.y - self.headerSpace;
     }
     
+    // if we need to scroll down
     else if(point.y+self.itemSize.height > self.clippedRect.origin.y + self.clippedRect.size.height)
     {
         scrollY = (point.y+self.itemSize.height)-self.clippedRect.size.height;
@@ -1061,13 +1062,13 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         
         CGFloat viewPosition = (self.clippedRect.origin.y+(self.clippedRect.size.height/2)) / self.bounds.size.height;
         
-       // BOOL animated = (self.frame.size.width == frameRect.size.width ? NO: YES);
+        
         [super setFrame:frameRect];
         
         [self refreshGridViewAnimated:NO];
         
-        // if we're not at the top then stay centered when resizing
-        if(self.clippedRect.origin.y != 0) // stay at top if we're at the top
+        // if we're not at the top then stay centered when live resizing
+        if(self.clippedRect.origin.y != 0 && [self inLiveResize]) // stay at top if we're at the top
         {
             viewPosition = (viewPosition * self.bounds.size.height)-(self.clippedRect.size.height/2);
             [self scrollPoint:NSMakePoint(0, viewPosition)];
