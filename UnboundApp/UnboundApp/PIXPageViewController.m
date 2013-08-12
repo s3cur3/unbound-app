@@ -51,6 +51,7 @@
 
 @property BOOL infoPanelShowing;
 
+@property (nonatomic, strong) NSToolbarItem * deleteItem;
 @property (nonatomic, strong) NSToolbarItem * shareItem;
 @property (nonatomic, strong) NSToolbarItem * infoItem;
 @property (nonatomic, strong) NSButton * infoButton;
@@ -505,10 +506,41 @@
 
 -(void)setupToolbar
 {
-    NSArray * items = @[self.navigationViewController.backButton, self.navigationViewController.middleSpacer, self.shareItem, self.infoItem];
+    NSArray * items = @[self.navigationViewController.backButton, self.navigationViewController.middleSpacer, self.deleteItem, self.shareItem, self.infoItem];
     
     [self.navigationViewController setNavBarHidden:NO];
     [self.navigationViewController setToolbarItems:items];
+    
+}
+
+- (NSToolbarItem *)deleteItem
+{
+    if(_deleteItem != nil) return _deleteItem;
+    
+    _deleteItem = [[NSToolbarItem alloc] initWithItemIdentifier:@"deletePhotoButton"];
+    //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
+    
+    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 60, 25)];
+    
+    [buttonView setImagePosition:NSNoImage];
+    [buttonView setBordered:YES];
+    [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
+    [buttonView setTitle:@"Delete"];
+    
+    _deleteItem.view = buttonView;
+    
+    [_deleteItem setLabel:@"Delete Photo"];
+    [_deleteItem setPaletteLabel:@"Delete Photo"];
+    
+    // Set up a reasonable tooltip, and image
+    // you will likely want to localize many of the item's properties
+    [_deleteItem setToolTip:@"Delete a Photo"];
+    
+    // Tell the item what message to send when it is clicked
+    [buttonView setTarget:self];
+    [buttonView setAction:@selector(deleteItems:)];
+    
+    return _deleteItem;
     
 }
 
@@ -917,14 +949,10 @@
         if (aPhoto == [self.pagerData lastObject]) {
             lastItem = YES;
         }
+        
+        
         NSArray *itemsToDelete = [NSArray arrayWithObject:aPhoto];
-        if (!lastItem) {
-            [self.pageController navigateForward:nil];
-        } else if (self.pagerData.count>1) {
-            [self.pageController navigateBack:nil];
-        } else {
-            [self.navigationViewController popViewController];
-        }
+
         [[PIXFileManager sharedInstance] recyclePhotos:itemsToDelete];
         
     } else {
@@ -1048,7 +1076,24 @@
 
 -(void)setAlbum:(PIXAlbum *)album
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:_album];
     _album = album;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAlbum:) name:AlbumDidChangeNotification object:_album];
+}
+
+-(void)updateAlbum:(NSNotification *)note
+
+{
+    if([self.album.photos count] == 0)
+   {
+       [self.navigationViewController popViewController];
+       return;
+   }
+    
+    [self updateData];
+    [self updateTitle];
+    
 }
 
 -(void)preloadNextImagesForShuffledSlideshowAtIndex:(NSUInteger)anIndex
@@ -1233,6 +1278,7 @@
 
 -(void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(tryFadeControls) object:nil];
 }
 
