@@ -11,6 +11,7 @@
 #import "PIXPhoto.h"
 #import "PIXDefines.h"
 #import "PIXAppDelegate.h"
+//#include <unistd.h>
 
 static NSString *const kItemsKey = @"photos";
 
@@ -458,6 +459,11 @@ static NSString *const kItemsKey = @"photos";
 -(void)writeUnboundFile:(NSDictionary *)unboundJSON
 {
     NSString *unboundFilePath = [NSString stringWithFormat:@"%@/.unbound", self.path];
+//    //NSURL *ubFileURL = [NSURL URLWithString:self.path];
+//    if ((access([unboundFilePath UTF8String], W_OK) == 0) ||
+//        (access([self.path UTF8String], W_OK) == 0))
+//    {
+//        // have access rights to read
     
     // write the JSON back to the file
     NSOutputStream *os = [[NSOutputStream alloc] initToFileAtPath:unboundFilePath append:NO];
@@ -469,6 +475,15 @@ static NSString *const kItemsKey = @"photos";
     [os close];
     
     [self setDateReadUnboundFile:[NSDate date]];
+    
+//    } else {
+//        NSAlert *alert = [[NSAlert alloc] init];
+//        [alert setMessageText:@"Unable to save changes to album at path '%@'.\nWrite permissions are disabled."];
+//        [alert addButtonWithTitle:@"OK"];
+//        [alert runModal];
+//    }
+    
+
     
 }
 

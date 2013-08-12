@@ -96,4 +96,9 @@ typedef enum {
 
 -(void)rescanFiles;
 
+/**
+ *  returns a list of NSDictionaries containing information about the current volumes on the file system
+ */
+-(NSArray *) mountedVolumesInfo;
+
 @end
