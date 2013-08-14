@@ -7,6 +7,7 @@
 //
 
 #import "PIXFileParser.h"
+#import "PIXFileManager.h"
 #import "PIXAppDelegate.h"
 #import "PIXDefines.h"
 #import "PIXAlbum.h"
@@ -281,13 +282,34 @@ NSDictionary * dictionaryForURL(NSURL * url)
         [subURL getResourceValue:&isPackage forKey:NSURLIsPackageKey error:nil];
         [subURL getResourceValue:&isHidden forKey:NSURLIsHiddenKey error:nil];
         
+        subURL = [subURL URLByDeletingLastPathComponent];
+        
         if([isPackage boolValue] || [isHidden boolValue])
         {
+            if ([PIXFileManager fileIsMetadataFile:changedURL]) {
+                if(self.pendingFolderScanPaths[subURL] == nil)
+                {
+                    // set a dummy object in this dictionary
+                    self.pendingFolderScanPaths[subURL] = [NSNumber numberWithBool:YES];
+                    
+                    // delay for half a second so any other scans of the same folder don't get done
+                    double delayInSeconds = 0.5;
+                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                        
+                        [self.pendingFolderScanPaths removeObjectForKey:subURL];
+                        
+                        // start the scan of the url
+                        [self scanURLForChanges:subURL withRecursion:PIXFileParserRecursionNone];
+                        
+                    });
+                }
+            }
             // do nothing, this is hidden or a package
             return;
         }
         
-        subURL = [subURL URLByDeletingLastPathComponent];
+        
         
     }
     
