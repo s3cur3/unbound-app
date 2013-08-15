@@ -7,6 +7,8 @@
 //
 
 #import "AutoSizingVideoView.h"
+//#import "PIXPageViewController.h"
+
 
 @implementation AutoSizingVideoView
 
@@ -22,6 +24,7 @@
 //        [super setFrameSize:newSize];
 //    }
 //}
+
 
 -(void)mouseDown:(NSEvent *)theEvent{
     DLog(@"mouseDown:%@", theEvent);
@@ -56,13 +59,24 @@
 }
 
 //- (void)mouseDown:(NSEvent *)theEvent {}
-- (void)rightMouseDown:(NSEvent *)theEvent {}
-- (void)otherMouseDown:(NSEvent *)theEvent {}
-- (void)mouseUp:(NSEvent *)theEvent {}
-- (void)otherMouseUp:(NSEvent *)theEvent {}
-- (void)rightMouseUp:(NSEvent *)theEvent {}
-- (void)scrollWheel:(NSEvent *)theEvent {}
-- (NSMenu *)menuForEvent:(NSEvent *)theEvent { return nil; }
+- (void)rightMouseDown:(NSEvent *)theEvent {DLog(@"%@", theEvent);}
+- (void)otherMouseDown:(NSEvent *)theEvent {DLog(@"%@", theEvent);}
+- (void)mouseUp:(NSEvent *)theEvent {DLog(@"%@", theEvent);}
+- (void)otherMouseUp:(NSEvent *)theEvent {DLog(@"%@", theEvent);}
+- (void)rightMouseUp:(NSEvent *)theEvent {DLog(@"%@", theEvent);}
+- (void)scrollWheel:(NSEvent *)theEvent {
+
+    //DLog(@"%@", theEvent);
+
+    if ([self.pageViewController movieIsPlaying] == YES) {
+        //DLog(@"movieIsPlaying is YES");
+        return;
+    } else {
+        [self.nextResponder scrollWheel:theEvent];
+    }
+    
+}
+- (NSMenu *)menuForEvent:(NSEvent *)theEvent {DLog(@"%@", theEvent); return nil; }
 - (BOOL)acceptsFirstResponder { return NO; }
 
 
