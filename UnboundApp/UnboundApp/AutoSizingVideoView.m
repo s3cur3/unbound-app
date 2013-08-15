@@ -55,5 +55,15 @@
     
 }
 
+//- (void)mouseDown:(NSEvent *)theEvent {}
+- (void)rightMouseDown:(NSEvent *)theEvent {}
+- (void)otherMouseDown:(NSEvent *)theEvent {}
+- (void)mouseUp:(NSEvent *)theEvent {}
+- (void)otherMouseUp:(NSEvent *)theEvent {}
+- (void)rightMouseUp:(NSEvent *)theEvent {}
+- (void)scrollWheel:(NSEvent *)theEvent {}
+- (NSMenu *)menuForEvent:(NSEvent *)theEvent { return nil; }
+- (BOOL)acceptsFirstResponder { return NO; }
+
 
 @end
