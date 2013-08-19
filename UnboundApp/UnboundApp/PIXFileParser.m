@@ -1480,7 +1480,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
 #ifdef DEBUG
             [self mountedVolumesInfo];
 #endif
-            NSString *warningMessage = [NSString stringWithFormat:@"The root folder you selected is read-only which may prevent some app features from functioning properly, continue with this folder anyway?"];
+            NSString *warningMessage = [NSString stringWithFormat:@"The root folder you selected is read-only which may prevent some app features from functioning properly. Continue with this folder anyway?"];
             if (NSRunAlertPanel(@"Read & Write Permissions Are Required", warningMessage, @"OK", @"Cancel", nil) == NSAlertDefaultReturn) {
                 //User selected to continue with this folder - do nothing
             } else {
