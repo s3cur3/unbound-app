@@ -72,6 +72,8 @@
         //DLog(@"movieIsPlaying is YES");
         return;
     } else {
+        PIXPageViewController *aPageVC = (PIXPageViewController *)[[theEvent window] firstResponder];
+        DLog(@"nextResponder : %@", self.nextResponder);
         [self.nextResponder scrollWheel:theEvent];
     }
     

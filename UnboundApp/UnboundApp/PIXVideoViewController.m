@@ -149,6 +149,10 @@ static NSString *ResolveName(NSString *aName)
     //    }
 }
 
+- (void)scrollWheel:(NSEvent *)theEvent {
+    DLog(@"%@", theEvent);
+}
+
 -(void)dismissOverlay
 {
     if (self.overlayWindow!=nil) {
@@ -166,6 +170,10 @@ static NSString *ResolveName(NSString *aName)
 -(void)displayOverlay
 {
     if (self.overlayWindow!=nil) {
+        return;
+    }
+    if (self.pageViewController.pageController.selectedViewController != self) {
+        DLog(@"not selected vc");
         return;
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playMoviePressed:) name:@"UB_PLAY_MOVIE_PRESSED" object:nil];
@@ -220,7 +228,7 @@ static NSString *ResolveName(NSString *aName)
                                                                 styleMask:NSBorderlessWindowMask
                                                                   backing:NSBackingStoreBuffered
                                                                     defer:NO];
-    [self.overlayWindow setParentView:self.pageViewController.pageController.view];
+    [self.overlayWindow setParentView:self.pageViewController.pageController.selectedViewController.view];
     [_overlayWindow setOpaque:NO];
     [_overlayWindow setHasShadow:YES];
     
