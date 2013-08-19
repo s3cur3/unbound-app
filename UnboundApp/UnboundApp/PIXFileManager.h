@@ -41,4 +41,6 @@
 
 -(IBAction)importPhotosToAlbum:(PIXAlbum *)album allowDirectories:(BOOL)allowDirectories;
 
++ (BOOL)fileIsMetadataFile:(NSURL *)url;
+
 @end

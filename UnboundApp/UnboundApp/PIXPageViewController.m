@@ -34,6 +34,8 @@
 
 #import "PIXPageView.h"
 
+#import "PIXPlayVideoHUDWindow.h"
+
 @interface PIXPageViewController () <PIXLeapResponder, PIXSlideshowOptonsDelegate, NSMenuDelegate>
 
 @property NSArray * viewControllers;
@@ -152,8 +154,9 @@
     [self.currentImageVC setIsCurrentView:NO];
     
     self.currentImageVC = (PIXImageViewController *)[self.pageController selectedViewController];
-    
-    [self.currentImageVC setIsCurrentView:YES];
+    if (thisPhoto.videoFile==nil) {
+        [self.currentImageVC setIsCurrentView:YES];
+    }
     
     
 }
@@ -649,6 +652,11 @@
 {
     return YES;
 }
+
+- (void)scrollWheel:(NSEvent *)theEvent {
+    DLog(@"%@", theEvent);
+}
+
 
 
 - (void)willHidePIXView
@@ -1324,6 +1332,11 @@
 //        return;
 //    }
     
+    if ([viewController isKindOfClass:[PIXVideoViewController class]]) {
+        PIXVideoViewController *videoVC = (PIXVideoViewController *)viewController;
+        [videoVC.overlayWindow close];
+    }
+    
     viewController.representedObject = object;
     // viewControllers may be reused... make sure to reset important stuff like the current magnification factor.
     
@@ -1343,6 +1356,18 @@
 }
 
 - (void)pageControllerWillStartLiveTransition:(NSPageController *)pageController {
+    
+    if ([pageController.selectedViewController isKindOfClass:[PIXVideoViewController class]]) {
+        PIXVideoViewController *videoVC = (PIXVideoViewController *)pageController.selectedViewController;
+        [videoVC dismissOverlay];
+        [videoVC.overlayWindow close];
+    }
+    if ([self.pageController.selectedViewController isKindOfClass:[PIXVideoViewController class]]) {
+        PIXVideoViewController *videoVC = (PIXVideoViewController *)self.pageController.selectedViewController;
+        [videoVC dismissOverlay];
+        [videoVC.overlayWindow close];
+    }
+    
     // Remember the initial selected object so we can determine when a cancel occurred.
     self.initialSelectedObject = [pageController.arrangedObjects objectAtIndex:pageController.selectedIndex];
 }
@@ -1380,9 +1405,17 @@
      [mainWindow makeFirstResponder:aView];
      
      });*/
-    
-    
-    
+    if ([pageController.selectedViewController isKindOfClass:[PIXVideoViewController class]]) {
+        PIXVideoViewController *videoVC = (PIXVideoViewController *)pageController.selectedViewController;
+        [videoVC dismissOverlay];
+        [videoVC.overlayWindow close];
+    }
+    if ([self.pageController.selectedViewController isKindOfClass:[PIXVideoViewController class]]) {
+        PIXVideoViewController *videoVC = (PIXVideoViewController *)self.pageController.selectedViewController;
+        [videoVC.overlayWindow close];
+    }
+
+
     
     [self performSelector:@selector(startPreloadForController:) withObject:pageController afterDelay:0.0f];
     //[self preloadNextImagesForIndex:pageController.selectedIndex];
@@ -1395,6 +1428,18 @@
 //    if (aPhoto.fullsizeImage == nil) {
 //        DLog(@"pageControllerDidEndLiveTransition fullsizeImage not loaded : %@", aPhoto);
 //    }
+    if ([aPageController.selectedViewController isKindOfClass:[PIXVideoViewController class]]) {
+        PIXVideoViewController *videoVC = (PIXVideoViewController *)aPageController.selectedViewController;
+        [videoVC dismissOverlay];
+        [videoVC.overlayWindow close];
+    }
+
+    if ([self.pageController.selectedViewController isKindOfClass:[PIXVideoViewController class]]) {
+        PIXVideoViewController *videoVC = (PIXVideoViewController *)self.pageController.selectedViewController;
+        [videoVC.overlayWindow close];
+        
+    }
+    
     [aPageController completeTransition];
 
     [self.currentImageVC setIsCurrentView:NO];

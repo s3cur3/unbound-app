@@ -7,6 +7,8 @@
 //
 
 #import "AutoSizingVideoView.h"
+//#import "PIXPageViewController.h"
+
 
 @implementation AutoSizingVideoView
 
@@ -22,6 +24,7 @@
 //        [super setFrameSize:newSize];
 //    }
 //}
+
 
 -(void)mouseDown:(NSEvent *)theEvent{
     DLog(@"mouseDown:%@", theEvent);
@@ -54,6 +57,29 @@
     
     
 }
+
+//- (void)mouseDown:(NSEvent *)theEvent {}
+- (void)rightMouseDown:(NSEvent *)theEvent {DLog(@"%@", theEvent);}
+- (void)otherMouseDown:(NSEvent *)theEvent {DLog(@"%@", theEvent);}
+- (void)mouseUp:(NSEvent *)theEvent {DLog(@"%@", theEvent);}
+- (void)otherMouseUp:(NSEvent *)theEvent {DLog(@"%@", theEvent);}
+- (void)rightMouseUp:(NSEvent *)theEvent {DLog(@"%@", theEvent);}
+- (void)scrollWheel:(NSEvent *)theEvent {
+
+    //DLog(@"%@", theEvent);
+
+    if ([self.pageViewController movieIsPlaying] == YES) {
+        //DLog(@"movieIsPlaying is YES");
+        return;
+    } else {
+        PIXPageViewController *aPageVC = (PIXPageViewController *)[[theEvent window] firstResponder];
+        DLog(@"nextResponder : %@", self.nextResponder);
+        [self.nextResponder scrollWheel:theEvent];
+    }
+    
+}
+- (NSMenu *)menuForEvent:(NSEvent *)theEvent {DLog(@"%@", theEvent); return nil; }
+- (BOOL)acceptsFirstResponder { return NO; }
 
 
 @end

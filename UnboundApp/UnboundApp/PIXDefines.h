@@ -36,8 +36,8 @@
 
 #define kAppObservedDirectoryUnavailable @"observedDirectoryUnavailable"
 #define kAppObservedDirectoryUnavailableSupressAlert @"observedDirectoryUnavailableSupressAlert"
-#define kRootFolderUnavailableDetailMessage @"Unbound cannot access your photos folder. Make sure that your network drives are connected or open the Preferences to load another folder. "
-#define kRootFolderUnavailableTitle @"Check Your Photos Folder"
+#define kRootFolderUnavailableDetailMessage @"Cannot Access Your Photos Folder"
+#define kRootFolderUnavailableTitle @"Make sure that your network drives are connected or open the Preferences to load another folder. "
 
 // key for obtaining the current scan count
 #define kScanCountKey @"scanCount"
