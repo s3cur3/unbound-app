@@ -156,12 +156,24 @@ NSDictionary * dictionaryForURL(NSURL * url)
         [url getResourceValue:&fileModifiedDate forKey:NSURLContentModificationDateKey error:nil];
         [url getResourceValue:&fileSize forKey:NSURLFileSizeKey error:nil];
         
-        NSDictionary *info = @{kNameKey : [url lastPathComponent],
+        NSMutableDictionary *info = [@{kNameKey : [url lastPathComponent],
                                kPathKey : [url path],
-                               kDirectoryPathKey : [[url URLByDeletingLastPathComponent] path],
-                               kCreatedKey : fileCreationDate,
-                               kModifiedKey : fileModifiedDate,
-                               kFileSizeKey : fileSize};
+                                     kDirectoryPathKey : [[url URLByDeletingLastPathComponent] path]} mutableCopy];
+        
+        if(fileCreationDate)
+        {
+            info[kCreatedKey] = fileCreationDate;
+        }
+        
+        if(fileModifiedDate)
+        {
+            info[kModifiedKey] = fileModifiedDate;
+        }
+        
+        if(fileSize)
+        {
+            info[kFileSizeKey] = fileSize;
+        }
 
         
         return info;
