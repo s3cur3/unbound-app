@@ -34,6 +34,8 @@
 
 #define kAppFirstRun @"appFirstRun"
 
+#define kAppDidNotExitCleanly @"appDidNotExitCleanly"
+
 #define kAppObservedDirectoryUnavailable @"observedDirectoryUnavailable"
 #define kAppObservedDirectoryUnavailableSupressAlert @"observedDirectoryUnavailableSupressAlert"
 #define kRootFolderUnavailableDetailMessage @"Cannot Access Your Photos Folder"

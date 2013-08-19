@@ -111,6 +111,18 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    
+    if([[NSUserDefaults standardUserDefaults] boolForKey:kAppDidNotExitCleanly])
+    {
+        if(NSRunAlertPanel(@"Unbound Crashed", @"Unbound seems to have crashed the last time you launched it. Do you want to try again or reset all settings?", @"Start Normally", @"Clear Settings", nil) == 0)
+        {
+            [self clearAllSettings];
+        }
+    }
+    
+    // set the did not exit cleanly flag now, it will clear it at the end of 'applicationShouldTerminate'
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kAppDidNotExitCleanly];
+    
     //[(NSApplication *)[aNotification object] setDelegate:self];
     
     // Insert code here to initialize your application
@@ -873,6 +885,23 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     return context;
 }
 
+- (void)clearAllSettings
+{
+    NSDictionary * allObjects;
+    NSString     * key;
+    
+    allObjects = [ [ NSUserDefaults standardUserDefaults ] dictionaryRepresentation ];
+    
+    for( key in allObjects )
+    {
+        [ [ NSUserDefaults standardUserDefaults ] removeObjectForKey: key ];
+    }
+    
+    [ [ NSUserDefaults standardUserDefaults ] synchronize ];
+    
+    [self clearDatabase];
+}
+
 - (void)clearDatabase
 {
     // pop to the root vc
@@ -974,15 +1003,18 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     // Save changes in the application's managed object context before the application terminates.
     
     if (!_managedObjectContext) {
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kAppDidNotExitCleanly];
         return NSTerminateNow;
     }
     
     if (![[self managedObjectContext] commitEditing]) {
         NSLog(@"%@:%@ unable to commit editing to terminate", [self class], NSStringFromSelector(_cmd));
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kAppDidNotExitCleanly];
         return NSTerminateCancel;
     }
     
     if (![[self managedObjectContext] hasChanges]) {
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kAppDidNotExitCleanly];
         return NSTerminateNow;
     }
     
@@ -1028,6 +1060,8 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
             return NSTerminateCancel;
         }
     }*/
+    
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kAppDidNotExitCleanly];
     
     return NSTerminateNow;
 }
