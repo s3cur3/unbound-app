@@ -469,8 +469,13 @@ static NSString *const kItemsKey = @"photos";
     NSOutputStream *os = [[NSOutputStream alloc] initToFileAtPath:unboundFilePath append:NO];
     NSError *error;
     [os open];
-    if (![NSJSONSerialization writeJSONObject:unboundJSON toStream:os options:NSJSONWritingPrettyPrinted error:&error]) {
-        [PIXAppDelegate presentError:error];
+
+    // no error if this is unwritable (captions arent saved when disk is unwritabe but they're still stored in the db)
+    if([os hasSpaceAvailable])
+    {
+        if (![NSJSONSerialization writeJSONObject:unboundJSON toStream:os options:NSJSONWritingPrettyPrinted error:&error]) {
+            [PIXAppDelegate presentError:error];
+        }
     }
     [os close];
     
