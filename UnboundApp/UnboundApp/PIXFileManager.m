@@ -576,7 +576,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     NSEntityDescription *entity = [NSEntityDescription entityForName:kPhotoEntityName inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"path contains %@", oldAlbumPath];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"path == %@ || path contains %@", oldAlbumPath, [oldAlbumPath stringByAppendingString:@"/"]];
     [fetchRequest setPredicate:predicate];
     
     NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
