@@ -85,6 +85,7 @@
 
 - (void)addObserver:(id<ArchDirectoryObserver>)observer forDirectoryAtURL:(NSURL *)url ignoresSelf:(BOOL)ignoresSelf responsive:(BOOL)responsive resumeToken:(id)resumeToken {
     if([self eventStreamWithObserver:observer forDirectoryAtURL:url]) {
+        
         @throw [NSException exceptionWithName:NSRangeException
                                        reason:[NSString stringWithFormat:@"The observer %@ is already observing the directory %@.", observer, url]
                                      userInfo:nil];
@@ -205,7 +206,11 @@ static void ArchDirectoryEventStreamCallback(
         
         FSEventStreamScheduleWithRunLoop(eventStream, [center.runLoop getCFRunLoop], kCFRunLoopCommonModes);
         
-        FSEventStreamStart(eventStream);
+        if(!FSEventStreamStart(eventStream))
+        {
+            NSString *errMsg = [NSString stringWithFormat:@"There was a problem monitoring the directory: %@ \n\nPlease change the main photos folder from the file menu.", url.path];
+            NSRunCriticalAlertPanel(@"Error Watching Directory", errMsg, @"OK", nil, nil);
+        }
         
         if(eventID == kFSEventStreamEventIdSinceNow) {
             [observer observedDirectory:URL descendantsAtURLDidChange:URL reason:ArchDirectoryObserverNoHistoryReason historical:YES resumeToken:[self.center resumeTokenForEventID:eventID]];
