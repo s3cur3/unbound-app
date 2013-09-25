@@ -38,7 +38,7 @@
 
 @implementation PIXFileParser
 
-
+@synthesize sandboxScopeURLs = _sandboxScopeURLs;
 
 -(void)incrementWorking
 {
@@ -221,8 +221,15 @@ NSDictionary * dictionaryForURL(NSURL * url)
     BOOL canAccessAllDirectories = YES;
     
     DLog(@"** CHECKING FILE SYSTEM OBSERVATION AVAILABILITY **");
+    
+    for(NSURL * aScopeURL in self.sandboxScopeURLs)
+    {
+        [aScopeURL startAccessingSecurityScopedResource];
+    }
+    
     for (NSURL *aDir in [self observedDirectories])
     {
+        
         BOOL isDir = NO;
         if ([[NSFileManager defaultManager] fileExistsAtPath:aDir.path isDirectory:&isDir]) {
             if (isDir!=YES) {
@@ -235,17 +242,29 @@ NSDictionary * dictionaryForURL(NSURL * url)
             DLog(@"Unable to access file at path : '%@'\nisDirectory : %d", aDir.path, isDir);
         }
     }
+    
+    for(NSURL * aScopeURL in self.sandboxScopeURLs)
+    {
+        [aScopeURL stopAccessingSecurityScopedResource];
+    }
+    
     return canAccessAllDirectories;
 }
 
 -(void)startObserving
 {
-    // remove any observers, we only do this one
-    [NSURL removeObserverForAllDirectories:self];
+    // remove any observers, we only do this once
+    [self stopObserving];
+    
+    for(NSURL * aScopeURL in self.sandboxScopeURLs)
+    {
+        [aScopeURL startAccessingSecurityScopedResource];
+    }
     
     DLog(@"** STARTING FILE SYSTEM OBSERVATION **");
     for (NSURL *aDir in [self observedDirectories])
     {
+        
         NSString *tokenKeyString = [NSString stringWithFormat:@"resumeToken-%@", aDir.path];
         NSData *token = [[NSUserDefaults standardUserDefaults] dataForKey:tokenKeyString];
         NSData *decodedToken = [NSKeyedUnarchiver unarchiveObjectWithData:token];
@@ -266,9 +285,16 @@ NSDictionary * dictionaryForURL(NSURL * url)
 
 -(void)stopObserving
 {
+    // use the iVar here so we don't create a new list int he lazy getter (only stop if they're already loaded)
+    for(NSURL * aScopeURL in _sandboxScopeURLs)
+    {
+        [aScopeURL stopAccessingSecurityScopedResource];
+    }
+    
     [NSURL removeObserverForAllDirectories:self];
     [self.loadingAlbumsDict removeAllObjects];
     _observedDirectories = nil;
+    _sandboxScopeURLs = nil;
 }
 
 
@@ -482,10 +508,16 @@ NSDictionary * dictionaryForURL(NSURL * url)
         NSDate * startScanTime = [NSDate date];
         
         NSMutableArray *photoFiles = [NSMutableArray new];
+        
+        for(NSURL * aScopeURL in self.sandboxScopeURLs)
+        {
+            [aScopeURL startAccessingSecurityScopedResource];
+        }
                 
         // loop through each of the enumerators (there can be more than one)
         for(NSURL * aTopURL in self.observedDirectories)
         {
+            
             
             NSDirectoryEnumerator *dirEnumerator = nil;
             //NSUInteger progressCounter = 0;
@@ -507,6 +539,12 @@ NSDictionary * dictionaryForURL(NSURL * url)
                                                                     NSURLFileSizeKey]
                                                           options:options
                                                      errorHandler:^(NSURL *url, NSError *error) {
+                                                         
+                                                         for(NSURL * aScopeURL in _sandboxScopeURLs)
+                                                         {
+                                                             [aScopeURL stopAccessingSecurityScopedResource];
+                                                         }
+                                                         
                                                          return NO;
                                                      }];
                 
@@ -589,6 +627,11 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kDeepScanIncompleteKey];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
+                
+                for(NSURL * aScopeURL in _sandboxScopeURLs)
+                {
+                    [aScopeURL stopAccessingSecurityScopedResource];
+                }
                 
 //                double delayInSeconds = 1.2;
 //                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
@@ -1330,13 +1373,13 @@ NSDictionary * dictionaryForURL(NSURL * url)
         
         // pull the observed directories from the NSUserDefaults
         
-        NSArray * pathArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"PIX_ObservedDirectoriesKey"];
+        NSArray * bookmarkArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"PIX_ObservedDirectoriesKey"];
         
         
-        // if we have not observed directories in the settings then default to the dropbox /Photos and /Camera Uploads folders
-        if([pathArray count] == 0)
+        // if we have not observed directories in the settings then we need the user to pick some...
+        if([bookmarkArray count] == 0)
         {
-            _observedDirectories = @[[self defaultDBFolder], [self defaultDBCameraUploadsFolder]];
+            _observedDirectories = nil;
         }
         
         // otherwise loop through and create NSUrls from the strings
@@ -1344,12 +1387,27 @@ NSDictionary * dictionaryForURL(NSURL * url)
         {
             NSMutableArray * urlArray = [NSMutableArray new];
             
-            for(NSString * path in pathArray)
+            for(NSData * bookmark in bookmarkArray)
             {
-                if([path isKindOfClass:[NSString class]])
+                if([bookmark isKindOfClass:[NSData class]])
                 {
-                    NSURL * url = [NSURL fileURLWithPath:path];
-                    [urlArray addObject:url];
+                    BOOL stale = NO;
+                    NSError * error = nil;
+                    NSURL * url = [NSURL URLByResolvingBookmarkData:bookmark
+                                                            options:nil // these arent security scoped. thats what sandboxScopeURLs are for
+                                                      relativeToURL:nil
+                                                bookmarkDataIsStale:&stale
+                                                              error:&error];
+                    
+                    if(stale)
+                    {
+                        NSLog(@"Error creating url from saved bookmark. Bookmark is stale.");
+                    }
+                    
+                    if(url && !error && !stale)
+                    {
+                        [urlArray addObject:url];
+                    }
                 }
             }
             
@@ -1367,15 +1425,125 @@ NSDictionary * dictionaryForURL(NSURL * url)
     
     for(NSURL * url in direcoryURLs)
     {
+        
         BOOL isDir = NO;
         if ([[NSFileManager defaultManager] fileExistsAtPath:url.path isDirectory:&isDir] && isDir) {
-            [pathArray addObject:[url path]];
+            
+            NSError * error = nil;
+            NSData * bookMarkData =  [url bookmarkDataWithOptions:nil // these arent security scoped. thats what sandboxScopeURLs are for
+                                   includingResourceValuesForKeys:nil
+                                                    relativeToURL:nil
+                                                            error:&error];
+            
+            if(bookMarkData && error == nil)
+            {
+                [pathArray addObject:bookMarkData];
+            }
+            
+            else
+            {
+                NSLog(@"Error creating security scoped bookmark: %@", error);
+            }
         } else {
             DLog(@"Can't observe file URL, either it doesn't exist or is not a directory : %@", url);
         }
+        
     }
     
     [[NSUserDefaults standardUserDefaults] setObject:pathArray forKey:@"PIX_ObservedDirectoriesKey"];
+    self.sandboxScopeURLs = nil;
+}
+
+
+// we need these to be seperate from observedURLS because if the user chooses the dropbox subfolders option the security scoped url doesn't pass through to subfolders
+-(NSArray *) sandboxScopeURLs
+{
+    if (_sandboxScopeURLs == nil) {
+        
+        // pull the observed directories from the NSUserDefaults
+        
+        NSArray * bookmarkArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"PIX_SandboxBookmarksKey"];
+        
+        
+        // if we have not observed directories in the settings then we need the user to pick some...
+        if([bookmarkArray count] == 0)
+        {
+            _sandboxScopeURLs = nil;
+        }
+        
+        // otherwise loop through and create NSUrls from the strings
+        else
+        {
+            NSMutableArray * urlArray = [NSMutableArray new];
+            
+            for(NSData * bookmark in bookmarkArray)
+            {
+                if([bookmark isKindOfClass:[NSData class]])
+                {
+                    BOOL stale = NO;
+                    NSError * error = nil;
+                    NSURL * url = [NSURL URLByResolvingBookmarkData:bookmark
+                                                            options:NSURLBookmarkCreationWithSecurityScope
+                                                      relativeToURL:nil
+                                                bookmarkDataIsStale:&stale
+                                                              error:&error];
+                    
+                    if(stale)
+                    {
+                        NSLog(@"Error creating url from saved bookmark. Bookmark is stale.");
+                    }
+                    
+                    if(url && !error && !stale)
+                    {
+                        [urlArray addObject:url];
+                    }
+                }
+            }
+            
+            _sandboxScopeURLs = urlArray;
+            return _sandboxScopeURLs;
+        }
+    }
+    
+    return _sandboxScopeURLs;
+}
+
+-(void)setSandboxScopeURLs:(NSArray *)sandboxScopeURLs
+{
+    NSMutableArray * bookmarkArray = [NSMutableArray new];
+    
+    for(NSURL * url in sandboxScopeURLs)
+    {
+        
+        [url startAccessingSecurityScopedResource];
+        
+        BOOL isDir = NO;
+        if ([[NSFileManager defaultManager] fileExistsAtPath:url.path isDirectory:&isDir] && isDir) {
+            
+            NSError * error = nil;
+            NSData * bookMarkData =  [url bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope
+                                   includingResourceValuesForKeys:nil
+                                                    relativeToURL:nil
+                                                            error:&error];
+            
+            if(bookMarkData && error == nil)
+            {
+                [bookmarkArray addObject:bookMarkData];
+            }
+            
+            else
+            {
+                NSLog(@"Error creating security scoped bookmark: %@", error);
+            }
+            
+        } else {
+            DLog(@"Can't observe file URL, either it doesn't exist or is not a directory : %@", url);
+        }
+        
+        [url stopAccessingSecurityScopedResource];
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setObject:bookmarkArray forKey:@"PIX_SandboxBookmarksKey"];
     self.observedDirectories = nil;
 }
 
@@ -1502,6 +1670,42 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 return NO;
             }
         }
+        
+        NSArray * urls = @[selectedURL];
+        [selectedURL startAccessingSecurityScopedResource];
+        
+        // Check if the user chose a dropbox folder where we should only use the Photos and Camera Uploads subfolders
+        if([[selectedURL lastPathComponent] isEqualToString:@"Dropbox"])
+        {
+            
+            
+            NSArray * dropboxURLS = @[[selectedURL URLByAppendingPathComponent:@"Photos"],
+                                      [selectedURL URLByAppendingPathComponent:@"Camera Uploads"]];
+            
+            BOOL urlsExist = YES;
+            
+            for(NSURL * aURL in dropboxURLS)
+            {
+                BOOL isDir = NO;
+                if (![[NSFileManager defaultManager] fileExistsAtPath:aURL.path isDirectory:&isDir] || !isDir)
+                {
+                    urlsExist = NO;
+                }
+            }
+            
+            
+            
+            // if all the urls are good, ask the user if we should use the subfolders
+            if(urlsExist)
+            {
+                NSString *message = [NSString stringWithFormat:@"You've selected your Dropbox folder for your photos. Would you like Unbound to scan just the Photos and Camera Uploads subfolders? This matches the default configuration of Unbound for iPhone and iPad."];
+                if (NSRunAlertPanel(@"Use Photos and Camera Uploads Folder?", message, @"Use Subfolders", @"Use entire Dropbox folder", nil) == NSAlertDefaultReturn) {
+                    urls = dropboxURLS;
+                }
+            }
+        }
+        
+        
         [[PIXAppDelegate sharedAppDelegate] showMainWindow:nil];
         
         // use this flag so the deep scan will restart if the app crashes half way through
@@ -1509,7 +1713,10 @@ NSDictionary * dictionaryForURL(NSURL * url)
         
         [self stopObserving];
         
-        [self setObservedURLs:[openPanel URLs]];
+        [self setObservedURLs:urls];
+        [self setSandboxScopeURLs:@[selectedURL]]; // s
+        
+        [selectedURL stopAccessingSecurityScopedResource];
         
         [[PIXAppDelegate sharedAppDelegate] clearDatabase];
         
@@ -1529,38 +1736,6 @@ NSDictionary * dictionaryForURL(NSURL * url)
     }
     
     return NO;
-}
-
--(void)userChoseDropboxPhotosFolder
-{
-    [[PIXAppDelegate sharedAppDelegate] showMainWindow:nil];
-    
-    // use this flag so the deep scan will restart if the app crashes half way through
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDeepScanIncompleteKey];
-    
-    [[PIXFileParser sharedFileParser] stopObserving];
-    
-    NSURL * dropboxPhotosFolder = [[PIXFileParser sharedFileParser] defaultDBFolder];
-    NSURL * dropboxCUFolder = [[PIXFileParser sharedFileParser] defaultDBCameraUploadsFolder];
-    
-    
-    [[PIXFileParser sharedFileParser] setObservedURLs:@[dropboxPhotosFolder, dropboxCUFolder]];
-    
-    [[PIXAppDelegate sharedAppDelegate] clearDatabase];
-    
-    [[PIXFileParser sharedFileParser] scanFullDirectory];
-    
-    for(NSURL * pathURL in self.observedDirectories)
-    {
-        NSString *tokenKeyString = [NSString stringWithFormat:@"resumeToken-%@", pathURL.path];
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:tokenKeyString];
-    }
-    
-    [[PIXFileParser sharedFileParser] startObserving];
-    
-    
-    
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kAppFirstRun];
 }
 
 -(void)rescanFiles

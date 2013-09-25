@@ -56,20 +56,6 @@
     {
         self.folderDisplay.stringValue = @"No Folders Observed!";
     }
-    
-    // check to see if the dropbox folder exits
-    NSURL * dropboxPhotosFolder = [[PIXFileParser sharedFileParser] defaultDBFolder];
-    
-    NSNumber * isDirectory;
-    [dropboxPhotosFolder getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:NULL];
-    
-    // if there is no dropbox photos folder or it's already selected then remove that option
-    if(![isDirectory boolValue] || [[dropboxPhotosFolder path] isEqualToString:self.folderDisplay.stringValue])
-    {
-        [self.dbFolderButton setHidden:YES];
-    }
-    
-
 }
 
 -(void)updateLeapInfo
@@ -115,13 +101,6 @@
     // the user default (@"backgroundTheme") is changed through a binding. We just need to send out the notification
 
     [[NSNotificationCenter defaultCenter] postNotificationName:@"backgroundThemeChanged" object:nil];
-}
-
-
-- (IBAction)useDBDefaults:(id)sender
-{
-    [[PIXFileParser sharedFileParser] userChoseDropboxPhotosFolder];
-    [self updateFolderFeild];
 }
 
 - (IBAction)chooseFolder:(id)sender

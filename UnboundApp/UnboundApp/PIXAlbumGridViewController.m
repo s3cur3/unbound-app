@@ -1079,9 +1079,15 @@
         if([directoryURLs count])
         {
             rootFolderInfo = [NSString stringWithFormat:@"Current Folder: %@", [(NSURL *)[directoryURLs objectAtIndex:0] path]];
+             [self.centerStatusViewSubTextField setStringValue:rootFolderInfo];
+        }
+        
+        else
+        {
+            [self.centerStatusViewSubTextField setStringValue:@"No Current Folder"];
         }
  
-        [self.centerStatusViewSubTextField setStringValue:rootFolderInfo];
+       
     }
     
     else

@@ -20,15 +20,5 @@
 	<true/>
 	<key>com.apple.security.print</key>
 	<true/>
-	<key>com.apple.security.temporary-exception.files.absolute-path.read-write</key>
-	<array>
-		<string>/</string>
-		<string>/Volumes/</string>
-	</array>
-	<key>com.apple.security.temporary-exception.files.home-relative-path.read-write</key>
-	<array>
-		<string>/Dropbox/</string>
-		<string>/Dropbox/Camera Uploads/</string>
-	</array>
 </dict>
 </plist>

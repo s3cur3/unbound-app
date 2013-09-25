@@ -9,7 +9,7 @@
 	<key>CFBundleIconFile</key>
 	<string>Unbound</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.pixite.UnboundForMac</string>
+	<string>com.pixite.Unbound</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>

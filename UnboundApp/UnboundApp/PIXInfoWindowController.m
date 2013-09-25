@@ -17,7 +17,6 @@
 
 @interface PIXInfoWindowController () <NSOpenSavePanelDelegate>
 
-@property IBOutlet NSButton * dbFolderButton;
 @property IBOutlet NSButton * anotherFolderButton;
 
 @property (strong) NSURL * pickerStartURL;
@@ -40,32 +39,7 @@
 {
     [super windowDidLoad];
     
-    // check to see if the dropbox folder exits
-    NSURL * dropboxPhotosFolder = [[PIXFileParser sharedFileParser] defaultDBFolder];
-    
-    NSNumber * isDirectory;
-    [dropboxPhotosFolder getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:NULL];
-    
-    // if there is no dropbox photos folder then remove that option
-    if(![isDirectory boolValue])
-    {
-        [self.dbFolderButton setHidden:YES];
-        [self.anotherFolderButton setTitle:@"Choose a Folder"];
-        self.pickerStartURL = [NSURL fileURLWithPath:@"~/"];
-    }
-    
-    else
-    {
-        self.pickerStartURL = [NSURL fileURLWithPath:@"~/Dropbox/"];
-    }
-}
-
-- (IBAction)useDBDefaults:(id)sender
-{
-    // use this flag so the deep scan will restart if the app crashes half way through
-    [[PIXFileParser sharedFileParser] userChoseDropboxPhotosFolder];
-    
-    [self close];
+    self.pickerStartURL = [NSURL fileURLWithPath:@"~/"];
 }
 
 - (IBAction)chooseFolder:(id)sender
