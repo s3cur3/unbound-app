@@ -1112,7 +1112,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
         [lastAlbumsPhotos addObjectsFromArray:lastAlbumsExistingPhotos];
         [lastAlbum setPhotos:[NSSet setWithArray:lastAlbumsPhotos] updateCoverImage:YES];
         ;
-        NSLog(@"scanned album %@ has %ld items", lastAlbum.title, lastAlbum.photos.count);
+        //NSLog(@"scanned album %@ has %ld items", lastAlbum.title, lastAlbum.photos.count);
         
         if(deletionBlock)
         {

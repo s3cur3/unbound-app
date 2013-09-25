@@ -186,9 +186,9 @@ static NSString *ResolveName(NSString *aName)
     // convert our QTMovieView coords from local coords to screen coords
     // which we'll use when creating our NSWindow below
 	screenOrigin = [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] convertBaseToScreen:baseOrigin];
-    NSLog(@"screenOrigin : x: %f y: %f , baseOrigin : x: %f y: %f ", screenOrigin.x, screenOrigin.y, baseOrigin.x, baseOrigin.y);
+   // NSLog(@"screenOrigin : x: %f y: %f , baseOrigin : x: %f y: %f ", screenOrigin.x, screenOrigin.y, baseOrigin.x, baseOrigin.y);
     
-    NSLog(@"mMovieView : %@", mMovieView);
+    //NSLog(@"mMovieView : %@", mMovieView);
     // Create an overlay window which will be attached as a child
     // window to our main window. We will create it directly on top
     // of our main window, so when we draw things they will appear
@@ -204,7 +204,7 @@ static NSString *ResolveName(NSString *aName)
     
     //NSImage *playButtonImage = [NSImage imageNamed:@"playbutton"];
     //[playButtonImage setScalesWhenResized:YES];
-    CGRect playButtonRect = CGRectMake(CGRectGetMidX(movieFrame)-100.0, CGRectGetMidY(movieFrame)-100.0, 200.0, 200.0);//
+    //CGRect playButtonRect = CGRectMake(CGRectGetMidX(movieFrame)-100.0, CGRectGetMidY(movieFrame)-100.0, 200.0, 200.0);//
     
 //    CGRect playButtonRect = CGRectApplyAffineTransform(imageRect, CGAffineTransformMakeScale(0.33, 0.33));
 //    [playButtonRect drawInRect:playButtonRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];

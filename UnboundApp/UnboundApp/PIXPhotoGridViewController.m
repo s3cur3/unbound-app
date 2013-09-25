@@ -386,7 +386,7 @@
 {
     if(index == NSNotFound) return;
     
-    CNLog(@"didDoubleClickItemAtIndex: %li", index);
+    //CNLog(@"didDoubleClickItemAtIndex: %li", index);
     [self showPageControllerForIndex:index];
 }
 
