@@ -460,8 +460,11 @@
         // start another timer
         [self performSelector:@selector(tryFadeControls) withObject:nil afterDelay:3];
         
+        [self.currentImageVC setIsCurrentView:YES];
+        
     });
 }
+
 
 -(void)updateTitle
 {
@@ -709,6 +712,7 @@
     
     
     [self restartNextSlideIfNeeded];
+     [self.currentImageVC setIsCurrentView:YES];
 }
 
 -(void)leapSwipeLeft
@@ -726,6 +730,7 @@
     }
     
     [self restartNextSlideIfNeeded];
+     [self.currentImageVC setIsCurrentView:YES];
 }
 
 -(void)leapPointerSelect:(NSPoint)normalizedPosition
@@ -871,6 +876,8 @@
     //[self.pageController navigateForward:nil];
     
     [self restartNextSlideIfNeeded];
+    
+     [self.currentImageVC setIsCurrentView:YES];
 }
 
 -(IBAction)lastPage:(id)sender
@@ -892,6 +899,8 @@
     //[self.pageController navigateBack:nil];
     
     [self restartNextSlideIfNeeded];
+    
+     [self.currentImageVC setIsCurrentView:YES];
 }
 
 
@@ -1182,7 +1191,7 @@
     
     NSRange nearbyItemsRange = NSMakeRange(startIndex, rangeLength);
     NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSetWithIndexesInRange:nearbyItemsRange];
-    DLog(@"indexSet : %@", indexSet);
+    //DLog(@"indexSet : %@", indexSet);
     
 //    // if we're playing a slideshow and we're in shuffle, then also preload the next two shuffle photos
 //    if(self.isPlayingSlideshow && [[NSUserDefaults standardUserDefaults] boolForKey:@"slideshowShouldShuffle"])

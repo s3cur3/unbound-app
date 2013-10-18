@@ -744,7 +744,7 @@
     
     if(index == NSNotFound) return;
     
-    DLog(@"didDoubleClickItemAtIndex: %li", index);
+    //DLog(@"didDoubleClickItemAtIndex: %li", index);
     PIXAlbum * album = nil;
     
     if(self.searchedAlbums)
@@ -1079,9 +1079,15 @@
         if([directoryURLs count])
         {
             rootFolderInfo = [NSString stringWithFormat:@"Current Folder: %@", [(NSURL *)[directoryURLs objectAtIndex:0] path]];
+             [self.centerStatusViewSubTextField setStringValue:rootFolderInfo];
+        }
+        
+        else
+        {
+            [self.centerStatusViewSubTextField setStringValue:@"No Current Folder"];
         }
  
-        [self.centerStatusViewSubTextField setStringValue:rootFolderInfo];
+       
     }
     
     else

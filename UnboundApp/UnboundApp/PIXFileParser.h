@@ -28,7 +28,10 @@ typedef enum {
 /**
  * observedDirectories is an array of the directories this class observes
  */
+
+@property (nonatomic, strong) NSArray *sandboxScopeURLs;
 @property (nonatomic, strong) NSArray *observedDirectories;
+
 
 @property BOOL isWorking;
 
@@ -91,8 +94,6 @@ typedef enum {
 
 
 -(BOOL)userChooseFolderDialog;
-
--(void)userChoseDropboxPhotosFolder;
 
 -(void)rescanFiles;
 

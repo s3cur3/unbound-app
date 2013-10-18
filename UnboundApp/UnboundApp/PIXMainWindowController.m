@@ -85,7 +85,7 @@
     NSDate * today = [NSDate date];
     
     // set the target date to June 30
-    NSDate * targetDate = [NSDate dateWithString:@"2013-08-20 00:00:00 -0000"];
+    NSDate * targetDate = [NSDate dateWithString:@"2013-10-30 00:00:00 -0000"];
     
     if([[NSUserDefaults standardUserDefaults] objectForKey:kTrialExpirationDate] == nil)
     {
@@ -115,7 +115,7 @@
                                                fromDate:today toDate:targetDate options:0];
     
     // add the text view to the title bar
-    self.trialExpireText.stringValue = [NSString stringWithFormat:@"Unbound Beta expires in %ld days", (long)difference.day];
+    self.trialExpireText.stringValue = [NSString stringWithFormat:@"Unbound Trial expires in %ld days", (long)difference.day];
     
     NSView *frameView = [[self.window contentView] superview];
     NSRect frame = [frameView frame];
@@ -135,16 +135,16 @@
     // present an alert and quit the app if this as expired (with a 5 minute gracec period
     if (![[today laterDate:targetDate] isEqualToDate:targetDate])
     {
-        self.trialExpireText.stringValue = @"This Beta has expired. 5:00 remaining";
+        self.trialExpireText.stringValue = @"This Trial has expired. 10:00 remaining";
 
-        if(NSRunAlertPanel(@"This beta has expired.", @"This app will run for 5 minutes before quiting.", @"Learn More", @"OK", nil))
+        if(NSRunAlertPanel(@"This trial has expired.", @"This app will run for 10 minutes before quiting.", @"Learn More", @"OK", nil))
         {
             NSURL * url = [NSURL URLWithString:@"http://www.unboundformac.com"];
             [[NSWorkspace sharedWorkspace] openURL:url];
         }
         
         
-        self.trialSecondsLeft = 5 * 60; // 5 minute grace period
+        self.trialSecondsLeft = 10 * 60; // 10 minute grace period
         [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(advanceTrialExpiredTimer:) userInfo:nil repeats:YES];
         
         double delayInSeconds = (double)self.trialSecondsLeft;
@@ -152,7 +152,7 @@
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             
-            if(NSRunAlertPanel(@"This beta has expired.", @"Please download a new version.", @"Learn More", @"OK", nil))
+            if(NSRunAlertPanel(@"This trial has expired.", @"Please download a new version.", @"Learn More", @"OK", nil))
             {
                 NSURL * url = [NSURL URLWithString:@"http://www.unboundformac.com"];
                 [[NSWorkspace sharedWorkspace] openURL:url];
@@ -188,14 +188,14 @@
     
     if(self.trialSecondsLeft >= 0)
     {
-        self.trialExpireText.stringValue = [NSString stringWithFormat:@"This Beta has expired. %d:%02d remaining",
+        self.trialExpireText.stringValue = [NSString stringWithFormat:@"This Trial has expired. %d:%02d remaining",
                                             self.trialSecondsLeft/60,
                                             self.trialSecondsLeft % 60];
     }
     
     else
     {
-        self.trialExpireText.stringValue = @"This Beta has expired.";
+        self.trialExpireText.stringValue = @"This Trial has expired.";
     }
 }
 

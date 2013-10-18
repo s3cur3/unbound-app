@@ -290,7 +290,6 @@
 		8C33D5191711FC8700647F95 /* PIXRoundedProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C33D5181711FC8700647F95 /* PIXRoundedProgressIndicator.m */; };
 		8C3580901714D99E00352870 /* LeapTutorial2.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C35808E1714D99E00352870 /* LeapTutorial2.mov */; };
 		8C3580911714D99E00352870 /* LeapTutorial3.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C35808F1714D99E00352870 /* LeapTutorial3.mov */; };
-		8C43CCF117385A9700A4395F /* UnboundTrial.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 8C43CCF017385A9700A4395F /* UnboundTrial.entitlements */; };
 		8C4B80E816B9D9FD00C7E8F4 /* PIXPhotoGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B80E716B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.m */; };
 		8C4B80FB16BB3D8A00C7E8F4 /* GeneralPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B80F616BB3D8A00C7E8F4 /* GeneralPreferencesViewController.m */; };
 		8C4B80FC16BB3D8A00C7E8F4 /* GeneralPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4B80F716BB3D8A00C7E8F4 /* GeneralPreferencesView.xib */; };
@@ -390,6 +389,9 @@
 		8CF05AEF17C3097400AB88B5 /* Licences.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8CF05AEE17C3097300AB88B5 /* Licences.txt */; };
 		8CF05AF017C30A2500AB88B5 /* Licences.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8CF05AEE17C3097300AB88B5 /* Licences.txt */; };
 		8CF05AF217C3374F00AB88B5 /* Unbound.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 8CF05AF117C3374F00AB88B5 /* Unbound.iconset */; };
+		8CF05AF317C33B6E00AB88B5 /* Unbound.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 1D69E646170DD7B70031AF73 /* Unbound.entitlements */; };
+		8CF05AF417C33B7300AB88B5 /* UnboundTrial.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 8C43CCF017385A9700A4395F /* UnboundTrial.entitlements */; };
+		8CF05AF517C3E14700AB88B5 /* Unbound.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 8CF05AF117C3374F00AB88B5 /* Unbound.iconset */; };
 		8CF2C5E316BB458900F906F1 /* MASPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CF2C5DF16BB458900F906F1 /* MASPreferencesWindow.xib */; };
 		8CF2C5E416BB458900F906F1 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CF2C5E216BB458900F906F1 /* MASPreferencesWindowController.m */; };
 		8CF9CE4216F8200A003B0933 /* arrow-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CF9CE3E16F8200A003B0933 /* arrow-left.png */; };
@@ -1479,7 +1481,6 @@
 				1D23CC1A172095E000C7FF70 /* Blank.jpg in Resources */,
 				1D23CC1B172095E000C7FF70 /* Mask.jpg in Resources */,
 				1D23CC1C172095E000C7FF70 /* Shading.tiff in Resources */,
-				8C43CCF117385A9700A4395F /* UnboundTrial.entitlements in Resources */,
 				8C72089C1749B1720074705D /* PIXProgressWindowController.xib in Resources */,
 				8CA954601756A5AD0016AE23 /* leapnotconnected.png in Resources */,
 				8CA954611756A5AD0016AE23 /* leapnotconnected@2x.png in Resources */,
@@ -1492,6 +1493,7 @@
 				8CDFEAA617B8896600BC5DD9 /* tempVideo@2x.jpg in Resources */,
 				8CF05AEF17C3097400AB88B5 /* Licences.txt in Resources */,
 				8CF05AF217C3374F00AB88B5 /* Unbound.iconset in Resources */,
+				8CF05AF317C33B6E00AB88B5 /* Unbound.entitlements in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1606,6 +1608,8 @@
 				8CDFEAA717B8896D00BC5DD9 /* tempVideo.jpg in Resources */,
 				8CDFEAA817B8896D00BC5DD9 /* tempVideo@2x.jpg in Resources */,
 				8CF05AF017C30A2500AB88B5 /* Licences.txt in Resources */,
+				8CF05AF417C33B7300AB88B5 /* UnboundTrial.entitlements in Resources */,
+				8CF05AF517C3E14700AB88B5 /* Unbound.iconset in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

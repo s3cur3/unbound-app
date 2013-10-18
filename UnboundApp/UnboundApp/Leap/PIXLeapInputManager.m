@@ -115,7 +115,7 @@
 
 - (void)onInit:(NSNotification *)notification
 {
-    DLog(@"Leap Initialized");
+    //DLog(@"Leap Initialized");
 }
 
 - (void)onConnect:(NSNotification *)notification;
