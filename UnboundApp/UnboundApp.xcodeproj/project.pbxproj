@@ -180,7 +180,6 @@
 		8C2860A317308566009A0B35 /* PIXLeapTutorialWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C14692617149A92009ECCC5 /* PIXLeapTutorialWindowController.m */; };
 		8C2860A417308566009A0B35 /* PIXAboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C82A865171A5138009DD803 /* PIXAboutWindowController.m */; };
 		8C2860A517308566009A0B35 /* PIXTransitionSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D23CC151720604E00C7FF70 /* PIXTransitionSetup.m */; };
-		8C2860A717308566009A0B35 /* MapKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFED16FB7C36008EF8B1 /* MapKit.framework */; };
 		8C2860A817308566009A0B35 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8C286055172F590D009A0B35 /* Sparkle.framework */; };
 		8C2860AA17308566009A0B35 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C14692E1714A5CC009ECCC5 /* QTKit.framework */; };
 		8C2860AC17308566009A0B35 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFF116FB7CED008EF8B1 /* CoreFoundation.framework */; };
@@ -188,7 +187,6 @@
 		8C2860AE17308566009A0B35 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4A1E07167C056C00C9A895 /* QuartzCore.framework */; };
 		8C2860AF17308566009A0B35 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DB2F84E167ABE87008AC0F7 /* Cocoa.framework */; };
 		8C2860B017308566009A0B35 /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C031CD016E926F7009B7F38 /* libLeap.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
-		8C2860B117308566009A0B35 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFED16FB7C36008EF8B1 /* MapKit.framework */; };
 		8C2860B217308566009A0B35 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C286055172F590D009A0B35 /* Sparkle.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8C2860B417308566009A0B35 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F857167ABE87008AC0F7 /* InfoPlist.strings */; };
 		8C2860B517308566009A0B35 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F85D167ABE87008AC0F7 /* Credits.rtf */; };
@@ -302,9 +300,7 @@
 		8C4B9CAA16DC436B00F6BADD /* PIXExifBGView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B9CA916DC436B00F6BADD /* PIXExifBGView.m */; };
 		8C5019CA171C803F00829914 /* click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8C5019C9171C803F00829914 /* click.wav */; };
 		8C53DFE816FB76E9008EF8B1 /* PIXInfoPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C53DFE716FB76E8008EF8B1 /* PIXInfoPanelViewController.m */; };
-		8C53DFEE16FB7C36008EF8B1 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFED16FB7C36008EF8B1 /* MapKit.framework */; };
 		8C53DFF216FB7CED008EF8B1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFF116FB7CED008EF8B1 /* CoreFoundation.framework */; };
-		8C53DFF416FB7E0F008EF8B1 /* MapKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFED16FB7C36008EF8B1 /* MapKit.framework */; };
 		8C53DFF716FB831A008EF8B1 /* MapViewAdditions.css in Resources */ = {isa = PBXBuildFile; fileRef = 8C53DFF616FB8319008EF8B1 /* MapViewAdditions.css */; };
 		8C53E00516FBCB36008EF8B1 /* libLeap.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8C031CD016E926F7009B7F38 /* libLeap.dylib */; };
 		8C5D757417015A5C0008CC00 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C5D757217015A5C0008CC00 /* pause.png */; };
@@ -405,6 +401,7 @@
 		8CFC13C116FD2B21004CA7D5 /* expand@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13BD16FD2B21004CA7D5 /* expand@2x.png */; };
 		8CFC13C416FD6111004CA7D5 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13C216FD6111004CA7D5 /* play.png */; };
 		8CFC13C516FD6111004CA7D5 /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13C316FD6111004CA7D5 /* play@2x.png */; };
+		8CFDF7661827123700809018 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CFDF7651827123700809018 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -414,7 +411,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				8C2860A717308566009A0B35 /* MapKit.framework in Copy Frameworks */,
 				8C2860A817308566009A0B35 /* Sparkle.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
@@ -436,7 +432,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				8C53DFF416FB7E0F008EF8B1 /* MapKit.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -630,7 +625,6 @@
 		8C5019C9171C803F00829914 /* click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = click.wav; sourceTree = "<group>"; };
 		8C53DFE616FB76E8008EF8B1 /* PIXInfoPanelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXInfoPanelViewController.h; sourceTree = "<group>"; };
 		8C53DFE716FB76E8008EF8B1 /* PIXInfoPanelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXInfoPanelViewController.m; sourceTree = "<group>"; };
-		8C53DFED16FB7C36008EF8B1 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = UnboundApp/MapKit.framework; sourceTree = "<group>"; };
 		8C53DFF116FB7CED008EF8B1 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		8C53DFF616FB8319008EF8B1 /* MapViewAdditions.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = MapViewAdditions.css; sourceTree = "<group>"; };
 		8C5D757217015A5C0008CC00 /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
@@ -746,6 +740,7 @@
 		8CFC13BD16FD2B21004CA7D5 /* expand@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "expand@2x.png"; sourceTree = "<group>"; };
 		8CFC13C216FD6111004CA7D5 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
 		8CFC13C316FD6111004CA7D5 /* play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play@2x.png"; sourceTree = "<group>"; };
+		8CFDF7651827123700809018 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -757,9 +752,9 @@
 				8C53DFF216FB7CED008EF8B1 /* CoreFoundation.framework in Frameworks */,
 				1D4A1E2B167D2A4D00C9A895 /* Quartz.framework in Frameworks */,
 				1D4A1E08167C056D00C9A895 /* QuartzCore.framework in Frameworks */,
+				8CFDF7661827123700809018 /* MapKit.framework in Frameworks */,
 				1DB2F84F167ABE87008AC0F7 /* Cocoa.framework in Frameworks */,
 				8C031CD416E926F7009B7F38 /* libLeap.dylib in Frameworks */,
-				8C53DFEE16FB7C36008EF8B1 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -773,7 +768,6 @@
 				8C2860AE17308566009A0B35 /* QuartzCore.framework in Frameworks */,
 				8C2860AF17308566009A0B35 /* Cocoa.framework in Frameworks */,
 				8C2860B017308566009A0B35 /* libLeap.dylib in Frameworks */,
-				8C2860B117308566009A0B35 /* MapKit.framework in Frameworks */,
 				8C2860B217308566009A0B35 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1100,6 +1094,7 @@
 		1DB2F84D167ABE87008AC0F7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8CFDF7651827123700809018 /* MapKit.framework */,
 				1DB2F84E167ABE87008AC0F7 /* Cocoa.framework */,
 				1DB2F850167ABE87008AC0F7 /* Other Frameworks */,
 			);
@@ -1164,7 +1159,6 @@
 			children = (
 				8C286055172F590D009A0B35 /* Sparkle.framework */,
 				8C031CD016E926F7009B7F38 /* libLeap.dylib */,
-				8C53DFED16FB7C36008EF8B1 /* MapKit.framework */,
 			);
 			name = 3rdParty;
 			sourceTree = "<group>";
@@ -1361,6 +1355,16 @@
 				CLASSPREFIX = PIX;
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Pixite Apps LLC";
+				TargetAttributes = {
+					1DB2F849167ABE87008AC0F7 = {
+						DevelopmentTeam = EQRQCAG846;
+						SystemCapabilities = {
+							com.apple.Mac = {
+								enabled = 1;
+							};
+						};
+					};
+				};
 			};
 			buildConfigurationList = 1DB2F844167ABE87008AC0F7 /* Build configuration list for PBXProject "UnboundApp" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1888,6 +1892,7 @@
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = Unbound.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1904,6 +1909,7 @@
 					"\"$(SRCROOT)/UnboundApp/MapKit.framework\"/**",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1914,7 +1920,8 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = Unbound.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

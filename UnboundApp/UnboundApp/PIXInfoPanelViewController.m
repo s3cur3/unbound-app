@@ -51,8 +51,8 @@
     
     [self.mapView setDelegate:self];
     
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"MapViewAdditions" ofType:@"css"];
-    [self.mapView addStylesheetTag:path];
+    //NSString *path = [[NSBundle mainBundle] pathForResource:@"MapViewAdditions" ofType:@"css"];
+    //[self.mapView addStylesheetTag:path];
 }
 
 -(void)setPhoto:(PIXPhoto *)photo
@@ -173,10 +173,15 @@
         [self.mapView removeAnnotations:self.mapView.annotations];
         [self.mapView addAnnotation:self.photo];
         
-        [self.mapView setCenterCoordinate:[self.photo coordinate] animated:YES];
+        //[self.mapView setCenterCoordinate:[self.photo coordinate] animated:YES];
         
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"MapViewAdditions" ofType:@"css"];
-        [self.mapView addStylesheetTag:path];
+        [self.mapView setShowsZoomControls:YES];
+        
+        
+        [self.mapView setRegion:MKCoordinateRegionMake([self.photo coordinate], MKCoordinateSpanMake(1.0, 1.0)) animated:YES];
+        
+        //NSString *path = [[NSBundle mainBundle] pathForResource:@"MapViewAdditions" ofType:@"css"];
+        //[self.mapView addStylesheetTag:path];
         
     }
 }
@@ -184,7 +189,7 @@
 -(void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
 {
     
-    [self updateMap];
+    //[self updateMap];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)aMapView viewForAnnotation:(id <MKAnnotation>)annotation
