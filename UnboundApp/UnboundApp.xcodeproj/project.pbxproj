@@ -291,6 +291,9 @@
 		8C3580901714D99E00352870 /* LeapTutorial2.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C35808E1714D99E00352870 /* LeapTutorial2.mov */; };
 		8C3580911714D99E00352870 /* LeapTutorial3.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C35808F1714D99E00352870 /* LeapTutorial3.mov */; };
 		8C4313521828399600DB0053 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C4313511828399600DB0053 /* Images.xcassets */; };
+		8C4313531828432E00DB0053 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C4313511828399600DB0053 /* Images.xcassets */; };
+		8C4313551828439B00DB0053 /* Unbound-For-Mac-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C4313541828439B00DB0053 /* Unbound-For-Mac-512.png */; };
+		8C4313561828439B00DB0053 /* Unbound-For-Mac-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C4313541828439B00DB0053 /* Unbound-For-Mac-512.png */; };
 		8C4B80E816B9D9FD00C7E8F4 /* PIXPhotoGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B80E716B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.m */; };
 		8C4B80FB16BB3D8A00C7E8F4 /* GeneralPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B80F616BB3D8A00C7E8F4 /* GeneralPreferencesViewController.m */; };
 		8C4B80FC16BB3D8A00C7E8F4 /* GeneralPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4B80F716BB3D8A00C7E8F4 /* GeneralPreferencesView.xib */; };
@@ -611,6 +614,7 @@
 		8C35808E1714D99E00352870 /* LeapTutorial2.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = LeapTutorial2.mov; sourceTree = "<group>"; };
 		8C35808F1714D99E00352870 /* LeapTutorial3.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = LeapTutorial3.mov; sourceTree = "<group>"; };
 		8C4313511828399600DB0053 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Unbound Trial/Images.xcassets"; sourceTree = "<group>"; };
+		8C4313541828439B00DB0053 /* Unbound-For-Mac-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Unbound-For-Mac-512.png"; sourceTree = "<group>"; };
 		8C43CCF017385A9700A4395F /* UnboundTrial.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = UnboundTrial.entitlements; sourceTree = "<group>"; };
 		8C4B80E616B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPhotoGridViewItem.h; sourceTree = "<group>"; };
 		8C4B80E716B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhotoGridViewItem.m; sourceTree = "<group>"; };
@@ -889,6 +893,7 @@
 		1D4A1D99167AD93400C9A895 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				8C4313541828439B00DB0053 /* Unbound-For-Mac-512.png */,
 				1D368173179A5AA5004538FA /* playbutton-tinted.png */,
 				1D368174179A5AA5004538FA /* playbutton-tinted@2x.png */,
 				1D368175179A5AA5004538FA /* playbutton.png */,
@@ -1422,6 +1427,7 @@
 				8CE460DC16CB650600CDFA04 /* btn-roundrect-down@2x.png in Resources */,
 				8CE460DD16CB650600CDFA04 /* btn-roundrect-up.png in Resources */,
 				8CE460DE16CB650600CDFA04 /* btn-roundrect-up@2x.png in Resources */,
+				8C4313551828439B00DB0053 /* Unbound-For-Mac-512.png in Resources */,
 				8CE460E916CD7BB400CDFA04 /* PIXCustomShareSheetViewController.xib in Resources */,
 				8C4B9CA716DC30FE00F6BADD /* PIXMiniExifViewController.xib in Resources */,
 				8C68248316F8089400245F09 /* buttongrid_copy.png in Resources */,
@@ -1475,6 +1481,7 @@
 				8C3580901714D99E00352870 /* LeapTutorial2.mov in Resources */,
 				8C3580911714D99E00352870 /* LeapTutorial3.mov in Resources */,
 				8C82A85F1718E28B009DD803 /* MainMenu-original.xib in Resources */,
+				8C4313531828432E00DB0053 /* Images.xcassets in Resources */,
 				8C82A86217192798009DD803 /* fullnophoto.png in Resources */,
 				8C82A86317192798009DD803 /* fullnophoto@2x.png in Resources */,
 				8C82A868171A5138009DD803 /* PIXAboutWindowController.xib in Resources */,
@@ -1607,6 +1614,7 @@
 				8C28611217308566009A0B35 /* LeapTutorial4.mov in Resources */,
 				8C28611317308566009A0B35 /* Blank.jpg in Resources */,
 				8C28611417308566009A0B35 /* Mask.jpg in Resources */,
+				8C4313561828439B00DB0053 /* Unbound-For-Mac-512.png in Resources */,
 				8C28611517308566009A0B35 /* Shading.tiff in Resources */,
 				8CA459D9174E7FD9002BF431 /* PIXProgressWindowController.xib in Resources */,
 				8CA954621756A5B50016AE23 /* leapnotconnected.png in Resources */,
