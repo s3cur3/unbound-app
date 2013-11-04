@@ -115,6 +115,11 @@ static NSString *const kItemsKey = @"photos";
     return nil; // this is just here for the protocol
 }
 
+-(void)prepareForDeletion
+{
+    
+}
+
 
 
 
