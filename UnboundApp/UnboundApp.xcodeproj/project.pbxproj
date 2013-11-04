@@ -327,6 +327,7 @@
 		8C68248E16F8089400245F09 /* buttongrid_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68248016F8089400245F09 /* buttongrid_share@2x.png */; };
 		8C68248F16F8089400245F09 /* buttongrid_twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68248116F8089400245F09 /* buttongrid_twitter.png */; };
 		8C68249016F8089400245F09 /* buttongrid_twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68248216F8089400245F09 /* buttongrid_twitter@2x.png */; };
+		8C6A035418216566003A4D99 /* UnboundTrial-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8C6A035318216566003A4D99 /* UnboundTrial-Info.plist */; };
 		8C72089B1749B1720074705D /* PIXProgressWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7208991749B1720074705D /* PIXProgressWindowController.m */; };
 		8C72089C1749B1720074705D /* PIXProgressWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C72089A1749B1720074705D /* PIXProgressWindowController.xib */; };
 		8C72FE581712843B00AA72B0 /* preferences_dark_theme.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE561712843B00AA72B0 /* preferences_dark_theme.png */; };
@@ -604,7 +605,6 @@
 		8C24A40A16F94ED100703F97 /* PIXRoundRectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXRoundRectView.m; sourceTree = "<group>"; };
 		8C286055172F590D009A0B35 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		8C28611B17308566009A0B35 /* Unbound.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unbound.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8C28611C17308566009A0B35 /* Unbound copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Unbound copy-Info.plist"; path = "/Users/scottsykora/Documents/Docs/WebAlbums/code/unbound_osx/UnboundApp/Unbound copy-Info.plist"; sourceTree = "<absolute>"; };
 		8C33D5171711FC8700647F95 /* PIXRoundedProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXRoundedProgressIndicator.h; sourceTree = "<group>"; };
 		8C33D5181711FC8700647F95 /* PIXRoundedProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXRoundedProgressIndicator.m; sourceTree = "<group>"; };
 		8C35808E1714D99E00352870 /* LeapTutorial2.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = LeapTutorial2.mov; sourceTree = "<group>"; };
@@ -657,6 +657,7 @@
 		8C68248016F8089400245F09 /* buttongrid_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttongrid_share@2x.png"; sourceTree = "<group>"; };
 		8C68248116F8089400245F09 /* buttongrid_twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttongrid_twitter.png; sourceTree = "<group>"; };
 		8C68248216F8089400245F09 /* buttongrid_twitter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttongrid_twitter@2x.png"; sourceTree = "<group>"; };
+		8C6A035318216566003A4D99 /* UnboundTrial-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "UnboundTrial-Info.plist"; sourceTree = "<group>"; };
 		8C7208981749B1720074705D /* PIXProgressWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXProgressWindowController.h; sourceTree = "<group>"; };
 		8C7208991749B1720074705D /* PIXProgressWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXProgressWindowController.m; sourceTree = "<group>"; };
 		8C72089A1749B1720074705D /* PIXProgressWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXProgressWindowController.xib; sourceTree = "<group>"; };
@@ -1084,7 +1085,6 @@
 				1DB2F854167ABE87008AC0F7 /* UnboundApp */,
 				1DB2F84D167ABE87008AC0F7 /* Frameworks */,
 				1DB2F84B167ABE87008AC0F7 /* Products */,
-				8C28611C17308566009A0B35 /* Unbound copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1135,6 +1135,7 @@
 			isa = PBXGroup;
 			children = (
 				1DB2F856167ABE87008AC0F7 /* UnboundApp-Info.plist */,
+				8C6A035318216566003A4D99 /* UnboundTrial-Info.plist */,
 				1DB2F857167ABE87008AC0F7 /* InfoPlist.strings */,
 				1DB2F85A167ABE87008AC0F7 /* main.m */,
 				1DB2F85C167ABE87008AC0F7 /* UnboundApp-Prefix.pch */,
@@ -1361,6 +1362,11 @@
 				CLASSPREFIX = PIX;
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Pixite Apps LLC";
+				TargetAttributes = {
+					8C28605917308566009A0B35 = {
+						DevelopmentTeam = EQRQCAG846;
+					};
+				};
 			};
 			buildConfigurationList = 1DB2F844167ABE87008AC0F7 /* Build configuration list for PBXProject "UnboundApp" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1436,6 +1442,7 @@
 				8C24A40816F94C1100703F97 /* intro_bg.jpg in Resources */,
 				8C53DFF716FB831A008EF8B1 /* MapViewAdditions.css in Resources */,
 				8CFC13BE16FD2B21004CA7D5 /* contract.png in Resources */,
+				8C6A035418216566003A4D99 /* UnboundTrial-Info.plist in Resources */,
 				8CFC13BF16FD2B21004CA7D5 /* contract@2x.png in Resources */,
 				8CFC13C016FD2B21004CA7D5 /* expand.png in Resources */,
 				8CFC13C116FD2B21004CA7D5 /* expand@2x.png in Resources */,
@@ -1942,7 +1949,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = UnboundTrial.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1956,7 +1963,7 @@
 					"TRIAL_MODE=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "UnboundApp/UnboundApp-Info.plist";
+				INFOPLIST_FILE = "UnboundApp/UnboundTrial-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
@@ -1973,7 +1980,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = UnboundTrial.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1986,7 +1993,7 @@
 					"ENABLE_SPARKLE=1",
 					"TRIAL_MODE=1",
 				);
-				INFOPLIST_FILE = "UnboundApp/UnboundApp-Info.plist";
+				INFOPLIST_FILE = "UnboundApp/UnboundTrial-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",

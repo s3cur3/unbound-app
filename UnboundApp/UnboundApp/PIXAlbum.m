@@ -465,6 +465,9 @@ static NSString *const kItemsKey = @"photos";
 //    {
 //        // have access rights to read
     
+    
+     if(![self shouldHaveUnboundFile]) return;
+    
     // write the JSON back to the file
     NSOutputStream *os = [[NSOutputStream alloc] initToFileAtPath:unboundFilePath append:NO];
     NSError *error;
@@ -542,9 +545,15 @@ static NSString *const kItemsKey = @"photos";
     });
 }
 
+-(BOOL)shouldHaveUnboundFile
+{
+    NSString * lowercasePath = [self.path lowercaseString];
+    return ([lowercasePath rangeOfString:@"/dropbox/"].length > 0);
+}
+
 -(void)updateUnboundFile
 {    
-    if(![self unboundFileIsChanged]) return;
+    if(![self unboundFileIsChanged] || ![self shouldHaveUnboundFile]) return;
     
     
      NSMutableDictionary * unboundMetaDictionary = [self readUnboundFile];
@@ -623,6 +632,8 @@ static NSString *const kItemsKey = @"photos";
 -(void) setUnboundFileCaptionForPhoto:(PIXPhoto *)photo
 {
     if(photo == nil) return;
+    
+    if(![self shouldHaveUnboundFile]) return;
     
     NSMutableDictionary * unboundMetaDictionary = [self readUnboundFile];
 
