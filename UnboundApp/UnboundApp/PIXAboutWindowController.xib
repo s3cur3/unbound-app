@@ -20,7 +20,7 @@
             <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1028"/>
             <view key="contentView" id="2">
                 <rect key="frame" x="0.0" y="0.0" width="332" height="303"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <imageView translatesAutoresizingMaskIntoConstraints="NO" id="5">
                         <rect key="frame" x="20" y="187" width="96" height="96"/>
