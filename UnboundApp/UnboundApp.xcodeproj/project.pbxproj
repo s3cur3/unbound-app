@@ -180,6 +180,7 @@
 		8C2860A317308566009A0B35 /* PIXLeapTutorialWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C14692617149A92009ECCC5 /* PIXLeapTutorialWindowController.m */; };
 		8C2860A417308566009A0B35 /* PIXAboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C82A865171A5138009DD803 /* PIXAboutWindowController.m */; };
 		8C2860A517308566009A0B35 /* PIXTransitionSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D23CC151720604E00C7FF70 /* PIXTransitionSetup.m */; };
+		8C2860A717308566009A0B35 /* MapKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFED16FB7C36008EF8B1 /* MapKit.framework */; };
 		8C2860A817308566009A0B35 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8C286055172F590D009A0B35 /* Sparkle.framework */; };
 		8C2860AA17308566009A0B35 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C14692E1714A5CC009ECCC5 /* QTKit.framework */; };
 		8C2860AC17308566009A0B35 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFF116FB7CED008EF8B1 /* CoreFoundation.framework */; };
@@ -187,6 +188,7 @@
 		8C2860AE17308566009A0B35 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4A1E07167C056C00C9A895 /* QuartzCore.framework */; };
 		8C2860AF17308566009A0B35 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DB2F84E167ABE87008AC0F7 /* Cocoa.framework */; };
 		8C2860B017308566009A0B35 /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C031CD016E926F7009B7F38 /* libLeap.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
+		8C2860B117308566009A0B35 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFED16FB7C36008EF8B1 /* MapKit.framework */; };
 		8C2860B217308566009A0B35 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C286055172F590D009A0B35 /* Sparkle.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8C2860B417308566009A0B35 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F857167ABE87008AC0F7 /* InfoPlist.strings */; };
 		8C2860B517308566009A0B35 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F85D167ABE87008AC0F7 /* Credits.rtf */; };
@@ -288,6 +290,10 @@
 		8C33D5191711FC8700647F95 /* PIXRoundedProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C33D5181711FC8700647F95 /* PIXRoundedProgressIndicator.m */; };
 		8C3580901714D99E00352870 /* LeapTutorial2.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C35808E1714D99E00352870 /* LeapTutorial2.mov */; };
 		8C3580911714D99E00352870 /* LeapTutorial3.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C35808F1714D99E00352870 /* LeapTutorial3.mov */; };
+		8C4313521828399600DB0053 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C4313511828399600DB0053 /* Images.xcassets */; };
+		8C4313531828432E00DB0053 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C4313511828399600DB0053 /* Images.xcassets */; };
+		8C4313551828439B00DB0053 /* Unbound-For-Mac-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C4313541828439B00DB0053 /* Unbound-For-Mac-512.png */; };
+		8C4313561828439B00DB0053 /* Unbound-For-Mac-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C4313541828439B00DB0053 /* Unbound-For-Mac-512.png */; };
 		8C4B80E816B9D9FD00C7E8F4 /* PIXPhotoGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B80E716B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.m */; };
 		8C4B80FB16BB3D8A00C7E8F4 /* GeneralPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B80F616BB3D8A00C7E8F4 /* GeneralPreferencesViewController.m */; };
 		8C4B80FC16BB3D8A00C7E8F4 /* GeneralPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4B80F716BB3D8A00C7E8F4 /* GeneralPreferencesView.xib */; };
@@ -300,7 +306,9 @@
 		8C4B9CAA16DC436B00F6BADD /* PIXExifBGView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B9CA916DC436B00F6BADD /* PIXExifBGView.m */; };
 		8C5019CA171C803F00829914 /* click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8C5019C9171C803F00829914 /* click.wav */; };
 		8C53DFE816FB76E9008EF8B1 /* PIXInfoPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C53DFE716FB76E8008EF8B1 /* PIXInfoPanelViewController.m */; };
+		8C53DFEE16FB7C36008EF8B1 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFED16FB7C36008EF8B1 /* MapKit.framework */; };
 		8C53DFF216FB7CED008EF8B1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFF116FB7CED008EF8B1 /* CoreFoundation.framework */; };
+		8C53DFF416FB7E0F008EF8B1 /* MapKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFED16FB7C36008EF8B1 /* MapKit.framework */; };
 		8C53DFF716FB831A008EF8B1 /* MapViewAdditions.css in Resources */ = {isa = PBXBuildFile; fileRef = 8C53DFF616FB8319008EF8B1 /* MapViewAdditions.css */; };
 		8C53E00516FBCB36008EF8B1 /* libLeap.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8C031CD016E926F7009B7F38 /* libLeap.dylib */; };
 		8C5D757417015A5C0008CC00 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C5D757217015A5C0008CC00 /* pause.png */; };
@@ -323,6 +331,7 @@
 		8C68248E16F8089400245F09 /* buttongrid_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68248016F8089400245F09 /* buttongrid_share@2x.png */; };
 		8C68248F16F8089400245F09 /* buttongrid_twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68248116F8089400245F09 /* buttongrid_twitter.png */; };
 		8C68249016F8089400245F09 /* buttongrid_twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68248216F8089400245F09 /* buttongrid_twitter@2x.png */; };
+		8C6A035418216566003A4D99 /* UnboundTrial-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8C6A035318216566003A4D99 /* UnboundTrial-Info.plist */; };
 		8C72089B1749B1720074705D /* PIXProgressWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7208991749B1720074705D /* PIXProgressWindowController.m */; };
 		8C72089C1749B1720074705D /* PIXProgressWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C72089A1749B1720074705D /* PIXProgressWindowController.xib */; };
 		8C72FE581712843B00AA72B0 /* preferences_dark_theme.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE561712843B00AA72B0 /* preferences_dark_theme.png */; };
@@ -600,11 +609,12 @@
 		8C24A40A16F94ED100703F97 /* PIXRoundRectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXRoundRectView.m; sourceTree = "<group>"; };
 		8C286055172F590D009A0B35 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		8C28611B17308566009A0B35 /* Unbound.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unbound.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8C28611C17308566009A0B35 /* Unbound copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Unbound copy-Info.plist"; path = "/Users/scottsykora/Documents/Docs/WebAlbums/code/unbound_osx/UnboundApp/Unbound copy-Info.plist"; sourceTree = "<absolute>"; };
 		8C33D5171711FC8700647F95 /* PIXRoundedProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXRoundedProgressIndicator.h; sourceTree = "<group>"; };
 		8C33D5181711FC8700647F95 /* PIXRoundedProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXRoundedProgressIndicator.m; sourceTree = "<group>"; };
 		8C35808E1714D99E00352870 /* LeapTutorial2.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = LeapTutorial2.mov; sourceTree = "<group>"; };
 		8C35808F1714D99E00352870 /* LeapTutorial3.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = LeapTutorial3.mov; sourceTree = "<group>"; };
+		8C4313511828399600DB0053 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Unbound Trial/Images.xcassets"; sourceTree = "<group>"; };
+		8C4313541828439B00DB0053 /* Unbound-For-Mac-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Unbound-For-Mac-512.png"; sourceTree = "<group>"; };
 		8C43CCF017385A9700A4395F /* UnboundTrial.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = UnboundTrial.entitlements; sourceTree = "<group>"; };
 		8C4B80E616B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPhotoGridViewItem.h; sourceTree = "<group>"; };
 		8C4B80E716B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhotoGridViewItem.m; sourceTree = "<group>"; };
@@ -652,6 +662,7 @@
 		8C68248016F8089400245F09 /* buttongrid_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttongrid_share@2x.png"; sourceTree = "<group>"; };
 		8C68248116F8089400245F09 /* buttongrid_twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttongrid_twitter.png; sourceTree = "<group>"; };
 		8C68248216F8089400245F09 /* buttongrid_twitter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttongrid_twitter@2x.png"; sourceTree = "<group>"; };
+		8C6A035318216566003A4D99 /* UnboundTrial-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "UnboundTrial-Info.plist"; sourceTree = "<group>"; };
 		8C7208981749B1720074705D /* PIXProgressWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXProgressWindowController.h; sourceTree = "<group>"; };
 		8C7208991749B1720074705D /* PIXProgressWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXProgressWindowController.m; sourceTree = "<group>"; };
 		8C72089A1749B1720074705D /* PIXProgressWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXProgressWindowController.xib; sourceTree = "<group>"; };
@@ -882,6 +893,7 @@
 		1D4A1D99167AD93400C9A895 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				8C4313541828439B00DB0053 /* Unbound-For-Mac-512.png */,
 				1D368173179A5AA5004538FA /* playbutton-tinted.png */,
 				1D368174179A5AA5004538FA /* playbutton-tinted@2x.png */,
 				1D368175179A5AA5004538FA /* playbutton.png */,
@@ -1081,7 +1093,6 @@
 				1DB2F854167ABE87008AC0F7 /* UnboundApp */,
 				1DB2F84D167ABE87008AC0F7 /* Frameworks */,
 				1DB2F84B167ABE87008AC0F7 /* Products */,
-				8C28611C17308566009A0B35 /* Unbound copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1133,6 +1144,7 @@
 			isa = PBXGroup;
 			children = (
 				1DB2F856167ABE87008AC0F7 /* UnboundApp-Info.plist */,
+				8C6A035318216566003A4D99 /* UnboundTrial-Info.plist */,
 				1DB2F857167ABE87008AC0F7 /* InfoPlist.strings */,
 				1DB2F85A167ABE87008AC0F7 /* main.m */,
 				1DB2F85C167ABE87008AC0F7 /* UnboundApp-Prefix.pch */,
@@ -1420,6 +1432,7 @@
 				8CE460DC16CB650600CDFA04 /* btn-roundrect-down@2x.png in Resources */,
 				8CE460DD16CB650600CDFA04 /* btn-roundrect-up.png in Resources */,
 				8CE460DE16CB650600CDFA04 /* btn-roundrect-up@2x.png in Resources */,
+				8C4313551828439B00DB0053 /* Unbound-For-Mac-512.png in Resources */,
 				8CE460E916CD7BB400CDFA04 /* PIXCustomShareSheetViewController.xib in Resources */,
 				8C4B9CA716DC30FE00F6BADD /* PIXMiniExifViewController.xib in Resources */,
 				8C68248316F8089400245F09 /* buttongrid_copy.png in Resources */,
@@ -1443,6 +1456,7 @@
 				8C24A40816F94C1100703F97 /* intro_bg.jpg in Resources */,
 				8C53DFF716FB831A008EF8B1 /* MapViewAdditions.css in Resources */,
 				8CFC13BE16FD2B21004CA7D5 /* contract.png in Resources */,
+				8C6A035418216566003A4D99 /* UnboundTrial-Info.plist in Resources */,
 				8CFC13BF16FD2B21004CA7D5 /* contract@2x.png in Resources */,
 				8CFC13C016FD2B21004CA7D5 /* expand.png in Resources */,
 				8CFC13C116FD2B21004CA7D5 /* expand@2x.png in Resources */,
@@ -1472,6 +1486,7 @@
 				8C3580901714D99E00352870 /* LeapTutorial2.mov in Resources */,
 				8C3580911714D99E00352870 /* LeapTutorial3.mov in Resources */,
 				8C82A85F1718E28B009DD803 /* MainMenu-original.xib in Resources */,
+				8C4313531828432E00DB0053 /* Images.xcassets in Resources */,
 				8C82A86217192798009DD803 /* fullnophoto.png in Resources */,
 				8CFDF768182716FD00809018 /* Images.xcassets in Resources */,
 				8C82A86317192798009DD803 /* fullnophoto@2x.png in Resources */,
@@ -1590,6 +1605,7 @@
 				8C28610417308566009A0B35 /* LeapTutorial3.mov in Resources */,
 				8C28610517308566009A0B35 /* MainMenu-original.xib in Resources */,
 				8C28610617308566009A0B35 /* fullnophoto.png in Resources */,
+				8C4313521828399600DB0053 /* Images.xcassets in Resources */,
 				8C28610717308566009A0B35 /* fullnophoto@2x.png in Resources */,
 				8C28610817308566009A0B35 /* PIXAboutWindowController.xib in Resources */,
 				8C28610917308566009A0B35 /* pixite-logo-wide.png in Resources */,
@@ -1604,6 +1620,7 @@
 				8C28611217308566009A0B35 /* LeapTutorial4.mov in Resources */,
 				8C28611317308566009A0B35 /* Blank.jpg in Resources */,
 				8C28611417308566009A0B35 /* Mask.jpg in Resources */,
+				8C4313561828439B00DB0053 /* Unbound-For-Mac-512.png in Resources */,
 				8C28611517308566009A0B35 /* Shading.tiff in Resources */,
 				8CA459D9174E7FD9002BF431 /* PIXProgressWindowController.xib in Resources */,
 				8CA954621756A5B50016AE23 /* leapnotconnected.png in Resources */,
@@ -1953,9 +1970,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = UnboundTrial.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1969,7 +1987,7 @@
 					"TRIAL_MODE=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "UnboundApp/UnboundApp-Info.plist";
+				INFOPLIST_FILE = "UnboundApp/UnboundTrial-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
@@ -1984,9 +2002,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = UnboundTrial.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1999,7 +2018,7 @@
 					"ENABLE_SPARKLE=1",
 					"TRIAL_MODE=1",
 				);
-				INFOPLIST_FILE = "UnboundApp/UnboundApp-Info.plist";
+				INFOPLIST_FILE = "UnboundApp/UnboundTrial-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",

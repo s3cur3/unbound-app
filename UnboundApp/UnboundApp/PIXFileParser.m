@@ -1323,8 +1323,20 @@ NSDictionary * dictionaryForURL(NSURL * url)
                     continue;
                 }
                 [albumsChanged addObject:aPhoto.album];
+                
+                [context deleteObject:anItemToDelete];
             }
-            [context deleteObject:anItemToDelete];
+            
+            // for albums, only delete them if they don't still exist in the file system
+            else
+            {
+                NSFileManager * fm = [NSFileManager defaultManager];
+                if (![fm fileExistsAtPath:[(PIXAlbum *)anItemToDelete path]])
+                {
+                    [context deleteObject:anItemToDelete];
+                }
+            }
+            
         }
         if (isPhotoEntity) {
             for (PIXAlbum *anAlbum in albumsChanged)
