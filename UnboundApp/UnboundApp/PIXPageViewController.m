@@ -964,7 +964,28 @@
 - (IBAction) deleteItems:(id )inSender
 {
     NSString *warningMessage = [NSString stringWithFormat:@"This photo will be deleted from your file system and moved to the trash.\n\nAre you sure you want to continue?"];
-    if (NSRunAlertPanel(@"Delete Photo?", warningMessage, @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
+    
+    NSAlert *alert = nil;
+    
+    BOOL suppressAlert = [[NSUserDefaults standardUserDefaults] boolForKey:@"PIX_supressDeleteWarning"];
+    
+    if(!suppressAlert)
+    {
+        alert = [[NSAlert alloc] init];
+        [alert setMessageText:@"Delete Photo?"];
+        [alert addButtonWithTitle:@"Delete"];
+        [alert addButtonWithTitle:@"Cancel"];
+        [alert setInformativeText:warningMessage];
+        [alert setShowsSuppressionButton:YES];
+        [[alert suppressionButton] setTitle:@"Don't warn me again."];
+    }
+    
+    if (suppressAlert || [alert runModal] == NSAlertFirstButtonReturn) {
+        
+        if ([[alert suppressionButton] state] == NSOnState) {
+            // Suppress this alert from now on.
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"PIX_supressDeleteWarning"];
+        }
         
         PIXPhoto *aPhoto = [self.pagerData objectAtIndex:self.pageController.selectedIndex];
         BOOL lastItem = NO;
