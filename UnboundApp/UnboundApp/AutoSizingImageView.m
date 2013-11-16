@@ -24,6 +24,18 @@
 // to size the view to the bounds of the clipview effectively nulling the magnification.
 //
 
++ (BOOL)isCompatibleWithResponsiveScrolling
+{
+    return NO;
+}
+
+
+-(void)awakeFromNib
+{
+    [super awakeFromNib];
+    
+    [self setEditable:YES];
+}
 
 - (void)setFrameSize:(NSSize)newSize {
 
@@ -68,6 +80,21 @@
         }
     }
 
+    
+}
+
+-(void)keyDown:(NSEvent *)theEvent
+{
+    [self.delegate keyDown:theEvent];
+}
+
+-(void)deleteForward:(id)sender
+{
+    
+}
+
+-(void)deleteBackward:(id)sender
+{
     
 }
 

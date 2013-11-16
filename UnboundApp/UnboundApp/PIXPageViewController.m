@@ -813,13 +813,18 @@
                 [self.view.window toggleFullScreen:theEvent];
                 return;
             }
+            
+            if(pressedUnichar == '') // f should togge fullscreen
+            {
+                [self deleteItems:nil];
+                return;
+            }
         }
     }
     
     [self interpretKeyEvents:@[theEvent]];
     
 }
-
 
 -(void)cancelOperation:(id)sender
 {
