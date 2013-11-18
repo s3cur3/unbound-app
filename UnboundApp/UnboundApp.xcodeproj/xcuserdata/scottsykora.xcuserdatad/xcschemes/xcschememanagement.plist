@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Unbound Trial copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>Unbound Trial.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -23,6 +28,11 @@
 			<true/>
 		</dict>
 		<key>8C28605917308566009A0B35</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8C9FA5D9183AD5A4000AEBC9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
