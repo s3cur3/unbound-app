@@ -165,7 +165,7 @@
 		8C28609417308566009A0B35 /* LeapObjectiveC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8C031CCF16E926F7009B7F38 /* LeapObjectiveC.mm */; };
 		8C28609517308566009A0B35 /* PIXLeapInputManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C031CD216E926F7009B7F38 /* PIXLeapInputManager.m */; };
 		8C28609617308566009A0B35 /* PIXSelectionLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68246A16F596BB00245F09 /* PIXSelectionLayer.m */; };
-		8C28609717308566009A0B35 /* NSBezierPath+pathUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68246D16F599FD00245F09 /* NSBezierPath+pathUtilities.m */; };
+		8C28609717308566009A0B35 /* NSBezierPath+pathUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68246D16F599FD00245F09 /* NSBezierPath+pathUtilities.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8C28609817308566009A0B35 /* PIXPageHUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68247016F6850B00245F09 /* PIXPageHUDView.m */; };
 		8C28609917308566009A0B35 /* PIXPageHUDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68247316F6A75000245F09 /* PIXPageHUDWindow.m */; };
 		8C28609A17308566009A0B35 /* PIXInfoPanelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CF9CE4716F8B4A9003B0933 /* PIXInfoPanelView.m */; };
@@ -187,7 +187,7 @@
 		8C2860AE17308566009A0B35 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4A1E07167C056C00C9A895 /* QuartzCore.framework */; };
 		8C2860AF17308566009A0B35 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DB2F84E167ABE87008AC0F7 /* Cocoa.framework */; };
 		8C2860B017308566009A0B35 /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C031CD016E926F7009B7F38 /* libLeap.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
-		8C2860B217308566009A0B35 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C286055172F590D009A0B35 /* Sparkle.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		8C2860B217308566009A0B35 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C286055172F590D009A0B35 /* Sparkle.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		8C2860B417308566009A0B35 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F857167ABE87008AC0F7 /* InfoPlist.strings */; };
 		8C2860B517308566009A0B35 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F85D167ABE87008AC0F7 /* Credits.rtf */; };
 		8C2860B617308566009A0B35 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F863167ABE87008AC0F7 /* MainMenu.xib */; };
@@ -357,6 +357,41 @@
 		8C9AA2BA16FFE39500D989CA /* captionbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9AA2B816FFE39500D989CA /* captionbutton@2x.png */; };
 		8C9AA2BE1700A5C100D989CA /* PIXSlideshowOptonsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9AA2BC1700A5C000D989CA /* PIXSlideshowOptonsViewController.m */; };
 		8C9AA2BF1700A5C100D989CA /* PIXSlideshowOptonsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C9AA2BD1700A5C000D989CA /* PIXSlideshowOptonsViewController.xib */; };
+		8C9FA59C183AC5FE000AEBC9 /* MKAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA555183AC5FE000AEBC9 /* MKAnnotationView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA59D183AC5FE000AEBC9 /* MKCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA557183AC5FE000AEBC9 /* MKCircle.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA59E183AC5FE000AEBC9 /* MKCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA559183AC5FE000AEBC9 /* MKCircleView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA59F183AC5FE000AEBC9 /* MKGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA55B183AC5FE000AEBC9 /* MKGeocoder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5A0183AC5FE000AEBC9 /* MKMapView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA55E183AC5FE000AEBC9 /* MKMapView+Additions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5A1183AC5FE000AEBC9 /* MKMapView+DelegateWrappers.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA560183AC5FE000AEBC9 /* MKMapView+DelegateWrappers.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5A2183AC5FE000AEBC9 /* MKMapView+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA562183AC5FE000AEBC9 /* MKMapView+Private.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5A3183AC5FE000AEBC9 /* MKMapView+WebViewIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA564183AC5FE000AEBC9 /* MKMapView+WebViewIntegration.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5A4183AC5FE000AEBC9 /* MKMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA566183AC5FE000AEBC9 /* MKMapView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5A5183AC5FE000AEBC9 /* MKMultiPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA568183AC5FE000AEBC9 /* MKMultiPoint.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5A6183AC5FE000AEBC9 /* MKOverlayPathView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA56B183AC5FE000AEBC9 /* MKOverlayPathView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5A7183AC5FE000AEBC9 /* MKOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA56D183AC5FE000AEBC9 /* MKOverlayView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5A8183AC5FE000AEBC9 /* MKPinAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA56F183AC5FE000AEBC9 /* MKPinAnnotationView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5A9183AC5FE000AEBC9 /* MKPlacemark+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA571183AC5FE000AEBC9 /* MKPlacemark+Private.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5AA183AC5FE000AEBC9 /* MKPlacemark.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA573183AC5FE000AEBC9 /* MKPlacemark.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5AB183AC5FE000AEBC9 /* MKPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA575183AC5FE000AEBC9 /* MKPointAnnotation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5AC183AC5FE000AEBC9 /* MKPolygon.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA577183AC5FE000AEBC9 /* MKPolygon.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5AD183AC5FE000AEBC9 /* MKPolygonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA579183AC5FE000AEBC9 /* MKPolygonView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5AE183AC5FE000AEBC9 /* MKPolyline.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA57B183AC5FE000AEBC9 /* MKPolyline.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5AF183AC5FE000AEBC9 /* MKPolylineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA57D183AC5FE000AEBC9 /* MKPolylineView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5B0183AC5FE000AEBC9 /* MKReverseGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA57F183AC5FE000AEBC9 /* MKReverseGeocoder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5B1183AC5FE000AEBC9 /* MKShape.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA581183AC5FE000AEBC9 /* MKShape.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5B2183AC5FE000AEBC9 /* MKUserLocation+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA584183AC5FE000AEBC9 /* MKUserLocation+Private.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5B3183AC5FE000AEBC9 /* MKUserLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA586183AC5FE000AEBC9 /* MKUserLocation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5B4183AC5FE000AEBC9 /* MKView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA588183AC5FE000AEBC9 /* MKView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5B5183AC5FE000AEBC9 /* MKWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA58A183AC5FE000AEBC9 /* MKWebView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5B6183AC5FE000AEBC9 /* NSColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA58C183AC5FE000AEBC9 /* NSColor+Additions.m */; };
+		8C9FA5B7183AC5FE000AEBC9 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA591183AC5FE000AEBC9 /* NSObject+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5B8183AC5FE000AEBC9 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA593183AC5FE000AEBC9 /* NSString+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5B9183AC5FE000AEBC9 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA595183AC5FE000AEBC9 /* SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5BA183AC5FE000AEBC9 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA597183AC5FE000AEBC9 /* SBJsonBase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5BB183AC5FE000AEBC9 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA599183AC5FE000AEBC9 /* SBJsonParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5BC183AC5FE000AEBC9 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA59B183AC5FE000AEBC9 /* SBJsonWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C9FA5BE183ACB90000AEBC9 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C9FA5BD183ACB90000AEBC9 /* CoreLocation.framework */; };
+		8C9FA5C0183ACB98000AEBC9 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C9FA5BF183ACB98000AEBC9 /* WebKit.framework */; };
 		8CA459D8174E7FD9002BF431 /* PIXProgressWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7208991749B1720074705D /* PIXProgressWindowController.m */; };
 		8CA459D9174E7FD9002BF431 /* PIXProgressWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C72089A1749B1720074705D /* PIXProgressWindowController.xib */; };
 		8CA954601756A5AD0016AE23 /* leapnotconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CA9545E1756A5AD0016AE23 /* leapnotconnected.png */; };
@@ -701,6 +736,80 @@
 		8C9AA2BB1700A5BF00D989CA /* PIXSlideshowOptonsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXSlideshowOptonsViewController.h; sourceTree = "<group>"; };
 		8C9AA2BC1700A5C000D989CA /* PIXSlideshowOptonsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSlideshowOptonsViewController.m; sourceTree = "<group>"; };
 		8C9AA2BD1700A5C000D989CA /* PIXSlideshowOptonsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXSlideshowOptonsViewController.xib; sourceTree = "<group>"; };
+		8C9FA552183AC5FE000AEBC9 /* MapKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapKit.h; sourceTree = "<group>"; };
+		8C9FA553183AC5FE000AEBC9 /* MKAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKAnnotation.h; sourceTree = "<group>"; };
+		8C9FA554183AC5FE000AEBC9 /* MKAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKAnnotationView.h; sourceTree = "<group>"; };
+		8C9FA555183AC5FE000AEBC9 /* MKAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKAnnotationView.m; sourceTree = "<group>"; };
+		8C9FA556183AC5FE000AEBC9 /* MKCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKCircle.h; sourceTree = "<group>"; };
+		8C9FA557183AC5FE000AEBC9 /* MKCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKCircle.m; sourceTree = "<group>"; };
+		8C9FA558183AC5FE000AEBC9 /* MKCircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKCircleView.h; sourceTree = "<group>"; };
+		8C9FA559183AC5FE000AEBC9 /* MKCircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKCircleView.m; sourceTree = "<group>"; };
+		8C9FA55A183AC5FE000AEBC9 /* MKGeocoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKGeocoder.h; sourceTree = "<group>"; };
+		8C9FA55B183AC5FE000AEBC9 /* MKGeocoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKGeocoder.m; sourceTree = "<group>"; };
+		8C9FA55C183AC5FE000AEBC9 /* MKGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKGeometry.h; sourceTree = "<group>"; };
+		8C9FA55D183AC5FE000AEBC9 /* MKMapView+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+Additions.h"; sourceTree = "<group>"; };
+		8C9FA55E183AC5FE000AEBC9 /* MKMapView+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+Additions.m"; sourceTree = "<group>"; };
+		8C9FA55F183AC5FE000AEBC9 /* MKMapView+DelegateWrappers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+DelegateWrappers.h"; sourceTree = "<group>"; };
+		8C9FA560183AC5FE000AEBC9 /* MKMapView+DelegateWrappers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+DelegateWrappers.m"; sourceTree = "<group>"; };
+		8C9FA561183AC5FE000AEBC9 /* MKMapView+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+Private.h"; sourceTree = "<group>"; };
+		8C9FA562183AC5FE000AEBC9 /* MKMapView+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+Private.m"; sourceTree = "<group>"; };
+		8C9FA563183AC5FE000AEBC9 /* MKMapView+WebViewIntegration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+WebViewIntegration.h"; sourceTree = "<group>"; };
+		8C9FA564183AC5FE000AEBC9 /* MKMapView+WebViewIntegration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+WebViewIntegration.m"; sourceTree = "<group>"; };
+		8C9FA565183AC5FE000AEBC9 /* MKMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKMapView.h; sourceTree = "<group>"; };
+		8C9FA566183AC5FE000AEBC9 /* MKMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKMapView.m; sourceTree = "<group>"; };
+		8C9FA567183AC5FE000AEBC9 /* MKMultiPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKMultiPoint.h; sourceTree = "<group>"; };
+		8C9FA568183AC5FE000AEBC9 /* MKMultiPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKMultiPoint.m; sourceTree = "<group>"; };
+		8C9FA569183AC5FE000AEBC9 /* MKOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKOverlay.h; sourceTree = "<group>"; };
+		8C9FA56A183AC5FE000AEBC9 /* MKOverlayPathView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKOverlayPathView.h; sourceTree = "<group>"; };
+		8C9FA56B183AC5FE000AEBC9 /* MKOverlayPathView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKOverlayPathView.m; sourceTree = "<group>"; };
+		8C9FA56C183AC5FE000AEBC9 /* MKOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKOverlayView.h; sourceTree = "<group>"; };
+		8C9FA56D183AC5FE000AEBC9 /* MKOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKOverlayView.m; sourceTree = "<group>"; };
+		8C9FA56E183AC5FE000AEBC9 /* MKPinAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKPinAnnotationView.h; sourceTree = "<group>"; };
+		8C9FA56F183AC5FE000AEBC9 /* MKPinAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKPinAnnotationView.m; sourceTree = "<group>"; };
+		8C9FA570183AC5FE000AEBC9 /* MKPlacemark+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKPlacemark+Private.h"; sourceTree = "<group>"; };
+		8C9FA571183AC5FE000AEBC9 /* MKPlacemark+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKPlacemark+Private.m"; sourceTree = "<group>"; };
+		8C9FA572183AC5FE000AEBC9 /* MKPlacemark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKPlacemark.h; sourceTree = "<group>"; };
+		8C9FA573183AC5FE000AEBC9 /* MKPlacemark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKPlacemark.m; sourceTree = "<group>"; };
+		8C9FA574183AC5FE000AEBC9 /* MKPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKPointAnnotation.h; sourceTree = "<group>"; };
+		8C9FA575183AC5FE000AEBC9 /* MKPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKPointAnnotation.m; sourceTree = "<group>"; };
+		8C9FA576183AC5FE000AEBC9 /* MKPolygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKPolygon.h; sourceTree = "<group>"; };
+		8C9FA577183AC5FE000AEBC9 /* MKPolygon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKPolygon.m; sourceTree = "<group>"; };
+		8C9FA578183AC5FE000AEBC9 /* MKPolygonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKPolygonView.h; sourceTree = "<group>"; };
+		8C9FA579183AC5FE000AEBC9 /* MKPolygonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKPolygonView.m; sourceTree = "<group>"; };
+		8C9FA57A183AC5FE000AEBC9 /* MKPolyline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKPolyline.h; sourceTree = "<group>"; };
+		8C9FA57B183AC5FE000AEBC9 /* MKPolyline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKPolyline.m; sourceTree = "<group>"; };
+		8C9FA57C183AC5FE000AEBC9 /* MKPolylineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKPolylineView.h; sourceTree = "<group>"; };
+		8C9FA57D183AC5FE000AEBC9 /* MKPolylineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKPolylineView.m; sourceTree = "<group>"; };
+		8C9FA57E183AC5FE000AEBC9 /* MKReverseGeocoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKReverseGeocoder.h; sourceTree = "<group>"; };
+		8C9FA57F183AC5FE000AEBC9 /* MKReverseGeocoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKReverseGeocoder.m; sourceTree = "<group>"; };
+		8C9FA580183AC5FE000AEBC9 /* MKShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKShape.h; sourceTree = "<group>"; };
+		8C9FA581183AC5FE000AEBC9 /* MKShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKShape.m; sourceTree = "<group>"; };
+		8C9FA582183AC5FE000AEBC9 /* MKTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKTypes.h; sourceTree = "<group>"; };
+		8C9FA583183AC5FE000AEBC9 /* MKUserLocation+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKUserLocation+Private.h"; sourceTree = "<group>"; };
+		8C9FA584183AC5FE000AEBC9 /* MKUserLocation+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKUserLocation+Private.m"; sourceTree = "<group>"; };
+		8C9FA585183AC5FE000AEBC9 /* MKUserLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKUserLocation.h; sourceTree = "<group>"; };
+		8C9FA586183AC5FE000AEBC9 /* MKUserLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKUserLocation.m; sourceTree = "<group>"; };
+		8C9FA587183AC5FE000AEBC9 /* MKView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKView.h; sourceTree = "<group>"; };
+		8C9FA588183AC5FE000AEBC9 /* MKView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKView.m; sourceTree = "<group>"; };
+		8C9FA589183AC5FE000AEBC9 /* MKWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKWebView.h; sourceTree = "<group>"; };
+		8C9FA58A183AC5FE000AEBC9 /* MKWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKWebView.m; sourceTree = "<group>"; };
+		8C9FA58B183AC5FE000AEBC9 /* NSColor+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+Additions.h"; sourceTree = "<group>"; };
+		8C9FA58C183AC5FE000AEBC9 /* NSColor+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+Additions.m"; sourceTree = "<group>"; };
+		8C9FA58F183AC5FE000AEBC9 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
+		8C9FA590183AC5FE000AEBC9 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
+		8C9FA591183AC5FE000AEBC9 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
+		8C9FA592183AC5FE000AEBC9 /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
+		8C9FA593183AC5FE000AEBC9 /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
+		8C9FA594183AC5FE000AEBC9 /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
+		8C9FA595183AC5FE000AEBC9 /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
+		8C9FA596183AC5FE000AEBC9 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
+		8C9FA597183AC5FE000AEBC9 /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
+		8C9FA598183AC5FE000AEBC9 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
+		8C9FA599183AC5FE000AEBC9 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
+		8C9FA59A183AC5FE000AEBC9 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
+		8C9FA59B183AC5FE000AEBC9 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		8C9FA5BD183ACB90000AEBC9 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		8C9FA5BF183ACB98000AEBC9 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		8CA459CF174D68A1002BF431 /* PIXAccount.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PIXAccount.h; sourceTree = "<group>"; };
 		8CA9545E1756A5AD0016AE23 /* leapnotconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leapnotconnected.png; sourceTree = "<group>"; };
 		8CA9545F1756A5AD0016AE23 /* leapnotconnected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leapnotconnected@2x.png"; sourceTree = "<group>"; };
@@ -771,6 +880,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C9FA5C0183ACB98000AEBC9 /* WebKit.framework in Frameworks */,
+				8C9FA5BE183ACB90000AEBC9 /* CoreLocation.framework in Frameworks */,
 				8C2860AA17308566009A0B35 /* QTKit.framework in Frameworks */,
 				8C2860AC17308566009A0B35 /* CoreFoundation.framework in Frameworks */,
 				8C2860AD17308566009A0B35 /* Quartz.framework in Frameworks */,
@@ -1104,6 +1215,8 @@
 		1DB2F84D167ABE87008AC0F7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8C9FA5BF183ACB98000AEBC9 /* WebKit.framework */,
+				8C9FA5BD183ACB90000AEBC9 /* CoreLocation.framework */,
 				8CFDF7651827123700809018 /* MapKit.framework */,
 				1DB2F84E167ABE87008AC0F7 /* Cocoa.framework */,
 				1DB2F850167ABE87008AC0F7 /* Other Frameworks */,
@@ -1281,6 +1394,7 @@
 		8C8EE92C16CACA6700F16C49 /* third party */ = {
 			isa = PBXGroup;
 			children = (
+				8C9FA551183AC5FE000AEBC9 /* MacMapKit */,
 				8C031CCB16E926F7009B7F38 /* Leap */,
 				8C8EE92D16CACA7900F16C49 /* ArchDirectoryObserver */,
 			);
@@ -1314,6 +1428,101 @@
 				1D083515167D78AD003D557A /* PIXImageBrowserCell.m */,
 			);
 			name = "no longer used";
+			sourceTree = "<group>";
+		};
+		8C9FA551183AC5FE000AEBC9 /* MacMapKit */ = {
+			isa = PBXGroup;
+			children = (
+				8C9FA552183AC5FE000AEBC9 /* MapKit.h */,
+				8C9FA553183AC5FE000AEBC9 /* MKAnnotation.h */,
+				8C9FA554183AC5FE000AEBC9 /* MKAnnotationView.h */,
+				8C9FA555183AC5FE000AEBC9 /* MKAnnotationView.m */,
+				8C9FA556183AC5FE000AEBC9 /* MKCircle.h */,
+				8C9FA557183AC5FE000AEBC9 /* MKCircle.m */,
+				8C9FA558183AC5FE000AEBC9 /* MKCircleView.h */,
+				8C9FA559183AC5FE000AEBC9 /* MKCircleView.m */,
+				8C9FA55A183AC5FE000AEBC9 /* MKGeocoder.h */,
+				8C9FA55B183AC5FE000AEBC9 /* MKGeocoder.m */,
+				8C9FA55C183AC5FE000AEBC9 /* MKGeometry.h */,
+				8C9FA55D183AC5FE000AEBC9 /* MKMapView+Additions.h */,
+				8C9FA55E183AC5FE000AEBC9 /* MKMapView+Additions.m */,
+				8C9FA55F183AC5FE000AEBC9 /* MKMapView+DelegateWrappers.h */,
+				8C9FA560183AC5FE000AEBC9 /* MKMapView+DelegateWrappers.m */,
+				8C9FA561183AC5FE000AEBC9 /* MKMapView+Private.h */,
+				8C9FA562183AC5FE000AEBC9 /* MKMapView+Private.m */,
+				8C9FA563183AC5FE000AEBC9 /* MKMapView+WebViewIntegration.h */,
+				8C9FA564183AC5FE000AEBC9 /* MKMapView+WebViewIntegration.m */,
+				8C9FA565183AC5FE000AEBC9 /* MKMapView.h */,
+				8C9FA566183AC5FE000AEBC9 /* MKMapView.m */,
+				8C9FA567183AC5FE000AEBC9 /* MKMultiPoint.h */,
+				8C9FA568183AC5FE000AEBC9 /* MKMultiPoint.m */,
+				8C9FA569183AC5FE000AEBC9 /* MKOverlay.h */,
+				8C9FA56A183AC5FE000AEBC9 /* MKOverlayPathView.h */,
+				8C9FA56B183AC5FE000AEBC9 /* MKOverlayPathView.m */,
+				8C9FA56C183AC5FE000AEBC9 /* MKOverlayView.h */,
+				8C9FA56D183AC5FE000AEBC9 /* MKOverlayView.m */,
+				8C9FA56E183AC5FE000AEBC9 /* MKPinAnnotationView.h */,
+				8C9FA56F183AC5FE000AEBC9 /* MKPinAnnotationView.m */,
+				8C9FA570183AC5FE000AEBC9 /* MKPlacemark+Private.h */,
+				8C9FA571183AC5FE000AEBC9 /* MKPlacemark+Private.m */,
+				8C9FA572183AC5FE000AEBC9 /* MKPlacemark.h */,
+				8C9FA573183AC5FE000AEBC9 /* MKPlacemark.m */,
+				8C9FA574183AC5FE000AEBC9 /* MKPointAnnotation.h */,
+				8C9FA575183AC5FE000AEBC9 /* MKPointAnnotation.m */,
+				8C9FA576183AC5FE000AEBC9 /* MKPolygon.h */,
+				8C9FA577183AC5FE000AEBC9 /* MKPolygon.m */,
+				8C9FA578183AC5FE000AEBC9 /* MKPolygonView.h */,
+				8C9FA579183AC5FE000AEBC9 /* MKPolygonView.m */,
+				8C9FA57A183AC5FE000AEBC9 /* MKPolyline.h */,
+				8C9FA57B183AC5FE000AEBC9 /* MKPolyline.m */,
+				8C9FA57C183AC5FE000AEBC9 /* MKPolylineView.h */,
+				8C9FA57D183AC5FE000AEBC9 /* MKPolylineView.m */,
+				8C9FA57E183AC5FE000AEBC9 /* MKReverseGeocoder.h */,
+				8C9FA57F183AC5FE000AEBC9 /* MKReverseGeocoder.m */,
+				8C9FA580183AC5FE000AEBC9 /* MKShape.h */,
+				8C9FA581183AC5FE000AEBC9 /* MKShape.m */,
+				8C9FA582183AC5FE000AEBC9 /* MKTypes.h */,
+				8C9FA583183AC5FE000AEBC9 /* MKUserLocation+Private.h */,
+				8C9FA584183AC5FE000AEBC9 /* MKUserLocation+Private.m */,
+				8C9FA585183AC5FE000AEBC9 /* MKUserLocation.h */,
+				8C9FA586183AC5FE000AEBC9 /* MKUserLocation.m */,
+				8C9FA587183AC5FE000AEBC9 /* MKView.h */,
+				8C9FA588183AC5FE000AEBC9 /* MKView.m */,
+				8C9FA589183AC5FE000AEBC9 /* MKWebView.h */,
+				8C9FA58A183AC5FE000AEBC9 /* MKWebView.m */,
+				8C9FA58B183AC5FE000AEBC9 /* NSColor+Additions.h */,
+				8C9FA58C183AC5FE000AEBC9 /* NSColor+Additions.m */,
+				8C9FA58D183AC5FE000AEBC9 /* Third Party */,
+			);
+			path = MacMapKit;
+			sourceTree = SOURCE_ROOT;
+		};
+		8C9FA58D183AC5FE000AEBC9 /* Third Party */ = {
+			isa = PBXGroup;
+			children = (
+				8C9FA58E183AC5FE000AEBC9 /* SBJSON */,
+			);
+			path = "Third Party";
+			sourceTree = "<group>";
+		};
+		8C9FA58E183AC5FE000AEBC9 /* SBJSON */ = {
+			isa = PBXGroup;
+			children = (
+				8C9FA58F183AC5FE000AEBC9 /* JSON.h */,
+				8C9FA590183AC5FE000AEBC9 /* NSObject+SBJSON.h */,
+				8C9FA591183AC5FE000AEBC9 /* NSObject+SBJSON.m */,
+				8C9FA592183AC5FE000AEBC9 /* NSString+SBJSON.h */,
+				8C9FA593183AC5FE000AEBC9 /* NSString+SBJSON.m */,
+				8C9FA594183AC5FE000AEBC9 /* SBJSON.h */,
+				8C9FA595183AC5FE000AEBC9 /* SBJSON.m */,
+				8C9FA596183AC5FE000AEBC9 /* SBJsonBase.h */,
+				8C9FA597183AC5FE000AEBC9 /* SBJsonBase.m */,
+				8C9FA598183AC5FE000AEBC9 /* SBJsonParser.h */,
+				8C9FA599183AC5FE000AEBC9 /* SBJsonParser.m */,
+				8C9FA59A183AC5FE000AEBC9 /* SBJsonWriter.h */,
+				8C9FA59B183AC5FE000AEBC9 /* SBJsonWriter.m */,
+			);
+			path = SBJSON;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1374,6 +1583,9 @@
 								enabled = 1;
 							};
 						};
+					};
+					8C28605917308566009A0B35 = {
+						DevelopmentTeam = EQRQCAG846;
 					};
 				};
 			};
@@ -1729,6 +1941,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C28605B17308566009A0B35 /* main.m in Sources */,
+				8C9FA5BC183AC5FE000AEBC9 /* SBJsonWriter.m in Sources */,
 				8C28605C17308566009A0B35 /* PIXAppDelegate.m in Sources */,
 				8C28605D17308566009A0B35 /* PIXMainWindowController.m in Sources */,
 				8C28605E17308566009A0B35 /* PIXInfoWindowController.m in Sources */,
@@ -1739,25 +1952,42 @@
 				8C28606317308566009A0B35 /* PIXSidebarViewController.m in Sources */,
 				8C28606417308566009A0B35 /* PIXSidebarTableCellView.m in Sources */,
 				8C28606517308566009A0B35 /* SquareImageView.m in Sources */,
+				8C9FA5AB183AC5FE000AEBC9 /* MKPointAnnotation.m in Sources */,
 				8C28606617308566009A0B35 /* PIXPageViewController.m in Sources */,
 				8C28606717308566009A0B35 /* PIXImageBrowserViewController.m in Sources */,
+				8C9FA59E183AC5FE000AEBC9 /* MKCircleView.m in Sources */,
+				8C9FA5A5183AC5FE000AEBC9 /* MKMultiPoint.m in Sources */,
 				8C28606817308566009A0B35 /* PIXImageBrowserView.m in Sources */,
 				8C28606917308566009A0B35 /* PIXImageBrowserCell.m in Sources */,
+				8C9FA5A1183AC5FE000AEBC9 /* MKMapView+DelegateWrappers.m in Sources */,
 				8C28606A17308566009A0B35 /* AutoSizingImageView.m in Sources */,
 				8C28606B17308566009A0B35 /* PIXPageView.m in Sources */,
+				8C9FA5BB183AC5FE000AEBC9 /* SBJsonParser.m in Sources */,
+				8C9FA59D183AC5FE000AEBC9 /* MKCircle.m in Sources */,
+				8C9FA5B7183AC5FE000AEBC9 /* NSObject+SBJSON.m in Sources */,
+				8C9FA5AF183AC5FE000AEBC9 /* MKPolylineView.m in Sources */,
 				8C28606C17308566009A0B35 /* PIXImageViewController.m in Sources */,
 				8C28606D17308566009A0B35 /* PIXModifierSwitchedEvent.m in Sources */,
+				8C9FA5B6183AC5FE000AEBC9 /* NSColor+Additions.m in Sources */,
 				8C28606E17308566009A0B35 /* PIXDataModel.xcdatamodeld in Sources */,
+				8C9FA59C183AC5FE000AEBC9 /* MKAnnotationView.m in Sources */,
 				8C28607017308566009A0B35 /* PIXPhoto.m in Sources */,
+				8C9FA5A4183AC5FE000AEBC9 /* MKMapView.m in Sources */,
 				8C28607117308566009A0B35 /* PIXAccount.m in Sources */,
+				8C9FA5B2183AC5FE000AEBC9 /* MKUserLocation+Private.m in Sources */,
+				8C9FA5A9183AC5FE000AEBC9 /* MKPlacemark+Private.m in Sources */,
+				8C9FA5B1183AC5FE000AEBC9 /* MKShape.m in Sources */,
 				8C28607217308566009A0B35 /* GetPathsOperation.m in Sources */,
 				8C28607317308566009A0B35 /* LoadOperation.m in Sources */,
 				8C28607417308566009A0B35 /* MakeThumbnailOperation.m in Sources */,
 				8C28607517308566009A0B35 /* PIXAlbumGridViewController.m in Sources */,
 				8C28607617308566009A0B35 /* CNGridView.m in Sources */,
 				8C28607717308566009A0B35 /* CNGridViewItem.m in Sources */,
+				8C9FA5A0183AC5FE000AEBC9 /* MKMapView+Additions.m in Sources */,
 				8C28607817308566009A0B35 /* CNGridViewItemLayout.m in Sources */,
+				8C9FA5B8183AC5FE000AEBC9 /* NSString+SBJSON.m in Sources */,
 				8C28607917308566009A0B35 /* NSColor+CNGridViewPalette.m in Sources */,
+				8C9FA5A2183AC5FE000AEBC9 /* MKMapView+Private.m in Sources */,
 				8C28607A17308566009A0B35 /* NSView+CNGridView.m in Sources */,
 				8C28607B17308566009A0B35 /* PIXAlbumGridViewItem.m in Sources */,
 				8C28607C17308566009A0B35 /* PIXGridViewItemLayout.m in Sources */,
@@ -1766,9 +1996,13 @@
 				8C28607F17308566009A0B35 /* PIXGridViewItem.m in Sources */,
 				8C28608017308566009A0B35 /* PIXPhotoGridViewItem.m in Sources */,
 				8C28608117308566009A0B35 /* PIXLoadAlbumOperation.m in Sources */,
+				8C9FA5B9183AC5FE000AEBC9 /* SBJSON.m in Sources */,
+				8C9FA5B3183AC5FE000AEBC9 /* MKUserLocation.m in Sources */,
+				8C9FA5B0183AC5FE000AEBC9 /* MKReverseGeocoder.m in Sources */,
 				8C28608217308566009A0B35 /* PIXGetAlbumPathsOperation.m in Sources */,
 				8C28608317308566009A0B35 /* GeneralPreferencesViewController.m in Sources */,
 				8C28608417308566009A0B35 /* AdvancedPreferencesViewController.m in Sources */,
+				8C9FA5AC183AC5FE000AEBC9 /* MKPolygon.m in Sources */,
 				8C28608517308566009A0B35 /* MASPreferencesWindowController.m in Sources */,
 				8C28608617308566009A0B35 /* DebugPreferencesViewController.m in Sources */,
 				8C28608717308566009A0B35 /* PIXGradientBarView.m in Sources */,
@@ -1780,30 +2014,41 @@
 				8C28608D17308566009A0B35 /* PIXCustomButton.m in Sources */,
 				8C28608E17308566009A0B35 /* PIXCustomShareSheetViewController.m in Sources */,
 				8C28608F17308566009A0B35 /* PIXFileParser.m in Sources */,
+				8C9FA5A6183AC5FE000AEBC9 /* MKOverlayPathView.m in Sources */,
+				8C9FA5A3183AC5FE000AEBC9 /* MKMapView+WebViewIntegration.m in Sources */,
 				8C28609017308566009A0B35 /* PIXSidebarClipView.m in Sources */,
+				8C9FA5A7183AC5FE000AEBC9 /* MKOverlayView.m in Sources */,
 				8C28609117308566009A0B35 /* PIXSidebarScrollView.m in Sources */,
 				8C28609217308566009A0B35 /* PIXMiniExifViewController.m in Sources */,
 				8C28609317308566009A0B35 /* PIXExifBGView.m in Sources */,
 				8C28609417308566009A0B35 /* LeapObjectiveC.mm in Sources */,
 				8C28609517308566009A0B35 /* PIXLeapInputManager.m in Sources */,
+				8C9FA5A8183AC5FE000AEBC9 /* MKPinAnnotationView.m in Sources */,
 				8C28609617308566009A0B35 /* PIXSelectionLayer.m in Sources */,
 				8C28609717308566009A0B35 /* NSBezierPath+pathUtilities.m in Sources */,
 				8C28609817308566009A0B35 /* PIXPageHUDView.m in Sources */,
 				8C28609917308566009A0B35 /* PIXPageHUDWindow.m in Sources */,
 				8C28609A17308566009A0B35 /* PIXInfoPanelView.m in Sources */,
+				8C9FA5B5183AC5FE000AEBC9 /* MKWebView.m in Sources */,
 				8C28609B17308566009A0B35 /* PIXRoundRectView.m in Sources */,
+				8C9FA5AD183AC5FE000AEBC9 /* MKPolygonView.m in Sources */,
+				8C9FA59F183AC5FE000AEBC9 /* MKGeocoder.m in Sources */,
 				8C28609C17308566009A0B35 /* PIXShareManager.m in Sources */,
 				8C28609D17308566009A0B35 /* PIXInfoPanelViewController.m in Sources */,
 				8C28609E17308566009A0B35 /* PIXSlideshowOptonsViewController.m in Sources */,
+				8C9FA5B4183AC5FE000AEBC9 /* MKView.m in Sources */,
 				8C28609F17308566009A0B35 /* PIXFileTextField.m in Sources */,
 				8C2860A017308566009A0B35 /* PIXOutlineView.m in Sources */,
 				8C2860A117308566009A0B35 /* PIXRoundedProgressIndicator.m in Sources */,
+				8C9FA5AA183AC5FE000AEBC9 /* MKPlacemark.m in Sources */,
 				8C2860A217308566009A0B35 /* PIXHUDMessageController.m in Sources */,
 				8C2860A317308566009A0B35 /* PIXLeapTutorialWindowController.m in Sources */,
+				8C9FA5AE183AC5FE000AEBC9 /* MKPolyline.m in Sources */,
 				8C2860A417308566009A0B35 /* PIXAboutWindowController.m in Sources */,
 				8C2860A517308566009A0B35 /* PIXTransitionSetup.m in Sources */,
 				8CA459D8174E7FD9002BF431 /* PIXProgressWindowController.m in Sources */,
 				8CDD1AE0177259B700EB6E63 /* PIXSeperatedSpinnerView.m in Sources */,
+				8C9FA5BA183AC5FE000AEBC9 /* SBJsonBase.m in Sources */,
 				1D77F3751795EA2300FCF0F5 /* PIXVideoViewController.m in Sources */,
 				1DCD7B2217987A5000DF9478 /* PIXVideoImageOverlayView.m in Sources */,
 				1D6C23EF179882AA00EC34F5 /* PIXPlayVideoHUDWindow.m in Sources */,
@@ -1969,7 +2214,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = UnboundTrial.entitlements;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1982,6 +2227,7 @@
 					"ENABLE_SPARKLE=1",
 					"TRIAL_MODE=1",
 					"$(inherited)",
+					"USE_OLD_MAPS=1",
 				);
 				INFOPLIST_FILE = "UnboundApp/UnboundTrial-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
@@ -1989,7 +2235,9 @@
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
 					"\"$(SRCROOT)/UnboundApp/MapKit.framework\"/**",
 				);
+				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_NAME = Unbound;
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2001,7 +2249,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = UnboundTrial.entitlements;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2020,6 +2268,7 @@
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
 					"\"$(SRCROOT)/UnboundApp/MapKit.framework\"/**",
 				);
+				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_NAME = Unbound;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;

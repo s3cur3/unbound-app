@@ -7,7 +7,13 @@
 //
 
 #import "PIXInfoPanelViewController.h"
+
+#ifdef USE_OLD_MAPS
+#import "MapKit.h"
+#else
 #import <MapKit/MapKit.h>
+#endif
+
 #import "PIXPhoto.h"
 #import "PIXPageViewController.h"
 #import "PIXFileManager.h"
@@ -173,15 +179,21 @@
         [self.mapView removeAnnotations:self.mapView.annotations];
         [self.mapView addAnnotation:self.photo];
         
-        //[self.mapView setCenterCoordinate:[self.photo coordinate] animated:YES];
         
+    
+#ifdef USE_OLD_MAPS
+        
+        [self.mapView setCenterCoordinate:[self.photo coordinate] animated:YES];
+    
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"MapViewAdditions" ofType:@"css"];
+        [self.mapView addStylesheetTag:path];
+        
+        
+#else
         [self.mapView setShowsZoomControls:YES];
-        
-        
         [self.mapView setRegion:MKCoordinateRegionMake([self.photo coordinate], MKCoordinateSpanMake(1.0, 1.0)) animated:YES];
+#endif
         
-        //NSString *path = [[NSBundle mainBundle] pathForResource:@"MapViewAdditions" ofType:@"css"];
-        //[self.mapView addStylesheetTag:path];
         
     }
 }
