@@ -244,11 +244,16 @@ static NSString *kContentTitleKey, *kContentImageKey;
     
     NSManagedObject *object = [itemsToDelete lastObject];
     NSString *objectType = @"Item";
+    
+    NSString * suppressKey = nil;
+    
     if([object isKindOfClass:[PIXPhoto class]])
     {
         objectType = PHOTO;
+        suppressKey = @"PIX_supressDeleteWarning";
     } else if([object isKindOfClass:[PIXAlbum class]]) {
         objectType = ALBUM;
+        suppressKey = @"PIX_supressAlbumDeleteWarning";
     }
     if([self.selectedItems count] > 1)
     {
@@ -260,7 +265,32 @@ static NSString *kContentTitleKey, *kContentImageKey;
     NSString *warningTitle = [NSString stringWithFormat:@"Delete %@?", deleteString];
     NSString *warningButtonConfirm = [NSString stringWithFormat:@"Delete %@", deleteString];
     NSString *warningMessage = [NSString stringWithFormat:@"The %@ will be deleted from your file system and moved to the trash.\n\nAre you sure you want to continue?", deleteString.lowercaseString];
-    if (NSRunAlertPanel(warningTitle, warningMessage, warningButtonConfirm, @"Cancel", nil) == NSAlertDefaultReturn) {
+    
+    
+    NSAlert *alert = nil;
+    
+    
+    
+    BOOL suppressAlert = [[NSUserDefaults standardUserDefaults] boolForKey:suppressKey];
+    
+    if(!suppressAlert)
+    {
+        alert = [[NSAlert alloc] init];
+        [alert setMessageText:warningTitle];
+        [alert addButtonWithTitle:warningButtonConfirm];
+        [alert addButtonWithTitle:@"Cancel"];
+        [alert setInformativeText:warningMessage];
+        [alert setShowsSuppressionButton:YES];
+        [[alert suppressionButton] setTitle:@"Don't warn me again."];
+    }
+    
+    if (suppressAlert || [alert runModal] == NSAlertFirstButtonReturn) {
+        
+        if ([[alert suppressionButton] state] == NSOnState) {
+            // Suppress this alert from now on.
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:suppressKey];
+        }
+
         
         if ([[itemsToDelete lastObject] class] == [PIXAlbum class]) {
             [[PIXFileManager sharedInstance] recycleAlbums:itemsToDelete];
