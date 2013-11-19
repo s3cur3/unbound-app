@@ -386,8 +386,10 @@ static NSString *const kItemsKey = @"photos";
         // not sure if we need to send this. the all albums refresh is always sent after this
         //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
         
-        
+        // I don't think we need to write unbound files unless we're saving captions now (only used on dropbox anyway)
+        // I've commented this out to see if it's faster on initial scan
         //[self updateUnboundFileinBackground];
+        
         [self fixCoverAndSubtitle];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:AlbumStackDidChangeNotification object:self];
