@@ -814,7 +814,7 @@
                 return;
             }
             
-            if(pressedUnichar == '') // f should togge fullscreen
+            if(pressedUnichar == '') // delete shoudl delete items
             {
                 [self deleteItems:nil];
                 return;

@@ -1205,9 +1205,6 @@
 		1D0834F5167D63E5003D557A /* PageView */ = {
 			isa = PBXGroup;
 			children = (
-				1D7BDD9817A02E0100E2CD16 /* AutoSizingVideoView.h */,
-				1D7BDD9917A02E0100E2CD16 /* AutoSizingVideoView.m */,
-				1D77F36F1795DC0C00FCF0F5 /* videoview.xib */,
 				1D23CC151720604E00C7FF70 /* PIXTransitionSetup.m */,
 				1D0834F8167D6478003D557A /* PIXPageViewController.h */,
 				1D0834F9167D6478003D557A /* PIXPageViewController.m */,
@@ -1235,6 +1232,9 @@
 				1D77F3731795EA2200FCF0F5 /* PIXVideoViewController.m */,
 				1DCD7B1F17987A5000DF9478 /* PIXVideoImageOverlayView.h */,
 				1DCD7B2017987A5000DF9478 /* PIXVideoImageOverlayView.m */,
+				1D7BDD9817A02E0100E2CD16 /* AutoSizingVideoView.h */,
+				1D7BDD9917A02E0100E2CD16 /* AutoSizingVideoView.m */,
+				1D77F36F1795DC0C00FCF0F5 /* videoview.xib */,
 				1D6C23EC179882AA00EC34F5 /* PIXPlayVideoHUDWindow.h */,
 				1D6C23ED179882AA00EC34F5 /* PIXPlayVideoHUDWindow.m */,
 			);

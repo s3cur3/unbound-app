@@ -72,7 +72,7 @@
         //DLog(@"movieIsPlaying is YES");
         return;
     } else {
-        PIXPageViewController *aPageVC = (PIXPageViewController *)[[theEvent window] firstResponder];
+        //PIXPageViewController *aPageVC = (PIXPageViewController *)[[theEvent window] firstResponder];
         DLog(@"nextResponder : %@", self.nextResponder);
         [self.nextResponder scrollWheel:theEvent];
     }
@@ -81,5 +81,11 @@
 - (NSMenu *)menuForEvent:(NSEvent *)theEvent {DLog(@"%@", theEvent); return nil; }
 - (BOOL)acceptsFirstResponder { return NO; }
 
+
+// disable keyboard control of quicktime view
+- (BOOL)performKeyEquivalent:(NSEvent *)theEvent
+{
+    return NO;
+}
 
 @end

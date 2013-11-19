@@ -191,7 +191,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1094"
             endingLineNumber = "1094"
-            landmarkName = "-updateAlbum:"
+            landmarkName = "-tryFadeControls"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -207,7 +207,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1065"
             endingLineNumber = "1065"
-            landmarkName = "-updateData"
+            landmarkName = "-mouseExited:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -265,7 +265,7 @@
                   symbolName = "-[CNGridView setItemSize:]"
                   moduleName = "Unbound"
                   urlString = "file:///Users/scottsykora/Documents/Docs/WebAlbums/code/unbound_osx/UnboundApp/UnboundApp/CNGridView/CNGridView.m"
-                  timestampString = "406591403.753519"
+                  timestampString = "406593419.970285"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "259"
@@ -279,7 +279,7 @@
                   symbolName = "-[CNGridView setItemSize:]"
                   moduleName = "Unbound"
                   urlString = "file:///Users/scottsykora/Documents/Docs/WebAlbums/code/unbound_osx/UnboundApp/UnboundApp/CNGridView/CNGridView.m"
-                  timestampString = "406591403.75371"
+                  timestampString = "406593419.970526"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "259"
@@ -344,6 +344,54 @@
             startingLineNumber = "479"
             endingLineNumber = "479"
             landmarkName = "-writeUnboundFile:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "UnboundApp/PIXPageViewController.m"
+            timestampString = "406591806.180093"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "804"
+            endingLineNumber = "804"
+            landmarkName = "-keyDown:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "UnboundApp/AutoSizingImageView.m"
+            timestampString = "406591819.415459"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
+            landmarkName = "-keyDown:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "UnboundApp/AutoSizingVideoView.m"
+            timestampString = "406592738.553479"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "-mouseDown:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

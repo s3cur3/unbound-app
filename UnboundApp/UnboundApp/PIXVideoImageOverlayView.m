@@ -140,6 +140,8 @@
 	//[textString drawAtPoint:NSMakePoint(50,5)];
 }
 
+
+
 //////////
 //
 // dealloc

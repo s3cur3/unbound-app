@@ -88,16 +88,6 @@
     [self.delegate keyDown:theEvent];
 }
 
--(void)deleteForward:(id)sender
-{
-    
-}
-
--(void)deleteBackward:(id)sender
-{
-    
-}
-
 -(void)setImage:(NSImage *)newImage
 {
     if(newImage == nil)
