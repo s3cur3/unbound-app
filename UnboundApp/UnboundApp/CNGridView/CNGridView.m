@@ -108,6 +108,9 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     BOOL mouseHasDragged;
     BOOL abortSelection;
 }
+
+@property CGRect overdrawRect;
+
 - (void)setupDefaults;
 - (void)updateVisibleRect;
 - (void)refreshGridViewAnimated:(BOOL)animated;
@@ -201,12 +204,14 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
     [[self enclosingScrollView] setDrawsBackground:YES];
 
+    
     NSClipView *clipView = [[self enclosingScrollView] contentView];
     [clipView setPostsBoundsChangedNotifications:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateVisibleRect)
                                                  name:NSViewBoundsDidChangeNotification
                                                object:clipView];
+    
     
     
     [self setTranslatesAutoresizingMaskIntoConstraints:YES];
@@ -431,9 +436,24 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     }
 }
 
+// this updates the rectangle needed for responsive scrolling
+- (void)prepareContentInRect:(NSRect)rect
+{
+    [super prepareContentInRect:rect];
+    
+    if(!CGRectEqualToRect(rect, self.overdrawRect))
+    {
+        [self updateVisibleRect];
+    }
+}
+
 - (NSRange)visibleItemRange
 {
     NSRect clippedRect  = [self clippedRect];
+    
+    
+    
+    
     NSUInteger columns  = [self columnsInGridView];
     NSUInteger rows     = [self visibleRowsInGridView];
 
@@ -492,6 +512,16 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
 - (NSRect)clippedRect
 {
+    if([self respondsToSelector:@selector(preparedContentRect)])
+    {
+        CGRect prepped = [self preparedContentRect];
+        
+        if(prepped.size.width == self.bounds.size.width)
+        {
+            return prepped;
+        }
+    }
+    
     return [[[self enclosingScrollView] contentView] bounds];
 }
 

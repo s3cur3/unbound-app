@@ -1099,7 +1099,7 @@
 		8C9FA5CB183AD536000AEBC9 /* Release Notes.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = "Release Notes.rtf"; sourceTree = "<group>"; };
 		8C9FA5CC183AD536000AEBC9 /* Stylesheet.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = Stylesheet.css; sourceTree = "<group>"; };
 		8C9FA5CD183AD536000AEBC9 /* TransparentPixel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TransparentPixel.png; sourceTree = "<group>"; };
-		8C9FA6D8183AD5A4000AEBC9 /* Unbound Trial copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unbound Trial copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C9FA6D8183AD5A4000AEBC9 /* Unbound.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unbound.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C9FA6D9183AD5A5000AEBC9 /* Unbound Trial copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Unbound Trial copy-Info.plist"; path = "/Users/scottsykora/Documents/Docs/WebAlbums/code/unbound_osx/UnboundApp/Unbound Trial copy-Info.plist"; sourceTree = "<absolute>"; };
 		8CA459CF174D68A1002BF431 /* PIXAccount.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PIXAccount.h; sourceTree = "<group>"; };
 		8CA9545E1756A5AD0016AE23 /* leapnotconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leapnotconnected.png; sourceTree = "<group>"; };
@@ -1516,7 +1516,7 @@
 			children = (
 				1DB2F84A167ABE87008AC0F7 /* Unbound.app */,
 				8C28611B17308566009A0B35 /* Unbound.app */,
-				8C9FA6D8183AD5A4000AEBC9 /* Unbound Trial copy.app */,
+				8C9FA6D8183AD5A4000AEBC9 /* Unbound.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1910,7 +1910,7 @@
 			);
 			name = "Unbound Non-MAS";
 			productName = UnboundApp;
-			productReference = 8C9FA6D8183AD5A4000AEBC9 /* Unbound Trial copy.app */;
+			productReference = 8C9FA6D8183AD5A4000AEBC9 /* Unbound.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -2911,7 +2911,7 @@
 					"\"$(SRCROOT)/UnboundApp/MapKit.framework\"/**",
 				);
 				OTHER_CODE_SIGN_FLAGS = "--deep";
-				PRODUCT_NAME = "Unbound Trial copy";
+				PRODUCT_NAME = Unbound;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2941,7 +2941,7 @@
 					"\"$(SRCROOT)/UnboundApp/MapKit.framework\"/**",
 				);
 				OTHER_CODE_SIGN_FLAGS = "--deep";
-				PRODUCT_NAME = "Unbound Trial copy";
+				PRODUCT_NAME = Unbound;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};

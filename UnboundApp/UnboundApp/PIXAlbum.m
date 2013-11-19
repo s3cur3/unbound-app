@@ -387,7 +387,7 @@ static NSString *const kItemsKey = @"photos";
         //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
         
         
-        [self updateUnboundFileinBackground];
+        //[self updateUnboundFileinBackground];
         [self fixCoverAndSubtitle];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:AlbumStackDidChangeNotification object:self];
