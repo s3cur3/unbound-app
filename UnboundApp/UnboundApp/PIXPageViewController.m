@@ -996,7 +996,11 @@
         
         NSArray *itemsToDelete = [NSArray arrayWithObject:aPhoto];
 
+        NSUInteger currentIndex = [self.pageController selectedIndex];
+        
         [[PIXFileManager sharedInstance] recyclePhotos:itemsToDelete];
+        
+        [self.pageController setSelectedIndex:currentIndex];
         
     } else {
         // User clicked cancel, they do not want to delete the files
@@ -1112,7 +1116,12 @@
     if ([self.pagerData count] > 0) {
         [self.pageController setArrangedObjects:self.pagerData];
         NSInteger index = [self.album.sortedPhotos indexOfObject:self.initialSelectedObject];
-        [self.pageController setSelectedIndex:index];
+        
+        if(index > 0 && index < [self.pagerData count])
+        {
+            [self.pageController setSelectedIndex:index];
+        }
+        
         [self performSelector:@selector(startPreloadForController:) withObject:self.pageController afterDelay:0.0f];
     }
 }

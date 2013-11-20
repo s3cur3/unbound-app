@@ -330,7 +330,10 @@ typedef NSUInteger PIXOverwriteStrategy;
     
     [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] save:nil];
     
-    
+    for(PIXAlbum * album in albumsToUpdate)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:album userInfo:nil];
+    }
     
     
     
