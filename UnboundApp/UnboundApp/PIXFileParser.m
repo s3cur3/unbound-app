@@ -1505,7 +1505,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                         NSLog(@"Error creating url from saved bookmark. Bookmark is stale.");
                     }
                     
-                    if(url && !error && !stale)
+                    if(url && !error)
                     {
                         [urlArray addObject:url];
                     }

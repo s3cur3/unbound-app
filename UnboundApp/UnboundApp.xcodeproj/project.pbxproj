@@ -1934,6 +1934,13 @@
 					8C28605917308566009A0B35 = {
 						DevelopmentTeam = EQRQCAG846;
 					};
+					8C9FA5D9183AD5A4000AEBC9 = {
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
+					};
 				};
 			};
 			buildConfigurationList = 1DB2F844167ABE87008AC0F7 /* Build configuration list for PBXProject "UnboundApp" */;
