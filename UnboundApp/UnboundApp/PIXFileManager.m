@@ -1130,13 +1130,6 @@ typedef NSUInteger PIXOverwriteStrategy;
         
         [undoArray addObject:@{@"source" : undoSrc, @"destination" : undoDest}];
         
-        NSString *fullDestPath = [NSString stringWithFormat:@"%@/%@", dest, filename];
-        NSError *error = nil;
-        if (![[NSFileManager defaultManager] moveItemAtPath:src toPath:fullDestPath error:&error])
-        {
-            DLog(@"%@", error);
-            [[NSApplication sharedApplication] presentError:error];
-        }
         
         // if we have the source photo in the database update it now
         PIXPhoto * srcPhoto = [[[PIXFileParser sharedFileParser] fetchPhotosWithPaths:@[src]] lastObject];
@@ -1158,11 +1151,6 @@ typedef NSUInteger PIXOverwriteStrategy;
         }
     }
     
-//    for(PIXAlbum * anAlbum in changedAlbums)
-//    {
-//        [anAlbum flush];
-//    }
-    
     // save the context so the db is updated
     
     [context save:nil];
@@ -1175,21 +1163,45 @@ typedef NSUInteger PIXOverwriteStrategy;
     for(PIXAlbum * anAlbum in changedAlbums)
     {
         [anAlbum flush];
-        //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumStackDidChangeNotification object:self];
-        //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
     }
+    
+    // now do the actual file moves in the background
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        // move the files
+        for (id aDict in items)
+        {
+            NSString *src = [aDict valueForKey:@"source"];
+            NSString *dest = [aDict valueForKey:@"destination"];
+            NSString *filename = [src lastPathComponent];
+            
+            NSString *fullDestPath = [NSString stringWithFormat:@"%@/%@", dest, filename];
+            NSError *error = nil;
+            if (![[NSFileManager defaultManager] moveItemAtPath:src toPath:fullDestPath error:&error])
+            {
+                DLog(@"%@", error);
+                [[NSApplication sharedApplication] presentError:error];
+            }
+        }
+        
+        
+        // and re-scan the albums in case we screwed up
+        for (NSString *albumPath in albumPaths)
+        {
+            if (![albumPath isEqualToString:[self trashFolderPath]] && [self directoryIsSubpathOfObservedDirectories:albumPath]) {
+                [[PIXFileParser sharedFileParser] scanPath:albumPath withRecursion:PIXFileParserRecursionNone];
+            }
+        }
+        
+        NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
+        [undoManager registerUndoWithTarget:self selector:@selector(moveFiles:) object:undoArray];
+        [undoManager setActionName:@"Move Files"];
+    });
     
 
-    for (NSString *albumPath in albumPaths)
-    {
-        if (![albumPath isEqualToString:[self trashFolderPath]] && [self directoryIsSubpathOfObservedDirectories:albumPath]) {
-            [[PIXFileParser sharedFileParser] scanPath:albumPath withRecursion:PIXFileParserRecursionNone];
-        }
-    }
+   
     
-    NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
-    [undoManager registerUndoWithTarget:self selector:@selector(moveFiles:) object:undoArray];
-    [undoManager setActionName:@"Move Files"];
+
 }
 
 
