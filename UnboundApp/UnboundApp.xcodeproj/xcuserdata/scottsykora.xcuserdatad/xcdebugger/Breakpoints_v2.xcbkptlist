@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UnboundApp/PIXFileManager.m"
-            timestampString = "397954530.301756"
+            timestampString = "406599848.708759"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1139"
-            endingLineNumber = "1139"
+            startingLineNumber = "1151"
+            endingLineNumber = "1151"
             landmarkName = "-moveFiles:"
             landmarkType = "5">
          </BreakpointContent>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UnboundApp/PIXFileManager.m"
-            timestampString = "397954530.301756"
+            timestampString = "406599848.708759"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1669"
-            endingLineNumber = "1669"
+            startingLineNumber = "1681"
+            endingLineNumber = "1681"
             landmarkName = "-createAlbumAtPath:withName:"
             landmarkType = "5">
          </BreakpointContent>
@@ -265,7 +265,7 @@
                   symbolName = "-[CNGridView setItemSize:]"
                   moduleName = "Unbound"
                   urlString = "file:///Users/scottsykora/Documents/Docs/WebAlbums/code/unbound_osx/UnboundApp/UnboundApp/CNGridView/CNGridView.m"
-                  timestampString = "406593998.491567"
+                  timestampString = "406599848.742524"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "259"
@@ -279,7 +279,7 @@
                   symbolName = "-[CNGridView setItemSize:]"
                   moduleName = "Unbound"
                   urlString = "file:///Users/scottsykora/Documents/Docs/WebAlbums/code/unbound_osx/UnboundApp/UnboundApp/CNGridView/CNGridView.m"
-                  timestampString = "406593998.491737"
+                  timestampString = "406599848.742702"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "259"
@@ -324,7 +324,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             scope = "1"

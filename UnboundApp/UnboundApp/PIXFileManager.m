@@ -316,6 +316,24 @@ typedef NSUInteger PIXOverwriteStrategy;
     NSURL *failURL = [NSURL fileURLWithPath:@"/tmp/bafdlsjkfasfasdss.txt"];
     [urlsToDelete addObject:failURL];
 #endif
+    
+    // Delete the items from the db ahead of time (the actul file deletion will happen after a dispatch)
+    NSMutableSet *albumsToUpdate = [[NSMutableSet alloc] init];
+    
+    for (PIXPhoto *anItem in items)
+    {
+        [albumsToUpdate addObject:[(PIXPhoto *)anItem album]];
+        
+        // delete the photos from the database
+        [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] deleteObject:anItem];
+    }
+    
+    [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] save:nil];
+    
+    
+    
+    
+    
     DLog(@"About to recycle the following items : %@", urlsToDelete);
     [[NSWorkspace sharedWorkspace] recycleURLs:urlsToDelete completionHandler:^(NSDictionary *newURLs, NSError *error) {
         //
@@ -323,18 +341,7 @@ typedef NSUInteger PIXOverwriteStrategy;
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 
-                NSMutableSet *albumsToUpdate = [[NSMutableSet alloc] init];
-                
-                for (PIXPhoto *anItem in items)
-                {
-                    [albumsToUpdate addObject:[(PIXPhoto *)anItem album]];
-                    
-                    // delete the photos from the database                
-                    [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] deleteObject:anItem];
-                }
-                
-                [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] save:nil];
-                
+                // scan the paths just to make sure everything worked
                 for (PIXAlbum *anAlbum in albumsToUpdate)
                 {
                     [[PIXFileParser sharedFileParser] scanPath:anAlbum.path withRecursion:PIXFileParserRecursionNone];
@@ -368,6 +375,16 @@ typedef NSUInteger PIXOverwriteStrategy;
             if (itemDeletionCount == 0) {
                 //No items were deleted so no need to setup undo operation
                 //[[[PIXAppDelegate sharedAppDelegate] managedObjectContext] discardEditing];
+                
+                // rescan the albums so they're correct
+                for (PIXAlbum *anAlbum in albumsToUpdate)
+                {
+                    //[anAlbum updateAlbumBecausePhotosDidChange];
+                    [[PIXFileParser sharedFileParser] scanPath:anAlbum.path withRecursion:PIXFileParserRecursionNone];
+                    [anAlbum flush];
+                }
+                
+                
                 return;
             }
             
@@ -379,13 +396,8 @@ typedef NSUInteger PIXOverwriteStrategy;
                 NSString *aPhotoPath = [anItem path];
                 [photosToDelete addObject:aPhotoPath];
             }
-            NSArray *photosWithPaths = [[PIXFileParser sharedFileParser] fetchPhotosWithPaths:[photosToDelete allObjects]];
-            for (PIXPhoto *aPhoto in photosWithPaths)
-            {
-                [albumsToUpdate addObject:aPhoto.album];
-                [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] deleteObject:aPhoto];
-            }
 
+            // rescan the albums so they're correct
             for (PIXAlbum *anAlbum in albumsToUpdate)
             {
                 //[anAlbum updateAlbumBecausePhotosDidChange];
