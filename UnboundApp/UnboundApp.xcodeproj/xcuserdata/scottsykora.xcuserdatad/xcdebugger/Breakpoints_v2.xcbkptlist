@@ -36,11 +36,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UnboundApp/PIXFileParser.m"
-            timestampString = "406680706.957133"
+            timestampString = "406692891.987528"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1503"
-            endingLineNumber = "1503"
+            startingLineNumber = "1505"
+            endingLineNumber = "1505"
             landmarkName = "-sandboxScopeURLs"
             landmarkType = "5">
          </BreakpointContent>
@@ -52,12 +52,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UnboundApp/PIXFileParser.m"
-            timestampString = "406680926.122787"
+            timestampString = "406692891.987528"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1505"
-            endingLineNumber = "1505"
+            startingLineNumber = "1507"
+            endingLineNumber = "1507"
             landmarkName = "-sandboxScopeURLs"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "UnboundApp/PIXFileParser.m"
+            timestampString = "406693783.545808"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1694"
+            endingLineNumber = "1694"
+            landmarkName = "-userChooseFolderDialog"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

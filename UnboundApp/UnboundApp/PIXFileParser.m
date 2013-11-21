@@ -1488,6 +1488,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
         {
             NSMutableArray * urlArray = [NSMutableArray new];
             
+            BOOL bookMarksWereStale = NO;
+            
             for(NSData * bookmark in bookmarkArray)
             {
                 if([bookmark isKindOfClass:[NSData class]])
@@ -1495,7 +1497,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                     BOOL stale = NO;
                     NSError * error = nil;
                     NSURL * url = [NSURL URLByResolvingBookmarkData:bookmark
-                                                            options:NSURLBookmarkCreationWithSecurityScope
+                                                            options:NSURLBookmarkResolutionWithSecurityScope
                                                       relativeToURL:nil
                                                 bookmarkDataIsStale:&stale
                                                               error:&error];
@@ -1503,12 +1505,19 @@ NSDictionary * dictionaryForURL(NSURL * url)
                     if(stale)
                     {
                         NSLog(@"Error creating url from saved bookmark. Bookmark is stale.");
+                        bookMarksWereStale = YES;
                     }
                     
                     if(url && !error)
                     {
                         [urlArray addObject:url];
                     }
+                }
+                
+                // if any of the bookmarks were stale then update the saved bookmarks using the more recent urls
+                if(bookMarksWereStale)
+                {
+                    [self setSandboxScopeURLs:urlArray];
                 }
             }
             

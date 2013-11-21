@@ -310,7 +310,7 @@
 		8C5D757417015A5C0008CC00 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C5D757217015A5C0008CC00 /* pause.png */; };
 		8C5D757517015A5C0008CC00 /* pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C5D757317015A5C0008CC00 /* pause@2x.png */; };
 		8C68246B16F596BB00245F09 /* PIXSelectionLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68246A16F596BB00245F09 /* PIXSelectionLayer.m */; };
-		8C68246E16F599FD00245F09 /* NSBezierPath+pathUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68246D16F599FD00245F09 /* NSBezierPath+pathUtilities.m */; };
+		8C68246E16F599FD00245F09 /* NSBezierPath+pathUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68246D16F599FD00245F09 /* NSBezierPath+pathUtilities.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8C68247116F6850C00245F09 /* PIXPageHUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68247016F6850B00245F09 /* PIXPageHUDView.m */; };
 		8C68247416F6A75100245F09 /* PIXPageHUDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68247316F6A75000245F09 /* PIXPageHUDWindow.m */; };
 		8C68248316F8089400245F09 /* buttongrid_copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247516F8089400245F09 /* buttongrid_copy.png */; };
@@ -352,6 +352,52 @@
 		8C8EE93416CACA7900F16C49 /* ArchDirectoryObservationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE92F16CACA7900F16C49 /* ArchDirectoryObservationCenter.m */; };
 		8C8EE93516CACA7900F16C49 /* NSURL+DirectoryObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE93316CACA7900F16C49 /* NSURL+DirectoryObserver.m */; };
 		8C8F4354170534610040562D /* PIXFileTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8F4353170534610040562D /* PIXFileTextField.m */; };
+		8C94DFFA183DA6AE00827888 /* MKAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA555183AC5FE000AEBC9 /* MKAnnotationView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94DFFB183DA6AE00827888 /* MKCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA557183AC5FE000AEBC9 /* MKCircle.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94DFFC183DA6AE00827888 /* MKCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA559183AC5FE000AEBC9 /* MKCircleView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94DFFD183DA6AE00827888 /* MKGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA55B183AC5FE000AEBC9 /* MKGeocoder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94DFFE183DA6AE00827888 /* MKMapView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA55E183AC5FE000AEBC9 /* MKMapView+Additions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94DFFF183DA6AE00827888 /* MKMapView+DelegateWrappers.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA560183AC5FE000AEBC9 /* MKMapView+DelegateWrappers.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E000183DA6AE00827888 /* MKMapView+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA562183AC5FE000AEBC9 /* MKMapView+Private.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E001183DA6AE00827888 /* MKMapView+WebViewIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA564183AC5FE000AEBC9 /* MKMapView+WebViewIntegration.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E002183DA6AE00827888 /* MKMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA566183AC5FE000AEBC9 /* MKMapView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E003183DA6AE00827888 /* MKMultiPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA568183AC5FE000AEBC9 /* MKMultiPoint.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E004183DA6AE00827888 /* MKOverlayPathView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA56B183AC5FE000AEBC9 /* MKOverlayPathView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E005183DA6AE00827888 /* MKOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA56D183AC5FE000AEBC9 /* MKOverlayView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E006183DA6AE00827888 /* MKPinAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA56F183AC5FE000AEBC9 /* MKPinAnnotationView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E007183DA6AE00827888 /* MKPlacemark+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA571183AC5FE000AEBC9 /* MKPlacemark+Private.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E008183DA6AE00827888 /* MKPlacemark.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA573183AC5FE000AEBC9 /* MKPlacemark.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E009183DA6AE00827888 /* MKPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA575183AC5FE000AEBC9 /* MKPointAnnotation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E00A183DA6AE00827888 /* MKPolygon.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA577183AC5FE000AEBC9 /* MKPolygon.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E00B183DA6AE00827888 /* MKPolygonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA579183AC5FE000AEBC9 /* MKPolygonView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E00C183DA6AE00827888 /* MKPolyline.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA57B183AC5FE000AEBC9 /* MKPolyline.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E00D183DA6AE00827888 /* MKPolylineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA57D183AC5FE000AEBC9 /* MKPolylineView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E00E183DA6AE00827888 /* MKReverseGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA57F183AC5FE000AEBC9 /* MKReverseGeocoder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E00F183DA6AE00827888 /* MKShape.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA581183AC5FE000AEBC9 /* MKShape.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E010183DA6AE00827888 /* MKUserLocation+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA584183AC5FE000AEBC9 /* MKUserLocation+Private.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E011183DA6AE00827888 /* MKUserLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA586183AC5FE000AEBC9 /* MKUserLocation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E012183DA6AE00827888 /* MKView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA588183AC5FE000AEBC9 /* MKView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E013183DA6AE00827888 /* MKWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA58A183AC5FE000AEBC9 /* MKWebView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E014183DA6AE00827888 /* NSColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA58C183AC5FE000AEBC9 /* NSColor+Additions.m */; };
+		8C94E015183DA6B400827888 /* Animations.css in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5C3183AD536000AEBC9 /* Animations.css */; };
+		8C94E016183DA6B400827888 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5C4183AD536000AEBC9 /* License.rtf */; };
+		8C94E017183DA6B400827888 /* MapKit-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5C5183AD536000AEBC9 /* MapKit-Info.plist */; };
+		8C94E018183DA6B400827888 /* MapKit.html in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5C6183AD536000AEBC9 /* MapKit.html */; };
+		8C94E019183DA6B400827888 /* MarkerTest.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5C7183AD536000AEBC9 /* MarkerTest.png */; };
+		8C94E01A183DA6B400827888 /* MKPinAnnotationColorGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5C8183AD536000AEBC9 /* MKPinAnnotationColorGreen.png */; };
+		8C94E01B183DA6B400827888 /* MKPinAnnotationColorPurple.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5C9183AD536000AEBC9 /* MKPinAnnotationColorPurple.png */; };
+		8C94E01C183DA6B400827888 /* MKPinAnnotationColorRed.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5CA183AD536000AEBC9 /* MKPinAnnotationColorRed.png */; };
+		8C94E01D183DA6B400827888 /* Release Notes.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5CB183AD536000AEBC9 /* Release Notes.rtf */; };
+		8C94E01E183DA6B400827888 /* Stylesheet.css in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5CC183AD536000AEBC9 /* Stylesheet.css */; };
+		8C94E01F183DA6B400827888 /* TransparentPixel.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5CD183AD536000AEBC9 /* TransparentPixel.png */; };
+		8C94E020183DA6BF00827888 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA591183AC5FE000AEBC9 /* NSObject+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E021183DA6BF00827888 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA593183AC5FE000AEBC9 /* NSString+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E022183DA6BF00827888 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA595183AC5FE000AEBC9 /* SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E023183DA6BF00827888 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA597183AC5FE000AEBC9 /* SBJsonBase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E024183DA6BF00827888 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA599183AC5FE000AEBC9 /* SBJsonParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E025183DA6BF00827888 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA59B183AC5FE000AEBC9 /* SBJsonWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8C94E026183DA6D300827888 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C9FA5BD183ACB90000AEBC9 /* CoreLocation.framework */; };
+		8C94E027183DA6D800827888 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C9FA5BF183ACB98000AEBC9 /* WebKit.framework */; };
 		8C972CB41680FE8B00358913 /* PIXModifierSwitchedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */; };
 		8C9AA2B916FFE39500D989CA /* captionbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9AA2B716FFE39500D989CA /* captionbutton.png */; };
 		8C9AA2BA16FFE39500D989CA /* captionbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9AA2B816FFE39500D989CA /* captionbutton@2x.png */; };
@@ -698,7 +744,6 @@
 		8CFC13C116FD2B21004CA7D5 /* expand@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13BD16FD2B21004CA7D5 /* expand@2x.png */; };
 		8CFC13C416FD6111004CA7D5 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13C216FD6111004CA7D5 /* play.png */; };
 		8CFC13C516FD6111004CA7D5 /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13C316FD6111004CA7D5 /* play@2x.png */; };
-		8CFDF7661827123700809018 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CFDF7651827123700809018 /* MapKit.framework */; };
 		8CFDF768182716FD00809018 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CFDF767182716FD00809018 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -1157,11 +1202,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C94E027183DA6D800827888 /* WebKit.framework in Frameworks */,
+				8C94E026183DA6D300827888 /* CoreLocation.framework in Frameworks */,
 				8C14692F1714A5CC009ECCC5 /* QTKit.framework in Frameworks */,
 				8C53DFF216FB7CED008EF8B1 /* CoreFoundation.framework in Frameworks */,
 				1D4A1E2B167D2A4D00C9A895 /* Quartz.framework in Frameworks */,
 				1D4A1E08167C056D00C9A895 /* QuartzCore.framework in Frameworks */,
-				8CFDF7661827123700809018 /* MapKit.framework in Frameworks */,
 				1DB2F84F167ABE87008AC0F7 /* Cocoa.framework in Frameworks */,
 				8C031CD416E926F7009B7F38 /* libLeap.dylib in Frameworks */,
 			);
@@ -1973,14 +2019,17 @@
 				1D4A1DAE167AD93400C9A895 /* dark_bg.png in Resources */,
 				1D4A1DAF167AD93400C9A895 /* dark_bg@2X.png in Resources */,
 				1D4A1DBC167AD93400C9A895 /* nophoto.png in Resources */,
+				8C94E016183DA6B400827888 /* License.rtf in Resources */,
 				1D4A1DBD167AD93400C9A895 /* nophoto@2x.png in Resources */,
 				1D4A1DBE167AD93400C9A895 /* temp-portrait.jpg in Resources */,
+				8C94E01A183DA6B400827888 /* MKPinAnnotationColorGreen.png in Resources */,
 				1D4A1DBF167AD93400C9A895 /* temp-portrait@2x.jpg in Resources */,
 				1D4A1DC0167AD93400C9A895 /* temp.jpg in Resources */,
 				1D4A1DC1167AD93400C9A895 /* temp@2x.jpg in Resources */,
 				1D4A1DC4167ADA2400C9A895 /* PIXMainWindow.xib in Resources */,
 				1D4A1DD1167AE22A00C9A895 /* PIXInfoWindowController.xib in Resources */,
 				1D4A1E31167D2D8F00C9A895 /* PIXSplitViewController.xib in Resources */,
+				8C94E01C183DA6B400827888 /* MKPinAnnotationColorRed.png in Resources */,
 				1D4A1E37167D365900C9A895 /* PIXSidebarViewController.xib in Resources */,
 				1D0834FC167D6478003D557A /* PIXPageViewController.xib in Resources */,
 				1D083502167D6678003D557A /* PIXImageBrowserViewController.xib in Resources */,
@@ -2005,9 +2054,11 @@
 				8C68248716F8089400245F09 /* buttongrid_emaillink.png in Resources */,
 				8C68248816F8089400245F09 /* buttongrid_emaillink@2x.png in Resources */,
 				8C68248916F8089400245F09 /* buttongrid_facebook.png in Resources */,
+				8C94E015183DA6B400827888 /* Animations.css in Resources */,
 				8C68248A16F8089400245F09 /* buttongrid_facebook@2x.png in Resources */,
 				8C68248B16F8089400245F09 /* buttongrid_print.png in Resources */,
 				8C68248C16F8089400245F09 /* buttongrid_print@2x.png in Resources */,
+				8C94E01E183DA6B400827888 /* Stylesheet.css in Resources */,
 				8C68248D16F8089400245F09 /* buttongrid_share.png in Resources */,
 				8C68248E16F8089400245F09 /* buttongrid_share@2x.png in Resources */,
 				8C68248F16F8089400245F09 /* buttongrid_twitter.png in Resources */,
@@ -2022,18 +2073,22 @@
 				8C6A035418216566003A4D99 /* UnboundTrial-Info.plist in Resources */,
 				8CFC13BF16FD2B21004CA7D5 /* contract@2x.png in Resources */,
 				8CFC13C016FD2B21004CA7D5 /* expand.png in Resources */,
+				8C94E01D183DA6B400827888 /* Release Notes.rtf in Resources */,
 				8CFC13C116FD2B21004CA7D5 /* expand@2x.png in Resources */,
 				8CFC13C416FD6111004CA7D5 /* play.png in Resources */,
 				8CFC13C516FD6111004CA7D5 /* play@2x.png in Resources */,
 				8C9AA2B916FFE39500D989CA /* captionbutton.png in Resources */,
 				8C9AA2BA16FFE39500D989CA /* captionbutton@2x.png in Resources */,
+				8C94E017183DA6B400827888 /* MapKit-Info.plist in Resources */,
 				8C9AA2BF1700A5C100D989CA /* PIXSlideshowOptonsViewController.xib in Resources */,
 				8C5D757417015A5C0008CC00 /* pause.png in Resources */,
+				8C94E01B183DA6B400827888 /* MKPinAnnotationColorPurple.png in Resources */,
 				8C5D757517015A5C0008CC00 /* pause@2x.png in Resources */,
 				8C23026417056E6E001A5510 /* sortbutton.png in Resources */,
 				8C23026517056E6E001A5510 /* sortbutton@2x.png in Resources */,
 				8C23026817057400001A5510 /* addbutton.png in Resources */,
 				8C23026917057400001A5510 /* addbutton@2x.png in Resources */,
+				8C94E01F183DA6B400827888 /* TransparentPixel.png in Resources */,
 				8C72FE581712843B00AA72B0 /* preferences_dark_theme.png in Resources */,
 				8C72FE591712843B00AA72B0 /* preferences_light_theme.png in Resources */,
 				8C72FE6317134BEE00AA72B0 /* PIXHUDMessageController.xib in Resources */,
@@ -2059,6 +2114,7 @@
 				8CC94925171C92E900EC1431 /* success.png in Resources */,
 				8CC94926171C92E900EC1431 /* success@2x.png in Resources */,
 				8CC94928171CDC5E00EC1431 /* softtap.wav in Resources */,
+				8C94E019183DA6B400827888 /* MarkerTest.png in Resources */,
 				8CC9492D171DF00000EC1431 /* success-backward.png in Resources */,
 				8CC9492E171DF00000EC1431 /* success-backward@2x.png in Resources */,
 				8CC9492F171DF00000EC1431 /* success-forward.png in Resources */,
@@ -2070,6 +2126,7 @@
 				8C72089C1749B1720074705D /* PIXProgressWindowController.xib in Resources */,
 				8CA954601756A5AD0016AE23 /* leapnotconnected.png in Resources */,
 				8CA954611756A5AD0016AE23 /* leapnotconnected@2x.png in Resources */,
+				8C94E018183DA6B400827888 /* MapKit.html in Resources */,
 				1D77F3701795DC0D00FCF0F5 /* videoview.xib in Resources */,
 				1D368177179A5AA5004538FA /* playbutton-tinted.png in Resources */,
 				1D368179179A5AA5004538FA /* playbutton-tinted@2x.png in Resources */,
@@ -2349,6 +2406,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1DB2F85B167ABE87008AC0F7 /* main.m in Sources */,
+				8C94E025183DA6BF00827888 /* SBJsonWriter.m in Sources */,
 				1DB2F862167ABE87008AC0F7 /* PIXAppDelegate.m in Sources */,
 				1D4A1DCC167AE1A500C9A895 /* PIXMainWindowController.m in Sources */,
 				1D4A1DD0167AE22A00C9A895 /* PIXInfoWindowController.m in Sources */,
@@ -2359,25 +2417,42 @@
 				1D4A1E36167D365900C9A895 /* PIXSidebarViewController.m in Sources */,
 				1D4A1E3A167D36E100C9A895 /* PIXSidebarTableCellView.m in Sources */,
 				1D4A1E3D167D372600C9A895 /* SquareImageView.m in Sources */,
+				8C94E009183DA6AE00827888 /* MKPointAnnotation.m in Sources */,
 				1D0834FB167D6478003D557A /* PIXPageViewController.m in Sources */,
 				1D083501167D6678003D557A /* PIXImageBrowserViewController.m in Sources */,
+				8C94DFFC183DA6AE00827888 /* MKCircleView.m in Sources */,
+				8C94E003183DA6AE00827888 /* MKMultiPoint.m in Sources */,
 				1D083513167D785F003D557A /* PIXImageBrowserView.m in Sources */,
 				1D083516167D78AD003D557A /* PIXImageBrowserCell.m in Sources */,
+				8C94DFFF183DA6AE00827888 /* MKMapView+DelegateWrappers.m in Sources */,
 				1D083519167DCA71003D557A /* AutoSizingImageView.m in Sources */,
 				1D083520167E7C80003D557A /* PIXPageView.m in Sources */,
+				8C94E024183DA6BF00827888 /* SBJsonParser.m in Sources */,
+				8C94DFFB183DA6AE00827888 /* MKCircle.m in Sources */,
+				8C94E020183DA6BF00827888 /* NSObject+SBJSON.m in Sources */,
+				8C94E00D183DA6AE00827888 /* MKPolylineView.m in Sources */,
 				1D08352D167E8B2B003D557A /* PIXImageViewController.m in Sources */,
 				8C972CB41680FE8B00358913 /* PIXModifierSwitchedEvent.m in Sources */,
+				8C94E014183DA6AE00827888 /* NSColor+Additions.m in Sources */,
 				1DDEF823169D2D9F00C0D303 /* PIXDataModel.xcdatamodeld in Sources */,
+				8C94DFFA183DA6AE00827888 /* MKAnnotationView.m in Sources */,
 				1DDEF82E169D2FE800C0D303 /* PIXPhoto.m in Sources */,
+				8C94E002183DA6AE00827888 /* MKMapView.m in Sources */,
 				1DDEF830169D2FE800C0D303 /* PIXAccount.m in Sources */,
+				8C94E010183DA6AE00827888 /* MKUserLocation+Private.m in Sources */,
+				8C94E007183DA6AE00827888 /* MKPlacemark+Private.m in Sources */,
+				8C94E00F183DA6AE00827888 /* MKShape.m in Sources */,
 				1DDEF839169D34A400C0D303 /* GetPathsOperation.m in Sources */,
 				1DDEF83A169D34A400C0D303 /* LoadOperation.m in Sources */,
 				1DDEF843169D3CF300C0D303 /* MakeThumbnailOperation.m in Sources */,
 				8C249E6E16AB426A00CB97AF /* PIXAlbumGridViewController.m in Sources */,
 				8C249E7D16AB429E00CB97AF /* CNGridView.m in Sources */,
 				8C249E7E16AB429E00CB97AF /* CNGridViewItem.m in Sources */,
+				8C94DFFE183DA6AE00827888 /* MKMapView+Additions.m in Sources */,
 				8C249E7F16AB429E00CB97AF /* CNGridViewItemLayout.m in Sources */,
+				8C94E021183DA6BF00827888 /* NSString+SBJSON.m in Sources */,
 				8C249E8016AB429E00CB97AF /* NSColor+CNGridViewPalette.m in Sources */,
+				8C94E000183DA6AE00827888 /* MKMapView+Private.m in Sources */,
 				8C249E8116AB429E00CB97AF /* NSView+CNGridView.m in Sources */,
 				8C249E8616AB467100CB97AF /* PIXAlbumGridViewItem.m in Sources */,
 				1D8CD7E816AB4D220072D516 /* PIXGridViewItemLayout.m in Sources */,
@@ -2386,9 +2461,13 @@
 				8C249E9116AB8DF600CB97AF /* PIXGridViewItem.m in Sources */,
 				8C4B80E816B9D9FD00C7E8F4 /* PIXPhotoGridViewItem.m in Sources */,
 				1D5F9D5B16AEF4A3008F8C80 /* PIXLoadAlbumOperation.m in Sources */,
+				8C94E022183DA6BF00827888 /* SBJSON.m in Sources */,
+				8C94E011183DA6AE00827888 /* MKUserLocation.m in Sources */,
+				8C94E00E183DA6AE00827888 /* MKReverseGeocoder.m in Sources */,
 				1D5F9D5F16AEF815008F8C80 /* PIXGetAlbumPathsOperation.m in Sources */,
 				8C4B80FB16BB3D8A00C7E8F4 /* GeneralPreferencesViewController.m in Sources */,
 				8C4B80FD16BB3D8A00C7E8F4 /* AdvancedPreferencesViewController.m in Sources */,
+				8C94E00A183DA6AE00827888 /* MKPolygon.m in Sources */,
 				8CF2C5E416BB458900F906F1 /* MASPreferencesWindowController.m in Sources */,
 				8CE8F62616BD8C9E00DC6014 /* DebugPreferencesViewController.m in Sources */,
 				8C7ABBBE16C42A3D00784BDA /* PIXGradientBarView.m in Sources */,
@@ -2400,30 +2479,41 @@
 				8CE460E416CD5A3900CDFA04 /* PIXCustomButton.m in Sources */,
 				8CE460E816CD7BB400CDFA04 /* PIXCustomShareSheetViewController.m in Sources */,
 				8C097D2716D57D0700E0E134 /* PIXFileParser.m in Sources */,
+				8C94E004183DA6AE00827888 /* MKOverlayPathView.m in Sources */,
+				8C94E001183DA6AE00827888 /* MKMapView+WebViewIntegration.m in Sources */,
 				8C4B9C9F16DADA2100F6BADD /* PIXSidebarClipView.m in Sources */,
+				8C94E005183DA6AE00827888 /* MKOverlayView.m in Sources */,
 				8C4B9CA216DADA9500F6BADD /* PIXSidebarScrollView.m in Sources */,
 				8C4B9CA616DC30FE00F6BADD /* PIXMiniExifViewController.m in Sources */,
 				8C4B9CAA16DC436B00F6BADD /* PIXExifBGView.m in Sources */,
 				8C031CD316E926F7009B7F38 /* LeapObjectiveC.mm in Sources */,
 				8C031CD516E926F7009B7F38 /* PIXLeapInputManager.m in Sources */,
+				8C94E006183DA6AE00827888 /* MKPinAnnotationView.m in Sources */,
 				8C68246B16F596BB00245F09 /* PIXSelectionLayer.m in Sources */,
 				8C68246E16F599FD00245F09 /* NSBezierPath+pathUtilities.m in Sources */,
 				8C68247116F6850C00245F09 /* PIXPageHUDView.m in Sources */,
 				8C68247416F6A75100245F09 /* PIXPageHUDWindow.m in Sources */,
 				8CF9CE4816F8B4A9003B0933 /* PIXInfoPanelView.m in Sources */,
+				8C94E013183DA6AE00827888 /* MKWebView.m in Sources */,
 				8C24A40B16F94ED100703F97 /* PIXRoundRectView.m in Sources */,
+				8C94E00B183DA6AE00827888 /* MKPolygonView.m in Sources */,
+				8C94DFFD183DA6AE00827888 /* MKGeocoder.m in Sources */,
 				8C85AC1916FA98470021ADB4 /* PIXShareManager.m in Sources */,
 				8C53DFE816FB76E9008EF8B1 /* PIXInfoPanelViewController.m in Sources */,
 				8C9AA2BE1700A5C100D989CA /* PIXSlideshowOptonsViewController.m in Sources */,
+				8C94E012183DA6AE00827888 /* MKView.m in Sources */,
 				8C8F4354170534610040562D /* PIXFileTextField.m in Sources */,
 				1D91D13C1709DB1C00747629 /* PIXOutlineView.m in Sources */,
 				8C33D5191711FC8700647F95 /* PIXRoundedProgressIndicator.m in Sources */,
+				8C94E008183DA6AE00827888 /* MKPlacemark.m in Sources */,
 				8C72FE6217134BEE00AA72B0 /* PIXHUDMessageController.m in Sources */,
 				8C14692817149A92009ECCC5 /* PIXLeapTutorialWindowController.m in Sources */,
+				8C94E00C183DA6AE00827888 /* MKPolyline.m in Sources */,
 				8C82A867171A5138009DD803 /* PIXAboutWindowController.m in Sources */,
 				1D23CC161720604E00C7FF70 /* PIXTransitionSetup.m in Sources */,
 				8C72089B1749B1720074705D /* PIXProgressWindowController.m in Sources */,
 				8CDD1ADF177259B700EB6E63 /* PIXSeperatedSpinnerView.m in Sources */,
+				8C94E023183DA6BF00827888 /* SBJsonBase.m in Sources */,
 				1D77F3741795EA2300FCF0F5 /* PIXVideoViewController.m in Sources */,
 				1DCD7B2117987A5000DF9478 /* PIXVideoImageOverlayView.m in Sources */,
 				1D6C23EE179882AA00EC34F5 /* PIXPlayVideoHUDWindow.m in Sources */,
@@ -2779,7 +2869,10 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UnboundApp/UnboundApp-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"USE_OLD_MAPS=1",
+				);
 				INFOPLIST_FILE = "UnboundApp/UnboundApp-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2809,7 +2902,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UnboundApp/UnboundApp-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_PREPROCESSOR_DEFINITIONS = "USE_OLD_MAPS=1";
 				INFOPLIST_FILE = "UnboundApp/UnboundApp-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
