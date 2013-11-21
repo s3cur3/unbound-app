@@ -963,7 +963,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
         // merge the changes
         
         //[[self managedObjectContext] reset];
-        [self.privateWriterContext performSelectorOnMainThread:@selector(mergeChangesFromContextDidSaveNotification:) withObject:notification waitUntilDone:YES];
+        [self.managedObjectContext performSelectorOnMainThread:@selector(mergeChangesFromContextDidSaveNotification:) withObject:notification waitUntilDone:YES];
         
         //[self.managedObjectContext performSelectorOnMainThread:@selector(save:) withObject:nil waitUntilDone:YES];
     }

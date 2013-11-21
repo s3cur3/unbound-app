@@ -1122,6 +1122,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
         // save the context
         [context save:nil];
         
+        
         // update flush albums and the UI with a notification
         // use performSelector instead of dispatch async because it's faster
         [self performSelectorOnMainThread:@selector(flushAlbumsWithIDs:) withObject:[editedAlbumObjectIDs copy] waitUntilDone:NO];
@@ -1263,11 +1264,14 @@ NSDictionary * dictionaryForURL(NSURL * url)
     }
    
     
-    NSNotification *albumNotification = [NSNotification notificationWithName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
-    [[NSNotificationQueue defaultQueue] enqueueNotification:albumNotification postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnName forModes:nil];
+   // NSNotification *albumNotification = [NSNotification notificationWithName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
+    //[[NSNotificationQueue defaultQueue] enqueueNotification:albumNotification postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnName forModes:nil];
     
 
-    //[[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil userInfo:nil];
+    });
+    
      
 }
 

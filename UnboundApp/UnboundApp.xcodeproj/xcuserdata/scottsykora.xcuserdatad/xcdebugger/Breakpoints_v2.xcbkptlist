@@ -36,12 +36,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UnboundApp/PIXFileParser.m"
-            timestampString = "406692891.987528"
+            timestampString = "406718390.678586"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1505"
-            endingLineNumber = "1505"
-            landmarkName = "-sandboxScopeURLs"
+            startingLineNumber = "788"
+            endingLineNumber = "788"
+            landmarkName = "-scanURLForChanges:withRecursion:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -52,12 +52,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UnboundApp/PIXFileParser.m"
-            timestampString = "406692891.987528"
+            timestampString = "406751163.673538"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1507"
-            endingLineNumber = "1507"
-            landmarkName = "-sandboxScopeURLs"
+            startingLineNumber = "1340"
+            endingLineNumber = "1340"
+            landmarkName = "-deleteObjectsForEntityName:inContext:withPredicate:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -68,12 +68,76 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UnboundApp/PIXFileParser.m"
-            timestampString = "406693783.545808"
+            timestampString = "406718714.018862"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1694"
-            endingLineNumber = "1694"
-            landmarkName = "-userChooseFolderDialog"
+            startingLineNumber = "1021"
+            endingLineNumber = "1021"
+            landmarkName = "-parsePhotos:withDeletionBlock:andGroup:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "UnboundApp/PIXFileParser.m"
+            timestampString = "406751163.673538"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1248"
+            endingLineNumber = "1248"
+            landmarkName = "-flushAlbumsWithIDs:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "UnboundApp/PIXSidebarViewController.m"
+            timestampString = "406719178.971882"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
+            landmarkName = "-willShowPIXView"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "UnboundApp/PIXAlbumGridViewController.m"
+            timestampString = "406719234.213814"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "-awakeFromNib"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "UnboundApp/PIXAlbumGridViewController.m"
+            timestampString = "406719394.065743"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1057"
+            endingLineNumber = "1057"
+            landmarkName = "-albumsChanged:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

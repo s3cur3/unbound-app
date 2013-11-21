@@ -890,7 +890,7 @@ const CGFloat kThumbnailSize = 370.0f;
         QTMovie *aMovie = [QTMovie movieWithURL:urlForImage error:&anError];
         NSImage *anImage = aMovie.posterImage;
         if (anImage) {
-            DLog(@"Movie posterImage : %@", anImage);
+            //DLog(@"Movie posterImage : %@", anImage);
         } else {
             DLog(@"Failed to generate thumbnail from QTMovie -posterImage for URL : %@", urlForImage);
         }
@@ -1159,7 +1159,7 @@ const CGFloat kThumbnailSize = 370.0f;
 -(void)loadThumbnailImage
 {
     if ([[self class] isVideoPath:self.path]) {
-        DLog(@"Found a vidoe file - get it's thumb from movie object");
+        //DLog(@"Found a vidoe file - get it's thumb from movie object");
         [self loadThumbnailImageFromVideo];
         return;
     }
@@ -1200,7 +1200,7 @@ const CGFloat kThumbnailSize = 370.0f;
             QTMovie *aMovie = [QTMovie movieWithURL:urlForImage error:&anError];
             NSImage *anImage = aMovie.posterImage;
             if (anImage) {
-                DLog(@"Movie posterImage : %@", anImage);
+                //DLog(@"Movie posterImage : %@", anImage);
             } else {
                 DLog(@"Failed to generate thumbnail from QTMovie -posterImage for URL : %@", urlForImage);
             }
