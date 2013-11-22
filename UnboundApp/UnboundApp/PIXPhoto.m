@@ -237,14 +237,7 @@ const CGFloat kThumbnailSize = 370.0f;
             return;
         }
         
-        //NSLog(@"Loading thumbnail");
         NSImage *image = nil;
-//        image = [[NSImage alloc] initWithContentsOfFile:aPath];
-//        if (image!=nil) {
-//            [weakSelf performSelectorOnMainThread:@selector(mainThreadLoadFullsizeFinished:) withObject:image waitUntilDone:NO];
-//            return;
-//        }
-       
         
         NSURL *urlForImage = [NSURL fileURLWithPath:aPath];
         
