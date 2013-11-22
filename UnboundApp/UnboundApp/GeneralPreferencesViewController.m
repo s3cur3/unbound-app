@@ -114,6 +114,12 @@
     [[PIXFileParser sharedFileParser] rescanFiles];
 }
 
+- (IBAction)resetAlerts:(id)sender
+{
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"PIX_supressDeleteWarning"];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"PIX_supressAlbumDeleteWarning"];
+}
+
 - (IBAction)showLeapTutorial:(id)sender
 {    
     [[PIXAppDelegate sharedAppDelegate] showLeapTutorialPressed:sender];
