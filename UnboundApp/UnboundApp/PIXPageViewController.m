@@ -819,6 +819,19 @@
                 [self deleteItems:nil];
                 return;
             }
+            
+            if(pressedUnichar == '\r') // return should play if it's a video
+            {
+                if ([self.pageController.selectedViewController isKindOfClass:[PIXVideoViewController class]]) {
+                    PIXVideoViewController *videoVC = (PIXVideoViewController *)self.pageController.selectedViewController;
+                    
+                        
+                    [videoVC playMoviePressed:nil];
+                    
+                    return;
+                    
+                }
+            }
         }
     }
     
@@ -988,11 +1001,6 @@
         }
         
         PIXPhoto *aPhoto = [self.pagerData objectAtIndex:self.pageController.selectedIndex];
-        BOOL lastItem = NO;
-        if (aPhoto == [self.pagerData lastObject]) {
-            lastItem = YES;
-        }
-        
         
         NSArray *itemsToDelete = [NSArray arrayWithObject:aPhoto];
 

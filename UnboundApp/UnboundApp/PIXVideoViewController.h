@@ -37,5 +37,7 @@
 
 -(BOOL)movieIsPlaying;
 
+-(void)playMoviePressed:(NSNotification *)notification;
+
 
 @end

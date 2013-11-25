@@ -116,14 +116,6 @@ const CGFloat kThumbnailSize = 370.0f;
     [self.album setUnboundFileCaptionForPhoto:self];
 }
 
-/*
--(void)setCaption:(NSString *)caption
-{
-    [self willChangeValueForKey:@"caption"];
-    [self setPrimitiveValue:[caption copy] forKey:@"caption"];
-    [self didChangeValueForKey:@"caption"];
-}*/
-
 //TODO: get rid of this
 -(NSURL *)filePath;
 {
@@ -138,38 +130,11 @@ const CGFloat kThumbnailSize = 370.0f;
     self.cancelFullsizeLoadOperation = YES;
 }
 
--(NSImage *)fullsizeImage
-{
-    //    if (_fullsizeImage == nil && !_fullsizeImageIsLoading)
-    //    {
-    //        __weak PIXPhoto *weakSelf = self;
-    //        dispatch_async(dispatch_get_main_queue(), ^{
-    //
-    //
-    //            weakSelf.cancelFullsizeLoadOperation = NO;
-    //            [weakSelf loadFullsizeImage];
-    //
-    //        });
-    //    }
-    return _fullsizeImage;
-}
 
 -(NSImage *)fullsizeImageForFullscreenDisplay
 {
     if (_fullsizeImage == nil)
     {
-        //_fullsizeImageIsLoading = YES;
-//        if (!_fullsizeImageIsLoading) {
-//            __weak PIXPhoto *weakSelf = self;
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                
-//                
-//                weakSelf.cancelFullsizeLoadOperation = NO;
-//                [weakSelf loadFullsizeImage];
-//                
-//            });
-//        }
-        
         //While full image is loading show the thumbnail stretched
         if (_thumbnailImage!=nil) {
             return _thumbnailImage;
@@ -183,7 +148,8 @@ const CGFloat kThumbnailSize = 370.0f;
             //use placeholder as a last resort
             return nil;
         }
-    } 
+    }
+    
     return _fullsizeImage;
 }
 
@@ -1641,10 +1607,14 @@ const CGFloat kThumbnailSize = 370.0f;
 
 - (void)prepareForDeletion
 {
+    
+    
+    self.thumbnailImage = nil;
+    self.fullsizeImage = nil;
+    
 	[self clearFiles];
 	return [super prepareForDeletion];
 }
-
 
 -(void)clearFiles
 {

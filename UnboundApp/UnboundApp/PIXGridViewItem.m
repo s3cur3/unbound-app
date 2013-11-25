@@ -168,20 +168,8 @@ static CGSize kDefaultItemSizeCustomized;
     
     
     // draw the albums stack
-    
-    NSColor * textColor = nil;
-    //NSColor * subtitleColor = nil;
-    NSColor * bgColor = nil;
-    
-    
-    bgColor = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
-    textColor = [NSColor colorWithCalibratedWhite:0.9 alpha:1.0];
-    
-    
-    
-    
-    
-    
+    NSColor * textColor = [NSColor colorWithCalibratedWhite:0.9 alpha:1.0];
+
     NSRect textRect = NSMakeRect(imgRect.origin.x + 3,
                                  0,
                                  NSWidth(imgRect) - 6,

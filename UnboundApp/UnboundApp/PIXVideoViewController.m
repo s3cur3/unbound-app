@@ -111,7 +111,16 @@ static NSString *ResolveName(NSString *aName)
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieWillStopForWindowClose:) name:QTMovieCloseWindowRequestNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieRateChanged:) name:QTMovieRateDidChangeNotification object:nil];
-    [[self.movieView movie] play];
+    
+    if(self.movieView.movie.rate == 0)
+    {
+        [[self.movieView movie] play];
+    }
+    
+    else
+    {
+        [[self.movieView movie] stop];
+    }
 }
      
 -(void)movieFinishedPlaying:(NSNotification *)notification
@@ -208,6 +217,8 @@ static NSString *ResolveName(NSString *aName)
     
 //    CGRect playButtonRect = CGRectApplyAffineTransform(imageRect, CGAffineTransformMakeScale(0.33, 0.33));
 //    [playButtonRect drawInRect:playButtonRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];
+    
+    
     
     CGRect playButtonWindowFrame = NSMakeRect((screenOrigin.x+(movieFrame.size.width/2))-100.0,
                                         (screenOrigin.y+(movieFrame.size.height/2))-100.0,
@@ -396,5 +407,17 @@ static NSString *ResolveName(NSString *aName)
     BOOL isPlaying = [[NSNumber numberWithFloat:rate] boolValue];
     return isPlaying;
 }
+
+
+- (void)insertNewline:(id)sender
+{
+    
+}
+
+-(void)keyDown:(NSEvent *)theEvent
+{
+    
+}
+
 
 @end

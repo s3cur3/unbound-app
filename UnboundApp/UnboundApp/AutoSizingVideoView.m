@@ -88,4 +88,16 @@
     return NO;
 }
 
+- (void)insertNewline:(id)sender
+{
+    
+}
+
+-(void)keyDown:(NSEvent *)theEvent
+{
+    
+}
+
+
+
 @end
