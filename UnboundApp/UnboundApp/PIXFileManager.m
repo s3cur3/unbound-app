@@ -839,7 +839,6 @@ typedef NSUInteger PIXOverwriteStrategy;
         [[PIXFileParser sharedFileParser] scanPath:albumPath withRecursion:PIXFileParserRecursionFull];
     }
     
-    //[[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
     NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
     //TODO: find a better way of dealing with the 'redo' action for recycled items
     [undoManager performSelector:@selector(removeAllActions) withObject:nil afterDelay:0.1f];

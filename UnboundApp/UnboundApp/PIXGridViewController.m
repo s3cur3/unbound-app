@@ -661,8 +661,39 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 - (void)gridViewDidDeselectAllItems:(CNGridView *)gridView
 {
+    NSArray * oldItems = [self.selectedItems copy];
+    
     [self.selectedItems removeAllObjects];
     [self updateToolbar];
+    
+    [self.gridView reloadSelection];
+    
+    NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
+    //NSDictionary *undoInfo = @{@"albumID" : anAlbum.objectID, @"name" : oldAlbumName};
+    [undoManager registerUndoWithTarget:self selector:@selector(reselectItems:) object:oldItems];
+    [undoManager setActionName:@"Deselect Items"];
+    [undoManager setActionIsDiscardable:YES];
+}
+
+-(void)reselectItems:(NSArray *)itemsToReselect
+{
+    [self.selectedItems removeAllObjects];
+    
+    for(NSObject * item in itemsToReselect)
+    {
+        if([self.items containsObject:item])
+        {
+            [self.selectedItems addObject:item];
+        }
+    }
+    
+    [self updateToolbar];
+    [self.gridView reloadSelection];
+    
+    NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
+    [undoManager registerUndoWithTarget:self selector:@selector(gridViewDidDeselectAllItems:) object:self.gridView];
+    [undoManager setActionName:@"Deselect Items"];
+    [undoManager setActionIsDiscardable:YES];
 }
 
 
