@@ -409,15 +409,6 @@ static NSString *ResolveName(NSString *aName)
 }
 
 
-- (void)insertNewline:(id)sender
-{
-    
-}
-
--(void)keyDown:(NSEvent *)theEvent
-{
-    
-}
 
 
 @end
