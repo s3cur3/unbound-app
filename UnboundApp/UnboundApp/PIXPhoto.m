@@ -90,6 +90,8 @@ const CGFloat kThumbnailSize = 370.0f;
 //TODO: make this a real attribute?
 -(NSString *)title
 {
+    if([self isReallyDeleted]) return nil;
+    
     return self.name;
 }
 
@@ -1590,6 +1592,8 @@ const CGFloat kThumbnailSize = 370.0f;
 // Map Annotation stuff
 -(CLLocationCoordinate2D)coordinate
 {
+    
+    
 	CLLocationCoordinate2D coord;
 	
 	coord.latitude = [[self latitude] doubleValue];

@@ -267,8 +267,17 @@ NSDictionary * dictionaryForURL(NSURL * url)
         
         NSString *tokenKeyString = [NSString stringWithFormat:@"resumeToken-%@", aDir.path];
         NSData *token = [[NSUserDefaults standardUserDefaults] dataForKey:tokenKeyString];
-        NSData *decodedToken = [NSKeyedUnarchiver unarchiveObjectWithData:token];
+        
+        NSData * decodedToken = nil;
+        
+        if(token)
+        {
+            decodedToken = [NSKeyedUnarchiver unarchiveObjectWithData:token];
+        }
+
         //[aDir addDirectoryObserver:self options:ArchDirectoryObserverResponsive | ArchDirectoryObserverObservesSelf resumeToken:decodedToken];
+        
+        
         [aDir addDirectoryObserver:self options:ArchDirectoryObserverResponsive resumeToken:decodedToken];
     }
 }

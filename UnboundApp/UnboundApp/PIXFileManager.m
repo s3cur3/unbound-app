@@ -265,7 +265,7 @@ typedef NSUInteger PIXOverwriteStrategy;
 -(void)undoRecyclePhotos:(NSDictionary *)newURLs
 {
     //NSWorkspaceDidPerformFileOperationNotification
-    NSMutableSet *albumPaths = [NSMutableSet set];
+    NSMutableSet *filePaths = [NSMutableSet set];
     NSURL *restorePathURL = nil;
     for (restorePathURL in [newURLs allKeys])
     {
@@ -286,14 +286,18 @@ typedef NSUInteger PIXOverwriteStrategy;
             continue;
         }
         
-        [albumPaths addObject:restorePath];
+        if(restorePath)
+        {
+            restorePath = [restorePath stringByAppendingPathComponent:fileName];
+            [filePaths addObject:restorePath];
+        }
         
         DLog(@"Restored file from '%@'", recyclerPath);
     }
     
-    for (NSString *albumPath in albumPaths)
+    for (NSString *filePath in filePaths)
     {
-        [[PIXFileParser sharedFileParser] scanPath:albumPath withRecursion:PIXFileParserRecursionNone];
+        [[PIXFileParser sharedFileParser] scanFile:[NSURL fileURLWithPath:filePath]];
     }
     
     //[[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
@@ -310,11 +314,18 @@ typedef NSUInteger PIXOverwriteStrategy;
     {
         NSString *path = [anItem path];
         NSURL *deleteURL = [NSURL fileURLWithPath:path isDirectory:NO];
-        [urlsToDelete addObject:deleteURL];
+        
+        if(deleteURL)
+        {
+            [urlsToDelete addObject:deleteURL];
+        }
     }
 #ifdef DEBUG_DELETE_ITEMS
     NSURL *failURL = [NSURL fileURLWithPath:@"/tmp/bafdlsjkfasfasdss.txt"];
-    [urlsToDelete addObject:failURL];
+    if(failURL)
+    {
+        [urlsToDelete addObject:failURL];
+    }
 #endif
     
     // Delete the items from the db ahead of time (the actul file deletion will happen after a dispatch)
@@ -322,7 +333,12 @@ typedef NSUInteger PIXOverwriteStrategy;
     
     for (PIXPhoto *anItem in items)
     {
-        [albumsToUpdate addObject:[(PIXPhoto *)anItem album]];
+        PIXAlbum * album = [(PIXPhoto *)anItem album];
+        
+        if(album)
+        {
+            [albumsToUpdate addObject:album];
+        }
         
         // delete the photos from the database
         [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] deleteObject:anItem];
@@ -397,7 +413,11 @@ typedef NSUInteger PIXOverwriteStrategy;
             {
                 DLog(@"Item at '%@' was recycled", anItem);
                 NSString *aPhotoPath = [anItem path];
-                [photosToDelete addObject:aPhotoPath];
+                
+                if(aPhotoPath)
+                {
+                    [photosToDelete addObject:aPhotoPath];
+                }
             }
 
             // rescan the albums so they're correct
@@ -829,7 +849,10 @@ typedef NSUInteger PIXOverwriteStrategy;
             continue;
         }
         
-        [albumPaths addObject:restorePath];
+        if(restorePath)
+        {
+            [albumPaths addObject:restorePath];
+        }
         
         DLog(@"Restored file from '%@'", recyclerPath);
     }

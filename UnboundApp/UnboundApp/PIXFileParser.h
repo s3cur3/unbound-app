@@ -97,6 +97,9 @@ typedef enum {
 
 -(void)rescanFiles;
 
+// this is a convenience method to parse a single file
+-(void)scanFile:(NSURL *)fileURL;
+
 /**
  *  returns a list of NSDictionaries containing information about the current volumes on the file system
  */

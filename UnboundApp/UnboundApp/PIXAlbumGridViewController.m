@@ -341,6 +341,8 @@
         [thisItem setState:NSOnState];
         [[NSUserDefaults standardUserDefaults] setInteger:[thisItem tag] forKey:@"PIXAlbumSort"];
         
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
         // update any albums views
         [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
         
