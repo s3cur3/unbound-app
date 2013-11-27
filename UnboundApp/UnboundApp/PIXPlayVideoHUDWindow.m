@@ -65,7 +65,10 @@
 {
     NSView *videoPlayerView = [self.parentView.subviews objectAtIndex:0];
     DLog(@"videoPlayerView : %@", videoPlayerView);
-    CGRect viewFrame = [self.parentView.window convertRectToScreen:videoPlayerView.frame];
+    
+    CGRect viewFrame = videoPlayerView.bounds;
+    
+    viewFrame = [self.parentView.window convertRectToScreen:viewFrame];
     CGRect selfFrame = self.frame;
     selfFrame.size = size;
     
@@ -74,7 +77,7 @@
     CGRect newFrame = CGRectZero;
     
     newFrame = CGRectMake(viewFrame.origin.x + (viewFrame.size.width /2) - (selfFrame.size.width/2),
-                          viewFrame.origin.y + (viewFrame.size.height /2) - (selfFrame.size.height/2),
+                          viewFrame.origin.y + (viewFrame.size.height /2) - (selfFrame.size.height/2) - 33,
                           selfFrame.size.width,
                           selfFrame.size.height);
     

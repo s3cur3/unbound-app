@@ -378,13 +378,9 @@ static NSString *const kItemsKey = @"photos";
 
 -(void)flush
 {
-    if(self.managedObjectContext != nil && ![self isDeleted])
+    if(![self isReallyDeleted])
     {
         [self.managedObjectContext refreshObject:self mergeChanges:NO];
-        //self.subtitle = nil;
-        
-        // not sure if we need to send this. the all albums refresh is always sent after this
-        //[[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:self];
         
         // I don't think we need to write unbound files unless we're saving captions now (only used on dropbox anyway)
         // I've commented this out to see if it's faster on initial scan
@@ -399,7 +395,7 @@ static NSString *const kItemsKey = @"photos";
         // enqueue these notes on the sender so if a few album stack images load right after each other it doesn't have to redraw multiple times
         [[NSNotificationQueue defaultQueue] enqueueNotification:note postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnSender forModes:nil];
         
-        //[[PIXAppDelegate sharedAppDelegate] saveDBToDiskWithRateLimit];
+        [[PIXAppDelegate sharedAppDelegate] saveDBToDiskWithRateLimit];
     }
 }
 

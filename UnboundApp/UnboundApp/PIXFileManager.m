@@ -293,7 +293,11 @@ typedef NSUInteger PIXOverwriteStrategy;
         }
         
         DLog(@"Restored file from '%@'", recyclerPath);
+        
+        
     }
+    
+    [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
     
     for (NSString *filePath in filePaths)
     {
@@ -344,7 +348,8 @@ typedef NSUInteger PIXOverwriteStrategy;
         [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] deleteObject:anItem];
     }
     
-    [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] save:nil];
+    
+    [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
     
     for(PIXAlbum * album in albumsToUpdate)
     {
