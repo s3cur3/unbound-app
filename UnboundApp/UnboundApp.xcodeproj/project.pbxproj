@@ -398,6 +398,9 @@
 		8C94E025183DA6BF00827888 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA59B183AC5FE000AEBC9 /* SBJsonWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8C94E026183DA6D300827888 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C9FA5BD183ACB90000AEBC9 /* CoreLocation.framework */; };
 		8C94E027183DA6D800827888 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C9FA5BF183ACB98000AEBC9 /* WebKit.framework */; };
+		8C95650118467EA900B5627B /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9564FF18467EA900B5627B /* Appirater.m */; };
+		8C95650318467EBD00B5627B /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C95650218467EBD00B5627B /* StoreKit.framework */; };
+		8C9565051846802800B5627B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C9565041846802800B5627B /* SystemConfiguration.framework */; };
 		8C972CB41680FE8B00358913 /* PIXModifierSwitchedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */; };
 		8C9AA2B916FFE39500D989CA /* captionbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9AA2B716FFE39500D989CA /* captionbutton.png */; };
 		8C9AA2BA16FFE39500D989CA /* captionbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9AA2B816FFE39500D989CA /* captionbutton@2x.png */; };
@@ -1052,6 +1055,11 @@
 		8C8EE93316CACA7900F16C49 /* NSURL+DirectoryObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+DirectoryObserver.m"; sourceTree = "<group>"; };
 		8C8F4352170534610040562D /* PIXFileTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXFileTextField.h; sourceTree = "<group>"; };
 		8C8F4353170534610040562D /* PIXFileTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXFileTextField.m; sourceTree = "<group>"; };
+		8C9564FE18467EA900B5627B /* Appirater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Appirater.h; sourceTree = "<group>"; };
+		8C9564FF18467EA900B5627B /* Appirater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Appirater.m; sourceTree = "<group>"; };
+		8C95650018467EA900B5627B /* AppiraterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppiraterDelegate.h; sourceTree = "<group>"; };
+		8C95650218467EBD00B5627B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		8C9565041846802800B5627B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8C972CB21680FE8A00358913 /* PIXModifierSwitchedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXModifierSwitchedEvent.h; sourceTree = "<group>"; };
 		8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXModifierSwitchedEvent.m; sourceTree = "<group>"; };
 		8C9AA2B716FFE39500D989CA /* captionbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = captionbutton.png; sourceTree = "<group>"; };
@@ -1202,6 +1210,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C9565051846802800B5627B /* SystemConfiguration.framework in Frameworks */,
+				8C95650318467EBD00B5627B /* StoreKit.framework in Frameworks */,
 				8C94E027183DA6D800827888 /* WebKit.framework in Frameworks */,
 				8C94E026183DA6D300827888 /* CoreLocation.framework in Frameworks */,
 				8C14692F1714A5CC009ECCC5 /* QTKit.framework in Frameworks */,
@@ -1570,6 +1580,8 @@
 		1DB2F84D167ABE87008AC0F7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8C9565041846802800B5627B /* SystemConfiguration.framework */,
+				8C95650218467EBD00B5627B /* StoreKit.framework */,
 				8C9FA5BF183ACB98000AEBC9 /* WebKit.framework */,
 				8C9FA5BD183ACB90000AEBC9 /* CoreLocation.framework */,
 				8CFDF7651827123700809018 /* MapKit.framework */,
@@ -1620,6 +1632,9 @@
 		1DB2F870167AC0A6008AC0F7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				8C9564FE18467EA900B5627B /* Appirater.h */,
+				8C9564FF18467EA900B5627B /* Appirater.m */,
+				8C95650018467EA900B5627B /* AppiraterDelegate.h */,
 				8C85AC1616FA98280021ADB4 /* Helpers */,
 				8C8EE92C16CACA6700F16C49 /* third party */,
 				1DB2F860167ABE87008AC0F7 /* PIXAppDelegate.h */,
@@ -2489,6 +2504,7 @@
 				8C031CD316E926F7009B7F38 /* LeapObjectiveC.mm in Sources */,
 				8C031CD516E926F7009B7F38 /* PIXLeapInputManager.m in Sources */,
 				8C94E006183DA6AE00827888 /* MKPinAnnotationView.m in Sources */,
+				8C95650118467EA900B5627B /* Appirater.m in Sources */,
 				8C68246B16F596BB00245F09 /* PIXSelectionLayer.m in Sources */,
 				8C68246E16F599FD00245F09 /* NSBezierPath+pathUtilities.m in Sources */,
 				8C68247116F6850C00245F09 /* PIXPageHUDView.m in Sources */,
