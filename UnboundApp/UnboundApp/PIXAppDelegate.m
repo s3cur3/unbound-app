@@ -869,7 +869,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
         }];
     }
     
-    /*
+    
     // merge the changes into main
     // Only interested in merging from master into main.
     if ([notification object] != self.privateWriterContext) return;
@@ -877,7 +877,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     [self.managedObjectContext performBlock:^{
         [self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
         
-    }];*/
+    }];
     
     /*
     NSManagedObjectContext *postingContext = [notification object];
