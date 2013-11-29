@@ -88,7 +88,7 @@
         }
     
     } else if (newPhoto!=nil) {
-        DLog(@"same non-nil representedObject being set.");
+        //DLog(@"same non-nil representedObject being set.");
     }
 }
 

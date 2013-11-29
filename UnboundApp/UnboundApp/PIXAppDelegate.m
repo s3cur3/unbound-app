@@ -733,7 +733,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     return YES;
 }
 
--(NSManagedObjectContext *)threadSafeManagedObjectContext
+-(NSManagedObjectContext *)threadSafePassThroughMOC
 {
     NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
     
@@ -757,7 +757,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     return context;
 }
 
--(NSManagedObjectContext *)threadSafeNonChildManagedObjectContext
+-(NSManagedObjectContext *)threadSafeSideSaveMOC
 {
     
     NSManagedObjectContext * context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];

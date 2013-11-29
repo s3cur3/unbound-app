@@ -72,8 +72,11 @@
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectContext *privateWriterContext;
 
--(NSManagedObjectContext *)threadSafeManagedObjectContext;
--(NSManagedObjectContext *)threadSafeNonChildManagedObjectContext;
+// this returns a newly created MOC (Managed Object Context) to do work in the background. This will be a child context where changes are saved directly into the main thread MOC (pass through)
+-(NSManagedObjectContext *)threadSafePassThroughMOC;
+
+// this returns a newly created MOC (Managed Object Context) to do work in the background. This will be a child context where changes are saved to the background writer MOC and then merged up to the main thread MOC (side save)
+-(NSManagedObjectContext *)threadSafeSideSaveMOC;
 
 
 

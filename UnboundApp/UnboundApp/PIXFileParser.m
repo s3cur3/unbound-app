@@ -910,7 +910,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
     {
         NSPredicate * predicate = [NSPredicate predicateWithFormat:@"path CONTAINS %@", fileURL.path, nil];
 
-        NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] threadSafeNonChildManagedObjectContext];
+        NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] threadSafeSideSaveMOC];
         // be sure to delete albums first so there are less photos to iterate through in the second delete
         if (![self deleteObjectsForEntityName:@"PIXAlbum" inContext:context withPredicate:predicate]) {
             DLog(@"There was a problem trying to delete old objects");
@@ -923,7 +923,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
     {
         NSPredicate * predicate = [NSPredicate predicateWithFormat:@"path == %@", fileURL.path, nil];
         
-        NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] threadSafeNonChildManagedObjectContext];
+        NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] threadSafeSideSaveMOC];
         // be sure to delete albums first so there are less photos to iterate through in the second delete
         if (![self deleteObjectsForEntityName:@"PIXPhoto" inContext:context withPredicate:predicate]) {
             DLog(@"There was a problem trying to delete old objects");
@@ -940,7 +940,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
 {
     
     // create a thread-safe context (may want to make this a child context down the road)
-    NSManagedObjectContext *context = [[PIXAppDelegate sharedAppDelegate] threadSafeNonChildManagedObjectContext];
+    NSManagedObjectContext *context = [[PIXAppDelegate sharedAppDelegate] threadSafeSideSaveMOC];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"PIXAlbum" inManagedObjectContext:context];
@@ -980,7 +980,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
         // if the parse context has changed then this is an old parse that we're no longer using
         if(self.parseContext == nil)
         {
-            self.parseContext = [[PIXAppDelegate sharedAppDelegate] threadSafeNonChildManagedObjectContext];
+            self.parseContext = [[PIXAppDelegate sharedAppDelegate] threadSafeSideSaveMOC];
         }
         
         NSManagedObjectContext *context = self.parseContext;

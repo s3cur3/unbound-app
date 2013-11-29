@@ -1030,7 +1030,7 @@ const CGFloat kThumbnailSize = 370.0f;
                 
                 //////////////// option 1 save in bg
                 
-                NSManagedObjectContext * threadSafeContext = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];
+                NSManagedObjectContext * threadSafeContext = [[PIXAppDelegate sharedAppDelegate] threadSafePassThroughMOC];
                 
                 PIXPhoto * threadPhoto = (PIXPhoto *)[threadSafeContext objectWithID:photoID];
                 
@@ -1343,7 +1343,7 @@ const CGFloat kThumbnailSize = 370.0f;
                 
                 //////////////// option 1 save in bg
                 
-                NSManagedObjectContext * threadSafeContext = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];
+                NSManagedObjectContext * threadSafeContext = [[PIXAppDelegate sharedAppDelegate] threadSafePassThroughMOC];
                 
                 PIXPhoto * threadPhoto = (PIXPhoto *)[threadSafeContext objectWithID:photoID];
                 

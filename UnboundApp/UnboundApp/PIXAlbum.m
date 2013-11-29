@@ -338,7 +338,7 @@ static NSString *const kItemsKey = @"photos";
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         
-        NSManagedObjectContext * threadSafeContext = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];
+        NSManagedObjectContext * threadSafeContext = [[PIXAppDelegate sharedAppDelegate] threadSafePassThroughMOC];
         
         PIXAlbum * threadAlbum = (PIXAlbum *)[threadSafeContext objectWithID:[self objectID]];
         
@@ -524,7 +524,7 @@ static NSString *const kItemsKey = @"photos";
     dispatch_async([self sharedUnboundQueue], ^{
         
         // get a bg thread context and find the album object
-        NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] threadSafeManagedObjectContext];
+        NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] threadSafePassThroughMOC];
         PIXAlbum * threadAlbum = (PIXAlbum *)[context objectWithID:thisID];
         
         
