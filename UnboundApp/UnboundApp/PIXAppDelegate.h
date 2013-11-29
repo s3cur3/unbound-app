@@ -73,8 +73,9 @@
 @property (readonly, strong, nonatomic) NSManagedObjectContext *privateWriterContext;
 
 -(NSManagedObjectContext *)threadSafeManagedObjectContext;
-
 -(NSManagedObjectContext *)threadSafeNonChildManagedObjectContext;
+
+
 
 // this will save the db to the disk in the background after a 1second delay.
 // If it is called again within one second it will cancel the last call and only save once

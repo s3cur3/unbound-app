@@ -297,7 +297,7 @@ typedef NSUInteger PIXOverwriteStrategy;
         
     }
     
-    [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
+    //[[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
     
     for (NSString *filePath in filePaths)
     {
@@ -313,6 +313,8 @@ typedef NSUInteger PIXOverwriteStrategy;
 -(void)recyclePhotos:(NSArray *)items
 {
     NSMutableArray *urlsToDelete = [NSMutableArray arrayWithCapacity:[items count]];
+    
+    NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
 
     for (id anItem in items)
     {
@@ -345,11 +347,12 @@ typedef NSUInteger PIXOverwriteStrategy;
         }
         
         // delete the photos from the database
-        [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] deleteObject:anItem];
+        [context deleteObject:anItem];
     }
     
+    NSError * error = nil;
+    [context save:&error];
     
-    [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
     
     for(PIXAlbum * album in albumsToUpdate)
     {

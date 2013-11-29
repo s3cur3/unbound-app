@@ -307,28 +307,28 @@ static NSString *const kItemsKey = @"photos";
     return sortDescriptors;
 
 }
-
+/*
 - (NSOrderedSet *)stackPhotos
 {
     [self willAccessValueForKey:@"stackPhotos"];
     NSOrderedSet *stackPhotos = [self primitiveValueForKey:@"stackPhotos"];
     [self didAccessValueForKey:@"stackPhotos"];
     
-    /*
-    // if for some reason the stack photos got broken, fix them
-    if(stackPhotos.count == 0 && self.photos.count > 0)
-    {
-        // dispatch this so we don't get an infinite loop
-        dispatch_async(dispatch_get_current_queue(), ^{
-            [self setPhotos:self.photos updateCoverImage:YES];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:AlbumStackDidChangeNotification object:self];
-        });
-    }*/
-    
+ 
+//    // if for some reason the stack photos got broken, fix them
+//    if(stackPhotos.count == 0 && self.photos.count > 0)
+//    {
+//        // dispatch this so we don't get an infinite loop
+//        dispatch_async(dispatch_get_current_queue(), ^{
+//            [self setPhotos:self.photos updateCoverImage:YES];
+//            
+//            [[NSNotificationCenter defaultCenter] postNotificationName:AlbumStackDidChangeNotification object:self];
+//        });
+//    }
+
     
     return stackPhotos;
-}
+}*/
 
 
 

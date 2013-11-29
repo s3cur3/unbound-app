@@ -490,6 +490,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
     // force a new context to be used
     [self.parseContext rollback];
     
+    // must do this at the begining of each new scan to reset context
     self.parseContext = nil;
     
     [self incrementWorking];
@@ -689,7 +690,10 @@ NSDictionary * dictionaryForURL(NSURL * url)
  *  current scans so new ones arent started
  */
 - (void)scanURLForChanges:(NSURL *)url withRecursion:(PIXFileParserRecursionOptions)recursionMode
-{    
+{
+    // must do this at the begining of each new scan to reset context
+    self.parseContext = nil;
+    
     self.scansCancelledFlag = NO;
     [self incrementWorking];
     
@@ -881,6 +885,9 @@ NSDictionary * dictionaryForURL(NSURL * url)
 // this is a convenience method to parse a single file
 -(void)scanFile:(NSURL *)fileURL
 {
+    // must do this at the begining of each new scan to reset context
+    self.parseContext = nil;
+    
     // add the unbound file of the main directory if it exists
     NSDictionary * info = dictionaryForURL(fileURL);
     
@@ -1063,7 +1070,6 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 // now iterate throuhg the album's existing photos and see if this photo is already in core data
                 __block PIXPhoto *dbPhoto = nil;
                 NSUInteger index = [lastAlbumsExistingPhotos indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-                    //
                     if ([[obj valueForKey:@"path"] isEqualToString:[aPhoto valueForKey:@"path"]])
                     {
                         // we found the photo
@@ -1072,6 +1078,11 @@ NSDictionary * dictionaryForURL(NSURL * url)
                     }
                     return NO;
                 }];
+                
+                if([dbPhoto isReallyDeleted])
+                {
+                    dbPhoto = nil;
+                }
                 
                 // if we didn't find the photo we'll need to create a new entity
                 if(dbPhoto==nil)
@@ -1120,7 +1131,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
         // we've finished the loop. add the photos objects to the last album we were working with
         [lastAlbumsPhotos addObjectsFromArray:lastAlbumsExistingPhotos];
         [lastAlbum setPhotos:[NSSet setWithArray:lastAlbumsPhotos] updateCoverImage:YES];
-        ;
+
         //NSLog(@"scanned album %@ has %ld items", lastAlbum.title, lastAlbum.photos.count);
         
         if(deletionBlock)
@@ -1130,6 +1141,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
         
         // save the context
         [context save:nil];
+        
         
         
         // update flush albums and the UI with a notification
@@ -1254,6 +1266,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
 // this should always be called on the main thread
 -(void)flushAlbumsWithIDs:(NSSet *)albumIDS
 {
+    
     NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
 
     

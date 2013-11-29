@@ -661,13 +661,13 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     [_privateWriterContext setPersistentStoreCoordinator:_persistentStoreCoordinator];
     
     // overwrite the database with updates from this context
-    [_privateWriterContext setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
+    //[_privateWriterContext setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
     
     _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     [_managedObjectContext setParentContext:_privateWriterContext];
     
     // overwrite the database with updates from this context
-    [_managedObjectContext setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
+    //[_managedObjectContext setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mergeContext:) name:NSManagedObjectContextDidSaveNotification object:nil];
     
@@ -699,6 +699,13 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 
 -(BOOL)saveDBToDisk:(NSError **)error
 {
+    if (![self.managedObjectContext save:error])
+    {
+        DLog(@"ERROR SAVING IN MAIN THREAD: %@", [*error description])
+        return NO;
+    }
+    
+    return YES;
     // perform this on the main thread if needed
     if(![NSThread isMainThread])
         
@@ -709,6 +716,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     
     if (![self.managedObjectContext save:error])
     {
+        DLog(@"ERROR SAVING IN MAIN THREAD: %@", [*error description])
         return NO;
     }
         
@@ -744,14 +752,15 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     [context setParentContext:self.managedObjectContext];
     
     // overwrite the database with updates from this context
-    [context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
+    //[context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
     
     return context;
 }
 
 -(NSManagedObjectContext *)threadSafeNonChildManagedObjectContext
 {
-    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
+    
+    NSManagedObjectContext * context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
     
     //-------------------------------------------------------
     //    Setting the undo manager to nil means that:
@@ -763,12 +772,12 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     
     
     //set it to the App Delegates persistant store coordinator
-    [context setPersistentStoreCoordinator:[self persistentStoreCoordinator]];
+    //[context setPersistentStoreCoordinator:[self persistentStoreCoordinator]];
     
-    //[context setParentContext:self.managedObjectContext];
+    [context setParentContext:self.privateWriterContext];
     
     // overwrite the database with updates from this context
-    [context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
+    //[context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
     
     return context;
 }
@@ -845,6 +854,32 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 -(void)mergeContext:(NSNotification *)notification
 {
     NSManagedObjectContext *postingContext = [notification object];
+    
+    // save the writer context in the bg
+    
+    if(postingContext.parentContext ==  self.privateWriterContext && postingContext != self.managedObjectContext)
+    {
+        [self.privateWriterContext performBlock:^{
+            
+            NSError * error = nil;
+            if (![self.privateWriterContext save:&error])
+            {
+                DLog(@"ERROR SAVING IN BG THREAD: %@", [error description]);
+            }
+        }];
+    }
+    
+    // merge the changes into main
+    // Only interested in merging from master into main.
+    if ([notification object] != self.privateWriterContext) return;
+    
+    [self.managedObjectContext performBlock:^{
+        [self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
+        
+    }];
+    
+    /*
+    NSManagedObjectContext *postingContext = [notification object];
     if ([postingContext persistentStoreCoordinator] == [self persistentStoreCoordinator] &&
         postingContext.parentContext == nil &&
         postingContext != self.privateWriterContext) {
@@ -855,7 +890,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
         
         // also save the context (so other bg threads get the changes)
         //[self.managedObjectContext performSelectorOnMainThread:@selector(save:) withObject:nil waitUntilDone:YES];
-    }
+    }*/
 }
 
 // Returns the NSUndoManager for the application. In this case, the manager returned is that of the managed object context for the application.
