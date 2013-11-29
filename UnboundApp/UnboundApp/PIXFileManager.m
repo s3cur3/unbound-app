@@ -359,11 +359,36 @@ typedef NSUInteger PIXOverwriteStrategy;
         [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:album userInfo:nil];
     }
     
-    
-    
     DLog(@"About to recycle the following items : %@", urlsToDelete);
+    
+
+    /*
+    NSMutableDictionary * newURLs = [[NSMutableDictionary alloc] initWithCapacity:[urlsToDelete count];
+    error = nil;
+    
+    
+    NSFileManager * fm = [NSFileManager defaultManager];
+    
+    for(NSURL * aURL in urlsToDelete)
+    {
+        NSURL * newURL = nil;
+        [fm trashItemAtURL:aURL resultingItemURL:&newURL error:&error];
+        
+        if(error)
+        {
+            
+            break;
+        }
+        
+        [newURLs setObject:newURL forKey:aURL];
+        
+    }
+    */
+    
+    
+    
+    
     [[NSWorkspace sharedWorkspace] recycleURLs:urlsToDelete completionHandler:^(NSDictionary *newURLs, NSError *error) {
-        //
         if (nil==error) {
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -451,7 +476,7 @@ typedef NSUInteger PIXOverwriteStrategy;
             [undoManager setActionName:undoMessage];
         }
         
-    }];
+}];
     
     DLog(@"Completed file deletion");
 }

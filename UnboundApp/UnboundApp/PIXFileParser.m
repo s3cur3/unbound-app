@@ -32,7 +32,7 @@
 @property float fullScannProgressCurrent;
 @property float fullScannProgressTotal;
 
-@property (strong, strong) NSMutableDictionary * pendingFolderScanPaths;
+@property (strong, nonatomic) NSMutableDictionary * pendingFolderScanPaths;
 
 @end
 
@@ -1659,7 +1659,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
                                description:&description
                                       type:&type];
         if (!res) continue;
-        fsAttributes = [fm fileSystemAttributesAtPath:path];
+        NSError * error = nil;
+        fsAttributes = [fm attributesOfFileSystemForPath:path error:&error];
         name         = [fm displayNameAtPath:path];
         size         = [fsAttributes objectForKey:NSFileSystemSize];
         

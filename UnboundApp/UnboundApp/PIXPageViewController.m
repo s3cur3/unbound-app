@@ -460,6 +460,10 @@
         // start another timer
         [self performSelector:@selector(tryFadeControls) withObject:nil afterDelay:3];
         
+        [self.currentImageVC setIsCurrentView:NO];
+        
+        self.currentImageVC = (PIXImageViewController *)[self.pageController selectedViewController];
+        
         [self.currentImageVC setIsCurrentView:YES];
         
     });
@@ -1117,8 +1121,6 @@
 - (void)updateData {
     
     self.pagerData = [[self.album sortedPhotos] mutableCopy];
-    
-    
     
     // set the first image in our list to the main magnifying view
     if ([self.pagerData count] > 0) {

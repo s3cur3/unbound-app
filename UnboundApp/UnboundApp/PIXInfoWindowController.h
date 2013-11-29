@@ -10,7 +10,6 @@
 
 @interface PIXInfoWindowController : NSWindowController
 
-- (IBAction)useDBDefaults:(id)sender;
 - (IBAction)chooseFolder:(id)sender;
 
 @end

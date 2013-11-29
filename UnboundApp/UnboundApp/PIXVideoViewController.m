@@ -17,6 +17,7 @@
 #import "PIXPageViewController.h"
 #import "PIXLeapInputManager.h"
 #import <QTKit/QTKit.h>
+#import <objc/runtime.h>
 
 @interface PIXVideoViewController ()
 
@@ -403,7 +404,7 @@ static NSString *ResolveName(NSString *aName)
         rate = self.movieView.movie.rate;
         isIdle = self.movieView.movie.isIdling;
     }
-    DLog(@"rate : %f, isIdle : %d", rate, isIdle);
+    //DLog(@"rate : %f, isIdle : %d", rate, isIdle);
     BOOL isPlaying = [[NSNumber numberWithFloat:rate] boolValue];
     return isPlaying;
 }

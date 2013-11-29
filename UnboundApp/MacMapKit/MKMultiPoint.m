@@ -17,7 +17,7 @@
 
 - (void)getCoordinates:(CLLocationCoordinate2D *)coords range:(NSRange)range
 {
-    for (int i = range.location; i < range.location+range.length; i++)
+    for (NSInteger i = range.location; i < range.location+range.length; i++)
     {
         coords[i] = coordinates[i];
     }

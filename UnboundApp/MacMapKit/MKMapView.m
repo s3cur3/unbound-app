@@ -89,7 +89,7 @@
 {
     mapType = type;
     WebScriptObject *webScriptObject = [webView windowScriptObject];
-    NSArray *args = [NSArray arrayWithObject:[NSNumber numberWithInt:mapType]];
+    NSArray *args = [NSArray arrayWithObject:[NSNumber numberWithLong:mapType]];
     [webScriptObject callWebScriptMethod:@"setMapType" withArguments:args];
 }
 
