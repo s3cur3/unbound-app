@@ -1149,9 +1149,58 @@ typedef NSUInteger PIXOverwriteStrategy;
 //TODO: background thread these operations
 -(void)moveFiles:(NSArray *)items
 {
+    
     DLog(@"moving %ld files...", items.count);
     NSString *aDestinationPath = [[items lastObject] valueForKey:@"destination"];
     NSURL *destinationURL = [NSURL fileURLWithPath:aDestinationPath isDirectory:YES];
+    
+    
+    BOOL hadLockedFiles = NO;
+    
+    NSMutableArray * validatedFiles = [NSMutableArray new];
+    
+    // remove any locked files
+    for(id file in items)
+	{
+        NSString *sourcePath = [file objectForKey:@"source"];
+        
+        NSError * error;
+        NSDictionary *attributes =  [[NSFileManager defaultManager] attributesOfItemAtPath:sourcePath error:&error];
+        BOOL isLocked = [[attributes objectForKey:@"NSFileImmutable"] boolValue];
+        
+        if(!isLocked)
+        {
+            [validatedFiles addObject:file];
+        }
+        
+        else
+        {
+            hadLockedFiles = YES;
+        }
+        
+    }
+    
+    if(hadLockedFiles)
+    {
+        // alert the user if some of the files were locked
+        
+        NSAlert* alert = [[NSAlert alloc] init];
+        alert.messageText = @"Unable to Move Locked Files";
+        alert.informativeText = @"Some of the files you tried to move are currently locked. These files will not be moved.";
+        
+        [alert addButtonWithTitle:@"OK"];
+        [alert addButtonWithTitle:@"Cancel Move"];
+        
+        if([alert runModal] == NSAlertSecondButtonReturn)
+        {
+            return;
+        }
+    }
+    
+    
+    items = validatedFiles;
+    
+    
     NSArray *newItems = [self userValidatedFiles:items forDestination:destinationURL];
     if (newItems.count == 0) {
         return;
@@ -1167,6 +1216,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     NSMutableSet * changedAlbums = [[NSMutableSet alloc] init];
     
     NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
+    
     
     for (id aDict in items)
     {
@@ -1549,6 +1599,7 @@ typedef NSUInteger PIXOverwriteStrategy;
 //            
 //			continue;
 //		}
+        
         
 		NSString* const name = [sourcePath lastPathComponent];
         NSString *destPath = [[destinationURL path] stringByAppendingPathComponent: name];
