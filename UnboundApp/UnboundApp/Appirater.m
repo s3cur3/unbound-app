@@ -50,7 +50,8 @@ NSString *const kAppiraterRatedCurrentVersion		= @"kAppiraterRatedCurrentVersion
 NSString *const kAppiraterDeclinedToRate			= @"kAppiraterDeclinedToRate";
 NSString *const kAppiraterReminderRequestDate		= @"kAppiraterReminderRequestDate";
 
-NSString *templateReviewURL = @"macappstore://userpub.itunes.apple.com/WebObjects/MZUserPublishing.woa/wa/addUserReview?id=APP_ID&type=Purple+Software";
+NSString *templateReviewURL = @"https://itunes.apple.com/us/app/unbound/idAPP_ID?ls=1&mt=12#";
+
 
 static NSString *_appId;
 static double _daysUntilPrompt = 30;

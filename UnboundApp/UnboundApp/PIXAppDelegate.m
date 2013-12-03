@@ -183,7 +183,7 @@
     [Appirater setUsesUntilPrompt:4];
     [Appirater setSignificantEventsUntilPrompt:-1];
     [Appirater setTimeBeforeReminding:2];
-    //[Appirater setDebug:YES];
+    [Appirater setDebug:YES];
     
     [Appirater appLaunched:YES];
 #endif
