@@ -2888,6 +2888,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"USE_OLD_MAPS=1",
+					"APPIRATOR=1",
 				);
 				INFOPLIST_FILE = "UnboundApp/UnboundApp-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
@@ -2918,7 +2919,10 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UnboundApp/UnboundApp-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "USE_OLD_MAPS=1";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"USE_OLD_MAPS=1",
+					"APPIRATOR=1",
+				);
 				INFOPLIST_FILE = "UnboundApp/UnboundApp-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
