@@ -1012,7 +1012,10 @@
         
         [[PIXFileManager sharedInstance] recyclePhotos:itemsToDelete];
         
-        [self.pageController setSelectedIndex:currentIndex];
+        if(currentIndex < [self.pagerData count])
+        {
+            [self.pageController setSelectedIndex:currentIndex];
+        }
         
     } else {
         // User clicked cancel, they do not want to delete the files
