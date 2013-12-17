@@ -129,7 +129,7 @@
     
     [self.trialExpireView setAutoresizingMask:NSViewMinXMargin | NSViewMinYMargin];
     
-    
+    [self.window invalidateCursorRectsForView:self.trialExpireView];
     
     
     // present an alert and quit the app if this as expired (with a 5 minute gracec period
@@ -167,6 +167,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fullscreenExited:) name:NSWindowDidExitFullScreenNotification object:self.window];
     
     
+
+    
 #endif
     
     
@@ -197,6 +199,12 @@
     {
         self.trialExpireText.stringValue = @"This Trial has expired.";
     }
+}
+
+-(IBAction)trailButtonPressed:(id)sender
+{
+    NSURL * url = [NSURL URLWithString:@"http://www.unboundformac.com"];
+    [[NSWorkspace sharedWorkspace] openURL:url];
 }
 
 

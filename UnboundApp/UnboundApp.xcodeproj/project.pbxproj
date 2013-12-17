@@ -728,6 +728,9 @@
 		8CE460E916CD7BB400CDFA04 /* PIXCustomShareSheetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460E716CD7BB300CDFA04 /* PIXCustomShareSheetViewController.xib */; };
 		8CE8F62516BD8C9E00DC6014 /* DebugPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CE8F62216BD8C9E00DC6014 /* DebugPreferencesView.xib */; };
 		8CE8F62616BD8C9E00DC6014 /* DebugPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE8F62316BD8C9E00DC6014 /* DebugPreferencesViewController.m */; };
+		8CEDF76A185A3E8300E35E77 /* PIXHandCursorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CEDF769185A3E8300E35E77 /* PIXHandCursorButton.m */; };
+		8CEDF76B185A446A00E35E77 /* PIXHandCursorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CEDF769185A3E8300E35E77 /* PIXHandCursorButton.m */; };
+		8CEDF76C185A446B00E35E77 /* PIXHandCursorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CEDF769185A3E8300E35E77 /* PIXHandCursorButton.m */; };
 		8CF05AEF17C3097400AB88B5 /* Licences.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8CF05AEE17C3097300AB88B5 /* Licences.txt */; };
 		8CF05AF017C30A2500AB88B5 /* Licences.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8CF05AEE17C3097300AB88B5 /* Licences.txt */; };
 		8CF05AF217C3374F00AB88B5 /* Unbound.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 8CF05AF117C3374F00AB88B5 /* Unbound.iconset */; };
@@ -1183,6 +1186,8 @@
 		8CE8F62216BD8C9E00DC6014 /* DebugPreferencesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DebugPreferencesView.xib; sourceTree = "<group>"; };
 		8CE8F62316BD8C9E00DC6014 /* DebugPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugPreferencesViewController.m; sourceTree = "<group>"; };
 		8CE8F62416BD8C9E00DC6014 /* DebugPrefrencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugPrefrencesViewController.h; sourceTree = "<group>"; };
+		8CEDF768185A3E8300E35E77 /* PIXHandCursorButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXHandCursorButton.h; sourceTree = "<group>"; };
+		8CEDF769185A3E8300E35E77 /* PIXHandCursorButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXHandCursorButton.m; sourceTree = "<group>"; };
 		8CF05AEE17C3097300AB88B5 /* Licences.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Licences.txt; sourceTree = "<group>"; };
 		8CF05AF117C3374F00AB88B5 /* Unbound.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = Unbound.iconset; sourceTree = "<group>"; };
 		8CF2C5DF16BB458900F906F1 /* MASPreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MASPreferencesWindow.xib; sourceTree = "<group>"; };
@@ -1321,6 +1326,8 @@
 				1D4A1DCA167AE1A500C9A895 /* PIXMainWindowController.h */,
 				1D4A1DCB167AE1A500C9A895 /* PIXMainWindowController.m */,
 				1D4A1DC3167ADA2400C9A895 /* PIXMainWindow.xib */,
+				8CEDF768185A3E8300E35E77 /* PIXHandCursorButton.h */,
+				8CEDF769185A3E8300E35E77 /* PIXHandCursorButton.m */,
 				1D4A1DCD167AE22A00C9A895 /* PIXInfoWindowController.h */,
 				1D4A1DCE167AE22A00C9A895 /* PIXInfoWindowController.m */,
 				1D4A1DCF167AE22A00C9A895 /* PIXInfoWindowController.xib */,
@@ -2465,6 +2472,7 @@
 				8C249E7E16AB429E00CB97AF /* CNGridViewItem.m in Sources */,
 				8C94DFFE183DA6AE00827888 /* MKMapView+Additions.m in Sources */,
 				8C249E7F16AB429E00CB97AF /* CNGridViewItemLayout.m in Sources */,
+				8CEDF76A185A3E8300E35E77 /* PIXHandCursorButton.m in Sources */,
 				8C94E021183DA6BF00827888 /* NSString+SBJSON.m in Sources */,
 				8C249E8016AB429E00CB97AF /* NSColor+CNGridViewPalette.m in Sources */,
 				8C94E000183DA6AE00827888 /* MKMapView+Private.m in Sources */,
@@ -2645,6 +2653,7 @@
 				8C2860A217308566009A0B35 /* PIXHUDMessageController.m in Sources */,
 				8C2860A317308566009A0B35 /* PIXLeapTutorialWindowController.m in Sources */,
 				8C9FA5AE183AC5FE000AEBC9 /* MKPolyline.m in Sources */,
+				8CEDF76B185A446A00E35E77 /* PIXHandCursorButton.m in Sources */,
 				8C2860A417308566009A0B35 /* PIXAboutWindowController.m in Sources */,
 				8C2860A517308566009A0B35 /* PIXTransitionSetup.m in Sources */,
 				8CA459D8174E7FD9002BF431 /* PIXProgressWindowController.m in Sources */,
@@ -2765,6 +2774,7 @@
 				8C9FA640183AD5A4000AEBC9 /* PIXHUDMessageController.m in Sources */,
 				8C9FA641183AD5A4000AEBC9 /* PIXLeapTutorialWindowController.m in Sources */,
 				8C9FA642183AD5A4000AEBC9 /* MKPolyline.m in Sources */,
+				8CEDF76C185A446B00E35E77 /* PIXHandCursorButton.m in Sources */,
 				8C9FA643183AD5A4000AEBC9 /* PIXAboutWindowController.m in Sources */,
 				8C9FA644183AD5A4000AEBC9 /* PIXTransitionSetup.m in Sources */,
 				8C9FA645183AD5A4000AEBC9 /* PIXProgressWindowController.m in Sources */,
@@ -2942,6 +2952,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = UnboundTrial.entitlements;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2977,6 +2988,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = UnboundTrial.entitlements;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (

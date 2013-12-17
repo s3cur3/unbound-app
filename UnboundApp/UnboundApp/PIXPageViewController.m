@@ -242,6 +242,11 @@
     self.isPlayingSlideshow = YES;
     self.startSlideshowButton.image = [NSImage imageNamed:@"pause"];
     
+    if([self.pageController.view respondsToSelector:@selector(setLayerUsesCoreImageFilters:)])
+    {
+        [self.pageController.view setLayerUsesCoreImageFilters:YES];
+    }
+    
     // set up an array of integers for the slideshowPhotoIndexes array (we use this to handle shuffle)
     NSMutableArray *photoIndexes = [[NSMutableArray alloc] initWithCapacity:self.pagerData.count];
     
@@ -393,6 +398,12 @@
         
         // dispatch the transition so it goes a little smoother
         dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if([self.pageController.view respondsToSelector:@selector(setLayerUsesCoreImageFilters:)])
+            {
+                [self.pageController.view setLayerUsesCoreImageFilters:YES];
+            }
+            
             [self.pageController.view.layer addAnimation:animation forKey:@" "];
             [self.pageController setSelectedIndex:[nextIndex intValue]];
         });
@@ -1134,6 +1145,7 @@
         {
             [self.pageController setSelectedIndex:index];
         }
+    
         
         [self performSelector:@selector(startPreloadForController:) withObject:self.pageController afterDelay:0.0f];
     }

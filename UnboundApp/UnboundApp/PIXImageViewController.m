@@ -80,11 +80,13 @@
         [super setRepresentedObject:newPhoto];
     
         if (self.representedObject!=nil) {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photoFullsizeChanged:) name:PhotoFullsizeDidChangeNotification object:self.representedObject];
+            
             //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photoChanged:) name:PhotoThumbDidChangeNotification object:self.representedObject];
             self.imageView.image = [newPhoto fullsizeImageForFullscreenDisplay];
             [self.imageView setNeedsDisplay];
             NSCParameterAssert(self.imageView.image);
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photoFullsizeChanged:) name:PhotoFullsizeDidChangeNotification object:self.representedObject];
+            
         }
     
     } else if (newPhoto!=nil) {

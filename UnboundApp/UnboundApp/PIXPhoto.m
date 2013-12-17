@@ -137,6 +137,9 @@ const CGFloat kThumbnailSize = 370.0f;
 {
     if (_fullsizeImage == nil)
     {
+        [self fullsizeImageStartLoadingIfNeeded:YES];
+        
+        
         //While full image is loading show the thumbnail stretched
         if (_thumbnailImage!=nil) {
             return _thumbnailImage;
