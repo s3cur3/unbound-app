@@ -850,7 +850,9 @@
         }
     }
     
-    [self interpretKeyEvents:@[theEvent]];
+    
+    [super keyDown:theEvent];
+    
     
 }
 

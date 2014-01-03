@@ -218,8 +218,7 @@
         return;
     }
     
-    
-    [self interpretKeyEvents:[NSArray arrayWithObject:theEvent]];
+    [super keyDown:theEvent];
 }
 
 
