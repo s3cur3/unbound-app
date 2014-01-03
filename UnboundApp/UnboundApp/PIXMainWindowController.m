@@ -208,6 +208,22 @@
 }
 
 
+- (void)keyDown:(NSEvent *)theEvent {
+    
+    //intercept cmd-w
+    
+    if(([theEvent modifierFlags] & NSCommandKeyMask) && [[theEvent characters] isEqualToString:@"w"])
+    {
+        [self close];
+        return;
+    }
+    
+    
+    [self interpretKeyEvents:[NSArray arrayWithObject:theEvent]];
+}
+
+
+
 
 //- (void)windowDidLoad
 //{
