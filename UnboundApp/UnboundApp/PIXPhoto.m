@@ -1339,6 +1339,7 @@ const CGFloat kThumbnailSize = 370.0f;
         
         self.thumbnailFilePath = nil;
     }
+    
 }
 
 -(void)postPhotoUpdatedNote

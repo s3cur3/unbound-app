@@ -1197,6 +1197,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 [mainThreadPhoto setThumbnailImage:nil];
                 [mainThreadPhoto clearFiles];
                 [mainThreadPhoto setExifData:nil];
+                [mainThreadPhoto setFullsizeImage:nil];
                 
                 [mainThreadPhoto postPhotoUpdatedNote];
             }
