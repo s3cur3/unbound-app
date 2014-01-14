@@ -707,13 +707,15 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 
 -(BOOL)saveDBToDisk:(NSError **)error
 {
-    if (![self.managedObjectContext save:error])
-    {
-        DLog(@"ERROR SAVING IN MAIN THREAD: %@", [*error description])
-        return NO;
-    }
-    
-    return YES;
+// rchang: this would return early and never advance to the later code.
+// commenting it out appears to fix an issue where restarts were reverting to older captions
+//    if (![self.managedObjectContext save:error])
+//    {
+//        DLog(@"ERROR SAVING IN MAIN THREAD: %@", [*error description])
+//        return NO;
+//    }
+//    
+//    return YES;
     // perform this on the main thread if needed
     if(![NSThread isMainThread])
         
