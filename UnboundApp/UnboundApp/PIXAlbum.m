@@ -395,6 +395,9 @@ static NSString *const kItemsKey = @"photos";
         // enqueue these notes on the sender so if a few album stack images load right after each other it doesn't have to redraw multiple times
         [[NSNotificationQueue defaultQueue] enqueueNotification:note postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnSender forModes:nil];
         
+        [self readAndImportUnboundFile];
+            
+        
         [[PIXAppDelegate sharedAppDelegate] saveDBToDiskWithRateLimit];
     }
 }
@@ -469,7 +472,7 @@ static NSString *const kItemsKey = @"photos";
 //        // have access rights to read
     
     
-     if(![self shouldHaveUnboundFile]) return;
+    // if(![self shouldHaveUnboundFile]) return;
     
     // write the JSON back to the file
     NSOutputStream *os = [[NSOutputStream alloc] initToFileAtPath:unboundFilePath append:NO];
@@ -554,14 +557,11 @@ static NSString *const kItemsKey = @"photos";
     return ([lowercasePath rangeOfString:@"/dropbox/"].length > 0);
 }
 
--(void)updateUnboundFile
-{    
-    if(![self unboundFileIsChanged] || ![self shouldHaveUnboundFile]) return;
+-(NSMutableDictionary *)readAndImportUnboundFile
+{
+    NSMutableDictionary * unboundMetaDictionary = [self readUnboundFile];
     
     
-     NSMutableDictionary * unboundMetaDictionary = [self readUnboundFile];
-        
-    [unboundMetaDictionary setObject:@"1.0" forKey:@"unboundFileVersion"];
     
     // loop through the photos and populate the captions
     NSDictionary * photosDictionary = [unboundMetaDictionary objectForKey:@"photos"];
@@ -595,7 +595,7 @@ static NSString *const kItemsKey = @"photos";
                             {
                                 // update the photo's caption
                                 [mainThreadPhoto setCaption:newCaption];
-            
+                                
                                 // also update the views
                                 [mainThreadPhoto postPhotoUpdatedNote];
                             }
@@ -606,6 +606,20 @@ static NSString *const kItemsKey = @"photos";
             }
         }
     }
+    
+    return unboundMetaDictionary;
+
+}
+
+-(void)updateUnboundFile
+{    
+    if(![self unboundFileIsChanged] || ![self shouldHaveUnboundFile]) return;
+    
+    
+    NSMutableDictionary * unboundMetaDictionary = [self readAndImportUnboundFile];
+        
+    [unboundMetaDictionary setObject:@"1.0" forKey:@"unboundFileVersion"];
+    
     
     NSDateFormatter *datFormatter = [[NSDateFormatter alloc] init];
     [datFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss Z"];
@@ -636,7 +650,7 @@ static NSString *const kItemsKey = @"photos";
 {
     if(photo == nil) return;
     
-    if(![self shouldHaveUnboundFile]) return;
+    //if(![self shouldHaveUnboundFile]) return;
     
     NSMutableDictionary * unboundMetaDictionary = [self readUnboundFile];
 

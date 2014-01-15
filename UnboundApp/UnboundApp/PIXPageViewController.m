@@ -450,12 +450,17 @@
         
         [self.controlView setNeedsDisplay:YES];
         
+        
+        
         [self.controlWindow setParentView:self.pageController.view];
         
         
         [self.pageController.view layoutSubtreeIfNeeded];
         
-        [self.infoPanelVC setPhoto:[self.pagerData objectAtIndex:self.pageController.selectedIndex]];
+        PIXPhoto * thisPhoto = [self.pagerData objectAtIndex:self.pageController.selectedIndex];
+        
+        [self.infoPanelVC setPhoto:thisPhoto];
+        [self.controlView setPhoto:thisPhoto];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fullscreenChanged:) name:NSWindowDidEnterFullScreenNotification object:self.view.window];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fullscreenChanged:) name:NSWindowDidExitFullScreenNotification object:self.view.window];
