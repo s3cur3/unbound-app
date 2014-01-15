@@ -1062,6 +1062,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 {
                     [lastAlbum setAlbumDate:[aPhoto objectForKey:kCreatedKey]];
                 }
+                // will check for date modified before updating
+                [lastAlbum updateUnboundFileinBackground];
             }
             
             // this is a photo. Create the object in the db

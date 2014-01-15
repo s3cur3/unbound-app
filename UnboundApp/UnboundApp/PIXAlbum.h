@@ -97,6 +97,7 @@ typedef enum {
 -(void) flush;
 -(void) checkDates;
 -(void) updateUnboundFile;
+-(void) updateUnboundFileinBackground;
 
 -(void) setUnboundFileCaptionForPhoto:(PIXPhoto *)photo;
 

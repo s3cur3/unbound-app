@@ -1148,7 +1148,7 @@
         [self.pageController setArrangedObjects:self.pagerData];
         NSInteger index = [self.album.sortedPhotos indexOfObject:self.initialSelectedObject];
         
-        if(index > 0 && index < [self.pagerData count])
+        if(index >= 0 && index < [self.pagerData count])
         {
             [self.pageController setSelectedIndex:index];
         }
