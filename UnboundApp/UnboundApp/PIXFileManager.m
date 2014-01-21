@@ -1621,14 +1621,14 @@ typedef NSUInteger PIXOverwriteStrategy;
                     
 
                     [alert setMessageText: [NSString stringWithFormat: @"%ld Duplicate File Names", dupeCount]];
-                    [alert setInformativeText:[NSString stringWithFormat:@"An item named \"%@\" and %ld others already exist in this location. Do you want to replace them with the ones you’re moving?", name, dupeCount-1]];
+                    [alert setInformativeText:[NSString stringWithFormat:@"An item named \"%@\" and %ld others already exist in this location. Do you want to keep both these files and the ones you are moving?", name, dupeCount-1]];
                 } else {
                     [alert addButtonWithTitle: @"Keep Both"];
                     [alert addButtonWithTitle: @"Cancel"];
                     [alert addButtonWithTitle: @"Skip"];
                     
                     [alert setMessageText: [NSString stringWithFormat: @"An item named \"%@\" ", name]];
-                    [alert setInformativeText:@"already exists in this location. Do you want to replace it with the one you’re moving?"];
+                    [alert setInformativeText:@"already exists in this location. Do you want to keep both this file and the one you are moving?"];
                 }
                 
                 [alert setAlertStyle: NSWarningAlertStyle];

@@ -561,8 +561,6 @@ static NSString *const kItemsKey = @"photos";
 {
     NSMutableDictionary * unboundMetaDictionary = [self readUnboundFile];
     
-    
-    
     // loop through the photos and populate the captions
     NSDictionary * photosDictionary = [unboundMetaDictionary objectForKey:@"photos"];
     

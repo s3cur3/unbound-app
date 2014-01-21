@@ -43,4 +43,10 @@
     [[NSWorkspace sharedWorkspace] openURL:url];
 }
 
+-(IBAction)cocoanaut:(id)sender
+{
+    NSURL * url = [NSURL URLWithString:@"http://www.cocoanaut.com"];
+    [[NSWorkspace sharedWorkspace] openURL:url];
+}
+
 @end

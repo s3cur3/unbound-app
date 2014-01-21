@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A2093" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13B3116" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
@@ -16,14 +16,14 @@
         <window title="About Unbound" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" showsToolbarButton="NO" wantsToBeColor="NO" animationBehavior="default" id="1">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="332" height="303"/>
+            <rect key="contentRect" x="196" y="240" width="332" height="310"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1028"/>
             <view key="contentView" id="2">
-                <rect key="frame" x="0.0" y="0.0" width="332" height="303"/>
+                <rect key="frame" x="0.0" y="0.0" width="332" height="310"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <imageView translatesAutoresizingMaskIntoConstraints="NO" id="5">
-                        <rect key="frame" x="20" y="187" width="96" height="96"/>
+                        <rect key="frame" x="20" y="194" width="96" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="96" id="77"/>
@@ -31,8 +31,8 @@
                         </constraints>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="Unbound-For-Mac-512" id="6"/>
                     </imageView>
-                    <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="13">
-                        <rect key="frame" x="128" y="249" width="87" height="25"/>
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="13">
+                        <rect key="frame" x="129" y="256" width="87" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="76"/>
@@ -43,8 +43,8 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="29">
-                        <rect key="frame" x="128" y="168" width="187" height="80"/>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="29">
+                        <rect key="frame" x="129" y="175" width="185" height="80"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="80" id="34"/>
@@ -55,8 +55,8 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="53">
-                        <rect key="frame" x="89" y="76" width="154" height="19"/>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="53">
+                        <rect key="frame" x="90" y="83" width="153" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="roundRect" title="Learn more about Pixite" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="54">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -67,7 +67,7 @@
                         </connections>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="59">
-                        <rect key="frame" x="79" y="103" width="175" height="57"/>
+                        <rect key="frame" x="79" y="110" width="175" height="57"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="175" id="70"/>
@@ -81,20 +81,32 @@
                             <action selector="unboundLearnMore:" target="-2" id="75"/>
                         </connections>
                     </button>
-                    <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="124">
-                        <rect key="frame" x="17" y="20" width="298" height="31"/>
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="124">
+                        <rect key="frame" x="18" y="20" width="296" height="46"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="31" id="150"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="46" id="giM-3Q-MS8"/>
                         </constraints>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="125">
                             <font key="font" size="9" name="Helvetica"/>
-                            <string key="title">Unbound uses code from the CNGridView and Sparkle projects.
+                            <string key="placeholderString">Unbound uses code from 
+the CNGridView from CocoaNaut.com and Sparkle projects.
 (Licenses can be found in Licenses.txt in the application bundle)</string>
                             <color key="textColor" white="0.0" alpha="0.76000000000000001" colorSpace="deviceWhite"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jW6-3g-m2x" customClass="PIXHandCursorButton">
+                        <rect key="frame" x="130" y="41" width="72" height="15"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="mK1-nw-FDC">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="cocoanaut:" target="-2" id="EsG-oP-QsM"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="5" firstAttribute="top" secondItem="2" secondAttribute="top" constant="20" symbolic="YES" id="9"/>
