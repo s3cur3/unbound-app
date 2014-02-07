@@ -164,8 +164,10 @@
             self.itemImage = [NSImage imageNamed:@"temp"];
         }
     }
+    
 
-    [self updateLayer];
+    [self setNeedsDisplay:YES]; // this will cause updateLayer to be called
+    
     if([self.photo isVideo])
     {
         [self.layer addSublayer:self.videoLayover.layer];
@@ -177,6 +179,11 @@
         self.videoLayover = nil;
     }
     [self setNeedsDisplay:YES];
+}
+
+-(BOOL)wantsUpdateLayer
+{
+    return YES;
 }
 
 - (void)prepareForReuse
