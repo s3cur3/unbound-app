@@ -1186,8 +1186,7 @@
     NSCParameterAssert(self.isPlayingSlideshow);
     NSCParameterAssert([[NSUserDefaults standardUserDefaults] boolForKey:@"slideshowShouldShuffle"]);
     
-    int currentSelectedIndex = [[self.slideshowPhotoIndexes objectAtIndex:self.currentSlide] intValue];
-    DLog(@"Current selected photo index : %d", currentSelectedIndex);
+    DLog(@"Current selected photo index : %d", [[self.slideshowPhotoIndexes objectAtIndex:self.currentSlide] intValue]);
     for (int i = (int)self.currentSlide; i<self.slideshowPhotoIndexes.count; i++)
     {
         PIXPhoto *aNewPhoto = [self.pagerData objectAtIndex:i];

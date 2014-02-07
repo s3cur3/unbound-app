@@ -516,7 +516,10 @@ const CGFloat kThumbnailSize = 370.0f;
                     weakSelf.thumbnailImage = thumb;
                     
                     // use performSelector instead of dispatch here because it updates the ui much faster                    
-                    [weakSelf performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
+                    //[weakSelf performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [weakSelf postPhotoUpdatedNote];
+                    });
                     
                     _thumbnailImageIsLoading = NO;
                 }
@@ -700,7 +703,10 @@ const CGFloat kThumbnailSize = 370.0f;
                 // save the thubm to memory
                 [weakSelf setThumbnailImage:image];
                 
-                [self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
+                //[self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self postPhotoUpdatedNote];
+                });
             }
         }
  
@@ -752,7 +758,10 @@ const CGFloat kThumbnailSize = 370.0f;
                         // save the thumb to memory
                         [weakSelf setThumbnailImage:image];
                         
-                        [self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
+                        //[self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self postPhotoUpdatedNote];
+                        });
                     }
                 }
                 
@@ -938,7 +947,10 @@ const CGFloat kThumbnailSize = 370.0f;
                     // save the thubm to memory
                     [weakSelf setThumbnailImage:image];
                     
-                    [self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
+                    //[self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self postPhotoUpdatedNote];
+                    });
                 }
             }
             [[PIXFileParser sharedFileParser] decrementWorking];
@@ -974,7 +986,10 @@ const CGFloat kThumbnailSize = 370.0f;
                 // save the thubm to memory
                 [weakSelf setThumbnailImage:image];
                 
-                [self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
+                //[self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self postPhotoUpdatedNote];
+                });
             }
             
             // we've finished updating the ui with the image, do everythinge else at a lower priority
@@ -1025,7 +1040,10 @@ const CGFloat kThumbnailSize = 370.0f;
                         // save the thumb to memory
                         [weakSelf setThumbnailImage:image];
                         
-                        [self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
+                        //[self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self postPhotoUpdatedNote];
+                        });
                     }
                 }
                 
@@ -1344,6 +1362,9 @@ const CGFloat kThumbnailSize = 370.0f;
 
 -(void)postPhotoUpdatedNote
 {
+    // enqueue these notes
+   // NSNotification * note = [NSNotification notificationWithName:PhotoThumbDidChangeNotification object:self];
+    //[[NSNotificationQueue defaultQueue] enqueueNotification:note postingStyle:NSPostASAP coalesceMask:NSNotificationNoCoalescing forModes:nil];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:PhotoThumbDidChangeNotification object:self];
     
