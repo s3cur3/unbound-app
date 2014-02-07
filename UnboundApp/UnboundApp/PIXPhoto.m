@@ -1363,10 +1363,10 @@ const CGFloat kThumbnailSize = 370.0f;
 -(void)postPhotoUpdatedNote
 {
     // enqueue these notes
-//    NSNotification * note = [NSNotification notificationWithName:PhotoThumbDidChangeNotification object:self];
-//    [[NSNotificationQueue defaultQueue] enqueueNotification:note postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnSender forModes:nil];
+    NSNotification * note = [NSNotification notificationWithName:PhotoThumbDidChangeNotification object:self];
+    [[NSNotificationQueue defaultQueue] enqueueNotification:note postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnSender forModes:nil];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:PhotoThumbDidChangeNotification object:self];
+    //[[NSNotificationCenter defaultCenter] postNotificationName:PhotoThumbDidChangeNotification object:self];
     
 
     

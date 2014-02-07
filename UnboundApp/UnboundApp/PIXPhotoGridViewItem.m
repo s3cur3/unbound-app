@@ -167,7 +167,7 @@
     
     
     
-    [self setNeedsDisplay:YES];
+    //[self setNeedsDisplay:YES];
     [self updateLayer];
 }
 
@@ -193,12 +193,10 @@
 
 -(void)setFrame:(NSRect)frameRect
 {
-    [super setFrame:frameRect];
-    [_selectionLayer setFrame:self.bounds];
+    if(CGRectEqualToRect(self.frame, frameRect)) return;
     
-    [self setNeedsDisplay:YES];
+    [super setFrame:frameRect];
     [self updateLayer];
-
 }
 
 -(NSImageView *)videoLayover
@@ -255,6 +253,8 @@
     
     [CATransaction begin];
     [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+    
+    [_selectionLayer setFrame:self.bounds];
     
     if([self.photo isVideo])
     {
