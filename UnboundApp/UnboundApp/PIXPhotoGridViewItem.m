@@ -165,26 +165,17 @@
         }
     }
     
-
-    [self setNeedsDisplay:YES]; // this will cause updateLayer to be called
     
-    if([self.photo isVideo])
-    {
-        [self.layer addSublayer:self.videoLayover.layer];
-        [self setFrame:self.frame];
-    }
-    else
-    {
-        [_videoLayover.layer removeFromSuperlayer];
-        self.videoLayover = nil;
-    }
+    
     [self setNeedsDisplay:YES];
+    [self updateLayer];
 }
 
 -(BOOL)wantsUpdateLayer
 {
     return YES;
 }
+
 
 - (void)prepareForReuse
 {
@@ -204,58 +195,10 @@
 {
     [super setFrame:frameRect];
     [_selectionLayer setFrame:self.bounds];
-
-    /*
-    if (_videoLayover!=nil) {
-        //DLog(@"self.frame.origin.x: %f, self.frame.origin.y: %f, self.frame.size.height: %f, self.frame.size.width: %f", frameRect.origin.x, frameRect.origin.y, frameRect.size.height, frameRect.size.width);
-        NSImage * photo = self.itemImage;
-        CGRect rect = CGRectInset(self.bounds, 15, 15);
-        
-        // calculate the proportional image frame
-        CGSize imageSize = [photo size];
-        
-        CGRect imageFrame = CGRectMake(0, 0, 100, 100);
-        
-        if(imageSize.width > 0 && imageSize.height > 0)
-        {
-            if(imageSize.width / imageSize.height > rect.size.width / rect.size.height)
-            {
-                float mulitplier = rect.size.width / imageSize.width;
-                
-                imageFrame.size.width = rint(mulitplier * imageFrame.size.width);
-                imageFrame.size.height = rint(mulitplier * imageFrame.size.height);
-                
-                imageFrame.origin.y = rint((rect.size.height - imageFrame.size.height)/2 + rect.origin.y);
-                imageFrame.origin.x = rint((rect.size.width - imageFrame.size.width)/2 + rect.origin.x);
-            }
-            
-            else
-            {
-                float mulitplier = rect.size.height / imageSize.height;
-                
-                imageFrame.size.width = rint(mulitplier * imageFrame.size.width);
-                imageFrame.size.height = rint(mulitplier * imageFrame.size.height);
-                
-                imageFrame.origin.y = rint((rect.size.height - imageFrame.size.height)/2 + rect.origin.y);
-                imageFrame.origin.x = rint((rect.size.width - imageFrame.size.width)/2 + rect.origin.x);
-            }
-        }
-        
-        else
-        {
-            float mulitplier = 0.5;
-            
-            imageFrame.size.width = rint(mulitplier * imageFrame.size.width);
-            imageFrame.size.height = rint(mulitplier * imageFrame.size.height);
-            
-            imageFrame.origin.y = rint((rect.size.height - imageFrame.size.height)/2 + rect.origin.y);
-            imageFrame.origin.x = rint((rect.size.width - imageFrame.size.width)/2 + rect.origin.x);
-        }
     
-        [_videoLayover setFrame:imageFrame];
-    }
-*/
+    [self setNeedsDisplay:YES];
     [self updateLayer];
+
 }
 
 -(NSImageView *)videoLayover
@@ -306,11 +249,23 @@
     return _selectionLayer;
 }
 
+
 -(void)updateLayer
 {
     
     [CATransaction begin];
     [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+    
+    if([self.photo isVideo])
+    {
+        [self.layer addSublayer:self.videoLayover.layer];
+    }
+    
+    else
+    {
+        [_videoLayover.layer removeFromSuperlayer];
+        self.videoLayover = nil;
+    }
     
     
     NSImage * photo = self.itemImage;
