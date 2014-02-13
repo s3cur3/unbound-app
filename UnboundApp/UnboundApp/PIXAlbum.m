@@ -335,6 +335,8 @@ static NSString *const kItemsKey = @"photos";
 -(void) checkDates
 {    
     
+    if([self isReallyDeleted]) return;
+    
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         
@@ -350,6 +352,11 @@ static NSString *const kItemsKey = @"photos";
         // loop through all this album's photos
         for(PIXPhoto * aPhoto in threadAlbum.photos)
         {
+            if(![aPhoto isReallyDeleted])
+            {
+                break;
+            }
+            
             // only try to get exif data if it's needed
             if(aPhoto.exifData == nil)
             {
