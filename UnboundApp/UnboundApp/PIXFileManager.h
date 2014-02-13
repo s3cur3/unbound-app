@@ -15,6 +15,8 @@
 
 +(PIXFileManager *)sharedInstance;
 
+- (void) deleteItemsWorkflow:(NSSet *)selectedItems;
+
 -(void)moveFiles:(NSArray *)items;
 -(void)copyFiles:(NSArray *)items;
 

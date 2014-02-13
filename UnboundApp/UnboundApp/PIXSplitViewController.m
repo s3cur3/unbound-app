@@ -28,6 +28,7 @@
 @property (nonatomic, strong) NSToolbarItem * sliderItem;
 @property (nonatomic, strong) NSToolbarItem * shareItem;
 @property (nonatomic, strong) NSToolbarItem * importItem;
+@property (nonatomic, strong) NSToolbarItem * deleteAlbumItem;
 @property (nonatomic, strong) NSToolbarItem * sortButton;
 
 @property float lastSplitviewWidth;
@@ -134,7 +135,7 @@
     [self.backButtonSegment setSelected:![self.splitView isSubviewCollapsed:self.leftPane]
                              forSegment:1];
     
-    NSArray * items = @[self.backButtonSegmentItem, self.importItem, self.navigationViewController.activityIndicator, self.navigationViewController.middleSpacer, self.sliderItem, self.sortButton];
+    NSArray * items = @[self.backButtonSegmentItem, self.importItem, self.navigationViewController.activityIndicator, self.navigationViewController.middleSpacer, self.sliderItem, self.deleteAlbumItem, self.sortButton];
     
     [self.navigationViewController setNavBarHidden:NO];
     [self.navigationViewController setToolbarItems:items];
@@ -354,6 +355,45 @@
     [popover setBehavior:NSPopoverBehaviorTransient];
     [popover showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMaxYEdge];
      */
+}
+
+- (NSToolbarItem *)deleteAlbumItem
+{
+    if(_deleteAlbumItem != nil) return _deleteAlbumItem;
+    
+    _deleteAlbumItem = [[NSToolbarItem alloc] initWithItemIdentifier:@"deleteAlbumButton"];
+    //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
+    
+    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, -2, 100, 25)];
+    
+    [buttonView setImage:nil];
+    [buttonView setImagePosition:NSImageLeft];
+    [buttonView setBordered:YES];
+    [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
+    [buttonView setTitle:@"Delete Album"];
+    
+    _deleteAlbumItem.view = buttonView;
+    
+    [_deleteAlbumItem setLabel:@"Delete Album"];
+    [_deleteAlbumItem setPaletteLabel:@"Delete Album"];
+    
+    
+    // Set up a reasonable tooltip, and image
+    // you will likely want to localize many of the item's properties
+    [_deleteAlbumItem setToolTip:@"Delete Album"];
+    
+    // Tell the item what message to send when it is clicked
+    [buttonView setTarget:self];
+    [buttonView setAction:@selector(deleteAlbumPressed:)];
+    
+    return _deleteAlbumItem;
+    
+}
+
+-(void)deleteAlbumPressed:(id)sender
+{
+    NSSet *itemsToDelete = [NSSet setWithObject:self.selectedAlbum];
+    [[PIXFileManager sharedInstance] deleteItemsWorkflow:itemsToDelete];
 }
 
 - (NSToolbarItem *)importItem

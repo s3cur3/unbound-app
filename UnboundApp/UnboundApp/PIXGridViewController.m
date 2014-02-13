@@ -226,94 +226,12 @@ static NSString *kContentTitleKey, *kContentImageKey;
     }
 }
 
-//TODO: Only for use with photos right now, fix to handle albums
 - (IBAction) deleteItems:(id )inSender
 {
     // if we have nothing to delete then do nothing
     if([self.selectedItems count] == 0) return;
     
-    NSMutableArray *itemsToDelete = [[self.selectedItems allObjects] mutableCopy];
-    NSSet *selectedSet = self.selectedItems;
-    if (self.selectedItems.count != selectedSet.count)
-    {
-        DLog(@"selectedItems contains duplicates : %@", self.selectedItems);
-        itemsToDelete = [[selectedSet allObjects] mutableCopy];
-    }
-    
-    NSString * deleteString = @"Delete";
-    
-    NSManagedObject *object = [itemsToDelete lastObject];
-    NSString *objectType = @"Item";
-    
-    NSString * suppressKey = nil;
-    
-    if([object isKindOfClass:[PIXPhoto class]])
-    {
-        objectType = PHOTO;
-        suppressKey = @"PIX_supressDeleteWarning";
-    } else if([object isKindOfClass:[PIXAlbum class]]) {
-        objectType = ALBUM;
-        suppressKey = @"PIX_supressAlbumDeleteWarning";
-    }
-    if([self.selectedItems count] > 1)
-    {
-        deleteString = [NSString stringWithFormat:@"%ld %@s", [self.selectedItems count], objectType];
-    } else {
-        deleteString = objectType;
-    }
-    
-    NSString *warningTitle = [NSString stringWithFormat:@"Delete %@?", deleteString];
-    NSString *warningButtonConfirm = [NSString stringWithFormat:@"Delete %@", deleteString];
-    NSString *warningMessage = [NSString stringWithFormat:@"The %@ will be deleted from your file system and moved to the trash.\n\nAre you sure you want to continue?", deleteString.lowercaseString];
-    
-    if([object isKindOfClass:[PIXAlbum class]])
-    {
-        if([self.selectedItems count] > 1)
-        {
-            warningMessage = @"The albums and their corresponding folders will be deleted from your file system and moved to the trash.\n\nAre you sure you want to continue?";
-        }
-        
-        else
-        {
-            warningMessage = @"The album and its corresponding folder will be deleted from your file system and moved to the trash.\n\nAre you sure you want to continue?";
-        }
-    }
-    
-    
-    NSAlert *alert = nil;
-    
-    
-    
-    BOOL suppressAlert = [[NSUserDefaults standardUserDefaults] boolForKey:suppressKey];
-    
-    if(!suppressAlert)
-    {
-        alert = [[NSAlert alloc] init];
-        [alert setMessageText:warningTitle];
-        [alert addButtonWithTitle:warningButtonConfirm];
-        [alert addButtonWithTitle:@"Cancel"];
-        [alert setInformativeText:warningMessage];
-        [alert setShowsSuppressionButton:YES];
-        [[alert suppressionButton] setTitle:@"Don't warn me again."];
-    }
-    
-    if (suppressAlert || [alert runModal] == NSAlertFirstButtonReturn) {
-        
-        if ([[alert suppressionButton] state] == NSOnState) {
-            // Suppress this alert from now on.
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:suppressKey];
-        }
-
-        
-        if ([[itemsToDelete lastObject] class] == [PIXAlbum class]) {
-            [[PIXFileManager sharedInstance] recycleAlbums:itemsToDelete];
-        } else {
-            [[PIXFileManager sharedInstance] recyclePhotos:itemsToDelete];
-        }
-        
-    } else {
-        // User clicked cancel, they do not want to delete the files
-    }
+    [[PIXFileManager sharedInstance] deleteItemsWorkflow:self.selectedItems];
     
 }
 

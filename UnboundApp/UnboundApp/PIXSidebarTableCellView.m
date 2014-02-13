@@ -149,48 +149,9 @@
     // if we have nothing to delete then do nothing
     if(!self.album) return;
     
-    NSArray *itemsToDelete = [NSArray arrayWithObject:self.album];
+        NSSet *itemsToDelete = [NSSet setWithObject:self.album];
 
-    // NSString * deleteString = @"Delete Album";
-
-
-    
-    NSString *warningTitle = @"Delete Album?";
-    NSString *warningButtonConfirm = @"Delete Album";
-    NSString *warningMessage = @"The album and its corresponding folder will be deleted from your file system and moved to the trash.\n\nAre you sure you want to continue?";
-    
-    
-    NSAlert *alert = nil;
-    
-    
-    NSString * suppressKey = @"PIX_supressAlbumDeleteWarning";
-    BOOL suppressAlert = [[NSUserDefaults standardUserDefaults] boolForKey:suppressKey];
-    
-    if(!suppressAlert)
-    {
-        alert = [[NSAlert alloc] init];
-        [alert setMessageText:warningTitle];
-        [alert addButtonWithTitle:warningButtonConfirm];
-        [alert addButtonWithTitle:@"Cancel"];
-        [alert setInformativeText:warningMessage];
-        [alert setShowsSuppressionButton:YES];
-        [[alert suppressionButton] setTitle:@"Don't warn me again."];
-    }
-    
-    if (suppressAlert || [alert runModal] == NSAlertFirstButtonReturn)
-    {
-        if ([[alert suppressionButton] state] == NSOnState) {
-            // Suppress this alert from now on.
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:suppressKey];
-        }
-        
-        
-        [[PIXFileManager sharedInstance] recycleAlbums:itemsToDelete];
-        
-    } else {
-        // User clicked cancel, they do not want to delete the files
-    }
-    
+    [[PIXFileManager sharedInstance] deleteItemsWorkflow:itemsToDelete];
 }
 
 

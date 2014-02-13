@@ -321,6 +321,14 @@
     [[NSWorkspace sharedWorkspace] openURL:url];
 }
 
+
+- (IBAction)requestFeaturePressed:(id)sender
+{
+    NSURL * url = [NSURL URLWithString:@"https://unbound.uservoice.com/forums/217348-new-features-for-unbound"];
+    [[NSWorkspace sharedWorkspace] openURL:url];
+}
+
+
 - (IBAction)chooseFolder:(id)sender
 {
     if([[PIXFileParser sharedFileParser] userChooseFolderDialog])

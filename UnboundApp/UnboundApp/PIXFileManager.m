@@ -497,6 +497,99 @@ typedef NSUInteger PIXOverwriteStrategy;
     
 }
 
+
+
+- (void) deleteItemsWorkflow:(NSSet *)selectedItems
+{
+    // if we have nothing to delete then do nothing
+    if([selectedItems count] == 0) return;
+    
+    NSMutableArray *itemsToDelete = [[selectedItems allObjects] mutableCopy];
+    
+    
+    NSString * deleteString = @"Delete";
+    
+    NSManagedObject *object = [itemsToDelete lastObject];
+    NSString *objectType = @"Item";
+    
+    NSString * suppressKey = nil;
+    
+    if([object isKindOfClass:[PIXPhoto class]])
+    {
+        objectType = PHOTO;
+        suppressKey = @"PIX_supressDeleteWarning";
+    } else if([object isKindOfClass:[PIXAlbum class]]) {
+        objectType = ALBUM;
+        suppressKey = @"PIX_supressAlbumDeleteWarning";
+    }
+    if([itemsToDelete count] > 1)
+    {
+        deleteString = [NSString stringWithFormat:@"%ld %@s", [itemsToDelete count], objectType];
+    } else {
+        deleteString = objectType;
+    }
+    
+    NSString *warningTitle = [NSString stringWithFormat:@"Delete %@?", deleteString];
+    NSString *warningButtonConfirm = [NSString stringWithFormat:@"Delete %@", deleteString];
+    NSString *warningMessage = [NSString stringWithFormat:@"The %@ will be deleted from your file system and moved to the trash.\n\nAre you sure you want to continue?", deleteString.lowercaseString];
+    
+    if([object isKindOfClass:[PIXAlbum class]])
+    {
+        if([itemsToDelete count] > 1)
+        {
+            warningMessage = @"The albums and their corresponding folders will be deleted from your file system and moved to the trash.\n\nAre you sure you want to continue?";
+        }
+        
+        else
+        {
+            PIXAlbum * album = (PIXAlbum *)object;
+            
+            warningMessage = [NSString stringWithFormat:@"The album and its corresponding folder will be deleted from your file system and moved to the trash.\n\n%@\n\nAre you sure you want to continue?", album.path];
+            
+            
+        }
+    }
+    
+    
+    NSAlert *alert = nil;
+    
+    
+    
+    BOOL suppressAlert = [[NSUserDefaults standardUserDefaults] boolForKey:suppressKey];
+    
+    if(!suppressAlert)
+    {
+        alert = [[NSAlert alloc] init];
+        [alert setMessageText:warningTitle];
+        [alert addButtonWithTitle:warningButtonConfirm];
+        [alert addButtonWithTitle:@"Cancel"];
+        [alert setInformativeText:warningMessage];
+        [alert setShowsSuppressionButton:YES];
+        [[alert suppressionButton] setTitle:@"Don't warn me again."];
+    }
+    
+    if (suppressAlert || [alert runModal] == NSAlertFirstButtonReturn) {
+        
+        if ([[alert suppressionButton] state] == NSOnState) {
+            // Suppress this alert from now on.
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:suppressKey];
+        }
+        
+        
+        if ([[itemsToDelete lastObject] class] == [PIXAlbum class]) {
+            [self recycleAlbums:itemsToDelete];
+        } else {
+            [self recyclePhotos:itemsToDelete];
+        }
+        
+    } else {
+        // User clicked cancel, they do not want to delete the files
+    }
+    
+}
+
+
+
 -(BOOL)shouldDeleteAlbumAtPath:(NSString *)directoryPath
 {
     NSURL *directoryURL = [NSURL fileURLWithPath:directoryPath isDirectory:YES];
