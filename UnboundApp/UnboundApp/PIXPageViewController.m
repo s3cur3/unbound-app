@@ -998,45 +998,16 @@
 
 - (IBAction) deleteItems:(id )inSender
 {
-    NSString *warningMessage = [NSString stringWithFormat:@"This photo will be deleted from your file system and moved to the trash.\n\nAre you sure you want to continue?"];
+    PIXPhoto *aPhoto = [self.pagerData objectAtIndex:self.pageController.selectedIndex];
+     NSSet *itemsToDelete = [NSSet setWithObject:aPhoto];
     
-    NSAlert *alert = nil;
+     NSUInteger currentIndex = [self.pageController selectedIndex];
     
-    BOOL suppressAlert = [[NSUserDefaults standardUserDefaults] boolForKey:@"PIX_supressDeleteWarning"];
+    [[PIXFileManager sharedInstance] deleteItemsWorkflow:itemsToDelete];
     
-    if(!suppressAlert)
+    if(currentIndex < [self.pagerData count])
     {
-        alert = [[NSAlert alloc] init];
-        [alert setMessageText:@"Delete Photo?"];
-        [alert addButtonWithTitle:@"Delete"];
-        [alert addButtonWithTitle:@"Cancel"];
-        [alert setInformativeText:warningMessage];
-        [alert setShowsSuppressionButton:YES];
-        [[alert suppressionButton] setTitle:@"Don't warn me again."];
-    }
-    
-    if (suppressAlert || [alert runModal] == NSAlertFirstButtonReturn) {
-        
-        if ([[alert suppressionButton] state] == NSOnState) {
-            // Suppress this alert from now on.
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"PIX_supressDeleteWarning"];
-        }
-        
-        PIXPhoto *aPhoto = [self.pagerData objectAtIndex:self.pageController.selectedIndex];
-        
-        NSArray *itemsToDelete = [NSArray arrayWithObject:aPhoto];
-
-        NSUInteger currentIndex = [self.pageController selectedIndex];
-        
-        [[PIXFileManager sharedInstance] recyclePhotos:itemsToDelete];
-        
-        if(currentIndex < [self.pagerData count])
-        {
-            [self.pageController setSelectedIndex:currentIndex];
-        }
-        
-    } else {
-        // User clicked cancel, they do not want to delete the files
+        [self.pageController setSelectedIndex:currentIndex];
     }
 
 }

@@ -517,7 +517,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     if([object isKindOfClass:[PIXPhoto class]])
     {
         objectType = PHOTO;
-        suppressKey = @"PIX_supressDeleteWarning";
+        suppressKey = @"PIX_supressPhotoDeleteWarning";
     } else if([object isKindOfClass:[PIXAlbum class]]) {
         objectType = ALBUM;
         suppressKey = @"PIX_supressAlbumDeleteWarning";
