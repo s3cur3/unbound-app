@@ -1400,12 +1400,12 @@ const CGFloat kThumbnailSize = 370.0f;
        [lowercasepath hasSuffix:@".m4p"] ||
        [lowercasepath hasSuffix:@".m4v"] ||
        [lowercasepath hasSuffix:@".mkv"] ||
-       [lowercasepath hasSuffix:@".mov"])
+       [lowercasepath hasSuffix:@".mov"] ||
 //       [lowercasepath hasSuffix:@".3gp"] ||
 //       [lowercasepath hasSuffix:@".3gpp"] ||
 //       [lowercasepath hasSuffix:@".3gpp2"] ||
 //       [lowercasepath hasSuffix:@".asf"] ||
-//       [lowercasepath hasSuffix:@".avi"] ||
+       [lowercasepath hasSuffix:@".avi"] ||
 //       [lowercasepath hasSuffix:@".dv"] ||
 //       [lowercasepath hasSuffix:@".dvi"] ||
 //       [lowercasepath hasSuffix:@".flv"] ||
@@ -1414,8 +1414,8 @@ const CGFloat kThumbnailSize = 370.0f;
 //       [lowercasepath hasSuffix:@".m4v"] ||
 //       [lowercasepath hasSuffix:@".mkv"] ||
 //       [lowercasepath hasSuffix:@".mov"] ||
-//       [lowercasepath hasSuffix:@".mpeg"] ||
-//       [lowercasepath hasSuffix:@".mpg"] ||
+       [lowercasepath hasSuffix:@".mpeg"] ||
+       [lowercasepath hasSuffix:@".mpg"])
 //       [lowercasepath hasSuffix:@".mts"] ||
 //       [lowercasepath hasSuffix:@".ts"] ||
 //       [lowercasepath hasSuffix:@".vob"] ||
