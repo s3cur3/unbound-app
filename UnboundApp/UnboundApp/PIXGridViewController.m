@@ -266,6 +266,19 @@ static NSString *kContentTitleKey, *kContentImageKey;
     NSString *warningButtonConfirm = [NSString stringWithFormat:@"Delete %@", deleteString];
     NSString *warningMessage = [NSString stringWithFormat:@"The %@ will be deleted from your file system and moved to the trash.\n\nAre you sure you want to continue?", deleteString.lowercaseString];
     
+    if([object isKindOfClass:[PIXAlbum class]])
+    {
+        if([self.selectedItems count] > 1)
+        {
+            warningMessage = @"The albums and their corresponding folders will be deleted from your file system and moved to the trash.\n\nAre you sure you want to continue?";
+        }
+        
+        else
+        {
+            warningMessage = @"The album and its corresponding folder will be deleted from your file system and moved to the trash.\n\nAre you sure you want to continue?";
+        }
+    }
+    
     
     NSAlert *alert = nil;
     

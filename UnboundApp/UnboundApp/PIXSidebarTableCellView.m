@@ -153,8 +153,37 @@
 
     // NSString * deleteString = @"Delete Album";
 
-    NSString *warningMessage = [NSString stringWithFormat:@"This album and its corresponding folder will be deleted from your file system and moved moved to the trash.\n\nAre you sure you want to continue?", nil];
-    if (NSRunAlertPanel(@"Delete Album?", warningMessage, @"Delete", @"Cancel", nil) == NSAlertDefaultReturn) {
+
+    
+    NSString *warningTitle = @"Delete Album?";
+    NSString *warningButtonConfirm = @"Delete Album";
+    NSString *warningMessage = @"The album and its corresponding folder will be deleted from your file system and moved to the trash.\n\nAre you sure you want to continue?";
+    
+    
+    NSAlert *alert = nil;
+    
+    
+    NSString * suppressKey = @"PIX_supressAlbumDeleteWarning";
+    BOOL suppressAlert = [[NSUserDefaults standardUserDefaults] boolForKey:suppressKey];
+    
+    if(!suppressAlert)
+    {
+        alert = [[NSAlert alloc] init];
+        [alert setMessageText:warningTitle];
+        [alert addButtonWithTitle:warningButtonConfirm];
+        [alert addButtonWithTitle:@"Cancel"];
+        [alert setInformativeText:warningMessage];
+        [alert setShowsSuppressionButton:YES];
+        [[alert suppressionButton] setTitle:@"Don't warn me again."];
+    }
+    
+    if (suppressAlert || [alert runModal] == NSAlertFirstButtonReturn)
+    {
+        if ([[alert suppressionButton] state] == NSOnState) {
+            // Suppress this alert from now on.
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:suppressKey];
+        }
+        
         
         [[PIXFileManager sharedInstance] recycleAlbums:itemsToDelete];
         
