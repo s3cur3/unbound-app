@@ -21,6 +21,8 @@
 
 @property (nonatomic, retain) NSImageView * videoLayover;
 
+@property BOOL isVideo;
+
 
 @end
 
@@ -40,6 +42,7 @@
         self.imageLayer.shadowOffset = CGSizeMake(0, 1);
         self.imageLayer.shadowRadius = 3.0;
         self.imageLayer.shadowOpacity = 0.4;
+        self.imageLayer.borderWidth = 6.0;
         
         // disable all animatsion on the image layer
         NSMutableDictionary *newActions = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSNull null], @"onOrderIn",
@@ -134,6 +137,9 @@
 {
     if(_photo != newPhoto)
     {
+        // save this as a local property for performance reasons
+        self.isVideo = [newPhoto isVideo];
+        
         if (_photo!=nil)
         {
             [[NSNotificationCenter defaultCenter] removeObserver:self name:PhotoThumbDidChangeNotification object:_photo];
@@ -153,7 +159,7 @@
     
     if(self.itemImage == nil)
     {
-        if([self.photo isVideo])
+        if(self.isVideo)
         {
             // no camera icon on videos
             self.itemImage = [NSImage imageNamed:@"tempVideo"];
@@ -194,6 +200,16 @@
 -(void)setFrame:(NSRect)frameRect
 {
     if(CGRectEqualToRect(self.frame, frameRect)) return;
+    
+    if(frameRect.size.width < 150)
+    {
+        self.imageLayer.borderWidth = 4;
+    }
+    
+    else
+    {
+        self.imageLayer.borderWidth = 6;
+    }
     
     [super setFrame:frameRect];
     [self updateLayer];
@@ -251,12 +267,12 @@
 -(void)updateLayer
 {
     
-    [CATransaction begin];
-    [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+    //[CATransaction begin];
+    //[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
     
     [_selectionLayer setFrame:self.bounds];
     
-    if([self.photo isVideo])
+    if(self.isVideo) // use local property for performance reasons (set when photo is set)
     {
         [self.layer addSublayer:self.videoLayover.layer];
     }
@@ -302,19 +318,8 @@
     }
     
     
-    CGFloat borderThickness = 6;
-    
-    if(rect.size.width < 120)
-    {
-        borderThickness = 4;
-    }
     
     self.imageLayer.frame = imageFrame;
-    
-    //CGRect borderFrame = CGRectInset(imageFrame, -(borderThickness-1), -(borderThickness-1));
-    
-    
-    self.imageLayer.borderWidth = borderThickness;
     
     CGRect videoThumbFrame = CGRectMake(0, 0, 80, 80);
     
@@ -346,8 +351,10 @@
     [_videoLayover setFrame:videoThumbFrame];
     
     
-    CGMutablePathRef path = CGPathCreateMutable();
-    CGPathAddRect(path, NULL, self.imageLayer.bounds);
+    //CGMutablePathRef path = CGPathCreateMutable();
+    //CGPathAddRect(path, NULL, self.imageLayer.bounds);
+    
+    CGPathRef path = CGPathCreateWithRect(self.imageLayer.bounds, NULL);
     
     self.imageLayer.shadowPath = path;
     
@@ -362,7 +369,7 @@
     
     
     
-    [CATransaction commit];
+    //[CATransaction commit];
     
     self.contentFrame = imageFrame;
 }
