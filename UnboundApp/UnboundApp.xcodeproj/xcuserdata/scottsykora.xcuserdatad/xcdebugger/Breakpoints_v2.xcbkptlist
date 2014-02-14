@@ -387,13 +387,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "UnboundApp/PIXPhotoGridViewItem.m"
-            timestampString = "413947318.311662"
+            filePath = "UnboundApp/PIXFileManager.m"
+            timestampString = "414030645.085262"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "270"
-            endingLineNumber = "270"
-            landmarkName = "-updateLayer"
+            startingLineNumber = "504"
+            endingLineNumber = "504"
+            landmarkName = "-deleteItemsWorkflow:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -403,13 +403,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "UnboundApp/PIXFileManager.m"
-            timestampString = "414030645.085262"
+            filePath = "UnboundApp/PIXPhotoGridViewController.m"
+            timestampString = "414033257.528181"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "504"
-            endingLineNumber = "504"
-            landmarkName = "-deleteItemsWorkflow:"
+            startingLineNumber = "152"
+            endingLineNumber = "152"
+            landmarkName = "-setThumbSize:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

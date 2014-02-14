@@ -149,7 +149,7 @@
 -(void)setThumbSize:(CGFloat)size
 {
     // sizes mapped between 140 and 400
-    float transformedSize = 140+(260.0 * size);
+    float transformedSize = rint(140+(260.0 * size));
     [self.gridView setItemSize:CGSizeMake(transformedSize, transformedSize)];
     
     dispatch_async(dispatch_get_main_queue(), ^{
