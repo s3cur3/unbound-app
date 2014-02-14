@@ -553,9 +553,12 @@ typedef NSUInteger PIXOverwriteStrategy;
     
     NSAlert *alert = nil;
     
+    // suppress the alert if they've ticked the box, or the command key is down
     
+    BOOL suppressAlert = [[NSUserDefaults standardUserDefaults] boolForKey:suppressKey] ||
+                         ([[NSApp currentEvent] modifierFlags] & NSCommandKeyMask);
     
-    BOOL suppressAlert = [[NSUserDefaults standardUserDefaults] boolForKey:suppressKey];
+
     
     if(!suppressAlert)
     {
