@@ -1366,6 +1366,12 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
                 return;
             }
             
+            if(pressedUnichar == '') // delete should delete items
+            {
+                [self deleteBackward:event];
+                return;
+            }
+            
             // map space to newline as well (open it)
             if(pressedUnichar == ' ')
             {
