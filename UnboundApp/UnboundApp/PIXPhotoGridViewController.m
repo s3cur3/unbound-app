@@ -251,7 +251,7 @@
         NSDateComponents* startComponents = [calendar components:unitFlags fromDate:startDate];
         NSDateComponents* endComponents = [calendar components:unitFlags fromDate:endDate];
         
-        [self.titleDateFormatter setDateFormat:@"MMMM d, yyyy"];
+        [self.titleDateFormatter setDateFormat:@"MMMM d, YYYY"];
         if([startComponents year] == [endComponents year])
         {
             // don't show the year on the first date if they're the same
@@ -260,12 +260,12 @@
         
         NSString * startDateString = [self.titleDateFormatter stringFromDate:startDate];
         
-        [self.titleDateFormatter setDateFormat:@"MMMM d, yyyy"];
+        [self.titleDateFormatter setDateFormat:@"MMMM d, YYYY"];
         
         
         
         // if the date goes multiple days print the span
-        if([startComponents day] != [endComponents day] && [startDate compare:endDate] == NSOrderedAscending)
+        if(([startComponents day] != [endComponents day] || [startComponents month] != [endComponents month] || [startComponents year] != [endComponents year]) && [startDate compare:endDate] == NSOrderedAscending)
         {
             /*// This will remove the second month name if they are the same
             if([startComponents month] == [endComponents month])
