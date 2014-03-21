@@ -675,12 +675,14 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     // create new writer MOC
     _privateWriterContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     [_privateWriterContext setPersistentStoreCoordinator:_persistentStoreCoordinator];
+    [_privateWriterContext setUndoManager:nil];
     
     // overwrite the database with updates from this context
     //[_privateWriterContext setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
     
     _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     [_managedObjectContext setParentContext:_privateWriterContext];
+    [_managedObjectContext setUndoManager:nil];
     
     // overwrite the database with updates from this context
     //[_managedObjectContext setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];

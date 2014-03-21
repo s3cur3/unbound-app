@@ -349,7 +349,7 @@
 {
     PIXPageViewController *pageViewController = [[PIXPageViewController alloc] initWithNibName:@"PIXPageViewController" bundle:nil];
     
-    pageViewController.initialSelectedObject = [self.album.sortedPhotos objectAtIndex:index];
+    pageViewController.initialSelectedObject = [self.items objectAtIndex:index];
     
     pageViewController.album = self.album;
     
