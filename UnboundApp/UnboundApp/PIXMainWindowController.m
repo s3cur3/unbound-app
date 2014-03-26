@@ -152,9 +152,9 @@
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             
-            if(NSRunAlertPanel(@"This trial has expired.", @"Please download a new version.", @"Learn More", @"OK", nil))
+            if(NSRunAlertPanel(@"This trial has expired.", @"Please consider purchasing Unbound on the Mac App Store.", @"Learn More", @"OK", nil))
             {
-                NSURL * url = [NSURL URLWithString:@"http://www.unboundformac.com"];
+                NSURL * url = [NSURL URLWithString:@"https://itunes.apple.com/us/app/unbound/id690375005?ls=1&mt=12&uo=4&at=11l4HQ"];
                 [[NSWorkspace sharedWorkspace] openURL:url];
             }
             
