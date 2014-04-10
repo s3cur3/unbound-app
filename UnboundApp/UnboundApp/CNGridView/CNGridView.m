@@ -871,7 +871,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     NSPoint point = [self rectForItemAtIndex:index].origin;
     point.x = 0;
     
-    CGFloat currentY = self.clippedRect.origin.y;
+    CGFloat currentY = self.visibleRect.origin.y;
     CGFloat scrollY = -1;
     
     // if we need to scroll up
@@ -881,9 +881,9 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     }
     
     // if we need to scroll down
-    else if(point.y+self.itemSize.height > self.clippedRect.origin.y + self.clippedRect.size.height)
+    else if(point.y+self.itemSize.height > self.visibleRect.origin.y + self.visibleRect.size.height)
     {
-        scrollY = (point.y+self.itemSize.height)-self.clippedRect.size.height;
+        scrollY = (point.y+self.itemSize.height)-self.visibleRect.size.height;
     }
     
     

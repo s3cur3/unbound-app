@@ -1111,6 +1111,7 @@
 }
 
 - (void)updateData {
+
     
     self.pagerData = [[self.album sortedPhotos] mutableCopy];
     
@@ -1145,6 +1146,8 @@
        [self.navigationViewController popViewController];
        return;
    }
+    
+    self.initialSelectedObject = [self.pagerData objectAtIndex:self.pageController.selectedIndex];
     
     [self updateData];
     [self updateTitle];
