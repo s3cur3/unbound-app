@@ -1264,21 +1264,14 @@ const CGFloat kThumbnailSize = 370.0f;
         // now also set attributes that are derived from the exif data
         NSString * dateTakenString = [[newExifData objectForKey:@"{Exif}"] objectForKey:@"DateTimeOriginal"];
         
+        if(!dateTakenString)
+        {
+            dateTakenString = [[newExifData objectForKey:@"{Exif}"] objectForKey:@"DateTimeDigitized"];
+        }
+        
         if(dateTakenString)
         {
             self.dateTaken = [[PIXPhoto exifDateFormatter] dateFromString:dateTakenString];
-        }
-        
-        NSString * secondDateString = [[newExifData objectForKey:@"{Exif}"] objectForKey:@"DateTimeDigitized"];
-        
-        if(secondDateString)
-        {
-            NSDate * secondDate = [[PIXPhoto exifDateFormatter] dateFromString:secondDateString];
-            
-            if(self.dateTaken == nil || [self.dateTaken compare:secondDate] == NSOrderedDescending)
-            {
-                self.dateTaken = secondDate;
-            }
         }
         
        
