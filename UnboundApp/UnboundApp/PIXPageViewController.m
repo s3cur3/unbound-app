@@ -197,6 +197,8 @@
         
         // update the panel info
         [self.infoPanelVC setPhoto:[self.pagerData objectAtIndex:self.pageController.selectedIndex]];
+        
+        [self.infoPanelVC updateMap];
     }
     
     self.infoPanelShowing = !self.infoPanelShowing;

@@ -1280,6 +1280,7 @@ const CGFloat kThumbnailSize = 370.0f;
         
         NSNumber * latitudeNumber = [newExifData valueForKeyPath: @"{GPS}.Latitude"];
         NSNumber * longitudeNumber = [newExifData valueForKeyPath: @"{GPS}.Longitude"];
+        
         NSString * latRef = [newExifData valueForKeyPath: @"{GPS}.LatitudeRef"];
         NSString * longRef = [newExifData valueForKeyPath: @"{GPS}.LongitudeRef"];
         

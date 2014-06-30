@@ -472,6 +472,9 @@ NSDictionary * dictionaryForURL(NSURL * url)
 {
     // update the resume token
     [self updateResumeToken:resumeToken forObservedDirectory:observedURL];
+    
+    if(![self isURLInObservedDirectories:changedURL]) return; // if this item isn't supposed to be observed do nothing
+
 }
 
 #pragma mark - Methods for Scanning file system

@@ -215,7 +215,6 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     
     
     [self setTranslatesAutoresizingMaskIntoConstraints:YES];
-    
 }
 
 

@@ -737,7 +737,7 @@
 
 - (void)gridView:(CNGridView *)gridView didClickItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
-    DLog(@"didClickItemAtIndex: %li", index);
+    //DLog(@"didClickItemAtIndex: %li", index);
 }
 
 - (void)gridView:(CNGridView *)gridView didDoubleClickItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
@@ -1127,6 +1127,8 @@
     {
         [self.centerStatusView setHidden:YES];
     }
+    
+    NSLog(@"updated");
     
 }
 

@@ -191,7 +191,7 @@ static void ArchDirectoryEventStreamCallback(
         
     // TODO: TRY: kFSEventStreamCreateFlagFileEvents
         
-        FSEventStreamCreateFlags flags = kFSEventStreamCreateFlagWatchRoot | kFSEventStreamCreateFlagUseCFTypes | kFSEventStreamCreateFlagFileEvents;
+        FSEventStreamCreateFlags flags = kFSEventStreamCreateFlagUseCFTypes | kFSEventStreamCreateFlagFileEvents;
         CFTimeInterval latency = 5.0;
     
         if(ignoresSelf) {
@@ -202,7 +202,9 @@ static void ArchDirectoryEventStreamCallback(
             flags |= kFSEventStreamCreateFlagNoDefer;
         }
         
-        eventStream = FSEventStreamCreate(NULL, (FSEventStreamCallback)ArchDirectoryEventStreamCallback, &context, (__bridge CFArrayRef)[NSArray arrayWithObject:[url path]], eventID, latency, flags);
+        NSString * path = [url path];
+        
+        eventStream = FSEventStreamCreate(NULL, (FSEventStreamCallback)ArchDirectoryEventStreamCallback, &context, (__bridge CFArrayRef)[NSArray arrayWithObject:path], eventID, latency, flags);
         
         FSEventStreamScheduleWithRunLoop(eventStream, [center.runLoop getCFRunLoop], kCFRunLoopCommonModes);
         

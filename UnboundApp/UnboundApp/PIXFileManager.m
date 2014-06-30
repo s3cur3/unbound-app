@@ -393,6 +393,7 @@ typedef NSUInteger PIXOverwriteStrategy;
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 
+                /*
                 // scan the paths just to make sure everything worked
                 for (PIXAlbum *anAlbum in albumsToUpdate)
                 {
@@ -403,6 +404,7 @@ typedef NSUInteger PIXOverwriteStrategy;
                 [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
+                 */
                 
                 NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
 
@@ -1368,20 +1370,21 @@ typedef NSUInteger PIXOverwriteStrategy;
             [changedAlbums addObject:dstAlbum];
             
             // delete the source photo since it's getting moved somewhere else
-            [context deleteObject:srcPhoto];
-            /*
+            
+            NSString * fullDestPath = [dest stringByAppendingPathComponent:srcPhoto.name];
             srcPhoto.path = fullDestPath;
             
             [srcPhoto.album removePhotosObject:srcPhoto];
             
             srcPhoto.album = dstAlbum;
-             */
+            
         }
     }
     
     // save the context so the db is updated
     
-    [context save:nil];
+    NSError * error = nil;
+    [context save:&error];
     
     //issue a notification to update the ui
     
@@ -1392,9 +1395,9 @@ typedef NSUInteger PIXOverwriteStrategy;
     {
         [anAlbum flush];
     }
-    
+
     // now do the actual file moves in the background
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         
         // move the files
         for (id aDict in items)
@@ -1426,7 +1429,6 @@ typedef NSUInteger PIXOverwriteStrategy;
         [undoManager setActionName:@"Move Files"];
     });
     
-
    
     
 

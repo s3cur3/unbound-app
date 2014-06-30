@@ -399,7 +399,6 @@
 		8C94E026183DA6D300827888 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C9FA5BD183ACB90000AEBC9 /* CoreLocation.framework */; };
 		8C94E027183DA6D800827888 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C9FA5BF183ACB98000AEBC9 /* WebKit.framework */; };
 		8C95650118467EA900B5627B /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9564FF18467EA900B5627B /* Appirater.m */; };
-		8C95650318467EBD00B5627B /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C95650218467EBD00B5627B /* StoreKit.framework */; };
 		8C9565051846802800B5627B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C9565041846802800B5627B /* SystemConfiguration.framework */; };
 		8C972CB41680FE8B00358913 /* PIXModifierSwitchedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */; };
 		8C9AA2B916FFE39500D989CA /* captionbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9AA2B716FFE39500D989CA /* captionbutton.png */; };
@@ -1061,7 +1060,6 @@
 		8C9564FE18467EA900B5627B /* Appirater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Appirater.h; sourceTree = "<group>"; };
 		8C9564FF18467EA900B5627B /* Appirater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Appirater.m; sourceTree = "<group>"; };
 		8C95650018467EA900B5627B /* AppiraterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppiraterDelegate.h; sourceTree = "<group>"; };
-		8C95650218467EBD00B5627B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		8C9565041846802800B5627B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8C972CB21680FE8A00358913 /* PIXModifierSwitchedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXModifierSwitchedEvent.h; sourceTree = "<group>"; };
 		8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXModifierSwitchedEvent.m; sourceTree = "<group>"; };
@@ -1216,7 +1214,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C9565051846802800B5627B /* SystemConfiguration.framework in Frameworks */,
-				8C95650318467EBD00B5627B /* StoreKit.framework in Frameworks */,
 				8C94E027183DA6D800827888 /* WebKit.framework in Frameworks */,
 				8C94E026183DA6D300827888 /* CoreLocation.framework in Frameworks */,
 				8C14692F1714A5CC009ECCC5 /* QTKit.framework in Frameworks */,
@@ -1588,7 +1585,6 @@
 			isa = PBXGroup;
 			children = (
 				8C9565041846802800B5627B /* SystemConfiguration.framework */,
-				8C95650218467EBD00B5627B /* StoreKit.framework */,
 				8C9FA5BF183ACB98000AEBC9 /* WebKit.framework */,
 				8C9FA5BD183ACB90000AEBC9 /* CoreLocation.framework */,
 				8CFDF7651827123700809018 /* MapKit.framework */,
@@ -1994,8 +1990,11 @@
 					1DB2F849167ABE87008AC0F7 = {
 						DevelopmentTeam = EQRQCAG846;
 						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 0;
+							};
 							com.apple.Mac = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -2890,7 +2889,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = Unbound.entitlements;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2923,8 +2922,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = Unbound.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Pixite LLC (EQRQCAG846)";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "3rd Party Mac Developer Application: Pixite LLC (EQRQCAG846)";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2943,7 +2942,7 @@
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "58021998-7972-46D2-B53C-DC1810F50B46";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
