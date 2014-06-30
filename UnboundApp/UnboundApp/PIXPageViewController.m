@@ -1154,6 +1154,12 @@
     [self updateData];
     [self updateTitle];
     
+    if(self.isPlayingSlideshow)
+    {
+        [self stopSlideShow:nil];
+        [self startSlideShow:nil];
+    }
+    
 }
 
 -(void)preloadNextImagesForShuffledSlideshowAtIndex:(NSUInteger)anIndex

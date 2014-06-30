@@ -68,11 +68,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UnboundApp/PIXPageViewController.m"
-            timestampString = "425780680.373164"
+            timestampString = "425851590.722362"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1162"
-            endingLineNumber = "1162"
+            startingLineNumber = "1168"
+            endingLineNumber = "1168"
             landmarkName = "-preloadNextImagesForShuffledSlideshowAtIndex:"
             landmarkType = "5">
          </BreakpointContent>
@@ -84,11 +84,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UnboundApp/PIXPageViewController.m"
-            timestampString = "425780680.373164"
+            timestampString = "425851590.722362"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1403"
-            endingLineNumber = "1403"
+            startingLineNumber = "1409"
+            endingLineNumber = "1409"
             landmarkName = "-pageController:prepareViewController:withObject:"
             landmarkType = "5">
          </BreakpointContent>
@@ -712,6 +712,22 @@
             startingLineNumber = "1280"
             endingLineNumber = "1280"
             landmarkName = "-forceSetExifData:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "UnboundApp/PIXPageViewController.m"
+            timestampString = "425851424.877092"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1146"
+            endingLineNumber = "1146"
+            landmarkName = "-updateAlbum:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
