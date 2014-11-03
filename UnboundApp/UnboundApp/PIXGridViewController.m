@@ -103,8 +103,6 @@ static NSString *kContentTitleKey, *kContentImageKey;
     self.gridView.superview.animations = [NSDictionary dictionaryWithObject:scrollAnim forKey:@"bounds"];
     
     [self updateToolbar];
-    
-    
 }
 
 -(void)willShowPIXView

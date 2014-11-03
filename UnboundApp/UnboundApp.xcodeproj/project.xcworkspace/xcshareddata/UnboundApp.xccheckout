@@ -10,29 +10,29 @@
 	<string>UnboundApp</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>F5A91C12-D095-4FA8-9E7F-25FF5F0F4196</key>
-		<string>ssh://github.com/scottsykora/UnboundForMac.git</string>
+		<key>DE46BFB3285BD4D5FC73750FED70C614DAAEF2AB</key>
+		<string>github.com:scottsykora/UnboundForMac.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>UnboundApp/UnboundApp.xcodeproj/project.xcworkspace</string>
+	<string>UnboundApp/UnboundApp.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>F5A91C12-D095-4FA8-9E7F-25FF5F0F4196</key>
+		<key>DE46BFB3285BD4D5FC73750FED70C614DAAEF2AB</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/scottsykora/UnboundForMac.git</string>
+	<string>github.com:scottsykora/UnboundForMac.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>F5A91C12-D095-4FA8-9E7F-25FF5F0F4196</string>
+	<string>DE46BFB3285BD4D5FC73750FED70C614DAAEF2AB</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>F5A91C12-D095-4FA8-9E7F-25FF5F0F4196</string>
+			<string>DE46BFB3285BD4D5FC73750FED70C614DAAEF2AB</string>
 			<key>IDESourceControlWCCName</key>
 			<string>unbound_osx</string>
 		</dict>

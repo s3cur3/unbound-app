@@ -137,7 +137,7 @@
     {
         self.trialExpireText.stringValue = @"This Trial has expired. 10:00 remaining";
 
-        if(NSRunAlertPanel(@"This trial has expired.", @"This app will run for 10 minutes before quiting.", @"Learn More", @"OK", nil))
+        if(NSRunAlertPanel(@"This trial has expired.", @"This app will run for 10 minutes before quiting. Please consider purchasing Unbound on the Mac App Store.", @"Learn More", @"OK", nil))
         {
             NSURL * url = [NSURL URLWithString:@"http://www.unboundformac.com"];
             [[NSWorkspace sharedWorkspace] openURL:url];

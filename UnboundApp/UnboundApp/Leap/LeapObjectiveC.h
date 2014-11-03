@@ -8,10 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-/* ************************************************************************
-Do not be alarmed by the copyright notice above. Please bear with us as we
-work with our lawyers to finalize a permissive license for this code.
-
+/*************************************************************************
 This wrapper works by doing a deep copy of the bulk of the hand and finger
 hierarchy as soon as you the user requests `[controller frame]`. This is
 enables us to set up the appropriate linkage between LeapHand and
@@ -52,7 +49,6 @@ Notes:
 * Requires XCode 4.2+, relies on Automatic Reference Counting (ARC),
   minimum target OS X 10.7
 * Contributions are welcome. Contact us via https://developer.leapmotion.com
-
 *************************************************************************/
 
 //////////////////////////////////////////////////////////////////////////
@@ -70,10 +66,12 @@ Notes:
  * The z-axis has positive values increasing away from the computer screen.
  *
  * <img src="../docs/images/Leap_Axes.png"/>
+ *
+ * @available Since 1.0
  */
 @interface LeapVector : NSObject
 
-/** 
+/**
  * Creates a new LeapVector with the specified component values.
  *
  * @example Vector_Constructor_1.txt
@@ -81,14 +79,16 @@ Notes:
  * @param x The horizontal component.
  * @param y The vertical component.
  * @param z The depth component.
+ * @available Since 1.0
  */
 - (id)initWithX:(float)x y:(float)y z:(float)z;
-/** 
- * Copies the specified LeapVector. 
+/**
+ * Copies the specified LeapVector.
  *
  * @example Vector_Constructor_2.txt
  *
  * @param vector The LeapVector to copy.
+ * @available Since 1.0
  */
 - (id)initWithVector:(const LeapVector *)vector;
 - (NSString *)description;
@@ -101,6 +101,7 @@ Notes:
  * the point represented by the (x, y, z) components of this LeapVector object.
  *
  * @returns The length of this vector.
+ * @available Since 1.0
  */
 - (float)magnitude;
 @property (nonatomic, getter = magnitude, readonly)float magnitude;
@@ -110,6 +111,7 @@ Notes:
  * @example Vector_Magnitude_Squared.txt
  *
  * @returns The square of the length of this vector.
+ * @available Since 1.0
  */
 - (float)magnitudeSquared;
 @property (nonatomic, getter = magnitudeSquared, readonly)float magnitudeSquared;
@@ -121,6 +123,7 @@ Notes:
  *
  * @param vector A LeapVector object.
  * @returns The distance from this point to the specified point.
+ * @available Since 1.0
  */
 - (float)distanceTo:(const LeapVector *)vector;
 /**
@@ -139,6 +142,7 @@ Notes:
  *
  * @param vector A LeapVector object.
  * @returns The angle between this vector and the specified vector in radians.
+ * @available Since 1.0
  */
 - (float)angleTo:(const LeapVector *)vector;
 /**
@@ -155,6 +159,7 @@ Notes:
  * <img src="../docs/images/Math_Pitch_Angle.png"/>
  *
  * @returns The angle of this vector above or below the horizon (x-z plane).
+ * @available Since 1.0
  */
 - (float)pitch;
 @property (nonatomic, getter = pitch, readonly)float pitch;
@@ -177,6 +182,7 @@ Notes:
  * to the horizontal (x-z) plane.
  *
  * @returns The angle of this vector to the right or left of the y-axis.
+ * @available Since 1.0
  */
 - (float)roll;
 @property (nonatomic, getter = roll, readonly)float roll;
@@ -194,56 +200,62 @@ Notes:
  * <img src="../docs/images/Math_Yaw_Angle.png"/>
  *
  * @returns The angle of this vector to the right or left of the negative z-axis.
+ * @available Since 1.0
  */
 - (float)yaw;
 @property (nonatomic, getter = yaw, readonly)float yaw;
-/** 
+/**
  * Adds two vectors.
  *
  * @example Vector_Plus.txt
  *
  * @param vector The LeapVector addend.
  * @returns The sum of the two LeapVectors.
+ * @available Since 1.0
  */
 - (LeapVector *)plus:(const LeapVector *)vector;
-/** 
+/**
  * Subtract a vector from this vector.
  *
  * @example Vector_Minus.txt
  *
  * @param vector the LeapVector subtrahend.
  * @returns the difference between the two LeapVectors.
+ * @available Since 1.0
  */
 - (LeapVector *)minus:(const LeapVector *)vector;
-/** 
- * Negate this vector. 
+/**
+ * Negate this vector.
  *
  * @example Vector_Negate.txt
- * 
+ *
  * @returns The negation of this LeapVector.
+ * @available Since 1.0
  */
 - (LeapVector *)negate;
-/** 
+/**
  * Multiply this vector by a number.
  *
  * @example Vector_Times.txt
  *
  * @param scalar The scalar factor.
  * @returns The product of this LeapVector and a scalar.
+ * @available Since 1.0
  */
 - (LeapVector *)times:(float)scalar;
-/** 
+/**
  * Divide this vector by a number.
  *
  * @example Vector_Divide.txt
  *
  * @param scalar The scalar divisor;
  * @returns The dividend of this LeapVector divided by a scalar.
+ * @available Since 1.0
  */
 - (LeapVector *)divide:(float)scalar;
 // not provided: unary assignment operators (plus_equals, minus_equals)
 // user should emulate with above operators
-/** 
+/**
  * Checks LeapVector equality.
  *
  * @example Vector_Equals.txt
@@ -251,6 +263,7 @@ Notes:
  * Vectors are equal if each corresponding component is equal.
  * @param vector The LeapVector to compare.
  * @returns YES, if the LeapVectors are equal.
+ * @available Since 1.0
  */
 - (BOOL)equals:(const LeapVector *)vector;
 // not provided: not_equals
@@ -267,6 +280,7 @@ Notes:
  *
  * @param vector A LeapVector object.
  * @returns The dot product of this vector and the specified vector.
+ * @available Since 1.0
  */
 - (float)dot:(const LeapVector *)vector;
 /**
@@ -277,13 +291,14 @@ Notes:
  * The cross product is a vector orthogonal to both original vectors.
  * It has a magnitude equal to the area of a parallelogram having the
  * two vectors as sides. The direction of the returned vector is
- * determined by the right-hand rule. Thus `[A cross:B] == 
+ * determined by the right-hand rule. Thus `[A cross:B] ==
  * [[B negate] cross:A]`.
  *
  * <img src="../docs/images/Math_Cross.png"/>
  *
  * @param vector A LeapVector object.
  * @returns The cross product of this vector and the specified vector.
+ * @available Since 1.0
  */
 - (LeapVector *)cross:(const LeapVector *)vector;
 /**
@@ -296,15 +311,17 @@ Notes:
  *
  * @returns A LeapVector object with a length of one, pointing in the same
  * direction as this Vector object.
+ * @available Since 1.0
  */
 - (LeapVector *)normalized;
 @property (nonatomic, getter = normalized, readonly)LeapVector *normalized;
-/** 
+/**
  * Returns an NSArray object containing the vector components in the
  * order: x, y, z.
  *
  * @example Vector_ToNSArray.txt
  *
+ * @available Since 1.0
  */
 - (NSArray *)toNSArray;
 @property (nonatomic, getter = toNSArray, readonly)NSArray *toNSArray;
@@ -313,78 +330,98 @@ Notes:
  * consecutive floating point values.
  *
  * @example Vector_ToFloatPointer.txt
+ * @available Since 1.0
  */
 - (NSMutableData *)toFloatPointer;
 @property (nonatomic, getter = toFloatPointer, readonly)NSMutableData *toFloatPointer;
 // not provided: toVector4Type
 // no templates, and ObjectiveC does not have a common math vector type
-/** 
- * The zero vector: (0, 0, 0) 
+/**
+ * The zero vector: (0, 0, 0)
  *
  * @example Vector_Zero.txt
+ * @available Since 1.0
  */
 + (LeapVector *)zero;
-/** 
+/**
  * The x-axis unit vector: (1, 0, 0).
  *
  * @example Vector_XAxis.txt
+ * @available Since 1.0
  */
 + (LeapVector *)xAxis;
-/** 
+/**
  * The y-axis unit vector: (0, 1, 0).
  *
  * @example Vector_YAxis.txt
+ * @available Since 1.0
  */
 + (LeapVector *)yAxis;
-/** 
+/**
  * The z-axis unit vector: (0, 0, 1).
  *
  * @example Vector_ZAxis.txt
+ * @available Since 1.0
  */
 + (LeapVector *)zAxis;
-/** 
+/**
  * The unit vector pointing left along the negative x-axis: (-1, 0, 0).
  *
  * @example Vector_Left.txt
+ * @available Since 1.0
  */
 + (LeapVector *)left;
-/** 
+/**
  * The unit vector pointing right along the positive x-axis: (1, 0, 0).
  *
  * @example Vector_Right.txt
+ * @available Since 1.0
  */
 + (LeapVector *)right;
-/** 
+/**
  * The unit vector pointing down along the negative y-axis: (0, -1, 0).
  *
  * @example Vector_Down.txt
+ * @available Since 1.0
  */
 + (LeapVector *)down;
-/** 
+/**
  * The unit vector pointing up along the positive y-axis: (0, 1, 0).
  *
  * @example Vector_Up.txt
+ * @available Since 1.0
  */
 + (LeapVector *)up;
-/** 
+/**
  * The unit vector pointing forward along the negative z-axis: (0, 0, -1).
  *
  * @example Vector_Forward.txt
+ * @available Since 1.0
  */
 + (LeapVector *)forward;
-/** 
+/**
  * The unit vector pointing backward along the positive z-axis: (0, 0, 1).
  *
  * @example Vector_Backward.txt
+ * @available Since 1.0
  */
 + (LeapVector *)backward;
 
-/** The horizontal component. */
-@property (nonatomic, assign, readonly)float x;
-/** The vertical component. */
-@property (nonatomic, assign, readonly)float y;
-/** The depth component. */
-@property (nonatomic, assign, readonly)float z;
+/**
+ * The horizontal component.
+ * @available Since 1.0
+ */
+@property (nonatomic, assign, readwrite)float x;
+/**
+ * The vertical component.
+ * @available Since 1.0
+ */
+@property (nonatomic, assign, readwrite)float y;
+/**
+ * The depth component.
+ * @available Since 1.0
+ */
+@property (nonatomic, assign, readwrite)float z;
 
 @end
 
@@ -393,32 +430,35 @@ Notes:
 /**
  *  The LeapMatrix class represents a transformation matrix.
  *
- * To use this class to transform a <LeapVector>, construct a matrix containing the
- * desired transformation and then use the <[LeapMatrix transformPoint:]> or
- * <[LeapMatrix transformDirection:]> functions to apply the transform.
+ * To use this class to transform a LeapVector, construct a matrix containing the
+ * desired transformation and then use the [LeapMatrix transformPoint:] or
+ * [LeapMatrix transformDirection:] functions to apply the transform.
  *
  * Transforms can be combined by multiplying two or more transform matrices using
- * the <[LeapMatrix times:]> function.
+ * the [LeapMatrix times:] function.
+ * @available Since 1.0
  */
 @interface LeapMatrix : NSObject
 
 /**
  *  Constructs a transformation matrix from the specified basis and translation vectors.
- * 
+ *
  * @example Matrix_Constructor_1.txt
  *
- * @param xBasis A <LeapVector> specifying rotation and scale factors for the x-axis.
- * @param yBasis A <LeapVector> specifying rotation and scale factors for the y-axis.
- * @param zBasis A <LeapVector> specifying rotation and scale factors for the z-axis.
- * @param origin A <LeapVector> specifying translation factors on all three axes.
+ * @param xBasis A LeapVector specifying rotation and scale factors for the x-axis.
+ * @param yBasis A LeapVector specifying rotation and scale factors for the y-axis.
+ * @param zBasis A LeapVector specifying rotation and scale factors for the z-axis.
+ * @param origin A LeapVector specifying translation factors on all three axes.
+ * @available Since 1.0
  */
 - (id)initWithXBasis:(const LeapVector *)xBasis yBasis:(const LeapVector *)yBasis zBasis:(const LeapVector *)zBasis origin:(const LeapVector *)origin;
-/** 
- * Constructs a copy of the specified Matrix object. 
+/**
+ * Constructs a copy of the specified Matrix object.
  *
  * @example Matrix_Constructor_2.txt
  *
  * @param matrix the LeapMatrix to copy.
+ * @available Since 1.0
  */
 - (id)initWithMatrix:(LeapMatrix *)matrix;
 /**
@@ -426,8 +466,9 @@ Notes:
  *
  * @example Matrix_Constructor_3.txt
  *
- * @param axis A <LeapVector> specifying the axis of rotation.
+ * @param axis A LeapVector specifying the axis of rotation.
  * @param angleRadians The amount of rotation in radians.
+ * @available Since 1.0
  */
 - (id)initWithAxis:(const LeapVector *)axis angleRadians:(float)angleRadians;
 /**
@@ -436,9 +477,10 @@ Notes:
  *
  * @example Matrix_Constructor_4.txt
  *
- * @param axis A <LeapVector> specifying the axis of rotation.
+ * @param axis A LeapVector specifying the axis of rotation.
  * @param angleRadians The angle of rotation in radians.
- * @param translation A <LeapVector> representing the translation part of the transform.
+ * @param translation A LeapVector representing the translation part of the transform.
+ * @available Since 1.0
  */
 - (id)initWithAxis:(const LeapVector *)axis angleRadians:(float)angleRadians translation:(const LeapVector *)translation;
 - (NSString *)description;
@@ -452,8 +494,9 @@ Notes:
  *
  * @example Matrix_TransformPoint.txt
  *
- * @param point A <LeapVector> representing the 3D position to transform.
- * @returns A new <LeapVector> representing the transformed original.
+ * @param point A LeapVector representing the 3D position to transform.
+ * @returns A new LeapVector representing the transformed original.
+ * @available Since 1.0
  */
 - (LeapVector *)transformPoint:(const LeapVector *)point;
 /**
@@ -462,10 +505,25 @@ Notes:
  *
  * @example Matrix_TransformDirection.txt
  *
- * @param direction The <LeapVector> to transform.
- * @returns A new <LeapVector> representing the transformed original.
+ * @param direction The LeapVector to transform.
+ * @returns A new LeapVector representing the transformed original.
+ * @available Since 1.0
  */
 - (LeapVector *)transformDirection:(const LeapVector *)direction;
+/**
+ *  Performs a matrix inverse if the matrix consists entirely of rigid
+ * transformations (translations and rotations).  If the matrix is not rigid,
+ * this operation will not represent an inverse.
+ *
+ * @example Matrix_rigidInverse.txt
+ *
+ * Note that all matricies that are directly returned by the API are rigid.
+ *
+ * @returns The rigid inverse of the matrix.
+ * @available Since 1.0
+ */
+- (LeapMatrix *)rigidInverse;
+@property (nonatomic, getter = rigidInverse, readonly)LeapMatrix *rigidInverse;
 /**
  *  Multiply transform matrices.
  *
@@ -476,16 +534,18 @@ Notes:
  * @param other A LeapMatrix to multiply on the right hand side.
  * @returns A new LeapMatrix representing the transformation equivalent to
  * applying the other transformation followed by this transformation.
+ * @available Since 1.0
  */
 - (LeapMatrix *)times:(const LeapMatrix *) other;
 // not provided: unary assignment operator times_equals
-/** 
- * Compare LeapMatrix equality component-wise. 
+/**
+ * Compare LeapMatrix equality component-wise.
  *
  * @example Matrix_Equals.txt
  *
  * @param other The LeapMatrix object to compare.
  * @return YES, if the corresponding elements in the two matrices are equal.
+ * @available Since 1.0
  */
 - (BOOL)equals:(const LeapMatrix *) other;
 // not provided: not_equals
@@ -497,6 +557,7 @@ Notes:
  * @example Matrix_ToNSArray_1.txt
  *
  * Translation factors are discarded.
+ * @available Since 1.0
  */
 - (NSMutableArray *)toNSArray3x3;
 @property (nonatomic, getter = toNSArray3x3, readonly)NSMutableArray *toNSArray3x3;
@@ -507,6 +568,7 @@ Notes:
  *
  * @example Matrix_ToNSArray_2.txt
  *
+ * @available Since 1.0
  */
 - (NSMutableArray *)toNSArray4x4;
 @property (nonatomic, getter = toNSArray4x4, readonly)NSMutableArray *toNSArray4x4;
@@ -516,37 +578,68 @@ Notes:
  * @example Matrix_Identity.txt
  *
  * @returns The identity matrix.
+ * @available Since 1.0
  */
 + (LeapMatrix *)identity;
 
-/** The rotation and scale factors for the x-axis. */
-@property (nonatomic, strong, readonly)LeapVector *xBasis;
-/** The rotation and scale factors for the y-axis. */
-@property (nonatomic, strong, readonly)LeapVector *yBasis;
-/** The rotation and scale factors for the z-axis. */
-@property (nonatomic, strong, readonly)LeapVector *zBasis;
-/** The translation factors for all three axes. */
-@property (nonatomic, strong, readonly)LeapVector *origin;
+/**
+ * The rotation and scale factors for the x-axis.
+ *
+ * @example Matrix_xBasis.txt
+ *
+ * @available Since 1.0
+ */
+@property (nonatomic, strong, readwrite)LeapVector *xBasis;
+/**
+ * The rotation and scale factors for the y-axis.
+ *
+ * @example Matrix_yBasis.txt
+ *
+ * @available Since 1.0
+ */
+@property (nonatomic, strong, readwrite)LeapVector *yBasis;
+/**
+ * The rotation and scale factors for the z-axis.
+ *
+ * @example Matrix_zBasis.txt
+ *
+ * @available Since 1.0
+ */
+@property (nonatomic, strong, readwrite)LeapVector *zBasis;
+/**
+ * The translation factors for all three axes.
+ *
+ * @example Matrix_origin.txt
+ *
+ * @available Since 1.0
+ */
+@property (nonatomic, strong, readwrite)LeapVector *origin;
 
 @end
 
 //////////////////////////////////////////////////////////////////////////
 //CONSTANTS
-/** The constant pi as a single precision floating point number. */
+/**
+ * The constant pi as a single precision floating point number.
+ * @available Since 1.0
+ */
 extern const float LEAP_PI;
 /**
  * The constant ratio to convert an angle measure from degrees to radians.
  * Multiply a value in degrees by this constant to convert to radians.
+ * @available Since 1.0
  */
 extern const float LEAP_DEG_TO_RAD;
 /**
  * The constant ratio to convert an angle measure from radians to degrees.
  * Multiply a value in radians by this constant to convert to degrees.
+ * @available Since 1.0
  */
 extern const float LEAP_RAD_TO_DEG;
 
 /**
  * The supported types of gestures.
+ * @available Since 1.0
  */
 typedef enum LeapGestureType {
     LEAP_GESTURE_TYPE_INVALID = -1, /**< An invalid type. */
@@ -568,32 +661,132 @@ typedef enum LeapGestureState {
 
 /**
  * The supported controller policies.
+ * @available Since 1.0
  */
 typedef enum LeapPolicyFlag {
-    LEAP_POLICY_DEFAULT = 0,                 /**< The default policy. */
-    LEAP_POLICY_BACKGROUND_FRAMES = (1 << 0) /**< Receive background frames. */
+    LEAP_POLICY_DEFAULT = 0,                  /**< The default policy. Since 1.0*/
+    LEAP_POLICY_BACKGROUND_FRAMES = (1 << 0), /**< Receive background frames. Since 1.0*/
+    LEAP_POLICY_IMAGES = (1 << 1),            /**< Receive raw images from sensor cameras. Since 2.0.5*/
+    LEAP_POLICY_OPTIMIZE_HMD = (1 << 2),      /**< Optimize the tracking for head-mounted device. Since 2.1.3*/
 } LeapPolicyFlag;
+
+/**
+ * Defines the values for reporting the state of a Pointable object in relation to
+ * an adaptive touch plane.
+ * @available Since 1.0
+ */
+typedef enum LeapPointableZone {
+    LEAP_POINTABLE_ZONE_NONE       = 0,  /**< The Pointable object is too far from
+                                          the plane to be considered hovering or touching.*/
+    LEAP_POINTABLE_ZONE_HOVERING   = 1,   /**< The Pointable object is close to, but
+                                           not touching the plane.*/
+    LEAP_POINTABLE_ZONE_TOUCHING   = 2,  /**< The Pointable has penetrated the plane. */
+} LeapPointableZone;
+
+/**
+ * Enumerates the joints of a finger.
+ *
+ * The joints along the finger are indexed from 0 to 3 (tip to knuckle). The same
+ * joint identifiers are used for the thumb, even though the thumb has one less
+ * phalanx bone than the other digits. This puts the base joint (JOINT_MCP) at the
+ * base of thumb's metacarpal bone.
+ *
+ * Pass a member of this enumeration to [LeapPointable jointPosition] to get the
+ * physical position of that joint.
+ *
+ * Note: The term "joint" is applied loosely here and the set of joints includes the
+ * finger tip even though it is not an anatomical joint.
+ *
+ * @available Since 2.0
+ */
+typedef enum LeapFingerJoint {
+    /**
+     * The metacarpophalangeal joint, or knuckle, of the finger.
+     *
+     * The metacarpophalangeal joint is located at the base of a finger between
+     * the metacarpal bone and the first phalanx. The common name for this joint is
+     * the knuckle.
+     *
+     * On a thumb, which has one less phalanx than a finger, this joint index
+     * identifies the thumb joint near the base of the hand, between the carpal
+     * and metacarpal bones.
+     * @available Since 2.0
+     */
+    LEAP_FINGER_JOINT_MCP = 0,
+    /**
+     * The proximal interphalangeal joint of the finger. This joint is the middle
+     * joint of a finger.
+     *
+     * The proximal interphalangeal joint is located between the two finger segments
+     * closest to the hand (the proximal and the intermediate phalanges). On a thumb,
+     * which lacks an intermediate phalanx, this joint index identifies the knuckle joint
+     * between the proximal phalanx and the metacarpal bone.
+     *
+     * @available Since 2.0
+     */
+    LEAP_FINGER_JOINT_PIP = 1,
+    /**
+     * The distal interphalangeal joint of the finger.
+     * This joint is closest to the tip.
+     *
+     * The distal interphalangeal joint is located between the most extreme segment
+     * of the finger (the distal phalanx) and the middle segment (the intermediate
+     * phalanx).
+     *
+     * @available Since 2.0
+     */
+    LEAP_FINGER_JOINT_DIP = 2,
+    /**
+     * The tip of the finger.
+     * @available Since 2.0
+     */
+    LEAP_FINGER_JOINT_TIP = 3
+} LeapFingerJoint;
+
+/**
+ * Enumerates the names of the fingers.
+ *
+ * Members of this enumeration are returned by [LeapFinger type] to identify a
+ * Finger object.
+ * @available Since 2.0
+ */
+typedef enum LeapFingerType {
+    LEAP_FINGER_TYPE_THUMB  = 0, /**< The thumb */
+    LEAP_FINGER_TYPE_INDEX  = 1, /**< The index or forefinger */
+    LEAP_FINGER_TYPE_MIDDLE = 2, /**< The middle finger */
+    LEAP_FINGER_TYPE_RING   = 3, /**< The ring finger */
+    LEAP_FINGER_TYPE_PINKY  = 4  /**< The pinky or little finger */
+} LeapFingerType;
 
 //////////////////////////////////////////////////////////////////////////
 //POINTABLE
 @class LeapFrame;
 @class LeapHand;
+@class LeapInteractionBox;
 
 /**
  * The LeapPointable class reports the physical characteristics of a detected finger or tool.
  *
- * Both fingers and tools are classified as LeapPointable objects. Use the 
- * <[LeapPointable isFinger]> function to determine whether a pointable object
- * represents a finger. Use the <[LeapPointable isTool]> function to determine 
- * whether a pointable object represents a tool. The Leap classifies a detected 
+ * Both fingers and tools are classified as LeapPointable objects. Use the
+ * [LeapPointable isFinger] function to determine whether a pointable object
+ * represents a finger. Use the [LeapPointable isTool] function to determine
+ * whether a pointable object represents a tool. The Leap classifies a detected
  * entity as a tool when it is thinner, straighter, and longer than a typical finger.
+ *
+ * To provide touch emulation, the Leap Motion software associates a floating touch
+ * plane that adapts to the user's finger movement and hand posture. The Leap Motion
+ * interprets purposeful movements toward this plane as potential touch points. The
+ * logic used by the LeapPointable class is the same as that used by the Leap Motion
+ * software for OS-level touch and mouse input emulation. The LeapPointable class reports
+ * touch state with the touchZone and touchDistance properties.
  *
  * Note that LeapPointable objects can be invalid, which means that they do not contain
  * valid tracking data and do not correspond to a physical entity. Invalid LeapPointable
  * objects can be the result of asking for a pointable object using an ID from an
  * earlier frame when no pointable objects with that ID exist in the current frame.
  * A pointable object created from the LeapPointable constructor is also invalid.
- * Test for validity with the <[LeapPointable isValid]> function.
+ * Test for validity with the [LeapPointable isValid] function.
+ * @available Since 1.0
  */
 @interface LeapPointable : NSObject
 
@@ -601,41 +794,54 @@ typedef enum LeapPolicyFlag {
 /**
  * A unique ID assigned to this LeapPointable object, whose value remains the
  * same across consecutive frames while the tracked finger or tool remains
- * visible. If tracking is lost (for example, when a finger is occluded by
- * another finger or when it is withdrawn from the Leap field of view), the
+ * visible. If tracking is lost, the
  * Leap may assign a new ID when it detects the entity in a future frame.
  *
- * Use the ID value with the <[LeapFrame pointable:]> function to find this
+ * @example Pointable_id.txt
+ *
+ * Use the ID value with the [LeapFrame pointable:] function to find this
  * LeapPointable object in future frames.
  *
+ * @example Pointable_get_id.txt
+ *
  * @returns The ID assigned to this LeapPointable object.
+ * @available Since 1.0
  */
 - (int32_t)id;
 @property (nonatomic, getter = id, readonly)int32_t id;
 /**
  * The tip position in millimeters from the Leap origin.
  *
- * @returns The <LeapVector> containing the coordinates of the tip position.
+ * @example Pointable_tipPosition.txt
+ *
+ * @returns The LeapVector containing the coordinates of the tip position.
+ * @available Since 1.0
  */
 - (LeapVector *)tipPosition;
 @property (nonatomic, getter = tipPosition, readonly)LeapVector *tipPosition;
 /**
  * The rate of change of the tip position in millimeters/second.
  *
- * @returns The <LeapVector> containing the coordinates of the tip velocity.
+ * @example Pointable_tipVelocity.txt
+ *
+ * @returns The LeapVector containing the coordinates of the tip velocity.
+ * @available Since 1.0
  */
 - (LeapVector *)tipVelocity;
 @property (nonatomic, getter = tipVelocity, readonly)LeapVector *tipVelocity;
 /**
  * The direction in which this finger or tool is pointing.
  *
+ * @example Pointable_direction.txt
+ *
  * The direction is expressed as a unit vector pointing in the same
  * direction as the tip.
  *
  * <img src="../docs/images/Leap_Finger_Model.png"/>
  *
- * @returns The <LeapVector> pointing in the same direction as the tip of this
+ * @returns The LeapVector pointing in the same direction as the tip of this
  * LeapPointable object.
+ * @available Since 1.0
  */
 - (LeapVector *)direction;
 @property (nonatomic, getter = direction, readonly)LeapVector *direction;
@@ -643,82 +849,461 @@ typedef enum LeapPolicyFlag {
  * The estimated width of the finger or tool in millimeters.
  *
  * The reported width is the average width of the visible portion of the
- * finger or tool from the hand to the tip. If the width isn't known,
+ * finger or tool. If the width isn't known,
  * then a value of 0 is returned.
  *
+ * @example Pointable_width.txt
+ *
  * @returns The estimated width of this LeapPointable object.
+ * @available Since 1.0
  */
 - (float)width;
 @property (nonatomic, getter = width, readonly)float width;
 /**
  * The estimated length of the finger or tool in millimeters.
  *
- * The reported length is the visible length of the finger or tool from the
- * hand to tip. If the length isn't known, then a value of 0 is returned.
+ * The reported length is the visible length of the finger or tool. 
+ * If the length isn't known, then a value of 0 is returned.
+ *
+ * @example Pointable_length.txt
  *
  * @returns The estimated length of this LeapPointable object.
+ * @available Since 1.0
  */
 - (float)length;
 @property (nonatomic, getter = length, readonly)float length;
 /**
- * Whether or not the LeapPointable is believed to be a finger.
- * Fingers are generally shorter, thicker, and less straight than tools.
+ * Whether or not the LeapPointable is classified a finger.
  *
- * @returns YES, if this LeapPointable is classified as a <LeapFinger>.
+ * @example Pointable_isFinger.txt
+ *
+ * @returns YES, if this LeapPointable is classified as a LeapFinger.
+ * @available Since 1.0
  */
 - (BOOL)isFinger;
 @property (nonatomic, getter = isFinger, readonly)BOOL isFinger;
 /**
- * Whether or not the LeapPointable is believed to be a tool.
- * Tools are generally longer, thinner, and straighter than fingers.
+ * Whether or not the LeapPointable is classified to be a tool.
  *
- * @returns YES, if this LeapPointable is classified as a <LeapTool>.
+ * @example Pointable_isTool.txt
+ *
+ * @returns YES, if this LeapPointable is classified as a LeapTool.
+ * @available Since 1.0
  */
 - (BOOL)isTool;
 @property (nonatomic, getter = isTool, readonly)BOOL isTool;
 /**
+ * Whether or not this Pointable is in an extended posture.
+ *
+ * @example Pointable_isExtended.txt
+ *
+ * A finger is considered extended if it is extended straight from the hand as if
+ * pointing. A finger is not extended when it is bent down and curled towards the
+ * palm.  Tools are always extended.
+ *
+ * @returns True, if the pointable is extended.
+ * @available Since 2.0
+ */
+- (BOOL)isExtended;
+@property (nonatomic, getter = isExtended, readonly)BOOL isExtended;
+/**
  * Reports whether this is a valid LeapPointable object.
  *
+ * @example Pointable_isValid.txt
+ *
  * @returns YES, if this LeapPointable object contains valid tracking data.
+ * @available Since 1.0
  */
 - (BOOL)isValid;
 @property (nonatomic, getter = isValid, readonly)BOOL isValid;
 /**
- * The <LeapFrame> associated with this LeapPointable object.
+ * The current touch zone of this LeapPointable object.
  *
- * @returns The associated <LeapFrame> object, if available; otherwise,
+ * @example Pointable_touchZone.txt
+ *
+ * The Leap Motion software computes the touch zone based on a floating touch
+ * plane that adapts to the user's finger movement and hand posture. The Leap
+ * Motion interprets purposeful movements toward this plane as potential touch
+ * points. When a LeapPointable moves close to the adaptive touch plane, it enters the
+ * "hovering" zone. When a LeapPointable reaches or passes through the plane, it enters
+ * the "touching" zone.
+ *
+ * The possible states are present in the Zone enum:
+ *
+ * **LEAP_POINTABLE_ZONE_NONE** -- The LeapPointable is outside the hovering zone.
+ *
+ * **LEAP_POINTABLE_ZONE_HOVERING** -- The LeapPointable is close to, but not touching the touch plane.
+ *
+ * **LEAP_POINTABLE_ZONE_TOUCHING** -- The LeapPointable has penetrated the touch plane.
+ *
+ *  <img src="../docs/images/Leap_Touch_Plane.png"/>
+ *
+ * The touchDistance property provides a normalized indication of the distance to
+ * the touch plane when the LeapPointable is in the hovering or touching zones.
+ * @available Since 1.0
+ */
+- (LeapPointableZone)touchZone;
+@property (nonatomic, getter = touchZone, readonly)LeapPointableZone touchZone;
+/**
+ * A value proportional to the distance between this LeapPointable object and the
+ * adaptive touch plane.
+ *
+ * @example Pointable_touchDistance.txt
+ *
+ * The touch distance is a value in the range [-1, 1]. The value 1.0 indicates the
+ * LeapPointable is at the far edge of the hovering zone. The value 0 indicates the
+ * LeapPointable is just entering the touching zone. A value of -1.0 indicates the
+ * LeapPointable is firmly within the touching zone. Values in between are
+ * proportional to the distance from the plane. Thus, the touchDistance of 0.5
+ * indicates that the LeapPointable is halfway into the hovering zone.
+ *
+ * You can use the touchDistance value to modulate visual feedback given to the
+ * user as their fingers close in on a touch target, such as a button.
+ * @available Since 1.0
+ */
+- (float)touchDistance;
+@property (nonatomic, getter = touchDistance, readonly)float touchDistance;
+/**
+ * The stabilized tip position of this LeapPointable.
+ *
+ * @example Pointable_stabilizedTipPosition.txt
+ *
+ * Smoothing and stabilization is performed in order to make
+ * this value more suitable for interaction with 2D content.
+ * @available Since 1.0
+ */
+- (LeapVector *)stabilizedTipPosition;
+@property (nonatomic, getter = stabilizedTipPosition, readonly)LeapVector *stabilizedTipPosition;
+/**
+ * The duration of time this Pointable has been visible to the Leap Motion Controller.
+ *
+ * @example Pointable_timeVisible.txt
+ *
+ * @returns The duration (in seconds) that this Pointable has been tracked.
+ * @available Since 1.0
+ */
+- (float)timeVisible;
+@property (nonatomic, getter = timeVisible, readonly)float timeVisible;
+/**
+ * The LeapFrame associated with this LeapPointable object.
+ *
+ * @example Pointable_frame.txt
+ *
+ * This property is a weak reference to the LeapFrame object so it is only valid
+ * during the lifetime of the LeapFrame object -- while the LeapFrame object is in
+ * the history buffer or while your application maintains its own reference.
+ *
+ * @returns The associated LeapFrame object, if available; otherwise,
  * an invalid LeapFrame object is returned.
+ * @available Since 1.0
  */
 - (LeapFrame *)frame;
 @property (nonatomic, weak, getter = frame, readonly)LeapFrame *frame;
 /**
- * The <LeapHand> associated with this finger or tool.
+ * The LeapHand associated with a finger.
  *
- * @returns The associated <LeapHand> object, if available; otherwise,
+ * @example Pointable_hand.txt
+ *
+ * This property is a weak reference to the LeapHand object so it is only valid
+ * during the lifetime of that LeapHand object -- in other words, while the
+ * parent LeapFrame object is valid or while your application maintains its own
+ * reference.
+ *
+ * As of version 2, tools are not associated with hands, so this property always
+ * returns an invalid LeapHand object for tools.
+ *
+ * @returns The associated LeapHand object, if available; otherwise,
  * an invalid LeapHand object is returned.
+ * @available Since 1.0
  */
 - (LeapHand *)hand;
 @property (nonatomic, weak, getter = hand, readonly)LeapHand *hand;
 /**
  * Returns an invalid LeapPointable object.
  *
- * You can use the instance returned by this function in comparisons testing
- * whether a given LeapPointable instance is valid or invalid. (You can also use the
- * LeapPointable isValid function.)
+ * @example Pointable_invalid.txt
  *
  * @returns The invalid LeapPointable instance.
+ * @available Since 1.0
  */
 + (LeapPointable *)invalid;
 
 @end
 
 //////////////////////////////////////////////////////////////////////////
+//ARM
+/**
+ * The LeapArm class represents the forearm attached to a tracked hand.
+ *
+ * @available Since 2.1.2
+ */
+@interface LeapArm : NSObject
+
+/**
+ * The orthonormal basis vectors for the LeapArm bone as a Matrix.
+ *
+ * Basis vectors specify the orientation of a bone.
+ *
+ * **xBasis** Perpendicular to the longitudinal axis of the
+ *   bone; exits the arm laterally through the sides of the wrist.
+ *
+ * **yBasis or up vector** Perpendicular to the longitudinal
+ *   axis of the bone; exits the top and bottom of the arm. More positive
+ *   in the upward direction.
+ *
+ * **zBasis** Aligned with the longitudinal axis of the arm bone.
+ *   More positive toward the wrist.
+ *
+ * \include Arm_basis.txt
+ *
+ * The bases provided for the right arm use the right-hand rule; those for
+ * the left arm use the left-hand rule. Thus, the positive direction of the
+ * x-basis is to the right for the right arm and to the left for the left
+ * arm. You can change from right-hand to left-hand rule by multiplying the
+ * z basis vector by -1.
+ *
+ * Note that converting the basis vectors directly into a quaternion
+ * representation is not mathematically valid. If you use quaternions,
+ * create them from the derived rotation matrix not directly from the bases.
+ *
+ * @returns The basis of the arm bone as a matrix.
+ * @since 2.1.2
+ */
+- (LeapMatrix *)basis;
+@property (nonatomic, getter = basis, readonly)LeapMatrix *basis;
+/**
+ * The center of the forearm.
+ *
+ * This location represents the midpoint of the arm between the wrist position
+ * and the elbow position.
+ * @since 2.1.2
+ */
+- (LeapVector *)center;
+@property (nonatomic, getter = center, readonly)LeapVector *center;
+/**
+ * The normalized direction in which the arm is pointing (from elbow to wrist).
+ *
+ * @example Arm_direction.txt
+ *
+ * @since 2.1.2
+ */
+- (LeapVector *)direction;
+@property (nonatomic, getter = direction, readonly)LeapVector *direction;
+/**
+ * Reports whether this is a valid LeapArm object.
+ *
+ * @example Arm_isValid.txt
+ *
+ * @since 2.1.2
+ */
+- (BOOL)isValid;
+@property (nonatomic, getter = isValid, readonly)BOOL isValid;
+/**
+ * The position of the elbow.
+ *
+ * @example Arm_elbowPosition.txt
+ *
+ * If not in view, the elbow position is estimated based on typical human
+ * anatomical proportions.
+ * @since 2.1.2
+ */
+- (LeapVector *)elbowPosition;
+@property (nonatomic, getter = elbowPosition, readonly)LeapVector *elbowPosition;
+/**
+ * The position of the wrist.
+ *
+ * \include Arm_wristPosition.txt
+ *
+ * Note that the wrist position is not collocated with the end of any bone in
+ * the hand. There is a gap of a few centimeters since the carpal bones are
+ * not included in the skeleton model.
+ * @since 2.1.2
+ */
+- (LeapVector *)wristPosition;
+@property (nonatomic, getter = wristPosition, readonly)LeapVector *wristPosition;
+/**
+ * The average width of the arm.
+ *
+ * \include Arm_width.txt
+ * @since 2.1.2
+ */
+- (float)width;
+@property (nonatomic, getter = width, readonly)float width;
+/**
+ * An invalid LeapArm object.
+ *
+ * You can use an invalid LeapArm object in comparisons testing
+ * whether a given LeapArm instance is valid or invalid. (You can also use the
+ * LeapArm.isValid property.)
+ *
+ * @example Arm_invalid.txt
+ *
+ * @returns The invalid Arm instance.
+ * @since 2.1.2
+ */
++ (LeapArm *)invalid;
+@property (nonatomic, getter = invalid, readonly)LeapArm *invalid;
+
+@end
+
+/**
+ * Enumerates the names of the bones.
+ * @available Since 2.0
+ */
+typedef enum LeapBoneType {
+    LEAP_BONE_TYPE_METACARPAL  = 0, /**< The metacarpal bone connecting to the wrist */
+    LEAP_BONE_TYPE_PROXIMAL  = 1, /**< The first finger phalanx bone. */
+    LEAP_BONE_TYPE_INTERMEDIATE = 2, /**< The middle finger phalanx bone */
+    LEAP_BONE_TYPE_DISTAL  = 3  /**< The finger phalanx bone at the end of the finger */
+} LeapBoneType;
+
+
+//////////////////////////////////////////////////////////////////////////
+//BONE
+/**
+ * The LeapBone class represents a tracked bone.
+ *
+ * All fingers contain 4 bones that make up the anatomy of the finger.
+ * Get valid LeapBone objects from a Finger object.
+ *
+ * Bones are ordered from base to tip, indexed from 0 to 3.  Additionally, the
+ * bone's LeapBoneType enum may be used to index a specific bone anatomically.
+ *
+ * The thumb does not have a base metacarpal bone and therefore contains a valid,
+ * zero length bone at that location.
+ *
+ * Note that LeapBone objects can be invalid, which means that they do not contain
+ * valid tracking data and do not correspond to a physical bone. Invalid LeapBone
+ * objects can be the result of asking for a LeapBone object from an invalid finger,
+ * indexing a bone out of range, or constructing a new bone.
+ * Test for validity with the LeapBone.isValid property.
+ * @available Since 2.0
+ */
+@interface LeapBone : NSObject
+
+/**
+ * The orientation of the bone as a basis matrix.
+ *
+ * The basis is defined as follows:
+ *   xAxis: Clockwise rotation axis of the bone
+ *   yAxis: Positive above the bone
+ *   zAxis: Positive along the bone towards the wrist
+ *
+ * @example Bone_basis.txt
+ *
+ * Note: Since the left hand is a mirror of the right hand, left handed
+ * bones will contain a left-handed basis.
+ *
+ * @returns The basis of the bone as a matrix.
+ * @since 2.0
+ */
+- (LeapMatrix *)basis;
+@property (nonatomic, getter = basis, readonly)LeapMatrix *basis;
+/**
+ * The midpoint in the center of the bone.
+ *
+ * @example Bone_center.txt
+ *
+ * @returns The midpoint in the center of the bone.
+ * @since 2.0
+ */
+- (LeapVector *)center;
+@property (nonatomic, getter = center, readonly)LeapVector *center;
+/**
+ * The normalized direction of the bone from base to tip.
+ *
+ * @example Bone_direction.txt
+ *
+ * @returns The normalized direction of the bone from base to tip.
+ * @since 2.0
+ */
+- (LeapVector *)direction;
+@property (nonatomic, getter = direction, readonly)LeapVector *direction;
+/**
+ * Reports whether this is a valid LeapBone object.
+ *
+ * @example Bone_isValid.txt
+ *
+ * @since 2.0
+ */
+- (BOOL)isValid;
+@property (nonatomic, getter = isValid, readonly)BOOL isValid;
+/**
+ * The end of the bone closest from the wrist.
+ *
+ * @example Bone_prevJoint.txt
+ *
+ * @returns The LeapVector containing the coordinates of the previous joint position
+ * (the joint closer to the wrist).
+ * @since 2.0
+ */
+- (LeapVector *)prevJoint;
+@property (nonatomic, getter = prevJoint, readonly)LeapVector *prevJoint;
+/**
+ * The end of the bone farthest from the wrist.
+ *
+ * @example Bone_nextJoint.txt
+ *
+ * @returns The LeapVector containing the coordinates of the next joint position
+ * (the joint or bone tip closest to the end of the finger).
+ * @since 2.0
+ */
+- (LeapVector *)nextJoint;
+@property (nonatomic, getter = nextJoint, readonly)LeapVector *nextJoint;
+/**
+ * The estimated length of the bone in millimeters.
+ *
+ * @example Bone_length.txt
+ *
+ * @returns The length of the bone in millimeters.
+ * @since 2.0
+ */
+- (float)length;
+@property (nonatomic, getter = length, readonly)float length;
+/**
+ * The average width of the finger along this bone in millimeters.
+ *
+ * @example Bone_width.txt
+ *
+ * @returns The average width of the bone including the surrounding flesh in millimeters.
+ * @since 2.0
+ */
+- (float)width;
+@property (nonatomic, getter = width, readonly)float width;
+/**
+ * The name of this bone.
+ *
+ * @example Bone_type.txt
+ *
+ * @returns The anatomical type of this bone as a member of the LeapBoneType
+ * enumeration.
+ * @since 2.0
+ */
+- (LeapBoneType)type;
+@property (nonatomic, getter = type, readonly)LeapBoneType type;
+/**
+ * An invalid Bone object.
+ *
+ * You can use an invalid LeapBone object in comparisons testing
+ * whether a given LeapBone instance is valid or invalid. (You can also use the
+ * LeapBone.isValid property.)
+ *
+ * @example Bone_invalid.txt
+ *
+ * @returns The invalid LeapBone instance.
+ * @since 2.0
+ */
++ (LeapBone *)invalid;
+@property (nonatomic, getter = invalid, readonly)LeapBone *invalid;
+
+@end
+//////////////////////////////////////////////////////////////////////////
 //FINGER
 /**
  * The LeapFinger class represents a tracked finger.
  *
  * Fingers are pointable objects that the Leap has classified as a finger.
- * Get valid LeapFinger objects from a <LeapFrame> or a <LeapHand> object.
+ * Get valid LeapFinger objects from a LeapFrame or a LeapHand object.
  *
  * Note that LeapFinger objects can be invalid, which means that they do not contain
  * valid tracking data and do not correspond to a physical finger. Invalid LeapFinger
@@ -726,8 +1311,55 @@ typedef enum LeapPolicyFlag {
  * earlier frame when no fingers with that ID exist in the current frame.
  * A LeapFinger object created from the LeapFinger constructor is also invalid.
  * Test for validity with the LeapFinger isValid function.
+ * @available Since 1.0
  */
 @interface LeapFinger : LeapPointable
+
+/**
+ * The position of the specified joint on this finger in millimeters from the
+ * Leap Motion origin.
+ *
+ * @deprecated Use the Bone class prevJoint and nextJoint properties instead.
+ *
+ * @param jointIx An index value from the LeapFingerJoint enumeration identifying the
+ * joint of interest.
+ * @returns The LeapVector containing the coordinates of the joint position.
+ * @available Since 2.0
+ */
+- (LeapVector *)jointPosition:(LeapFingerJoint)jointIx;
+/**
+ * The name of this finger.
+ *
+ * @example Finger_type.txt
+ *
+ * @returns The anatomical type of this finger as a member of the LeapFingerType
+ * enumeration.
+ * @available Since 2.0
+ */
+- (LeapFingerType)type;
+@property (nonatomic, getter = type, readonly)LeapFingerType type;
+
+/**
+ * The bone of the specified anatomical type for this finger.
+ *
+ * Note that the thumb bone types match the types of the other fingers in the
+ * Leap Motion model. A real thumb has one fewer bone than the other fingers,
+ * so a zero-length bone is inserted for the thumb in the Leap Motion model.
+ * To keep the bone indexes and names consistent between the thumb and other fingers,
+ * the zero-length bone is added at the metacarpal position. However, in the standard
+ * anatomical naming system, the missing thumb bone is the intermediate
+ * phalanx. Thus, in the Leap Motion model, the anatomical metacarpal of the thumb is
+ * labeled as the proximal phalanx and the proximal phalanx is labeled as the
+ * intermediate phalanx.
+ *
+ * @example Finger_bone.txt
+ *
+ * @param type An index value from the LeapBoneType enumeration identifying the
+ * bone of interest.
+ * @returns The LeapBone object of the specified bone type.
+ * @since 2.0
+ */
+- (LeapBone *)bone:(LeapBoneType)type;
 @end
 
 //////////////////////////////////////////////////////////////////////////
@@ -737,7 +1369,7 @@ typedef enum LeapPolicyFlag {
  *
  * Tools are pointable objects that the Leap has classified as a tool.
  * Tools are longer, thinner, and straighter than a typical finger.
- * Get valid LeapTool objects from a <LeapFrame> or a <LeapHand> object.
+ * Get valid LeapTool objects from a LeapFrame object.
  *
  * <img src="../docs/images/Leap_Tool.png"/>
  *
@@ -747,6 +1379,7 @@ typedef enum LeapPolicyFlag {
  * earlier frame when no tools with that ID exist in the current frame.
  * A LeapTool object created from the LeapTool constructor is also invalid.
  * Test for validity with the LeapTool isValid function.
+ * @available Since 1.0
  */
 @interface LeapTool : LeapPointable
 @end
@@ -758,7 +1391,7 @@ typedef enum LeapPolicyFlag {
  *
  * Hand tracking data includes a palm position and velocity; vectors for
  * the palm normal and direction to the fingers; properties of a sphere fit
- * to the hand; and lists of the attached fingers and tools.
+ * to the hand; and lists of the attached fingers.
  *
  * Note that LeapHand objects can be invalid, which means that they do not contain
  * valid tracking data and do not correspond to a physical entity. Invalid LeapHand
@@ -766,126 +1399,186 @@ typedef enum LeapPolicyFlag {
  * earlier frame when no hand objects with that ID exist in the current frame.
  * A hand object created from the LeapHand constructor is also invalid.
  * Test for validity with the LeapHand isValid function.
+ * @available Since 1.0
  */
 @interface LeapHand : NSObject
 
 - (NSString *)description;
 /**
  * A unique ID assigned to this LeapHand object, whose value remains the same
- * across consecutive frames while the tracked hand remains visible. 
- * 
+ * across consecutive frames while the tracked hand remains visible.
+ *
  * If tracking is lost (for example, when a hand is occluded by another hand
  * or when it is withdrawn from or reaches the edge of the Leap field of view),
  * the Leap may assign a new ID when it detects the hand in a future frame.
  *
- * Use the ID value with the <[LeapFrame hand:]> function to find this LeapHand object
+ * @example Hand_id.txt
+ *
+ * Use the ID value with the [LeapFrame hand:] function to find this LeapHand object
  * in future frames.
  *
+ * @example Hand_Get_ID.txt
+ *
  * @returns The ID of this hand.
+ * @available Since 1.0
  */
 - (int32_t)id;
 @property (nonatomic, getter = id, readonly)int32_t id;
 /**
- * The list of <LeapPointable> objects (fingers and tools) detected in this frame
- * that are associated with this hand, given in arbitrary order. 
+ * The list of LeapPointable objects (fingers) detected in this frame
+ * that are associated with this hand, given in arbitrary order.
  *
- * The list can be empty if no fingers or tools associated with this hand 
- * are detected.
+ * @example Hand_pointables.txt
  *
- * Use the <[LeapPointable isFinger]> function to determine whether or not an
- * item in the list represents a finger. Use the <[LeapPointable isTool]> function
- * to determine whether or not an item in the list represents a tool.
- * You can also get only fingers using the <[LeapHand fingers]> function or
- * only tools using the <[LeapHand tools]> function.
+ * The list will always contain 5 fingers even when some fingers are blocked 
+ * from view and when the user is missing digits.
  *
- * @returns An NSArray containing all <LeapPointable> objects associated with this hand.
+ * @returns An NSArray containing all LeapPointable objects associated with this hand.
+ * @available Since 1.0
  */
 - (NSArray *)pointables;
 @property (nonatomic, getter = pointables, readonly)NSArray *pointables;
 /**
- * The list of <LeapFinger> objects detected in this frame that are attached to
+ * The list of LeapFinger objects detected in this frame that are attached to
  * this hand, given in arbitrary order.
+ *
+ * @example Hand_fingers.txt
  *
  * The list can be empty if no fingers attached to this hand are detected.
  *
- * @returns An NSArray containing all <LeapFinger> objects attached to this hand.
+ * @returns An NSArray containing all LeapFinger objects attached to this hand.
+ * @available Since 1.0
  */
 - (NSArray *)fingers;
 @property (nonatomic, getter = fingers, readonly)NSArray *fingers;
-/**
- * The list of <LeapTool> objects detected in this frame that are held by this
+/*
+ * The list of LeapTool objects detected in this frame that are held by this
  * hand, given in arbitrary order.
+ *
+ * @example Hand_tools.txt
+ *
  * The list can be empty if no tools held by this hand are detected.
  *
- * @returns An NSArray containing all <LeapTool> objects held by this hand.
+ * @returns An NSArray containing all LeapTool objects held by this hand.
+ * @available Since 1.0
+ */
+ /**
+ * @deprecated 2.0
  */
 - (NSArray *)tools;
 @property (nonatomic, getter = tools, readonly)NSArray *tools;
 /**
- * The <LeapPointable> object with the specified ID associated with this hand.
+ * The LeapPointable object with the specified ID associated with this hand.
  *
  * Use this [LeapHand pointable:] function to retrieve a LeapPointable object
  * associated with this hand using an ID value obtained from a previous frame.
- * This function always returns a LeapPointable object, but if no finger or tool
+ * This function always returns a LeapPointable object, but if no finger
  * with the specified ID is present, an invalid LeapPointable object is returned.
  *
- * Note that ID values persist across frames, but only until tracking of a
- * particular object is lost. If tracking of a finger or tool is lost and subsequently
- * regained, the new LeapPointable object representing that finger or tool may have a
- * different ID than that representing the finger or tool in an earlier frame.
+ * @example Hand_pointable.txt
  *
- * @param pointableId The ID value of a <LeapPointable> object from a previous frame.
- * @returns The <LeapPointable> object with the matching ID if one exists for this
+ * Note that ID values of fingers are based on the hand ID. Hand IDs persist 
+ * across frames, but only until tracking of that hand is lost. If tracking of 
+ * a hand is lost and subsequently
+ * regained, the new LeapHand object representing that hand will have a different
+ * ID than that representing the hand in an earlier frame. Thus the IDs for the
+ * fingers on the hand will also change.
+ *
+ * @param pointableId The ID value of a LeapPointable object from a previous frame.
+ * @returns The LeapPointable object with the matching ID if one exists for this
  * hand in this frame; otherwise, an invalid LeapPointable object is returned.
+ * @available Since 1.0
  */
 - (LeapPointable *)pointable:(int32_t)pointableId;
 /**
- * The <LeapFinger> object with the specified ID attached to this hand.
+ * The LeapFinger object with the specified ID attached to this hand.
  *
  * Use this [LeapHand finger:] function to retrieve a LeapFinger object attached to
  * this hand using an ID value obtained from a previous frame.
  * This function always returns a LeapFinger object, but if no finger
  * with the specified ID is present, an invalid LeapFinger object is returned.
  *
+ * @example Hand_finger.txt
+ *
  * Note that ID values persist across frames, but only until tracking of a
  * particular object is lost. If tracking of a finger is lost and subsequently
  * regained, the new LeapFinger object representing that finger may have a
  * different ID than that representing the finger in an earlier frame.
  *
- * @param fingerId The ID value of a <LeapFinger> object from a previous frame.
- * @returns The <LeapFinger> object with the matching ID if one exists for this
+ * @param fingerId The ID value of a LeapFinger object from a previous frame.
+ * @returns The LeapFinger object with the matching ID if one exists for this
  * hand in this frame; otherwise, an invalid LeapFinger object is returned.
+ * @available Since 1.0
  */
 - (LeapFinger *)finger:(int32_t)fingerId;
-/**
- * The <LeapTool> object with the specified ID held by this hand.
+/*
+ * The LeapTool object with the specified ID held by this hand.
  *
  * Use this [LeapHand tool:] function to retrieve a LeapTool object held by
  * this hand using an ID value obtained from a previous frame.
  * This function always returns a LeapTool object, but if no tool
  * with the specified ID is present, an invalid LeapTool object is returned.
  *
+ * @example Hand_tool.txt
+ *
  * Note that ID values persist across frames, but only until tracking of a
  * particular object is lost. If tracking of a tool is lost and subsequently
  * regained, the new LeapTool object representing that tool may have a
  * different ID than that representing the tool in an earlier frame.
  *
- * @param toolId The ID value of a <LeapTool> object from a previous frame.
- * @returns The <LeapTool> object with the matching ID if one exists for this
+ * @param toolId The ID value of a LeapTool object from a previous frame.
+ * @returns The LeapTool object with the matching ID if one exists for this
  * hand in this frame; otherwise, an invalid LeapTool object is returned.
+ * @available Since 1.0
+ */
+ /**
+ * @deprecated 2.0
  */
 - (LeapTool *)tool:(int32_t)toolId;
 /**
+ * The arm to which this hand is attached.
+ *
+ * If the arm is not completely in view, Arm attributes are estimated based on
+ * the attributes of entities that are in view combined with typical human anatomy.
+ *
+ * \include Arm_get.txt
+ *
+ * @returns The Arm object for this hand.
+ * @since 2.0.3
+ */
+- (LeapArm *)arm;
+@property (nonatomic, getter = arm, readonly)LeapArm *arm;
+/**
  * The center position of the palm in millimeters from the Leap origin.
  *
- * @returns The <LeapVector> representing the coordinates of the palm position.
+ * @example Hand_palmPosition.txt
+ *
+ * @returns The LeapVector representing the coordinates of the palm position.
+ * @available Since 1.0
  */
 - (LeapVector *)palmPosition;
 @property (nonatomic, getter = palmPosition, readonly)LeapVector *palmPosition;
 /**
+ * The stabilized tip position of this Pointable.
+ *
+ * @example Hand_stabilizedPalmPosition.txt
+ *
+ * Smoothing and stabilization is performed in order to make
+ * this value more suitable for interaction with 2D content.
+ *
+ * @returns A modified tip position of this Pointable object
+ * with some additional smoothing and stabilization applied.
+ * @available Since 1.0
+ */
+ - (LeapVector *)stabilizedPalmPosition;
+@property (nonatomic, getter = stabilizedPalmPosition, readonly)LeapVector *stabilizedPalmPosition;
+/**
  * The rate of change of the palm position in millimeters/second.
  *
- * @returns The <LeapVector> representing the coordinates of the palm velocity.
+ * @example Hand_palmVelocity.txt
+ *
+ * @returns The LeapVector representing the coordinates of the palm velocity.
+ * @available Since 1.0
  */
 - (LeapVector *)palmVelocity;
 @property (nonatomic, getter = palmVelocity, readonly)LeapVector *palmVelocity;
@@ -898,215 +1591,367 @@ typedef enum LeapPolicyFlag {
  * The direction is expressed as a unit vector pointing in the same
  * direction as the palm normal (that is, a vector orthogonal to the palm).
  *
- * @returns The <LeapVector> normal to the plane formed by the palm.
+ * @example Hand_palmNormal.txt
+ *
+ * @returns The LeapVector normal to the plane formed by the palm.
+ * @available Since 1.0
  */
 - (LeapVector *)palmNormal;
 @property (nonatomic, getter = palmNormal, readonly)LeapVector *palmNormal;
 /**
  * The direction from the palm position toward the fingers.
  *
+ * @example Hand_direction.txt
+ *
  * The direction is expressed as a unit vector pointing in the same
  * direction as the directed line from the palm position to the fingers.
  *
- * @returns The <LeapVector> pointing from the palm position toward the fingers.
+ * @returns The LeapVector pointing from the palm position toward the fingers.
+ * @available Since 1.0
  */
 - (LeapVector *)direction;
 @property (nonatomic, getter = direction, readonly)LeapVector *direction;
 /**
  * The center of a sphere fit to the curvature of this hand.
  *
+ * @example Hand_sphereCenter.txt
+ *
  * This sphere is placed roughly as if the hand were holding a ball.
  *
  * <img src="../docs/images/Leap_Hand_Ball.png"/>
  *
- * @returns The <LeapVector> representing the center position of the sphere.
+ * @returns The LeapVector representing the center position of the sphere.
+ * @available Since 1.0
  */
 - (LeapVector *)sphereCenter;
 @property (nonatomic, getter = sphereCenter, readonly)LeapVector *sphereCenter;
 /**
  * The radius of a sphere fit to the curvature of this hand.
  *
+ * @example Hand_sphereRadius.txt
+ *
  * This sphere is placed roughly as if the hand were holding a ball. Thus the
  * size of the sphere decreases as the fingers are curled into a fist.
  * @returns The radius of the sphere in millimeters.
+ * @available Since 1.0
  */
 - (float)sphereRadius;
 @property (nonatomic, getter = sphereRadius, readonly)float sphereRadius;
 /**
+ * The holding strength of a pinch hand pose.
+ *
+ * @example Hand_pinchStrength.txt
+ *
+ * The strength is zero for an open hand, and blends to 1.0 when a pinching
+ * hand pose is recognized. Pinching can be done between the thumb
+ * and any other finger of the same hand.
+ *
+ * @returns A float value in the [0..1] range representing the holding strength
+ * of the pinch pose.
+ * @available Since 2.0
+ */
+- (float) pinchStrength;
+@property (nonatomic, getter = pinchStrength, readonly)float pinchStrength;
+/**
+ * The strength of a grab hand pose.
+ *
+ * @example Hand_grabStrength.txt
+ *
+ * The strength is zero for an open hand, and blends to 1.0 when a grabbing hand
+ * pose is recognized.
+ *
+ * @returns A float value in the [0..1] range representing the holding strength
+ * of the pose.
+ * @available Since 2.0
+ */
+- (float) grabStrength;
+@property (nonatomic, getter = grabStrength, readonly)float grabStrength;
+/**
  * Reports whether this is a valid LeapHand object.
  *
+ * @example Hand_isValid.txt
+ *
  * @returns YES, if this LeapHand object contains valid tracking data.
+ * @available Since 1.0
  */
 - (BOOL)isValid;
 @property (nonatomic, getter = isValid, readonly)BOOL isValid;
 /**
- * The <LeapFrame> associated with this Hand.
+ * The LeapFrame associated with this Hand.
  *
- * @returns The associated <LeapFrame> object, if available; otherwise,
+ * @example Hand_frame.txt
+ *
+ * This property is a weak reference to the LeapFrame object so it is only valid
+ * during the lifetime of the LeapFrame object -- while the LeapFrame object is in
+ * the history buffer or while your application maintains its own reference.
+ *
+ * @returns The associated LeapFrame object, if available; otherwise,
  * an invalid LeapFrame object is returned.
+ * @available Since 1.0
  */
 - (LeapFrame *)frame;
 @property (nonatomic, weak, getter = frame, readonly)LeapFrame *frame;
 /**
- * The change of position of this hand between the current <LeapFrame> and
+ * The change of position of this hand between the current LeapFrame and
  * the specified LeapFrame.
  *
  * The returned translation vector provides the magnitude and direction of
  * the movement in millimeters.
  *
+ * @example Hand_translation.txt
+ *
  * If a corresponding LeapHand object is not found in sinceFrame, or if either
  * this frame or sinceFrame are invalid LeapFrame objects, then this method
  * returns a zero vector.
  *
- * @param sinceFrame The starting <LeapFrame> for computing the translation.
- * @returns A <LeapVector> representing the heuristically determined change in
+ * @param sinceFrame The starting LeapFrame for computing the translation.
+ * @returns A LeapVector representing the heuristically determined change in
  * hand position between the current frame and that specified in the
  * sinceFrame parameter.
+ * @available Since 1.0
  */
 - (LeapVector *)translation:(const LeapFrame *)sinceFrame;
 /**
  * The estimated probability that the hand motion between the current
- * frame and the specified <LeapFrame> is intended to be a translating motion.
+ * frame and the specified LeapFrame is intended to be a translating motion.
+ *
+ * @example Hand_translationProbablity.txt
  *
  * If a corresponding LeapHand object is not found in sinceFrame, or if either
  * this frame or sinceFrame are invalid LeapFrame objects, then this method
  * returns zero.
  *
- * @param sinceFrame The starting <LeapFrame> for computing the translation.
+ * @param sinceFrame The starting LeapFrame for computing the translation.
  * @returns A value between 0 and 1 representing the estimated probability
  * that the hand motion between the current frame and the specified frame
  * is intended to be a translating motion.
+ * @available Since 1.0
  */
 - (float)translationProbability:(const LeapFrame *)sinceFrame;
 /**
  * The axis of rotation derived from the change in orientation of this
- * hand, and any associated fingers and tools, between the current <LeapFrame>
+ * hand, and associated fingers, between the current LeapFrame
  * and the specified LeapFrame.
  *
  * The returned direction vector is normalized.
+ *
+ * @example Hand_rotationAxis.txt
  *
  * If a corresponding LeapHand object is not found in sinceFrame, or if either
  * this frame or sinceFrame are invalid LeapFrame objects, then this method
  * returns a zero vector.
  *
- * @param sinceFrame The starting <LeapFrame> for computing the relative rotation.
- * @returns A <LeapVector> containing the normalized direction vector representing the heuristically
+ * @param sinceFrame The starting LeapFrame for computing the relative rotation.
+ * @returns A LeapVector containing the normalized direction vector representing the heuristically
  * determined axis of rotational change of the hand between the current
  * frame and that specified in the sinceFrame parameter.
+ * @available Since 1.0
  */
 - (LeapVector *)rotationAxis:(const LeapFrame *)sinceFrame;
 /**
  * The angle of rotation around the rotation axis derived from the change
- * in orientation of this hand, and any associated fingers and tools,
- * between the current <LeapFrame> and the specified LeapFrame.
+ * in orientation of this hand, and associated fingers,
+ * between the current LeapFrame and the specified LeapFrame.
  *
  * The returned angle is expressed in radians measured clockwise around the
  * rotation axis (using the right-hand rule) between the start and end frames.
  * The value is always between 0 and pi radians (0 and 180 degrees).
  *
+ * @example Hand_rotationAngle.txt
+ *
  * If a corresponding LeapHand object is not found in sinceFrame, or if either
  * this frame or sinceFrame are invalid LeapFrame objects, then the angle of
  * rotation is zero.
  *
- * @param sinceFrame The starting <LeapFrame> for computing the relative rotation.
+ * @param sinceFrame The starting LeapFrame for computing the relative rotation.
  * @returns A positive value representing the heuristically determined
  * rotational change of the hand between the current frame and that
  * specified in the sinceFrame parameter.
+ * @available Since 1.0
  */
 - (float)rotationAngle:(const LeapFrame *)sinceFrame;
 /**
  * The angle of rotation around the specified axis derived from the change
- * in orientation of this hand, and any associated fingers and tools,
- * between the current <LeapFrame> and the specified LeapFrame.
+ * in orientation of this hand, and associated fingers,
+ * between the current LeapFrame and the specified LeapFrame.
  *
  * The returned angle is expressed in radians measured clockwise around the
  * rotation axis (using the right-hand rule) between the start and end frames.
  * The value is always between -pi and pi radians (-180 and 180 degrees).
  *
+ * @example Hand_rotationAngle_axis.txt
+ *
  * If a corresponding LeapHand object is not found in sinceFrame, or if either
  * this frame or sinceFrame are invalid LeapFrame objects, then the angle of
  * rotation is zero.
  *
- * @param sinceFrame The starting <LeapFrame> for computing the relative rotation.
- * @param axis A <LeapVector> representing the axis to measure rotation around.
+ * @param sinceFrame The starting LeapFrame for computing the relative rotation.
+ * @param axis A LeapVector representing the axis to measure rotation around.
  * @returns A value representing the heuristically determined rotational
  * change of the hand between the current frame and that specified in the
  * sinceFrame parameter around the specified axis.
+ * @available Since 1.0
  */
 - (float)rotationAngle:(const LeapFrame *)sinceFrame axis:(const LeapVector *)axis;
 /**
  * The transform matrix expressing the rotation derived from the change
- * in orientation of this hand, and any associated fingers and tools,
- * between the current <LeapFrame> and the specified LeapFrame.
+ * in orientation of this hand, and associated fingers,
+ * between the current LeapFrame and the specified LeapFrame.
+ *
+ * @example Hand_rotationMatrix.txt
  *
  * If a corresponding LeapHand object is not found in sinceFrame, or if either
  * this frame or sinceFrame are invalid LeapFrame objects, then this method
  * returns an identity matrix.
  *
- * @param sinceFrame The starting <LeapFrame> for computing the relative rotation.
- * @returns A transformation <LeapMatrix> representing the heuristically determined
+ * @param sinceFrame The starting LeapFrame for computing the relative rotation.
+ * @returns A transformation LeapMatrix representing the heuristically determined
  * rotational change of the hand between the current frame and that specified
  * in the sinceFrame parameter.
+ * @available Since 1.0
  */
 - (LeapMatrix *)rotationMatrix:(const LeapFrame *)sinceFrame;
 /**
  * The estimated probability that the hand motion between the current
- * <LeapFrame> and the specified LeapFrame is intended to be a rotating motion.
+ * LeapFrame and the specified LeapFrame is intended to be a rotating motion.
+ *
+ * @example Hand_rotationProbability.txt
  *
  * If a corresponding LeapHand object is not found in sinceFrame, or if either
  * this frame or sinceFrame are invalid LeapFrame objects, then this method
  * returns zero.
  *
- * @param sinceFrame The starting <LeapFrame> for computing the relative rotation.
+ * @param sinceFrame The starting LeapFrame for computing the relative rotation.
  * @returns A value between 0 and 1 representing the estimated probability
  * that the hand motion between the current frame and the specified frame
  * is intended to be a rotating motion.
+ * @available Since 1.0
  */
 - (float)rotationProbability:(const LeapFrame *)sinceFrame;
 /**
  * The scale factor derived from this hand's motion between the current
- * <LeapFrame> and the specified LeapFrame.
+ * LeapFrame and the specified LeapFrame.
  *
  * The scale factor is always positive. A value of 1.0 indicates no
  * scaling took place. Values between 0.0 and 1.0 indicate contraction
  * and values greater than 1.0 indicate expansion.
  *
  * The Leap derives scaling from the relative inward or outward motion of
- * a hand and its associated fingers and tools (independent of translation
+ * a hand and its associated fingers (independent of translation
  * and rotation).
+ *
+ * @example Hand_scale.txt
  *
  * If a corresponding LeapHand object is not found in sinceFrame, or if either
  * this frame or sinceFrame are invalid LeapFrame objects, then this method
  * returns 1.0.
  *
- * @param sinceFrame The starting <LeapFrame> for computing the relative scaling.
+ * @param sinceFrame The starting LeapFrame for computing the relative scaling.
  * @returns A positive value representing the heuristically determined
  * scaling change ratio of the hand between the current frame and that
  * specified in the sinceFrame parameter.
+ * @available Since 1.0
  */
 - (float)scaleFactor:(const LeapFrame *)sinceFrame;
 /**
  * The estimated probability that the hand motion between the current
- * <LeapFrame> and the specified LeapFrame is intended to be a scaling motion.
+ * LeapFrame and the specified LeapFrame is intended to be a scaling motion.
+ *
+ * @example Hand_scaleProbability.txt
  *
  * If a corresponding LeapHand object is not found in sinceFrame, or if either
  * this frame or sinceFrame are invalid LeapFrame objects, then this method
  * returns zero.
  *
- * @param sinceFrame The starting <LeapFrame> for computing the relative scaling.
+ * @param sinceFrame The starting LeapFrame for computing the relative scaling.
  * @returns A value between 0 and 1 representing the estimated probability
  * that the hand motion between the current frame and the specified frame
  * is intended to be a scaling motion.
+ * @available Since 1.0
  */
 - (float)scaleProbability:(const LeapFrame *)sinceFrame;
 /**
+ * The duration of time this Hand has been visible to the Leap Motion Controller.
+ *
+ * @example Hand_timeVisible.txt
+ *
+ * @returns The duration (in seconds) that this Hand has been tracked.
+ * @available Since 1.0
+ */
+- (float)timeVisible;
+@property (nonatomic, getter = timeVisible, readonly)float timeVisible;
+/**
+ * Rates how well the internal hand model fits the observed data.
+ *
+ * The confidence level ranges between 0.0 and 1.0 inclusive, with 1.0 representing
+ * high confidence.
+ *
+ * @example Hand_confidence.txt
+ *
+ * @returns A confidence rating between 0 and 1.
+ * @available Since 2.0
+ */
+- (float)confidence;
+@property (nonatomic, getter = confidence, readonly)float confidence;
+
+/**
+ * Identifies whether this Hand is a left hand.
+ *
+ * @example Hand_isLeft.txt
+ *
+ * @returns True if the hand is a left hand.
+ * @available Since 2.0
+ */
+- (BOOL)isLeft;
+@property (nonatomic, getter = isLeft, readonly)BOOL isLeft;
+/**
+ * Identifies whether this Hand is a right hand.
+ *
+ * @example Hand_isRight.txt
+ *
+ * @returns True if the hand is a right hand.
+ * @available Since 2.0
+ */
+- (BOOL)isRight;
+@property (nonatomic, getter = isRight, readonly)BOOL isRight;
+/**
+ * The orientation of the hand as a basis matrix.
+ *
+ * The basis is defined as follows:
+ *
+ * **xAxis** Positive in the direction of the pinky
+ *
+ * **yAxis** Positive above the hand
+ *
+ * **zAxis** Positive in the direction of the wrist
+ *
+ * Note: Since the left hand is a mirror of the right hand, the
+ * basis matrix uses the left-hand rule for left hands.
+ *
+ * @example Hand_Finger_Transform.txt
+ *
+ * @returns The basis of the hand as a matrix.
+ * @since 2.0
+ */
+- (LeapMatrix *)basis;
+@property (nonatomic, getter = basis, readonly)LeapMatrix *basis;
+/**
+ * The estimated width of the palm when the hand is in a flat position.
+ *
+ * @example Hand_palmWidth.txt
+ *
+ * @returns The width of the palm in millimeters
+ * @since 2.0
+ */
+- (float)palmWidth;
+@property (nonatomic, getter = palmWidth, readonly)float palmWidth;
+/**
  * Returns an invalid LeapHand object.
  *
- * You can use the instance returned by this function in comparisons testing
- * whether a given LeapHand instance is valid or invalid. (You can also use the
- * LeapHand isValid: function.)
+ * @example Hand_invalid.txt
  *
  * @returns The invalid LeapHand instance.
+ * @available Since 1.0
  */
 + (LeapHand *)invalid;
 
@@ -1116,456 +1961,675 @@ typedef enum LeapPolicyFlag {
 //POINTABLEorHANDLIST CATEGORY
 /**
  * The LeapPointableOrHandList category provides methods for getting objects
- * from an NSArray containing <LeapPointable>, <LeapFinger>, <LeapTool>, or 
- * <LeapHand> objects based on their physical position within the Leap
+ * from an NSArray containing LeapPointable, LeapFinger, LeapTool, or
+ * LeapHand objects based on their physical position within the Leap
  * coordinate system.
+ *
+ * @example List_Basic.txt
+ *
+ * @available Since 1.0
  */
 @interface NSArray (LeapPointableOrHandList)
 /**
  * The member of the list that is farthest to the left within the standard
  * Leap frame of reference (i.e has the smallest X coordinate).
- * 
+ *
+ * @example ListCategory_leftmost.txt
+ *
  * Returns nil if the NSArray is empty.
+ * @available Since 1.0
  */
 - (id)leftmost;
 /**
  * The member of the list that is farthest to the right within the standard
  * Leap frame of reference (i.e has the largest X coordinate).
  *
+ * @example ListCategory_rightmost.txt
+ *
  * Returns nil if the NSArray is empty.
+ * @available Since 1.0
  */
 - (id)rightmost;
 /**
  * The member of the list that is farthest to the front within the standard
  * Leap frame of reference (i.e has the smallest Z coordinate).
  *
+ * @example ListCategory_frontmost.txt
+ *
  * Returns nil if the NSArray is empty.
+ * @available Since 1.0
  */
 - (id)frontmost;
+/**
+ * Returns a new list containing those members of the current list that are
+ * extended. This includes all tools and any fingers whose [LeapPointable isExtended] function is true.
+ * Unlike its C++ counterpart, this method does not modify the original NSArray.
+ *
+ * @example ListCategory_extended.txt
+ *
+ * @returns The list of tools and extended fingers from the current list.
+ * @available Since 2.0
+ */
+- (NSArray *)extended;
+/**
+ * Returns a new list containing those Pointable objects in the current list
+ * that are of the specified finger type.
+ *
+ * @example ListCategory_fingerType.txt
+ *
+ * @returns The list of matching fingers from the current list.
+ * @available Since 2.0
+ */
+- (NSArray *)fingerType:(LeapFingerType)type;
 
 @end
 
 //////////////////////////////////////////////////////////////////////////
 //SCREEN
-/**
- * The LeapScreen class represents a computer monitor screen.
- *
- * The LeapScreen class reports characteristics describing the position and
- * orientation of the monitor screen within the Leap coordinate system. These
- * characteristics include the bottom-left corner position of the screen,
- * direction vectors for the horizontal and vertical axes of the screen, and
- * the screen's normal vector. The screen must be properly registered with the
- * Screen Locator for the Leap to report these characteristics accurately.
- * The LeapScreen class also reports the size of the screen in pixels, using
- * information obtained from the operating system. (Run the Screen Locator
- * from the Leap Application Settings dialog, on the Screen page.)
- *
- * Get an array containing the available LeapScreen objects from a connected
- * LeapController object:
- *
- * @example Screen_Closest_1.txt
- *
- * You can get the point of intersection between the screen and a ray
- * projected from a <LeapPointable> object using the LeapScreen 
- * intersect:normalize:clampRatio function.
- * Likewise, you can get the distance to the closest point on the screen to a point in space
- * using the LeapScreen distanceToPoint: function. Again, the screen location
- * must be registered with the Screen Locator for these functions to
- * return accurate values.
- *
- * Note that LeapScreen objects can be invalid, which means that they do not contain
- * valid screen coordinate data and do not correspond to a physical entity.
- * Test for validity with the LeapScreen isValid: function.
+/*
+ * Deprecated as of version 1.2.
  */
 @interface LeapScreen : NSObject
 
 - (NSString *)description;
-/**
- * A unique identifier for this screen based on the screen
- * information in the configuration. A default screen with ID, *0*,
- * always exists and contains default characteristics, even if no screens
- * have been located.
- */
 - (int32_t)id;
 @property (nonatomic, getter = id, readonly)int32_t id;
-/**
- * Returns the intersection between this screen and a ray projecting from a
- * Pointable object.
- *
- * The projected ray emanates from the <[LeapPointable tipPosition]> along the
- * pointable's direction vector.
- *
- * @example Screen_Normalized_1.txt
- *
- * Set the normalize parameter to true to request the intersection point in
- * normalized screen coordinates. Normalized screen coordinates are usually
- * values between 0 and 1, where 0 represents the screen's origin at the
- * bottom-left corner and 1 represents the opposite edge (either top or
- * right). When you request normalized coordinates, the z-component of the
- * returned vector is zero. Multiply a normalized coordinate by the values
- * returned by <[LeapScreen widthPixels]> or <[LeapScreen heightPixels]> to calculate
- * the screen position in pixels (remembering that many other computer
- * graphics coordinate systems place the origin in the top-left corner).
- *
- * Set the normalize parameter to false to request the intersection point
- * in Leap coordinates (millimeters from the Leap origin).
- *
- * If the LeapPointable object points outside the screen's border (but still
- * intersects the plane in which the screen lies), the returned intersection
- * point is clamped to the nearest point on the edge of the screen.
- *
- * You can use the clampRatio parameter to contract or expand the area in
- * which you can point. For example, if you set the clampRatio parameter to
- * 0.5, then the positions reported for intersection points outside the
- * central 50% of the screen are moved to the border of this smaller area.
- * If, on the other hand, you expanded the area by setting clampRatio to
- * a value such as 3.0, then you could point well outside screen's physical
- * boundary before the intersection points would be clamped. The positions
- * for any points clamped would also be placed on this larger outer border.
- * The positions reported for any intersection points inside the clamping
- * border are unaffected by clamping.
- *
- * If the LeapPointable object does not point toward the plane of the screen
- * (i.e. it is pointing parallel to or away from the screen), then the
- * components of the returned vector are all set to NaN (not-a-number).
- *
- * To get the physical distance from the tip of a pointable object to the
- * screen intersection point, set the normalize parameter to NO to get the 
- * intersection coordinates in terms of the Leap coordinate system and then
- * calculate the distance between the two points:
- *
- * @example Screen_DistanceTo_1.txt
- *
- * @param pointable The <LeapPointable> object to check for screen intersection.
- *
- * @param normalize If true, return normalized coordinates representing
- * the intersection point as a percentage of the screen's width and height.
- * If false, return Leap coordinates (millimeters from the Leap origin,
- * which is located at the center of the top surface of the Leap device).
- * If true and the clampRatio parameter is set to 1.0, coordinates will be
- * of the form (0..1, 0..1, 0). Setting the clampRatio to a different value
- * changes the range for normalized coordinates. For example, a clampRatio
- * of 5.0 changes the range of values to be of the form (-2..3, -2..3, 0).
- *
- * @param clampRatio Adjusts the clamping border around this screen.
- * By default this ratio is 1.0, and the border corresponds to the actual
- * boundaries of the screen. Setting clampRatio to 0.5 would reduce the
- * interaction area. Likewise, setting the ratio to 2.0 would increase the
- * interaction area, adding 50% around each edge of the physical monitor.
- * Intersection points outside the interaction area are repositioned to
- * the closest point on the clamping border before the vector is returned.
- *
- * @returns A <LeapVector> containing the coordinates of the intersection between
- * this screen and a ray projecting from the specified Pointable object.
- */
 - (LeapVector *)intersect:(LeapPointable *)pointable normalize:(BOOL)normalize clampRatio:(float)clampRatio;
-
-/**
- * Returns the intersection between this screen and a ray projecting from
- * the specified position along the specified direction.
- *
- * Set the normalize parameter to true to request the intersection point in
- * normalized screen coordinates. Normalized screen coordinates are usually
- * values between 0 and 1, where 0 represents the screen's origin at the
- * bottom-left corner and 1 represents the opposite edge (either top or
- * right). When you request normalized coordinates, the z-component of the
- * returned vector is zero. Multiply a normalized coordinate by the values
- * returned by <[LeapScreen widthPixels]> or <[LeapScreen heightPixels]> to calculate
- * the screen position in pixels (remembering that many other computer
- * graphics coordinate systems place the origin in the top-left corner).
- *
- * Set the normalize parameter to false to request the intersection point
- * in Leap coordinates (millimeters from the Leap origin).
- *
- * If the specified ray points outside the screen's border (but still
- * intersects the plane in which the screen lies), the returned intersection
- * point is clamped to the nearest point on the edge of the screen.
- *
- * You can use the clampRatio parameter to contract or expand the area in
- * which you can point. For example, if you set the clampRatio parameter to
- * 0.5, then the positions reported for intersection points outside the
- * central 50% of the screen are moved to the border of this smaller area.
- * If, on the other hand, you expanded the area by setting clampRatio to
- * a value such as 3.0, then you could point well outside screen's physical
- * boundary before the intersection points would be clamped. The positions
- * for any points clamped would also be placed on this larger outer border.
- * The positions reported for any intersection points inside the clamping
- * border are unaffected by clamping.
- *
- * If the specified ray does not point toward the plane of the screen
- * (i.e. it is pointing parallel to or away from the screen), then the
- * components of the returned vector are all set to NaN (not-a-number).
- *
- * @param position The position from which to check for screen intersection.
- * @param direction The direction in which to check for screen intersection.
- *
- * @param normalize If true, return normalized coordinates representing
- * the intersection point as a percentage of the screen's width and height.
- * If false, return Leap coordinates (millimeters from the Leap origin,
- * which is located at the center of the top surface of the Leap device).
- * If true and the clampRatio parameter is set to 1.0, coordinates will be
- * of the form (0..1, 0..1, 0). Setting the clampRatio to a different value
- * changes the range for normalized coordinates. For example, a clampRatio
- * of 5.0 changes the range of values to be of the form (-2..3, -2..3, 0).
- *
- * @param clampRatio Adjusts the clamping border around this screen.
- * By default this ratio is 1.0, and the border corresponds to the actual
- * boundaries of the screen. Setting clampRatio to 0.5 would reduce the
- * interaction area. Likewise, setting the ratio to 2.0 would increase the
- * interaction area, adding 50% around each edge of the physical monitor.
- * Intersection points outside the interaction area are repositioned to
- * the closest point on the clamping border before the vector is returned.
- *
- * @returns A Vector containing the coordinates of the intersection between
- * this screen and a ray projecting from the specified position in the
- * specified direction.
- */
 - (LeapVector *)intersect:(const LeapVector *)position direction:(const LeapVector *)direction normalize:(BOOL)normalize clampRatio:(float)clampRatio;
-
-/**
- * Returns the projection from the specified position onto this screen.
- *
- * @example Screen_Project_1.txt
- *
- * Set the normalize parameter to true to request the projection point in
- * normalized screen coordinates. Normalized screen coordinates are usually
- * values between 0 and 1, where 0 represents the screen's origin at the
- * bottom-left corner and 1 represents the opposite edge (either top or
- * right). When you request normalized coordinates, the z-component of the
- * returned vector is zero. Multiply a normalized coordinate by the values
- * returned by <[LeapScreen widthPixels]> or <[LeapScreen heightPixels]> to calculate
- * the screen position in pixels (remembering that many other computer
- * graphics coordinate systems place the origin in the top-left corner).
- *
- * Set the normalize parameter to false to request the projection point
- * in Leap coordinates (millimeters from the Leap origin).
- *
- * If the specified point projects outside the screen's border, the returned
- * projection point is clamped to the nearest point on the edge of the screen.
- *
- * You can use the clampRatio parameter to contract or expand the area in
- * which you can point. For example, if you set the clampRatio parameter to
- * 0.5, then the positions reported for projection points outside the
- * central 50% of the screen are moved to the border of this smaller area.
- * If, on the other hand, you expanded the area by setting clampRatio to
- * a value such as 3.0, then you could point well outside screen's physical
- * boundary before the projection points would be clamped. The positions
- * for any points clamped would also be placed on this larger outer border.
- * The positions reported for any projection points inside the clamping
- * border are unaffected by clamping.
- *
- * @param position The position from which to project onto this screen.
- *
- * @param normalize If true, return normalized coordinates representing
- * the projection point as a percentage of the screen's width and height.
- * If false, return Leap coordinates (millimeters from the Leap origin,
- * which is located at the center of the top surface of the Leap device).
- * If true and the clampRatio parameter is set to 1.0, coordinates will be
- * of the form (0..1, 0..1, 0). Setting the clampRatio to a different value
- * changes the range for normalized coordinates. For example, a clampRatio
- * of 5.0 changes the range of values to be of the form (-2..3, -2..3, 0).
- *
- * @param clampRatio Adjusts the clamping border around this screen.
- * By default this ratio is 1.0, and the border corresponds to the actual
- * boundaries of the screen. Setting clampRatio to 0.5 would reduce the
- * interaction area. Likewise, setting the ratio to 2.0 would increase the
- * interaction area, adding 50% around each edge of the physical monitor.
- * Projection points outside the interaction area are repositioned to
- * the closest point on the clamping border before the vector is returned.
- *
- * @returns A Vector containing the coordinates of the projection between
- * this screen and a ray projecting from the specified position onto the
- * screen along its normal vector.
- */
 - (LeapVector *)project:(LeapVector *)position normalize:(BOOL)normalize clampRatio:(float)clampRatio;
-/**
- * A <LeapVector> representing the horizontal axis of this LeapScreen within the
- * Leap coordinate system.
- *
- * The magnitude of this vector estimates the physical width of this LeapScreen
- * in millimeters. The direction of this vector is parallel to the bottom
- * edge of the screen and points toward the right edge of the screen.
- *
- * Together, horizontalAxis, verticalAxis, and bottomLeftCorner
- * describe the physical position, size and orientation of this LeapScreen.
- *
- * @returns A <LeapVector> representing the bottom, horizontal edge of this LeapScreen.
- */
 - (LeapVector *)horizontalAxis;
 @property (nonatomic, getter = horizontalAxis, readonly)LeapVector *horizontalAxis;
-/**
- * A <LeapVector> representing the vertical axis of this LeapScreen within the
- * Leap coordinate system.
- *
- * The magnitude of this vector estimates the physical height of this LeapScreen
- * in millimeters. The direction of this vector is parallel to the left
- * edge of the screen and points toward the top edge of the screen.
- *
- * Together, horizontalAxis, verticalAxis, and bottomLeftCorner
- * describe the physical position, size and orientation of this screen.
- *
- * @returns A <LeapVector> representing the left, vertical edge of this LeapScreen.
- */
 - (LeapVector *)verticalAxis;
 @property (nonatomic, getter = verticalAxis, readonly)LeapVector *verticalAxis;
-/**
- * A <LeapVector> representing the bottom left corner of this LeapScreen within the
- * Leap coordinate system.
- *
- * The point represented by this vector defines the origin of the screen
- * in the Leap coordinate system.
- *
- * Together, horizontalAxis, verticalAxis, and bottomLeftCorner
- * describe the physical position, size and orientation of this LeapScreen.
- *
- * @returns A <LeapVector> containing the coordinates of the bottom-left corner
- * of this LeapScreen.
- */
 - (LeapVector *)bottomLeftCorner;
 @property (nonatomic, getter = bottomLeftCorner, readonly)LeapVector *bottomLeftCorner;
-/**
- * A <LeapVector> normal to the plane in which this LeapScreen lies.
- *
- * The normal vector is a unit direction vector orthogonal to the screen's
- * surface plane. It points toward a viewer positioned for typical use of
- * the monitor.
- *
- * @returns A <LeapVector> representing this LeapScreen's normal vector.
- */
 - (LeapVector *)normal;
 @property (nonatomic, getter = normal, readonly)LeapVector *normal;
-/**
- * The horizontal resolution of this screen, in pixels.
- *
- * @returns The width of this LeapScreen in pixels.
- */
 - (int)widthPixels;
 @property (nonatomic, getter = widthPixels, readonly)int widthPixels;
-/**
- * The vertical resolution of this screen, in pixels.
- *
- * @returns The height of this LeapScreen in pixels.
- */
 - (int)heightPixels;
 @property (nonatomic, getter = heightPixels, readonly)int heightPixels;
-/**
- * The shortest distance from the specified point to the plane in which this
- * LeapScreen lies.
- *
- * @example Screen_DistanceTo_2.txt
- *
- * @param point The point of interest.
- * @returns The length of the perpendicular line segment extending from
- * the plane this LeapScreen lies in to the specified point.
- */
 - (float)distanceToPoint:(const LeapVector *)point;
-/**
- * Reports whether this is a valid LeapScreen object.
- *
- * **Important:** A valid LeapScreen object does not necessarily contain
- * up-to-date screen location information. Location information is only
- * accurate until the Leap device or the monitor are moved. In addition, the
- * primary screen always contains default location information even if the
- * user has never run the screen location utility. This default location
- * information will not return accurate results.
- *
- * @returns YES, if this LeapScreen object contains valid data.
- */
 - (BOOL)isValid;
 @property (nonatomic, getter = isValid, readonly)BOOL isValid;
-/**
- * Compare LeapScreen object equality.
- * Two LeapScreen objects are equal if and only if both objects represent the
- * exact same screens and both LeapScreen objects are valid.
- * @param other The LeapScreen object to compare.
- */
 - (BOOL)equals:(const LeapScreen *)other;
-// not provided: not_equals
-// user should emulate with !scr.equals(...)
-/**
- * Returns an invalid LeapScreen object.
- *
- * You can use the instance returned by this function in comparisons testing
- * whether a given LeapScreen instance is valid or invalid. (You can also use the
- * LeapScreen isValid function.)
- *
- * @returns The invalid LeapScreen instance.
- */
 + (LeapScreen *)invalid;
-
 @end
 
 //////////////////////////////////////////////////////////////////////////
 // SCREENLIST Category
-/**
- * The LeapScreenList category supplies methods for getting a screen from
- * an NSArray containing <LeapScreen> objects based on the relationship between
- * the screens and a LeapPointable object or point.
+/*
+ * Deprecated as of version 1.2.
  */
 @interface NSArray (LeapScreenList)
-/**
- * Gets the closest <LeapScreen> intercepting a ray projecting from the specified
- * Pointable object.
- *
- * The projected ray emanates from the Pointable tipPosition along the
- * Pointable's direction vector. If the projected ray does not intersect
- * any screen surface directly, then the Leap checks for intersection with
- * the planes extending from the surfaces of the known screens
- * and returns the LeapScreen with the closest intersection.
- *
- * @example Screen_Closest_2.txt
- *
- * If no intersections are found (i.e. the ray is directed parallel to or
- * away from all known screens), then an invalid LeapScreen object is returned.
- *
- * *Note:* Be sure to test whether the LeapScreen object returned by this method
- * is valid. Attempting to use an invalid LeapScreen object will lead to
- * incorrect results.
- *
- * @param pointable The <LeapPointable> object to check for screen intersection.
- * @returns The closest <LeapScreen> toward which the specified LeapPointable object
- * is pointing, or, if the pointable is not pointing in the direction of
- * any known screen, an invalid LeapScreen object.
- */
 - (LeapScreen *)closestScreenHit:(LeapPointable *)pointable;
-/**
- * Gets the closest <LeapScreen> intercepting a ray projecting from the specified
- * position in the specified direction.
- *
- * The projected ray emanates from the position along the direction vector.
- * If the projected ray does not intersect any screen surface directly,
- * then the Leap checks for intersection with the planes extending from the
- * surfaces of the known screens and returns the LeapScreen with the closest
- * intersection.
- *
- * If no intersections are found (i.e. the ray is directed parallel to or
- * away from all known screens), then an invalid LeapScreen object is returned.
- *
- * *Note:* Be sure to test whether the LeapScreen object returned by this method
- * is valid. Attempting to use an invalid LeapScreen object will lead to
- * incorrect results.
- *
- * @param position The position from which to check for screen intersection.
- * @param direction The direction in which to check for screen intersection.
- * @returns The closest <LeapScreen> toward which the specified ray is pointing,
- * or, if the ray is not pointing in the direction of any known screen,
- * an invalid LeapScreen object.
- */
 - (LeapScreen *)closestScreenHit:(const LeapVector *)position direction:(const LeapVector *)direction;
-/**
- * Gets the <LeapScreen> closest to the specified position.
- *
- * @example Screen_Closest_3.txt
- *
- * The specified position is projected along each screen's normal vector
- * onto the screen's plane. The screen whose projected point is closest to
- * the specified position is returned. Call <[LeapScreen project:position normalize:NO clampRatio:1.0f]>
- * on the returned LeapScreen object to find the projected point.
- *
- * @param position The position from which to check for screen projection.
- * @returns The closest <LeapScreen> onto which the specified position is projected.
- */
 - (LeapScreen *)closestScreen:(LeapVector *)position;
+@end
+
+//////////////////////////////////////////////////////////////////////////
+//DEVICE
+/**
+ * The available types of Leap Motion controllers.
+ * @since 1.2
+ */
+typedef enum DeviceType
+{
+ /**
+  * A standalone USB peripheral. The original Leap Motion controller device.
+  * @since 1.2
+  */
+    DEVICE_PERIPHERAL = 1,
+ /**
+  * A controller embedded in a keyboard.
+  * @since 1.2
+  */
+    DEVICE_KEYBOARD,
+ /**
+  * A controller embedded in a laptop computer.
+  * @since 1.2
+  */
+    DEVICE_LAPTOP
+} LeapDeviceType;
+
+/**
+ * The LeapDevice class represents a physically connected device.
+ *
+ * The LeapDevice class contains information related to a particular connected
+ * device such as field of view, device id, and calibrated positions.
+ *
+ * @example Device_get.txt
+ *
+ * Note that Device objects can be invalid, which means that they do not contain
+ * valid device information and do not correspond to a physical device.
+ * Test for validity with the [LeapDevice isValid] function.
+ * @available Since 1.0
+ */
+@interface LeapDevice : NSObject
+
+- (NSString *)description;
+/**
+ * The angle of view along the x axis of this device, in radians.
+ *
+ * <img src="../docs/images/Leap_horizontalViewAngle.png"/>
+ *
+ * The Leap Motion controller scans a volume in the shape of an inverted pyramid
+ * centered at the device's center and extending upwards. The horizontalViewAngle
+ * reports the view angle along the long dimension of the device.
+ *
+ * @example Device_horizontalViewAngle.txt
+ *
+ * @available Since 1.0
+ */
+- (float)horizontalViewAngle;
+@property (nonatomic, getter = horizontalViewAngle, readonly)float horizontalViewAngle;
+/**
+ * The angle of view along the z axis of this device, in radians.
+ *
+ * <img src="../docs/images/Leap_verticalViewAngle.png"/>
+ *
+ * The Leap Motion controller scans a region in the shape of an inverted pyramid
+ * centered at the device's center and extending upwards. The verticalViewAngle
+ * reports the view angle along the short dimension of the device.
+ *
+ * @example Device_verticalViewAngle.txt
+ *
+ * @available Since 1.0
+ */
+- (float)verticalViewAngle;
+@property (nonatomic, getter = verticalViewAngle, readonly)float verticalViewAngle;
+/**
+ * The maximum reliable tracking range, in millimeters.
+ *
+ * The range reports the maximum recommended distance from the device center
+ * for which tracking is expected to be reliable. This distance is not a hard limit.
+ * Tracking may be still be functional above this distance or begin to degrade slightly
+ * before this distance depending on calibration and extreme environmental conditions.
+ *
+ * @example Device_range.txt
+ *
+ * @available Since 1.0
+ */
+- (float)range;
+@property (nonatomic, getter = range, readonly)float range;
+/**
+ * The distance to the nearest edge of the Leap Motion controller's view volume.
+ *
+ * The view volume is an axis-aligned, inverted pyramid centered on the device origin
+ * and extending upward to the range limit. The walls of the pyramid are described
+ * by the horizontalViewAngle and verticalViewAngle properties and the roof by the range.
+ * This function estimates the distance between the specified input position and the
+ * nearest wall or roof of the view volume.
+ *
+ * @example Device_distanceToBoundary.txt
+ *
+ * @param position The point to use for the distance calculation.
+ * @returns The distance in millimeters from the input position to the nearest boundary.
+ * @available Since 1.0
+ */
+- (float)distanceToBoundary:(const LeapVector *)position;
+/**
+ * Reports whether this device is embedded in another computer or computer
+ * peripheral.
+ *
+ * @example Device_isEmbedded.txt
+ *
+ * @returns True, if this device is embedded in a laptop, keyboard, or other computer
+ * component; false, if this device is a standalone controller.
+ * @since 1.2
+ */
+- (BOOL)isEmbedded;
+@property(nonatomic, getter = isEmbedded, readonly)BOOL isEmbedded;
+
+/**
+ * Reports whether this device is streaming data to your application.
+ *
+ * @example Device_isStreaming.txt
+ *
+ * Currently only one controller can provide data at a time.
+ * @since 1.2
+ */
+- (BOOL)isStreaming;
+@property(nonatomic, getter = isStreaming, readonly)BOOL isStreaming;
+
+/**
+ * Reports whether the coordinate axes have been reversed.
+ *
+ * The Leap Motion controller can automatically flip the coordinate axes so
+ * that the z-axis is positive toward the user and the x-axis is more positive
+ * from left to right. The user can also manually flip the axes in the Leap
+ * Motion control panel.
+ *  
+ * Images from the camera are not flipped, however.
+ *
+ * @return True, if the axes are flipped, that is, if the positive z-axis
+ * extends from the long side of the device that does not have the green LED.
+ *
+ * @since 2.1
+ */
+- (BOOL)isFlipped;
+@property(nonatomic, getter = isFlipped, readonly)BOOL isFlipped;
+
+/**
+ * The device type.
+ *
+ * Use the device type value in the (rare) circumstances that you
+ * have an application feature which relies on a particular type of device.
+ * Current types of device include the original Leap Motion peripheral,
+ * keyboard-embedded controllers, and laptop-embedded controllers.
+ *
+ * @example Device_type.txt
+ *
+ * @returns The physical device type as a member of the DeviceType enumeration.
+ * @since 1.2
+ */
+- (LeapDeviceType)type;
+@property(nonatomic, getter = type, readonly)LeapDeviceType type;
+
+/**
+ * Reports whether this is a valid LeapDevice object.
+ *
+ * @example Device_isValid.txt
+ *
+ * @returns True, if this LeapDevice object contains valid data.
+ * @available Since 1.0
+ */
+- (BOOL)isValid;
+@property (nonatomic, getter = isValid, readonly)BOOL isValid;
+/**
+ * Compare LeapDevice object inequality.
+ * Two LeapDevice objects are equal if and only if both LeapDevice objects represent the
+ * exact same LeapDevice and both Devices are valid.
+ *
+ * @example Device_equals.txt
+ *
+ * @available Since 1.0
+ */
+- (BOOL)equals:(const LeapDevice *)other;
+// not provided: not_equals
+// user should emulate with !scr.equals(...)
+/**
+ * Returns an invalid LeapDevice object.
+ *
+ * @example Device_invalid.txt
+ *
+ * @returns The invalid LeapDevice instance.
+ * @available Since 1.0
+ */
++ (LeapDevice *)invalid;
+
+@end
+
+///////
+//////////////////////////////////////////////////////////////////////////
+//IMAGE
+/**
+* The LeapImage class represents a single greyscale image from one of the the Leap Motion cameras.
+*
+* In addition to image data, the LeapImage object provides a distortion map for correcting
+* lens distortion. 
+*
+* \include Image_raw.txt
+*
+* Note that LeapImage objects can be invalid, which means that they do not contain
+* valid image data. Get valid LeapImage objects from [LeapFrame frames:]. Test for
+* validity with the LeapImage.isValid.
+* @since 2.1.5
+*/
+@interface LeapImage : NSObject
+
+- (NSString *)description;
+/**
+ * The image ID.
+ *
+ * Images with ID of 0 are from the left camera; those with an ID of 1 are from the 
+ * right camera (with the device in its standard operating position with the
+ * green LED facing the operator).
+ *
+ * @since 2.1.5
+ */
+- (int32_t)id;
+/**
+ * The image width.
+ *
+ * \include Image_image_width_1.txt
+ *
+ * @since 2.1.5
+ */
+- (int)width;
+@property (nonatomic, getter = width, readonly)int width;
+/**
+ * The image height.
+ *
+ * \include Image_image_height_1.txt
+ *
+ * @since 2.1.5
+ */
+- (int)height;
+@property (nonatomic, getter = height, readonly)int height;
+/**
+ * The stride of the distortion map.
+ *
+ * Since each point on the 64x64 element distortion map has two values in the
+ * buffer, the stride is 2 times the size of the grid. (Stride is currently fixed
+ * at 2 * 64 = 128).
+ *
+ * \include Image_distortion_width_1.txt
+ *
+ * @since 2.1.5
+ */
+- (int)distortionWidth;
+@property (nonatomic, getter = distortionWidth, readonly)int distortionWidth;
+/**
+ * The distortion map height.
+ *
+ * Currently fixed at 64.
+ *
+ * \include Image_distortion_height_1.txt
+ *
+ * @since 2.1.5
+ */
+- (int)distortionHeight;
+@property (nonatomic, getter = distortionHeight, readonly)int distortionHeight;
+/**
+ * The horizontal ray offset.
+ *
+ * Used to convert between normalized coordinates in the range [0..1] and the
+ * ray slope range [-4..4].
+ *
+ * \include Image_ray_factors_1.txt
+ *
+ * @since 2.1.5
+ */
+- (float)rayOffsetX;
+@property (nonatomic, getter = rayOffsetX, readonly)float rayOffsetX;
+/**
+ * The vertical ray offset.
+ *
+ * Used to convert between normalized coordinates in the range [0..1] and the
+ * ray slope range [-4..4].
+ *
+ * \include Image_ray_factors_2.txt
+ *
+ * @since 2.1.5
+ */
+- (float)rayOffsetY;
+@property (nonatomic, getter = rayOffsetY, readonly)float rayOffsetY;
+/**
+ * The horizontal ray scale factor.
+ *
+ * Used to convert between normalized coordinates in the range [0..1] and the
+ * ray slope range [-4..4].
+ *
+ * \include Image_ray_factors_1.txt
+ *
+ * @since 2.1.5
+ */
+- (float)rayScaleX;
+@property (nonatomic, getter = rayScaleX, readonly)float rayScaleX;
+/**
+ * The vertical ray scale factor.
+ *
+ * Used to convert between normalized coordinates in the range [0..1] and the
+ * ray slope range [-4..4].
+ *
+ * \include Image_ray_factors_2.txt
+ *
+ * @since 2.1.5
+ */
+- (float)rayScaleY;
+@property (nonatomic, getter = rayScaleY, readonly)float rayScaleY;
+/**
+ * A pointer to the image data.
+ * 
+ * The image data is a set of 8-bit intensity values. The size of the buffer is
+ * ``image.width * image.height`` bytes.
+ *
+ * \include Image_data_2.txt
+ *
+ * Where convenient, you can wrap the image data in an NSData object:
+ * 
+ *     NSData * asNSData = [[NSData alloc] initWithBytesNoCopy:(void *)image.data
+ *         length:image.width * image.height
+ *         deallocator:^void (void * bytes, NSUInteger length) {}];//No need to deallocate
+ *
+ * @since 2.1.5
+ */
+- (const unsigned char *) data;
+@property (nonatomic, getter = data, readonly) const unsigned char *data;
+
+/**
+ * A pointer to the distortion calibration map.
+ *
+ * The calibration map is a 64x64 grid of points. Each point is defined by
+ * a pair of 32-bit floating point values. Thus the size of the buffer is 
+ * ``(image.distortionWidth * 2) * image.distortionHeight * 4 bytes``.
+ * Currently the size is not dynamic and evaluates to: ``64 * 2 * 64 * 4 = 32768 bytes``. 
+ * A future device or change in the
+ * API, however, could result in a different size for the calibration map.
+ * You should always use the ``image.distortionWidth`` and ``image.distortionHeight`` 
+ * properties to calculate the buffer size.
+ *
+ * Each point in the map
+ * represents a ray projected into the camera. The value of
+ * a grid point defines the pixel in the image data containing the brightness 
+ * value produced by the light entering along the corresponding ray. By 
+ * interpolating between grid data points, you can find the brightness value 
+ * for any projected ray. Grid values that fall outside the range [0..1] do
+ * not correspond to a value in the image data and those points should be ignored.
+ *
+ * \include Image_distortion_1.txt
+ *
+ * The calibration map can be used to render an undistorted image as well as to
+ * find the true angle from the camera to a feature in the raw image. The
+ * distortion map itself is designed to be used with GLSL shader programs.
+ * In other contexts, it may be more convenient to use the [LeapImage rectify:]
+ * and [LeapImage warp:] functions.
+ *
+ * Distortion is caused by the lens geometry as well as imperfections in the
+ * lens and sensor window. The calibration map is created by the calibration
+ * process run for each device at the factory (and which can be rerun by the
+ * user).
+ * 
+ * @since 2.1.5
+ */
+- (const float *) distortion;
+@property (nonatomic, getter = distortion, readonly)const float *distortion;
+
+/**
+ * Provides the corrected camera ray intercepting the specified point on the image.
+ *
+ * Given a point on the image, ``rectify:`` corrects for camera distortion
+ * and returns the true direction from the camera to the source of that image point
+ * within the Leap Motion field of view.
+ *
+ * This direction vector has an x and y component with the third element
+ * always zero: i.e. [x, y, 0]. Note that this vector uses the 2D camera coordinate system
+ * where the x-axis parallels the longer (typically horizontal) dimension and
+ * the y-axis parallels the shorter (vertical) dimension. The camera coordinate
+ * system does not correlate to the Leap Motion 3D coordinate system.
+ *
+ * \include Image_rectify_1.txt
+ *
+ * @param uv A LeapVector containing the position of a pixel in the image.
+ * @returns A LeapVector containing the ray direction (the z-component of the vector is always 0).
+ * @since 2.1.5
+ */
+- (LeapVector *)rectify:(LeapVector *)uv;
+/**
+ * Provides the point in the image corresponding to a ray projecting
+ * from the camera.
+ *
+ * Given a ray projected from the camera in the specified direction, ``warp:``
+ * corrects for camera distortion and returns the corresponding pixel
+ * coordinates in the image.
+ *
+ * The ray direction is specified in relationship to the camera. The first 
+ * vector element corresponds to the "horizontal" view angle; the second
+ * corresponds to the "vertical" view angle. 
+ *
+ * \include Image_warp_1.txt
+ *
+ * @param xy A LeapVector containing the ray direction.
+ * @returns A LeapVector containing the pixel coordinates [x, y, 0] (with z always zero).
+ * @since 2.1.5
+ */
+- (LeapVector *)warp:(LeapVector *)xy;
+/**
+ * Reports whether this LeapImage instance contains valid data.
+ *
+ * @returns true, if and only if the image is valid.
+ * @since 2.1.5
+ */
+- (BOOL)isValid;
+@property (nonatomic, getter = isValid, readonly)BOOL isValid;
+/**
+ * Compare LeapImage object equality.
+ *
+ * Two LeapImage objects are equal if and only if both objects represent the
+ * exact same image and both LeapImage objects are valid.
+ * @since 2.1.5
+ */
+- (BOOL)equals:(const LeapImage *)other;
+/**
+ * Returns an invalid Image object.
+ *
+ * You can use the instance returned by this function in comparisons testing
+ * whether a given Image instance is valid or invalid. (You can also use the
+ * LeapImage.isValid property.)
+ *
+ *
+ * @returns The invalid LeapImage instance.
+ * @since 2.1.5
+ */
++ (LeapImage *)invalid;
+@end
+///////
+
+//////////////////////////////////////////////////////////////////////////
+//INTERACTIONBOX
+/**
+ * The LeapInteractionBox class represents a box-shaped region completely
+ * within the field of view of the Leap Motion controller.
+ *
+ * The interaction box is an axis-aligned rectangular prism and provides normalized
+ * coordinates for hands, fingers, and tools within this box. The InteractionBox class
+ * can make it easier to map positions in the Leap Motion coordinate system to 2D or
+ * 3D coordinate systems used for application drawing.
+ *
+ * <img src="../docs/images/Leap_InteractionBox.png"/>
+ *
+ * The LeapInteractionBox region is defined by a center and dimensions along the x, y,
+ * and z axes.
+ *
+ * @example IBox_get.txt
+ *
+ * @available Since 1.0
+ */
+@interface LeapInteractionBox : NSObject
+
+- (NSString *)description;
+/**
+ * Normalizes the coordinates of a point using the interaction box.
+ *
+ * Coordinates from the Leap frame of reference (millimeters) are converted
+ * to a range of [0..1] such that the minimum value of the LeapInteractionBox maps to 0
+ * and the maximum value of the LeapInteractionBox maps to 1.
+ *
+ * @example IBox_normalizePoint.txt
+ *
+ * @param position The input position in device coordinates.
+ * @param clamp Whether or not to limit the output value to the range [0,1] when the
+ * input position is outside the LeapInteractionBox. Defaults to true.
+ * @returns The normalized position.
+ * @available Since 1.0
+ */
+- (LeapVector *)normalizePoint:(const LeapVector *)position clamp:(BOOL)clamp;
+/**
+ * Converts a position defined by normalized LeapInteractionBox coordinates into device
+ * coordinates in millimeters.
+ *
+ * @example IBox_denormalizePoint.txt
+ *
+ * This function performs the inverse of [LeapInteractionBox normalizePoint:].
+ *
+ * @param position A normalized position in LeapInteractionBox coordinates.
+ * @returns The corresponding denormalized position in device coordinates.
+ * @available Since 1.0
+ */
+- (LeapVector *)denormalizePoint:(const LeapVector *)position;
+/**
+ * The center of the LeapInteractionBox in device coordinates (millimeters). This point
+ * is equidistant from all sides of the box.
+ *
+ * @example IBox_center.txt
+ *
+ * @returns The LeapInteractionBox center in device coordinates.
+ * @available Since 1.0
+ */
+- (LeapVector *)center;
+@property (nonatomic, getter = center, readonly)LeapVector *center;
+/**
+ * The width of the LeapInteractionBox in millimeters, measured along the x-axis.
+ *
+ * @example IBox_width.txt
+ *
+ * @returns The LeapInteractionBox width in millimeters.
+ * @available Since 1.0
+ */
+- (float)width;
+@property (nonatomic, getter = width, readonly)float width;
+/**
+ * The height of the LeapInteractionBox in millimeters, measured along the y-axis.
+ *
+ * @example IBox_height.txt
+ *
+ * @returns The LeapInteractionBox height in millimeters.
+ * @available Since 1.0
+ */
+- (float)height;
+@property (nonatomic, getter = width, readonly)float height;
+/**
+ * The depth of the LeapInteractionBox in millimeters, measured along the z-axis.
+ *
+ * @example IBox_depth.txt
+ *
+ * @returns The LeapInteractionBox depth in millimeters.
+ * @available Since 1.0
+ */
+- (float)depth;
+@property (nonatomic, getter = width, readonly)float depth;
+/**
+ * Reports whether this is a valid LeapInteractionBox object.
+ *
+ * @example IBox_isValid.txt
+ *
+ * @returns True, if this LeapInteractionBox object contains valid data.
+ * @available Since 1.0
+ */
+- (BOOL)isValid;
+@property (nonatomic, getter = isValid, readonly)BOOL isValid;
+/**
+ * Reports whether this is a valid LeapInteractionBox object.
+ *
+ * @example IBox_equals.txt
+ *
+ * @returns True, if this LeapInteractionBox object contains valid data.
+ * @available Since 1.0
+ */
+- (BOOL)equals:(const LeapInteractionBox *)other;
+// not provided: not_equals
+// user should emulate with !scr.equals(...)
+/**
+ * Returns an invalid LeapInteractionBox object.
+ *
+ * @example IBox_invalid.txt
+ *
+ * @returns The invalid InteractionBox instance.
+ * @available Since 1.0
+ */
++ (LeapInteractionBox *)invalid;
+
 @end
 
 //////////////////////////////////////////////////////////////////////////
@@ -1585,29 +2649,34 @@ typedef enum LeapPolicyFlag {
  * subsequent frame.
  *
  * **Important:** Recognition for each type of gesture must be enabled using the
- * <[LeapController enableGesture:enable:]> function; otherwise **no gestures are
+ * [LeapController enableGesture:enable:] function; otherwise **no gestures are
  * recognized or reported**.
+ *
+ * @example Gesture_Enable_All.txt
  *
  * Subclasses of LeapGesture define the properties for the specific movement patterns
  * recognized by the Leap.
  *
  * The LeapGesture subclasses for include:
  *
- * * <LeapCircleGesture> -- A circular movement by a finger.
- * * <LeapSwipeGesture> -- A straight line movement by the hand with fingers extended.
- * * <LeapScreenTapGesture> -- A forward tapping movement by a finger.
- * * <LeapKeyTapGesture> -- A downward tapping movement by a finger.
+ * **LeapCircleGesture** -- A circular movement by a finger.
+ *
+ * **LeapSwipeGesture** -- A straight line movement by the hand with fingers extended.
+ *
+ * **LeapScreenTapGesture** -- A forward tapping movement by a finger.
+ *
+ * **LeapKeyTapGesture** -- A downward tapping movement by a finger.
  *
  * Circle and swipe gestures are continuous and these objects can have a
  * state of start, update, and stop.
  *
  * The tap gestures are discrete. The Leap only creates a single
- * LeapScreenTapGesture or LeapKeyTapGesture object appears for each tap and that 
+ * LeapScreenTapGesture or LeapKeyTapGesture object appears for each tap and that
  * object is always assigned the stop state.
  *
- * Get valid LeapGesture instances from a <LeapFrame> object. You can get a list of gestures
- * with the <[LeapFrame gestures:]> method. You can also
- * use the <[LeapFrame gesture:]> method to find a gesture in the current frame using
+ * Get valid LeapGesture instances from a LeapFrame object. You can get a list of gestures
+ * with the [LeapFrame gestures:] method. You can also
+ * use the [LeapFrame gesture:] method to find a gesture in the current frame using
  * an ID value obtained in a previous frame.
  *
  * LeapGesture objects can be invalid. For example, when you get a gesture by ID
@@ -1619,40 +2688,60 @@ typedef enum LeapPolicyFlag {
  * The following keys can be used with the LeapConfig class to configure the gesture
  * recognizer:
  *
- * Key string | Value type | Default value | Units
- * -----------|------------|---------------|------
- * Gesture.Circle.MinRadius | float | 5.0 | mm
- * Gesture.Circle.MinArc | float | 1.5*pi | radians
- * Gesture.Swipe.MinLength | float | 150 | mm
- * Gesture.Swipe.MinVelocity | float | 1000 | mm/s
- * Gesture.KeyTap.MinDownVelocity | float | 50 | mm/s
- * Gesture.KeyTap.HistorySeconds | float | 0.1 | s
- * Gesture.KeyTap.MinDistance | float | 5.0 | mm
- * Gesture.ScreenTap.MinForwardVelocity  | float | 50 | mm/s
- * Gesture.ScreenTap.HistorySeconds | float | 0.1 | s
- * Gesture.ScreenTap.MinDistance | float | 3.0 | mm
+ * \table
+ * ====================================  ========== ============= =======
+ * Key string                            Value type Default value Units
+ * ====================================  ========== ============= =======
+ * Gesture.Circle.MinRadius              float      5.0           mm
+ * Gesture.Circle.MinArc                 float      1.5 * pi      radians
+ * Gesture.Swipe.MinLength               float      150           mm
+ * Gesture.Swipe.MinVelocity             float      1000          mm/s
+ * Gesture.KeyTap.MinDownVelocity        float      50            mm/s
+ * Gesture.KeyTap.HistorySeconds         float      0.1           s
+ * Gesture.KeyTap.MinDistance            float      3.0           mm
+ * Gesture.ScreenTap.MinForwardVelocity  float      50            mm/s
+ * Gesture.ScreenTap.HistorySeconds      float      0.1           s
+ * Gesture.ScreenTap.MinDistance         float      5.0           mm
+ * ====================================  ========== ============= =======
+ * \endtable
+ *
+ * The LeapController object must be connected to the Leap Motion service/daemon
+ * before setting the configuration parameters.
+ *
+ * @example Gesture_Params_All.txt
+ *
+ * @available Since 1.0
  */
 @interface LeapGesture : NSObject
 /**
- * The <LeapFrame> containing this LeapGesture instance.
+ * The LeapFrame containing this LeapGesture instance.
  *
- * @return The parent <LeapFrame> object.
+ * @example Gesture_frame.txt
+ *
+ * @return The parent LeapFrame object.
+ * @available Since 1.0
  */
 @property (nonatomic, strong, readonly)LeapFrame *frame;
 /**
  * The list of hands associated with this LeapGesture, if any.
  *
+ * @example Gesture_hands.txt
+ *
  * If no hands are related to this gesture, the list is empty.
  *
- * @return NSArray the list of related <LeapHand> objects.
+ * @return NSArray the list of related LeapHand objects.
+ * @available Since 1.0
  */
 @property (nonatomic, strong, readonly)NSArray *hands;
 /**
  * The list of fingers and tools associated with this LeapGesture, if any.
  *
- * If no <LeapPointable> objects are related to this gesture, the list is empty.
+ * @example Gesture_pointables.txt
  *
- * @return NSArray the list of related <LeapPointable> objects.
+ * If no LeapPointable objects are related to this gesture, the list is empty.
+ *
+ * @return NSArray the list of related LeapPointable objects.
+ * @available Since 1.0
  */
 @property (nonatomic, strong, readonly)NSArray *pointables;
 
@@ -1660,16 +2749,22 @@ typedef enum LeapPolicyFlag {
 /**
  * The gesture type.
  *
+ * @example Gesture_type.txt
  *
  * The supported types of gestures are defined by the LeapGestureType enumeration:
  *
- * * LEAP_GESTURE_TYPE_INVALID -- An invalid type.
- * * LEAP_GESTURE_TYPE_SWIPE  -- A straight line movement by the hand with fingers extended.
- * * LEAP_GESTURE_TYPE_CIRCLE -- A circular movement by a finger.
- * * LEAP_GESTURE_TYPE_SCREEN_TAP -- A forward tapping movement by a finger.
- * * LEAP_GESTURE_TYPE_KEY_TAP -- A downward tapping movement by a finger.
+ * **LEAP_GESTURE_TYPE_INVALID** -- An invalid type.
+ *
+ * **LEAP_GESTURE_TYPE_SWIPE**  -- A straight line movement by the hand with fingers extended.
+ *
+ * **LEAP_GESTURE_TYPE_CIRCLE** -- A circular movement by a finger.
+ *
+ * **LEAP_GESTURE_TYPE_SCREEN_TAP** -- A forward tapping movement by a finger.
+ *
+ * **LEAP_GESTURE_TYPE_KEY_TAP** -- A downward tapping movement by a finger.
  *
  * @returns LeapGestureType A value from the LeapGestureType enumeration.
+ * @available Since 1.0
  */
 - (LeapGestureType)type;
 @property (nonatomic, getter = type, readonly)LeapGestureType type;
@@ -1680,14 +2775,20 @@ typedef enum LeapPolicyFlag {
  * and an end. The 'state' attribute reports where in that sequence this
  * LeapGesture object falls.
  *
+ * @example Gesture_state.txt
+ *
  * The possible gesture states are defined by the LeapGestureState enumeration:
  *
- * * LEAP_GESTURE_STATE_INVALID -- An invalid state.
- * * LEAP_GESTURE_STATE_START -- The gesture is starting. Just enough has happened to recognize it.
- * * LEAP_GESTURE_STATE_UPDATE -- The gesture is in progress. (Note: not all gestures have updates).
- * * LEAP_GESTURE_STATE_STOP -- The gesture has completed or stopped.
+ * **LEAP_GESTURE_STATE_INVALID** -- An invalid state.
+ *
+ * **LEAP_GESTURE_STATE_START** -- The gesture is starting. Just enough has happened to recognize it.
+ *
+ * **LEAP_GESTURE_STATE_UPDATE** -- The gesture is in progress. (Note: not all gestures have updates).
+ *
+ * **LEAP_GESTURE_STATE_STOP** -- The gesture has completed or stopped.
  *
  * @returns LeapGestureState A value from the LeapGestureState enumeration.
+ * @available Since 1.0
  */
 - (LeapGestureState)state;
 @property (nonatomic, getter = state, readonly)LeapGestureState state;
@@ -1695,10 +2796,13 @@ typedef enum LeapPolicyFlag {
  * The gesture ID.
  *
  * All LeapGesture objects belonging to the same recognized movement share the
- * same ID value. Use the ID value with the <[LeapFrame gesture:]> method to
+ * same ID value. Use the ID value with the [LeapFrame gesture:] method to
  * find updates related to this LeapGesture object in subsequent frames.
  *
+ * @example Gesture_id.txt
+ *
  * @returns int32_t the ID of this LeapGesture.
+ * @available Since 1.0
  */
 - (int32_t)id;
 @property (nonatomic, getter = id, readonly)int32_t id;
@@ -1706,19 +2810,26 @@ typedef enum LeapPolicyFlag {
  * The elapsed duration of the recognized movement up to the
  * frame containing this LeapGesture object, in microseconds.
  *
+ * @example Gesture_duration.txt
+ *
  * The duration reported for the first LeapGesture in the sequence (with the
  * LEAP_GESTURE_STATE_START state) will typically be a small positive number since
  * the movement must progress far enough for the Leap to recognize it as
  * an intentional gesture.
  *
  * @return int64_t the elapsed duration in microseconds.
+ * @available Since 1.0
  */
 - (int64_t)duration;
 @property (nonatomic, getter = duration, readonly)int64_t duration;
 /**
  * The elapsed duration in seconds.
+ *
+ * @example Gesture_durationSeconds.txt
+ *
  * @see duration
  * @return float the elapsed duration in seconds.
+ * @available Since 1.0
  */
 - (float)durationSeconds;
 @property (nonatomic, getter = durationSeconds, readonly)float durationSeconds;
@@ -1728,12 +2839,15 @@ typedef enum LeapPolicyFlag {
  * An invalid LeapGesture object does not represent a snapshot of a recognized
  * movement. Invalid LeapGesture objects are returned when a valid object cannot
  * be provided. For example, when you get an gesture by ID
- * using <[LeapFrame gesture:]>, and there is no gesture with that ID in the current
+ * using [LeapFrame gesture:], and there is no gesture with that ID in the current
  * frame, then `gesture:` returns an Invalid LeapGesture object (rather than a null
  * value). Always check object validity in situations where an gesture might be
  * invalid.
  *
+ * @example Gesture_isValid.txt
+ *
  * @returns bool Yes, if this is a valid LeapGesture instance; NO, otherwise.
+ * @available Since 1.0
  */
 - (BOOL)isValid;
 @property (nonatomic, getter = isValid, readonly)BOOL isValid;
@@ -1742,7 +2856,11 @@ typedef enum LeapPolicyFlag {
  *
  * Two LeapGestures are equal if they represent the same snapshot of the same
  * recognized movement.
+ *
+ * @example Gesture_equals.txt
+ *
  * @param other The LeapGesture object to compare.
+ * @available Since 1.0
  */
 - (BOOL)equals:(const LeapGesture *)other;
 // not provided: not_equals
@@ -1750,11 +2868,10 @@ typedef enum LeapPolicyFlag {
 /**
  * Returns an invalid LeapGesture object.
  *
- * You can use the instance returned by this function in comparisons testing
- * whether a given LeapGesture instance is valid or invalid. (You can also use the
- * <[LeapGesture isValid]> function.)
+ * @example Gesture_invalid.txt
  *
  * @returns The invalid LeapGesture instance.
+ * @available Since 1.0
  */
 + (LeapGesture *)invalid;
 
@@ -1763,80 +2880,108 @@ typedef enum LeapPolicyFlag {
 ////////////////////////////////////////////////////////////////////////
 //SWIPE GESTURE
 /**
- * The LeapSwipeGesture class represents a swiping motion of a finger or tool.
+ * The LeapSwipeGesture class represents a swiping motion of fingers and tools.
  *
  * <img src="../docs/images/Leap_Gesture_Swipe.png"/>
+ *
+ * SwipeGesture objects are generated for each swiping finger or tool. 
+ * Swipe gestures are continuous; a gesture object with the same
+ * ID value will appear in each frame while the gesture continues. The LeapSwipeGesture
+ * objects for the gesture have three possible states:
+ *
+ * **LEAP_GESTURE_STATE_START** -- The gesture has just started.
+ *
+ * **LEAP_GESTURE_STATE_UPDATE** -- The swipe gesture is continuing.
+ *
+ * **LEAP_GESTURE_STATE_STOP** -- The swipe gesture is finished.
  *
  * **Important:** To use swipe gestures in your application, you must enable
  * recognition of the swipe gesture. You can enable recognition with:
  *
  * @example Gesture_Swipe_enable.txt
  *
- * Swipe gestures are continuous. The LeapSwipeGesture objects for the gesture have
- * three possible states:
- *
- * * LEAP_GESTURE_STATE_START -- The gesture has just started. 
- * * LEAP_GESTURE_STATE_UPDATE -- The swipe gesture is continuing.
- * * LEAP_GESTURE_STATE_STOP -- The swipe gesture is finished.
- *
  * You can set the minimum length and velocity required for a movement
  * to be recognized as a swipe using the config attribute of a connected
  * LeapController object. Use the following keys to configure swipe recognition:
  *
- * Key string | Value type | Default value | Units
- * -----------|------------|---------------|------
- * Gesture.Swipe.MinLength | float | 150 | mm
- * Gesture.Swipe.MinVelocity | float | 1000 | mm/s
+ * \table
+ * ====================================  ========== ============= =======
+ * Key string                            Value type Default value Units
+ * ====================================  ========== ============= =======
+ * Gesture.Swipe.MinLength               float      150           mm
+ * Gesture.Swipe.MinVelocity             float      1000          mm/s
+ * ====================================  ========== ============= =======
+ * \endtable
  *
- * The following example demonstrates how to set the swipe configuration 
+ * The following example demonstrates how to set the swipe configuration
  * parameters:
  *
  * @example Gesture_Swipe_Params.txt
+ *
+ * The LeapController object must be connected to the Leap Motion service/daemon
+ * before setting the configuration parameters.
+ *
+ * @available Since 1.0
  */
 @interface LeapSwipeGesture : LeapGesture
 
 /**
  * The current position of the swipe.
  *
- * @returns <LeapVector> The current swipe position within the Leap frame of
+ * @example SwipeGesture_position.txt
+ *
+ * @returns LeapVector The current swipe position within the Leap frame of
  * reference, in mm.
+ * @available Since 1.0
  */
 - (LeapVector *)position;
 @property (nonatomic, getter = position, readonly)LeapVector *position;
 /**
  * The position where the swipe began.
  *
- * @returns <LeapVector> The starting position within the Leap frame of
+ * @example SwipeGesture_startPosition.txt
+ *
+ * @returns LeapVector The starting position within the Leap frame of
  * reference, in mm.
+ * @available Since 1.0
  */
 - (LeapVector *)startPosition;
 @property (nonatomic, getter = startPosition, readonly)LeapVector *startPosition;
 /**
  * The unit direction vector parallel to the swipe motion.
  *
+ * @example SwipeGesture_direction.txt
+ *
  * You can compare the components of the vector to classify the swipe as
  * appropriate for your application. For example, if you are using swipes
  * for two dimensional scrolling, you can compare the x and y values to
  * determine if the swipe is primarily horizontal or vertical.
  *
- * @returns <LeapVector> The unit direction vector representing the swipe
+ * @returns LeapVector The unit direction vector representing the swipe
  * motion.
+ * @available Since 1.0
  */
 - (LeapVector *)direction;
 @property (nonatomic, getter = direction, readonly)LeapVector *direction;
 /**
  * The swipe speed in mm/second.
  *
+ * @example SwipeGesture_speed.txt
+ *
  * @returns float The speed of the finger performing the swipe gesture in
  * millimeters per second.
+ * @available Since 1.0
  */
 - (float)speed;
 @property (nonatomic, getter = speed, readonly)float speed;
 /**
  * The finger or tool performing the swipe gesture.
  *
- * @returns A <LeapPointable> object representing the swiping finger
+ * @example SwipeGesture_pointable.txt
+ *
+ * @returns A LeapPointable object representing the swiping finger
  * or tool.
+ * @available Since 1.0
  */
 - (LeapPointable *)pointable;
 
@@ -1860,33 +3005,65 @@ typedef enum LeapPolicyFlag {
  * Circle gestures are continuous. The LeapCircleGesture objects for the gesture have
  * three possible states:
  *
- * * LEAP_GESTURE_STATE_START -- The circle gesture has just started. The movement has
- *  progressed far enough for the recognizer to classify it as a circle.
- * * LEAP_GESTURE_STATE_UPDATE -- The circle gesture is continuing.
- * * LEAP_GESTURE_STATE_STOP -- The circle gesture is finished.
+ * **LEAP_GESTURE_STATE_START** -- The circle gesture has just started. The movement has
+ *   progressed far enough for the recognizer to classify it as a circle.
+ *
+ * **LEAP_GESTURE_STATE_UPDATE** -- The circle gesture is continuing.
+ *
+ * **LEAP_GESTURE_STATE_STOP** -- The circle gesture is finished.
  *
  * You can set the minimum radius and minimum arc length required for a movement
  * to be recognized as a circle using the config attribute of a connected
  * LeapController object. Use the following keys to configure circle recognition:
  *
- * Key string | Value type | Default value | Units
- * -----------|------------|---------------|------
- * Gesture.Circle.MinRadius | float | 5.0 | mm
- * Gesture.Circle.MinArc | float | 1.5*pi | radians
+ * \table
+ * ====================================  ========== ============= =======
+ * Key string                            Value type Default value Units
+ * ====================================  ========== ============= =======
+ * Gesture.Circle.MinRadius              float      5.0           mm
+ * Gesture.Circle.MinArc                 float      1.5 * pi      radians
+ * ====================================  ========== ============= =======
+ * \endtable
  *
  * The following example demonstrates how to set the circle configuration
  * parameters:
  *
  * @example Gesture_Circle_Params.txt
+ *
+ * The LeapController object must be connected to the Leap Motion service/daemon
+ * before setting the configuration parameters.
+ *
+ * @available Since 1.0
  */
 @interface LeapCircleGesture : LeapGesture
 
+/**
+ * The number of times the finger tip has traversed the circle.
+ *
+ * Progress is reported as a positive number of the number. For example,
+ * a progress value of .5 indicates that the finger has gone halfway
+ * around, while a value of 3 indicates that the finger has gone around
+ * the the circle three times.
+ *
+ * @example CircleGesture_progress.txt
+ *
+ * Progress starts where the circle gesture began. Since the circle
+ * must be partially formed before the Leap Motion software can recognize it, progress
+ * will be greater than zero when a circle gesture first appears in the
+ * frame.
+ *
+ * @returns float A positive number indicating the gesture progress.
+ * @since 1.0
+ */
 - (float)progress;
 @property (nonatomic, getter = progress, readonly)float progress;
 /**
  * The center point of the circle within the Leap frame of reference.
  *
- * @returns <LeapVector> The center of the circle in mm from the Leap origin.
+ * @example CircleGesture_center.txt
+ *
+ * @returns LeapVector The center of the circle in mm from the Leap origin.
+ * @available Since 1.0
  */
 - (LeapVector *)center;
 @property (nonatomic, getter = center, readonly)LeapVector *center;
@@ -1900,17 +3077,10 @@ typedef enum LeapPolicyFlag {
  * pointable. If the angle between the normal and the pointable object
  * drawing the circle is less than 90 degrees, then the circle is clockwise.
  *
+ * @example CircleGesture_normal.txt
  *
- *     `NSString* clockwiseness;`
- *     `if ([[[circleGesture pointable] direction] angleTo:[circleGesture normal]] <= LEAP_PI/4) {`
- *     `    clockwiseness = @"clockwise";`
- *     `}`
- *     `else {`
- *     `    clockwiseness = @"counterclockwise";`
- *     `}`
- *
- *
- * @return <LeapVector> the normal vector for the circle being traced
+ * @return LeapVector the normal vector for the circle being traced
+ * @available Since 1.0
  */
 
 - (LeapVector *)normal;
@@ -1918,14 +3088,20 @@ typedef enum LeapPolicyFlag {
 /**
  * The radius of the circle.
  *
+ * @example CircleGesture_radius.txt
+ *
  * @returns The circle radius in mm.
+ * @available Since 1.0
  */
 - (float)radius;
 @property (nonatomic, getter = radius, readonly)float radius;
 /**
  * The finger performing the circle gesture.
  *
- * @returns A <LeapPointable> object representing the circling finger.
+ * @example CircleGesture_pointable.txt
+ *
+ * @returns A LeapPointable object representing the circling finger.
+ * @available Since 1.0
  */
 - (LeapPointable *)pointable;
 @property (nonatomic, getter = pointable, readonly)LeapPointable *pointable;
@@ -1948,8 +3124,8 @@ typedef enum LeapPolicyFlag {
  *
  * @example Gesture_ScreenTap_Enable.txt
  *
- * LeapScreenTap gestures are discrete. The LeapScreenTapGesture object 
- * representing a tap always has the state, LEAP_GESTURE_STATE_STOP. Only one 
+ * LeapScreenTap gestures are discrete. The LeapScreenTapGesture object
+ * representing a tap always has the state, LEAP_GESTURE_STATE_STOP. Only one
  * LeapScreenTapGesture object is created for each screen tap gesture recognized.
  *
  * You can set the minimum finger movement and velocity required for a movement
@@ -1957,30 +3133,45 @@ typedef enum LeapPolicyFlag {
  * evaluating the movement using the config attribute of a connected
  * LeapController object. Use the following keys to configure screen tap recognition:
  *
- * Key string | Value type | Default value | Units
- * -----------|------------|---------------|------
- * Gesture.ScreenTap.MinForwardVelocity  | float | 50 | mm/s
- * Gesture.ScreenTap.HistorySeconds | float | 0.1 | s
- * Gesture.ScreenTap.MinDistance | float | 3.0 | mm
+ * \table
+ * ====================================  ========== ============= =======
+ * Key string                            Value type Default value Units
+ * ====================================  ========== ============= =======
+ * Gesture.ScreenTap.MinForwardVelocity  float      50            mm/s
+ * Gesture.ScreenTap.HistorySeconds      float      0.1           s
+ * Gesture.ScreenTap.MinDistance         float      5.0           mm
+ * ====================================  ========== ============= =======
+ * \endtable
  *
  * The following example demonstrates how to set the screen tap configuration
  * parameters:
  *
  * @example Gesture_ScreenTap_Params.txt
+ *
+ * The LeapController object must be connected to the Leap Motion service/daemon
+ * before setting the configuration parameters.
+ *
+ * @available Since 1.0
  */
 @interface LeapScreenTapGesture : LeapGesture
 
 /**
  * The position where the screen tap is registered.
  *
- * @return A <LeapVector> containing the coordinates of screen tap location.
+ * @example ScreenTapGesture_position.txt
+ *
+ * @return A LeapVector containing the coordinates of screen tap location.
+ * @available Since 1.0
  */
 - (LeapVector *)position;
 @property (nonatomic, getter = position, readonly)LeapVector *position;
 /**
  * The direction of finger tip motion.
  *
- * @returns <LeapVector> A unit direction vector.
+ * @example ScreenTapGesture_direction.txt
+ *
+ * @returns LeapVector A unit direction vector.
+ * @available Since 1.0
  */
 - (LeapVector *)direction;
 @property (nonatomic, getter = direction, readonly)LeapVector *direction;
@@ -1988,13 +3179,17 @@ typedef enum LeapPolicyFlag {
  * The progess value is always 1.0 for a screen tap gesture.
  *
  * @returns float The value 1.0.
+ * @available Since 1.0
  */
 - (float)progress;
 @property (nonatomic, getter = progress, readonly)float progress;
 /**
  * The finger performing the screen tap gesture.
  *
- * @returns A <LeapPointable> object representing the tapping finger.
+ * @example ScreenTapGesture_pointable.txt
+ *
+ * @returns A LeapPointable object representing the tapping finger.
+ * @available Since 1.0
  */
 - (LeapPointable *)pointable;
 @property (nonatomic, getter = pointable, readonly)LeapPointable *pointable;
@@ -2018,7 +3213,7 @@ typedef enum LeapPolicyFlag {
  * @example Gesture_KeyTap_Enable.txt
  *
  * Key tap gestures are discrete. The LeapKeyTapGesture object representing a tap always
- * has the state, LEAP_GESTURE_STATE_STOP. Only one LeapKeyTapGesture object is 
+ * has the state, LEAP_GESTURE_STATE_STOP. Only one LeapKeyTapGesture object is
  * created for each key tap gesture recognized.
  *
  * You can set the minimum finger movement and velocity required for a movement
@@ -2027,30 +3222,45 @@ typedef enum LeapPolicyFlag {
  * LeapController object. Use the following configuration keys to configure key tap
  * recognition:
  *
- * Key string | Value type | Default value | Units
- * -----------|------------|---------------|------
- * Gesture.KeyTap.MinDownVelocity | float | 50 | mm/s
- * Gesture.KeyTap.HistorySeconds | float | 0.1 | s
- * Gesture.KeyTap.MinDistance | float | 5.0 | mm
+ * \table
+ * ====================================  ========== ============= =======
+ * Key string                            Value type Default value Units
+ * ====================================  ========== ============= =======
+ * Gesture.KeyTap.MinDownVelocity        float      50            mm/s
+ * Gesture.KeyTap.HistorySeconds         float      0.1           s
+ * Gesture.KeyTap.MinDistance            float      3.0           mm
+ * ====================================  ========== ============= =======
+ * \endtable
  *
  * The following example demonstrates how to set the key tap configuration
  * parameters:
  *
  * @example Gesture_KeyTap_Params.txt
+ *
+ * The LeapController object must be connected to the Leap Motion service/daemon
+ * before setting the configuration parameters.
+ *
+ * @available Since 1.0
  */
 @interface LeapKeyTapGesture : LeapGesture
 
 /**
  * The position where the key tap is registered.
  *
- * @return A <LeapVector> containing the coordinates of key tap location.
+ * @example KeyTapGesture_position.txt
+ *
+ * @return A LeapVector containing the coordinates of key tap location.
+ * @available Since 1.0
  */
 - (LeapVector *)position;
 @property (nonatomic, getter = position, readonly)LeapVector *position;
 /**
  * The direction of finger tip motion.
  *
- * @returns <LeapVector> A unit direction vector.
+ * @example KeyTapGesture_direction.txt
+ *
+ * @returns LeapVector A unit direction vector.
+ * @available Since 1.0
  */
 - (LeapVector *)direction;
 @property (nonatomic, getter = direction, readonly)LeapVector *direction;
@@ -2058,13 +3268,17 @@ typedef enum LeapPolicyFlag {
  * The progess value is always 1.0 for a key tap gesture.
  *
  * @returns float The value 1.0.
+ * @available Since 1.0
  */
 - (float)progress;
 @property (nonatomic, getter = progress, readonly)float progress;
 /**
  * The finger performing the key tap gesture.
  *
- * @returns A <LeapPointable> object representing the tapping finger.
+ * @example KeyTapGesture_pointable.txt
+ *
+ * @returns A LeapPointable object representing the tapping finger.
+ * @available Since 1.0
  */
 - (LeapPointable *)pointable;
 @property (nonatomic, getter = pointable, readonly)LeapPointable *pointable;
@@ -2080,39 +3294,71 @@ typedef enum LeapPolicyFlag {
  * The Leap detects hands, fingers and tools within the tracking area, reporting
  * their positions, orientations and motions in frames at the Leap frame rate.
  *
- * Access LeapFrame objects through an instance of a <LeapController>. Implement a
- * <LeapListener> subclass to receive a callback event when a new LeapFrame is available.
+ * Access LeapFrame objects through an instance of a LeapController.
+ *
+ * @example Frame_get.txt
+ *
+ * Implement a LeapListener subclass to receive a callback event when a new
+ * LeapFrame is available.
+ *
+ * A LeapFrame object maintains strong references to its child objects (hands,
+ * fingers, tools, etc). However, the child objects only maintain weak references
+ * to their parent objects. Thus, you can access the full hierarchy of objects while
+ * the LeapFrame object exists, but you can only access child objects once the
+ * LeapFrame object has been deleted.
+ *
+ * @available Since 1.0
  */
 @interface LeapFrame : NSObject
 
 /**
- * The list of <LeapHand> objects detected in this frame, given in arbitrary order.
+ * The list of LeapHand objects detected in this frame, given in arbitrary order.
  * The list can be empty if no hands are detected.
  *
- * @returns NSArray containing all <LeapHand> objects detected in this frame.
+ * @example Frame_hands.txt
+ *
+ * @returns NSArray containing all LeapHand objects detected in this frame.
+ * @available Since 1.0
  */
 @property (nonatomic, strong, readonly)NSArray *hands;
 /**
- * The list of <LeapPointable> objects (fingers and tools) detected in this frame,
+ * The list of LeapPointable objects (fingers and tools) detected in this frame,
  * given in arbitrary order. The list can be empty if no fingers or tools are detected.
  *
- * @returns NSArray containing all <LeapPointable> objects detected in this frame.
+ * @example Frame_pointables.txt
+ *
+ * @returns NSArray containing all LeapPointable objects detected in this frame.
+ * @available Since 1.0
  */
 @property (nonatomic, strong, readonly)NSArray *pointables;
 /**
- * The list of <LeapFinger> objects detected in this frame, given in arbitrary order.
+ * The list of LeapFinger objects detected in this frame, given in arbitrary order.
  * The list can be empty if no fingers are detected.
  *
- * @returns NSArray containing all <LeapFinger> objects detected in this frame.
+ * @example Frame_fingers.txt
+ *
+ * @returns NSArray containing all LeapFinger objects detected in this frame.
+ * @available Since 1.0
  */
 @property (nonatomic, strong, readonly)NSArray *fingers;
 /**
- * The list of <LeapTool> objects detected in this frame, given in arbitrary order.
+ * The list of LeapTool objects detected in this frame, given in arbitrary order.
  * The list can be empty if no tools are detected.
  *
- * @returns NSArray containing all <LeapTool> objects detected in this frame.
+ * @example Frame_tools.txt
+ *
+ * @returns NSArray containing all LeapTool objects detected in this frame.
+ * @available Since 1.0
  */
 @property (nonatomic, strong, readonly)NSArray *tools;
+
+/**
+ *  The list of images from the Leap Motion cameras.
+ *  
+ *  @return An NSArray object containing the camera images analyzed to create this Frame.
+ *  @available Since 2.1.5
+*/
+@property (nonatomic, strong, readonly)NSArray *images;
 
 - (NSString *)description;
 - (void *)interfaceFrame;
@@ -2120,87 +3366,105 @@ typedef enum LeapPolicyFlag {
  * A unique ID for this LeapFrame. Consecutive frames processed by the Leap
  * have consecutive increasing values.
  *
+ * @example Frame_id.txt
+ *
  * @returns The frame ID.
+ * @available Since 1.0
  */
 - (int64_t)id;
 @property (nonatomic, getter = id, readonly)int64_t id;
 /**
  * The frame capture time in microseconds elapsed since the Leap started.
  *
+ * @example Frame_timestamp.txt
+ *
  * @returns The timestamp in microseconds.
+ * @available Since 1.0
  */
 - (int64_t)timestamp;
 @property (nonatomic, getter = timestamp, readonly)int64_t timestamp;
 /**
- * The <LeapHand> object with the specified ID in this frame.
+ * The LeapHand object with the specified ID in this frame.
  *
  * Use the [LeapFrame hand:] function to retrieve the LeapHand object from
  * this frame using an ID value obtained from a previous frame.
  * This function always returns a LeapHand object, but if no hand
  * with the specified ID is present, an invalid LeapHand object is returned.
  *
+ * @example Frame_hand.txt
+ *
  * Note that ID values persist across frames, but only until tracking of a
  * particular object is lost. If tracking of a hand is lost and subsequently
  * regained, the new LeapHand object representing that physical hand may have
  * a different ID than that representing the physical hand in an earlier frame.
  *
- * @param handId The ID value of a <LeapHand> object from a previous frame.
- * @returns The <LeapHand> object with the matching ID if one exists in this frame;
+ * @param handId The ID value of a LeapHand object from a previous frame.
+ * @returns The LeapHand object with the matching ID if one exists in this frame;
  * otherwise, an invalid LeapHand object is returned.
+ * @available Since 1.0
  */
 - (LeapHand *)hand:(int32_t)handId;
 /**
- * The <LeapPointable> object with the specified ID in this frame.
+ * The LeapPointable object with the specified ID in this frame.
  *
  * Use the [LeapFrame pointable:] function to retrieve the LeapPointable object from
  * this frame using an ID value obtained from a previous frame.
  * This function always returns a LeapPointable object, but if no finger or tool
  * with the specified ID is present, an invalid LeapPointable object is returned.
  *
+ * @example Frame_pointable.txt
+ *
  * Note that ID values persist across frames, but only until tracking of a
  * particular object is lost. If tracking of a finger or tool is lost and subsequently
  * regained, the new LeapPointable object representing that finger or tool may have
  * a different ID than that representing the finger or tool in an earlier frame.
  *
- * @param pointableId The ID value of a <LeapPointable> object from a previous frame.
- * @returns The <LeapPointable> object with the matching ID if one exists in this frame;
+ * @param pointableId The ID value of a LeapPointable object from a previous frame.
+ * @returns The LeapPointable object with the matching ID if one exists in this frame;
  * otherwise, an invalid LeapPointable object is returned.
+ * @available Since 1.0
  */
 - (LeapPointable *)pointable:(int32_t)pointableId;
 /**
- * The <LeapFinger> object with the specified ID in this frame.
+ * The LeapFinger object with the specified ID in this frame.
  *
  * Use the [LeapFrame finger:] function to retrieve the LeapFinger object from
  * this frame using an ID value obtained from a previous frame.
  * This function always returns a LeapFinger object, but if no finger
  * with the specified ID is present, an invalid LeapFinger object is returned.
  *
+ * @example Frame_finger.txt
+ *
  * Note that ID values persist across frames, but only until tracking of a
  * particular object is lost. If tracking of a finger is lost and subsequently
  * regained, the new LeapFinger object representing that physical finger may have
  * a different ID than that representing the finger in an earlier frame.
  *
- * @param fingerId The ID value of a <LeapFinger> object from a previous frame.
- * @returns The <LeapFinger> object with the matching ID if one exists in this frame;
+ * @param fingerId The ID value of a LeapFinger object from a previous frame.
+ * @returns The LeapFinger object with the matching ID if one exists in this frame;
  * otherwise, an invalid LeapFinger object is returned.
+ * @available Since 1.0
  */
 - (LeapFinger *)finger:(int32_t)fingerId;
 /**
- * The <LeapTool> object with the specified ID in this frame.
+ * The LeapTool object with the specified ID in this frame.
  *
  * Use the [LeapFrame tool:] function to retrieve the LeapTool object from
  * this frame using an ID value obtained from a previous frame.
  * This function always returns a LeapTool object, but if no tool
  * with the specified ID is present, an invalid LeapTool object is returned.
  *
+ * @example Frame_tool.txt
+ *
  * Note that ID values persist across frames, but only until tracking of a
  * particular object is lost. If tracking of a tool is lost and subsequently
  * regained, the new LeapTool object representing that tool may have a
  * different ID than that representing the tool in an earlier frame.
  *
- * @param toolId The ID value of a <LeapTool> object from a previous frame.
- * @returns The <LeapTool> object with the matching ID if one exists in this frame;
+ * @param toolId The ID value of a LeapTool object from a previous frame.
+ * @returns The LeapTool object with the matching ID if one exists in this frame;
  * otherwise, an invalid LeapTool object is returned.
+ * @available Since 1.0
  */
 - (LeapTool *)tool:(int32_t)toolId;
 /**
@@ -2209,13 +3473,16 @@ typedef enum LeapPolicyFlag {
  * Circle and swipe gestures are updated every frame. Tap gestures
  * only appear in the list for a single frame.
  *
- * @param sinceFrame An earlier LeapFrame. Set to nil to get the gestures for 
+ * @example Frame_gestures.txt
+ *
+ * @param sinceFrame An earlier LeapFrame. Set to nil to get the gestures for
  * the current LeapFrame only.
  * @return NSArray containing the list of gestures.
+ * @available Since 1.0
  */
 - (NSArray *)gestures:(const LeapFrame *)sinceFrame;
 /**
- * The <LeapGesture> object with the specified ID in this frame.
+ * The LeapGesture object with the specified ID in this frame.
  *
  * Use the [LeapFrame gesture:] function to return a Gesture object in this
  * frame using an ID obtained in an earlier frame. The function always
@@ -2224,9 +3491,13 @@ typedef enum LeapPolicyFlag {
  *
  * All LeapGesture objects representing the same recognized movement share the
  * same ID.
- * @param gestureId The ID of a <LeapGesture> object from a previous frame.
- * @returns The <LeapGesture> object in the frame with the specified ID if one
+ *
+ * @example Gesture_isValid.txt
+ *
+ * @param gestureId The ID of a LeapGesture object from a previous frame.
+ * @returns The LeapGesture object in the frame with the specified ID if one
  * exists; Otherwise, an Invalid LeapGesture object.
+ * @available Since 1.0
  */
 - (LeapGesture *)gesture:(int32_t)gestureId;
 /**
@@ -2239,18 +3510,23 @@ typedef enum LeapPolicyFlag {
  * The Leap derives frame translation from the linear motion of
  * all objects detected in the field of view.
  *
+ * @example Frame_translation.txt
+ *
  * If either this frame or sinceFrame is an invalid LeapFrame object, then this
  * method returns a zero vector.
  *
  * @param sinceFrame The starting frame for computing the relative translation.
- * @returns A <LeapVector> representing the heuristically determined change in
+ * @returns A LeapVector representing the heuristically determined change in
  * position of all objects between the current frame and that specified
  * in the sinceFrame parameter.
+ * @available Since 1.0
  */
 - (LeapVector *)translation:(const LeapFrame *)sinceFrame;
 /**
  * The estimated probability that the overall motion between the current
  * frame and the specified frame is intended to be a translating motion.
+ *
+ * @example Frame_translationProbability.txt
  *
  * If either this frame or sinceFrame is an invalid LeapFrame object, then this
  * method returns zero.
@@ -2259,6 +3535,7 @@ typedef enum LeapPolicyFlag {
  * @returns A value between 0 and 1 representing the estimated probability
  * that the overall motion between the current frame and the specified frame
  * is intended to be a translating motion.
+ * @available Since 1.0
  */
 - (float)translationProbability:(const LeapFrame *)sinceFrame;
 /**
@@ -2270,13 +3547,16 @@ typedef enum LeapPolicyFlag {
  * The Leap derives frame rotation from the relative change in position and
  * orientation of all objects detected in the field of view.
  *
+ * @example Frame_rotationAxis.txt
+ *
  * If either this frame or sinceFrame is an invalid LeapFrame object, or if no
  * rotation is detected between the two frames, a zero vector is returned.
  *
  * @param sinceFrame The starting frame for computing the relative rotation.
- * @returns A <LeapVector> containing the normalized direction vector representing the axis of the
+ * @returns A LeapVector containing the normalized direction vector representing the axis of the
  * heuristically determined rotational change between the current frame
  * and that specified in the sinceFrame parameter.
+ * @available Since 1.0
  */
 - (LeapVector *)rotationAxis:(const LeapFrame *)sinceFrame;
 /**
@@ -2290,6 +3570,8 @@ typedef enum LeapPolicyFlag {
  * The Leap derives frame rotation from the relative change in position and
  * orientation of all objects detected in the field of view.
  *
+ * @example Frame_rotationAngle.txt
+ *
  * If either this frame or sinceFrame is an invalid LeapFrame object, then the
  * angle of rotation is zero.
  *
@@ -2297,6 +3579,7 @@ typedef enum LeapPolicyFlag {
  * @returns A positive value containing the heuristically determined
  * rotational change between the current frame and that specified in the
  * sinceFrame parameter.
+ * @available Since 1.0
  */
 - (float)rotationAngle:(const LeapFrame *)sinceFrame;
 /**
@@ -2310,14 +3593,17 @@ typedef enum LeapPolicyFlag {
  * The Leap derives frame rotation from the relative change in position and
  * orientation of all objects detected in the field of view.
  *
+ * @example Frame_rotationAngle_axis.txt
+ *
  * If either this frame or sinceFrame is an invalid LeapFrame object, then the
  * angle of rotation is zero.
  *
  * @param sinceFrame The starting frame for computing the relative rotation.
- * @param axis The <LeapVector> representing the direction of the axis to measure rotation around.
+ * @param axis The LeapVector representing the direction of the axis to measure rotation around.
  * @returns A value containing the heuristically determined rotational
  * change between the current frame and that specified in the sinceFrame
  * parameter around the given axis.
+ * @available Since 1.0
  */
 - (float)rotationAngle:(const LeapFrame *)sinceFrame axis:(const LeapVector *)axis;
 /**
@@ -2327,18 +3613,23 @@ typedef enum LeapPolicyFlag {
  * The Leap derives frame rotation from the relative change in position and
  * orientation of all objects detected in the field of view.
  *
+ * @example Frame_rotationMatrix.txt
+ *
  * If either this frame or sinceFrame is an invalid LeapFrame object, then this
  * method returns an identity matrix.
  *
  * @param sinceFrame The starting frame for computing the relative rotation.
- * @returns A <LeapMatrix> containing the heuristically determined
+ * @returns A LeapMatrix containing the heuristically determined
  * rotational change between the current frame and that specified in the
  * sinceFrame parameter.
+ * @available Since 1.0
  */
 - (LeapMatrix *)rotationMatrix:(const LeapFrame *)sinceFrame;
 /**
  * The estimated probability that the overall motion between the current
  * frame and the specified frame is intended to be a rotating motion.
+ *
+ * @example Frame_rotationProbability.txt
  *
  * If either this frame or sinceFrame is an invalid LeapFrame object, then this
  * method returns zero.
@@ -2347,6 +3638,7 @@ typedef enum LeapPolicyFlag {
  * @returns A value between 0 and 1 representing the estimated probability
  * that the overall motion between the current frame and the specified frame
  * is intended to be a rotating motion.
+ * @available Since 1.0
  */
 - (float)rotationProbability:(const LeapFrame *)sinceFrame;
 /**
@@ -2361,6 +3653,8 @@ typedef enum LeapPolicyFlag {
  * all objects detected in the field of view (independent of translation
  * and rotation).
  *
+ * @example Frame_scale.txt
+ *
  * If either this frame or sinceFrame is an invalid LeapFrame object, then this
  * method returns 1.0.
  *
@@ -2368,11 +3662,14 @@ typedef enum LeapPolicyFlag {
  * @returns A positive value representing the heuristically determined
  * scaling change ratio between the current frame and that specified in the
  * sinceFrame parameter.
+ * @available Since 1.0
  */
 - (float)scaleFactor:(const LeapFrame *)sinceFrame;
 /**
  * The estimated probability that the overall motion between the current
  * frame and the specified frame is intended to be a scaling motion.
+ *
+ * @example Frame_scaleProbability.txt
  *
  * If either this frame or sinceFrame is an invalid LeapFrame object, then this
  * method returns zero.
@@ -2381,36 +3678,64 @@ typedef enum LeapPolicyFlag {
  * @returns A value between 0 and 1 representing the estimated probability
  * that the overall motion between the current frame and the specified frame
  * is intended to be a scaling motion.
+ * @available Since 1.0
  */
 - (float)scaleProbability:(const LeapFrame *)sinceFrame;
 /**
  * Reports whether this LeapFrame instance is valid.
  *
- * A valid LeapFrame is one generated by the <LeapController> object that contains
+ * @example Frame_isValid.txt
+ *
+ * A valid LeapFrame is one generated by the LeapController object that contains
  * tracking data for all detected entities. An invalid LeapFrame contains no
  * actual tracking data, but you can call its functions without risk of a
  * null pointer exception. The invalid LeapFrame mechanism makes it more
  * convenient to track individual data across the frame history. For example,
  * you can invoke:
  *
- *     `LeapFinger finger = [[controller frame:n] finger:fingerID];`
+ * @example Frame_Valid_Chain.txt
  *
  * for an arbitrary LeapFrame history value, "n", without first checking whether
  * frame: returned a null object. (You should still check that the
  * returned LeapFinger instance is valid.)
  *
  * @returns YES, if this is a valid LeapFrame object; false otherwise.
+ * @available Since 1.0
  */
 - (BOOL)isValid;
 @property (nonatomic, getter = isValid, readonly)BOOL isValid;
 /**
+ * The current LeapInteractionBox for the frame. See the LeapInteractionBox class
+ * documentation for more details on how this class should be used.
+ *
+ * @example IBox_get.txt
+ *
+ * @returns The current LeapInteractionBox object.
+ * @available Since 1.0
+ */
+- (LeapInteractionBox *)interactionBox;
+/**
+ * The instantaneous framerate.
+ *
+ * The rate at which the Leap Motion software is providing frames of data
+ * (in frames per second). The framerate can fluctuate depending on available computing
+ * resources, activity within the device field of view, software tracking settings,
+ * and other factors.
+ *
+ * @example Frame_currentFramesPerSecond.txt
+ *
+ * @returns An estimate of frames per second of the Leap Motion Controller.
+ * @available Since 1.0
+ */
+- (float)currentFramesPerSecond;
+@property (nonatomic, getter = currentFramesPerSecond, readonly)float currentFramesPerSecond;
+/**
  * Returns an invalid LeapFrame object.
  *
- * You can use the instance returned by this function in comparisons testing
- * whether a given LeapFrame instance is valid or invalid. (You can also use the
- * <[LeapFrame isValid]> function.)
+ * @example Frame_invalid.txt
  *
  * @returns The invalid LeapFrame instance.
+ * @available Since 1.0
  */
 + (LeapFrame *)invalid;
 
@@ -2422,7 +3747,8 @@ typedef enum LeapPolicyFlag {
 /**
  * Enumerates the possible data types for configuration values.
  *
- * The LeapConfig::type() function returns an item from the LeapValueType enumeration.
+ * The [LeapConfig type] property returns an item from the LeapValueType enumeration.
+ * @available Since 1.0
  */
 typedef enum {
     TYPE_UNKNOWN = 0,
@@ -2436,83 +3762,152 @@ typedef enum {
  * The LeapConfig class provides access to Leap system configuration information.
  *
  * You can get and set gesture configuration parameters using the LeapConfig object
- * obtained from a connected <LeapController> object. The key strings required to
+ * obtained from a connected LeapController object.
+ *
+ * @example Config_get_config.txt
+ *
+ * The key strings required to
  * identify a configuration parameter include:
  *
- * Key string | Value type | Default value | Units
- * -----------|------------|---------------|------
- * Gesture.Circle.MinRadius | float | 5.0 | mm
- * Gesture.Circle.MinArc | float | 1.5*pi | radians
- * Gesture.Swipe.MinLength | float | 150 | mm
- * Gesture.Swipe.MinVelocity | float | 1000 | mm/s
- * Gesture.KeyTap.MinDownVelocity | float | 50 | mm/s
- * Gesture.KeyTap.HistorySeconds | float | 0.1 | s
- * Gesture.KeyTap.MinDistance | float | 5.0 | mm
- * Gesture.ScreenTap.MinForwardVelocity  | float | 50 | mm/s
- * Gesture.ScreenTap.HistorySeconds | float | 0.1 | s
- * Gesture.ScreenTap.MinDistance | float | 3.0 | mm
+ * \table
+ * ====================================  ========== ============= =======
+ * Key string                            Value type Default value Units
+ * ====================================  ========== ============= =======
+ * Gesture.Circle.MinRadius              float      5.0           mm
+ * Gesture.Circle.MinArc                 float      1.5 * pi      radians
+ * Gesture.Swipe.MinLength               float      150           mm
+ * Gesture.Swipe.MinVelocity             float      1000          mm/s
+ * Gesture.KeyTap.MinDownVelocity        float      50            mm/s
+ * Gesture.KeyTap.HistorySeconds         float      0.1           s
+ * Gesture.KeyTap.MinDistance            float      3.0           mm
+ * Gesture.ScreenTap.MinForwardVelocity  float      50            mm/s
+ * Gesture.ScreenTap.HistorySeconds      float      0.1           s
+ * Gesture.ScreenTap.MinDistance         float      5.0           mm
+ * ====================================  ========== ============= =======
+ * \endtable
  *
- * After setting a configuration value, you must call the <[Config save]> method
- * to commit the changes. The configuration value changes are not persistent;
+ * After setting a configuration value, you must call the [LeapConfig save] method
+ * to commit the changes. You can save after the LeapController has connected to
+ * the Leap Motion service/daemon. In other words, after the LeapController
+ * has dispatched the serviceConnected or connected events or
+ * LeapController::isConnected is true. The configuration value changes are not persistent;
  * your application needs to set the values everytime it runs.
  *
- * @see <LeapCircleGesture>
- * @see <LeapKeyTapGesture>
- * @see <LeapScreenTapGesture>
- * @see <LeapSwipeGesture>
+ * @see LeapCircleGesture
+ * @see LeapKeyTapGesture
+ * @see LeapScreenTapGesture
+ * @see LeapSwipeGesture
+ * @available Since 1.0
  */
 @interface LeapConfig : NSObject
 
 /**
  * Reports the natural data type for the value related to the specified key.
  *
- * The supported data types defined by the members of the LeapValueType 
+ * The supported data types defined by the members of the LeapValueType
  * enumeration:
  *
- * * TYPE_BOOLEAN = 1
- * * TYPE_INT32 = 2
- * * TYPE_FLOAT = 6
- * * TYPE_STRING = 8
- * * TYPE_UNKNOWN = 0 (usually indicates that an error occured)
+ * **TYPE_BOOLEAN**
+ *
+ * **TYPE_INT32**
+ *
+ * **TYPE_FLOAT**
+ *
+ * **TYPE_STRING**
+ *
+ * **TYPE_UNKNOWN**
+ *
+ * @example Config_type.txt
  *
  * @param key The key for the looking up the value in the configuration dictionary.
  * @returns The native data type of the value, that is, the type that does not
  * require a data conversion.
+ * @available Since 1.0
  */
 - (LeapValueType)type:(NSString *)key;
-/** Gets the boolean representation for the specified key. */
+/**
+ * Gets the boolean representation for the specified key.
+ *
+ * @example Config_getBool.txt
+ *
+ * @available Since 1.0
+ */
 - (BOOL)getBool:(NSString *)key;
-/** Sets the boolean representation for the specified key.
+/**
+ * Sets the boolean representation for the specified key.
+ *
+ * @example Config_setBool.txt
+ *
  * @returns YES on success, NO on failure.
+ * @available Since 1.0
  */
 - (BOOL)setBool:(NSString *)key value:(BOOL)value;
-/** Gets the 32-bit integer representation for the specified key. */
+/**
+ * Gets the 32-bit integer representation for the specified key.
+ *
+ * @example Config_getInt32.txt
+ *
+ * @available Since 1.0
+ */
 - (int32_t)getInt32:(NSString *)key;
-/** Sets the 32-bit integer representation for the specified key.
+/**
+ * Sets the 32-bit integer representation for the specified key.
+ *
+ * @example Config_setInt32.txt
+ *
  * @returns YES on success, NO on failure.
+ * @available Since 1.0
  */
 - (BOOL)setInt32:(NSString *)key value:(int32_t)value;
-/** Gets the floating point representation for the specified key. */
+/**
+ * Gets the floating point representation for the specified key.
+ *
+ * @example Config_getFloat.txt
+ *
+ * @available Since 1.0
+ */
 - (float)getFloat:(NSString *)key;
-/** Sets the floating point representation for the specified key.
+/**
+ * Sets the floating point representation for the specified key.
+ *
+ * @example Config_setFloat.txt
+ *
  * @returns YES on success, NO on failure.
+ * @available Since 1.0
  */
 - (BOOL)setFloat:(NSString *)key value:(float)value;
-/** Gets the NSString representation for the specified key. */
+/**
+ * Gets the NSString representation for the specified key.
+ *
+ * @example Config_getString.txt
+ *
+ * @available Since 1.0
+ */
 - (NSString *)getString:(NSString *)key;
-/** Sets the string representation for the specified key.
+/**
+ * Sets the string representation for the specified key.
+ *
+ * @example Config_setString.txt
+ *
  * @returns YES on success, NO on failure.
+ * @available Since 1.0
  */
 - (BOOL)setString:(NSString *)key value:(NSString *)value;
-/** 
+/**
  * Saves the current state of the config.
  *
  * Call [LeapConfig save:] after making a set of configuration changes. The
  * [LeapConfig save:] function transfers the configuration changes to the Leap
- * application. The configuration value changes are not persistent; your
- * application needs to set the values everytime it runs.
+ * application. You can save after the LeapController has connected to
+ * the Leap Motion service/daemon. In other words, after the LeapController
+ * has dispatched the serviceConnected or connected events or
+ * LeapController::isConnected is true. The configuration value changes are not persistent; your
+ * application needs to set the values every time it runs.
+ *
+ * @example Config_save.txt
  *
  * @returns TRUE on success, NO on failure.
+ * @available Since 1.0
  */
 - (BOOL)save;
 
@@ -2526,10 +3921,10 @@ typedef enum {
  *
  * Create an instance of this LeapController class to access frames of tracking
  * data and configuration information. Frame data can be polled at any time
- * using the <[LeapController frame:]> function. Set the `frame:` parameter to 0 
- * to get the most recent frame. Set the parameter to a positive integer 
+ * using the [LeapController frame:] function. Set the `frame:` parameter to 0
+ * to get the most recent frame. Set the parameter to a positive integer
  * to access previous frames. For example, `[controller frame:10]` returns the
- * frame that occured ten frames ago. A controller stores up to 60 frames in its 
+ * frame that occured ten frames ago. A controller stores up to 60 frames in its
  * frame history.
  *
  * Polling is an appropriate strategy for applications which already have an
@@ -2544,61 +3939,66 @@ typedef enum {
  *
  * Create an instance of the LeapController class using the default initializer:
  *
- *     `LeapController *controller = [[LeapController alloc] init];`
+ * @example Controller_constructor.txt
  *
  * Access the frame data at regular intervals:
  *
- *     `LeapFrame *frame = [controller frame:0];`
+ * @example Controller_frame.txt
  *
- * You can check <[LeapController isConnected]> to determine if the controller
+ * You can check [LeapController isConnected] to determine if the controller
  * is connected to the Leap software.
  *
  * **LeapListener protocol**
  *
- * Implement a class adopting the <LeapListener> protocol.
+ * Implement a class adopting the LeapListener protocol.
  *
  * Create an instance of the LeapController class and assign your LeapListener object to it:
  *
- *     `MYListener *listener = [[MYListener alloc] init];`
- *     `LeapController *controller = [[LeapController alloc] initWithListener:listener];`
+ * @example Controller_withListener.txt
  *
  * The controller subscribes the LeapListener instance to the appropriate NSNotifications
  * for the Leap events. When a new frame of data is ready, the controller dispatches an
  * NSNotification on the main application thread, which is handled by your
- * <[LeapListener onFrame:]> implementation.
+ * [LeapListener onFrame:] implementation.
  *
  * **LeapDelegate protocol**
  *
- * Implement a class adopting the <LeapDelegate> protocol.
+ * Implement a class adopting the LeapDelegate protocol.
  *
  * Create an instance of the LeapController class and assign your LeapListener object to it:
  *
- *     `MYDelegate *delegate = [[MYDelegate alloc] init];`
- *     `LeapController *controller = [[LeapController alloc] init];`
- *     `[controller addDelegate:delegate];`
+ * @example Controller_addDelegate.txt
  *
  * When a new frame of data is ready, the controller calls the
- * <[LeapDelegate onFrame:]> method. The Controller object is multithreaded and 
+ * [LeapDelegate onFrame:] method. The Controller object is multithreaded and
  * calls the LeapDelegate functions on its own thread, not on an application thread.
  *
  *
  * You can handle the other Leap events, `onInit`, `onConnect`, `onDisconnect`,
- * and `onExit` in the same manner.
+ * `onServiceConnect`, `onServiceDisconnect`, `onDeviceChange`, and `onExit` in
+ * the same manner.
  *
- * @since Version 1.0
+ * @available Since 1.0
  */
 @interface LeapController : NSObject
 
 /**
  * Initializes a LeapController instance.
+ *
+ * @example Controller_constructor.txt
+ *
+ * @available Since 1.0
  */
 - (id)init;
 /**
  * Initializes a LeapController instance and assigns a listener.
  *
+ * @example Controller_withListener.txt
+ *
  * * *Note:* You can use either a listener or a delegate, but not both.
  *
- * @param listener An object adopting the <LeapListener> protocol.
+ * @param listener An object adopting the LeapListener protocol.
+ * @available Since 1.0
  */
 - (id)initWithListener:(id)listener;
 /**
@@ -2606,7 +4006,7 @@ typedef enum {
  *
  * Use this function to determine the current policy state.
  * Keep in mind that setting a policy flag is asynchronous, so changes are
- * not effective immediately after calling <[LeapController setPolicyFlag]>. In addition, a
+ * not effective immediately after calling [LeapController setPolicyFlag]. In addition, a
  * policy request can be declined by the user. You should always set the
  * policy flags required by your application at startup and check that the
  * policy change request was successful after an appropriate interval.
@@ -2614,7 +4014,10 @@ typedef enum {
  * If the controller object is not connected to the Leap, then the default
  * policy state is returned.
  *
+ * @example Controller_policyFlags.txt
+ *
  * @returns The current policy flags.
+ * @available Since 1.0
  */
 - (LeapPolicyFlag)policyFlags;
 /**
@@ -2626,94 +4029,157 @@ typedef enum {
  *
  * Policy changes are completed asynchronously and, because they are subject
  * to user approval, may not complete successfully. Call
- * <[LeapController policyFlags]> after a suitable interval to test whether
+ * [LeapController policyFlags] after a suitable interval to test whether
  * the change was accepted.
  *
- * Currently, the background frames policy is the only policy supported.
- * The background frames policy determines whether an application
- * receives frames of tracking data while in the background. By
- * default, the Leap only sends tracking data to the foreground application.
- * Only applications that need this ability should request the background
- * frames policy.
+ * The current policies are:
  *
- * At this time, you can use the Leap applications Settings window to
- * globally enable or disable the background frames policy. However,
- * each application that needs tracking data while in the background
- * must also set the policy flag using this function.
+ * **LEAP_POLICY_BACKGROUND_FRAMES** -- requests that your application receives frames
+ *   when it is not the foreground application for user input.\n
  *
- * This function can be called before the LeapController object is connected,
- * but the request will be sent to the Leap after the controller connects.
+ *   The background frames policy determines whether an application
+ *   receives frames of tracking data while in the background. By
+ *   default, the Leap Motion  software only sends tracking data to the foreground application.
+ *   Only applications that need this ability should request the background
+ *   frames policy. The "Allow Background Apps" checkbox must be enabled in the
+ *   Leap Motion Control Panel or this policy will be denied.
  *
- * @param flags A PolicyFlag value indicating the policies to request. Must be 
+ * **LEAP_POLICY_IMAGES** -- request that your application receives images from the
+ *   device cameras. The "Allow Images" checkbox must be enabled in the
+ *   Leap Motion Control Panel or this policy will be denied.\n
+ *   The images policy determines whether an application recieves image data from
+ *   the Leap Motion sensors which each frame of data. By default, this data is
+ *   not sent. Only applications that use the image data should request this policy.\n
+ *
+ *   Note that this is not
+ *   directly supported by the Objective-C API at this time, but you can access
+ *   the image data using the C++ API in Objective-C++ applications.
+ *
+ * **LEAP_POLICY_OPTIMIZE_HMD** -- request that the tracking be optimized for head-mounted
+ *   tracking.\n
+ *   The optimize HMD policy improves tracking in situations where the Leap
+ *   Motion hardware is attached to a head-mounted display. This policy is
+ *   not granted for devices that cannot be mounted to an HMD, such as 
+ *   Leap Motion controllers embedded in a laptop or keyboard.
+ *
+ * **LEAP_POLICY_DEFAULT** -- the default state of all policies: no background frames,
+ *   no images, and tracking optimized for the standard, bottom-up configuration.
+ *
+ * @example Controller_setPolicyFlags.txt
+ *
+ * @param flags A PolicyFlag value indicating the policies to request. Must be
  * a member of the LeapPolicyFlags enumeration:
- * 
- * * LEAP_POLICY_DEFAULT -- restore the default policy configuration for this 
- * application (do not receive frames while in the background).
- * * LEAP_POLICY_BACKGROUND_FRAMES -- the application should receive frames of
- * motion tracking data while in the background.
+ *
+ * **LEAP_POLICY_DEFAULT**
+ *
+ * **LEAP_POLICY_BACKGROUND_FRAMES**
+ *
+ * **LEAP_POLICY_IMAGES**
+ *
+ * **LEAP_POLICY_OPTIMIZE_HMD**
+ *
+ * @available Since 1.0
  */
 - (void)setPolicyFlags:(LeapPolicyFlag)flags;
 /**
  * Adds a listener to this LeapController.
  *
- * When you add an object adopting the <LeapListener> protocol to a LeapController,
+ * When you add an object adopting the LeapListener protocol to a LeapController,
  * the controller automatically subscribes the listener to NSNotifications
  * dispatched for the Leap events.
  *
+ * @example Controller_addListener.txt
+ *
  * *Note:* You cannot add a listener when there is already a delegate assigned.
  *
- * @param listener An object adopting the <LeapListener> protocol. 
+ * @param listener An object adopting the LeapListener protocol.
  * @returns BOOL Whether or not the listener was successfully added to the list
  * of listeners.
+ * @available Since 1.0
  */
 - (BOOL)addListener:(id)listener;
 /**
- * Unsubscribes the listener object from receiving Leap NSNotifications. 
+ * Unsubscribes the listener object from receiving Leap NSNotifications.
+ *
+ * @example Controller_removeListener.txt
  *
  * @param listener The listener to unsubscribe.
  * @returns BOOL Whether or not the listener was successfully removed.
+ * @available Since 1.0
  */
 - (BOOL)removeListener:(id)listener;
 /**
  * Initializes a LeapController instance and assigns a delegate.
  *
+ * @example Controller_withDelegate.txt
+ *
  * * *Note:* You can use either a delegate or a listener, but not both.
  *
- * @param delegate An object adopting the <LeapDelegate> protocol.
+ * @param delegate An object adopting the LeapDelegate protocol.
+ * @available Since 1.0
  */
 - (id)initWithDelegate:(id)delegate;
 /**
  * Adds a delegate to this LeapController.
  *
+ * @example Controller_addDelegate.txt
+ *
  * *Note:* You cannot add a delegate when there is already a listener assigned.
  *
- * @param delegate An object adopting the <LeapDelegate> protocol.
+ * @param delegate An object adopting the LeapDelegate protocol.
  * @returns BOOL Whether or not the delegate was successfully added.
+ * @available Since 1.0
  */
 - (BOOL)addDelegate:(id)delegate;
 /**
  * Removes the delegate assigned to this LeapController.
  *
+ * @example Controller_removeDelegate.txt
+ *
  * @returns BOOL Whether or not the delegate was successfully removed.
+ * @available Since 1.0
  */
 - (BOOL)removeDelegate;
 /**
- * Returns a <LeapFrame> containing a frame of tracking data from the Leap. Use the optional
- * history parameter to specify which frame to retrieve. Call 
- * `[controller frame:0]` to access the most recent frame; call 
+ * Returns a LeapFrame containing a frame of tracking data from the Leap. Use the optional
+ * history parameter to specify which frame to retrieve. Call
+ * `[controller frame:0]` to access the most recent frame; call
  * `[controller frame:1]` to access the previous frame, and so on. If you use a
- * history value greater than the number of stored frames, then the controller 
+ * history value greater than the number of stored frames, then the controller
  * returns an invalid frame.
  *
- * @param history The age of the <LeapFrame> to return, counting backwards from
+ * @example Controller_frame.txt
+ *
+ * @param history The age of the LeapFrame to return, counting backwards from
  * the most recent frame (0) into the past and up to the maximum age (59).
- * @returns The specified <LeapFrame>; or, if no history parameter is specified,
+ * @returns The specified LeapFrame; or, if no history parameter is specified,
  * the newest frame. If a frame is not available at the specified history
  * position, an invalid LeapFrame is returned.
+ * @available Since 1.0
  */
 - (LeapFrame *)frame:(int)history;
+/**
+ * Returns a Config object, which you can use to query the Leap system for
+ * configuration information.
+ *
+ * @example Controller_config.txt
+ *
+ * @available Since 1.0
+ */
 - (LeapConfig *)config;
 @property (nonatomic, getter = config, readonly)LeapConfig *config;
+/**
+ * Returns a list of currently attached devices.  Devices can be queried for
+ * device-specific information such as field of view.
+ *
+ * Currently the Leap controller only recognizes a single device at a time.
+ *
+ * @example Controller_devices.txt
+ *
+ * @available Since 1.0
+ */
+- (NSArray *)devices;
+@property (nonatomic, getter = devices, readonly)NSArray *devices;
 /**
  * Reports whether this LeapController is connected to the Leap device.
  *
@@ -2721,22 +4187,47 @@ typedef enum {
  * After the controller finishes initializing and connects to the Leap,
  * isConnected will return true.
  *
- * You can either handle the onConnect event using a <LeapListener> or <LeapDelegate> 
+ * You can either handle the onConnect event using a LeapListener or LeapDelegate
  * instance or poll the isConnected function if you need to wait for your
  * application to be connected to the Leap before performing some other
  * operation.
  *
+ * @example Controller_isConnected.txt
+ *
  * @returns True, if connected; false otherwise.
+ * @available Since 1.0
  */
 - (BOOL)isConnected;
 @property (nonatomic, getter = isConnected, readonly)BOOL isConnected;
+/**
+ * Reports whether this LeapService is in communication with the client API.
+ *
+ * When you first create a LeapController object, isServiceConnected returns false.
+ * After the controller finishes initializing and makes contact with the LeapService,
+ * isServiceConnected will return true.
+ *
+ * You can either handle the onServiceConnect event using a LeapListener or LeapDelegate
+ * instance or poll the isServiceConnected function if you need to wait for your
+ * application to be connected to the Leap Service before performing some other
+ * operation.
+ *
+ * @example Controller_isServiceConnected.txt
+ *
+ * @returns True, if connected; false otherwise.
+ * @available Since 1.2
+ */
+- (BOOL)isServiceConnected;
+@property (nonatomic, getter = isServiceConnected, readonly)BOOL isServiceConnected;
 /**
  * Reports whether this application is the focused, foreground application.
  *
  * Only the foreground application receives tracking information from
  * the Leap Motion Controller.
  *
+ * @example Controller_hasFocus.txt
+ *
  * @returns True, if application has focus; false otherwise.
+ * @available Since 1.0
  */
 - (BOOL)hasFocus;
 @property (nonatomic, getter = hasFocus, readonly)BOOL hasFocus;
@@ -2747,76 +4238,54 @@ typedef enum {
  * disabled type are never reported and will not appear in the frame
  * gesture list.
  *
+ * @example Controller_hasFocus.txt
+ *
  * As a performance optimization, only enable recognition for the types
  * of movements that you use in your application.
  *
  * @param gestureType The type of gesture to enable or disable. Must be a
  * member of the LeapGestureType enumeration:
  *
- * * LEAP_GESTURE_TYPE_SWIPE  -- A straight line movement by the hand with fingers extended.
- * * LEAP_GESTURE_TYPE_CIRCLE -- A circular movement by a finger.
- * * LEAP_GESTURE_TYPE_SCREEN_TAP -- A forward tapping movement by a finger.
- * * LEAP_GESTURE_TYPE_KEY_TAP -- A downward tapping movement by a finger.
+ * **LEAP_GESTURE_TYPE_SWIPE**  -- A straight line movement by the hand with fingers extended.
+ *
+ * **LEAP_GESTURE_TYPE_CIRCLE** -- A circular movement by a finger.
+ *
+ * **LEAP_GESTURE_TYPE_SCREEN_TAP** -- A forward tapping movement by a finger.
+ *
+ * **LEAP_GESTURE_TYPE_KEY_TAP** -- A downward tapping movement by a finger.
  *
  * @param enable YES, to enable the specified gesture type; NO,
  * to disable.
  * @see [LeapController isGestureEnabled:]
+ * @available Since 1.0
  */
 - (void)enableGesture:(LeapGestureType)gestureType enable:(BOOL)enable;
 /**
  * Reports whether the specified gesture type is enabled.
  *
+ * @example Controller_isGestureEnabled.txt
+ *
  * @param gestureType The type of gesture to check.  Must be a
  * member of the LeapGestureType enumeration:
  *
- * * LEAP_GESTURE_TYPE_SWIPE  -- A straight line movement by the hand with fingers extended.
- * * LEAP_GESTURE_TYPE_CIRCLE -- A circular movement by a finger.
- * * LEAP_GESTURE_TYPE_SCREEN_TAP -- A forward tapping movement by a finger.
- * * LEAP_GESTURE_TYPE_KEY_TAP -- A downward tapping movement by a finger.
+ * **LEAP_GESTURE_TYPE_SWIPE**  -- A straight line movement by the hand with fingers extended.
+ *
+ * **LEAP_GESTURE_TYPE_CIRCLE** -- A circular movement by a finger.
+ *
+ * **LEAP_GESTURE_TYPE_SCREEN_TAP** -- A forward tapping movement by a finger.
+ *
+ * **LEAP_GESTURE_TYPE_KEY_TAP** -- A downward tapping movement by a finger.
  *
  * @return YES, if the specified type is enabled; NO, otherwise.
  * @see [LeapController enableGesture:enable:]
+ * @available Since 1.0
  */
 - (BOOL)isGestureEnabled:(LeapGestureType)gestureType;
-/**
- * The list of <LeapScreen> objects representing the computer display screens
- * whose positions have been identified by using the Leap application's
- * Screen Locator utility.
- *
- * The list always contains at least one entry representing the default
- * screen. If the user has not registered the location of this default
- * screen, then the coordinates, directions, and other values reported by
- * the functions in its <LeapScreen> object will not be accurate. Other monitor
- * screens only appear in the list if their positions have been registered
- * using the Leap Screen Locator.
- *
- * A LeapScreen object represents the position and orientation of a display
- * monitor screen within the Leap coordinate system.
- * For example, if the screen location is known, you can get Leap coordinates
- * for the bottom-left corner of the screen. Registering the screen
- * location also allows the Leap to calculate the point on the screen at
- * which a finger or tool is pointing.
- *
- * A user can run the Screen Locator tool from the Leap application
- * Settings window. Avoid assuming that a screen location is known or that
- * an existing position is still correct. The registered position is only
- * valid as long as the relative position of the Leap device and the
- * monitor screen remain constant.
- *
- * @returns NSArray An array containing the screens whose positions have
- * been registered by the user using the Screen Locator tool.
- * The list always contains at least one entry representing the default
- * monitor. If the user has not run the Screen Locator or has moved the Leap
- * device or screen since running it, the <LeapScreen> object for this entry
- * only contains default values.
+/*
+ * Deprecated as of version 1.2
  */
 - (NSArray *)locatedScreens;
 @property (nonatomic, getter = locatedScreens, readonly)NSArray *locatedScreens;
-/**
- * Deprecated. Use [LeapController locatedScreens:] instead.
- * @see [LeapController locatedScreens:]
- */
-@property (nonatomic, getter = locatedScreens, readonly)NSArray *calibratedScreens;
 
 @end
 
@@ -2827,110 +4296,201 @@ typedef enum {
  * implement to respond to NSNotification messages dispatched by a LeapController object.
  *
  * To use the LeapListener protocol, implement a class adopting the protocol
- * and assign an instance of that class to a <LeapController> instance:
+ * and assign an instance of that class to a LeapController instance:
  *
- *     `MYListener *listener = [[MYListener alloc] init];`
- *     `LeapController *controller = [[LeapController alloc] initWithListener:listener];`
+ *     MYListener *listener = [[MYListener alloc] init];
+ *     LeapController *controller = [[LeapController alloc] initWithListener:listener];
  *
  * The controller subscribes the LeapListener instance to the appropriate NSNotifications
  * for the Leap events. When a new frame of data is ready, the controller dispatches an
  * NSNotification on the main application thread, which is handled by your
- * <[LeapListener onFrame:]> implementation.
+ * [LeapListener onFrame:] implementation.
  *
  * You can handle the other Leap events, `onInit`, `onConnect`, `onDisconnect`,
- * `onExit`, `onFocusGained`, and `onFocusLost` in the same manner.
+ * `onServiceConnect`, `onServiceDisconnect`, `onDeviceChange`, `onExit`, `onFocusGained`,
+ * and `onFocusLost` in the same manner.
  *
  * You must have a running NSRunLoop to receive NSNotification objects.
  * This is usually present and running by default in a Cocoa application.
- * Calling <[LeapController addListener:]> takes care subscribing the listener object
+ * Calling [LeapController addListener:] takes care subscribing the listener object
  * to the appropriate notifications. The LeapListener object is the notification observer,
  * while the LeapController object is the notification sender. You can also subscribe to
  * notifications manually. For example, to subscribe to the OnFrame message, call:
  *
- *     `[[NSNotificationCenter defaultCenter] selector:@selector(onFrame:) name:@"OnFrame" object:controller]]`
+ *     [[NSNotificationCenter defaultCenter] selector:@selector(onFrame:) name:@"OnFrame" object:controller]]
  *
  * However, at least one listener must be added to the controller with [LeapController addListener:]
  * or the controller does not bother to dispatch notification messages.
  *
  * Using the LeapListener protocol is not mandatory. You can also use
- * a delegate implementing the <LeapDelegate> protocol or simply poll the
- * controller object (as described in the <LeapController> class overview).
+ * a delegate implementing the LeapDelegate protocol or simply poll the
+ * controller object (as described in the LeapController class overview).
+ * @available Since 1.0
  */
 @protocol LeapListener<NSObject>
 
 @optional
 /**
- * Dispatched once, when the <LeapController> has finished initializing.
+ * Dispatched once, when the LeapController has finished initializing.
  *
  * Only the first LeapListener added to the controller receives this notification.
+
+ *    - (void)onInit:(NSNotification *)notification
+ *    {
+ *        NSLog(@"Initialized");
+ *        //...
+ *    }
  *
- *    `- (void)onInit:(NSNotification *)notification`
- *    `{
- *    `    NSLog(@"Initialized");`
- *    `    //...`
- *    `}`
- *
- * @param notification The <LeapController> object dispatching the notification.
+ * @param notification The LeapController object dispatching the notification.
+ * @available Since 1.0
  */
 - (void)onInit:(NSNotification *)notification;
 /**
- * Dispatched when the <LeapController> object connects to the Leap software, or when
+ * Called when this application becomes the foreground application.
+ *
+ * Only the foreground application receives tracking data from the Leap
+ * Motion Controller. This function is only called when the controller
+ * object is in a connected state.
+ *
+ *     - (void)onFocusGained:(NSNotification *)notification
+ *     {
+ *         NSLog(@"Focus Gained");
+ *     }
+ *
+ * @param notification The LeapController object dispatching the notification.
+ * @available Since 1.0
+ */
+- (void)onFocusGained:(NSNotification *)notification;
+/**
+ * Called when this application loses the foreground focus.
+ *
+ * Only the foreground application receives tracking data from the Leap
+ * Motion Controller. This function is only called when the controller
+ * object is in a connected state.
+ *
+ *     - (void)onFocusLost:(NSNotification *)notification
+ *     {
+ *         NSLog(@"Focus Lost");
+ *     }
+ *
+ * @param controller The parent LeapController object.
+ * @available Since 1.0
+ */
+- (void)onFocusLost:(NSNotification *)notification;
+
+/**
+ * Dispatched when the LeapController object connects to the Leap software, or when
  * this ListenerListener object is added to a controller that is already connected.
  *
- *     `- (void)onConnect:(NSNotification *)notification`
- *     `{`
- *     `   NSLog(@"Connected");`
- *     `    LeapController *aController = (LeapController *)[notification object];`
- *     `    [aController enableGesture:LEAP_GESTURE_TYPE_CIRCLE enable:YES];`
- *     `    //...`
- *     `}`
+ *     - (void)onConnect:(NSNotification *)notification
+ *     {
+ *        NSLog(@"Connected");
+ *         LeapController *aController = (LeapController *)[notification object];
+ *         [aController enableGesture:LEAP_GESTURE_TYPE_CIRCLE enable:YES];
+ *         //...
+ *     }
  *
- * @param notification The <LeapController> object dispatching the notification.
+ * @param notification The LeapController object dispatching the notification.
+ * @available Since 1.0
  */
 - (void)onConnect:(NSNotification *)notification;
 /**
- * Dispatched when the <LeapController> object disconnects from the Leap software.
+ * Dispatched when the LeapController object disconnects from the Leap software.
  * The controller can disconnect when the Leap device is unplugged, the
  * user shuts the Leap software down, or the Leap software encounters an
  * unrecoverable error.
  *
- *     `- (void)onDisconnect:(NSNotification *)notification`
- *     `{`
- *     `    NSLog(@"Disconnected");`
- *     `}`
+ *     - (void)onDisconnect:(NSNotification *)notification
+ *     {
+ *         NSLog(@"Disconnected");
+ *     }
  *
  * Note: When you launch a Leap-enabled application in a debugger, the
  * Leap library does not disconnect from the application. This is to allow
  * you to step through code without losing the connection because of time outs.
  *
- * @param notification The <LeapController> object dispatching the notification.
+ * @param notification The LeapController object dispatching the notification.
+ * @available Since 1.0
  */
 - (void)onDisconnect:(NSNotification *)notification;
 /**
- * Dispatched when this LeapListener object is removed from the <LeapController>
+ * Dispatched when the LeapController object connects to the Leap software, or when
+ * this ListenerListener object is added to a controller that is already connected.
+ *
+ *     - (void)onServiceConnect:(NSNotification *)notification
+ *     {
+ *         NSLog(@"Service Connected");
+ *         LeapController *aController = (LeapController *)[notification object];
+ *         [aController enableGesture:LEAP_GESTURE_TYPE_CIRCLE enable:YES];
+ *         //...
+ *     }
+ *
+ * @param notification The LeapController object dispatching the notification.
+ * @available Since 1.0
+ */
+- (void)onServiceConnect:(NSNotification *)notification;
+/**
+ * Dispatched when the LeapController object disconnects from the Leap software.
+ * The controller can disconnect when the Leap device is unplugged, the
+ * user shuts the Leap software down, or the Leap software encounters an
+ * unrecoverable error.
+ *
+ *     - (void)onServiceDisconnect:(NSNotification *)notification
+ *     {
+ *         NSLog(@"Service Disconnected");
+ *     }
+ *
+ * Note: When you launch a Leap-enabled application in a debugger, the
+ * Leap library does not disconnect from the application. This is to allow
+ * you to step through code without losing the connection because of time outs.
+ *
+ * @param notification The LeapController object dispatching the notification.
+ * @available Since 1.0
+ */
+- (void)onServiceDisconnect:(NSNotification *)notification;
+/**
+ * Called when a Leap Motion controller plugged in, unplugged, or the device changes state.
+ *
+ * State changes include changes in frame rate and entering or leaving "robust" mode.
+ * Note that there is currently no way to query whether a device is in robust mode.
+ * You can use Frame::currentFramerate() to get the framerate.
+ *
+ *    - (void)onDeviceChange:(NSNotification *)notification
+ *     {
+ *         NSLog(@"Device Changed");
+ *     }
+ *
+ * @param notification The LeapController object dispatching the notification.
+ * @since 1.2
+ */
+- (void)onDeviceChange:(NSNotification *)notification;
+
+/**
+ * Dispatched when this LeapListener object is removed from the LeapController
  * or the controller instance is destroyed.
  *
- *     `- (void)onExit:(NSNotification *)notification`
- *     `{`
- *     `    NSLog(@"Exited");`
- *     `}`
+ *     - (void)onExit:(NSNotification *)notification
+ *     {
+ *         NSLog(@"Exited");
+ *     }
  *
- * @param notification The <LeapController> object dispatching the notification.
+ * @param notification The LeapController object dispatching the notification.
+ * @available Since 1.0
  */
 - (void)onExit:(NSNotification *)notification;
 /**
- * Dispatched when a new <LeapFrame> containing hand and finger tracking data is available.
- * Access the new frame data using the <[LeapController frame:]> function.
+ * Dispatched when a new LeapFrame containing hand and finger tracking data is available.
+ * Access the new frame data using the [LeapController frame:] function.
  *
- *    `- (void)onFrame:(NSNotification *)notification`
- *    `{`
- *    `     NSLog(@"New LeapFrame");`
- *    `     LeapController *controller = (LeapController *)[notification object];`
- *    `     LeapFrame *frame = [controller frame:0];`
- *    `     //...`
- *    `}`
+ *    - (void)onFrame:(NSNotification *)notification
+ *    {
+ *         NSLog(@"New LeapFrame");
+ *         LeapController *controller = (LeapController *)[notification object];
+ *         LeapFrame *frame = [controller frame:0];
+ *         //...
+ *    }
  *
- * Note, the <LeapController> skips any pending onFrame notifications while your
+ * Note, the LeapController skips any pending onFrame notifications while your
  * onFrame handler executes. If your implementation takes too long to return,
  * one or more frames can be skipped. The controller still inserts the skipped
  * frames into the frame history. You can access recent frames by setting
@@ -2938,7 +4498,8 @@ typedef enum {
  * You can determine if any pending onFrame events were skipped by comparing
  * the ID of the most recent frame with the ID of the last received frame.
  *
- * @param notification The <LeapController> object dispatching the notification.
+ * @param notification The LeapController object dispatching the notification.
+ * @available Since 1.0
  */
 - (void)onFrame:(NSNotification *)notification;
 
@@ -2948,107 +4509,114 @@ typedef enum {
 //DELEGATE
 /**
  * The LeapDelegate protocol defines a set of methods that you can
- * implement in a delegate object for a <LeapController>. The
+ * implement in a delegate object for a LeapController. The
  * LeapController calls the delegate methods when Leap events occur,
  * such as when a new frame of data is available.
  *
- * To use the LeapDelegate protocol, implement a class adopting the <LeapDelegate> protocol
- * and assign it to a LeapController instance:
+ * To use the LeapDelegate protocol, implement a class adopting the LeapDelegate
+ * protocol and assign it to a LeapController instance:
  *
- *     `MYDelegate *delegate = [[MYDelegate alloc] init];`
- *     `LeapController *controller = [[LeapController alloc] init];`
- *     `[controller addDelegate:delegate];`
+ *     MYDelegate *delegate = [[MYDelegate alloc] init];
+ *     LeapController *controller = [[LeapController alloc] init];
+ *     [controller addDelegate:delegate];
  *
  * When a new frame of data is ready, the controller calls the
- * <[LeapDelegate onFrame:]> method. The other Leap events, `onInit`, `onConnect`, `onDisconnect`,
- * `onExit`, `onFocusGained`, and `onFocusLost` are handled in the same
- * manner. The Controller object is multithreaded and calls the LeapDelegate
- * functions on its own threads, not on an application thread.
+ * [LeapDelegate onFrame:] method. The other Leap events, `onInit`, `onConnect`,
+ * `onDisconnect`, `onServiceConnect`, `onServiceDisconnect`, `onExit`,
+ * `onFocusGained`, and `onFocusLost` are handled in the same manner. The
+ * Controller object is multithreaded and calls the LeapDelegate functions on
+ * its own threads, not on an application thread.
  *
  * Using the LeapDelegate protocol is not mandatory. You can also use
- * NSNotifications with a <LeapListener> object or simply poll the
- * controller object (as described in the <LeapController> class overview).
+ * NSNotifications with a LeapListener object or simply poll the
+ * controller object (as described in the LeapController class overview).
+ * @available Since 1.0
  */
 @protocol LeapDelegate<NSObject>
 
 @optional
 /**
- * Called once, when the <LeapController> has finished initializing.
+ * Called once, when the LeapController has finished initializing.
  *
  *
- *    `- (void)onInit:(LeapController *)controller`
- *    `{`
- *    `    NSLog(@"Initialized");`
- *    `    //...`
- *    `}`
+ *    - (void)onInit:(LeapController *)controller
+ *    {
+ *        NSLog(@"Initialized");
+ *        //...
+ *    }
  *
- * @param controller The parent <LeapController> object.
+ * @param controller The parent LeapController object.
+ * @available Since 1.0
  */
 - (void)onInit:(LeapController *)controller;
 /**
- * Called when the <LeapController> object connects to the Leap software, or when
+ * Called when the LeapController object connects to the Leap software, or when
  * this ListenerDelegate object is added to a controller that is already connected.
  *
- *     `- (void)onConnect:(LeapController *)controller`
- *     `{`
- *     `    NSLog(@"Connected");`
- *     `    [controller enableGesture:LEAP_GESTURE_TYPE_CIRCLE enable:YES];`
- *     `    //...`
- *     `}`
+ *     - (void)onConnect:(LeapController *)controller
+ *     {
+ *         NSLog(@"Connected");
+ *         [controller enableGesture:LEAP_GESTURE_TYPE_CIRCLE enable:YES];
+ *         //...
+ *     }
  *
- * @param controller The parent <LeapController> object.
+ * @param controller The parent LeapController object.
+ * @available Since 1.0
  */
 - (void)onConnect:(LeapController *)controller;
 /**
- * Called when the <LeapController> object disconnects from the Leap software.
+ * Called when the LeapController object disconnects from the Leap software.
  * The controller can disconnect when the Leap device is unplugged, the
  * user shuts the Leap software down, or the Leap software encounters an
  * unrecoverable error.
  *
- *     `- (void)onDisconnect:(LeapController *)controller`
- *     `{`
- *     `    NSLog(@"Disconnected");`
- *     `}`
+ *     - (void)onDisconnect:(LeapController *)controller
+ *     {
+ *         NSLog(@"Disconnected");
+ *     }
  *
- * @param controller The parent <LeapController> object.
+ * @param controller The parent LeapController object.
+ * @available Since 1.0
  */
 - (void)onDisconnect:(LeapController *)controller;
 /**
- * Called when this LeapDelegate object is removed from the <LeapController>
+ * Called when this LeapDelegate object is removed from the LeapController
  * or the controller instance is destroyed.
  *
- *     `- (void)onExit:(LeapController *)controller`
- *     `{`
- *     `    NSLog(@"Exited");`
- *     `}`
+ *     - (void)onExit:(LeapController *)controller
+ *     {
+ *         NSLog(@"Exited");
+ *     }
  *
- * Note: When you launch a Leap-enabled application in a debugger, the 
+ * Note: When you launch a Leap-enabled application in a debugger, the
  * Leap library does not disconnect from the application. This is to allow
  * you to step through code without losing the connection because of time outs.
  *
- * @param controller The parent <LeapController> object.
+ * @param controller The parent LeapController object.
+ * @available Since 1.0
  */
 - (void)onExit:(LeapController *)controller;
 /**
  * Called when a new frame of hand and finger tracking data is available.
- * Access the new frame data using the <[LeapController frame:]> function.
+ * Access the new frame data using the [LeapController frame:] function.
  *
- *    `- (void)onFrame:(LeapController *)controller`
- *    `{`
- *    `     NSLog(@"New LeapFrame");`
- *    `     LeapFrame *frame = [controller frame:0];`
- *    `     //...`
- *    `}`
+ *    - (void)onFrame:(LeapController *)controller
+ *    {
+ *         NSLog(@"New LeapFrame");
+ *         LeapFrame *frame = [controller frame:0];
+ *         //...
+ *    }
  *
  * Note, the LeapController skips any pending frames while your
  * onFrame handler executes. If your implementation takes too long to return,
  * one or more frames can be skipped. The controller still inserts the skipped
  * frames into the frame history. You can access recent frames by setting
- * the history parameter when calling the <[LeapController frame:]> function.
+ * the history parameter when calling the [LeapController frame:] function.
  * You can determine if any pending frames were skipped by comparing
  * the ID of the current frame with the ID of the previous received frame.
  *
- * @param controller The parent <LeapController> object.
+ * @param controller The parent LeapController object.
+ * @available Since 1.0
  */
 - (void)onFrame:(LeapController *)controller;
 /**
@@ -3058,12 +4626,13 @@ typedef enum {
  * Motion Controller. This function is only called when the controller
  * object is in a connected state.
  *
- *     `- (void)onFocusGained:(LeapController *)controller`
- *     `{`
- *     `    NSLog(@"Focus Gained");`
- *     `}`
+ *     - (void)onFocusGained:(LeapController *)controller
+ *     {
+ *         NSLog(@"Focus Gained");
+ *     }
  *
- * @param controller The parent <LeapController> object.
+ * @param controller The parent LeapController object.
+ * @available Since 1.0
  */
 - (void)onFocusGained:(LeapController *)controller;
 /**
@@ -3073,14 +4642,62 @@ typedef enum {
  * Motion Controller. This function is only called when the controller
  * object is in a connected state.
  *
- *     `- (void)onFocuslost:(LeapController *)controller`
- *     `{`
- *     `    NSLog(@"Focus Lost");`
- *     `}`
+ *     - (void)onFocusLost:(LeapController *)controller
+ *     {
+ *         NSLog(@"Focus Lost");
+ *     }
  *
- * @param controller The parent <LeapController> object.
+ * @param controller The parent LeapController object.
+ * @available Since 1.0
  */
 - (void)onFocusLost:(LeapController *)controller;
+/**
+ * Called if the Leap Motion daemon/service disconnects from your application Controller.
+ *
+ * Normally, this callback is not invoked. It is only called if some external event
+ * or problem shuts down the service or otherwise interrupts the connection.
+ *
+ *     - (void)onServiceConnect:(LeapController *)controller
+ *     {
+ *         NSLog(@"Service Connected");
+ *     }
+ *
+ * @param controller The Controller object invoking this callback function.
+ * @available Since 1.2
+ */
+- (void)onServiceConnect:(LeapController *)controller;
+
+/**
+ * Called if the Leap Motion daemon/service disconnects from your application Controller.
+ *
+ * Normally, this callback is not invoked. It is only called if some external event
+ * or problem shuts down the service or otherwise interrupts the connection.
+ *
+ *    - (void)onServiceDisconnect:(LeapController *)controller
+ *     {
+ *         NSLog(@"Service Disconnected");
+ *     }
+ *
+ * @param controller The Controller object invoking this callback function.
+ * @available Since 1.2
+ */
+- (void)onServiceDisconnect:(LeapController *)controller;
+/**
+ * Called when a Leap Motion controller plugged in, unplugged, or the device changes state.
+ *
+ * State changes include changes in frame rate and entering or leaving "robust" mode.
+ * Note that there is currently no way to query whether a device is in robust mode.
+ * You can use Frame::currentFramerate() to get the framerate.
+ *
+ *    - (void)onDeviceChange:(LeapController *)controller
+ *     {
+ *         NSLog(@"Device Changed");
+ *     }
+ *
+ * @param controller The Controller object invoking this callback function.
+ * @since 1.2
+ */
+- (void)onDeviceChange:(LeapController *)controller;
 
 @end
 

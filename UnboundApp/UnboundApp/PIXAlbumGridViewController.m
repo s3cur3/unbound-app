@@ -662,7 +662,7 @@
 #pragma mark - CNGridView DataSource
 
 - (NSUInteger)gridView:(CNGridView *)gridView numberOfItemsInSection:(NSInteger)section
-{
+{    
     if(self.searchedAlbums)
     {
         return self.searchedAlbums.count;
@@ -1128,7 +1128,7 @@
         [self.centerStatusView setHidden:YES];
     }
     
-    NSLog(@"updated");
+    //NSLog(@"updated");
     
 }
 

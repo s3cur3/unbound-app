@@ -70,6 +70,8 @@ const CGFloat kThumbnailSize = 370.0f;
 
 @synthesize videoFile = _videoFile;
 
+@synthesize isReallyDeleted;
+
 //__strong static NSDateFormatter * _exifDateFormatter = nil;
 
 // exif date formatter singleton for performance
@@ -867,7 +869,7 @@ const CGFloat kThumbnailSize = 370.0f;
 }
 
 -(void)loadThumbnailImage
-{
+{    
     if ([[self class] isVideoPath:self.path]) {
         //DLog(@"Found a vidoe file - get it's thumb from movie object");
         [self loadThumbnailImageFromVideo];

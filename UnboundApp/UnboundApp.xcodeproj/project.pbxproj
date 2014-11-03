@@ -84,7 +84,6 @@
 		1DDEF83A169D34A400C0D303 /* LoadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF838169D34A400C0D303 /* LoadOperation.m */; };
 		1DDEF843169D3CF300C0D303 /* MakeThumbnailOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF842169D3CF300C0D303 /* MakeThumbnailOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8C031CD316E926F7009B7F38 /* LeapObjectiveC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8C031CCF16E926F7009B7F38 /* LeapObjectiveC.mm */; };
-		8C031CD416E926F7009B7F38 /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C031CD016E926F7009B7F38 /* libLeap.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
 		8C031CD516E926F7009B7F38 /* PIXLeapInputManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C031CD216E926F7009B7F38 /* PIXLeapInputManager.m */; };
 		8C097D2716D57D0700E0E134 /* PIXFileParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C097D2616D57D0700E0E134 /* PIXFileParser.m */; };
 		8C14692817149A92009ECCC5 /* PIXLeapTutorialWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C14692617149A92009ECCC5 /* PIXLeapTutorialWindowController.m */; };
@@ -186,7 +185,6 @@
 		8C2860AD17308566009A0B35 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4A1E2A167D2A4C00C9A895 /* Quartz.framework */; };
 		8C2860AE17308566009A0B35 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4A1E07167C056C00C9A895 /* QuartzCore.framework */; };
 		8C2860AF17308566009A0B35 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DB2F84E167ABE87008AC0F7 /* Cocoa.framework */; };
-		8C2860B017308566009A0B35 /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C031CD016E926F7009B7F38 /* libLeap.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
 		8C2860B217308566009A0B35 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C286055172F590D009A0B35 /* Sparkle.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		8C2860B417308566009A0B35 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F857167ABE87008AC0F7 /* InfoPlist.strings */; };
 		8C2860B517308566009A0B35 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F85D167ABE87008AC0F7 /* Credits.rtf */; };
@@ -284,7 +282,6 @@
 		8C28611317308566009A0B35 /* Blank.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1D23CC17172095E000C7FF70 /* Blank.jpg */; };
 		8C28611417308566009A0B35 /* Mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1D23CC18172095E000C7FF70 /* Mask.jpg */; };
 		8C28611517308566009A0B35 /* Shading.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 1D23CC19172095E000C7FF70 /* Shading.tiff */; };
-		8C28611717308566009A0B35 /* libLeap.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8C031CD016E926F7009B7F38 /* libLeap.dylib */; };
 		8C33D5191711FC8700647F95 /* PIXRoundedProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C33D5181711FC8700647F95 /* PIXRoundedProgressIndicator.m */; };
 		8C3580901714D99E00352870 /* LeapTutorial2.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C35808E1714D99E00352870 /* LeapTutorial2.mov */; };
 		8C3580911714D99E00352870 /* LeapTutorial3.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C35808F1714D99E00352870 /* LeapTutorial3.mov */; };
@@ -306,7 +303,6 @@
 		8C53DFE816FB76E9008EF8B1 /* PIXInfoPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C53DFE716FB76E8008EF8B1 /* PIXInfoPanelViewController.m */; };
 		8C53DFF216FB7CED008EF8B1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFF116FB7CED008EF8B1 /* CoreFoundation.framework */; };
 		8C53DFF716FB831A008EF8B1 /* MapViewAdditions.css in Resources */ = {isa = PBXBuildFile; fileRef = 8C53DFF616FB8319008EF8B1 /* MapViewAdditions.css */; };
-		8C53E00516FBCB36008EF8B1 /* libLeap.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8C031CD016E926F7009B7F38 /* libLeap.dylib */; };
 		8C5D757417015A5C0008CC00 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C5D757217015A5C0008CC00 /* pause.png */; };
 		8C5D757517015A5C0008CC00 /* pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C5D757317015A5C0008CC00 /* pause@2x.png */; };
 		8C68246B16F596BB00245F09 /* PIXSelectionLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68246A16F596BB00245F09 /* PIXSelectionLayer.m */; };
@@ -572,7 +568,6 @@
 		8C9FA653183AD5A4000AEBC9 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4A1E2A167D2A4C00C9A895 /* Quartz.framework */; };
 		8C9FA654183AD5A4000AEBC9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4A1E07167C056C00C9A895 /* QuartzCore.framework */; };
 		8C9FA655183AD5A4000AEBC9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DB2F84E167ABE87008AC0F7 /* Cocoa.framework */; };
-		8C9FA656183AD5A4000AEBC9 /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C031CD016E926F7009B7F38 /* libLeap.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
 		8C9FA657183AD5A4000AEBC9 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C286055172F590D009A0B35 /* Sparkle.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		8C9FA659183AD5A4000AEBC9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F857167ABE87008AC0F7 /* InfoPlist.strings */; };
 		8C9FA65A183AD5A4000AEBC9 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F85D167ABE87008AC0F7 /* Credits.rtf */; };
@@ -696,7 +691,6 @@
 		8C9FA6D0183AD5A4000AEBC9 /* TransparentPixel.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5CD183AD536000AEBC9 /* TransparentPixel.png */; };
 		8C9FA6D1183AD5A4000AEBC9 /* UnboundTrial.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 8C43CCF017385A9700A4395F /* UnboundTrial.entitlements */; };
 		8C9FA6D2183AD5A4000AEBC9 /* Unbound.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 8CF05AF117C3374F00AB88B5 /* Unbound.iconset */; };
-		8C9FA6D4183AD5A4000AEBC9 /* libLeap.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8C031CD016E926F7009B7F38 /* libLeap.dylib */; };
 		8CA459D8174E7FD9002BF431 /* PIXProgressWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7208991749B1720074705D /* PIXProgressWindowController.m */; };
 		8CA459D9174E7FD9002BF431 /* PIXProgressWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C72089A1749B1720074705D /* PIXProgressWindowController.xib */; };
 		8CA954601756A5AD0016AE23 /* leapnotconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CA9545E1756A5AD0016AE23 /* leapnotconnected.png */; };
@@ -730,6 +724,9 @@
 		8CEDF76A185A3E8300E35E77 /* PIXHandCursorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CEDF769185A3E8300E35E77 /* PIXHandCursorButton.m */; };
 		8CEDF76B185A446A00E35E77 /* PIXHandCursorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CEDF769185A3E8300E35E77 /* PIXHandCursorButton.m */; };
 		8CEDF76C185A446B00E35E77 /* PIXHandCursorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CEDF769185A3E8300E35E77 /* PIXHandCursorButton.m */; };
+		8CEE1F3D1A083413005A200B /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CEE1F3C1A083413005A200B /* libLeap.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		8CEE1F3E1A083413005A200B /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CEE1F3C1A083413005A200B /* libLeap.dylib */; };
+		8CEE1F3F1A083413005A200B /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CEE1F3C1A083413005A200B /* libLeap.dylib */; };
 		8CF05AEF17C3097400AB88B5 /* Licences.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8CF05AEE17C3097300AB88B5 /* Licences.txt */; };
 		8CF05AF017C30A2500AB88B5 /* Licences.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8CF05AEE17C3097300AB88B5 /* Licences.txt */; };
 		8CF05AF217C3374F00AB88B5 /* Unbound.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 8CF05AF117C3374F00AB88B5 /* Unbound.iconset */; };
@@ -770,7 +767,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
-				8C28611717308566009A0B35 /* libLeap.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -790,7 +786,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
-				8C53E00516FBCB36008EF8B1 /* libLeap.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -811,7 +806,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
-				8C9FA6D4183AD5A4000AEBC9 /* libLeap.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -929,7 +923,6 @@
 		8C031CCD16E926F7009B7F38 /* LeapMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeapMath.h; sourceTree = "<group>"; };
 		8C031CCE16E926F7009B7F38 /* LeapObjectiveC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeapObjectiveC.h; sourceTree = "<group>"; };
 		8C031CCF16E926F7009B7F38 /* LeapObjectiveC.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LeapObjectiveC.mm; sourceTree = "<group>"; };
-		8C031CD016E926F7009B7F38 /* libLeap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libLeap.dylib; path = UnboundApp/Leap/libLeap.dylib; sourceTree = "<group>"; };
 		8C031CD116E926F7009B7F38 /* PIXLeapInputManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXLeapInputManager.h; sourceTree = "<group>"; };
 		8C031CD216E926F7009B7F38 /* PIXLeapInputManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXLeapInputManager.m; sourceTree = "<group>"; };
 		8C097D2516D57D0700E0E134 /* PIXFileParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXFileParser.h; sourceTree = "<group>"; };
@@ -1186,6 +1179,7 @@
 		8CE8F62416BD8C9E00DC6014 /* DebugPrefrencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugPrefrencesViewController.h; sourceTree = "<group>"; };
 		8CEDF768185A3E8300E35E77 /* PIXHandCursorButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXHandCursorButton.h; sourceTree = "<group>"; };
 		8CEDF769185A3E8300E35E77 /* PIXHandCursorButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXHandCursorButton.m; sourceTree = "<group>"; };
+		8CEE1F3C1A083413005A200B /* libLeap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libLeap.dylib; path = UnboundApp/Leap/libLeap.dylib; sourceTree = "<group>"; };
 		8CF05AEE17C3097300AB88B5 /* Licences.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Licences.txt; sourceTree = "<group>"; };
 		8CF05AF117C3374F00AB88B5 /* Unbound.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = Unbound.iconset; sourceTree = "<group>"; };
 		8CF2C5DF16BB458900F906F1 /* MASPreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MASPreferencesWindow.xib; sourceTree = "<group>"; };
@@ -1219,9 +1213,9 @@
 				8C14692F1714A5CC009ECCC5 /* QTKit.framework in Frameworks */,
 				8C53DFF216FB7CED008EF8B1 /* CoreFoundation.framework in Frameworks */,
 				1D4A1E2B167D2A4D00C9A895 /* Quartz.framework in Frameworks */,
+				8CEE1F3D1A083413005A200B /* libLeap.dylib in Frameworks */,
 				1D4A1E08167C056D00C9A895 /* QuartzCore.framework in Frameworks */,
 				1DB2F84F167ABE87008AC0F7 /* Cocoa.framework in Frameworks */,
-				8C031CD416E926F7009B7F38 /* libLeap.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1235,8 +1229,8 @@
 				8C2860AC17308566009A0B35 /* CoreFoundation.framework in Frameworks */,
 				8C2860AD17308566009A0B35 /* Quartz.framework in Frameworks */,
 				8C2860AE17308566009A0B35 /* QuartzCore.framework in Frameworks */,
+				8CEE1F3E1A083413005A200B /* libLeap.dylib in Frameworks */,
 				8C2860AF17308566009A0B35 /* Cocoa.framework in Frameworks */,
-				8C2860B017308566009A0B35 /* libLeap.dylib in Frameworks */,
 				8C2860B217308566009A0B35 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1251,8 +1245,8 @@
 				8C9FA652183AD5A4000AEBC9 /* CoreFoundation.framework in Frameworks */,
 				8C9FA653183AD5A4000AEBC9 /* Quartz.framework in Frameworks */,
 				8C9FA654183AD5A4000AEBC9 /* QuartzCore.framework in Frameworks */,
+				8CEE1F3F1A083413005A200B /* libLeap.dylib in Frameworks */,
 				8C9FA655183AD5A4000AEBC9 /* Cocoa.framework in Frameworks */,
-				8C9FA656183AD5A4000AEBC9 /* libLeap.dylib in Frameworks */,
 				8C9FA657183AD5A4000AEBC9 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1654,8 +1648,8 @@
 		1DB2F871167AC0DF008AC0F7 /* 3rdParty */ = {
 			isa = PBXGroup;
 			children = (
+				8CEE1F3C1A083413005A200B /* libLeap.dylib */,
 				8C286055172F590D009A0B35 /* Sparkle.framework */,
-				8C031CD016E926F7009B7F38 /* libLeap.dylib */,
 			);
 			name = 3rdParty;
 			sourceTree = "<group>";
@@ -2889,7 +2883,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = Unbound.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2908,9 +2902,11 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
+					"$(PROJECT_DIR)/UnboundApp/Leap",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx10.9;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2922,7 +2918,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = Unbound.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2940,9 +2936,11 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
+					"$(PROJECT_DIR)/UnboundApp/Leap",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx10.9;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -2954,7 +2952,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = UnboundTrial.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2975,6 +2973,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
 					"\"$(SRCROOT)/UnboundApp/MapKit.framework\"/**",
+					"$(PROJECT_DIR)/UnboundApp/Leap",
 				);
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_NAME = Unbound;
@@ -2990,7 +2989,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = UnboundTrial.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3010,6 +3009,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
 					"\"$(SRCROOT)/UnboundApp/MapKit.framework\"/**",
+					"$(PROJECT_DIR)/UnboundApp/Leap",
 				);
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_NAME = Unbound;
@@ -3043,6 +3043,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
 					"\"$(SRCROOT)/UnboundApp/MapKit.framework\"/**",
+					"$(PROJECT_DIR)/UnboundApp/Leap",
 				);
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_NAME = Unbound;
@@ -3073,6 +3074,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
 					"\"$(SRCROOT)/UnboundApp/MapKit.framework\"/**",
+					"$(PROJECT_DIR)/UnboundApp/Leap",
 				);
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_NAME = Unbound;

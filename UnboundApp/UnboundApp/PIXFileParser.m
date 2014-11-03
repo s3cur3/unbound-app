@@ -489,7 +489,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
  */
 
 - (void)scanFullDirectory
-{    
+{
+    
     // force a new context to be used
     [self.parseContext rollback];
     
@@ -980,6 +981,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
     
     void (^dispatchBlock)(void) = ^(void) {
         
+        
+        
         // if the parse context has changed then this is an old parse that we're no longer using
         if(self.parseContext == nil)
         {
@@ -1154,9 +1157,14 @@ NSDictionary * dictionaryForURL(NSURL * url)
         
         self.fullScanProgress = (float)self.fullScannProgressCurrent / (float)self.fullScannProgressTotal;
         
+        
+         
         [self decrementWorking];
+         
+         
         
     };
+    
     
     if(dispatchGroup == NULL)
     {
@@ -1271,7 +1279,6 @@ NSDictionary * dictionaryForURL(NSURL * url)
 // this should always be called on the main thread
 -(void)flushAlbumsWithIDs:(NSSet *)albumIDS
 {
-    
     NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
 
     

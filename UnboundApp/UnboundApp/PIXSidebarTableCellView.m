@@ -188,6 +188,7 @@
 {
 
         [super setBackgroundStyle:style];
+    
         
         // If the cell's text color is black, this sets it to white
         [((NSCell *)self.detailTextLabel.cell) setBackgroundStyle:style];
@@ -202,17 +203,22 @@
         switch (style) {
             case NSBackgroundStyleLight:
                 //[self.titleTextLabel setShadow:nil];
-                [self.detailTextLabel setTextColor:[NSColor colorWithCalibratedWhite:0.4 alpha:1.0]];
+                [self.titleTextLabel setTextColor:[NSColor colorWithCalibratedWhite:0.0 alpha:1.0]];
+                [self.detailTextLabel setTextColor:[NSColor colorWithCalibratedWhite:0.0 alpha:1.0]];
                 break;
                 
             case NSBackgroundStyleDark:
             default:
+            
                 
                 
                 //[[self.titleTextLabel cell] setBackgroundStyle:NSBackgroundStyleRaised | style];
                 //[self.titleTextLabel setShadow:textShadow];
-                [self.detailTextLabel setTextColor:[NSColor colorWithCalibratedWhite:1.0 alpha:1.0]];
+                [self.titleTextLabel setTextColor:[NSColor colorWithCalibratedWhite:0.0 alpha:1.0]];
+                [self.detailTextLabel setTextColor:[NSColor colorWithCalibratedWhite:0.0 alpha:1.0]];
                 break;
+                
+             break;
         }
 }
 

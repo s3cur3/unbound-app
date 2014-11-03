@@ -41,6 +41,20 @@
     return self;
 }
 
+-(void)loadView {
+    [super loadView];
+    
+//    Class vibrantClass=NSClassFromString(@"NSVisualEffectView");
+//    if (vibrantClass)
+//    {
+//        NSVisualEffectView * vibrant=[[vibrantClass alloc] initWithFrame:self.view.bounds];
+//        [vibrant setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
+//        [vibrant setBlendingMode:mode];
+//        [self addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
+//    }
+    
+}
+
 
 
 
@@ -122,7 +136,7 @@
 
 
 -(void)willShowPIXView
-{
+{    
     [self.outlineView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
     
     [self.outlineView setDraggingSourceOperationMask:(NSDragOperationCopy) forLocal:NO];
@@ -500,14 +514,18 @@
 }
 
 -(void)outlineViewSelectionDidChange:(NSNotification *)notification {
-    if ([self.outlineView selectedRow] != -1) {
-        NSInteger aSelectedRow = [self.outlineView selectedRow];
+    NSInteger aSelectedRow = [self.outlineView selectedRow];
+    
+    if (aSelectedRow != -1) {
+        
         PIXAlbum *anAlbum =  [self.outlineView itemAtRow:aSelectedRow];
         if (anAlbum!=nil)
         {
             //DLog(@"New album selected");
             self.splitViewController.selectedAlbum = anAlbum;
-        } 
+        }
+        
+        
     }
 }
 

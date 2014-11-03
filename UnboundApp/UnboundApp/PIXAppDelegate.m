@@ -418,6 +418,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 // -------------------------------------------------------------------------------
 - (IBAction)showMainWindow:(id)sender
 {
+        
     if (self.mainWindowController == nil) {
         self.mainWindowController = [[PIXMainWindowController alloc] initWithWindowNibName:@"PIXMainWindow"];
         //mainWindowController = (PIXMainWindowController *)[self.window windowController];
@@ -794,7 +795,10 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     //set it to the App Delegates persistant store coordinator
     //[context setPersistentStoreCoordinator:[self persistentStoreCoordinator]];
     
-    [context setParentContext:self.privateWriterContext];
+    if(self.privateWriterContext)
+    {
+        [context setParentContext:self.privateWriterContext];
+    }
     
     // overwrite the database with updates from this context
     //[context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
@@ -872,7 +876,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 }
 
 -(void)mergeContext:(NSNotification *)notification
-{
+{    
     NSManagedObjectContext *postingContext = [notification object];
     
     // save the writer context in the bg

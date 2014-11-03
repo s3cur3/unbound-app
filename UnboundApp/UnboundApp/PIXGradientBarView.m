@@ -115,7 +115,7 @@
         aGradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.9 alpha:1.000]
                                                   endingColor:[NSColor colorWithCalibratedWhite:0.85 alpha:1.000]];
         
-        edgeColor = [NSColor colorWithCalibratedWhite:0.35 alpha:1.000];
+        edgeColor = [NSColor colorWithCalibratedWhite:0.6 alpha:1.000];
         
     }
     
@@ -124,7 +124,7 @@
         aGradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.95 alpha:1.000]
                                                   endingColor:[NSColor colorWithCalibratedWhite:0.9 alpha:1.000]];
         
-        edgeColor = [NSColor colorWithCalibratedWhite:0.5 alpha:1.000];
+        edgeColor = [NSColor colorWithCalibratedWhite:0.9 alpha:1.000];
     }
     
     [aGradient drawInRect:[self bounds] angle:270];

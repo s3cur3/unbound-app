@@ -38,22 +38,22 @@
 @property (nonatomic, retain) NSString * caption;
 @property (nonatomic, retain) PIXAlbum *album;
 @property (nonatomic, retain) PIXAlbum *datePhotoAlbum;
-@property (nonatomic, retain) PIXAlbum *stackPhotoAlbum;
-@property (nonatomic, retain) NSDictionary * exifData;
-@property (nonatomic, retain) NSNumber * fileSize;
+@property (atomic, retain) PIXAlbum *stackPhotoAlbum;
+@property (atomic, retain) NSDictionary * exifData;
+@property (atomic, retain) NSNumber * fileSize;
 
-@property (nonatomic, copy) NSString * thumbnailFilePath;
+@property (atomic, copy) NSString * thumbnailFilePath;
 
 @property (nonatomic, retain) NSNumber * latitude;
 @property (nonatomic, retain) NSNumber * longitude;
 
-@property (nonatomic, strong) NSImage *thumbnailImage;
-@property (nonatomic, assign, readwrite) BOOL cancelThumbnailLoadOperation;
+@property (atomic, strong) NSImage *thumbnailImage;
+@property (atomic, assign, readwrite) BOOL cancelThumbnailLoadOperation;
 
-@property (nonatomic, strong) NSImage *fullsizeImage;
-@property (nonatomic, assign, readwrite) BOOL cancelFullsizeLoadOperation;
+@property (atomic, strong) NSImage *fullsizeImage;
+@property (atomic, assign, readwrite) BOOL cancelFullsizeLoadOperation;
 
-@property (readonly) BOOL isReallyDeleted;
+@property (atomic) BOOL isReallyDeleted;
 
 //TODO: get rid of this
 -(NSURL *)filePath;
