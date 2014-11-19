@@ -324,6 +324,7 @@
 		8C68248F16F8089400245F09 /* buttongrid_twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68248116F8089400245F09 /* buttongrid_twitter.png */; };
 		8C68249016F8089400245F09 /* buttongrid_twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68248216F8089400245F09 /* buttongrid_twitter@2x.png */; };
 		8C6A035418216566003A4D99 /* UnboundTrial-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8C6A035318216566003A4D99 /* UnboundTrial-Info.plist */; };
+		8C7033851A1C20C000B5445D /* libLeap.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8CEE1F3C1A083413005A200B /* libLeap.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		8C72089B1749B1720074705D /* PIXProgressWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7208991749B1720074705D /* PIXProgressWindowController.m */; };
 		8C72089C1749B1720074705D /* PIXProgressWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C72089A1749B1720074705D /* PIXProgressWindowController.xib */; };
 		8C72FE581712843B00AA72B0 /* preferences_dark_theme.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE561712843B00AA72B0 /* preferences_dark_theme.png */; };
@@ -724,7 +725,7 @@
 		8CEDF76A185A3E8300E35E77 /* PIXHandCursorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CEDF769185A3E8300E35E77 /* PIXHandCursorButton.m */; };
 		8CEDF76B185A446A00E35E77 /* PIXHandCursorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CEDF769185A3E8300E35E77 /* PIXHandCursorButton.m */; };
 		8CEDF76C185A446B00E35E77 /* PIXHandCursorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CEDF769185A3E8300E35E77 /* PIXHandCursorButton.m */; };
-		8CEE1F3D1A083413005A200B /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CEE1F3C1A083413005A200B /* libLeap.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		8CEE1F3D1A083413005A200B /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CEE1F3C1A083413005A200B /* libLeap.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
 		8CEE1F3E1A083413005A200B /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CEE1F3C1A083413005A200B /* libLeap.dylib */; };
 		8CEE1F3F1A083413005A200B /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CEE1F3C1A083413005A200B /* libLeap.dylib */; };
 		8CF05AEF17C3097400AB88B5 /* Licences.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8CF05AEE17C3097300AB88B5 /* Licences.txt */; };
@@ -786,6 +787,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
+				8C7033851A1C20C000B5445D /* libLeap.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2883,13 +2885,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = Unbound.entitlements;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/UnboundApp\"",
+					"\"$(SRCROOT)/UnboundApp\"/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UnboundApp/UnboundApp-Prefix.pch";
@@ -2902,7 +2904,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
-					"$(PROJECT_DIR)/UnboundApp/Leap",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2918,13 +2919,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = Unbound.entitlements;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/UnboundApp\"",
+					"\"$(SRCROOT)/UnboundApp\"/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UnboundApp/UnboundApp-Prefix.pch";
@@ -2936,7 +2937,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
-					"$(PROJECT_DIR)/UnboundApp/Leap",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -3043,7 +3043,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
 					"\"$(SRCROOT)/UnboundApp/MapKit.framework\"/**",
-					"$(PROJECT_DIR)/UnboundApp/Leap",
 				);
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_NAME = Unbound;
@@ -3074,7 +3073,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
 					"\"$(SRCROOT)/UnboundApp/MapKit.framework\"/**",
-					"$(PROJECT_DIR)/UnboundApp/Leap",
 				);
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_NAME = Unbound;
