@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Unbound Non-MAS.xcscheme</key>
+		<key>Unbound Non-Sandbox.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>2</integer>
@@ -33,6 +33,11 @@
 			<true/>
 		</dict>
 		<key>8C9FA5D9183AD5A4000AEBC9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8CFC2D5E1A5864B8004FCE5F</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -1027,17 +1027,21 @@
 
 -(void)mouseEntered:(NSEvent *)theEvent
 {
-    [self unfadeControls];
     
-    // stop any current timed control fades
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(tryFadeControls) object:nil];
-    
-    // start another timer
-    [self performSelector:@selector(tryFadeControls) withObject:nil afterDelay:3];
-    
-    self.hasMouse = YES;
-    
-    //[self.view.window makeFirstResponder:self];
+    if(self.hasMouse == NO)
+    {
+        [self unfadeControls];
+        
+        // stop any current timed control fades
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(tryFadeControls) object:nil];
+        
+        // start another timer
+        [self performSelector:@selector(tryFadeControls) withObject:nil afterDelay:3];
+        
+        self.hasMouse = YES;
+        
+        //[self.view.window makeFirstResponder:self];
+    }
 }
 
 -(void)mouseMoved:(NSEvent *)theEvent

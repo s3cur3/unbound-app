@@ -448,250 +448,6 @@
 		8C9FA5D6183AD536000AEBC9 /* Release Notes.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5CB183AD536000AEBC9 /* Release Notes.rtf */; };
 		8C9FA5D7183AD536000AEBC9 /* Stylesheet.css in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5CC183AD536000AEBC9 /* Stylesheet.css */; };
 		8C9FA5D8183AD536000AEBC9 /* TransparentPixel.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5CD183AD536000AEBC9 /* TransparentPixel.png */; };
-		8C9FA5DB183AD5A4000AEBC9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2F85A167ABE87008AC0F7 /* main.m */; };
-		8C9FA5DC183AD5A4000AEBC9 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA59B183AC5FE000AEBC9 /* SBJsonWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA5DD183AD5A4000AEBC9 /* PIXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2F861167ABE87008AC0F7 /* PIXAppDelegate.m */; };
-		8C9FA5DE183AD5A4000AEBC9 /* PIXMainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DCB167AE1A500C9A895 /* PIXMainWindowController.m */; };
-		8C9FA5DF183AD5A4000AEBC9 /* PIXInfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DCE167AE22A00C9A895 /* PIXInfoWindowController.m */; };
-		8C9FA5E0183AD5A4000AEBC9 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DD3167AEEDE00C9A895 /* Preferences.m */; };
-		8C9FA5E1183AD5A4000AEBC9 /* PIXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DFF167BEAF200C9A895 /* PIXViewController.m */; };
-		8C9FA5E2183AD5A4000AEBC9 /* PIXNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E02167BEC1700C9A895 /* PIXNavigationController.m */; };
-		8C9FA5E3183AD5A4000AEBC9 /* PIXSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E2E167D2D8E00C9A895 /* PIXSplitViewController.m */; };
-		8C9FA5E4183AD5A4000AEBC9 /* PIXSidebarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E34167D365900C9A895 /* PIXSidebarViewController.m */; };
-		8C9FA5E5183AD5A4000AEBC9 /* PIXSidebarTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E39167D36E100C9A895 /* PIXSidebarTableCellView.m */; };
-		8C9FA5E6183AD5A4000AEBC9 /* SquareImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E3C167D372600C9A895 /* SquareImageView.m */; };
-		8C9FA5E7183AD5A4000AEBC9 /* MKPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA575183AC5FE000AEBC9 /* MKPointAnnotation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA5E8183AD5A4000AEBC9 /* PIXPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D0834F9167D6478003D557A /* PIXPageViewController.m */; };
-		8C9FA5E9183AD5A4000AEBC9 /* PIXImageBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D0834FF167D6678003D557A /* PIXImageBrowserViewController.m */; };
-		8C9FA5EA183AD5A4000AEBC9 /* MKCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA559183AC5FE000AEBC9 /* MKCircleView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA5EB183AD5A4000AEBC9 /* MKMultiPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA568183AC5FE000AEBC9 /* MKMultiPoint.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA5EC183AD5A4000AEBC9 /* PIXImageBrowserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D083512167D785F003D557A /* PIXImageBrowserView.m */; };
-		8C9FA5ED183AD5A4000AEBC9 /* PIXImageBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D083515167D78AD003D557A /* PIXImageBrowserCell.m */; };
-		8C9FA5EE183AD5A4000AEBC9 /* MKMapView+DelegateWrappers.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA560183AC5FE000AEBC9 /* MKMapView+DelegateWrappers.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA5EF183AD5A4000AEBC9 /* AutoSizingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D083518167DCA71003D557A /* AutoSizingImageView.m */; };
-		8C9FA5F0183AD5A4000AEBC9 /* PIXPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D08351F167E7C80003D557A /* PIXPageView.m */; };
-		8C9FA5F1183AD5A4000AEBC9 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA599183AC5FE000AEBC9 /* SBJsonParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA5F2183AD5A4000AEBC9 /* MKCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA557183AC5FE000AEBC9 /* MKCircle.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA5F3183AD5A4000AEBC9 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA591183AC5FE000AEBC9 /* NSObject+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA5F4183AD5A4000AEBC9 /* MKPolylineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA57D183AC5FE000AEBC9 /* MKPolylineView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA5F5183AD5A4000AEBC9 /* PIXImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D08352C167E8B2B003D557A /* PIXImageViewController.m */; };
-		8C9FA5F6183AD5A4000AEBC9 /* PIXModifierSwitchedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */; };
-		8C9FA5F7183AD5A4000AEBC9 /* NSColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA58C183AC5FE000AEBC9 /* NSColor+Additions.m */; };
-		8C9FA5F8183AD5A4000AEBC9 /* PIXDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF81D169D2D9F00C0D303 /* PIXDataModel.xcdatamodeld */; };
-		8C9FA5F9183AD5A4000AEBC9 /* MKAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA555183AC5FE000AEBC9 /* MKAnnotationView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA5FA183AD5A4000AEBC9 /* PIXPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF82D169D2FE800C0D303 /* PIXPhoto.m */; };
-		8C9FA5FB183AD5A4000AEBC9 /* MKMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA566183AC5FE000AEBC9 /* MKMapView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA5FC183AD5A4000AEBC9 /* PIXAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF82F169D2FE800C0D303 /* PIXAccount.m */; };
-		8C9FA5FD183AD5A4000AEBC9 /* MKUserLocation+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA584183AC5FE000AEBC9 /* MKUserLocation+Private.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA5FE183AD5A4000AEBC9 /* MKPlacemark+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA571183AC5FE000AEBC9 /* MKPlacemark+Private.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA5FF183AD5A4000AEBC9 /* MKShape.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA581183AC5FE000AEBC9 /* MKShape.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA600183AD5A4000AEBC9 /* GetPathsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF836169D34A400C0D303 /* GetPathsOperation.m */; };
-		8C9FA601183AD5A4000AEBC9 /* LoadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF838169D34A400C0D303 /* LoadOperation.m */; };
-		8C9FA602183AD5A4000AEBC9 /* MakeThumbnailOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF842169D3CF300C0D303 /* MakeThumbnailOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA603183AD5A4000AEBC9 /* PIXAlbumGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E6D16AB426A00CB97AF /* PIXAlbumGridViewController.m */; };
-		8C9FA604183AD5A4000AEBC9 /* CNGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7216AB429E00CB97AF /* CNGridView.m */; };
-		8C9FA605183AD5A4000AEBC9 /* CNGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7616AB429E00CB97AF /* CNGridViewItem.m */; };
-		8C9FA606183AD5A4000AEBC9 /* MKMapView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA55E183AC5FE000AEBC9 /* MKMapView+Additions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA607183AD5A4000AEBC9 /* CNGridViewItemLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7816AB429E00CB97AF /* CNGridViewItemLayout.m */; };
-		8C9FA608183AD5A4000AEBC9 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA593183AC5FE000AEBC9 /* NSString+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA609183AD5A4000AEBC9 /* NSColor+CNGridViewPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7A16AB429E00CB97AF /* NSColor+CNGridViewPalette.m */; };
-		8C9FA60A183AD5A4000AEBC9 /* MKMapView+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA562183AC5FE000AEBC9 /* MKMapView+Private.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA60B183AD5A4000AEBC9 /* NSView+CNGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7C16AB429E00CB97AF /* NSView+CNGridView.m */; };
-		8C9FA60C183AD5A4000AEBC9 /* PIXAlbumGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E8516AB467100CB97AF /* PIXAlbumGridViewItem.m */; };
-		8C9FA60D183AD5A4000AEBC9 /* PIXGridViewItemLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8CD7E716AB4D220072D516 /* PIXGridViewItemLayout.m */; };
-		8C9FA60E183AD5A4000AEBC9 /* PIXGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8CD7ED16AB6EC70072D516 /* PIXGridViewController.m */; };
-		8C9FA60F183AD5A4000AEBC9 /* PIXPhotoGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8CD7F316AB76E20072D516 /* PIXPhotoGridViewController.m */; };
-		8C9FA610183AD5A4000AEBC9 /* PIXGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E9016AB8DF600CB97AF /* PIXGridViewItem.m */; };
-		8C9FA611183AD5A4000AEBC9 /* PIXPhotoGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B80E716B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.m */; };
-		8C9FA612183AD5A4000AEBC9 /* PIXLoadAlbumOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5F9D5A16AEF4A3008F8C80 /* PIXLoadAlbumOperation.m */; };
-		8C9FA613183AD5A4000AEBC9 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA595183AC5FE000AEBC9 /* SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA614183AD5A4000AEBC9 /* MKUserLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA586183AC5FE000AEBC9 /* MKUserLocation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA615183AD5A4000AEBC9 /* MKReverseGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA57F183AC5FE000AEBC9 /* MKReverseGeocoder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA616183AD5A4000AEBC9 /* PIXGetAlbumPathsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5F9D5E16AEF814008F8C80 /* PIXGetAlbumPathsOperation.m */; };
-		8C9FA617183AD5A4000AEBC9 /* GeneralPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B80F616BB3D8A00C7E8F4 /* GeneralPreferencesViewController.m */; };
-		8C9FA618183AD5A4000AEBC9 /* AdvancedPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B80F916BB3D8A00C7E8F4 /* AdvancedPreferencesViewController.m */; };
-		8C9FA619183AD5A4000AEBC9 /* MKPolygon.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA577183AC5FE000AEBC9 /* MKPolygon.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA61A183AD5A4000AEBC9 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CF2C5E216BB458900F906F1 /* MASPreferencesWindowController.m */; };
-		8C9FA61B183AD5A4000AEBC9 /* DebugPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE8F62316BD8C9E00DC6014 /* DebugPreferencesViewController.m */; };
-		8C9FA61C183AD5A4000AEBC9 /* PIXGradientBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7ABBBD16C42A3D00784BDA /* PIXGradientBarView.m */; };
-		8C9FA61D183AD5A4000AEBC9 /* PIXAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE92A16C46AB800F16C49 /* PIXAlbum.m */; };
-		8C9FA61E183AD5A4000AEBC9 /* ArchDirectoryObservationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE92F16CACA7900F16C49 /* ArchDirectoryObservationCenter.m */; };
-		8C9FA61F183AD5A4000AEBC9 /* NSURL+DirectoryObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE93316CACA7900F16C49 /* NSURL+DirectoryObserver.m */; };
-		8C9FA620183AD5A4000AEBC9 /* PIXFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DBFD55516CAE415001944A9 /* PIXFileManager.m */; };
-		8C9FA621183AD5A4000AEBC9 /* PIXCustomButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE460E016CB674700CDFA04 /* PIXCustomButtonCell.m */; };
-		8C9FA622183AD5A4000AEBC9 /* PIXCustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE460E316CD5A3000CDFA04 /* PIXCustomButton.m */; };
-		8C9FA623183AD5A4000AEBC9 /* PIXCustomShareSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE460E616CD7BB300CDFA04 /* PIXCustomShareSheetViewController.m */; };
-		8C9FA624183AD5A4000AEBC9 /* PIXFileParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C097D2616D57D0700E0E134 /* PIXFileParser.m */; };
-		8C9FA625183AD5A4000AEBC9 /* MKOverlayPathView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA56B183AC5FE000AEBC9 /* MKOverlayPathView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA626183AD5A4000AEBC9 /* MKMapView+WebViewIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA564183AC5FE000AEBC9 /* MKMapView+WebViewIntegration.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA627183AD5A4000AEBC9 /* PIXSidebarClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B9C9E16DADA2100F6BADD /* PIXSidebarClipView.m */; };
-		8C9FA628183AD5A4000AEBC9 /* MKOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA56D183AC5FE000AEBC9 /* MKOverlayView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA629183AD5A4000AEBC9 /* PIXSidebarScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B9CA116DADA9500F6BADD /* PIXSidebarScrollView.m */; };
-		8C9FA62A183AD5A4000AEBC9 /* PIXMiniExifViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B9CA416DC30FB00F6BADD /* PIXMiniExifViewController.m */; };
-		8C9FA62B183AD5A4000AEBC9 /* PIXExifBGView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B9CA916DC436B00F6BADD /* PIXExifBGView.m */; };
-		8C9FA62C183AD5A4000AEBC9 /* LeapObjectiveC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8C031CCF16E926F7009B7F38 /* LeapObjectiveC.mm */; };
-		8C9FA62D183AD5A4000AEBC9 /* PIXLeapInputManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C031CD216E926F7009B7F38 /* PIXLeapInputManager.m */; };
-		8C9FA62E183AD5A4000AEBC9 /* MKPinAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA56F183AC5FE000AEBC9 /* MKPinAnnotationView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA62F183AD5A4000AEBC9 /* PIXSelectionLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68246A16F596BB00245F09 /* PIXSelectionLayer.m */; };
-		8C9FA630183AD5A4000AEBC9 /* NSBezierPath+pathUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68246D16F599FD00245F09 /* NSBezierPath+pathUtilities.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA631183AD5A4000AEBC9 /* PIXPageHUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68247016F6850B00245F09 /* PIXPageHUDView.m */; };
-		8C9FA632183AD5A4000AEBC9 /* PIXPageHUDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68247316F6A75000245F09 /* PIXPageHUDWindow.m */; };
-		8C9FA633183AD5A4000AEBC9 /* PIXInfoPanelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CF9CE4716F8B4A9003B0933 /* PIXInfoPanelView.m */; };
-		8C9FA634183AD5A4000AEBC9 /* MKWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA58A183AC5FE000AEBC9 /* MKWebView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA635183AD5A4000AEBC9 /* PIXRoundRectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C24A40A16F94ED100703F97 /* PIXRoundRectView.m */; };
-		8C9FA636183AD5A4000AEBC9 /* MKPolygonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA579183AC5FE000AEBC9 /* MKPolygonView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA637183AD5A4000AEBC9 /* MKGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA55B183AC5FE000AEBC9 /* MKGeocoder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA638183AD5A4000AEBC9 /* PIXShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C85AC1816FA98470021ADB4 /* PIXShareManager.m */; };
-		8C9FA639183AD5A4000AEBC9 /* PIXInfoPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C53DFE716FB76E8008EF8B1 /* PIXInfoPanelViewController.m */; };
-		8C9FA63A183AD5A4000AEBC9 /* PIXSlideshowOptonsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9AA2BC1700A5C000D989CA /* PIXSlideshowOptonsViewController.m */; };
-		8C9FA63B183AD5A4000AEBC9 /* MKView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA588183AC5FE000AEBC9 /* MKView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA63C183AD5A4000AEBC9 /* PIXFileTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8F4353170534610040562D /* PIXFileTextField.m */; };
-		8C9FA63D183AD5A4000AEBC9 /* PIXOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D91D13B1709DB1C00747629 /* PIXOutlineView.m */; };
-		8C9FA63E183AD5A4000AEBC9 /* PIXRoundedProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C33D5181711FC8700647F95 /* PIXRoundedProgressIndicator.m */; };
-		8C9FA63F183AD5A4000AEBC9 /* MKPlacemark.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA573183AC5FE000AEBC9 /* MKPlacemark.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA640183AD5A4000AEBC9 /* PIXHUDMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C72FE6017134BEE00AA72B0 /* PIXHUDMessageController.m */; };
-		8C9FA641183AD5A4000AEBC9 /* PIXLeapTutorialWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C14692617149A92009ECCC5 /* PIXLeapTutorialWindowController.m */; };
-		8C9FA642183AD5A4000AEBC9 /* MKPolyline.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA57B183AC5FE000AEBC9 /* MKPolyline.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA643183AD5A4000AEBC9 /* PIXAboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C82A865171A5138009DD803 /* PIXAboutWindowController.m */; };
-		8C9FA644183AD5A4000AEBC9 /* PIXTransitionSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D23CC151720604E00C7FF70 /* PIXTransitionSetup.m */; };
-		8C9FA645183AD5A4000AEBC9 /* PIXProgressWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7208991749B1720074705D /* PIXProgressWindowController.m */; };
-		8C9FA646183AD5A4000AEBC9 /* PIXSeperatedSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CDD1ADE177259B700EB6E63 /* PIXSeperatedSpinnerView.m */; };
-		8C9FA647183AD5A4000AEBC9 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA597183AC5FE000AEBC9 /* SBJsonBase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8C9FA648183AD5A4000AEBC9 /* PIXVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D77F3731795EA2200FCF0F5 /* PIXVideoViewController.m */; };
-		8C9FA649183AD5A4000AEBC9 /* PIXVideoImageOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCD7B2017987A5000DF9478 /* PIXVideoImageOverlayView.m */; };
-		8C9FA64A183AD5A4000AEBC9 /* PIXPlayVideoHUDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6C23ED179882AA00EC34F5 /* PIXPlayVideoHUDWindow.m */; };
-		8C9FA64B183AD5A4000AEBC9 /* AutoSizingVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D7BDD9917A02E0100E2CD16 /* AutoSizingVideoView.m */; };
-		8C9FA64D183AD5A4000AEBC9 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8C286055172F590D009A0B35 /* Sparkle.framework */; };
-		8C9FA64F183AD5A4000AEBC9 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C9FA5BF183ACB98000AEBC9 /* WebKit.framework */; };
-		8C9FA650183AD5A4000AEBC9 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C9FA5BD183ACB90000AEBC9 /* CoreLocation.framework */; };
-		8C9FA651183AD5A4000AEBC9 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C14692E1714A5CC009ECCC5 /* QTKit.framework */; };
-		8C9FA652183AD5A4000AEBC9 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFF116FB7CED008EF8B1 /* CoreFoundation.framework */; };
-		8C9FA653183AD5A4000AEBC9 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4A1E2A167D2A4C00C9A895 /* Quartz.framework */; };
-		8C9FA654183AD5A4000AEBC9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4A1E07167C056C00C9A895 /* QuartzCore.framework */; };
-		8C9FA655183AD5A4000AEBC9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DB2F84E167ABE87008AC0F7 /* Cocoa.framework */; };
-		8C9FA657183AD5A4000AEBC9 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C286055172F590D009A0B35 /* Sparkle.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		8C9FA659183AD5A4000AEBC9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F857167ABE87008AC0F7 /* InfoPlist.strings */; };
-		8C9FA65A183AD5A4000AEBC9 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F85D167ABE87008AC0F7 /* Credits.rtf */; };
-		8C9FA65B183AD5A4000AEBC9 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F863167ABE87008AC0F7 /* MainMenu.xib */; };
-		8C9FA65C183AD5A4000AEBC9 /* dark_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1D9A167AD93400C9A895 /* dark_bg.png */; };
-		8C9FA65D183AD5A4000AEBC9 /* MKPinAnnotationColorRed.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5CA183AD536000AEBC9 /* MKPinAnnotationColorRed.png */; };
-		8C9FA65E183AD5A4000AEBC9 /* Release Notes.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5CB183AD536000AEBC9 /* Release Notes.rtf */; };
-		8C9FA65F183AD5A4000AEBC9 /* dark_bg@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1D9B167AD93400C9A895 /* dark_bg@2X.png */; };
-		8C9FA660183AD5A4000AEBC9 /* nophoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DA8167AD93400C9A895 /* nophoto.png */; };
-		8C9FA661183AD5A4000AEBC9 /* nophoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DA9167AD93400C9A895 /* nophoto@2x.png */; };
-		8C9FA662183AD5A4000AEBC9 /* temp-portrait.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DAA167AD93400C9A895 /* temp-portrait.jpg */; };
-		8C9FA663183AD5A4000AEBC9 /* temp-portrait@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DAB167AD93400C9A895 /* temp-portrait@2x.jpg */; };
-		8C9FA664183AD5A4000AEBC9 /* temp.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DAC167AD93400C9A895 /* temp.jpg */; };
-		8C9FA665183AD5A4000AEBC9 /* MapKit-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5C5183AD536000AEBC9 /* MapKit-Info.plist */; };
-		8C9FA666183AD5A4000AEBC9 /* temp@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DAD167AD93400C9A895 /* temp@2x.jpg */; };
-		8C9FA667183AD5A4000AEBC9 /* MapKit.html in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5C6183AD536000AEBC9 /* MapKit.html */; };
-		8C9FA668183AD5A4000AEBC9 /* PIXMainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DC3167ADA2400C9A895 /* PIXMainWindow.xib */; };
-		8C9FA669183AD5A4000AEBC9 /* PIXInfoWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DCF167AE22A00C9A895 /* PIXInfoWindowController.xib */; };
-		8C9FA66A183AD5A4000AEBC9 /* PIXSplitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1E2F167D2D8E00C9A895 /* PIXSplitViewController.xib */; };
-		8C9FA66B183AD5A4000AEBC9 /* PIXSidebarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1E35167D365900C9A895 /* PIXSidebarViewController.xib */; };
-		8C9FA66C183AD5A4000AEBC9 /* PIXPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D0834FA167D6478003D557A /* PIXPageViewController.xib */; };
-		8C9FA66D183AD5A4000AEBC9 /* PIXImageBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D083500167D6678003D557A /* PIXImageBrowserViewController.xib */; };
-		8C9FA66E183AD5A4000AEBC9 /* MarkerTest.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5C7183AD536000AEBC9 /* MarkerTest.png */; };
-		8C9FA66F183AD5A4000AEBC9 /* AutoSizingImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D083525167E7EEE003D557A /* AutoSizingImageView.xib */; };
-		8C9FA670183AD5A4000AEBC9 /* nophoto_200x200.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1DA66CAF16AA2ED00060D796 /* nophoto_200x200.jpg */; };
-		8C9FA671183AD5A4000AEBC9 /* PIXGridViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8CD7EE16AB6EC70072D516 /* PIXGridViewController.xib */; };
-		8C9FA672183AD5A4000AEBC9 /* GeneralPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4B80F716BB3D8A00C7E8F4 /* GeneralPreferencesView.xib */; };
-		8C9FA673183AD5A4000AEBC9 /* AdvancedPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4B80FA16BB3D8A00C7E8F4 /* AdvancedPreferencesView.xib */; };
-		8C9FA674183AD5A4000AEBC9 /* MASPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CF2C5DF16BB458900F906F1 /* MASPreferencesWindow.xib */; };
-		8C9FA675183AD5A4000AEBC9 /* DebugPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CE8F62216BD8C9E00DC6014 /* DebugPreferencesView.xib */; };
-		8C9FA676183AD5A4000AEBC9 /* btn-roundrect-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D716CB650600CDFA04 /* btn-roundrect-down.png */; };
-		8C9FA677183AD5A4000AEBC9 /* btn-roundrect-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D816CB650600CDFA04 /* btn-roundrect-down@2x.png */; };
-		8C9FA678183AD5A4000AEBC9 /* btn-roundrect-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D916CB650600CDFA04 /* btn-roundrect-up.png */; };
-		8C9FA679183AD5A4000AEBC9 /* btn-roundrect-up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460DA16CB650600CDFA04 /* btn-roundrect-up@2x.png */; };
-		8C9FA67A183AD5A4000AEBC9 /* PIXCustomShareSheetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460E716CD7BB300CDFA04 /* PIXCustomShareSheetViewController.xib */; };
-		8C9FA67B183AD5A4000AEBC9 /* PIXMiniExifViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4B9CA516DC30FD00F6BADD /* PIXMiniExifViewController.xib */; };
-		8C9FA67C183AD5A4000AEBC9 /* buttongrid_copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247516F8089400245F09 /* buttongrid_copy.png */; };
-		8C9FA67D183AD5A4000AEBC9 /* buttongrid_copy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247616F8089400245F09 /* buttongrid_copy@2x.png */; };
-		8C9FA67E183AD5A4000AEBC9 /* buttongrid_email.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247716F8089400245F09 /* buttongrid_email.png */; };
-		8C9FA67F183AD5A4000AEBC9 /* buttongrid_email@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247816F8089400245F09 /* buttongrid_email@2x.png */; };
-		8C9FA680183AD5A4000AEBC9 /* buttongrid_emaillink.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247916F8089400245F09 /* buttongrid_emaillink.png */; };
-		8C9FA681183AD5A4000AEBC9 /* buttongrid_emaillink@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247A16F8089400245F09 /* buttongrid_emaillink@2x.png */; };
-		8C9FA682183AD5A4000AEBC9 /* buttongrid_facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247B16F8089400245F09 /* buttongrid_facebook.png */; };
-		8C9FA683183AD5A4000AEBC9 /* buttongrid_facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247C16F8089400245F09 /* buttongrid_facebook@2x.png */; };
-		8C9FA684183AD5A4000AEBC9 /* buttongrid_print.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247D16F8089400245F09 /* buttongrid_print.png */; };
-		8C9FA685183AD5A4000AEBC9 /* MKPinAnnotationColorPurple.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5C9183AD536000AEBC9 /* MKPinAnnotationColorPurple.png */; };
-		8C9FA686183AD5A4000AEBC9 /* buttongrid_print@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247E16F8089400245F09 /* buttongrid_print@2x.png */; };
-		8C9FA687183AD5A4000AEBC9 /* buttongrid_share.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247F16F8089400245F09 /* buttongrid_share.png */; };
-		8C9FA688183AD5A4000AEBC9 /* buttongrid_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68248016F8089400245F09 /* buttongrid_share@2x.png */; };
-		8C9FA689183AD5A4000AEBC9 /* buttongrid_twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68248116F8089400245F09 /* buttongrid_twitter.png */; };
-		8C9FA68A183AD5A4000AEBC9 /* buttongrid_twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68248216F8089400245F09 /* buttongrid_twitter@2x.png */; };
-		8C9FA68B183AD5A4000AEBC9 /* arrow-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CF9CE3E16F8200A003B0933 /* arrow-left.png */; };
-		8C9FA68C183AD5A4000AEBC9 /* arrow-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CF9CE3F16F8200A003B0933 /* arrow-left@2x.png */; };
-		8C9FA68D183AD5A4000AEBC9 /* arrow-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CF9CE4016F8200A003B0933 /* arrow-right.png */; };
-		8C9FA68E183AD5A4000AEBC9 /* arrow-right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CF9CE4116F8200A003B0933 /* arrow-right@2x.png */; };
-		8C9FA68F183AD5A4000AEBC9 /* intro_bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8C24A40716F94C1100703F97 /* intro_bg.jpg */; };
-		8C9FA690183AD5A4000AEBC9 /* MapViewAdditions.css in Resources */ = {isa = PBXBuildFile; fileRef = 8C53DFF616FB8319008EF8B1 /* MapViewAdditions.css */; };
-		8C9FA691183AD5A4000AEBC9 /* contract.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13BA16FD2B21004CA7D5 /* contract.png */; };
-		8C9FA692183AD5A4000AEBC9 /* contract@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13BB16FD2B21004CA7D5 /* contract@2x.png */; };
-		8C9FA693183AD5A4000AEBC9 /* expand.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13BC16FD2B21004CA7D5 /* expand.png */; };
-		8C9FA694183AD5A4000AEBC9 /* expand@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13BD16FD2B21004CA7D5 /* expand@2x.png */; };
-		8C9FA695183AD5A4000AEBC9 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13C216FD6111004CA7D5 /* play.png */; };
-		8C9FA696183AD5A4000AEBC9 /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13C316FD6111004CA7D5 /* play@2x.png */; };
-		8C9FA697183AD5A4000AEBC9 /* captionbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9AA2B716FFE39500D989CA /* captionbutton.png */; };
-		8C9FA698183AD5A4000AEBC9 /* captionbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9AA2B816FFE39500D989CA /* captionbutton@2x.png */; };
-		8C9FA699183AD5A4000AEBC9 /* PIXSlideshowOptonsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C9AA2BD1700A5C000D989CA /* PIXSlideshowOptonsViewController.xib */; };
-		8C9FA69A183AD5A4000AEBC9 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C5D757217015A5C0008CC00 /* pause.png */; };
-		8C9FA69B183AD5A4000AEBC9 /* pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C5D757317015A5C0008CC00 /* pause@2x.png */; };
-		8C9FA69C183AD5A4000AEBC9 /* sortbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C23026217056E6E001A5510 /* sortbutton.png */; };
-		8C9FA69D183AD5A4000AEBC9 /* sortbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C23026317056E6E001A5510 /* sortbutton@2x.png */; };
-		8C9FA69E183AD5A4000AEBC9 /* addbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C23026617057400001A5510 /* addbutton.png */; };
-		8C9FA69F183AD5A4000AEBC9 /* addbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C23026717057400001A5510 /* addbutton@2x.png */; };
-		8C9FA6A0183AD5A4000AEBC9 /* preferences_dark_theme.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE561712843B00AA72B0 /* preferences_dark_theme.png */; };
-		8C9FA6A1183AD5A4000AEBC9 /* preferences_light_theme.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE571712843B00AA72B0 /* preferences_light_theme.png */; };
-		8C9FA6A2183AD5A4000AEBC9 /* PIXHUDMessageController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE6117134BEE00AA72B0 /* PIXHUDMessageController.xib */; };
-		8C9FA6A3183AD5A4000AEBC9 /* leapconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE641713701200AA72B0 /* leapconnected.png */; };
-		8C9FA6A4183AD5A4000AEBC9 /* leapconnected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE651713701200AA72B0 /* leapconnected@2x.png */; };
-		8C9FA6A5183AD5A4000AEBC9 /* graydot.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE681713EAAA00AA72B0 /* graydot.png */; };
-		8C9FA6A6183AD5A4000AEBC9 /* graydot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE691713EAAA00AA72B0 /* graydot@2x.png */; };
-		8C9FA6A7183AD5A4000AEBC9 /* greendot.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE6A1713EAAA00AA72B0 /* greendot.png */; };
-		8C9FA6A8183AD5A4000AEBC9 /* greendot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE6B1713EAAA00AA72B0 /* greendot@2x.png */; };
-		8C9FA6A9183AD5A4000AEBC9 /* PIXLeapTutorialWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C14692717149A92009ECCC5 /* PIXLeapTutorialWindowController.xib */; };
-		8C9FA6AA183AD5A4000AEBC9 /* LeapTutorial0.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C1469311714B1C7009ECCC5 /* LeapTutorial0.mov */; };
-		8C9FA6AB183AD5A4000AEBC9 /* LeapTutorial1.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C1469331714B442009ECCC5 /* LeapTutorial1.mov */; };
-		8C9FA6AC183AD5A4000AEBC9 /* LeapTutorial2.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C35808E1714D99E00352870 /* LeapTutorial2.mov */; };
-		8C9FA6AD183AD5A4000AEBC9 /* LeapTutorial3.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C35808F1714D99E00352870 /* LeapTutorial3.mov */; };
-		8C9FA6AE183AD5A4000AEBC9 /* MainMenu-original.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C82A85D1718E28A009DD803 /* MainMenu-original.xib */; };
-		8C9FA6AF183AD5A4000AEBC9 /* fullnophoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C82A86017192798009DD803 /* fullnophoto.png */; };
-		8C9FA6B0183AD5A4000AEBC9 /* MKPinAnnotationColorGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5C8183AD536000AEBC9 /* MKPinAnnotationColorGreen.png */; };
-		8C9FA6B1183AD5A4000AEBC9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C4313511828399600DB0053 /* Images.xcassets */; };
-		8C9FA6B2183AD5A4000AEBC9 /* fullnophoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C82A86117192798009DD803 /* fullnophoto@2x.png */; };
-		8C9FA6B3183AD5A4000AEBC9 /* PIXAboutWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C82A866171A5138009DD803 /* PIXAboutWindowController.xib */; };
-		8C9FA6B4183AD5A4000AEBC9 /* pixite-logo-wide.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C8B6DEE171BBC4C00AB230F /* pixite-logo-wide.png */; };
-		8C9FA6B5183AD5A4000AEBC9 /* click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8C5019C9171C803F00829914 /* click.wav */; };
-		8C9FA6B6183AD5A4000AEBC9 /* success.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC94923171C92E900EC1431 /* success.png */; };
-		8C9FA6B7183AD5A4000AEBC9 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5C4183AD536000AEBC9 /* License.rtf */; };
-		8C9FA6B8183AD5A4000AEBC9 /* success@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC94924171C92E900EC1431 /* success@2x.png */; };
-		8C9FA6B9183AD5A4000AEBC9 /* softtap.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8CC94927171CDC5E00EC1431 /* softtap.wav */; };
-		8C9FA6BA183AD5A4000AEBC9 /* success-backward.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC94929171DF00000EC1431 /* success-backward.png */; };
-		8C9FA6BB183AD5A4000AEBC9 /* success-backward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC9492A171DF00000EC1431 /* success-backward@2x.png */; };
-		8C9FA6BC183AD5A4000AEBC9 /* success-forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC9492B171DF00000EC1431 /* success-forward.png */; };
-		8C9FA6BD183AD5A4000AEBC9 /* success-forward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC9492C171DF00000EC1431 /* success-forward@2x.png */; };
-		8C9FA6BE183AD5A4000AEBC9 /* LeapTutorial4.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8CC94931171E145A00EC1431 /* LeapTutorial4.mov */; };
-		8C9FA6BF183AD5A4000AEBC9 /* Blank.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1D23CC17172095E000C7FF70 /* Blank.jpg */; };
-		8C9FA6C0183AD5A4000AEBC9 /* Mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1D23CC18172095E000C7FF70 /* Mask.jpg */; };
-		8C9FA6C1183AD5A4000AEBC9 /* Unbound-For-Mac-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C4313541828439B00DB0053 /* Unbound-For-Mac-512.png */; };
-		8C9FA6C2183AD5A4000AEBC9 /* Shading.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 1D23CC19172095E000C7FF70 /* Shading.tiff */; };
-		8C9FA6C3183AD5A4000AEBC9 /* PIXProgressWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C72089A1749B1720074705D /* PIXProgressWindowController.xib */; };
-		8C9FA6C4183AD5A4000AEBC9 /* leapnotconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CA9545E1756A5AD0016AE23 /* leapnotconnected.png */; };
-		8C9FA6C5183AD5A4000AEBC9 /* leapnotconnected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CA9545F1756A5AD0016AE23 /* leapnotconnected@2x.png */; };
-		8C9FA6C6183AD5A4000AEBC9 /* Stylesheet.css in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5CC183AD536000AEBC9 /* Stylesheet.css */; };
-		8C9FA6C7183AD5A4000AEBC9 /* videoview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D77F36F1795DC0C00FCF0F5 /* videoview.xib */; };
-		8C9FA6C8183AD5A4000AEBC9 /* playbutton-tinted.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D368173179A5AA5004538FA /* playbutton-tinted.png */; };
-		8C9FA6C9183AD5A4000AEBC9 /* playbutton-tinted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D368174179A5AA5004538FA /* playbutton-tinted@2x.png */; };
-		8C9FA6CA183AD5A4000AEBC9 /* Animations.css in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5C3183AD536000AEBC9 /* Animations.css */; };
-		8C9FA6CB183AD5A4000AEBC9 /* playbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D368175179A5AA5004538FA /* playbutton.png */; };
-		8C9FA6CC183AD5A4000AEBC9 /* playbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D368176179A5AA5004538FA /* playbutton@2x.png */; };
-		8C9FA6CD183AD5A4000AEBC9 /* tempVideo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8CDFEAA317B8896600BC5DD9 /* tempVideo.jpg */; };
-		8C9FA6CE183AD5A4000AEBC9 /* tempVideo@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8CDFEAA417B8896600BC5DD9 /* tempVideo@2x.jpg */; };
-		8C9FA6CF183AD5A4000AEBC9 /* Licences.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8CF05AEE17C3097300AB88B5 /* Licences.txt */; };
-		8C9FA6D0183AD5A4000AEBC9 /* TransparentPixel.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5CD183AD536000AEBC9 /* TransparentPixel.png */; };
-		8C9FA6D1183AD5A4000AEBC9 /* UnboundTrial.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 8C43CCF017385A9700A4395F /* UnboundTrial.entitlements */; };
-		8C9FA6D2183AD5A4000AEBC9 /* Unbound.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 8CF05AF117C3374F00AB88B5 /* Unbound.iconset */; };
 		8CA459D8174E7FD9002BF431 /* PIXProgressWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7208991749B1720074705D /* PIXProgressWindowController.m */; };
 		8CA459D9174E7FD9002BF431 /* PIXProgressWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C72089A1749B1720074705D /* PIXProgressWindowController.xib */; };
 		8CA954601756A5AD0016AE23 /* leapnotconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CA9545E1756A5AD0016AE23 /* leapnotconnected.png */; };
@@ -708,6 +464,7 @@
 		8CC94932171E145A00EC1431 /* LeapTutorial4.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8CC94931171E145A00EC1431 /* LeapTutorial4.mov */; };
 		8CDD1ADF177259B700EB6E63 /* PIXSeperatedSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CDD1ADE177259B700EB6E63 /* PIXSeperatedSpinnerView.m */; };
 		8CDD1AE0177259B700EB6E63 /* PIXSeperatedSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CDD1ADE177259B700EB6E63 /* PIXSeperatedSpinnerView.m */; };
+		8CDF0D8C1A37AA5300FFC2FE /* libLeap.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8CEE1F3C1A083413005A200B /* libLeap.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		8CDFEAA517B8896600BC5DD9 /* tempVideo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8CDFEAA317B8896600BC5DD9 /* tempVideo.jpg */; };
 		8CDFEAA617B8896600BC5DD9 /* tempVideo@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8CDFEAA417B8896600BC5DD9 /* tempVideo@2x.jpg */; };
 		8CDFEAA717B8896D00BC5DD9 /* tempVideo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8CDFEAA317B8896600BC5DD9 /* tempVideo.jpg */; };
@@ -724,10 +481,8 @@
 		8CE8F62616BD8C9E00DC6014 /* DebugPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE8F62316BD8C9E00DC6014 /* DebugPreferencesViewController.m */; };
 		8CEDF76A185A3E8300E35E77 /* PIXHandCursorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CEDF769185A3E8300E35E77 /* PIXHandCursorButton.m */; };
 		8CEDF76B185A446A00E35E77 /* PIXHandCursorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CEDF769185A3E8300E35E77 /* PIXHandCursorButton.m */; };
-		8CEDF76C185A446B00E35E77 /* PIXHandCursorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CEDF769185A3E8300E35E77 /* PIXHandCursorButton.m */; };
 		8CEE1F3D1A083413005A200B /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CEE1F3C1A083413005A200B /* libLeap.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
 		8CEE1F3E1A083413005A200B /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CEE1F3C1A083413005A200B /* libLeap.dylib */; };
-		8CEE1F3F1A083413005A200B /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CEE1F3C1A083413005A200B /* libLeap.dylib */; };
 		8CF05AEF17C3097400AB88B5 /* Licences.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8CF05AEE17C3097300AB88B5 /* Licences.txt */; };
 		8CF05AF017C30A2500AB88B5 /* Licences.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8CF05AEE17C3097300AB88B5 /* Licences.txt */; };
 		8CF05AF217C3374F00AB88B5 /* Unbound.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 8CF05AF117C3374F00AB88B5 /* Unbound.iconset */; };
@@ -747,6 +502,255 @@
 		8CFC13C116FD2B21004CA7D5 /* expand@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13BD16FD2B21004CA7D5 /* expand@2x.png */; };
 		8CFC13C416FD6111004CA7D5 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13C216FD6111004CA7D5 /* play.png */; };
 		8CFC13C516FD6111004CA7D5 /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13C316FD6111004CA7D5 /* play@2x.png */; };
+		8CFC2D601A5864B8004FCE5F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2F85A167ABE87008AC0F7 /* main.m */; };
+		8CFC2D611A5864B8004FCE5F /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA59B183AC5FE000AEBC9 /* SBJsonWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2D621A5864B8004FCE5F /* PIXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2F861167ABE87008AC0F7 /* PIXAppDelegate.m */; };
+		8CFC2D631A5864B8004FCE5F /* PIXMainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DCB167AE1A500C9A895 /* PIXMainWindowController.m */; };
+		8CFC2D641A5864B8004FCE5F /* PIXInfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DCE167AE22A00C9A895 /* PIXInfoWindowController.m */; };
+		8CFC2D651A5864B8004FCE5F /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DD3167AEEDE00C9A895 /* Preferences.m */; };
+		8CFC2D661A5864B8004FCE5F /* PIXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DFF167BEAF200C9A895 /* PIXViewController.m */; };
+		8CFC2D671A5864B8004FCE5F /* PIXNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E02167BEC1700C9A895 /* PIXNavigationController.m */; };
+		8CFC2D681A5864B8004FCE5F /* PIXSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E2E167D2D8E00C9A895 /* PIXSplitViewController.m */; };
+		8CFC2D691A5864B8004FCE5F /* PIXSidebarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E34167D365900C9A895 /* PIXSidebarViewController.m */; };
+		8CFC2D6A1A5864B8004FCE5F /* PIXSidebarTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E39167D36E100C9A895 /* PIXSidebarTableCellView.m */; };
+		8CFC2D6B1A5864B8004FCE5F /* SquareImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E3C167D372600C9A895 /* SquareImageView.m */; };
+		8CFC2D6C1A5864B8004FCE5F /* MKPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA575183AC5FE000AEBC9 /* MKPointAnnotation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2D6D1A5864B8004FCE5F /* PIXPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D0834F9167D6478003D557A /* PIXPageViewController.m */; };
+		8CFC2D6E1A5864B8004FCE5F /* PIXImageBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D0834FF167D6678003D557A /* PIXImageBrowserViewController.m */; };
+		8CFC2D6F1A5864B8004FCE5F /* MKCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA559183AC5FE000AEBC9 /* MKCircleView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2D701A5864B8004FCE5F /* MKMultiPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA568183AC5FE000AEBC9 /* MKMultiPoint.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2D711A5864B8004FCE5F /* PIXImageBrowserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D083512167D785F003D557A /* PIXImageBrowserView.m */; };
+		8CFC2D721A5864B8004FCE5F /* PIXImageBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D083515167D78AD003D557A /* PIXImageBrowserCell.m */; };
+		8CFC2D731A5864B8004FCE5F /* MKMapView+DelegateWrappers.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA560183AC5FE000AEBC9 /* MKMapView+DelegateWrappers.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2D741A5864B8004FCE5F /* AutoSizingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D083518167DCA71003D557A /* AutoSizingImageView.m */; };
+		8CFC2D751A5864B8004FCE5F /* PIXPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D08351F167E7C80003D557A /* PIXPageView.m */; };
+		8CFC2D761A5864B8004FCE5F /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA599183AC5FE000AEBC9 /* SBJsonParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2D771A5864B8004FCE5F /* MKCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA557183AC5FE000AEBC9 /* MKCircle.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2D781A5864B8004FCE5F /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA591183AC5FE000AEBC9 /* NSObject+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2D791A5864B8004FCE5F /* MKPolylineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA57D183AC5FE000AEBC9 /* MKPolylineView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2D7A1A5864B8004FCE5F /* PIXImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D08352C167E8B2B003D557A /* PIXImageViewController.m */; };
+		8CFC2D7B1A5864B8004FCE5F /* PIXModifierSwitchedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C972CB31680FE8B00358913 /* PIXModifierSwitchedEvent.m */; };
+		8CFC2D7C1A5864B8004FCE5F /* NSColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA58C183AC5FE000AEBC9 /* NSColor+Additions.m */; };
+		8CFC2D7D1A5864B8004FCE5F /* PIXDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF81D169D2D9F00C0D303 /* PIXDataModel.xcdatamodeld */; };
+		8CFC2D7E1A5864B8004FCE5F /* MKAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA555183AC5FE000AEBC9 /* MKAnnotationView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2D7F1A5864B8004FCE5F /* PIXPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF82D169D2FE800C0D303 /* PIXPhoto.m */; };
+		8CFC2D801A5864B8004FCE5F /* MKMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA566183AC5FE000AEBC9 /* MKMapView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2D811A5864B8004FCE5F /* PIXAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF82F169D2FE800C0D303 /* PIXAccount.m */; };
+		8CFC2D821A5864B8004FCE5F /* MKUserLocation+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA584183AC5FE000AEBC9 /* MKUserLocation+Private.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2D831A5864B8004FCE5F /* MKPlacemark+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA571183AC5FE000AEBC9 /* MKPlacemark+Private.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2D841A5864B8004FCE5F /* MKShape.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA581183AC5FE000AEBC9 /* MKShape.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2D851A5864B8004FCE5F /* GetPathsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF836169D34A400C0D303 /* GetPathsOperation.m */; };
+		8CFC2D861A5864B8004FCE5F /* LoadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF838169D34A400C0D303 /* LoadOperation.m */; };
+		8CFC2D871A5864B8004FCE5F /* MakeThumbnailOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF842169D3CF300C0D303 /* MakeThumbnailOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2D881A5864B8004FCE5F /* PIXAlbumGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E6D16AB426A00CB97AF /* PIXAlbumGridViewController.m */; };
+		8CFC2D891A5864B8004FCE5F /* CNGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7216AB429E00CB97AF /* CNGridView.m */; };
+		8CFC2D8A1A5864B8004FCE5F /* CNGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7616AB429E00CB97AF /* CNGridViewItem.m */; };
+		8CFC2D8B1A5864B8004FCE5F /* MKMapView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA55E183AC5FE000AEBC9 /* MKMapView+Additions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2D8C1A5864B8004FCE5F /* CNGridViewItemLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7816AB429E00CB97AF /* CNGridViewItemLayout.m */; };
+		8CFC2D8D1A5864B8004FCE5F /* PIXHandCursorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CEDF769185A3E8300E35E77 /* PIXHandCursorButton.m */; };
+		8CFC2D8E1A5864B8004FCE5F /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA593183AC5FE000AEBC9 /* NSString+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2D8F1A5864B8004FCE5F /* NSColor+CNGridViewPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7A16AB429E00CB97AF /* NSColor+CNGridViewPalette.m */; };
+		8CFC2D901A5864B8004FCE5F /* MKMapView+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA562183AC5FE000AEBC9 /* MKMapView+Private.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2D911A5864B8004FCE5F /* NSView+CNGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E7C16AB429E00CB97AF /* NSView+CNGridView.m */; };
+		8CFC2D921A5864B8004FCE5F /* PIXAlbumGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E8516AB467100CB97AF /* PIXAlbumGridViewItem.m */; };
+		8CFC2D931A5864B8004FCE5F /* PIXGridViewItemLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8CD7E716AB4D220072D516 /* PIXGridViewItemLayout.m */; };
+		8CFC2D941A5864B8004FCE5F /* PIXGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8CD7ED16AB6EC70072D516 /* PIXGridViewController.m */; };
+		8CFC2D951A5864B8004FCE5F /* PIXPhotoGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8CD7F316AB76E20072D516 /* PIXPhotoGridViewController.m */; };
+		8CFC2D961A5864B8004FCE5F /* PIXGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C249E9016AB8DF600CB97AF /* PIXGridViewItem.m */; };
+		8CFC2D971A5864B8004FCE5F /* PIXPhotoGridViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B80E716B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.m */; };
+		8CFC2D981A5864B8004FCE5F /* PIXLoadAlbumOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5F9D5A16AEF4A3008F8C80 /* PIXLoadAlbumOperation.m */; };
+		8CFC2D991A5864B8004FCE5F /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA595183AC5FE000AEBC9 /* SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2D9A1A5864B8004FCE5F /* MKUserLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA586183AC5FE000AEBC9 /* MKUserLocation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2D9B1A5864B8004FCE5F /* MKReverseGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA57F183AC5FE000AEBC9 /* MKReverseGeocoder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2D9C1A5864B8004FCE5F /* PIXGetAlbumPathsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5F9D5E16AEF814008F8C80 /* PIXGetAlbumPathsOperation.m */; };
+		8CFC2D9D1A5864B8004FCE5F /* GeneralPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B80F616BB3D8A00C7E8F4 /* GeneralPreferencesViewController.m */; };
+		8CFC2D9E1A5864B8004FCE5F /* AdvancedPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B80F916BB3D8A00C7E8F4 /* AdvancedPreferencesViewController.m */; };
+		8CFC2D9F1A5864B8004FCE5F /* MKPolygon.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA577183AC5FE000AEBC9 /* MKPolygon.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2DA01A5864B8004FCE5F /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CF2C5E216BB458900F906F1 /* MASPreferencesWindowController.m */; };
+		8CFC2DA11A5864B8004FCE5F /* DebugPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE8F62316BD8C9E00DC6014 /* DebugPreferencesViewController.m */; };
+		8CFC2DA21A5864B8004FCE5F /* PIXGradientBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7ABBBD16C42A3D00784BDA /* PIXGradientBarView.m */; };
+		8CFC2DA31A5864B8004FCE5F /* PIXAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE92A16C46AB800F16C49 /* PIXAlbum.m */; };
+		8CFC2DA41A5864B8004FCE5F /* ArchDirectoryObservationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE92F16CACA7900F16C49 /* ArchDirectoryObservationCenter.m */; };
+		8CFC2DA51A5864B8004FCE5F /* NSURL+DirectoryObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8EE93316CACA7900F16C49 /* NSURL+DirectoryObserver.m */; };
+		8CFC2DA61A5864B8004FCE5F /* PIXFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DBFD55516CAE415001944A9 /* PIXFileManager.m */; };
+		8CFC2DA71A5864B8004FCE5F /* PIXCustomButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE460E016CB674700CDFA04 /* PIXCustomButtonCell.m */; };
+		8CFC2DA81A5864B8004FCE5F /* PIXCustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE460E316CD5A3000CDFA04 /* PIXCustomButton.m */; };
+		8CFC2DA91A5864B8004FCE5F /* PIXCustomShareSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CE460E616CD7BB300CDFA04 /* PIXCustomShareSheetViewController.m */; };
+		8CFC2DAA1A5864B8004FCE5F /* PIXFileParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C097D2616D57D0700E0E134 /* PIXFileParser.m */; };
+		8CFC2DAB1A5864B8004FCE5F /* MKOverlayPathView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA56B183AC5FE000AEBC9 /* MKOverlayPathView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2DAC1A5864B8004FCE5F /* MKMapView+WebViewIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA564183AC5FE000AEBC9 /* MKMapView+WebViewIntegration.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2DAD1A5864B8004FCE5F /* PIXSidebarClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B9C9E16DADA2100F6BADD /* PIXSidebarClipView.m */; };
+		8CFC2DAE1A5864B8004FCE5F /* MKOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA56D183AC5FE000AEBC9 /* MKOverlayView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2DAF1A5864B8004FCE5F /* PIXSidebarScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B9CA116DADA9500F6BADD /* PIXSidebarScrollView.m */; };
+		8CFC2DB01A5864B8004FCE5F /* PIXMiniExifViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B9CA416DC30FB00F6BADD /* PIXMiniExifViewController.m */; };
+		8CFC2DB11A5864B8004FCE5F /* PIXExifBGView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4B9CA916DC436B00F6BADD /* PIXExifBGView.m */; };
+		8CFC2DB21A5864B8004FCE5F /* LeapObjectiveC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8C031CCF16E926F7009B7F38 /* LeapObjectiveC.mm */; };
+		8CFC2DB31A5864B8004FCE5F /* PIXLeapInputManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C031CD216E926F7009B7F38 /* PIXLeapInputManager.m */; };
+		8CFC2DB41A5864B8004FCE5F /* MKPinAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA56F183AC5FE000AEBC9 /* MKPinAnnotationView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2DB51A5864B8004FCE5F /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9564FF18467EA900B5627B /* Appirater.m */; };
+		8CFC2DB61A5864B8004FCE5F /* PIXSelectionLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68246A16F596BB00245F09 /* PIXSelectionLayer.m */; };
+		8CFC2DB71A5864B8004FCE5F /* NSBezierPath+pathUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68246D16F599FD00245F09 /* NSBezierPath+pathUtilities.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2DB81A5864B8004FCE5F /* PIXPageHUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68247016F6850B00245F09 /* PIXPageHUDView.m */; };
+		8CFC2DB91A5864B8004FCE5F /* PIXPageHUDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C68247316F6A75000245F09 /* PIXPageHUDWindow.m */; };
+		8CFC2DBA1A5864B8004FCE5F /* PIXInfoPanelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CF9CE4716F8B4A9003B0933 /* PIXInfoPanelView.m */; };
+		8CFC2DBB1A5864B8004FCE5F /* MKWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA58A183AC5FE000AEBC9 /* MKWebView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2DBC1A5864B8004FCE5F /* PIXRoundRectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C24A40A16F94ED100703F97 /* PIXRoundRectView.m */; };
+		8CFC2DBD1A5864B8004FCE5F /* MKPolygonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA579183AC5FE000AEBC9 /* MKPolygonView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2DBE1A5864B8004FCE5F /* MKGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA55B183AC5FE000AEBC9 /* MKGeocoder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2DBF1A5864B8004FCE5F /* PIXShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C85AC1816FA98470021ADB4 /* PIXShareManager.m */; };
+		8CFC2DC01A5864B8004FCE5F /* PIXInfoPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C53DFE716FB76E8008EF8B1 /* PIXInfoPanelViewController.m */; };
+		8CFC2DC11A5864B8004FCE5F /* PIXSlideshowOptonsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9AA2BC1700A5C000D989CA /* PIXSlideshowOptonsViewController.m */; };
+		8CFC2DC21A5864B8004FCE5F /* MKView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA588183AC5FE000AEBC9 /* MKView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2DC31A5864B8004FCE5F /* PIXFileTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C8F4353170534610040562D /* PIXFileTextField.m */; };
+		8CFC2DC41A5864B8004FCE5F /* PIXOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D91D13B1709DB1C00747629 /* PIXOutlineView.m */; };
+		8CFC2DC51A5864B8004FCE5F /* PIXRoundedProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C33D5181711FC8700647F95 /* PIXRoundedProgressIndicator.m */; };
+		8CFC2DC61A5864B8004FCE5F /* MKPlacemark.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA573183AC5FE000AEBC9 /* MKPlacemark.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2DC71A5864B8004FCE5F /* PIXHUDMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C72FE6017134BEE00AA72B0 /* PIXHUDMessageController.m */; };
+		8CFC2DC81A5864B8004FCE5F /* PIXLeapTutorialWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C14692617149A92009ECCC5 /* PIXLeapTutorialWindowController.m */; };
+		8CFC2DC91A5864B8004FCE5F /* MKPolyline.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA57B183AC5FE000AEBC9 /* MKPolyline.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2DCA1A5864B8004FCE5F /* PIXAboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C82A865171A5138009DD803 /* PIXAboutWindowController.m */; };
+		8CFC2DCB1A5864B8004FCE5F /* PIXTransitionSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D23CC151720604E00C7FF70 /* PIXTransitionSetup.m */; };
+		8CFC2DCC1A5864B8004FCE5F /* PIXProgressWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C7208991749B1720074705D /* PIXProgressWindowController.m */; };
+		8CFC2DCD1A5864B8004FCE5F /* PIXSeperatedSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CDD1ADE177259B700EB6E63 /* PIXSeperatedSpinnerView.m */; };
+		8CFC2DCE1A5864B8004FCE5F /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9FA597183AC5FE000AEBC9 /* SBJsonBase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8CFC2DCF1A5864B8004FCE5F /* PIXVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D77F3731795EA2200FCF0F5 /* PIXVideoViewController.m */; };
+		8CFC2DD01A5864B8004FCE5F /* PIXVideoImageOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCD7B2017987A5000DF9478 /* PIXVideoImageOverlayView.m */; };
+		8CFC2DD11A5864B8004FCE5F /* PIXPlayVideoHUDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6C23ED179882AA00EC34F5 /* PIXPlayVideoHUDWindow.m */; };
+		8CFC2DD21A5864B8004FCE5F /* AutoSizingVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D7BDD9917A02E0100E2CD16 /* AutoSizingVideoView.m */; };
+		8CFC2DD51A5864B8004FCE5F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C9565041846802800B5627B /* SystemConfiguration.framework */; };
+		8CFC2DD61A5864B8004FCE5F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C9FA5BF183ACB98000AEBC9 /* WebKit.framework */; };
+		8CFC2DD71A5864B8004FCE5F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C9FA5BD183ACB90000AEBC9 /* CoreLocation.framework */; };
+		8CFC2DD81A5864B8004FCE5F /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C14692E1714A5CC009ECCC5 /* QTKit.framework */; };
+		8CFC2DD91A5864B8004FCE5F /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFF116FB7CED008EF8B1 /* CoreFoundation.framework */; };
+		8CFC2DDA1A5864B8004FCE5F /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4A1E2A167D2A4C00C9A895 /* Quartz.framework */; };
+		8CFC2DDB1A5864B8004FCE5F /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CEE1F3C1A083413005A200B /* libLeap.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
+		8CFC2DDC1A5864B8004FCE5F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4A1E07167C056C00C9A895 /* QuartzCore.framework */; };
+		8CFC2DDD1A5864B8004FCE5F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DB2F84E167ABE87008AC0F7 /* Cocoa.framework */; };
+		8CFC2DDF1A5864B8004FCE5F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F857167ABE87008AC0F7 /* InfoPlist.strings */; };
+		8CFC2DE01A5864B8004FCE5F /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F85D167ABE87008AC0F7 /* Credits.rtf */; };
+		8CFC2DE11A5864B8004FCE5F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB2F863167ABE87008AC0F7 /* MainMenu.xib */; };
+		8CFC2DE21A5864B8004FCE5F /* dark_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1D9A167AD93400C9A895 /* dark_bg.png */; };
+		8CFC2DE31A5864B8004FCE5F /* dark_bg@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1D9B167AD93400C9A895 /* dark_bg@2X.png */; };
+		8CFC2DE41A5864B8004FCE5F /* nophoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DA8167AD93400C9A895 /* nophoto.png */; };
+		8CFC2DE51A5864B8004FCE5F /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5C4183AD536000AEBC9 /* License.rtf */; };
+		8CFC2DE61A5864B8004FCE5F /* nophoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DA9167AD93400C9A895 /* nophoto@2x.png */; };
+		8CFC2DE71A5864B8004FCE5F /* temp-portrait.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DAA167AD93400C9A895 /* temp-portrait.jpg */; };
+		8CFC2DE81A5864B8004FCE5F /* MKPinAnnotationColorGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5C8183AD536000AEBC9 /* MKPinAnnotationColorGreen.png */; };
+		8CFC2DE91A5864B8004FCE5F /* temp-portrait@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DAB167AD93400C9A895 /* temp-portrait@2x.jpg */; };
+		8CFC2DEA1A5864B8004FCE5F /* temp.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DAC167AD93400C9A895 /* temp.jpg */; };
+		8CFC2DEB1A5864B8004FCE5F /* temp@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DAD167AD93400C9A895 /* temp@2x.jpg */; };
+		8CFC2DEC1A5864B8004FCE5F /* PIXMainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DC3167ADA2400C9A895 /* PIXMainWindow.xib */; };
+		8CFC2DED1A5864B8004FCE5F /* PIXInfoWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DCF167AE22A00C9A895 /* PIXInfoWindowController.xib */; };
+		8CFC2DEE1A5864B8004FCE5F /* PIXSplitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1E2F167D2D8E00C9A895 /* PIXSplitViewController.xib */; };
+		8CFC2DEF1A5864B8004FCE5F /* MKPinAnnotationColorRed.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5CA183AD536000AEBC9 /* MKPinAnnotationColorRed.png */; };
+		8CFC2DF01A5864B8004FCE5F /* PIXSidebarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1E35167D365900C9A895 /* PIXSidebarViewController.xib */; };
+		8CFC2DF11A5864B8004FCE5F /* PIXPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D0834FA167D6478003D557A /* PIXPageViewController.xib */; };
+		8CFC2DF21A5864B8004FCE5F /* PIXImageBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D083500167D6678003D557A /* PIXImageBrowserViewController.xib */; };
+		8CFC2DF31A5864B8004FCE5F /* AutoSizingImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D083525167E7EEE003D557A /* AutoSizingImageView.xib */; };
+		8CFC2DF41A5864B8004FCE5F /* nophoto_200x200.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1DA66CAF16AA2ED00060D796 /* nophoto_200x200.jpg */; };
+		8CFC2DF51A5864B8004FCE5F /* PIXGridViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D8CD7EE16AB6EC70072D516 /* PIXGridViewController.xib */; };
+		8CFC2DF61A5864B8004FCE5F /* GeneralPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4B80F716BB3D8A00C7E8F4 /* GeneralPreferencesView.xib */; };
+		8CFC2DF71A5864B8004FCE5F /* AdvancedPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4B80FA16BB3D8A00C7E8F4 /* AdvancedPreferencesView.xib */; };
+		8CFC2DF81A5864B8004FCE5F /* MASPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CF2C5DF16BB458900F906F1 /* MASPreferencesWindow.xib */; };
+		8CFC2DF91A5864B8004FCE5F /* DebugPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CE8F62216BD8C9E00DC6014 /* DebugPreferencesView.xib */; };
+		8CFC2DFA1A5864B8004FCE5F /* btn-roundrect-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D716CB650600CDFA04 /* btn-roundrect-down.png */; };
+		8CFC2DFB1A5864B8004FCE5F /* btn-roundrect-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D816CB650600CDFA04 /* btn-roundrect-down@2x.png */; };
+		8CFC2DFC1A5864B8004FCE5F /* btn-roundrect-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460D916CB650600CDFA04 /* btn-roundrect-up.png */; };
+		8CFC2DFD1A5864B8004FCE5F /* btn-roundrect-up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460DA16CB650600CDFA04 /* btn-roundrect-up@2x.png */; };
+		8CFC2DFE1A5864B8004FCE5F /* Unbound-For-Mac-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C4313541828439B00DB0053 /* Unbound-For-Mac-512.png */; };
+		8CFC2DFF1A5864B8004FCE5F /* PIXCustomShareSheetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CE460E716CD7BB300CDFA04 /* PIXCustomShareSheetViewController.xib */; };
+		8CFC2E001A5864B8004FCE5F /* PIXMiniExifViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4B9CA516DC30FD00F6BADD /* PIXMiniExifViewController.xib */; };
+		8CFC2E011A5864B8004FCE5F /* buttongrid_copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247516F8089400245F09 /* buttongrid_copy.png */; };
+		8CFC2E021A5864B8004FCE5F /* buttongrid_copy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247616F8089400245F09 /* buttongrid_copy@2x.png */; };
+		8CFC2E031A5864B8004FCE5F /* buttongrid_email.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247716F8089400245F09 /* buttongrid_email.png */; };
+		8CFC2E041A5864B8004FCE5F /* buttongrid_email@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247816F8089400245F09 /* buttongrid_email@2x.png */; };
+		8CFC2E051A5864B8004FCE5F /* buttongrid_emaillink.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247916F8089400245F09 /* buttongrid_emaillink.png */; };
+		8CFC2E061A5864B8004FCE5F /* buttongrid_emaillink@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247A16F8089400245F09 /* buttongrid_emaillink@2x.png */; };
+		8CFC2E071A5864B8004FCE5F /* buttongrid_facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247B16F8089400245F09 /* buttongrid_facebook.png */; };
+		8CFC2E081A5864B8004FCE5F /* Animations.css in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5C3183AD536000AEBC9 /* Animations.css */; };
+		8CFC2E091A5864B8004FCE5F /* buttongrid_facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247C16F8089400245F09 /* buttongrid_facebook@2x.png */; };
+		8CFC2E0A1A5864B8004FCE5F /* buttongrid_print.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247D16F8089400245F09 /* buttongrid_print.png */; };
+		8CFC2E0B1A5864B8004FCE5F /* buttongrid_print@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247E16F8089400245F09 /* buttongrid_print@2x.png */; };
+		8CFC2E0C1A5864B8004FCE5F /* Stylesheet.css in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5CC183AD536000AEBC9 /* Stylesheet.css */; };
+		8CFC2E0D1A5864B8004FCE5F /* buttongrid_share.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68247F16F8089400245F09 /* buttongrid_share.png */; };
+		8CFC2E0E1A5864B8004FCE5F /* buttongrid_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68248016F8089400245F09 /* buttongrid_share@2x.png */; };
+		8CFC2E0F1A5864B8004FCE5F /* buttongrid_twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68248116F8089400245F09 /* buttongrid_twitter.png */; };
+		8CFC2E101A5864B8004FCE5F /* buttongrid_twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C68248216F8089400245F09 /* buttongrid_twitter@2x.png */; };
+		8CFC2E111A5864B8004FCE5F /* arrow-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CF9CE3E16F8200A003B0933 /* arrow-left.png */; };
+		8CFC2E121A5864B8004FCE5F /* arrow-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CF9CE3F16F8200A003B0933 /* arrow-left@2x.png */; };
+		8CFC2E131A5864B8004FCE5F /* arrow-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CF9CE4016F8200A003B0933 /* arrow-right.png */; };
+		8CFC2E141A5864B8004FCE5F /* arrow-right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CF9CE4116F8200A003B0933 /* arrow-right@2x.png */; };
+		8CFC2E151A5864B8004FCE5F /* intro_bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8C24A40716F94C1100703F97 /* intro_bg.jpg */; };
+		8CFC2E161A5864B8004FCE5F /* MapViewAdditions.css in Resources */ = {isa = PBXBuildFile; fileRef = 8C53DFF616FB8319008EF8B1 /* MapViewAdditions.css */; };
+		8CFC2E171A5864B8004FCE5F /* contract.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13BA16FD2B21004CA7D5 /* contract.png */; };
+		8CFC2E181A5864B8004FCE5F /* UnboundTrial-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8C6A035318216566003A4D99 /* UnboundTrial-Info.plist */; };
+		8CFC2E191A5864B8004FCE5F /* contract@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13BB16FD2B21004CA7D5 /* contract@2x.png */; };
+		8CFC2E1A1A5864B8004FCE5F /* expand.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13BC16FD2B21004CA7D5 /* expand.png */; };
+		8CFC2E1B1A5864B8004FCE5F /* Release Notes.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5CB183AD536000AEBC9 /* Release Notes.rtf */; };
+		8CFC2E1C1A5864B8004FCE5F /* expand@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13BD16FD2B21004CA7D5 /* expand@2x.png */; };
+		8CFC2E1D1A5864B8004FCE5F /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13C216FD6111004CA7D5 /* play.png */; };
+		8CFC2E1E1A5864B8004FCE5F /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CFC13C316FD6111004CA7D5 /* play@2x.png */; };
+		8CFC2E1F1A5864B8004FCE5F /* captionbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9AA2B716FFE39500D989CA /* captionbutton.png */; };
+		8CFC2E201A5864B8004FCE5F /* captionbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9AA2B816FFE39500D989CA /* captionbutton@2x.png */; };
+		8CFC2E211A5864B8004FCE5F /* MapKit-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5C5183AD536000AEBC9 /* MapKit-Info.plist */; };
+		8CFC2E221A5864B8004FCE5F /* PIXSlideshowOptonsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C9AA2BD1700A5C000D989CA /* PIXSlideshowOptonsViewController.xib */; };
+		8CFC2E231A5864B8004FCE5F /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C5D757217015A5C0008CC00 /* pause.png */; };
+		8CFC2E241A5864B8004FCE5F /* MKPinAnnotationColorPurple.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5C9183AD536000AEBC9 /* MKPinAnnotationColorPurple.png */; };
+		8CFC2E251A5864B8004FCE5F /* pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C5D757317015A5C0008CC00 /* pause@2x.png */; };
+		8CFC2E261A5864B8004FCE5F /* sortbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C23026217056E6E001A5510 /* sortbutton.png */; };
+		8CFC2E271A5864B8004FCE5F /* sortbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C23026317056E6E001A5510 /* sortbutton@2x.png */; };
+		8CFC2E281A5864B8004FCE5F /* addbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C23026617057400001A5510 /* addbutton.png */; };
+		8CFC2E291A5864B8004FCE5F /* addbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C23026717057400001A5510 /* addbutton@2x.png */; };
+		8CFC2E2A1A5864B8004FCE5F /* TransparentPixel.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5CD183AD536000AEBC9 /* TransparentPixel.png */; };
+		8CFC2E2B1A5864B8004FCE5F /* preferences_dark_theme.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE561712843B00AA72B0 /* preferences_dark_theme.png */; };
+		8CFC2E2C1A5864B8004FCE5F /* preferences_light_theme.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE571712843B00AA72B0 /* preferences_light_theme.png */; };
+		8CFC2E2D1A5864B8004FCE5F /* PIXHUDMessageController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE6117134BEE00AA72B0 /* PIXHUDMessageController.xib */; };
+		8CFC2E2E1A5864B8004FCE5F /* leapconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE641713701200AA72B0 /* leapconnected.png */; };
+		8CFC2E2F1A5864B8004FCE5F /* leapconnected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE651713701200AA72B0 /* leapconnected@2x.png */; };
+		8CFC2E301A5864B8004FCE5F /* graydot.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE681713EAAA00AA72B0 /* graydot.png */; };
+		8CFC2E311A5864B8004FCE5F /* graydot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE691713EAAA00AA72B0 /* graydot@2x.png */; };
+		8CFC2E321A5864B8004FCE5F /* greendot.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE6A1713EAAA00AA72B0 /* greendot.png */; };
+		8CFC2E331A5864B8004FCE5F /* greendot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C72FE6B1713EAAA00AA72B0 /* greendot@2x.png */; };
+		8CFC2E341A5864B8004FCE5F /* PIXLeapTutorialWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C14692717149A92009ECCC5 /* PIXLeapTutorialWindowController.xib */; };
+		8CFC2E351A5864B8004FCE5F /* LeapTutorial0.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C1469311714B1C7009ECCC5 /* LeapTutorial0.mov */; };
+		8CFC2E361A5864B8004FCE5F /* LeapTutorial1.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C1469331714B442009ECCC5 /* LeapTutorial1.mov */; };
+		8CFC2E371A5864B8004FCE5F /* LeapTutorial2.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C35808E1714D99E00352870 /* LeapTutorial2.mov */; };
+		8CFC2E381A5864B8004FCE5F /* LeapTutorial3.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8C35808F1714D99E00352870 /* LeapTutorial3.mov */; };
+		8CFC2E391A5864B8004FCE5F /* MainMenu-original.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C82A85D1718E28A009DD803 /* MainMenu-original.xib */; };
+		8CFC2E3A1A5864B8004FCE5F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C4313511828399600DB0053 /* Images.xcassets */; };
+		8CFC2E3B1A5864B8004FCE5F /* fullnophoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C82A86017192798009DD803 /* fullnophoto.png */; };
+		8CFC2E3C1A5864B8004FCE5F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CFDF767182716FD00809018 /* Images.xcassets */; };
+		8CFC2E3D1A5864B8004FCE5F /* fullnophoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C82A86117192798009DD803 /* fullnophoto@2x.png */; };
+		8CFC2E3E1A5864B8004FCE5F /* PIXAboutWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C82A866171A5138009DD803 /* PIXAboutWindowController.xib */; };
+		8CFC2E3F1A5864B8004FCE5F /* pixite-logo-wide.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C8B6DEE171BBC4C00AB230F /* pixite-logo-wide.png */; };
+		8CFC2E401A5864B8004FCE5F /* click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8C5019C9171C803F00829914 /* click.wav */; };
+		8CFC2E411A5864B8004FCE5F /* success.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC94923171C92E900EC1431 /* success.png */; };
+		8CFC2E421A5864B8004FCE5F /* success@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC94924171C92E900EC1431 /* success@2x.png */; };
+		8CFC2E431A5864B8004FCE5F /* softtap.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8CC94927171CDC5E00EC1431 /* softtap.wav */; };
+		8CFC2E441A5864B8004FCE5F /* MarkerTest.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5C7183AD536000AEBC9 /* MarkerTest.png */; };
+		8CFC2E451A5864B8004FCE5F /* success-backward.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC94929171DF00000EC1431 /* success-backward.png */; };
+		8CFC2E461A5864B8004FCE5F /* success-backward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC9492A171DF00000EC1431 /* success-backward@2x.png */; };
+		8CFC2E471A5864B8004FCE5F /* success-forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC9492B171DF00000EC1431 /* success-forward.png */; };
+		8CFC2E481A5864B8004FCE5F /* success-forward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CC9492C171DF00000EC1431 /* success-forward@2x.png */; };
+		8CFC2E491A5864B8004FCE5F /* LeapTutorial4.mov in Resources */ = {isa = PBXBuildFile; fileRef = 8CC94931171E145A00EC1431 /* LeapTutorial4.mov */; };
+		8CFC2E4A1A5864B8004FCE5F /* Blank.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1D23CC17172095E000C7FF70 /* Blank.jpg */; };
+		8CFC2E4B1A5864B8004FCE5F /* Mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1D23CC18172095E000C7FF70 /* Mask.jpg */; };
+		8CFC2E4C1A5864B8004FCE5F /* Shading.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 1D23CC19172095E000C7FF70 /* Shading.tiff */; };
+		8CFC2E4D1A5864B8004FCE5F /* PIXProgressWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C72089A1749B1720074705D /* PIXProgressWindowController.xib */; };
+		8CFC2E4E1A5864B8004FCE5F /* leapnotconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CA9545E1756A5AD0016AE23 /* leapnotconnected.png */; };
+		8CFC2E4F1A5864B8004FCE5F /* leapnotconnected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CA9545F1756A5AD0016AE23 /* leapnotconnected@2x.png */; };
+		8CFC2E501A5864B8004FCE5F /* MapKit.html in Resources */ = {isa = PBXBuildFile; fileRef = 8C9FA5C6183AD536000AEBC9 /* MapKit.html */; };
+		8CFC2E511A5864B8004FCE5F /* videoview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D77F36F1795DC0C00FCF0F5 /* videoview.xib */; };
+		8CFC2E521A5864B8004FCE5F /* playbutton-tinted.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D368173179A5AA5004538FA /* playbutton-tinted.png */; };
+		8CFC2E531A5864B8004FCE5F /* playbutton-tinted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D368174179A5AA5004538FA /* playbutton-tinted@2x.png */; };
+		8CFC2E541A5864B8004FCE5F /* playbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D368175179A5AA5004538FA /* playbutton.png */; };
+		8CFC2E551A5864B8004FCE5F /* playbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D368176179A5AA5004538FA /* playbutton@2x.png */; };
+		8CFC2E561A5864B8004FCE5F /* tempVideo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8CDFEAA317B8896600BC5DD9 /* tempVideo.jpg */; };
+		8CFC2E571A5864B8004FCE5F /* tempVideo@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8CDFEAA417B8896600BC5DD9 /* tempVideo@2x.jpg */; };
+		8CFC2E581A5864B8004FCE5F /* Licences.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8CF05AEE17C3097300AB88B5 /* Licences.txt */; };
+		8CFC2E591A5864B8004FCE5F /* Unbound.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 8CF05AF117C3374F00AB88B5 /* Unbound.iconset */; };
+		8CFC2E5A1A5864B8004FCE5F /* Unbound.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 1D69E646170DD7B70031AF73 /* Unbound.entitlements */; };
+		8CFC2E5C1A5864B8004FCE5F /* libLeap.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8CEE1F3C1A083413005A200B /* libLeap.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		8CFDF768182716FD00809018 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CFDF767182716FD00809018 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -768,6 +772,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
+				8CDF0D8C1A37AA5300FFC2FE /* libLeap.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -791,23 +796,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8C9FA64C183AD5A4000AEBC9 /* Copy Frameworks */ = {
+		8CFC2DD31A5864B8004FCE5F /* Copy Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				8C9FA64D183AD5A4000AEBC9 /* Sparkle.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8C9FA6D3183AD5A4000AEBC9 /* CopyFiles */ = {
+		8CFC2E5B1A5864B8004FCE5F /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
+				8CFC2E5C1A5864B8004FCE5F /* libLeap.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1148,7 +1153,6 @@
 		8C9FA5CB183AD536000AEBC9 /* Release Notes.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = "Release Notes.rtf"; sourceTree = "<group>"; };
 		8C9FA5CC183AD536000AEBC9 /* Stylesheet.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = Stylesheet.css; sourceTree = "<group>"; };
 		8C9FA5CD183AD536000AEBC9 /* TransparentPixel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TransparentPixel.png; sourceTree = "<group>"; };
-		8C9FA6D8183AD5A4000AEBC9 /* Unbound.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unbound.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C9FA6D9183AD5A5000AEBC9 /* Unbound Trial copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Unbound Trial copy-Info.plist"; path = "/Users/scottsykora/Documents/Docs/WebAlbums/code/unbound_osx/UnboundApp/Unbound Trial copy-Info.plist"; sourceTree = "<absolute>"; };
 		8CA459CF174D68A1002BF431 /* PIXAccount.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PIXAccount.h; sourceTree = "<group>"; };
 		8CA9545E1756A5AD0016AE23 /* leapnotconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leapnotconnected.png; sourceTree = "<group>"; };
@@ -1200,6 +1204,8 @@
 		8CFC13BD16FD2B21004CA7D5 /* expand@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "expand@2x.png"; sourceTree = "<group>"; };
 		8CFC13C216FD6111004CA7D5 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
 		8CFC13C316FD6111004CA7D5 /* play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play@2x.png"; sourceTree = "<group>"; };
+		8CFC2E601A5864B8004FCE5F /* Unbound copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unbound copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8CFC2E611A5864B9004FCE5F /* Unbound copy2-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Unbound copy2-Info.plist"; path = "/Users/scottsykora/Documents/Docs/WebAlbums/code/unbound_osx/UnboundApp/Unbound copy2-Info.plist"; sourceTree = "<absolute>"; };
 		8CFDF7651827123700809018 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		8CFDF767182716FD00809018 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Unbound/Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1237,19 +1243,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8C9FA64E183AD5A4000AEBC9 /* Frameworks */ = {
+		8CFC2DD41A5864B8004FCE5F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8C9FA64F183AD5A4000AEBC9 /* WebKit.framework in Frameworks */,
-				8C9FA650183AD5A4000AEBC9 /* CoreLocation.framework in Frameworks */,
-				8C9FA651183AD5A4000AEBC9 /* QTKit.framework in Frameworks */,
-				8C9FA652183AD5A4000AEBC9 /* CoreFoundation.framework in Frameworks */,
-				8C9FA653183AD5A4000AEBC9 /* Quartz.framework in Frameworks */,
-				8C9FA654183AD5A4000AEBC9 /* QuartzCore.framework in Frameworks */,
-				8CEE1F3F1A083413005A200B /* libLeap.dylib in Frameworks */,
-				8C9FA655183AD5A4000AEBC9 /* Cocoa.framework in Frameworks */,
-				8C9FA657183AD5A4000AEBC9 /* Sparkle.framework in Frameworks */,
+				8CFC2DD51A5864B8004FCE5F /* SystemConfiguration.framework in Frameworks */,
+				8CFC2DD61A5864B8004FCE5F /* WebKit.framework in Frameworks */,
+				8CFC2DD71A5864B8004FCE5F /* CoreLocation.framework in Frameworks */,
+				8CFC2DD81A5864B8004FCE5F /* QTKit.framework in Frameworks */,
+				8CFC2DD91A5864B8004FCE5F /* CoreFoundation.framework in Frameworks */,
+				8CFC2DDA1A5864B8004FCE5F /* Quartz.framework in Frameworks */,
+				8CFC2DDB1A5864B8004FCE5F /* libLeap.dylib in Frameworks */,
+				8CFC2DDC1A5864B8004FCE5F /* QuartzCore.framework in Frameworks */,
+				8CFC2DDD1A5864B8004FCE5F /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1564,6 +1570,7 @@
 				1DB2F84D167ABE87008AC0F7 /* Frameworks */,
 				1DB2F84B167ABE87008AC0F7 /* Products */,
 				8C9FA6D9183AD5A5000AEBC9 /* Unbound Trial copy-Info.plist */,
+				8CFC2E611A5864B9004FCE5F /* Unbound copy2-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1572,7 +1579,7 @@
 			children = (
 				1DB2F84A167ABE87008AC0F7 /* Unbound.app */,
 				8C28611B17308566009A0B35 /* Unbound.app */,
-				8C9FA6D8183AD5A4000AEBC9 /* Unbound.app */,
+				8CFC2E601A5864B8004FCE5F /* Unbound copy.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1954,23 +1961,23 @@
 			productReference = 8C28611B17308566009A0B35 /* Unbound.app */;
 			productType = "com.apple.product-type.application";
 		};
-		8C9FA5D9183AD5A4000AEBC9 /* Unbound Non-MAS */ = {
+		8CFC2D5E1A5864B8004FCE5F /* Unbound Non-Sandbox */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8C9FA6D5183AD5A4000AEBC9 /* Build configuration list for PBXNativeTarget "Unbound Non-MAS" */;
+			buildConfigurationList = 8CFC2E5D1A5864B8004FCE5F /* Build configuration list for PBXNativeTarget "Unbound Non-Sandbox" */;
 			buildPhases = (
-				8C9FA5DA183AD5A4000AEBC9 /* Sources */,
-				8C9FA64C183AD5A4000AEBC9 /* Copy Frameworks */,
-				8C9FA64E183AD5A4000AEBC9 /* Frameworks */,
-				8C9FA658183AD5A4000AEBC9 /* Resources */,
-				8C9FA6D3183AD5A4000AEBC9 /* CopyFiles */,
+				8CFC2D5F1A5864B8004FCE5F /* Sources */,
+				8CFC2DD31A5864B8004FCE5F /* Copy Frameworks */,
+				8CFC2DD41A5864B8004FCE5F /* Frameworks */,
+				8CFC2DDE1A5864B8004FCE5F /* Resources */,
+				8CFC2E5B1A5864B8004FCE5F /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "Unbound Non-MAS";
+			name = "Unbound Non-Sandbox";
 			productName = UnboundApp;
-			productReference = 8C9FA6D8183AD5A4000AEBC9 /* Unbound.app */;
+			productReference = 8CFC2E601A5864B8004FCE5F /* Unbound copy.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -2002,10 +2009,10 @@
 							};
 						};
 					};
-					8C9FA5D9183AD5A4000AEBC9 = {
+					8CFC2D5E1A5864B8004FCE5F = {
 						SystemCapabilities = {
 							com.apple.Sandbox = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -2025,7 +2032,7 @@
 			targets = (
 				1DB2F849167ABE87008AC0F7 /* Unbound */,
 				8C28605917308566009A0B35 /* Unbound Trial */,
-				8C9FA5D9183AD5A4000AEBC9 /* Unbound Non-MAS */,
+				8CFC2D5E1A5864B8004FCE5F /* Unbound Non-Sandbox */,
 			);
 		};
 /* End PBXProject section */
@@ -2291,132 +2298,134 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8C9FA658183AD5A4000AEBC9 /* Resources */ = {
+		8CFC2DDE1A5864B8004FCE5F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8C9FA659183AD5A4000AEBC9 /* InfoPlist.strings in Resources */,
-				8C9FA65A183AD5A4000AEBC9 /* Credits.rtf in Resources */,
-				8C9FA65B183AD5A4000AEBC9 /* MainMenu.xib in Resources */,
-				8C9FA65C183AD5A4000AEBC9 /* dark_bg.png in Resources */,
-				8C9FA65D183AD5A4000AEBC9 /* MKPinAnnotationColorRed.png in Resources */,
-				8C9FA65E183AD5A4000AEBC9 /* Release Notes.rtf in Resources */,
-				8C9FA65F183AD5A4000AEBC9 /* dark_bg@2X.png in Resources */,
-				8C9FA660183AD5A4000AEBC9 /* nophoto.png in Resources */,
-				8C9FA661183AD5A4000AEBC9 /* nophoto@2x.png in Resources */,
-				8C9FA662183AD5A4000AEBC9 /* temp-portrait.jpg in Resources */,
-				8C9FA663183AD5A4000AEBC9 /* temp-portrait@2x.jpg in Resources */,
-				8C9FA664183AD5A4000AEBC9 /* temp.jpg in Resources */,
-				8C9FA665183AD5A4000AEBC9 /* MapKit-Info.plist in Resources */,
-				8C9FA666183AD5A4000AEBC9 /* temp@2x.jpg in Resources */,
-				8C9FA667183AD5A4000AEBC9 /* MapKit.html in Resources */,
-				8C9FA668183AD5A4000AEBC9 /* PIXMainWindow.xib in Resources */,
-				8C9FA669183AD5A4000AEBC9 /* PIXInfoWindowController.xib in Resources */,
-				8C9FA66A183AD5A4000AEBC9 /* PIXSplitViewController.xib in Resources */,
-				8C9FA66B183AD5A4000AEBC9 /* PIXSidebarViewController.xib in Resources */,
-				8C9FA66C183AD5A4000AEBC9 /* PIXPageViewController.xib in Resources */,
-				8C9FA66D183AD5A4000AEBC9 /* PIXImageBrowserViewController.xib in Resources */,
-				8C9FA66E183AD5A4000AEBC9 /* MarkerTest.png in Resources */,
-				8C9FA66F183AD5A4000AEBC9 /* AutoSizingImageView.xib in Resources */,
-				8C9FA670183AD5A4000AEBC9 /* nophoto_200x200.jpg in Resources */,
-				8C9FA671183AD5A4000AEBC9 /* PIXGridViewController.xib in Resources */,
-				8C9FA672183AD5A4000AEBC9 /* GeneralPreferencesView.xib in Resources */,
-				8C9FA673183AD5A4000AEBC9 /* AdvancedPreferencesView.xib in Resources */,
-				8C9FA674183AD5A4000AEBC9 /* MASPreferencesWindow.xib in Resources */,
-				8C9FA675183AD5A4000AEBC9 /* DebugPreferencesView.xib in Resources */,
-				8C9FA676183AD5A4000AEBC9 /* btn-roundrect-down.png in Resources */,
-				8C9FA677183AD5A4000AEBC9 /* btn-roundrect-down@2x.png in Resources */,
-				8C9FA678183AD5A4000AEBC9 /* btn-roundrect-up.png in Resources */,
-				8C9FA679183AD5A4000AEBC9 /* btn-roundrect-up@2x.png in Resources */,
-				8C9FA67A183AD5A4000AEBC9 /* PIXCustomShareSheetViewController.xib in Resources */,
-				8C9FA67B183AD5A4000AEBC9 /* PIXMiniExifViewController.xib in Resources */,
-				8C9FA67C183AD5A4000AEBC9 /* buttongrid_copy.png in Resources */,
-				8C9FA67D183AD5A4000AEBC9 /* buttongrid_copy@2x.png in Resources */,
-				8C9FA67E183AD5A4000AEBC9 /* buttongrid_email.png in Resources */,
-				8C9FA67F183AD5A4000AEBC9 /* buttongrid_email@2x.png in Resources */,
-				8C9FA680183AD5A4000AEBC9 /* buttongrid_emaillink.png in Resources */,
-				8C9FA681183AD5A4000AEBC9 /* buttongrid_emaillink@2x.png in Resources */,
-				8C9FA682183AD5A4000AEBC9 /* buttongrid_facebook.png in Resources */,
-				8C9FA683183AD5A4000AEBC9 /* buttongrid_facebook@2x.png in Resources */,
-				8C9FA684183AD5A4000AEBC9 /* buttongrid_print.png in Resources */,
-				8C9FA685183AD5A4000AEBC9 /* MKPinAnnotationColorPurple.png in Resources */,
-				8C9FA686183AD5A4000AEBC9 /* buttongrid_print@2x.png in Resources */,
-				8C9FA687183AD5A4000AEBC9 /* buttongrid_share.png in Resources */,
-				8C9FA688183AD5A4000AEBC9 /* buttongrid_share@2x.png in Resources */,
-				8C9FA689183AD5A4000AEBC9 /* buttongrid_twitter.png in Resources */,
-				8C9FA68A183AD5A4000AEBC9 /* buttongrid_twitter@2x.png in Resources */,
-				8C9FA68B183AD5A4000AEBC9 /* arrow-left.png in Resources */,
-				8C9FA68C183AD5A4000AEBC9 /* arrow-left@2x.png in Resources */,
-				8C9FA68D183AD5A4000AEBC9 /* arrow-right.png in Resources */,
-				8C9FA68E183AD5A4000AEBC9 /* arrow-right@2x.png in Resources */,
-				8C9FA68F183AD5A4000AEBC9 /* intro_bg.jpg in Resources */,
-				8C9FA690183AD5A4000AEBC9 /* MapViewAdditions.css in Resources */,
-				8C9FA691183AD5A4000AEBC9 /* contract.png in Resources */,
-				8C9FA692183AD5A4000AEBC9 /* contract@2x.png in Resources */,
-				8C9FA693183AD5A4000AEBC9 /* expand.png in Resources */,
-				8C9FA694183AD5A4000AEBC9 /* expand@2x.png in Resources */,
-				8C9FA695183AD5A4000AEBC9 /* play.png in Resources */,
-				8C9FA696183AD5A4000AEBC9 /* play@2x.png in Resources */,
-				8C9FA697183AD5A4000AEBC9 /* captionbutton.png in Resources */,
-				8C9FA698183AD5A4000AEBC9 /* captionbutton@2x.png in Resources */,
-				8C9FA699183AD5A4000AEBC9 /* PIXSlideshowOptonsViewController.xib in Resources */,
-				8C9FA69A183AD5A4000AEBC9 /* pause.png in Resources */,
-				8C9FA69B183AD5A4000AEBC9 /* pause@2x.png in Resources */,
-				8C9FA69C183AD5A4000AEBC9 /* sortbutton.png in Resources */,
-				8C9FA69D183AD5A4000AEBC9 /* sortbutton@2x.png in Resources */,
-				8C9FA69E183AD5A4000AEBC9 /* addbutton.png in Resources */,
-				8C9FA69F183AD5A4000AEBC9 /* addbutton@2x.png in Resources */,
-				8C9FA6A0183AD5A4000AEBC9 /* preferences_dark_theme.png in Resources */,
-				8C9FA6A1183AD5A4000AEBC9 /* preferences_light_theme.png in Resources */,
-				8C9FA6A2183AD5A4000AEBC9 /* PIXHUDMessageController.xib in Resources */,
-				8C9FA6A3183AD5A4000AEBC9 /* leapconnected.png in Resources */,
-				8C9FA6A4183AD5A4000AEBC9 /* leapconnected@2x.png in Resources */,
-				8C9FA6A5183AD5A4000AEBC9 /* graydot.png in Resources */,
-				8C9FA6A6183AD5A4000AEBC9 /* graydot@2x.png in Resources */,
-				8C9FA6A7183AD5A4000AEBC9 /* greendot.png in Resources */,
-				8C9FA6A8183AD5A4000AEBC9 /* greendot@2x.png in Resources */,
-				8C9FA6A9183AD5A4000AEBC9 /* PIXLeapTutorialWindowController.xib in Resources */,
-				8C9FA6AA183AD5A4000AEBC9 /* LeapTutorial0.mov in Resources */,
-				8C9FA6AB183AD5A4000AEBC9 /* LeapTutorial1.mov in Resources */,
-				8C9FA6AC183AD5A4000AEBC9 /* LeapTutorial2.mov in Resources */,
-				8C9FA6AD183AD5A4000AEBC9 /* LeapTutorial3.mov in Resources */,
-				8C9FA6AE183AD5A4000AEBC9 /* MainMenu-original.xib in Resources */,
-				8C9FA6AF183AD5A4000AEBC9 /* fullnophoto.png in Resources */,
-				8C9FA6B0183AD5A4000AEBC9 /* MKPinAnnotationColorGreen.png in Resources */,
-				8C9FA6B1183AD5A4000AEBC9 /* Images.xcassets in Resources */,
-				8C9FA6B2183AD5A4000AEBC9 /* fullnophoto@2x.png in Resources */,
-				8C9FA6B3183AD5A4000AEBC9 /* PIXAboutWindowController.xib in Resources */,
-				8C9FA6B4183AD5A4000AEBC9 /* pixite-logo-wide.png in Resources */,
-				8C9FA6B5183AD5A4000AEBC9 /* click.wav in Resources */,
-				8C9FA6B6183AD5A4000AEBC9 /* success.png in Resources */,
-				8C9FA6B7183AD5A4000AEBC9 /* License.rtf in Resources */,
-				8C9FA6B8183AD5A4000AEBC9 /* success@2x.png in Resources */,
-				8C9FA6B9183AD5A4000AEBC9 /* softtap.wav in Resources */,
-				8C9FA6BA183AD5A4000AEBC9 /* success-backward.png in Resources */,
-				8C9FA6BB183AD5A4000AEBC9 /* success-backward@2x.png in Resources */,
-				8C9FA6BC183AD5A4000AEBC9 /* success-forward.png in Resources */,
-				8C9FA6BD183AD5A4000AEBC9 /* success-forward@2x.png in Resources */,
-				8C9FA6BE183AD5A4000AEBC9 /* LeapTutorial4.mov in Resources */,
-				8C9FA6BF183AD5A4000AEBC9 /* Blank.jpg in Resources */,
-				8C9FA6C0183AD5A4000AEBC9 /* Mask.jpg in Resources */,
-				8C9FA6C1183AD5A4000AEBC9 /* Unbound-For-Mac-512.png in Resources */,
-				8C9FA6C2183AD5A4000AEBC9 /* Shading.tiff in Resources */,
-				8C9FA6C3183AD5A4000AEBC9 /* PIXProgressWindowController.xib in Resources */,
-				8C9FA6C4183AD5A4000AEBC9 /* leapnotconnected.png in Resources */,
-				8C9FA6C5183AD5A4000AEBC9 /* leapnotconnected@2x.png in Resources */,
-				8C9FA6C6183AD5A4000AEBC9 /* Stylesheet.css in Resources */,
-				8C9FA6C7183AD5A4000AEBC9 /* videoview.xib in Resources */,
-				8C9FA6C8183AD5A4000AEBC9 /* playbutton-tinted.png in Resources */,
-				8C9FA6C9183AD5A4000AEBC9 /* playbutton-tinted@2x.png in Resources */,
-				8C9FA6CA183AD5A4000AEBC9 /* Animations.css in Resources */,
-				8C9FA6CB183AD5A4000AEBC9 /* playbutton.png in Resources */,
-				8C9FA6CC183AD5A4000AEBC9 /* playbutton@2x.png in Resources */,
-				8C9FA6CD183AD5A4000AEBC9 /* tempVideo.jpg in Resources */,
-				8C9FA6CE183AD5A4000AEBC9 /* tempVideo@2x.jpg in Resources */,
-				8C9FA6CF183AD5A4000AEBC9 /* Licences.txt in Resources */,
-				8C9FA6D0183AD5A4000AEBC9 /* TransparentPixel.png in Resources */,
-				8C9FA6D1183AD5A4000AEBC9 /* UnboundTrial.entitlements in Resources */,
-				8C9FA6D2183AD5A4000AEBC9 /* Unbound.iconset in Resources */,
+				8CFC2DDF1A5864B8004FCE5F /* InfoPlist.strings in Resources */,
+				8CFC2DE01A5864B8004FCE5F /* Credits.rtf in Resources */,
+				8CFC2DE11A5864B8004FCE5F /* MainMenu.xib in Resources */,
+				8CFC2DE21A5864B8004FCE5F /* dark_bg.png in Resources */,
+				8CFC2DE31A5864B8004FCE5F /* dark_bg@2X.png in Resources */,
+				8CFC2DE41A5864B8004FCE5F /* nophoto.png in Resources */,
+				8CFC2DE51A5864B8004FCE5F /* License.rtf in Resources */,
+				8CFC2DE61A5864B8004FCE5F /* nophoto@2x.png in Resources */,
+				8CFC2DE71A5864B8004FCE5F /* temp-portrait.jpg in Resources */,
+				8CFC2DE81A5864B8004FCE5F /* MKPinAnnotationColorGreen.png in Resources */,
+				8CFC2DE91A5864B8004FCE5F /* temp-portrait@2x.jpg in Resources */,
+				8CFC2DEA1A5864B8004FCE5F /* temp.jpg in Resources */,
+				8CFC2DEB1A5864B8004FCE5F /* temp@2x.jpg in Resources */,
+				8CFC2DEC1A5864B8004FCE5F /* PIXMainWindow.xib in Resources */,
+				8CFC2DED1A5864B8004FCE5F /* PIXInfoWindowController.xib in Resources */,
+				8CFC2DEE1A5864B8004FCE5F /* PIXSplitViewController.xib in Resources */,
+				8CFC2DEF1A5864B8004FCE5F /* MKPinAnnotationColorRed.png in Resources */,
+				8CFC2DF01A5864B8004FCE5F /* PIXSidebarViewController.xib in Resources */,
+				8CFC2DF11A5864B8004FCE5F /* PIXPageViewController.xib in Resources */,
+				8CFC2DF21A5864B8004FCE5F /* PIXImageBrowserViewController.xib in Resources */,
+				8CFC2DF31A5864B8004FCE5F /* AutoSizingImageView.xib in Resources */,
+				8CFC2DF41A5864B8004FCE5F /* nophoto_200x200.jpg in Resources */,
+				8CFC2DF51A5864B8004FCE5F /* PIXGridViewController.xib in Resources */,
+				8CFC2DF61A5864B8004FCE5F /* GeneralPreferencesView.xib in Resources */,
+				8CFC2DF71A5864B8004FCE5F /* AdvancedPreferencesView.xib in Resources */,
+				8CFC2DF81A5864B8004FCE5F /* MASPreferencesWindow.xib in Resources */,
+				8CFC2DF91A5864B8004FCE5F /* DebugPreferencesView.xib in Resources */,
+				8CFC2DFA1A5864B8004FCE5F /* btn-roundrect-down.png in Resources */,
+				8CFC2DFB1A5864B8004FCE5F /* btn-roundrect-down@2x.png in Resources */,
+				8CFC2DFC1A5864B8004FCE5F /* btn-roundrect-up.png in Resources */,
+				8CFC2DFD1A5864B8004FCE5F /* btn-roundrect-up@2x.png in Resources */,
+				8CFC2DFE1A5864B8004FCE5F /* Unbound-For-Mac-512.png in Resources */,
+				8CFC2DFF1A5864B8004FCE5F /* PIXCustomShareSheetViewController.xib in Resources */,
+				8CFC2E001A5864B8004FCE5F /* PIXMiniExifViewController.xib in Resources */,
+				8CFC2E011A5864B8004FCE5F /* buttongrid_copy.png in Resources */,
+				8CFC2E021A5864B8004FCE5F /* buttongrid_copy@2x.png in Resources */,
+				8CFC2E031A5864B8004FCE5F /* buttongrid_email.png in Resources */,
+				8CFC2E041A5864B8004FCE5F /* buttongrid_email@2x.png in Resources */,
+				8CFC2E051A5864B8004FCE5F /* buttongrid_emaillink.png in Resources */,
+				8CFC2E061A5864B8004FCE5F /* buttongrid_emaillink@2x.png in Resources */,
+				8CFC2E071A5864B8004FCE5F /* buttongrid_facebook.png in Resources */,
+				8CFC2E081A5864B8004FCE5F /* Animations.css in Resources */,
+				8CFC2E091A5864B8004FCE5F /* buttongrid_facebook@2x.png in Resources */,
+				8CFC2E0A1A5864B8004FCE5F /* buttongrid_print.png in Resources */,
+				8CFC2E0B1A5864B8004FCE5F /* buttongrid_print@2x.png in Resources */,
+				8CFC2E0C1A5864B8004FCE5F /* Stylesheet.css in Resources */,
+				8CFC2E0D1A5864B8004FCE5F /* buttongrid_share.png in Resources */,
+				8CFC2E0E1A5864B8004FCE5F /* buttongrid_share@2x.png in Resources */,
+				8CFC2E0F1A5864B8004FCE5F /* buttongrid_twitter.png in Resources */,
+				8CFC2E101A5864B8004FCE5F /* buttongrid_twitter@2x.png in Resources */,
+				8CFC2E111A5864B8004FCE5F /* arrow-left.png in Resources */,
+				8CFC2E121A5864B8004FCE5F /* arrow-left@2x.png in Resources */,
+				8CFC2E131A5864B8004FCE5F /* arrow-right.png in Resources */,
+				8CFC2E141A5864B8004FCE5F /* arrow-right@2x.png in Resources */,
+				8CFC2E151A5864B8004FCE5F /* intro_bg.jpg in Resources */,
+				8CFC2E161A5864B8004FCE5F /* MapViewAdditions.css in Resources */,
+				8CFC2E171A5864B8004FCE5F /* contract.png in Resources */,
+				8CFC2E181A5864B8004FCE5F /* UnboundTrial-Info.plist in Resources */,
+				8CFC2E191A5864B8004FCE5F /* contract@2x.png in Resources */,
+				8CFC2E1A1A5864B8004FCE5F /* expand.png in Resources */,
+				8CFC2E1B1A5864B8004FCE5F /* Release Notes.rtf in Resources */,
+				8CFC2E1C1A5864B8004FCE5F /* expand@2x.png in Resources */,
+				8CFC2E1D1A5864B8004FCE5F /* play.png in Resources */,
+				8CFC2E1E1A5864B8004FCE5F /* play@2x.png in Resources */,
+				8CFC2E1F1A5864B8004FCE5F /* captionbutton.png in Resources */,
+				8CFC2E201A5864B8004FCE5F /* captionbutton@2x.png in Resources */,
+				8CFC2E211A5864B8004FCE5F /* MapKit-Info.plist in Resources */,
+				8CFC2E221A5864B8004FCE5F /* PIXSlideshowOptonsViewController.xib in Resources */,
+				8CFC2E231A5864B8004FCE5F /* pause.png in Resources */,
+				8CFC2E241A5864B8004FCE5F /* MKPinAnnotationColorPurple.png in Resources */,
+				8CFC2E251A5864B8004FCE5F /* pause@2x.png in Resources */,
+				8CFC2E261A5864B8004FCE5F /* sortbutton.png in Resources */,
+				8CFC2E271A5864B8004FCE5F /* sortbutton@2x.png in Resources */,
+				8CFC2E281A5864B8004FCE5F /* addbutton.png in Resources */,
+				8CFC2E291A5864B8004FCE5F /* addbutton@2x.png in Resources */,
+				8CFC2E2A1A5864B8004FCE5F /* TransparentPixel.png in Resources */,
+				8CFC2E2B1A5864B8004FCE5F /* preferences_dark_theme.png in Resources */,
+				8CFC2E2C1A5864B8004FCE5F /* preferences_light_theme.png in Resources */,
+				8CFC2E2D1A5864B8004FCE5F /* PIXHUDMessageController.xib in Resources */,
+				8CFC2E2E1A5864B8004FCE5F /* leapconnected.png in Resources */,
+				8CFC2E2F1A5864B8004FCE5F /* leapconnected@2x.png in Resources */,
+				8CFC2E301A5864B8004FCE5F /* graydot.png in Resources */,
+				8CFC2E311A5864B8004FCE5F /* graydot@2x.png in Resources */,
+				8CFC2E321A5864B8004FCE5F /* greendot.png in Resources */,
+				8CFC2E331A5864B8004FCE5F /* greendot@2x.png in Resources */,
+				8CFC2E341A5864B8004FCE5F /* PIXLeapTutorialWindowController.xib in Resources */,
+				8CFC2E351A5864B8004FCE5F /* LeapTutorial0.mov in Resources */,
+				8CFC2E361A5864B8004FCE5F /* LeapTutorial1.mov in Resources */,
+				8CFC2E371A5864B8004FCE5F /* LeapTutorial2.mov in Resources */,
+				8CFC2E381A5864B8004FCE5F /* LeapTutorial3.mov in Resources */,
+				8CFC2E391A5864B8004FCE5F /* MainMenu-original.xib in Resources */,
+				8CFC2E3A1A5864B8004FCE5F /* Images.xcassets in Resources */,
+				8CFC2E3B1A5864B8004FCE5F /* fullnophoto.png in Resources */,
+				8CFC2E3C1A5864B8004FCE5F /* Images.xcassets in Resources */,
+				8CFC2E3D1A5864B8004FCE5F /* fullnophoto@2x.png in Resources */,
+				8CFC2E3E1A5864B8004FCE5F /* PIXAboutWindowController.xib in Resources */,
+				8CFC2E3F1A5864B8004FCE5F /* pixite-logo-wide.png in Resources */,
+				8CFC2E401A5864B8004FCE5F /* click.wav in Resources */,
+				8CFC2E411A5864B8004FCE5F /* success.png in Resources */,
+				8CFC2E421A5864B8004FCE5F /* success@2x.png in Resources */,
+				8CFC2E431A5864B8004FCE5F /* softtap.wav in Resources */,
+				8CFC2E441A5864B8004FCE5F /* MarkerTest.png in Resources */,
+				8CFC2E451A5864B8004FCE5F /* success-backward.png in Resources */,
+				8CFC2E461A5864B8004FCE5F /* success-backward@2x.png in Resources */,
+				8CFC2E471A5864B8004FCE5F /* success-forward.png in Resources */,
+				8CFC2E481A5864B8004FCE5F /* success-forward@2x.png in Resources */,
+				8CFC2E491A5864B8004FCE5F /* LeapTutorial4.mov in Resources */,
+				8CFC2E4A1A5864B8004FCE5F /* Blank.jpg in Resources */,
+				8CFC2E4B1A5864B8004FCE5F /* Mask.jpg in Resources */,
+				8CFC2E4C1A5864B8004FCE5F /* Shading.tiff in Resources */,
+				8CFC2E4D1A5864B8004FCE5F /* PIXProgressWindowController.xib in Resources */,
+				8CFC2E4E1A5864B8004FCE5F /* leapnotconnected.png in Resources */,
+				8CFC2E4F1A5864B8004FCE5F /* leapnotconnected@2x.png in Resources */,
+				8CFC2E501A5864B8004FCE5F /* MapKit.html in Resources */,
+				8CFC2E511A5864B8004FCE5F /* videoview.xib in Resources */,
+				8CFC2E521A5864B8004FCE5F /* playbutton-tinted.png in Resources */,
+				8CFC2E531A5864B8004FCE5F /* playbutton-tinted@2x.png in Resources */,
+				8CFC2E541A5864B8004FCE5F /* playbutton.png in Resources */,
+				8CFC2E551A5864B8004FCE5F /* playbutton@2x.png in Resources */,
+				8CFC2E561A5864B8004FCE5F /* tempVideo.jpg in Resources */,
+				8CFC2E571A5864B8004FCE5F /* tempVideo@2x.jpg in Resources */,
+				8CFC2E581A5864B8004FCE5F /* Licences.txt in Resources */,
+				8CFC2E591A5864B8004FCE5F /* Unbound.iconset in Resources */,
+				8CFC2E5A1A5864B8004FCE5F /* Unbound.entitlements in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2666,124 +2675,125 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8C9FA5DA183AD5A4000AEBC9 /* Sources */ = {
+		8CFC2D5F1A5864B8004FCE5F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8C9FA5DB183AD5A4000AEBC9 /* main.m in Sources */,
-				8C9FA5DC183AD5A4000AEBC9 /* SBJsonWriter.m in Sources */,
-				8C9FA5DD183AD5A4000AEBC9 /* PIXAppDelegate.m in Sources */,
-				8C9FA5DE183AD5A4000AEBC9 /* PIXMainWindowController.m in Sources */,
-				8C9FA5DF183AD5A4000AEBC9 /* PIXInfoWindowController.m in Sources */,
-				8C9FA5E0183AD5A4000AEBC9 /* Preferences.m in Sources */,
-				8C9FA5E1183AD5A4000AEBC9 /* PIXViewController.m in Sources */,
-				8C9FA5E2183AD5A4000AEBC9 /* PIXNavigationController.m in Sources */,
-				8C9FA5E3183AD5A4000AEBC9 /* PIXSplitViewController.m in Sources */,
-				8C9FA5E4183AD5A4000AEBC9 /* PIXSidebarViewController.m in Sources */,
-				8C9FA5E5183AD5A4000AEBC9 /* PIXSidebarTableCellView.m in Sources */,
-				8C9FA5E6183AD5A4000AEBC9 /* SquareImageView.m in Sources */,
-				8C9FA5E7183AD5A4000AEBC9 /* MKPointAnnotation.m in Sources */,
-				8C9FA5E8183AD5A4000AEBC9 /* PIXPageViewController.m in Sources */,
-				8C9FA5E9183AD5A4000AEBC9 /* PIXImageBrowserViewController.m in Sources */,
-				8C9FA5EA183AD5A4000AEBC9 /* MKCircleView.m in Sources */,
-				8C9FA5EB183AD5A4000AEBC9 /* MKMultiPoint.m in Sources */,
-				8C9FA5EC183AD5A4000AEBC9 /* PIXImageBrowserView.m in Sources */,
-				8C9FA5ED183AD5A4000AEBC9 /* PIXImageBrowserCell.m in Sources */,
-				8C9FA5EE183AD5A4000AEBC9 /* MKMapView+DelegateWrappers.m in Sources */,
-				8C9FA5EF183AD5A4000AEBC9 /* AutoSizingImageView.m in Sources */,
-				8C9FA5F0183AD5A4000AEBC9 /* PIXPageView.m in Sources */,
-				8C9FA5F1183AD5A4000AEBC9 /* SBJsonParser.m in Sources */,
-				8C9FA5F2183AD5A4000AEBC9 /* MKCircle.m in Sources */,
-				8C9FA5F3183AD5A4000AEBC9 /* NSObject+SBJSON.m in Sources */,
-				8C9FA5F4183AD5A4000AEBC9 /* MKPolylineView.m in Sources */,
-				8C9FA5F5183AD5A4000AEBC9 /* PIXImageViewController.m in Sources */,
-				8C9FA5F6183AD5A4000AEBC9 /* PIXModifierSwitchedEvent.m in Sources */,
-				8C9FA5F7183AD5A4000AEBC9 /* NSColor+Additions.m in Sources */,
-				8C9FA5F8183AD5A4000AEBC9 /* PIXDataModel.xcdatamodeld in Sources */,
-				8C9FA5F9183AD5A4000AEBC9 /* MKAnnotationView.m in Sources */,
-				8C9FA5FA183AD5A4000AEBC9 /* PIXPhoto.m in Sources */,
-				8C9FA5FB183AD5A4000AEBC9 /* MKMapView.m in Sources */,
-				8C9FA5FC183AD5A4000AEBC9 /* PIXAccount.m in Sources */,
-				8C9FA5FD183AD5A4000AEBC9 /* MKUserLocation+Private.m in Sources */,
-				8C9FA5FE183AD5A4000AEBC9 /* MKPlacemark+Private.m in Sources */,
-				8C9FA5FF183AD5A4000AEBC9 /* MKShape.m in Sources */,
-				8C9FA600183AD5A4000AEBC9 /* GetPathsOperation.m in Sources */,
-				8C9FA601183AD5A4000AEBC9 /* LoadOperation.m in Sources */,
-				8C9FA602183AD5A4000AEBC9 /* MakeThumbnailOperation.m in Sources */,
-				8C9FA603183AD5A4000AEBC9 /* PIXAlbumGridViewController.m in Sources */,
-				8C9FA604183AD5A4000AEBC9 /* CNGridView.m in Sources */,
-				8C9FA605183AD5A4000AEBC9 /* CNGridViewItem.m in Sources */,
-				8C9FA606183AD5A4000AEBC9 /* MKMapView+Additions.m in Sources */,
-				8C9FA607183AD5A4000AEBC9 /* CNGridViewItemLayout.m in Sources */,
-				8C9FA608183AD5A4000AEBC9 /* NSString+SBJSON.m in Sources */,
-				8C9FA609183AD5A4000AEBC9 /* NSColor+CNGridViewPalette.m in Sources */,
-				8C9FA60A183AD5A4000AEBC9 /* MKMapView+Private.m in Sources */,
-				8C9FA60B183AD5A4000AEBC9 /* NSView+CNGridView.m in Sources */,
-				8C9FA60C183AD5A4000AEBC9 /* PIXAlbumGridViewItem.m in Sources */,
-				8C9FA60D183AD5A4000AEBC9 /* PIXGridViewItemLayout.m in Sources */,
-				8C9FA60E183AD5A4000AEBC9 /* PIXGridViewController.m in Sources */,
-				8C9FA60F183AD5A4000AEBC9 /* PIXPhotoGridViewController.m in Sources */,
-				8C9FA610183AD5A4000AEBC9 /* PIXGridViewItem.m in Sources */,
-				8C9FA611183AD5A4000AEBC9 /* PIXPhotoGridViewItem.m in Sources */,
-				8C9FA612183AD5A4000AEBC9 /* PIXLoadAlbumOperation.m in Sources */,
-				8C9FA613183AD5A4000AEBC9 /* SBJSON.m in Sources */,
-				8C9FA614183AD5A4000AEBC9 /* MKUserLocation.m in Sources */,
-				8C9FA615183AD5A4000AEBC9 /* MKReverseGeocoder.m in Sources */,
-				8C9FA616183AD5A4000AEBC9 /* PIXGetAlbumPathsOperation.m in Sources */,
-				8C9FA617183AD5A4000AEBC9 /* GeneralPreferencesViewController.m in Sources */,
-				8C9FA618183AD5A4000AEBC9 /* AdvancedPreferencesViewController.m in Sources */,
-				8C9FA619183AD5A4000AEBC9 /* MKPolygon.m in Sources */,
-				8C9FA61A183AD5A4000AEBC9 /* MASPreferencesWindowController.m in Sources */,
-				8C9FA61B183AD5A4000AEBC9 /* DebugPreferencesViewController.m in Sources */,
-				8C9FA61C183AD5A4000AEBC9 /* PIXGradientBarView.m in Sources */,
-				8C9FA61D183AD5A4000AEBC9 /* PIXAlbum.m in Sources */,
-				8C9FA61E183AD5A4000AEBC9 /* ArchDirectoryObservationCenter.m in Sources */,
-				8C9FA61F183AD5A4000AEBC9 /* NSURL+DirectoryObserver.m in Sources */,
-				8C9FA620183AD5A4000AEBC9 /* PIXFileManager.m in Sources */,
-				8C9FA621183AD5A4000AEBC9 /* PIXCustomButtonCell.m in Sources */,
-				8C9FA622183AD5A4000AEBC9 /* PIXCustomButton.m in Sources */,
-				8C9FA623183AD5A4000AEBC9 /* PIXCustomShareSheetViewController.m in Sources */,
-				8C9FA624183AD5A4000AEBC9 /* PIXFileParser.m in Sources */,
-				8C9FA625183AD5A4000AEBC9 /* MKOverlayPathView.m in Sources */,
-				8C9FA626183AD5A4000AEBC9 /* MKMapView+WebViewIntegration.m in Sources */,
-				8C9FA627183AD5A4000AEBC9 /* PIXSidebarClipView.m in Sources */,
-				8C9FA628183AD5A4000AEBC9 /* MKOverlayView.m in Sources */,
-				8C9FA629183AD5A4000AEBC9 /* PIXSidebarScrollView.m in Sources */,
-				8C9FA62A183AD5A4000AEBC9 /* PIXMiniExifViewController.m in Sources */,
-				8C9FA62B183AD5A4000AEBC9 /* PIXExifBGView.m in Sources */,
-				8C9FA62C183AD5A4000AEBC9 /* LeapObjectiveC.mm in Sources */,
-				8C9FA62D183AD5A4000AEBC9 /* PIXLeapInputManager.m in Sources */,
-				8C9FA62E183AD5A4000AEBC9 /* MKPinAnnotationView.m in Sources */,
-				8C9FA62F183AD5A4000AEBC9 /* PIXSelectionLayer.m in Sources */,
-				8C9FA630183AD5A4000AEBC9 /* NSBezierPath+pathUtilities.m in Sources */,
-				8C9FA631183AD5A4000AEBC9 /* PIXPageHUDView.m in Sources */,
-				8C9FA632183AD5A4000AEBC9 /* PIXPageHUDWindow.m in Sources */,
-				8C9FA633183AD5A4000AEBC9 /* PIXInfoPanelView.m in Sources */,
-				8C9FA634183AD5A4000AEBC9 /* MKWebView.m in Sources */,
-				8C9FA635183AD5A4000AEBC9 /* PIXRoundRectView.m in Sources */,
-				8C9FA636183AD5A4000AEBC9 /* MKPolygonView.m in Sources */,
-				8C9FA637183AD5A4000AEBC9 /* MKGeocoder.m in Sources */,
-				8C9FA638183AD5A4000AEBC9 /* PIXShareManager.m in Sources */,
-				8C9FA639183AD5A4000AEBC9 /* PIXInfoPanelViewController.m in Sources */,
-				8C9FA63A183AD5A4000AEBC9 /* PIXSlideshowOptonsViewController.m in Sources */,
-				8C9FA63B183AD5A4000AEBC9 /* MKView.m in Sources */,
-				8C9FA63C183AD5A4000AEBC9 /* PIXFileTextField.m in Sources */,
-				8C9FA63D183AD5A4000AEBC9 /* PIXOutlineView.m in Sources */,
-				8C9FA63E183AD5A4000AEBC9 /* PIXRoundedProgressIndicator.m in Sources */,
-				8C9FA63F183AD5A4000AEBC9 /* MKPlacemark.m in Sources */,
-				8C9FA640183AD5A4000AEBC9 /* PIXHUDMessageController.m in Sources */,
-				8C9FA641183AD5A4000AEBC9 /* PIXLeapTutorialWindowController.m in Sources */,
-				8C9FA642183AD5A4000AEBC9 /* MKPolyline.m in Sources */,
-				8CEDF76C185A446B00E35E77 /* PIXHandCursorButton.m in Sources */,
-				8C9FA643183AD5A4000AEBC9 /* PIXAboutWindowController.m in Sources */,
-				8C9FA644183AD5A4000AEBC9 /* PIXTransitionSetup.m in Sources */,
-				8C9FA645183AD5A4000AEBC9 /* PIXProgressWindowController.m in Sources */,
-				8C9FA646183AD5A4000AEBC9 /* PIXSeperatedSpinnerView.m in Sources */,
-				8C9FA647183AD5A4000AEBC9 /* SBJsonBase.m in Sources */,
-				8C9FA648183AD5A4000AEBC9 /* PIXVideoViewController.m in Sources */,
-				8C9FA649183AD5A4000AEBC9 /* PIXVideoImageOverlayView.m in Sources */,
-				8C9FA64A183AD5A4000AEBC9 /* PIXPlayVideoHUDWindow.m in Sources */,
-				8C9FA64B183AD5A4000AEBC9 /* AutoSizingVideoView.m in Sources */,
+				8CFC2D601A5864B8004FCE5F /* main.m in Sources */,
+				8CFC2D611A5864B8004FCE5F /* SBJsonWriter.m in Sources */,
+				8CFC2D621A5864B8004FCE5F /* PIXAppDelegate.m in Sources */,
+				8CFC2D631A5864B8004FCE5F /* PIXMainWindowController.m in Sources */,
+				8CFC2D641A5864B8004FCE5F /* PIXInfoWindowController.m in Sources */,
+				8CFC2D651A5864B8004FCE5F /* Preferences.m in Sources */,
+				8CFC2D661A5864B8004FCE5F /* PIXViewController.m in Sources */,
+				8CFC2D671A5864B8004FCE5F /* PIXNavigationController.m in Sources */,
+				8CFC2D681A5864B8004FCE5F /* PIXSplitViewController.m in Sources */,
+				8CFC2D691A5864B8004FCE5F /* PIXSidebarViewController.m in Sources */,
+				8CFC2D6A1A5864B8004FCE5F /* PIXSidebarTableCellView.m in Sources */,
+				8CFC2D6B1A5864B8004FCE5F /* SquareImageView.m in Sources */,
+				8CFC2D6C1A5864B8004FCE5F /* MKPointAnnotation.m in Sources */,
+				8CFC2D6D1A5864B8004FCE5F /* PIXPageViewController.m in Sources */,
+				8CFC2D6E1A5864B8004FCE5F /* PIXImageBrowserViewController.m in Sources */,
+				8CFC2D6F1A5864B8004FCE5F /* MKCircleView.m in Sources */,
+				8CFC2D701A5864B8004FCE5F /* MKMultiPoint.m in Sources */,
+				8CFC2D711A5864B8004FCE5F /* PIXImageBrowserView.m in Sources */,
+				8CFC2D721A5864B8004FCE5F /* PIXImageBrowserCell.m in Sources */,
+				8CFC2D731A5864B8004FCE5F /* MKMapView+DelegateWrappers.m in Sources */,
+				8CFC2D741A5864B8004FCE5F /* AutoSizingImageView.m in Sources */,
+				8CFC2D751A5864B8004FCE5F /* PIXPageView.m in Sources */,
+				8CFC2D761A5864B8004FCE5F /* SBJsonParser.m in Sources */,
+				8CFC2D771A5864B8004FCE5F /* MKCircle.m in Sources */,
+				8CFC2D781A5864B8004FCE5F /* NSObject+SBJSON.m in Sources */,
+				8CFC2D791A5864B8004FCE5F /* MKPolylineView.m in Sources */,
+				8CFC2D7A1A5864B8004FCE5F /* PIXImageViewController.m in Sources */,
+				8CFC2D7B1A5864B8004FCE5F /* PIXModifierSwitchedEvent.m in Sources */,
+				8CFC2D7C1A5864B8004FCE5F /* NSColor+Additions.m in Sources */,
+				8CFC2D7D1A5864B8004FCE5F /* PIXDataModel.xcdatamodeld in Sources */,
+				8CFC2D7E1A5864B8004FCE5F /* MKAnnotationView.m in Sources */,
+				8CFC2D7F1A5864B8004FCE5F /* PIXPhoto.m in Sources */,
+				8CFC2D801A5864B8004FCE5F /* MKMapView.m in Sources */,
+				8CFC2D811A5864B8004FCE5F /* PIXAccount.m in Sources */,
+				8CFC2D821A5864B8004FCE5F /* MKUserLocation+Private.m in Sources */,
+				8CFC2D831A5864B8004FCE5F /* MKPlacemark+Private.m in Sources */,
+				8CFC2D841A5864B8004FCE5F /* MKShape.m in Sources */,
+				8CFC2D851A5864B8004FCE5F /* GetPathsOperation.m in Sources */,
+				8CFC2D861A5864B8004FCE5F /* LoadOperation.m in Sources */,
+				8CFC2D871A5864B8004FCE5F /* MakeThumbnailOperation.m in Sources */,
+				8CFC2D881A5864B8004FCE5F /* PIXAlbumGridViewController.m in Sources */,
+				8CFC2D891A5864B8004FCE5F /* CNGridView.m in Sources */,
+				8CFC2D8A1A5864B8004FCE5F /* CNGridViewItem.m in Sources */,
+				8CFC2D8B1A5864B8004FCE5F /* MKMapView+Additions.m in Sources */,
+				8CFC2D8C1A5864B8004FCE5F /* CNGridViewItemLayout.m in Sources */,
+				8CFC2D8D1A5864B8004FCE5F /* PIXHandCursorButton.m in Sources */,
+				8CFC2D8E1A5864B8004FCE5F /* NSString+SBJSON.m in Sources */,
+				8CFC2D8F1A5864B8004FCE5F /* NSColor+CNGridViewPalette.m in Sources */,
+				8CFC2D901A5864B8004FCE5F /* MKMapView+Private.m in Sources */,
+				8CFC2D911A5864B8004FCE5F /* NSView+CNGridView.m in Sources */,
+				8CFC2D921A5864B8004FCE5F /* PIXAlbumGridViewItem.m in Sources */,
+				8CFC2D931A5864B8004FCE5F /* PIXGridViewItemLayout.m in Sources */,
+				8CFC2D941A5864B8004FCE5F /* PIXGridViewController.m in Sources */,
+				8CFC2D951A5864B8004FCE5F /* PIXPhotoGridViewController.m in Sources */,
+				8CFC2D961A5864B8004FCE5F /* PIXGridViewItem.m in Sources */,
+				8CFC2D971A5864B8004FCE5F /* PIXPhotoGridViewItem.m in Sources */,
+				8CFC2D981A5864B8004FCE5F /* PIXLoadAlbumOperation.m in Sources */,
+				8CFC2D991A5864B8004FCE5F /* SBJSON.m in Sources */,
+				8CFC2D9A1A5864B8004FCE5F /* MKUserLocation.m in Sources */,
+				8CFC2D9B1A5864B8004FCE5F /* MKReverseGeocoder.m in Sources */,
+				8CFC2D9C1A5864B8004FCE5F /* PIXGetAlbumPathsOperation.m in Sources */,
+				8CFC2D9D1A5864B8004FCE5F /* GeneralPreferencesViewController.m in Sources */,
+				8CFC2D9E1A5864B8004FCE5F /* AdvancedPreferencesViewController.m in Sources */,
+				8CFC2D9F1A5864B8004FCE5F /* MKPolygon.m in Sources */,
+				8CFC2DA01A5864B8004FCE5F /* MASPreferencesWindowController.m in Sources */,
+				8CFC2DA11A5864B8004FCE5F /* DebugPreferencesViewController.m in Sources */,
+				8CFC2DA21A5864B8004FCE5F /* PIXGradientBarView.m in Sources */,
+				8CFC2DA31A5864B8004FCE5F /* PIXAlbum.m in Sources */,
+				8CFC2DA41A5864B8004FCE5F /* ArchDirectoryObservationCenter.m in Sources */,
+				8CFC2DA51A5864B8004FCE5F /* NSURL+DirectoryObserver.m in Sources */,
+				8CFC2DA61A5864B8004FCE5F /* PIXFileManager.m in Sources */,
+				8CFC2DA71A5864B8004FCE5F /* PIXCustomButtonCell.m in Sources */,
+				8CFC2DA81A5864B8004FCE5F /* PIXCustomButton.m in Sources */,
+				8CFC2DA91A5864B8004FCE5F /* PIXCustomShareSheetViewController.m in Sources */,
+				8CFC2DAA1A5864B8004FCE5F /* PIXFileParser.m in Sources */,
+				8CFC2DAB1A5864B8004FCE5F /* MKOverlayPathView.m in Sources */,
+				8CFC2DAC1A5864B8004FCE5F /* MKMapView+WebViewIntegration.m in Sources */,
+				8CFC2DAD1A5864B8004FCE5F /* PIXSidebarClipView.m in Sources */,
+				8CFC2DAE1A5864B8004FCE5F /* MKOverlayView.m in Sources */,
+				8CFC2DAF1A5864B8004FCE5F /* PIXSidebarScrollView.m in Sources */,
+				8CFC2DB01A5864B8004FCE5F /* PIXMiniExifViewController.m in Sources */,
+				8CFC2DB11A5864B8004FCE5F /* PIXExifBGView.m in Sources */,
+				8CFC2DB21A5864B8004FCE5F /* LeapObjectiveC.mm in Sources */,
+				8CFC2DB31A5864B8004FCE5F /* PIXLeapInputManager.m in Sources */,
+				8CFC2DB41A5864B8004FCE5F /* MKPinAnnotationView.m in Sources */,
+				8CFC2DB51A5864B8004FCE5F /* Appirater.m in Sources */,
+				8CFC2DB61A5864B8004FCE5F /* PIXSelectionLayer.m in Sources */,
+				8CFC2DB71A5864B8004FCE5F /* NSBezierPath+pathUtilities.m in Sources */,
+				8CFC2DB81A5864B8004FCE5F /* PIXPageHUDView.m in Sources */,
+				8CFC2DB91A5864B8004FCE5F /* PIXPageHUDWindow.m in Sources */,
+				8CFC2DBA1A5864B8004FCE5F /* PIXInfoPanelView.m in Sources */,
+				8CFC2DBB1A5864B8004FCE5F /* MKWebView.m in Sources */,
+				8CFC2DBC1A5864B8004FCE5F /* PIXRoundRectView.m in Sources */,
+				8CFC2DBD1A5864B8004FCE5F /* MKPolygonView.m in Sources */,
+				8CFC2DBE1A5864B8004FCE5F /* MKGeocoder.m in Sources */,
+				8CFC2DBF1A5864B8004FCE5F /* PIXShareManager.m in Sources */,
+				8CFC2DC01A5864B8004FCE5F /* PIXInfoPanelViewController.m in Sources */,
+				8CFC2DC11A5864B8004FCE5F /* PIXSlideshowOptonsViewController.m in Sources */,
+				8CFC2DC21A5864B8004FCE5F /* MKView.m in Sources */,
+				8CFC2DC31A5864B8004FCE5F /* PIXFileTextField.m in Sources */,
+				8CFC2DC41A5864B8004FCE5F /* PIXOutlineView.m in Sources */,
+				8CFC2DC51A5864B8004FCE5F /* PIXRoundedProgressIndicator.m in Sources */,
+				8CFC2DC61A5864B8004FCE5F /* MKPlacemark.m in Sources */,
+				8CFC2DC71A5864B8004FCE5F /* PIXHUDMessageController.m in Sources */,
+				8CFC2DC81A5864B8004FCE5F /* PIXLeapTutorialWindowController.m in Sources */,
+				8CFC2DC91A5864B8004FCE5F /* MKPolyline.m in Sources */,
+				8CFC2DCA1A5864B8004FCE5F /* PIXAboutWindowController.m in Sources */,
+				8CFC2DCB1A5864B8004FCE5F /* PIXTransitionSetup.m in Sources */,
+				8CFC2DCC1A5864B8004FCE5F /* PIXProgressWindowController.m in Sources */,
+				8CFC2DCD1A5864B8004FCE5F /* PIXSeperatedSpinnerView.m in Sources */,
+				8CFC2DCE1A5864B8004FCE5F /* SBJsonBase.m in Sources */,
+				8CFC2DCF1A5864B8004FCE5F /* PIXVideoViewController.m in Sources */,
+				8CFC2DD01A5864B8004FCE5F /* PIXVideoImageOverlayView.m in Sources */,
+				8CFC2DD11A5864B8004FCE5F /* PIXPlayVideoHUDWindow.m in Sources */,
+				8CFC2DD21A5864B8004FCE5F /* AutoSizingVideoView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2978,6 +2988,7 @@
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_NAME = Unbound;
 				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx10.9;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -3014,69 +3025,74 @@
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_NAME = Unbound;
 				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx10.9;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
-		8C9FA6D6183AD5A4000AEBC9 /* Debug */ = {
+		8CFC2E5E1A5864B8004FCE5F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CODE_SIGN_ENTITLEMENTS = UnboundTrial.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Unbound.entitlements;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/UnboundApp\"",
+					"\"$(SRCROOT)/UnboundApp\"/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UnboundApp/UnboundApp-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"USE_OLD_MAPS=1",
+					"APPIRATOR=1",
 				);
-				INFOPLIST_FILE = "Unbound Trial copy-Info.plist";
+				INFOPLIST_FILE = "Unbound copy2-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
-					"\"$(SRCROOT)/UnboundApp/MapKit.framework\"/**",
 				);
-				OTHER_CODE_SIGN_FLAGS = "--deep";
-				PRODUCT_NAME = Unbound;
+				PRODUCT_NAME = "Unbound copy";
 				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx10.9;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
-		8C9FA6D7183AD5A4000AEBC9 /* Release */ = {
+		8CFC2E5F1A5864B8004FCE5F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CODE_SIGN_ENTITLEMENTS = UnboundTrial.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Unbound.entitlements;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/UnboundApp\"",
+					"\"$(SRCROOT)/UnboundApp\"/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UnboundApp/UnboundApp-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "USE_OLD_MAPS=1";
-				INFOPLIST_FILE = "Unbound Trial copy-Info.plist";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"USE_OLD_MAPS=1",
+					"APPIRATOR=1",
+				);
+				INFOPLIST_FILE = "Unbound copy2-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
-					"\"$(SRCROOT)/UnboundApp/MapKit.framework\"/**",
 				);
-				OTHER_CODE_SIGN_FLAGS = "--deep";
-				PRODUCT_NAME = Unbound;
+				PRODUCT_NAME = "Unbound copy";
 				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx10.9;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -3111,11 +3127,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8C9FA6D5183AD5A4000AEBC9 /* Build configuration list for PBXNativeTarget "Unbound Non-MAS" */ = {
+		8CFC2E5D1A5864B8004FCE5F /* Build configuration list for PBXNativeTarget "Unbound Non-Sandbox" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8C9FA6D6183AD5A4000AEBC9 /* Debug */,
-				8C9FA6D7183AD5A4000AEBC9 /* Release */,
+				8CFC2E5E1A5864B8004FCE5F /* Debug */,
+				8CFC2E5F1A5864B8004FCE5F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
