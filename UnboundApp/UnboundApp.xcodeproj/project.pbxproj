@@ -179,7 +179,7 @@
 		8C2860A317308566009A0B35 /* PIXLeapTutorialWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C14692617149A92009ECCC5 /* PIXLeapTutorialWindowController.m */; };
 		8C2860A417308566009A0B35 /* PIXAboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C82A865171A5138009DD803 /* PIXAboutWindowController.m */; };
 		8C2860A517308566009A0B35 /* PIXTransitionSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D23CC151720604E00C7FF70 /* PIXTransitionSetup.m */; };
-		8C2860A817308566009A0B35 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8C286055172F590D009A0B35 /* Sparkle.framework */; };
+		8C2860A817308566009A0B35 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8C286055172F590D009A0B35 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		8C2860AA17308566009A0B35 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C14692E1714A5CC009ECCC5 /* QTKit.framework */; };
 		8C2860AC17308566009A0B35 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C53DFF116FB7CED008EF8B1 /* CoreFoundation.framework */; };
 		8C2860AD17308566009A0B35 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4A1E2A167D2A4C00C9A895 /* Quartz.framework */; };
@@ -1262,6 +1262,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04918ED81C7F94240055E792 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				1DB2F860167ABE87008AC0F7 /* PIXAppDelegate.h */,
+				1DB2F861167ABE87008AC0F7 /* PIXAppDelegate.m */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		04918ED91C7F94F30055E792 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				1D4A1DFE167BEAF200C9A895 /* PIXViewController.h */,
+				1D4A1DFF167BEAF200C9A895 /* PIXViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		1D0834F5167D63E5003D557A /* PageView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1527,8 +1545,6 @@
 		1D8CD7EA16AB6D310072D516 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				1D4A1DFE167BEAF200C9A895 /* PIXViewController.h */,
-				1D4A1DFF167BEAF200C9A895 /* PIXViewController.m */,
 				1D4A1E01167BEC1600C9A895 /* PIXNavigationController.h */,
 				1D4A1E02167BEC1700C9A895 /* PIXNavigationController.m */,
 				8C249E7016AB429E00CB97AF /* CNGridView */,
@@ -1615,6 +1631,8 @@
 		1DB2F854167ABE87008AC0F7 /* UnboundApp */ = {
 			isa = PBXGroup;
 			children = (
+				04918ED81C7F94240055E792 /* Application */,
+				04918ED91C7F94F30055E792 /* Controllers */,
 				1DB2F870167AC0A6008AC0F7 /* Sources */,
 				1D4A1D97167AD90200C9A895 /* Resources */,
 				1DB2F855167ABE87008AC0F7 /* Supporting Files */,
@@ -1643,8 +1661,6 @@
 				8C95650018467EA900B5627B /* AppiraterDelegate.h */,
 				8C85AC1616FA98280021ADB4 /* Helpers */,
 				8C8EE92C16CACA6700F16C49 /* third party */,
-				1DB2F860167ABE87008AC0F7 /* PIXAppDelegate.h */,
-				1DB2F861167ABE87008AC0F7 /* PIXAppDelegate.m */,
 				1D4A1DD6167AF00000C9A895 /* PIXDefines.h */,
 				1D4A1DD7167AFB8600C9A895 /* Model */,
 				1D1419A5167FC49100A8A920 /* Windows */,
@@ -1987,11 +2003,11 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = PIX;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Pixite Apps LLC";
 				TargetAttributes = {
 					1DB2F849167ABE87008AC0F7 = {
-						DevelopmentTeam = EQRQCAG846;
+						DevelopmentTeam = QF7WDEZH8C;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 0;
@@ -2839,13 +2855,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -2869,7 +2885,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -2891,7 +2906,6 @@
 		1DB2F869167ABE87008AC0F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = Unbound.entitlements;
@@ -2915,9 +2929,10 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pixite.UnboundForMac;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2925,7 +2940,6 @@
 		1DB2F86A167ABE87008AC0F7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = Unbound.entitlements;
@@ -2948,9 +2962,10 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pixite.UnboundForMac;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -2958,7 +2973,6 @@
 		8C28611917308566009A0B35 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = UnboundTrial.entitlements;
@@ -2986,9 +3000,10 @@
 					"$(PROJECT_DIR)/UnboundApp/Leap",
 				);
 				OTHER_CODE_SIGN_FLAGS = "--deep";
+				PRODUCT_BUNDLE_IDENTIFIER = com.pixite.Unbound;
 				PRODUCT_NAME = Unbound;
 				PROVISIONING_PROFILE = "";
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2996,7 +3011,6 @@
 		8C28611A17308566009A0B35 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = UnboundTrial.entitlements;
@@ -3023,9 +3037,10 @@
 					"$(PROJECT_DIR)/UnboundApp/Leap",
 				);
 				OTHER_CODE_SIGN_FLAGS = "--deep";
+				PRODUCT_BUNDLE_IDENTIFIER = com.pixite.Unbound;
 				PRODUCT_NAME = Unbound;
 				PROVISIONING_PROFILE = "";
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -3033,7 +3048,6 @@
 		8CFC2E5E1A5864B8004FCE5F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = Unbound.entitlements;
@@ -3057,9 +3071,10 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pixite.UnboundForMac;
 				PRODUCT_NAME = "Unbound copy";
 				PROVISIONING_PROFILE = "";
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -3067,7 +3082,6 @@
 		8CFC2E5F1A5864B8004FCE5F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = Unbound.entitlements;
@@ -3090,9 +3104,10 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pixite.UnboundForMac;
 				PRODUCT_NAME = "Unbound copy";
 				PROVISIONING_PROFILE = "";
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -445,7 +445,7 @@
         [self updateData];
         
         [self.view.window makeFirstResponder:self];
-        self.nextResponder = self.view;
+//        self.nextResponder = self.view;
         
         [self.view.window addChildWindow:self.controlWindow ordered:NSWindowAbove];        
         [self.controlWindow orderFront:self];

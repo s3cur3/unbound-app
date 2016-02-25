@@ -87,6 +87,7 @@
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
+    NSLog(@"PIXImageBrowserView.m: mouseUp");
     
     //check to see if this was a single click on the background (this will unselect)
     if([theEvent clickCount] == 1)

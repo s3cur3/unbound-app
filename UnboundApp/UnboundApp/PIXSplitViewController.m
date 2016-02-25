@@ -81,7 +81,7 @@
     [self.sidebarViewController.searchField setNextKeyView:self.sidebarViewController.outlineView];
     
     [self.sidebarViewController.view setNextResponder:self];
-    [self setNextResponder:self.view];
+//    [self setNextResponder:self.view];
     
     [self.imageBrowserViewController setThumbSize:self.sizeSlider.floatValue];
     

@@ -1244,8 +1244,8 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         // if the location has moved at least 10 pixels from the initial mousedown point
         CGPoint location = [theEvent locationInWindow];
         
-        CGFloat dx = abs(location.x - selectionFrameInitialPoint.x);
-        CGFloat dy = abs(location.y - selectionFrameInitialPoint.y);
+        CGFloat dx = fabs(location.x - selectionFrameInitialPoint.x);
+        CGFloat dy = fabs(location.y - selectionFrameInitialPoint.y);
         
         if(dx > 10 || dy > 10)
         {
@@ -1258,6 +1258,7 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
+    NSLog(@"CNGridView.m: mouseUp");
     [NSCursor arrowCursor];
     
     // get the index clicked up in

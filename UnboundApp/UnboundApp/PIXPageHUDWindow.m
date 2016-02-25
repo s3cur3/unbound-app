@@ -347,6 +347,7 @@
 
 
 - (void)mouseUp:(NSEvent *)theEvent {
+    NSLog(@"PIXPageHUDView.m: mouseUp");
     // animate to the closest snap position
     [self findClosestPosition];
     

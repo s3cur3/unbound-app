@@ -10,7 +10,7 @@
 
 @implementation PIXModifierSwitchedEvent
 
-- (NSUInteger)modifierFlags
+- (NSEventModifierFlags)modifierFlags
 {
     
         return ([super modifierFlags] ^ (NSUInteger)NSCommandKeyMask);

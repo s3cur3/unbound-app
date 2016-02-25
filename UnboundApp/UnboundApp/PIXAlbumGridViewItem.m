@@ -582,6 +582,7 @@
 
 -(void)mouseUp:(NSEvent *)theEvent
 {
+    NSLog(@"PIXAlbumGridViewItem.m: mouseUp");
     // only check for title edits if this was already selected on mouse down
     if(self.allowTitleEdit)
     {

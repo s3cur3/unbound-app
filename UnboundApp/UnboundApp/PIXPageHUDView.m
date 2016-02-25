@@ -354,6 +354,7 @@
 
 -(void)mouseUp:(NSEvent *)theEvent
 {
+    NSLog(@"PIXPageHUDView.m: mouseUp");
     
     if(self.mouseDragged == NO &&
        NSPointInRect([self convertPoint:[theEvent locationInWindow] fromView:nil], self.captionScrollView.frame) &&
