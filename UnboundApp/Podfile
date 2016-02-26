@@ -1,0 +1,10 @@
+platform :osx, '10.8'
+
+use_frameworks!
+
+target 'Unbound' do
+  pod 'Sparkle', '~>1.13.1'
+
+  target 'Unbound Trial'
+  target 'Unbound Non-Sandbox'
+end
