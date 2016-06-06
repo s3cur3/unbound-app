@@ -4,6 +4,8 @@ use_frameworks!
 
 target 'Unbound' do
   pod 'Sparkle', '~>1.13.1'
+  pod 'Fabric'
+  pod 'Crashlytics'
 
   target 'Unbound Trial'
   target 'Unbound Non-Sandbox'

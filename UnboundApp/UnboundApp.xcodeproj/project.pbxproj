@@ -84,6 +84,9 @@
 		1DDEF839169D34A400C0D303 /* GetPathsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF836169D34A400C0D303 /* GetPathsOperation.m */; };
 		1DDEF83A169D34A400C0D303 /* LoadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF838169D34A400C0D303 /* LoadOperation.m */; };
 		1DDEF843169D3CF300C0D303 /* MakeThumbnailOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF842169D3CF300C0D303 /* MakeThumbnailOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		458AD964A38D38ED7BB5C351 /* PIXPhotoUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD79863DBF54EA4ED1591 /* PIXPhotoUtils.m */; };
+		458ADB574918088A4933AECF /* PIXPhotoUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD79863DBF54EA4ED1591 /* PIXPhotoUtils.m */; };
+		458ADE0CD435BCB939BC3562 /* PIXPhotoUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD79863DBF54EA4ED1591 /* PIXPhotoUtils.m */; };
 		516CD5C0AB64DE4E4C0C2C51 /* Pods_Unbound_Unbound_Trial.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B57E8CFC774C93F78329C164 /* Pods_Unbound_Unbound_Trial.framework */; };
 		5B5D6A4F81851DE75E03A2F0 /* Pods_Unbound.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 134F3158BC5FAA565CECD41D /* Pods_Unbound.framework */; };
 		8C031CD316E926F7009B7F38 /* LeapObjectiveC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8C031CCF16E926F7009B7F38 /* LeapObjectiveC.mm */; };
@@ -928,6 +931,8 @@
 		1DDEF841169D3CF300C0D303 /* MakeThumbnailOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakeThumbnailOperation.h; sourceTree = "<group>"; };
 		1DDEF842169D3CF300C0D303 /* MakeThumbnailOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MakeThumbnailOperation.m; sourceTree = "<group>"; };
 		3F1A9DCD905A2E2EDB3FCB20 /* Pods-Unbound-Unbound Trial.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unbound-Unbound Trial.release.xcconfig"; path = "Pods/Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial.release.xcconfig"; sourceTree = "<group>"; };
+		458AD349D218C1F582CBE7F0 /* PIXPhotoUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPhotoUtils.h; sourceTree = "<group>"; };
+		458AD79863DBF54EA4ED1591 /* PIXPhotoUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhotoUtils.m; sourceTree = "<group>"; };
 		585B7A18AE7B4EA3C6A11CE2 /* Pods-Unbound.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unbound.release.xcconfig"; path = "Pods/Target Support Files/Pods-Unbound/Pods-Unbound.release.xcconfig"; sourceTree = "<group>"; };
 		7E89BC0C1281AD1D8279AEE6 /* Pods-Unbound-Unbound Trial.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unbound-Unbound Trial.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial.debug.xcconfig"; sourceTree = "<group>"; };
 		8C031CCC16E926F7009B7F38 /* Leap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Leap.h; sourceTree = "<group>"; };
@@ -1813,6 +1818,8 @@
 				8C72FE6117134BEE00AA72B0 /* PIXHUDMessageController.xib */,
 				8CDD1ADD177259B700EB6E63 /* PIXSeperatedSpinnerView.h */,
 				8CDD1ADE177259B700EB6E63 /* PIXSeperatedSpinnerView.m */,
+				458AD79863DBF54EA4ED1591 /* PIXPhotoUtils.m */,
+				458AD349D218C1F582CBE7F0 /* PIXPhotoUtils.h */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1977,14 +1984,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1DB2F868167ABE87008AC0F7 /* Build configuration list for PBXNativeTarget "Unbound" */;
 			buildPhases = (
-				D19DCCD844E4975002E5CC81 /* Check Pods Manifest.lock */,
+				D19DCCD844E4975002E5CC81 /* 📦 Check Pods Manifest.lock */,
 				1DB2F846167ABE87008AC0F7 /* Sources */,
 				8C53DFF316FB7DF4008EF8B1 /* Copy Frameworks */,
 				1DB2F847167ABE87008AC0F7 /* Frameworks */,
 				1DB2F848167ABE87008AC0F7 /* Resources */,
 				8C53E00416FBCB0D008EF8B1 /* CopyFiles */,
-				7645624AC3056208B26A9B46 /* Embed Pods Frameworks */,
-				D7FEE8385452F8E911A19637 /* Copy Pods Resources */,
+				7645624AC3056208B26A9B46 /* 📦 Embed Pods Frameworks */,
+				D7FEE8385452F8E911A19637 /* 📦 Copy Pods Resources */,
+				042991741D0619CB00BBA95A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1999,14 +2007,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8C28611817308566009A0B35 /* Build configuration list for PBXNativeTarget "Unbound Trial" */;
 			buildPhases = (
-				B0AEAA92FC82B6F8CB8FE21E /* Check Pods Manifest.lock */,
+				B0AEAA92FC82B6F8CB8FE21E /* 📦 Check Pods Manifest.lock */,
 				8C28605A17308566009A0B35 /* Sources */,
 				8C2860A617308566009A0B35 /* Copy Frameworks */,
 				8C2860A917308566009A0B35 /* Frameworks */,
 				8C2860B317308566009A0B35 /* Resources */,
 				8C28611617308566009A0B35 /* CopyFiles */,
-				8A75FDD0A01A37AD4103A0C1 /* Embed Pods Frameworks */,
-				BBC948C1A594FBD46BE39839 /* Copy Pods Resources */,
+				8A75FDD0A01A37AD4103A0C1 /* 📦 Embed Pods Frameworks */,
+				BBC948C1A594FBD46BE39839 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2021,14 +2029,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8CFC2E5D1A5864B8004FCE5F /* Build configuration list for PBXNativeTarget "Unbound Non-Sandbox" */;
 			buildPhases = (
-				B4E08290978617516AB17B93 /* Check Pods Manifest.lock */,
+				B4E08290978617516AB17B93 /* 📦 Check Pods Manifest.lock */,
 				8CFC2D5F1A5864B8004FCE5F /* Sources */,
 				8CFC2DD31A5864B8004FCE5F /* Copy Frameworks */,
 				8CFC2DD41A5864B8004FCE5F /* Frameworks */,
 				8CFC2DDE1A5864B8004FCE5F /* Resources */,
 				8CFC2E5B1A5864B8004FCE5F /* CopyFiles */,
-				770895F5DE0A7ABEC5AEC3D5 /* Embed Pods Frameworks */,
-				1E66F5274F2E59D79A2CE0CB /* Copy Pods Resources */,
+				770895F5DE0A7ABEC5AEC3D5 /* 📦 Embed Pods Frameworks */,
+				1E66F5274F2E59D79A2CE0CB /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2491,14 +2499,27 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1E66F5274F2E59D79A2CE0CB /* Copy Pods Resources */ = {
+		042991741D0619CB00BBA95A /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 2d7dec3d45e8c12d3d51e10f742ccd405d097f97 00c88cbd24f188ff3b9d936e5cd215aa8b2e35b3062af111d5bcf647e7ba4ea6";
+		};
+		1E66F5274F2E59D79A2CE0CB /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2506,14 +2527,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Unbound-Unbound Non-Sandbox/Pods-Unbound-Unbound Non-Sandbox-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7645624AC3056208B26A9B46 /* Embed Pods Frameworks */ = {
+		7645624AC3056208B26A9B46 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2521,14 +2542,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Unbound/Pods-Unbound-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		770895F5DE0A7ABEC5AEC3D5 /* Embed Pods Frameworks */ = {
+		770895F5DE0A7ABEC5AEC3D5 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2536,14 +2557,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Unbound-Unbound Non-Sandbox/Pods-Unbound-Unbound Non-Sandbox-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8A75FDD0A01A37AD4103A0C1 /* Embed Pods Frameworks */ = {
+		8A75FDD0A01A37AD4103A0C1 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2551,14 +2572,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B0AEAA92FC82B6F8CB8FE21E /* Check Pods Manifest.lock */ = {
+		B0AEAA92FC82B6F8CB8FE21E /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2566,14 +2587,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		B4E08290978617516AB17B93 /* Check Pods Manifest.lock */ = {
+		B4E08290978617516AB17B93 /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2581,14 +2602,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		BBC948C1A594FBD46BE39839 /* Copy Pods Resources */ = {
+		BBC948C1A594FBD46BE39839 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2596,14 +2617,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D19DCCD844E4975002E5CC81 /* Check Pods Manifest.lock */ = {
+		D19DCCD844E4975002E5CC81 /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2611,14 +2632,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		D7FEE8385452F8E911A19637 /* Copy Pods Resources */ = {
+		D7FEE8385452F8E911A19637 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2748,6 +2769,7 @@
 				1DCD7B2117987A5000DF9478 /* PIXVideoImageOverlayView.m in Sources */,
 				1D6C23EE179882AA00EC34F5 /* PIXPlayVideoHUDWindow.m in Sources */,
 				1D7BDD9A17A02E0200E2CD16 /* AutoSizingVideoView.m in Sources */,
+				458ADE0CD435BCB939BC3562 /* PIXPhotoUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2869,6 +2891,7 @@
 				1DCD7B2217987A5000DF9478 /* PIXVideoImageOverlayView.m in Sources */,
 				1D6C23EF179882AA00EC34F5 /* PIXPlayVideoHUDWindow.m in Sources */,
 				1D7BDD9B17A02E0200E2CD16 /* AutoSizingVideoView.m in Sources */,
+				458AD964A38D38ED7BB5C351 /* PIXPhotoUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2991,6 +3014,7 @@
 				8CFC2DD01A5864B8004FCE5F /* PIXVideoImageOverlayView.m in Sources */,
 				8CFC2DD11A5864B8004FCE5F /* PIXPlayVideoHUDWindow.m in Sources */,
 				8CFC2DD21A5864B8004FCE5F /* AutoSizingVideoView.m in Sources */,
+				458ADB574918088A4933AECF /* PIXPhotoUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

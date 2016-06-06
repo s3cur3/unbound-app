@@ -207,10 +207,10 @@ CNItemPoint CNMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     
     NSClipView *clipView = [[self enclosingScrollView] contentView];
     [clipView setPostsBoundsChangedNotifications:YES];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateVisibleRect)
-                                                 name:NSViewBoundsDidChangeNotification
-                                               object:clipView];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(updateVisibleRect)
+//                                                 name:NSViewBoundsDidChangeNotification
+//                                               object:clipView];
     
     
     

@@ -28,7 +28,8 @@
 #import "PIXLeapTutorialWindowController.h"
 
 #import <Sparkle/Sparkle.h>
-
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
 #ifdef APPIRATOR
 #import "Appirater.h"
@@ -114,6 +115,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    [Fabric with:@[[Crashlytics class]]];
     
     if([[NSUserDefaults standardUserDefaults] boolForKey:kAppDidNotExitCleanly])
     {

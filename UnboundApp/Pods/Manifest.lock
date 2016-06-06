@@ -1,12 +1,19 @@
 PODS:
+  - Crashlytics (3.7.0):
+    - Fabric (~> 1.6.3)
+  - Fabric (1.6.7)
   - Sparkle (1.13.1)
 
 DEPENDENCIES:
+  - Crashlytics
+  - Fabric
   - Sparkle (~> 1.13.1)
 
 SPEC CHECKSUMS:
+  Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
+  Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   Sparkle: 2fbd47b869621d1e679c7554e3e19dda02104818
 
-PODFILE CHECKSUM: fefe690c3406fc75a06e65b25e83926ae81695da
+PODFILE CHECKSUM: 434edc758946da4ab4e61eb339079dd916c372e0
 
-COCOAPODS: 1.0.0.beta.3
+COCOAPODS: 1.0.0
