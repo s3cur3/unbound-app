@@ -588,8 +588,6 @@
     }
 }
 
-
-/*
 -(void)mouseDown:(NSEvent *)theEvent
 {
     if(self.selected) {
@@ -625,7 +623,7 @@
     }
     [[self nextResponder] mouseUp:theEvent];
 }
-*/
+
 - (void)prepareForReuse
 {
     if (self.album )  {

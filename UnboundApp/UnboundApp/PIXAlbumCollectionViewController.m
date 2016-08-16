@@ -1030,6 +1030,30 @@
     [undoManager setActionIsDiscardable:YES];
 }
 
+- (void)gridView:(PIXGridView *)gridView didKeySelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
+{
+    // if we're holding shift or command then keep the selection
+    if(!([NSEvent modifierFlags] & (NSCommandKeyMask | NSShiftKeyMask)))
+    {
+        [self.selectedItems removeAllObjects];
+    }
+    
+    [self.selectedItems addObject:[self albumForIndex:index]];
+    
+    [self updateToolbar];
+    [self.gridView reloadSelection];
+    
+}
+
+#pragma mark - Leap Methods
+- (void)gridView:(PIXGridView *)gridView didPointItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
+{
+    [self.selectedItems removeAllObjects];
+    [self.selectedItems addObject:[self albumForIndex:index]];
+    [self updateToolbar];
+    [self.gridView reloadSelection];
+}
+
 - (void)gridView:(PIXGridView *)gridView dragDidBeginAtIndex:(NSUInteger)index inSection:(NSUInteger)section andEvent:(NSEvent *)event
 {
     // move the item we just selected to the front (so it will show up correctly in the drag image)

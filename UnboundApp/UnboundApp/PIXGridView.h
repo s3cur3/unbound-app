@@ -8,8 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 #import "PIXLeapInputManager.h"
+#import "PIXCollectionViewItem.h"
 
 @protocol PIXGridViewDelegate;
+
+typedef struct _PIXItemPoint {
+    NSUInteger column;
+    NSUInteger row;
+} PIXItemPoint;
+
 @interface PIXGridView : NSCollectionView <PIXLeapResponder>
 
 @property (nonatomic, assign) id<PIXGridViewDelegate> gridViewDelegate;
@@ -22,6 +29,8 @@
 - (void)setBackgroundColor:(NSColor *)c;
 
 - (void)reloadSelection;
+
+- (PIXCollectionViewItem *)scrollToAndReturnItemAtIndex:(NSUInteger)index animated:(BOOL)animated;
 
 @end
 
@@ -48,5 +57,11 @@
 - (void)gridView:(PIXGridView *)gridView dragDidBeginAtIndex:(NSUInteger)index inSection:(NSUInteger)section andEvent:(NSEvent *)event;
 
 - (BOOL)gridView:(PIXGridView *)gridView itemIsSelectedAtIndex:(NSInteger)index inSection:(NSInteger)section;
+
+
+- (void)gridViewDeleteKeyPressed:(PIXGridView *)gridView;
+- (void)gridView:(PIXGridView *)gridView didKeyOpenItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section;
+- (void)gridView:(PIXGridView *)gridView didKeySelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section;
+- (void)gridView:(PIXGridView *)gridView didPointItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section;
 
 @end

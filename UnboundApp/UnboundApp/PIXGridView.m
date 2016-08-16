@@ -7,7 +7,13 @@
 //
 
 #import "PIXGridView.h"
-#import "PIXCollectionViewItem.h"
+
+PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
+    PIXItemPoint point;
+    point.column = aColumn;
+    point.row = aRow;
+    return point;
+}
 
 @interface PIXSelectionFrameView : NSView
 @end
@@ -54,6 +60,48 @@
     
     self.maxItemSize = s;
     self.minItemSize = s;
+}
+
+- (PIXCollectionViewItem *)scrollToAndReturnItemAtIndex:(NSUInteger)index animated:(BOOL)animated
+{
+    // scroll to this index
+    NSPoint point = [self frameForItemAtIndex:index].origin;
+    point.x = 0;
+    
+    CGFloat currentY = self.visibleRect.origin.y;
+    CGFloat scrollY = -1;
+    
+    // if we need to scroll up
+    if (point.y-self.headerSpace < currentY)
+    {
+        scrollY = point.y - self.headerSpace;
+    }
+    
+    // if we need to scroll down
+    else if(point.y+self.itemSize.height > self.visibleRect.origin.y + self.visibleRect.size.height)
+    {
+        scrollY = (point.y+self.itemSize.height)-self.visibleRect.size.height;
+    }
+    
+    if(scrollY != -1)
+    {
+        if(animated)
+        {
+            [NSAnimationContext beginGrouping];
+            NSClipView* clipView = [[self enclosingScrollView] contentView];
+            NSPoint newOrigin = [clipView bounds].origin;
+            newOrigin.y = scrollY;
+            [[clipView animator] setBoundsOrigin:newOrigin];
+            [NSAnimationContext endGrouping];
+        }
+        else
+        {
+            [self scrollPoint:NSMakePoint(0, scrollY)];
+        }
+    }
+    
+    PIXCollectionViewItem * item = (PIXCollectionViewItem *)[self itemAtIndex:index];
+    return item;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -299,18 +347,36 @@
     return NSNotFound;
 }
 
+- (PIXItemPoint)locationForItemAtIndex:(NSUInteger)itemIndex
+{
+    NSUInteger columnsInGridView = [self columnsInGridView];
+    NSUInteger row = floor(itemIndex / columnsInGridView) + 1;
+    NSUInteger column = itemIndex - floor((row -1) * columnsInGridView) + 1;
+    PIXItemPoint location = PIXMakeItemPoint(column, row);
+    return location;
+}
+
 - (NSIndexSet *)indexesForVisibleItems
 {
     __block NSMutableIndexSet *indexesForVisibleItems = [[NSMutableIndexSet alloc] init];
     
     NSRect visibleRect = [self visibleRect];
     NSInteger nCols = [self columnsInGridView];
-    NSInteger nRows = visibleRect.origin.y/self.itemSize.height;
-    CGFloat Y = NSMaxY(visibleRect);
+    
+    NSInteger nRows = visibleRect.origin.y/self.itemSize.height-1;
+    if( nRows < 0 )
+        nRows = 0;
+    
+    CGFloat Y = NSMaxY(visibleRect)+self.itemSize.height+5;
     while( Y > nRows*self.itemSize.height )
     {
         for( NSInteger i = 0 ; i < nCols ; i++ )
+        {
+            NSInteger idx = nRows*nCols+i;
+            if( idx >= [self.content count] )
+                break;
             [indexesForVisibleItems addIndex:nRows*nCols+i];
+        }
         nRows++;
     }
     
@@ -319,6 +385,61 @@
         [indexesForVisibleItems addIndex:[(CNGridViewItem *)obj index]];
     }];*/
     return indexesForVisibleItems;
+}
+
+- (NSUInteger)indexForItemAtLocationNoSpace:(NSPoint)location
+{
+    NSPoint point = [self convertPoint:location fromView:nil];
+    
+    if(!CGRectContainsPoint(self.bounds, point))
+    {
+        return NSNotFound;
+    }
+    
+    NSUInteger indexForItemAtLocation = NSNotFound;
+    
+    NSUInteger columns = [self columnsInGridView];
+    CGFloat space = (self.frame.size.width - (columns * self.itemSize.width)) / (columns + 1);
+    
+    /*if (point.x > ((self.itemSize.width+space) * [self columnsInGridView])) {
+     indexForItemAtLocation = NSNotFound;
+     
+     } else {*/
+    
+    NSUInteger currentColumn = floor(point.x / ((self.itemSize.width+space)+space));
+    NSUInteger currentRow = floor(point.y / self.itemSize.height);
+    indexForItemAtLocation = currentRow * [self columnsInGridView] + currentColumn;
+    
+    // if we're out of range, find the closest item (by column for leap)
+    if(indexForItemAtLocation > ([self.content count] - 1))
+    {
+        while(indexForItemAtLocation > ([self.content count] - 1))
+        {
+            
+            // if we can go up a row, do that first
+            if(currentRow > 0)
+            {
+                currentRow--;
+                indexForItemAtLocation = currentRow * [self columnsInGridView] + currentColumn;
+            }
+            
+            // otherwise, go up a column
+            else
+            {
+                currentColumn--;
+                indexForItemAtLocation = currentRow * [self columnsInGridView] + currentColumn;
+            }
+        }
+        
+        // if we still havent found the item (there are none)
+        if(indexForItemAtLocation > ([self.content count] - 1))
+        {
+            indexForItemAtLocation = NSNotFound;
+        }
+    }
+    //}
+    
+    return indexForItemAtLocation;
 }
 
 - (NSUInteger)columnsInGridView
@@ -661,6 +782,215 @@
     }
 }
 
+- (void)deleteForward:(id)sender
+{
+    if([self.gridViewDelegate respondsToSelector:@selector(gridViewDeleteKeyPressed:)])
+    {
+        [self.gridViewDelegate gridViewDeleteKeyPressed:self];
+    }
+}
+
+- (void)deleteBackward:(id)sender
+{
+    if([self.gridViewDelegate respondsToSelector:@selector(gridViewDeleteKeyPressed:)])
+    {
+        [self.gridViewDelegate gridViewDeleteKeyPressed:self];
+    }
+}
+
+// return key pressed
+- (void)insertNewline:(id)sender
+{
+    if( lastSelectedItemIndex != NSNotFound )
+    {
+        PIXCollectionViewItem * lastSelectedItem = (PIXCollectionViewItem *)[self itemAtIndex:lastSelectedItemIndex];
+        if( lastSelectedItem.isSelected )
+        {
+            if([self.gridViewDelegate respondsToSelector:@selector(gridView:didKeyOpenItemAtIndex:inSection:)])
+            {
+                [self.gridViewDelegate gridView:self didKeyOpenItemAtIndex:lastSelectedItemIndex inSection:0];
+            }
+        }
+    }
+    
+    /*
+    if(lastSelectedItemIndex != NSNotFound &&
+       [[keyedVisibleItems objectForKey:[NSNumber numberWithInteger:lastSelectedItemIndex]] selected])
+    {
+        if([self.delegate respondsToSelector:@selector(gridView:didKeyOpenItemAtIndex:inSection:)])
+        {
+            [self.delegate gridView:self didKeyOpenItemAtIndex:lastSelectedItemIndex inSection:0];
+        }
+    }
+     */
+}
+
+- (void)moveRight:(id)sender
+{
+    NSUInteger newIndex = 0;
+    
+    if( lastSelectedItemIndex != NSNotFound )
+    {
+        PIXCollectionViewItem * lastSelectedItem = (PIXCollectionViewItem *)[self itemAtIndex:lastSelectedItemIndex];
+        if( lastSelectedItem.isSelected )
+        {
+            PIXItemPoint lastSelectedPoint = [self locationForItemAtIndex:lastSelectedItemIndex];
+            if(lastSelectedPoint.column < self.columnsInGridView)
+            {
+                lastSelectedPoint.column++;
+                newIndex = lastSelectedPoint.column-1 + ((lastSelectedPoint.row-1) * self.columnsInGridView);
+            }
+            else
+            {
+                newIndex = lastSelectedPoint.column-1 + ((lastSelectedPoint.row-1) * self.columnsInGridView);
+                newIndex++;
+            }
+            
+            if(newIndex >= [self.content count])
+            {
+                newIndex = [self.content count]-1;
+            }
+        }
+    }
+    
+    if([self.gridViewDelegate respondsToSelector:@selector(gridView:didKeySelectItemAtIndex:inSection:)])
+    {
+        [self.gridViewDelegate gridView:self didKeySelectItemAtIndex:newIndex inSection:0];
+    }
+    
+    // scroll to keep the item visible
+    [self scrollToAndReturnItemAtIndex:newIndex animated:YES];
+    
+    // do this after the delegate call because that will probably call reloadSelection
+    lastSelectedItemIndex = newIndex;
+}
+
+- (void)moveLeft:(id)sender
+{
+    NSUInteger newIndex = 0;
+    
+    if( lastSelectedItemIndex != NSNotFound )
+    {
+        PIXCollectionViewItem * lastSelectedItem = (PIXCollectionViewItem *)[self itemAtIndex:lastSelectedItemIndex];
+        if( lastSelectedItem.isSelected )
+        {
+            PIXItemPoint lastSelectedPoint = [self locationForItemAtIndex:lastSelectedItemIndex];
+            if(lastSelectedPoint.column > 1)
+            {
+                lastSelectedPoint.column--;
+                newIndex = lastSelectedPoint.column-1 + ((lastSelectedPoint.row-1) * self.columnsInGridView);
+            }
+            else
+            {
+                if([self.nextResponder respondsToSelector:@selector(moveLeft:)])
+                {
+                    [self.nextResponder moveLeft:sender];
+                    return; // do nothing and pass along the message if we're at the furthest left column
+                }
+    
+                if( lastSelectedPoint.row == 1 )
+                    return;
+                
+                // if theres no responder for left then go up a row
+                newIndex = lastSelectedPoint.column-1 + ((lastSelectedPoint.row-1) * self.columnsInGridView);
+                newIndex--;
+            }
+        }
+    }
+    
+    if([self.gridViewDelegate respondsToSelector:@selector(gridView:didKeySelectItemAtIndex:inSection:)])
+    {
+        [self.gridViewDelegate gridView:self didKeySelectItemAtIndex:newIndex inSection:0];
+    }
+    
+    // scroll to keep the item visible
+    [self scrollToAndReturnItemAtIndex:newIndex animated:YES];
+    
+    // do this after the delegate call because that will probably call reloadSelection
+    lastSelectedItemIndex = newIndex;
+}
+
+- (void)moveUp:(id)sender
+{
+    NSUInteger newIndex = 0;
+    
+    if( lastSelectedItemIndex != NSNotFound )
+    {
+        PIXCollectionViewItem * lastSelectedItem = (PIXCollectionViewItem *)[self itemAtIndex:lastSelectedItemIndex];
+        if( lastSelectedItem.isSelected )
+        {
+            PIXItemPoint lastSelectedPoint = [self locationForItemAtIndex:lastSelectedItemIndex];
+            
+            if(lastSelectedPoint.row > 1)
+            {
+                lastSelectedPoint.row--;
+            }
+            else
+            {
+                return; // do nothing if we're at the top
+            }
+            
+            newIndex = lastSelectedPoint.column-1 + ((lastSelectedPoint.row-1) * self.columnsInGridView);
+        }
+    }
+    
+    if([self.gridViewDelegate respondsToSelector:@selector(gridView:didKeySelectItemAtIndex:inSection:)])
+    {
+        [self.gridViewDelegate gridView:self didKeySelectItemAtIndex:newIndex inSection:0];
+    }
+    
+    // scroll to keep the item visible
+    [self scrollToAndReturnItemAtIndex:newIndex animated:YES];
+    
+    // do this after the delegate call because that will probably call reloadSelection
+    lastSelectedItemIndex = newIndex;
+}
+
+- (void)moveDown:(id)sender
+{
+    NSUInteger newIndex = 0;
+    
+    if( lastSelectedItemIndex != NSNotFound )
+    {
+        PIXCollectionViewItem * lastSelectedItem = (PIXCollectionViewItem *)[self itemAtIndex:lastSelectedItemIndex];
+        if( lastSelectedItem.isSelected )
+        {
+            PIXItemPoint lastSelectedPoint = [self locationForItemAtIndex:lastSelectedItemIndex];
+            
+            if(lastSelectedPoint.row <= (int)([self.content count] / self.columnsInGridView))
+            {
+                lastSelectedPoint.row++;
+            }
+            else
+            {
+                return; // do nothing if we're at the top
+            }
+            
+            newIndex = lastSelectedPoint.column-1 + ((lastSelectedPoint.row-1) * self.columnsInGridView);
+            
+            if(newIndex >= [self.content count])
+            {
+                newIndex = [self.content count]-1;
+            }
+            if(newIndex == lastSelectedItemIndex)
+            {
+                return; // do nothing if we're at the end
+            }
+        }
+    }
+    
+    if([self.gridViewDelegate respondsToSelector:@selector(gridView:didKeySelectItemAtIndex:inSection:)])
+    {
+        [self.gridViewDelegate gridView:self didKeySelectItemAtIndex:newIndex inSection:0];
+    }
+    
+    // scroll to keep the item visible
+    [self scrollToAndReturnItemAtIndex:newIndex animated:YES];
+    
+    // do this after the delegate call because that will probably call reloadSelection
+    lastSelectedItemIndex = newIndex;
+}
+
 #pragma mark - Delegate Calls
 - (void)gridViewDidDeselectAllItems:(PIXGridView *)gridView
 {
@@ -764,7 +1094,7 @@
 
 - (BOOL)gridView:(PIXGridView *)gridView itemIsSelectedAtIndex:(NSInteger)index inSection:(NSInteger)section
 {
-    if ([self.dataSource respondsToSelector:_cmd]) {
+    if ([self.gridViewDelegate respondsToSelector:_cmd]) {
         return [self.gridViewDelegate gridView:gridView itemIsSelectedAtIndex:index inSection:section];
     }
     return NO;
@@ -773,7 +1103,6 @@
 #pragma mark - Leap Responder
 - (void)leapPointerPosition:(NSPoint)normalizedPosition
 {
-    /*
     if(self.window == nil) return;
     
     if(![self.window isKeyWindow]) return;
@@ -799,9 +1128,9 @@
         lastPointed = index;
         lastSelectedItemIndex = index;
         
-        if([self.delegate respondsToSelector:@selector(gridView:didPointItemAtIndex:inSection:)])
+        if([self.gridViewDelegate respondsToSelector:@selector(gridView:didPointItemAtIndex:inSection:)])
         {
-            [self.delegate gridView:self didPointItemAtIndex:index inSection:0];
+            [self.gridViewDelegate gridView:self didPointItemAtIndex:index inSection:0];
         }
     }
     
@@ -829,12 +1158,10 @@
         
         [self scrollPoint:currentPoint];
     }
-     */
 }
 
 - (void)leapPointerSelect:(NSPoint)normalizedPosition
 {
-    /*
     if(self.window == nil) return;
     
     if(![self.window isKeyWindow]) return;
@@ -864,7 +1191,6 @@
 //     [self.delegate gridView:self didPointItemAtIndex:index inSection:0];
 //     }
 //     }
-    */
 }
 
 @end
