@@ -12,6 +12,7 @@
 #import "PIXSidebarTableCellView.h"
 #import "PIXSplitViewController.h"
 #import "PIXPhotoGridViewController.h"
+#import "PIXPhotoCollectionViewController.h"
 #import "PIXFileParser.h"
 #import "PIXAlbum.h"
 #import "PIXPhoto.h"

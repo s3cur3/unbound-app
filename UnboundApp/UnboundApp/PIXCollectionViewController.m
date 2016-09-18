@@ -19,7 +19,7 @@
 
 static NSString *kContentTitleKey, *kContentImageKey;
 
-@interface PIXCollectionViewController () <NSMenuDelegate>
+@interface PIXCollectionViewController () <NSMenuDelegate, PIXGridViewDelegate>
 
 @property (strong) IBOutlet NSLayoutConstraint *toolbarPosition;
 @property BOOL toolbarIsShowing;
@@ -434,15 +434,14 @@ static NSString *kContentTitleKey, *kContentImageKey;
 - (IBAction)selectAll:(id)sender
 {
     self.selectedItems = [NSMutableSet setWithArray:self.items];
-    
-    //[self.gridView reloadSelection];
+    [self.gridView reloadSelection];
     [self updateToolbar];
 }
 
 - (IBAction)selectNone:(id)sender
 {
     [self.selectedItems removeAllObjects];
-    //[self.gridView reloadSelection];
+    [self.gridView reloadSelection];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self updateToolbar];
@@ -458,7 +457,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
     
     self.selectedItems = mutableItems;
     
-    //[self.gridView reloadSelection];
+    [self.gridView reloadSelection];
     [self updateToolbar];
 }
 
@@ -490,6 +489,114 @@ static NSString *kContentTitleKey, *kContentImageKey;
     [undoManager registerUndoWithTarget:self selector:@selector(gridViewDidDeselectAllItems:) object:self.gridView];
     [undoManager setActionName:@"Deselect Items"];
     [undoManager setActionIsDiscardable:YES];
+}
+
+#pragma mark - PIXGridViewDelegate
+- (void)gridViewDeleteKeyPressed:(PIXGridView *)gridView
+{
+    [self deleteItems:gridView];
+}
+
+- (void)gridView:(PIXGridView *)gridView didSelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
+{
+    [self.selectedItems addObject:[self.items objectAtIndex:index]];
+    [self updateToolbar];
+}
+
+- (void)gridView:(PIXGridView *)gridView didShiftSelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
+{
+    if([self.selectedItems count] == 0)
+    {
+        [self.selectedItems addObject:[self.items objectAtIndex:index]];
+    }
+    
+    else
+    {
+        // loop through the current selection and find the index that's closest the the newly clicked index
+        NSUInteger startIndex = NSNotFound;
+        NSUInteger distance = NSUIntegerMax;
+        
+        for(PIXAlbum * aSelectedAlbum in self.selectedItems)
+        {
+            NSUInteger thisIndex = [self.items indexOfObject:aSelectedAlbum];
+            NSUInteger thisDistance = abs((int)(thisIndex-index));
+            
+            if(thisIndex != NSNotFound && thisDistance < distance)
+            {
+                startIndex = thisIndex;
+                distance = thisDistance;
+            }
+        }
+        
+        // prep the indexes we're going to loop through
+        NSUInteger endIndex = index;
+        
+        // flip them so we always go the right rections
+        if(endIndex < startIndex)
+        {
+            endIndex = startIndex;
+            startIndex = index;
+        }
+        
+        // now add all the items between the two indexes to the selection
+        for(NSUInteger i = startIndex; i <= endIndex; i++)
+        {
+            [self.selectedItems addObject:[self.items objectAtIndex:i]];
+        }
+    }
+    
+    [self.gridView reloadSelection];
+    [self updateToolbar];
+}
+
+- (void)gridView:(PIXGridView *)gridView didKeySelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
+{
+    // if we're holding shift or command then keep the selection
+    if(!([NSEvent modifierFlags] & (NSCommandKeyMask | NSShiftKeyMask)))
+    {
+        [self.selectedItems removeAllObjects];
+    }
+    
+    id item = [self.items objectAtIndex:index];
+    
+    [self.selectedItems addObject:item];
+    [self updateToolbar];
+    [self.gridView reloadSelection];
+}
+
+- (void)gridView:(PIXGridView *)gridView didKeyOpenItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
+{
+    [self gridView:gridView didDoubleClickItemAtIndex:index inSection:section];
+}
+
+- (void)gridView:(PIXGridView *)gridView didDeselectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
+{
+    [self.selectedItems removeObject:[self.items objectAtIndex:index]];
+    [self updateToolbar];
+}
+
+- (void)gridViewDidDeselectAllItems:(PIXGridView *)gridView
+{
+    NSArray * oldItems = [self.selectedItems copy];
+    
+    [self.selectedItems removeAllObjects];
+    [self updateToolbar];
+    
+    [self.gridView reloadSelection];
+    
+    NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
+    //NSDictionary *undoInfo = @{@"albumID" : anAlbum.objectID, @"name" : oldAlbumName};
+    [undoManager registerUndoWithTarget:self selector:@selector(reselectItems:) object:oldItems];
+    [undoManager setActionName:@"Deselect Items"];
+    [undoManager setActionIsDiscardable:YES];
+}
+
+- (void)gridView:(PIXGridView *)gridView didPointItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
+{
+    [self.selectedItems removeAllObjects];
+    [self.selectedItems addObject:[self.items objectAtIndex:index]];
+    [self updateToolbar];
+    [self.gridView reloadSelection];
 }
 
 @end

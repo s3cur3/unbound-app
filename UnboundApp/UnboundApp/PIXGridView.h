@@ -21,6 +21,19 @@ typedef struct _PIXItemPoint {
 
 @property (nonatomic, assign) id<PIXGridViewDelegate> gridViewDelegate;
 
+/**
+ Property for setting the elasticity of the enclosing `NSScrollView`.
+ 
+ This property will set and overwrite the values from Interface Builder. There is no horizontal-vertical distinction.
+ The default value is `YES`.
+ 
+ @param     YES Elasticity is on.
+ @param     NO Elasticity is off.
+ 
+ */
+@property (nonatomic, assign) BOOL scrollElasticity;
+
+
 @property (nonatomic, assign) NSSize itemSize;
 
 /* Don't use */

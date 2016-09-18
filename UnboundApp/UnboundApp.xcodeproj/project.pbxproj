@@ -90,6 +90,15 @@
 		2D3182021D52DEB900FC7337 /* PIXCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3182011D52DEB900FC7337 /* PIXCollectionViewItem.m */; };
 		2D3182031D52DEB900FC7337 /* PIXCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3182011D52DEB900FC7337 /* PIXCollectionViewItem.m */; };
 		2D3182041D52DEB900FC7337 /* PIXCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3182011D52DEB900FC7337 /* PIXCollectionViewItem.m */; };
+		2D6A21441D894EE700D056DB /* PIXPhotoCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D6A21421D894EE700D056DB /* PIXPhotoCollectionViewController.m */; };
+		2D6A21451D894EE700D056DB /* PIXPhotoCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D6A21421D894EE700D056DB /* PIXPhotoCollectionViewController.m */; };
+		2D6A21461D894EE700D056DB /* PIXPhotoCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D6A21421D894EE700D056DB /* PIXPhotoCollectionViewController.m */; };
+		2D6A21471D894EE700D056DB /* PIXPhotoCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D6A21431D894EE700D056DB /* PIXPhotoCollectionViewController.xib */; };
+		2D6A21481D894EE700D056DB /* PIXPhotoCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D6A21431D894EE700D056DB /* PIXPhotoCollectionViewController.xib */; };
+		2D6A21491D894EE700D056DB /* PIXPhotoCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D6A21431D894EE700D056DB /* PIXPhotoCollectionViewController.xib */; };
+		2D6A214C1D89502000D056DB /* PIXPhotoCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D6A214B1D89502000D056DB /* PIXPhotoCollectionViewItem.m */; };
+		2D6A214D1D89502000D056DB /* PIXPhotoCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D6A214B1D89502000D056DB /* PIXPhotoCollectionViewItem.m */; };
+		2D6A214E1D89502000D056DB /* PIXPhotoCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D6A214B1D89502000D056DB /* PIXPhotoCollectionViewItem.m */; };
 		2D7A2A4D1D4AEFB200218712 /* PIXCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D7A2A4B1D4AEFB200218712 /* PIXCollectionViewController.m */; };
 		2D7A2A4E1D4AEFB200218712 /* PIXCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D7A2A4B1D4AEFB200218712 /* PIXCollectionViewController.m */; };
 		2D7A2A4F1D4AEFB200218712 /* PIXCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D7A2A4B1D4AEFB200218712 /* PIXCollectionViewController.m */; };
@@ -952,6 +961,11 @@
 		2D3181FC1D5245F600FC7337 /* PIXAlbumCollectionViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXAlbumCollectionViewItem.m; sourceTree = "<group>"; };
 		2D3182001D52DEB900FC7337 /* PIXCollectionViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXCollectionViewItem.h; sourceTree = "<group>"; };
 		2D3182011D52DEB900FC7337 /* PIXCollectionViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXCollectionViewItem.m; sourceTree = "<group>"; };
+		2D6A21411D894EE700D056DB /* PIXPhotoCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPhotoCollectionViewController.h; sourceTree = "<group>"; };
+		2D6A21421D894EE700D056DB /* PIXPhotoCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhotoCollectionViewController.m; sourceTree = "<group>"; };
+		2D6A21431D894EE700D056DB /* PIXPhotoCollectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXPhotoCollectionViewController.xib; sourceTree = "<group>"; };
+		2D6A214A1D89502000D056DB /* PIXPhotoCollectionViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPhotoCollectionViewItem.h; sourceTree = "<group>"; };
+		2D6A214B1D89502000D056DB /* PIXPhotoCollectionViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhotoCollectionViewItem.m; sourceTree = "<group>"; };
 		2D7A2A4A1D4AEFB200218712 /* PIXCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXCollectionViewController.h; sourceTree = "<group>"; };
 		2D7A2A4B1D4AEFB200218712 /* PIXCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXCollectionViewController.m; sourceTree = "<group>"; };
 		2D7A2A4C1D4AEFB200218712 /* PIXAlbumCollectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXAlbumCollectionViewController.xib; sourceTree = "<group>"; };
@@ -1382,6 +1396,11 @@
 				8C68246A16F596BB00245F09 /* PIXSelectionLayer.m */,
 				8C68246C16F599FC00245F09 /* NSBezierPath+pathUtilities.h */,
 				8C68246D16F599FD00245F09 /* NSBezierPath+pathUtilities.m */,
+				2D6A21411D894EE700D056DB /* PIXPhotoCollectionViewController.h */,
+				2D6A21421D894EE700D056DB /* PIXPhotoCollectionViewController.m */,
+				2D6A21431D894EE700D056DB /* PIXPhotoCollectionViewController.xib */,
+				2D6A214A1D89502000D056DB /* PIXPhotoCollectionViewItem.h */,
+				2D6A214B1D89502000D056DB /* PIXPhotoCollectionViewItem.m */,
 			);
 			name = PhotoBrowserView;
 			sourceTree = "<group>";
@@ -2209,6 +2228,7 @@
 				8CFC13BF16FD2B21004CA7D5 /* contract@2x.png in Resources */,
 				8CFC13C016FD2B21004CA7D5 /* expand.png in Resources */,
 				8C94E01D183DA6B400827888 /* Release Notes.rtf in Resources */,
+				2D6A21471D894EE700D056DB /* PIXPhotoCollectionViewController.xib in Resources */,
 				8CFC13C116FD2B21004CA7D5 /* expand@2x.png in Resources */,
 				8CFC13C416FD6111004CA7D5 /* play.png in Resources */,
 				8CFC13C516FD6111004CA7D5 /* play@2x.png in Resources */,
@@ -2319,6 +2339,7 @@
 				8C2860D517308566009A0B35 /* buttongrid_copy@2x.png in Resources */,
 				8C2860D617308566009A0B35 /* buttongrid_email.png in Resources */,
 				8C2860D717308566009A0B35 /* buttongrid_email@2x.png in Resources */,
+				2D6A21481D894EE700D056DB /* PIXPhotoCollectionViewController.xib in Resources */,
 				8C2860D817308566009A0B35 /* buttongrid_emaillink.png in Resources */,
 				8C2860D917308566009A0B35 /* buttongrid_emaillink@2x.png in Resources */,
 				8C2860DA17308566009A0B35 /* buttongrid_facebook.png in Resources */,
@@ -2471,6 +2492,7 @@
 				8CFC2E191A5864B8004FCE5F /* contract@2x.png in Resources */,
 				8CFC2E1A1A5864B8004FCE5F /* expand.png in Resources */,
 				8CFC2E1B1A5864B8004FCE5F /* Release Notes.rtf in Resources */,
+				2D6A21491D894EE700D056DB /* PIXPhotoCollectionViewController.xib in Resources */,
 				8CFC2E1C1A5864B8004FCE5F /* expand@2x.png in Resources */,
 				8CFC2E1D1A5864B8004FCE5F /* play.png in Resources */,
 				8CFC2E1E1A5864B8004FCE5F /* play@2x.png in Resources */,
@@ -2731,6 +2753,7 @@
 				8C94DFFA183DA6AE00827888 /* MKAnnotationView.m in Sources */,
 				1DDEF82E169D2FE800C0D303 /* PIXPhoto.m in Sources */,
 				8C94E002183DA6AE00827888 /* MKMapView.m in Sources */,
+				2D6A21441D894EE700D056DB /* PIXPhotoCollectionViewController.m in Sources */,
 				1DDEF830169D2FE800C0D303 /* PIXAccount.m in Sources */,
 				8C94E010183DA6AE00827888 /* MKUserLocation+Private.m in Sources */,
 				8C94E007183DA6AE00827888 /* MKPlacemark+Private.m in Sources */,
@@ -2791,6 +2814,7 @@
 				8C68247416F6A75100245F09 /* PIXPageHUDWindow.m in Sources */,
 				8CF9CE4816F8B4A9003B0933 /* PIXInfoPanelView.m in Sources */,
 				8C94E013183DA6AE00827888 /* MKWebView.m in Sources */,
+				2D6A214C1D89502000D056DB /* PIXPhotoCollectionViewItem.m in Sources */,
 				8C24A40B16F94ED100703F97 /* PIXRoundRectView.m in Sources */,
 				8C94E00B183DA6AE00827888 /* MKPolygonView.m in Sources */,
 				8C94DFFD183DA6AE00827888 /* MKGeocoder.m in Sources */,
@@ -2880,6 +2904,7 @@
 				8C28607E17308566009A0B35 /* PIXPhotoGridViewController.m in Sources */,
 				8C28607F17308566009A0B35 /* PIXGridViewItem.m in Sources */,
 				8C28608017308566009A0B35 /* PIXPhotoGridViewItem.m in Sources */,
+				2D6A21451D894EE700D056DB /* PIXPhotoCollectionViewController.m in Sources */,
 				8C28608117308566009A0B35 /* PIXLoadAlbumOperation.m in Sources */,
 				8C9FA5B9183AC5FE000AEBC9 /* SBJSON.m in Sources */,
 				2D7A2A561D4B0E9800218712 /* PIXGridView.m in Sources */,
@@ -2927,6 +2952,7 @@
 				8C28609F17308566009A0B35 /* PIXFileTextField.m in Sources */,
 				8C2860A017308566009A0B35 /* PIXOutlineView.m in Sources */,
 				8C2860A117308566009A0B35 /* PIXRoundedProgressIndicator.m in Sources */,
+				2D6A214D1D89502000D056DB /* PIXPhotoCollectionViewItem.m in Sources */,
 				8C9FA5AA183AC5FE000AEBC9 /* MKPlacemark.m in Sources */,
 				8C2860A217308566009A0B35 /* PIXHUDMessageController.m in Sources */,
 				8C2860A317308566009A0B35 /* PIXLeapTutorialWindowController.m in Sources */,
@@ -2986,6 +3012,7 @@
 				8CFC2D7E1A5864B8004FCE5F /* MKAnnotationView.m in Sources */,
 				8CFC2D7F1A5864B8004FCE5F /* PIXPhoto.m in Sources */,
 				8CFC2D801A5864B8004FCE5F /* MKMapView.m in Sources */,
+				2D6A21461D894EE700D056DB /* PIXPhotoCollectionViewController.m in Sources */,
 				8CFC2D811A5864B8004FCE5F /* PIXAccount.m in Sources */,
 				8CFC2D821A5864B8004FCE5F /* MKUserLocation+Private.m in Sources */,
 				8CFC2D831A5864B8004FCE5F /* MKPlacemark+Private.m in Sources */,
@@ -3046,6 +3073,7 @@
 				8CFC2DB91A5864B8004FCE5F /* PIXPageHUDWindow.m in Sources */,
 				8CFC2DBA1A5864B8004FCE5F /* PIXInfoPanelView.m in Sources */,
 				8CFC2DBB1A5864B8004FCE5F /* MKWebView.m in Sources */,
+				2D6A214E1D89502000D056DB /* PIXPhotoCollectionViewItem.m in Sources */,
 				8CFC2DBC1A5864B8004FCE5F /* PIXRoundRectView.m in Sources */,
 				8CFC2DBD1A5864B8004FCE5F /* MKPolygonView.m in Sources */,
 				8CFC2DBE1A5864B8004FCE5F /* MKGeocoder.m in Sources */,

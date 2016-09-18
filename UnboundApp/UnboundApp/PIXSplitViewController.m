@@ -18,6 +18,7 @@
 #import "PIXShareManager.h"
 #import "PIXFileManager.h"
 #import "PIXDefines.h"
+#import "PIXPhotoCollectionViewController.h"
 
 @interface PIXSplitViewController () <PIXLeapResponder>
 
@@ -56,7 +57,11 @@
         self.sidebarViewController = [[PIXSidebarViewController alloc] initWithNibName:@"PIXSidebarViewController" bundle:nil];
         self.sidebarViewController.splitViewController = self;
         
+#ifndef USE_NSCOLLECTIONVIEW
         self.imageBrowserViewController = [[PIXPhotoGridViewController alloc] initWithNibName:@"PIXGridViewController" bundle:nil];
+#else
+        self.imageBrowserViewController = [[PIXPhotoCollectionViewController alloc] initWithNibName:@"PIXPhotoCollectionViewController" bundle:nil];
+#endif
         self.imageBrowserViewController.splitViewController = self;
         
         
@@ -505,6 +510,7 @@
     self.imageBrowserViewController.album = self.selectedAlbum;
     [self.imageBrowserViewController.view setFrame:self.rightPane.bounds];
     [self.rightPane addSubview:self.imageBrowserViewController.view];
+    [self.imageBrowserViewController.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
 }
 
 

@@ -8,10 +8,13 @@
 
 #import "PIXViewController.h"
 
+#define USE_NSCOLLECTIONVIEW
+
 @class Album;
 @class PIXAlbum;
 @class PIXSidebarViewController;
 @class PIXPhotoGridViewController;
+@class PIXPhotoCollectionViewController;
 
 @protocol PIXSplitViewControllerDelegate <NSObject>
 
@@ -24,7 +27,11 @@
 @property (nonatomic,weak) id <PIXSplitViewControllerDelegate> delegate;
 
 @property (nonatomic, strong) PIXSidebarViewController *sidebarViewController;
+#ifndef USE_NSCOLLECTIONVIEW
 @property (nonatomic, strong) PIXPhotoGridViewController *imageBrowserViewController;
+#else
+@property (nonatomic, strong) PIXPhotoCollectionViewController *imageBrowserViewController;
+#endif
 
 @property (nonatomic,weak) IBOutlet NSSplitView *splitView;
 @property (nonatomic,weak) IBOutlet NSView *leftPane;

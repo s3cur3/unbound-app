@@ -62,6 +62,19 @@ PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     self.minItemSize = s;
 }
 
+- (void)setScrollElasticity:(BOOL)scrollElasticity
+{
+    _scrollElasticity = scrollElasticity;
+    NSScrollView *scrollView = [self enclosingScrollView];
+    if (_scrollElasticity) {
+        [scrollView setHorizontalScrollElasticity:NSScrollElasticityNone];
+        [scrollView setVerticalScrollElasticity:NSScrollElasticityAllowed];
+    } else {
+        [scrollView setHorizontalScrollElasticity:NSScrollElasticityNone];
+        [scrollView setVerticalScrollElasticity:NSScrollElasticityNone];
+    }
+}
+
 - (PIXCollectionViewItem *)scrollToAndReturnItemAtIndex:(NSUInteger)index animated:(BOOL)animated
 {
     // scroll to this index
@@ -497,6 +510,7 @@ PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 - (void)reloadSelection
 {
     // loop through all items on the screen and set their selection
+    /*
     [[self indexesForVisibleItems] enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
         
         PIXCollectionViewItem * item = (PIXCollectionViewItem *)[self itemAtIndex:idx];
@@ -505,6 +519,17 @@ PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
         if( item.selected )
             lastSelectedItemIndex = idx;
     }];
+     */
+    
+    NSInteger nCnt = [self.content count];
+    for( NSInteger idx = 0 ; idx < nCnt ; idx++ )
+    {
+        PIXCollectionViewItem * item = (PIXCollectionViewItem *)[self itemAtIndex:idx];
+        item.selected = [self gridView:self itemIsSelectedAtIndex:idx inSection:0];
+        
+        if( item.selected )
+            lastSelectedItemIndex = idx;
+    }
 }
 
 - (void)selectItemAtIndexMouseDown:(NSUInteger)selectedItemIndex usingModifierFlags:(NSUInteger)modifierFlags
