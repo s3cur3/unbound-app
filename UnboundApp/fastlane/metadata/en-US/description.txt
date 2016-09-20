@@ -1,0 +1,26 @@
+Unbound is a faster, simpler photo manager.
+
+
+Incredibly Fast
+
+Unbound was designed with speed as a priority. Everything from the initial app launch to scrolling through your thumbs is incredibly responsive. Access photos whenever you want without having to wait.
+
+
+Easy Organization
+
+Unbound keeps your photo organization simple. Use albums to group your photos and easily find them later. Instant search puts any album within a few taps of your keyboard.
+
+
+Save Space
+
+Unbound doesn't create a separate photo library like other photo apps. Instead, Unbound uses your existing file structure to create its albums. That means your photos aren't duplicated and you save space.
+
+
+Easy & Direct Access
+
+Using the file structure also means that you can edit, copy, delete, and move your photos using the Finder, Photoshop, or any other app. Unbound watches the files and stays perfectly up-to-date.
+
+
+Effortlessly Sync Using Dropbox
+
+Do you want to sync your photo albums with your iPhone, iPad or even multiple Macs? Combine Unbound with Dropbox and you can organize and upload your photos from anywhere and have the changes automatically synced to all your devices.

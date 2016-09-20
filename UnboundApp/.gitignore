@@ -46,3 +46,4 @@ xcuserdata/
 fastlane/report.xml
 fastlane/screenshots
 .idea
+.DS_Store
