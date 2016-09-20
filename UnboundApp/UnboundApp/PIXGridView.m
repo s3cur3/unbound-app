@@ -868,7 +868,7 @@ PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 {
     NSUInteger newIndex = 0;
     
-    if( lastSelectedItemIndex != NSNotFound )
+    if( lastSelectedItemIndex != NSNotFound && lastSelectedItemIndex < self.content.count)
     {
         PIXCollectionViewItem * lastSelectedItem = (PIXCollectionViewItem *)[self itemAtIndex:lastSelectedItemIndex];
         if( lastSelectedItem.isSelected )
@@ -921,7 +921,7 @@ PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
             }
             else
             {
-                if( (lastSelectedPoint.row == 1) && [self.nextResponder respondsToSelector:@selector(moveLeft:)] )
+                if([self.nextResponder respondsToSelector:@selector(moveLeft:)] )
                 {
                     [self.nextResponder moveLeft:sender];
                     return; // do nothing and pass along the message if we're at the furthest left column
