@@ -89,7 +89,7 @@
     [[PIXLeapInputManager sharedInstance] addResponder:self];
     [[PIXLeapInputManager sharedInstance] addResponder:self.gridView];
     
-    [self.gridView setNextResponder:self];
+    //[self.gridView setNextResponder:self];
     //[self setNextResponder:self.scrollView];
     
 }
@@ -128,17 +128,6 @@
 {
     [[PIXLeapInputManager sharedInstance] removeResponder:self];
     [[PIXLeapInputManager sharedInstance] removeResponder:self.gridView];
-}
-
--(void)moveLeft:(id)sender
-{
-    // make the album view the first responder if it's open
-    if(![self.splitViewController.splitView isSubviewCollapsed:self.splitViewController.leftPane] &&
-       [self.selectedItems count] == 1) // make sure only one item is selected
-    {
-        [self.view.window makeFirstResponder:self.splitViewController.sidebarViewController.outlineView];
-        [self selectNone:sender];
-    }
 }
 
 // send a size between 0 and 1 (will be transformed into appropriate sizes)
@@ -438,6 +427,17 @@
     
     NSImage * dragImage = [PIXPhotoCollectionViewItemView dragImageForPhotos:selectedArray size:NSMakeSize(180, 180)];
     [self.gridView dragImage:dragImage at:location offset:NSZeroSize event:event pasteboard:dragPBoard source:self slideBack:YES];
+}
+
+- (void)gridViewDidPressLeftArrowKeyAtFirstColumn:(PIXGridView *)gridView
+{
+    // make the album view the first responder if it's open
+    if(![self.splitViewController.splitView isSubviewCollapsed:self.splitViewController.leftPane] &&
+       [self.selectedItems count] == 1) // make sure only one item is selected
+    {
+        [self.view.window makeFirstResponder:self.splitViewController.sidebarViewController.outlineView];
+        [self selectNone:nil];
+    }
 }
 
 #pragma mark - Drop Operation

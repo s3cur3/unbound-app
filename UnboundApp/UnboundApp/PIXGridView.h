@@ -77,4 +77,6 @@ typedef struct _PIXItemPoint {
 - (void)gridView:(PIXGridView *)gridView didKeySelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section;
 - (void)gridView:(PIXGridView *)gridView didPointItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section;
 
+- (void)gridViewDidPressLeftArrowKeyAtFirstColumn:(PIXGridView *)gridView;
+
 @end

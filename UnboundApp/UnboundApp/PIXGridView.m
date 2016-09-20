@@ -921,12 +921,15 @@ PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
             }
             else
             {
-                if([self.nextResponder respondsToSelector:@selector(moveLeft:)] )
+                if( [self.gridViewDelegate respondsToSelector:@selector(gridViewDidPressLeftArrowKeyAtFirstColumn:)] )
                 {
-                    [self.nextResponder moveLeft:sender];
-                    return; // do nothing and pass along the message if we're at the furthest left column
+                    [self.gridViewDelegate gridViewDidPressLeftArrowKeyAtFirstColumn:self];
+                    return;
                 }
-    
+
+                if( lastSelectedPoint.row == 1 )
+                    return;
+                
                 // if theres no responder for left then go up a row
                 newIndex = lastSelectedPoint.column-1 + ((lastSelectedPoint.row-1) * self.columnsInGridView);
                 newIndex--;
