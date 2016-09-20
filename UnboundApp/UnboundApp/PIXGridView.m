@@ -521,6 +521,11 @@ PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     
 }
 
+- (void)resetSelection {
+    lastSelectedItemIndex = NSNotFound;
+    [self reloadSelection];
+}
+
 - (void)reloadSelection
 {
     // loop through all items on the screen and set their selection
@@ -871,16 +876,22 @@ PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     if( lastSelectedItemIndex != NSNotFound && lastSelectedItemIndex < self.content.count)
     {
         PIXCollectionViewItem * lastSelectedItem = (PIXCollectionViewItem *)[self itemAtIndex:lastSelectedItemIndex];
-        if( lastSelectedItem.isSelected )
+        if( lastSelectedItem != nil )
         {
             PIXItemPoint lastSelectedPoint = [self locationForItemAtIndex:lastSelectedItemIndex];
-            if(lastSelectedPoint.column < self.columnsInGridView)
-            {
+
+            if (!lastSelectedItem.isSelected) {
+                // If the item is no longer selected, we're returning to the
+                // view, so just restore the selection
+                newIndex = lastSelectedItemIndex;
+            }
+            else if (lastSelectedPoint.column < self.columnsInGridView) {
+                // If we're not at the right edge of the list, advance the selection to the right.
                 lastSelectedPoint.column++;
                 newIndex = lastSelectedPoint.column-1 + ((lastSelectedPoint.row-1) * self.columnsInGridView);
             }
-            else
-            {
+            else {
+                // If we're at the right edge of the list, advance to the next row
                 newIndex = lastSelectedPoint.column-1 + ((lastSelectedPoint.row-1) * self.columnsInGridView);
                 newIndex++;
             }

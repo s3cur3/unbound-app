@@ -39,7 +39,7 @@
     if (self) {
         // Initialization code here.
         
-        
+
         self.titleDateFormatter = [[NSDateFormatter alloc] init];
         [self.titleDateFormatter setDateStyle:NSDateFormatterLongStyle];
         [self.titleDateFormatter setTimeStyle:NSDateFormatterNoStyle];
@@ -194,7 +194,8 @@
         [self.selectedItems removeAllObjects];
         [self updateToolbar];
         [self updateAlbum:nil];
-        
+
+        [self.gridView resetSelection];
         [self.gridView scrollPoint:NSZeroPoint];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAlbum:) name:AlbumDidChangeNotification object:_album];

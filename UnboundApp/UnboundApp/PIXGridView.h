@@ -41,6 +41,8 @@ typedef struct _PIXItemPoint {
 
 - (void)setBackgroundColor:(NSColor *)c;
 
+- (void)resetSelection;
+
 - (void)reloadSelection;
 
 - (PIXCollectionViewItem *)scrollToAndReturnItemAtIndex:(NSUInteger)index animated:(BOOL)animated;
