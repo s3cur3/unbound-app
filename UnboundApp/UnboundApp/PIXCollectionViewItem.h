@@ -10,6 +10,8 @@
 
 @interface PIXCollectionViewItem : NSCollectionViewItem
 
+- (void)refresh;
+
 @end
 
 @interface PIXCollectionViewItemView : NSView

@@ -50,6 +50,11 @@
     return view.selected;
 }
 
+- (void)refresh
+{
+    [self.view updateLayer];
+}
+
 @end
 
 

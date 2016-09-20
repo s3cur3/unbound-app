@@ -89,8 +89,8 @@
     [[PIXLeapInputManager sharedInstance] addResponder:self];
     [[PIXLeapInputManager sharedInstance] addResponder:self.gridView];
     
-    //    [self.gridView setNextResponder:self];
-    //    [self setNextResponder:self.scrollView];
+    [self.gridView setNextResponder:self];
+    //[self setNextResponder:self.scrollView];
     
 }
 
@@ -148,7 +148,7 @@
     float transformedSize = rint(140+(260.0 * size));
     [self.gridView setItemSize:CGSizeMake(transformedSize, transformedSize)];
     // Need to refresh gridView
-    [self.gridView reloadData];
+    //[self.gridView reloadData];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.gridView setScrollElasticity:YES];

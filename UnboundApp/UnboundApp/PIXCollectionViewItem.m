@@ -9,6 +9,12 @@
 #import "PIXCollectionViewItem.h"
 
 @implementation PIXCollectionViewItem
+
+- (void)refresh
+{
+    [self.view setNeedsDisplay:YES];
+}
+
 @end
 
 @implementation PIXCollectionViewItemView

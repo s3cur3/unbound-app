@@ -60,6 +60,20 @@ PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     
     self.maxItemSize = s;
     self.minItemSize = s;
+    
+    dispatch_block_t block = ^(void){
+        NSInteger nCnt = [self.content count];
+        for( NSInteger i = 0 ; i < nCnt ; i++ )
+        {
+            PIXCollectionViewItem * item = (PIXCollectionViewItem *)[self itemAtIndex:i];
+            [item refresh];
+        }
+    };
+    
+    if( [NSThread isMainThread] )
+        block();
+    else
+        dispatch_sync(dispatch_get_main_queue(), block);
 }
 
 - (void)setScrollElasticity:(BOOL)scrollElasticity
@@ -907,15 +921,12 @@ PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
             }
             else
             {
-                if([self.nextResponder respondsToSelector:@selector(moveLeft:)])
+                if( (lastSelectedPoint.row == 1) && [self.nextResponder respondsToSelector:@selector(moveLeft:)] )
                 {
                     [self.nextResponder moveLeft:sender];
                     return; // do nothing and pass along the message if we're at the furthest left column
                 }
     
-                if( lastSelectedPoint.row == 1 )
-                    return;
-                
                 // if theres no responder for left then go up a row
                 newIndex = lastSelectedPoint.column-1 + ((lastSelectedPoint.row-1) * self.columnsInGridView);
                 newIndex--;
