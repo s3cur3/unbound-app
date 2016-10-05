@@ -9,12 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-#ifdef USE_OLD_MAPS
-#import "MapKit.h"
-#else
 #import <MapKit/MapKit.h>
-#endif
-
 #import "PIXThumbnailLoadingDelegate.h"
 
 @class QTMovie;

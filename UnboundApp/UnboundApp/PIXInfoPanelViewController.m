@@ -8,12 +8,6 @@
 
 #import "PIXInfoPanelViewController.h"
 
-#ifdef USE_OLD_MAPS
-#import "MapKit.h"
-#else
-#import <MapKit/MapKit.h>
-#endif
-
 #import "PIXPhoto.h"
 #import "PIXPageViewController.h"
 #import "PIXFileManager.h"
@@ -166,35 +160,15 @@
 
 -(void)updateMap
 {
-    
-    if([[self.photo latitude] doubleValue] == 0 || [[self.photo longitude] doubleValue] == 0)
-    {
-        [self.mapView.animator setHidden:YES];
-    }
-    
-    else
-    {
-        [self.mapView.animator setHidden:NO];
-        
+    if([[self.photo latitude] doubleValue] == 0 || [[self.photo longitude] doubleValue] == 0) {
+        self.mapView.animator.hidden = YES;
+    } else {
+        self.mapView.animator.hidden = NO;
+
         [self.mapView removeAnnotations:self.mapView.annotations];
         [self.mapView addAnnotation:self.photo];
-        
-        
-    
-#ifdef USE_OLD_MAPS
-        
-        [self.mapView setCenterCoordinate:[self.photo coordinate] animated:YES];
-    
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"MapViewAdditions" ofType:@"css"];
-        [self.mapView addStylesheetTag:path];
-        
-        
-#else
-        [self.mapView setShowsZoomControls:YES];
         [self.mapView setRegion:MKCoordinateRegionMake([self.photo coordinate], MKCoordinateSpanMake(1.0, 1.0)) animated:YES];
-#endif
-        
-        
+//        self.mapView.showsZoomControls = YES;
     }
 }
 
@@ -206,10 +180,14 @@
 
 - (MKAnnotationView *)mapView:(MKMapView *)aMapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
-    MKPinAnnotationView *view = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"blah"];
-    view.draggable = NO;
-    view.animatesDrop = YES;
-
+    NSString *identifier = @"Pin";
+    MKPinAnnotationView *view = (MKPinAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+    if (view == nil) {
+        view = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
+        view.animatesDrop = YES;
+    } else {
+        view.annotation = annotation;
+    }
     return view;
 }
 

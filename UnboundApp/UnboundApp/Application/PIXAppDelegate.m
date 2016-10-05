@@ -27,9 +27,12 @@
 
 #import "PIXLeapTutorialWindowController.h"
 
-#import <Sparkle/Sparkle.h>
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+
+#ifdef SPARKLE
+#import <Sparkle/Sparkle.h>
+#endif
 
 #ifdef APPIRATOR
 #import "Appirater.h"
@@ -47,7 +50,9 @@
 
 @property (strong) PIXLeapTutorialWindowController * leapTutorial;
 
+#ifdef SPARKLE
 @property (strong) SUUpdater * sparkleUpdater;
+#endif
 
 @end
 
@@ -174,7 +179,7 @@
     [[PIXLeapInputManager sharedInstance] run];
 
     
-#ifdef ENABLE_SPARKLE
+#ifdef SPARKLE
     self.showSparkleMenu = YES;
     self.sparkleUpdater = [SUUpdater new];
 #endif
@@ -195,7 +200,7 @@
 - (IBAction)checkForUpdates:(id)sender
 {
     
-#ifdef ENABLE_SPARKLE
+#ifdef SPARKLE
     [self.sparkleUpdater checkForUpdates:sender];
 #endif
 }
