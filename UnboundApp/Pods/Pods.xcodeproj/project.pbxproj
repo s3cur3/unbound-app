@@ -1,712 +1,1804 @@
-// !$*UTF8*$!
-{
-	archiveVersion = 1;
-	classes = {
-	};
-	objectVersion = 46;
-	objects = {
-
-/* Begin PBXBuildFile section */
-		15D50B20E045F52AD6542B190266CF27 /* Pods-Unbound-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FA95349D59FC35859D9259B68E9DCDF8 /* Pods-Unbound-dummy.m */; };
-		2AE42F2DDF22D837A9D9DA49A6D9F007 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CA6EBC2E57D96052268211209D6AA52 /* Cocoa.framework */; };
-		4FFBCA39E59656F6AEE18EC5834BDFD1 /* Pods-Unbound-Unbound Trial-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BEE8B99B322445182E5AB74C0C02904 /* Pods-Unbound-Unbound Trial-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		559DA3E1A42088DC56C73B0FE8FBF50C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CA6EBC2E57D96052268211209D6AA52 /* Cocoa.framework */; };
-		639FA40254D486DF19055810DD960D94 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CA6EBC2E57D96052268211209D6AA52 /* Cocoa.framework */; };
-		6F8DEF45E2994FC9D3A6C4026904FAB7 /* Pods-Unbound-Unbound Trial-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AA8A8D54254E16A6577CABB135C410E /* Pods-Unbound-Unbound Trial-dummy.m */; };
-		7A764AFC4261425EADB48AAE67FB5D7A /* Pods-Unbound-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 886F6D314DF31E2FDF49900019BBEBA0 /* Pods-Unbound-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B62DF9175974031F634A7EBCF22B7F39 /* Pods-Unbound-Unbound Non-Sandbox-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = FF41FBAAF5E1B271D71EB54C54C59061 /* Pods-Unbound-Unbound Non-Sandbox-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EBB91FFBB93E682A85AF9956B684F922 /* Pods-Unbound-Unbound Non-Sandbox-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D7F2B0494FBAEC11374CA7D195B32D6A /* Pods-Unbound-Unbound Non-Sandbox-dummy.m */; };
-/* End PBXBuildFile section */
-
-/* Begin PBXFileReference section */
-		08FB59EBA8D8166E565CCC938D405477 /* Pods-Unbound-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Unbound-acknowledgements.markdown"; sourceTree = "<group>"; };
-		0A4397AD6DED914814EF4E1A4C90B687 /* Pods-Unbound.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Unbound.release.xcconfig"; sourceTree = "<group>"; };
-		0CB0A5F718666B73058F010C28DE165C /* Pods-Unbound-Unbound Non-Sandbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Unbound-Unbound Non-Sandbox.release.xcconfig"; sourceTree = "<group>"; };
-		1CA6EBC2E57D96052268211209D6AA52 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
-		20FB0274D317BA3CD82C98C6EF1F20FA /* Pods-Unbound-Unbound Trial-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Unbound-Unbound Trial-resources.sh"; sourceTree = "<group>"; };
-		2AA8A8D54254E16A6577CABB135C410E /* Pods-Unbound-Unbound Trial-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Unbound-Unbound Trial-dummy.m"; sourceTree = "<group>"; };
-		30808168338ED80E27485D62AF291154 /* Pods-Unbound-Unbound Non-Sandbox-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Unbound-Unbound Non-Sandbox-resources.sh"; sourceTree = "<group>"; };
-		3309D27575D475DE481FCE0F069A0EC6 /* Pods_Unbound_Unbound_Non_Sandbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unbound_Unbound_Non_Sandbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5814C832216ED7C3D0A75CF2F10BD08C /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = OSX/Crashlytics.framework; sourceTree = "<group>"; };
-		5CF71449562C7CC3FE5FD9F2211C1A6F /* Pods-Unbound.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-Unbound.modulemap"; sourceTree = "<group>"; };
-		6DFAB9D9014C72529D75C10702393014 /* Pods-Unbound-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Unbound-resources.sh"; sourceTree = "<group>"; };
-		7013D2576B7F1315BA20018E4D8ACCDB /* Pods-Unbound-Unbound Trial-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Unbound-Unbound Trial-frameworks.sh"; sourceTree = "<group>"; };
-		709E09473A1689039704291D4E6D0141 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
-		73E6215B86E012DFA9F68E684913C413 /* Pods-Unbound-Unbound Trial.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Unbound-Unbound Trial.debug.xcconfig"; sourceTree = "<group>"; };
-		77B22799B874AA0DB89F1E119FF21C9B /* Pods-Unbound-Unbound Non-Sandbox.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-Unbound-Unbound Non-Sandbox.modulemap"; sourceTree = "<group>"; };
-		7E625D8AE90ECFD01529FCF79C902250 /* Pods-Unbound-Unbound Non-Sandbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Unbound-Unbound Non-Sandbox.debug.xcconfig"; sourceTree = "<group>"; };
-		7F49B7B4BD403FF39E5B1FC57726DF62 /* Pods-Unbound-Unbound Non-Sandbox-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Unbound-Unbound Non-Sandbox-acknowledgements.plist"; sourceTree = "<group>"; };
-		81CCA243DF4AED5DE6EB3A7220D0230C /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		85E6FE2432060E98FB638A7B145699D1 /* Pods-Unbound-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Unbound-acknowledgements.plist"; sourceTree = "<group>"; };
-		886F6D314DF31E2FDF49900019BBEBA0 /* Pods-Unbound-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Unbound-umbrella.h"; sourceTree = "<group>"; };
-		8AB27C7E1A81CFCD36D1BCC5DDD249B5 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8BEE8B99B322445182E5AB74C0C02904 /* Pods-Unbound-Unbound Trial-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Unbound-Unbound Trial-umbrella.h"; sourceTree = "<group>"; };
-		A102C47B6364952CEEA8C10D3E65887A /* Pods-Unbound-Unbound Trial-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Unbound-Unbound Trial-acknowledgements.markdown"; sourceTree = "<group>"; };
-		A11CB1B5DA8AE3CD6B615A7F43818B45 /* Pods-Unbound-Unbound Trial-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Unbound-Unbound Trial-acknowledgements.plist"; sourceTree = "<group>"; };
-		A82A548FE5354E09CF79040FBE5204DC /* Pods_Unbound_Unbound_Trial.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unbound_Unbound_Trial.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		BB3DA30FB97A773F92B958A861034C54 /* Pods-Unbound-Unbound Non-Sandbox-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Unbound-Unbound Non-Sandbox-acknowledgements.markdown"; sourceTree = "<group>"; };
-		BF61F9B0195EF56D75DE0666F7D1B7F8 /* Pods-Unbound.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Unbound.debug.xcconfig"; sourceTree = "<group>"; };
-		D7F2B0494FBAEC11374CA7D195B32D6A /* Pods-Unbound-Unbound Non-Sandbox-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Unbound-Unbound Non-Sandbox-dummy.m"; sourceTree = "<group>"; };
-		E091B1E79D102D116846F98AA7D999A8 /* Pods-Unbound-Unbound Non-Sandbox-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Unbound-Unbound Non-Sandbox-frameworks.sh"; sourceTree = "<group>"; };
-		E2F4009296C7ADDD7D02C25C33A0C61D /* Pods_Unbound.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unbound.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E33C05D0972299812D77375AD77FAC02 /* Pods-Unbound-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Unbound-frameworks.sh"; sourceTree = "<group>"; };
-		E69AAEE065A0DC696C0D7EA023A9707D /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E7C48C853114F35B00B28565B0DE109E /* Pods-Unbound-Unbound Trial.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-Unbound-Unbound Trial.modulemap"; sourceTree = "<group>"; };
-		EAC91010461ABF7D5E96F84F8304165E /* Pods-Unbound-Unbound Trial.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Unbound-Unbound Trial.release.xcconfig"; sourceTree = "<group>"; };
-		FA95349D59FC35859D9259B68E9DCDF8 /* Pods-Unbound-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Unbound-dummy.m"; sourceTree = "<group>"; };
-		FEED66E9439B13AFC3CBD5FE5C2DF819 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = OSX/Fabric.framework; sourceTree = "<group>"; };
-		FF41FBAAF5E1B271D71EB54C54C59061 /* Pods-Unbound-Unbound Non-Sandbox-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Unbound-Unbound Non-Sandbox-umbrella.h"; sourceTree = "<group>"; };
-/* End PBXFileReference section */
-
-/* Begin PBXFrameworksBuildPhase section */
-		385E3BB4554CE38D57A370A1E6F9577D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2AE42F2DDF22D837A9D9DA49A6D9F007 /* Cocoa.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C264EAB2DD5F0E28BDA0A50EE578A56A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				639FA40254D486DF19055810DD960D94 /* Cocoa.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CC1234E70F71FB83DB2465CDC3C6287D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				559DA3E1A42088DC56C73B0FE8FBF50C /* Cocoa.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
-
-/* Begin PBXGroup section */
-		1332C35BA303FEA123537CCF7E542FF5 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				5A66EF47D90F4BEA7B2E500F57EC85EF /* Crashlytics */,
-				FCD1AEB0641A4392015F9BF0587BF674 /* Fabric */,
-				67943E531531F07EAAB6884840654D46 /* Sparkle */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		28C17CEF104526ACA07B6EEE217EC43E /* OS X */ = {
-			isa = PBXGroup;
-			children = (
-				1CA6EBC2E57D96052268211209D6AA52 /* Cocoa.framework */,
-			);
-			name = "OS X";
-			sourceTree = "<group>";
-		};
-		39E9EE8210D861DFD82346C1F5EB7218 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				28C17CEF104526ACA07B6EEE217EC43E /* OS X */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		42E67BF21CA75491069D03F9C3D1E2DD /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				709E09473A1689039704291D4E6D0141 /* Sparkle.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		5A66EF47D90F4BEA7B2E500F57EC85EF /* Crashlytics */ = {
-			isa = PBXGroup;
-			children = (
-				88FD8DE4433B785872F63AFA9AB0D1D1 /* Frameworks */,
-			);
-			path = Crashlytics;
-			sourceTree = "<group>";
-		};
-		67943E531531F07EAAB6884840654D46 /* Sparkle */ = {
-			isa = PBXGroup;
-			children = (
-				42E67BF21CA75491069D03F9C3D1E2DD /* Frameworks */,
-			);
-			path = Sparkle;
-			sourceTree = "<group>";
-		};
-		7AF184277500FA0FA945B2DDD455CC4E /* Pods-Unbound-Unbound Non-Sandbox */ = {
-			isa = PBXGroup;
-			children = (
-				8AB27C7E1A81CFCD36D1BCC5DDD249B5 /* Info.plist */,
-				77B22799B874AA0DB89F1E119FF21C9B /* Pods-Unbound-Unbound Non-Sandbox.modulemap */,
-				BB3DA30FB97A773F92B958A861034C54 /* Pods-Unbound-Unbound Non-Sandbox-acknowledgements.markdown */,
-				7F49B7B4BD403FF39E5B1FC57726DF62 /* Pods-Unbound-Unbound Non-Sandbox-acknowledgements.plist */,
-				D7F2B0494FBAEC11374CA7D195B32D6A /* Pods-Unbound-Unbound Non-Sandbox-dummy.m */,
-				E091B1E79D102D116846F98AA7D999A8 /* Pods-Unbound-Unbound Non-Sandbox-frameworks.sh */,
-				30808168338ED80E27485D62AF291154 /* Pods-Unbound-Unbound Non-Sandbox-resources.sh */,
-				FF41FBAAF5E1B271D71EB54C54C59061 /* Pods-Unbound-Unbound Non-Sandbox-umbrella.h */,
-				7E625D8AE90ECFD01529FCF79C902250 /* Pods-Unbound-Unbound Non-Sandbox.debug.xcconfig */,
-				0CB0A5F718666B73058F010C28DE165C /* Pods-Unbound-Unbound Non-Sandbox.release.xcconfig */,
-			);
-			name = "Pods-Unbound-Unbound Non-Sandbox";
-			path = "Target Support Files/Pods-Unbound-Unbound Non-Sandbox";
-			sourceTree = "<group>";
-		};
-		7DB346D0F39D3F0E887471402A8071AB = {
-			isa = PBXGroup;
-			children = (
-				BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */,
-				39E9EE8210D861DFD82346C1F5EB7218 /* Frameworks */,
-				1332C35BA303FEA123537CCF7E542FF5 /* Pods */,
-				B86BF2346E388B3A78CAA91AA4367295 /* Products */,
-				9B198698CB1BBBF7F0AE29AF6D42C33A /* Targets Support Files */,
-			);
-			sourceTree = "<group>";
-		};
-		88FD8DE4433B785872F63AFA9AB0D1D1 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				5814C832216ED7C3D0A75CF2F10BD08C /* Crashlytics.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		9B198698CB1BBBF7F0AE29AF6D42C33A /* Targets Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				B2D512DC616C93E5923D743E2D117910 /* Pods-Unbound */,
-				7AF184277500FA0FA945B2DDD455CC4E /* Pods-Unbound-Unbound Non-Sandbox */,
-				B6CE1DFEEE262D9EA786F62BCA82F14C /* Pods-Unbound-Unbound Trial */,
-			);
-			name = "Targets Support Files";
-			sourceTree = "<group>";
-		};
-		B2D512DC616C93E5923D743E2D117910 /* Pods-Unbound */ = {
-			isa = PBXGroup;
-			children = (
-				81CCA243DF4AED5DE6EB3A7220D0230C /* Info.plist */,
-				5CF71449562C7CC3FE5FD9F2211C1A6F /* Pods-Unbound.modulemap */,
-				08FB59EBA8D8166E565CCC938D405477 /* Pods-Unbound-acknowledgements.markdown */,
-				85E6FE2432060E98FB638A7B145699D1 /* Pods-Unbound-acknowledgements.plist */,
-				FA95349D59FC35859D9259B68E9DCDF8 /* Pods-Unbound-dummy.m */,
-				E33C05D0972299812D77375AD77FAC02 /* Pods-Unbound-frameworks.sh */,
-				6DFAB9D9014C72529D75C10702393014 /* Pods-Unbound-resources.sh */,
-				886F6D314DF31E2FDF49900019BBEBA0 /* Pods-Unbound-umbrella.h */,
-				BF61F9B0195EF56D75DE0666F7D1B7F8 /* Pods-Unbound.debug.xcconfig */,
-				0A4397AD6DED914814EF4E1A4C90B687 /* Pods-Unbound.release.xcconfig */,
-			);
-			name = "Pods-Unbound";
-			path = "Target Support Files/Pods-Unbound";
-			sourceTree = "<group>";
-		};
-		B6CE1DFEEE262D9EA786F62BCA82F14C /* Pods-Unbound-Unbound Trial */ = {
-			isa = PBXGroup;
-			children = (
-				E69AAEE065A0DC696C0D7EA023A9707D /* Info.plist */,
-				E7C48C853114F35B00B28565B0DE109E /* Pods-Unbound-Unbound Trial.modulemap */,
-				A102C47B6364952CEEA8C10D3E65887A /* Pods-Unbound-Unbound Trial-acknowledgements.markdown */,
-				A11CB1B5DA8AE3CD6B615A7F43818B45 /* Pods-Unbound-Unbound Trial-acknowledgements.plist */,
-				2AA8A8D54254E16A6577CABB135C410E /* Pods-Unbound-Unbound Trial-dummy.m */,
-				7013D2576B7F1315BA20018E4D8ACCDB /* Pods-Unbound-Unbound Trial-frameworks.sh */,
-				20FB0274D317BA3CD82C98C6EF1F20FA /* Pods-Unbound-Unbound Trial-resources.sh */,
-				8BEE8B99B322445182E5AB74C0C02904 /* Pods-Unbound-Unbound Trial-umbrella.h */,
-				73E6215B86E012DFA9F68E684913C413 /* Pods-Unbound-Unbound Trial.debug.xcconfig */,
-				EAC91010461ABF7D5E96F84F8304165E /* Pods-Unbound-Unbound Trial.release.xcconfig */,
-			);
-			name = "Pods-Unbound-Unbound Trial";
-			path = "Target Support Files/Pods-Unbound-Unbound Trial";
-			sourceTree = "<group>";
-		};
-		B86BF2346E388B3A78CAA91AA4367295 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E2F4009296C7ADDD7D02C25C33A0C61D /* Pods_Unbound.framework */,
-				3309D27575D475DE481FCE0F069A0EC6 /* Pods_Unbound_Unbound_Non_Sandbox.framework */,
-				A82A548FE5354E09CF79040FBE5204DC /* Pods_Unbound_Unbound_Trial.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		F33A1A138D279460BF2DE745096701B9 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				FEED66E9439B13AFC3CBD5FE5C2DF819 /* Fabric.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		FCD1AEB0641A4392015F9BF0587BF674 /* Fabric */ = {
-			isa = PBXGroup;
-			children = (
-				F33A1A138D279460BF2DE745096701B9 /* Frameworks */,
-			);
-			path = Fabric;
-			sourceTree = "<group>";
-		};
-/* End PBXGroup section */
-
-/* Begin PBXHeadersBuildPhase section */
-		1C43BE30903F5AF7DDEF637852DF23C9 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B62DF9175974031F634A7EBCF22B7F39 /* Pods-Unbound-Unbound Non-Sandbox-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5079230F714EDC088374F991185A301F /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4FFBCA39E59656F6AEE18EC5834BDFD1 /* Pods-Unbound-Unbound Trial-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		53FEA7B84E0FE3C30FF3F05D08E6701E /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7A764AFC4261425EADB48AAE67FB5D7A /* Pods-Unbound-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
-/* Begin PBXNativeTarget section */
-		C7ADC1A95458D8E86E225FC5064D9C2B /* Pods-Unbound */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D5122592E040944AFB9282C74F9400E5 /* Build configuration list for PBXNativeTarget "Pods-Unbound" */;
-			buildPhases = (
-				D8942289BF4CADD437B5AB6ADFA67255 /* Sources */,
-				385E3BB4554CE38D57A370A1E6F9577D /* Frameworks */,
-				53FEA7B84E0FE3C30FF3F05D08E6701E /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Pods-Unbound";
-			productName = "Pods-Unbound";
-			productReference = E2F4009296C7ADDD7D02C25C33A0C61D /* Pods_Unbound.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		D8E3D45E9373B40E003A2726B5EED3E0 /* Pods-Unbound-Unbound Trial */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 337F0821A7C9E552DA9648C7CCE17C07 /* Build configuration list for PBXNativeTarget "Pods-Unbound-Unbound Trial" */;
-			buildPhases = (
-				3E182CD5D5AE8D76079B34CC2636FC4D /* Sources */,
-				C264EAB2DD5F0E28BDA0A50EE578A56A /* Frameworks */,
-				5079230F714EDC088374F991185A301F /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Pods-Unbound-Unbound Trial";
-			productName = "Pods-Unbound-Unbound Trial";
-			productReference = A82A548FE5354E09CF79040FBE5204DC /* Pods_Unbound_Unbound_Trial.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		FE4558E5EE1D8BC111FCEAEC4DF6C1A5 /* Pods-Unbound-Unbound Non-Sandbox */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = AED0BC6DCAB3B23A01B052568FCD4EEC /* Build configuration list for PBXNativeTarget "Pods-Unbound-Unbound Non-Sandbox" */;
-			buildPhases = (
-				890BF56BEA54B7F89E4D925A64223563 /* Sources */,
-				CC1234E70F71FB83DB2465CDC3C6287D /* Frameworks */,
-				1C43BE30903F5AF7DDEF637852DF23C9 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Pods-Unbound-Unbound Non-Sandbox";
-			productName = "Pods-Unbound-Unbound Non-Sandbox";
-			productReference = 3309D27575D475DE481FCE0F069A0EC6 /* Pods_Unbound_Unbound_Non_Sandbox.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-/* End PBXNativeTarget section */
-
-/* Begin PBXProject section */
-		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
-			isa = PBXProject;
-			attributes = {
-				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0700;
-			};
-			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
-			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
-			hasScannedForEncodings = 0;
-			knownRegions = (
-				en,
-			);
-			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = B86BF2346E388B3A78CAA91AA4367295 /* Products */;
-			projectDirPath = "";
-			projectRoot = "";
-			targets = (
-				C7ADC1A95458D8E86E225FC5064D9C2B /* Pods-Unbound */,
-				FE4558E5EE1D8BC111FCEAEC4DF6C1A5 /* Pods-Unbound-Unbound Non-Sandbox */,
-				D8E3D45E9373B40E003A2726B5EED3E0 /* Pods-Unbound-Unbound Trial */,
-			);
-		};
-/* End PBXProject section */
-
-/* Begin PBXSourcesBuildPhase section */
-		3E182CD5D5AE8D76079B34CC2636FC4D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6F8DEF45E2994FC9D3A6C4026904FAB7 /* Pods-Unbound-Unbound Trial-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		890BF56BEA54B7F89E4D925A64223563 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				EBB91FFBB93E682A85AF9956B684F922 /* Pods-Unbound-Unbound Non-Sandbox-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D8942289BF4CADD437B5AB6ADFA67255 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				15D50B20E045F52AD6542B190266CF27 /* Pods-Unbound-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXSourcesBuildPhase section */
-
-/* Begin XCBuildConfiguration section */
-		0DA9CCBF7A72518431F916B157A282CE /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0A4397AD6DED914814EF4E1A4C90B687 /* Pods-Unbound.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_VERSION = A;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-Unbound/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				MODULEMAP_FILE = "Target Support Files/Pods-Unbound/Pods-Unbound.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_Unbound;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		36612D1D8C2CC5492172FEE4DA501893 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = BF61F9B0195EF56D75DE0666F7D1B7F8 /* Pods-Unbound.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_VERSION = A;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-Unbound/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				MODULEMAP_FILE = "Target Support Files/Pods-Unbound/Pods-Unbound.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_Unbound;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		68409A7CC907C65CC4632EA7B8F024D8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"POD_CONFIGURATION_DEBUG=1",
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				ONLY_ACTIVE_ARCH = YES;
-				STRIP_INSTALLED_PRODUCT = NO;
-				SYMROOT = "${SRCROOT}/../build";
-			};
-			name = Debug;
-		};
-		8DB64911BDB908C7A48EBC67F77B3D6E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7E625D8AE90ECFD01529FCF79C902250 /* Pods-Unbound-Unbound Non-Sandbox.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_VERSION = A;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-Unbound-Unbound Non-Sandbox/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				MODULEMAP_FILE = "Target Support Files/Pods-Unbound-Unbound Non-Sandbox/Pods-Unbound-Unbound Non-Sandbox.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_Unbound_Unbound_Non_Sandbox;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		98CFE9C261161DD20054425BC8F2E5DB /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0CB0A5F718666B73058F010C28DE165C /* Pods-Unbound-Unbound Non-Sandbox.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_VERSION = A;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-Unbound-Unbound Non-Sandbox/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				MODULEMAP_FILE = "Target Support Files/Pods-Unbound-Unbound Non-Sandbox/Pods-Unbound-Unbound Non-Sandbox.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_Unbound_Unbound_Non_Sandbox;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		B5527E718D62AA611740378AF093618F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"POD_CONFIGURATION_RELEASE=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				STRIP_INSTALLED_PRODUCT = NO;
-				SYMROOT = "${SRCROOT}/../build";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		D7682C8D06C539999AAD68DB24060C2F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 73E6215B86E012DFA9F68E684913C413 /* Pods-Unbound-Unbound Trial.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_VERSION = A;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-Unbound-Unbound Trial/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				MODULEMAP_FILE = "Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_Unbound_Unbound_Trial;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		E8F701FA90CCAA5D53479831B64043C2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = EAC91010461ABF7D5E96F84F8304165E /* Pods-Unbound-Unbound Trial.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_VERSION = A;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-Unbound-Unbound Trial/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				MODULEMAP_FILE = "Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_Unbound_Unbound_Trial;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-/* End XCBuildConfiguration section */
-
-/* Begin XCConfigurationList section */
-		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				68409A7CC907C65CC4632EA7B8F024D8 /* Debug */,
-				B5527E718D62AA611740378AF093618F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		337F0821A7C9E552DA9648C7CCE17C07 /* Build configuration list for PBXNativeTarget "Pods-Unbound-Unbound Trial" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D7682C8D06C539999AAD68DB24060C2F /* Debug */,
-				E8F701FA90CCAA5D53479831B64043C2 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		AED0BC6DCAB3B23A01B052568FCD4EEC /* Build configuration list for PBXNativeTarget "Pods-Unbound-Unbound Non-Sandbox" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				8DB64911BDB908C7A48EBC67F77B3D6E /* Debug */,
-				98CFE9C261161DD20054425BC8F2E5DB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D5122592E040944AFB9282C74F9400E5 /* Build configuration list for PBXNativeTarget "Pods-Unbound" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				36612D1D8C2CC5492172FEE4DA501893 /* Debug */,
-				0DA9CCBF7A72518431F916B157A282CE /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-/* End XCConfigurationList section */
-	};
-	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>archiveVersion</key>
+	<string>1</string>
+	<key>classes</key>
+	<dict/>
+	<key>objectVersion</key>
+	<string>46</string>
+	<key>objects</key>
+	<dict>
+		<key>08FB59EBA8D8166E565CCC938D405477</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text</string>
+			<key>path</key>
+			<string>Pods-Unbound-acknowledgements.markdown</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>0A4397AD6DED914814EF4E1A4C90B687</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-Unbound.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>0CB0A5F718666B73058F010C28DE165C</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-Unbound-Unbound Non-Sandbox.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>0DA9CCBF7A72518431F916B157A282CE</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>0A4397AD6DED914814EF4E1A4C90B687</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>-</string>
+				<key>COMBINE_HIDPI_IMAGES</key>
+				<string>YES</string>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf-with-dsym</string>
+				<key>DEFINES_MODULE</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>FRAMEWORK_VERSION</key>
+				<string>A</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Target Support Files/Pods-Unbound/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>@executable_path/../Frameworks</string>
+					<string>@loader_path/Frameworks</string>
+				</array>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MACOSX_DEPLOYMENT_TARGET</key>
+				<string>10.8</string>
+				<key>MODULEMAP_FILE</key>
+				<string>Target Support Files/Pods-Unbound/Pods-Unbound.modulemap</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>NO</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
+				<key>PRODUCT_NAME</key>
+				<string>Pods_Unbound</string>
+				<key>SDKROOT</key>
+				<string>macosx</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>15D50B20E045F52AD6542B190266CF27</key>
+		<dict>
+			<key>fileRef</key>
+			<string>FA95349D59FC35859D9259B68E9DCDF8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>1A18055CBEAE7CFCAB0BFC1CF4AA8FEB</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>5307D5C2C7E5C9DC396E2CB4621F5C9F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Frameworks</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1C2E343A0607F99F56EA7BA49E76CB02</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>CLSAttributes.h</string>
+			<key>path</key>
+			<string>OSX/Crashlytics.framework/Versions/A/Headers/CLSAttributes.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1C43BE30903F5AF7DDEF637852DF23C9</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>B62DF9175974031F634A7EBCF22B7F39</string>
+			</array>
+			<key>isa</key>
+			<string>PBXHeadersBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>1CA6EBC2E57D96052268211209D6AA52</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>Cocoa.framework</string>
+			<key>path</key>
+			<string>Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/Cocoa.framework</string>
+			<key>sourceTree</key>
+			<string>DEVELOPER_DIR</string>
+		</dict>
+		<key>20FB0274D317BA3CD82C98C6EF1F20FA</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-Unbound-Unbound Trial-resources.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>223E86A2C509D310BFC05511F2257A66</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>F9FB351419D9FBECED8245364CB9F934</string>
+				<string>6F08A2222A86B2B91ED727541A91892D</string>
+				<string>1C2E343A0607F99F56EA7BA49E76CB02</string>
+				<string>C709BCF1F5A1192BBF0ABF91E6947EF9</string>
+				<string>8A18B7A8C87C76419D498DCC20B39799</string>
+				<string>E3DF191A0B283D7710B6A041C830055A</string>
+				<string>925125D2535BE0E9176B86A359DDA7F1</string>
+				<string>804B5BBA54CB47CCF32813D40A25764D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Crashlytics</string>
+			<key>path</key>
+			<string>Crashlytics</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>28C17CEF104526ACA07B6EEE217EC43E</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>1CA6EBC2E57D96052268211209D6AA52</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>OS X</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>2AA8A8D54254E16A6577CABB135C410E</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Pods-Unbound-Unbound Trial-dummy.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>2AE42F2DDF22D837A9D9DA49A6D9F007</key>
+		<dict>
+			<key>fileRef</key>
+			<string>1CA6EBC2E57D96052268211209D6AA52</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>2D8E8EC45A3A1A1D94AE762CB5028504</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>69661301F8D32E52F8182266C75D6AD2</string>
+				<string>782C3E88D13F77FBCD7F3D032F7F6027</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>30808168338ED80E27485D62AF291154</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-Unbound-Unbound Non-Sandbox-resources.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3309D27575D475DE481FCE0F069A0EC6</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>Pods_Unbound_Unbound_Non_Sandbox.framework</string>
+			<key>path</key>
+			<string>Pods-Unbound-Unbound Non-Sandbox.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>337F0821A7C9E552DA9648C7CCE17C07</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>D7682C8D06C539999AAD68DB24060C2F</string>
+				<string>E8F701FA90CCAA5D53479831B64043C2</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>36612D1D8C2CC5492172FEE4DA501893</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>BF61F9B0195EF56D75DE0666F7D1B7F8</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>-</string>
+				<key>COMBINE_HIDPI_IMAGES</key>
+				<string>YES</string>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf</string>
+				<key>DEFINES_MODULE</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>FRAMEWORK_VERSION</key>
+				<string>A</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Target Support Files/Pods-Unbound/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>@executable_path/../Frameworks</string>
+					<string>@loader_path/Frameworks</string>
+				</array>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MACOSX_DEPLOYMENT_TARGET</key>
+				<string>10.8</string>
+				<key>MODULEMAP_FILE</key>
+				<string>Target Support Files/Pods-Unbound/Pods-Unbound.modulemap</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>YES</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
+				<key>PRODUCT_NAME</key>
+				<string>Pods_Unbound</string>
+				<key>SDKROOT</key>
+				<string>macosx</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>385E3BB4554CE38D57A370A1E6F9577D</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>2AE42F2DDF22D837A9D9DA49A6D9F007</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>39E9EE8210D861DFD82346C1F5EB7218</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>28C17CEF104526ACA07B6EEE217EC43E</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Frameworks</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3E182CD5D5AE8D76079B34CC2636FC4D</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>6F8DEF45E2994FC9D3A6C4026904FAB7</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>4FFBCA39E59656F6AEE18EC5834BDFD1</key>
+		<dict>
+			<key>fileRef</key>
+			<string>8BEE8B99B322445182E5AB74C0C02904</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>Public</string>
+				</array>
+			</dict>
+		</dict>
+		<key>5079230F714EDC088374F991185A301F</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>4FFBCA39E59656F6AEE18EC5834BDFD1</string>
+			</array>
+			<key>isa</key>
+			<string>PBXHeadersBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>5307D5C2C7E5C9DC396E2CB4621F5C9F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>Fabric.framework</string>
+			<key>path</key>
+			<string>OSX/Fabric.framework</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>53FEA7B84E0FE3C30FF3F05D08E6701E</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>7A764AFC4261425EADB48AAE67FB5D7A</string>
+			</array>
+			<key>isa</key>
+			<string>PBXHeadersBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>559DA3E1A42088DC56C73B0FE8FBF50C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>1CA6EBC2E57D96052268211209D6AA52</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>5CF71449562C7CC3FE5FD9F2211C1A6F</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Pods-Unbound.modulemap</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>639FA40254D486DF19055810DD960D94</key>
+		<dict>
+			<key>fileRef</key>
+			<string>1CA6EBC2E57D96052268211209D6AA52</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>69661301F8D32E52F8182266C75D6AD2</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++0x</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES</string>
+				<key>CLANG_WARN_UNREACHABLE_CODE</key>
+				<string>YES</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>NO</string>
+				<key>ENABLE_TESTABILITY</key>
+				<string>YES</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu99</string>
+				<key>GCC_DYNAMIC_NO_PIC</key>
+				<string>NO</string>
+				<key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>0</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>POD_CONFIGURATION_DEBUG=1</string>
+					<string>DEBUG=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
+				<string>NO</string>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>MACOSX_DEPLOYMENT_TARGET</key>
+				<string>10.8</string>
+				<key>ONLY_ACTIVE_ARCH</key>
+				<string>YES</string>
+				<key>STRIP_INSTALLED_PRODUCT</key>
+				<string>NO</string>
+				<key>SYMROOT</key>
+				<string>${SRCROOT}/../build</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>6DFAB9D9014C72529D75C10702393014</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-Unbound-resources.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>6F08A2222A86B2B91ED727541A91892D</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>Answers.h</string>
+			<key>path</key>
+			<string>OSX/Crashlytics.framework/Versions/A/Headers/Answers.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>6F8DEF45E2994FC9D3A6C4026904FAB7</key>
+		<dict>
+			<key>fileRef</key>
+			<string>2AA8A8D54254E16A6577CABB135C410E</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>7013D2576B7F1315BA20018E4D8ACCDB</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-Unbound-Unbound Trial-frameworks.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>73E6215B86E012DFA9F68E684913C413</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-Unbound-Unbound Trial.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>77B22799B874AA0DB89F1E119FF21C9B</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Pods-Unbound-Unbound Non-Sandbox.modulemap</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>782C3E88D13F77FBCD7F3D032F7F6027</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++0x</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES</string>
+				<key>CLANG_WARN_UNREACHABLE_CODE</key>
+				<string>YES</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>YES</string>
+				<key>ENABLE_NS_ASSERTIONS</key>
+				<string>NO</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu99</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>POD_CONFIGURATION_RELEASE=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>MACOSX_DEPLOYMENT_TARGET</key>
+				<string>10.8</string>
+				<key>STRIP_INSTALLED_PRODUCT</key>
+				<string>NO</string>
+				<key>SYMROOT</key>
+				<string>${SRCROOT}/../build</string>
+				<key>VALIDATE_PRODUCT</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>789BA591F846EB2578BCDF34D4FC48AF</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>1A18055CBEAE7CFCAB0BFC1CF4AA8FEB</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Fabric</string>
+			<key>path</key>
+			<string>Fabric</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>7A764AFC4261425EADB48AAE67FB5D7A</key>
+		<dict>
+			<key>fileRef</key>
+			<string>886F6D314DF31E2FDF49900019BBEBA0</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>Public</string>
+				</array>
+			</dict>
+		</dict>
+		<key>7AF184277500FA0FA945B2DDD455CC4E</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>8AB27C7E1A81CFCD36D1BCC5DDD249B5</string>
+				<string>77B22799B874AA0DB89F1E119FF21C9B</string>
+				<string>BB3DA30FB97A773F92B958A861034C54</string>
+				<string>7F49B7B4BD403FF39E5B1FC57726DF62</string>
+				<string>D7F2B0494FBAEC11374CA7D195B32D6A</string>
+				<string>E091B1E79D102D116846F98AA7D999A8</string>
+				<string>30808168338ED80E27485D62AF291154</string>
+				<string>FF41FBAAF5E1B271D71EB54C54C59061</string>
+				<string>7E625D8AE90ECFD01529FCF79C902250</string>
+				<string>0CB0A5F718666B73058F010C28DE165C</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods-Unbound-Unbound Non-Sandbox</string>
+			<key>path</key>
+			<string>Target Support Files/Pods-Unbound-Unbound Non-Sandbox</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>7DB346D0F39D3F0E887471402A8071AB</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>BA6428E9F66FD5A23C0A2E06ED26CD2F</string>
+				<string>39E9EE8210D861DFD82346C1F5EB7218</string>
+				<string>F37DEE5D24193838722647299EBF99B9</string>
+				<string>B86BF2346E388B3A78CAA91AA4367295</string>
+				<string>9B198698CB1BBBF7F0AE29AF6D42C33A</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>7E625D8AE90ECFD01529FCF79C902250</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-Unbound-Unbound Non-Sandbox.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>7F49B7B4BD403FF39E5B1FC57726DF62</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Pods-Unbound-Unbound Non-Sandbox-acknowledgements.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>804B5BBA54CB47CCF32813D40A25764D</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>E405615E33ED50CEF1793C86A9822C17</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Frameworks</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>81CCA243DF4AED5DE6EB3A7220D0230C</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>85E6FE2432060E98FB638A7B145699D1</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Pods-Unbound-acknowledgements.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>886F6D314DF31E2FDF49900019BBEBA0</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Pods-Unbound-umbrella.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>890BF56BEA54B7F89E4D925A64223563</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>EBB91FFBB93E682A85AF9956B684F922</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>8A18B7A8C87C76419D498DCC20B39799</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>CLSReport.h</string>
+			<key>path</key>
+			<string>OSX/Crashlytics.framework/Versions/A/Headers/CLSReport.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>8AB27C7E1A81CFCD36D1BCC5DDD249B5</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>8BEE8B99B322445182E5AB74C0C02904</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Pods-Unbound-Unbound Trial-umbrella.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>8DB64911BDB908C7A48EBC67F77B3D6E</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>7E625D8AE90ECFD01529FCF79C902250</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>-</string>
+				<key>COMBINE_HIDPI_IMAGES</key>
+				<string>YES</string>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf</string>
+				<key>DEFINES_MODULE</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>FRAMEWORK_VERSION</key>
+				<string>A</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Target Support Files/Pods-Unbound-Unbound Non-Sandbox/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>@executable_path/../Frameworks</string>
+					<string>@loader_path/Frameworks</string>
+				</array>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MACOSX_DEPLOYMENT_TARGET</key>
+				<string>10.8</string>
+				<key>MODULEMAP_FILE</key>
+				<string>Target Support Files/Pods-Unbound-Unbound Non-Sandbox/Pods-Unbound-Unbound Non-Sandbox.modulemap</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>YES</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
+				<key>PRODUCT_NAME</key>
+				<string>Pods_Unbound_Unbound_Non_Sandbox</string>
+				<key>SDKROOT</key>
+				<string>macosx</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>925125D2535BE0E9176B86A359DDA7F1</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>Crashlytics.h</string>
+			<key>path</key>
+			<string>OSX/Crashlytics.framework/Versions/A/Headers/Crashlytics.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>98CFE9C261161DD20054425BC8F2E5DB</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>0CB0A5F718666B73058F010C28DE165C</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>-</string>
+				<key>COMBINE_HIDPI_IMAGES</key>
+				<string>YES</string>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf-with-dsym</string>
+				<key>DEFINES_MODULE</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>FRAMEWORK_VERSION</key>
+				<string>A</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Target Support Files/Pods-Unbound-Unbound Non-Sandbox/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>@executable_path/../Frameworks</string>
+					<string>@loader_path/Frameworks</string>
+				</array>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MACOSX_DEPLOYMENT_TARGET</key>
+				<string>10.8</string>
+				<key>MODULEMAP_FILE</key>
+				<string>Target Support Files/Pods-Unbound-Unbound Non-Sandbox/Pods-Unbound-Unbound Non-Sandbox.modulemap</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>NO</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
+				<key>PRODUCT_NAME</key>
+				<string>Pods_Unbound_Unbound_Non_Sandbox</string>
+				<key>SDKROOT</key>
+				<string>macosx</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>9B198698CB1BBBF7F0AE29AF6D42C33A</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>B2D512DC616C93E5923D743E2D117910</string>
+				<string>7AF184277500FA0FA945B2DDD455CC4E</string>
+				<string>B6CE1DFEEE262D9EA786F62BCA82F14C</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Targets Support Files</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>A102C47B6364952CEEA8C10D3E65887A</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text</string>
+			<key>path</key>
+			<string>Pods-Unbound-Unbound Trial-acknowledgements.markdown</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>A11CB1B5DA8AE3CD6B615A7F43818B45</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Pods-Unbound-Unbound Trial-acknowledgements.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>A82A548FE5354E09CF79040FBE5204DC</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>Pods_Unbound_Unbound_Trial.framework</string>
+			<key>path</key>
+			<string>Pods-Unbound-Unbound Trial.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>AED0BC6DCAB3B23A01B052568FCD4EEC</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>8DB64911BDB908C7A48EBC67F77B3D6E</string>
+				<string>98CFE9C261161DD20054425BC8F2E5DB</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>B2D512DC616C93E5923D743E2D117910</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>81CCA243DF4AED5DE6EB3A7220D0230C</string>
+				<string>5CF71449562C7CC3FE5FD9F2211C1A6F</string>
+				<string>08FB59EBA8D8166E565CCC938D405477</string>
+				<string>85E6FE2432060E98FB638A7B145699D1</string>
+				<string>FA95349D59FC35859D9259B68E9DCDF8</string>
+				<string>E33C05D0972299812D77375AD77FAC02</string>
+				<string>6DFAB9D9014C72529D75C10702393014</string>
+				<string>886F6D314DF31E2FDF49900019BBEBA0</string>
+				<string>BF61F9B0195EF56D75DE0666F7D1B7F8</string>
+				<string>0A4397AD6DED914814EF4E1A4C90B687</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods-Unbound</string>
+			<key>path</key>
+			<string>Target Support Files/Pods-Unbound</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B62DF9175974031F634A7EBCF22B7F39</key>
+		<dict>
+			<key>fileRef</key>
+			<string>FF41FBAAF5E1B271D71EB54C54C59061</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>Public</string>
+				</array>
+			</dict>
+		</dict>
+		<key>B6CE1DFEEE262D9EA786F62BCA82F14C</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>E69AAEE065A0DC696C0D7EA023A9707D</string>
+				<string>E7C48C853114F35B00B28565B0DE109E</string>
+				<string>A102C47B6364952CEEA8C10D3E65887A</string>
+				<string>A11CB1B5DA8AE3CD6B615A7F43818B45</string>
+				<string>2AA8A8D54254E16A6577CABB135C410E</string>
+				<string>7013D2576B7F1315BA20018E4D8ACCDB</string>
+				<string>20FB0274D317BA3CD82C98C6EF1F20FA</string>
+				<string>8BEE8B99B322445182E5AB74C0C02904</string>
+				<string>73E6215B86E012DFA9F68E684913C413</string>
+				<string>EAC91010461ABF7D5E96F84F8304165E</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods-Unbound-Unbound Trial</string>
+			<key>path</key>
+			<string>Target Support Files/Pods-Unbound-Unbound Trial</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B80B5C6E0662678B8D09256EE54906B0</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>path</key>
+			<string>Sparkle.framework</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B86BF2346E388B3A78CAA91AA4367295</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>E2F4009296C7ADDD7D02C25C33A0C61D</string>
+				<string>3309D27575D475DE481FCE0F069A0EC6</string>
+				<string>A82A548FE5354E09CF79040FBE5204DC</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BA6428E9F66FD5A23C0A2E06ED26CD2F</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text</string>
+			<key>name</key>
+			<string>Podfile</string>
+			<key>path</key>
+			<string>../Podfile</string>
+			<key>sourceTree</key>
+			<string>SOURCE_ROOT</string>
+			<key>xcLanguageSpecificationIdentifier</key>
+			<string>xcode.lang.ruby</string>
+		</dict>
+		<key>BB3DA30FB97A773F92B958A861034C54</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text</string>
+			<key>path</key>
+			<string>Pods-Unbound-Unbound Non-Sandbox-acknowledgements.markdown</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BF61F9B0195EF56D75DE0666F7D1B7F8</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-Unbound.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C264EAB2DD5F0E28BDA0A50EE578A56A</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>639FA40254D486DF19055810DD960D94</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>C37DEF282D4CDEF343BBEAC61FFC249C</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>E8479B07393BD426D5EC352B306A6026</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Sparkle</string>
+			<key>path</key>
+			<string>Sparkle</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C709BCF1F5A1192BBF0ABF91E6947EF9</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>CLSLogging.h</string>
+			<key>path</key>
+			<string>OSX/Crashlytics.framework/Versions/A/Headers/CLSLogging.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C7ADC1A95458D8E86E225FC5064D9C2B</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>D5122592E040944AFB9282C74F9400E5</string>
+			<key>buildPhases</key>
+			<array>
+				<string>D8942289BF4CADD437B5AB6ADFA67255</string>
+				<string>385E3BB4554CE38D57A370A1E6F9577D</string>
+				<string>53FEA7B84E0FE3C30FF3F05D08E6701E</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>Pods-Unbound</string>
+			<key>productName</key>
+			<string>Pods-Unbound</string>
+			<key>productReference</key>
+			<string>E2F4009296C7ADDD7D02C25C33A0C61D</string>
+			<key>productType</key>
+			<string>com.apple.product-type.framework</string>
+		</dict>
+		<key>CC1234E70F71FB83DB2465CDC3C6287D</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>559DA3E1A42088DC56C73B0FE8FBF50C</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>D41D8CD98F00B204E9800998ECF8427E</key>
+		<dict>
+			<key>attributes</key>
+			<dict>
+				<key>LastSwiftUpdateCheck</key>
+				<string>0720</string>
+				<key>LastUpgradeCheck</key>
+				<string>0700</string>
+			</dict>
+			<key>buildConfigurationList</key>
+			<string>2D8E8EC45A3A1A1D94AE762CB5028504</string>
+			<key>compatibilityVersion</key>
+			<string>Xcode 3.2</string>
+			<key>developmentRegion</key>
+			<string>English</string>
+			<key>hasScannedForEncodings</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXProject</string>
+			<key>knownRegions</key>
+			<array>
+				<string>en</string>
+			</array>
+			<key>mainGroup</key>
+			<string>7DB346D0F39D3F0E887471402A8071AB</string>
+			<key>productRefGroup</key>
+			<string>B86BF2346E388B3A78CAA91AA4367295</string>
+			<key>projectDirPath</key>
+			<string></string>
+			<key>projectReferences</key>
+			<array/>
+			<key>projectRoot</key>
+			<string></string>
+			<key>targets</key>
+			<array>
+				<string>C7ADC1A95458D8E86E225FC5064D9C2B</string>
+				<string>FE4558E5EE1D8BC111FCEAEC4DF6C1A5</string>
+				<string>D8E3D45E9373B40E003A2726B5EED3E0</string>
+			</array>
+		</dict>
+		<key>D5122592E040944AFB9282C74F9400E5</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>36612D1D8C2CC5492172FEE4DA501893</string>
+				<string>0DA9CCBF7A72518431F916B157A282CE</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>D7682C8D06C539999AAD68DB24060C2F</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>73E6215B86E012DFA9F68E684913C413</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>-</string>
+				<key>COMBINE_HIDPI_IMAGES</key>
+				<string>YES</string>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf</string>
+				<key>DEFINES_MODULE</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>FRAMEWORK_VERSION</key>
+				<string>A</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Target Support Files/Pods-Unbound-Unbound Trial/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>@executable_path/../Frameworks</string>
+					<string>@loader_path/Frameworks</string>
+				</array>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MACOSX_DEPLOYMENT_TARGET</key>
+				<string>10.8</string>
+				<key>MODULEMAP_FILE</key>
+				<string>Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial.modulemap</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>YES</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
+				<key>PRODUCT_NAME</key>
+				<string>Pods_Unbound_Unbound_Trial</string>
+				<key>SDKROOT</key>
+				<string>macosx</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>D7F2B0494FBAEC11374CA7D195B32D6A</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Pods-Unbound-Unbound Non-Sandbox-dummy.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>D8942289BF4CADD437B5AB6ADFA67255</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>15D50B20E045F52AD6542B190266CF27</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>D8E3D45E9373B40E003A2726B5EED3E0</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>337F0821A7C9E552DA9648C7CCE17C07</string>
+			<key>buildPhases</key>
+			<array>
+				<string>3E182CD5D5AE8D76079B34CC2636FC4D</string>
+				<string>C264EAB2DD5F0E28BDA0A50EE578A56A</string>
+				<string>5079230F714EDC088374F991185A301F</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>Pods-Unbound-Unbound Trial</string>
+			<key>productName</key>
+			<string>Pods-Unbound-Unbound Trial</string>
+			<key>productReference</key>
+			<string>A82A548FE5354E09CF79040FBE5204DC</string>
+			<key>productType</key>
+			<string>com.apple.product-type.framework</string>
+		</dict>
+		<key>E091B1E79D102D116846F98AA7D999A8</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-Unbound-Unbound Non-Sandbox-frameworks.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>E2F4009296C7ADDD7D02C25C33A0C61D</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>Pods_Unbound.framework</string>
+			<key>path</key>
+			<string>Pods-Unbound.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>E33C05D0972299812D77375AD77FAC02</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-Unbound-frameworks.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>E3DF191A0B283D7710B6A041C830055A</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>CLSStackFrame.h</string>
+			<key>path</key>
+			<string>OSX/Crashlytics.framework/Versions/A/Headers/CLSStackFrame.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>E405615E33ED50CEF1793C86A9822C17</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>Crashlytics.framework</string>
+			<key>path</key>
+			<string>OSX/Crashlytics.framework</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>E69AAEE065A0DC696C0D7EA023A9707D</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>E7C48C853114F35B00B28565B0DE109E</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Pods-Unbound-Unbound Trial.modulemap</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>E8479B07393BD426D5EC352B306A6026</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>B80B5C6E0662678B8D09256EE54906B0</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Frameworks</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>E8F701FA90CCAA5D53479831B64043C2</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>EAC91010461ABF7D5E96F84F8304165E</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>-</string>
+				<key>COMBINE_HIDPI_IMAGES</key>
+				<string>YES</string>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf-with-dsym</string>
+				<key>DEFINES_MODULE</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>FRAMEWORK_VERSION</key>
+				<string>A</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Target Support Files/Pods-Unbound-Unbound Trial/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>@executable_path/../Frameworks</string>
+					<string>@loader_path/Frameworks</string>
+				</array>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MACOSX_DEPLOYMENT_TARGET</key>
+				<string>10.8</string>
+				<key>MODULEMAP_FILE</key>
+				<string>Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial.modulemap</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>NO</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
+				<key>PRODUCT_NAME</key>
+				<string>Pods_Unbound_Unbound_Trial</string>
+				<key>SDKROOT</key>
+				<string>macosx</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>EAC91010461ABF7D5E96F84F8304165E</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-Unbound-Unbound Trial.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>EBB91FFBB93E682A85AF9956B684F922</key>
+		<dict>
+			<key>fileRef</key>
+			<string>D7F2B0494FBAEC11374CA7D195B32D6A</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>F37DEE5D24193838722647299EBF99B9</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>223E86A2C509D310BFC05511F2257A66</string>
+				<string>789BA591F846EB2578BCDF34D4FC48AF</string>
+				<string>C37DEF282D4CDEF343BBEAC61FFC249C</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F9FB351419D9FBECED8245364CB9F934</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>ANSCompatibility.h</string>
+			<key>path</key>
+			<string>OSX/Crashlytics.framework/Versions/A/Headers/ANSCompatibility.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>FA95349D59FC35859D9259B68E9DCDF8</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Pods-Unbound-dummy.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>FE4558E5EE1D8BC111FCEAEC4DF6C1A5</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>AED0BC6DCAB3B23A01B052568FCD4EEC</string>
+			<key>buildPhases</key>
+			<array>
+				<string>890BF56BEA54B7F89E4D925A64223563</string>
+				<string>CC1234E70F71FB83DB2465CDC3C6287D</string>
+				<string>1C43BE30903F5AF7DDEF637852DF23C9</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>Pods-Unbound-Unbound Non-Sandbox</string>
+			<key>productName</key>
+			<string>Pods-Unbound-Unbound Non-Sandbox</string>
+			<key>productReference</key>
+			<string>3309D27575D475DE481FCE0F069A0EC6</string>
+			<key>productType</key>
+			<string>com.apple.product-type.framework</string>
+		</dict>
+		<key>FF41FBAAF5E1B271D71EB54C54C59061</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Pods-Unbound-Unbound Non-Sandbox-umbrella.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+	</dict>
+	<key>rootObject</key>
+	<string>D41D8CD98F00B204E9800998ECF8427E</string>
+</dict>
+</plist>

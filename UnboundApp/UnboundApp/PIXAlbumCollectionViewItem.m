@@ -141,6 +141,11 @@
     return self;
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
 - (NSDragOperation)draggingEntered:(id < NSDraggingInfo >)sender
 {
     // for now don't accept drags from our own app (this will be used for merging albums later)

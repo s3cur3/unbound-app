@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04FA456F1D96D23700651709 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CFDF7651827123700809018 /* MapKit.framework */; };
 		185BA788DEB1D184CB84B77A /* Pods_Unbound_Unbound_Non_Sandbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E32014CD77226B46D108886D /* Pods_Unbound_Unbound_Non_Sandbox.framework */; };
 		1D0834FB167D6478003D557A /* PIXPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D0834F9167D6478003D557A /* PIXPageViewController.m */; };
 		1D0834FC167D6478003D557A /* PIXPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D0834FA167D6478003D557A /* PIXPageViewController.xib */; };
@@ -1275,6 +1276,7 @@
 				8C94E027183DA6D800827888 /* WebKit.framework in Frameworks */,
 				8C94E026183DA6D300827888 /* CoreLocation.framework in Frameworks */,
 				8C14692F1714A5CC009ECCC5 /* QTKit.framework in Frameworks */,
+				04FA456F1D96D23700651709 /* MapKit.framework in Frameworks */,
 				8C53DFF216FB7CED008EF8B1 /* CoreFoundation.framework in Frameworks */,
 				1D4A1E2B167D2A4D00C9A895 /* Quartz.framework in Frameworks */,
 				8CEE1F3D1A083413005A200B /* libLeap.dylib in Frameworks */,
@@ -2133,6 +2135,9 @@
 							};
 							com.apple.Mac = {
 								enabled = 0;
+							};
+							com.apple.Maps.Mac = {
+								enabled = 1;
 							};
 							com.apple.Sandbox = {
 								enabled = 1;
@@ -3350,7 +3355,7 @@
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = Unbound.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

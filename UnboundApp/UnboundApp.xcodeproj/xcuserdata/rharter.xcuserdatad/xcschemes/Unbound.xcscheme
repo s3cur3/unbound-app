@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "1DB2F849167ABE87008AC0F7"
-               BuildableName = "Unbound"
+               BuildableName = "Unbound.app"
                BlueprintName = "Unbound"
                ReferencedContainer = "container:UnboundApp.xcodeproj">
             </BuildableReference>
@@ -56,7 +56,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1DB2F849167ABE87008AC0F7"
-            BuildableName = "Unbound"
+            BuildableName = "Unbound.app"
             BlueprintName = "Unbound"
             ReferencedContainer = "container:UnboundApp.xcodeproj">
          </BuildableReference>

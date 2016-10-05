@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8CFC2D5E1A5864B8004FCE5F"
-               BuildableName = "Unbound Non-Sandbox"
+               BuildableName = "Unbound copy.app"
                BlueprintName = "Unbound Non-Sandbox"
                ReferencedContainer = "container:UnboundApp.xcodeproj">
             </BuildableReference>
@@ -56,7 +56,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8CFC2D5E1A5864B8004FCE5F"
-            BuildableName = "Unbound Non-Sandbox"
+            BuildableName = "Unbound copy.app"
             BlueprintName = "Unbound Non-Sandbox"
             ReferencedContainer = "container:UnboundApp.xcodeproj">
          </BuildableReference>

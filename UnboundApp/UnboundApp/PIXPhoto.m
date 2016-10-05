@@ -1382,10 +1382,6 @@ const CGFloat kThumbnailSize = 370.0f;
     return [self isDeleted] || [self managedObjectContext] == nil;
 }
 
-
-
-
-
 //Supported video types
 //.3gp, .3gpp, .3gpp2, .asf, .avi, .dv, .dvi, .flv, .m2t, .m4p, .m4v, .mkv, .mov, .mpeg, .mpg, .mts, .ts, .vob, .webm, .wmv
 + (BOOL) isVideoPath:(NSString *)path
