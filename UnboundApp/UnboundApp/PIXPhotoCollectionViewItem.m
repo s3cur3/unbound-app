@@ -425,4 +425,8 @@
     self.contentFrame = imageFrame;
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 @end
