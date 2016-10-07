@@ -32,8 +32,7 @@
 - (IBAction)showMainWindow:(id)sender;
 - (IBAction)showIntroWindow:(id)sender;
 - (IBAction)showAboutWindow:(id)sender;
-- (IBAction)unboundWebsitePressed:(id)sender;
-- (IBAction)moreAppsPressed:(id)sender;
+- (IBAction)analogOceanWebsitePressed:(id)sender;
 - (IBAction)coolLeapAppsPressed:(id)sender;
 - (IBAction)showLeapTutorialPressed:(id)sender;
 - (IBAction)helpPressed:(id)sender;

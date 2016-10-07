@@ -9,10 +9,10 @@
 #import "PIXAppDelegate.h"
 //#import "PIXAppDelegate+CoreDataUtils.h"
 #import "PIXInfoWindowController.h"
-#import "PIXAboutWindowController.h"
 #import "PIXMainWindowController.h"
 
 #import "PIXNavigationController.h"
+#import "Unbound-Swift.h"
  
 #import "Preferences.h"
 #import "PIXFileParser.h"
@@ -264,6 +264,7 @@
 
 }
 
+#pragma mark - Menu Items
 // -------------------------------------------------------------------------------
 //	showIntroWindow:sender
 // -------------------------------------------------------------------------------
@@ -286,22 +287,14 @@
 {
     if (showAboutWindow == nil)
     {
-        showAboutWindow = [[PIXAboutWindowController alloc] initWithWindowNibName:@"PIXAboutWindowController"];
+        showAboutWindow = [[PIXAboutWindowController alloc] init];
     }
-    
     [showAboutWindow showWindow:self];
 }
 
-
-- (IBAction)moreAppsPressed:(id)sender
+- (IBAction)analogOceanWebsitePressed:(id)sender
 {
-    NSURL * url = [NSURL URLWithString:@"http://www.pixiteapps.com"];
-    [[NSWorkspace sharedWorkspace] openURL:url];
-}
-
-- (IBAction)unboundWebsitePressed:(id)sender
-{
-    NSURL * url = [NSURL URLWithString:@"http://www.unboundformac.com"];
+    NSURL * url = [NSURL URLWithString:@"http://www.analog-ocean.com"];
     [[NSWorkspace sharedWorkspace] openURL:url];
 }
 

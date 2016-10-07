@@ -19,7 +19,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.1.103</string>
+	<string>2</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -39,7 +39,12 @@
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2012 Pixite Apps LLC. All rights reserved.</string>
+	<string>Copyright © 2016 Analog Ocean, Ltd. All rights reserved.</string>
+	<key>PIXAppLink</key>
+	<string>http://www.unboundformac.com</string>
+	<key>PIXCopyright</key>
+	<string>Copyright © 2016 Analog Ocean, Ltd.
+All rights reserved.</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
