@@ -16,7 +16,7 @@
 #import "PIXMainWindowController.h"
 #import "PIXPageViewController.h"
 #import "PIXLeapInputManager.h"
-#import <QTKit/QTKit.h>
+#import <AVKit/AVKit.h>
 #import <objc/runtime.h>
 
 @interface PIXVideoViewController ()
@@ -107,57 +107,38 @@ static NSString *ResolveName(NSString *aName)
     DLog(@"playMoviePressed");
     [[self pageViewController] tryFadeControls];
     [self dismissOverlay];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieFinishedPlaying:) name:QTMovieDidEndNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieWillStopForWindowClose:) name:QTMovieCloseWindowRequestNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieRateChanged:) name:QTMovieRateDidChangeNotification object:nil];
-    
-    if(self.movieView.movie.rate == 0)
+
+    [self.movieView.player addObserver:self forKeyPath:@"rate" options:nil context:nil];
+
+    if(self.movieView.player.rate == 0)
     {
-        [[self.movieView movie] play];
+        [self.movieView.player play];
     }
     
     else
     {
-        [[self.movieView movie] stop];
+        [self.movieView.player pause];
     }
 }
-     
+
+- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSKeyValueChangeKey, id> *)change context:(nullable void *)context {
+    if (object == self.movieView.player && [@"rate" isEqualToString:keyPath]) {
+        if (self.movieView.player.rate == 0) {
+            [self movieFinishedPlaying:nil];
+        }
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
+
 -(void)movieFinishedPlaying:(NSNotification *)notification
  {
      if ([self isCurrentView]) {
-         [[NSNotificationCenter defaultCenter] removeObserver:self name:QTMovieDidEndNotification object:nil];
-         [[NSNotificationCenter defaultCenter] removeObserver:self name:QTMovieCloseWindowRequestNotification object:nil];
-         [[NSNotificationCenter defaultCenter] removeObserver:self name:QTMovieRateDidChangeNotification object:nil];
          [self displayOverlay];
+         [self.movieView.player removeObserver:self forKeyPath:@"rate"];
      }
  }
-
--(void)movieRateChanged:(NSNotification *)notification
-{
-    DLog(@"note : %@", notification);
-    NSNumber *newRate = [notification.userInfo objectForKey:QTMovieRateDidChangeNotificationParameter];
-    DLog(@"newRate : %@", newRate);
-    if ([newRate boolValue]==NO) {
-        [self displayOverlay];
-    } else {
-        [self dismissOverlay];
-    }
-//    if ([self isCurrentView]) {
-//        [[NSNotificationCenter defaultCenter] removeObserver:self name:QTMovieDidEndNotification object:nil];
-//        [self displayOverlay];
-//    }
-}
-
--(void)movieWillStopForWindowClose:(NSNotification *)notification
-{
-    DLog(@"note : %@", notification);
-    //    if ([self isCurrentView]) {
-    //        [[NSNotificationCenter defaultCenter] removeObserver:self name:QTMovieDidEndNotification object:nil];
-    //        [self displayOverlay];
-    //    }
-}
 
 - (void)scrollWheel:(NSEvent *)theEvent {
     DLog(@"%@", theEvent);
@@ -189,7 +170,7 @@ static NSString *ResolveName(NSString *aName)
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playMoviePressed:) name:@"UB_PLAY_MOVIE_PRESSED" object:nil];
     //self.imageView.delegate = self;
     NSPoint baseOrigin, screenOrigin;
-    QTMovieView *mMovieView = self.movieView;
+    AVPlayerView *mMovieView = self.movieView;
 	baseOrigin = NSMakePoint([mMovieView frame].origin.x,
                              [mMovieView frame].origin.y);
     
@@ -281,7 +262,7 @@ static NSString *ResolveName(NSString *aName)
     //self.imageView.delegate = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self dismissOverlay];
-    [self.movieView.movie stop];
+    [self.movieView.player pause];
 }
 
 -(void)setRepresentedObject:(id)representedObject
@@ -300,10 +281,7 @@ static NSString *ResolveName(NSString *aName)
     id obj = notification.object;
     //DLog(@"obj class : %@", [obj class]);
     PIXPhoto *aPhoto = (PIXPhoto *)obj;
-    self.movieView.movie = [QTMovie movieWithFile:aPhoto.path error:nil];
-//    NSCParameterAssert(aPhoto.fullsizeImage);
-//    self.imageView.image = aPhoto.fullsizeImage;
-//    [self.imageView setNeedsDisplay:YES];
+    self.movieView.player = [AVPlayer playerWithURL:aPhoto.filePath];
 }
 
 -(void)setPhoto:(PIXPhoto *)newPhoto
@@ -323,7 +301,7 @@ static NSString *ResolveName(NSString *aName)
         
         if (self.representedObject!=nil) {
             //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photoChanged:) name:PhotoThumbDidChangeNotification object:self.representedObject];
-            self.movieView.movie = [QTMovie movieWithFile:newPhoto.path error:nil];
+            self.movieView.player = [AVPlayer playerWithURL:newPhoto.filePath];
             //[self.imageView setNeedsDisplay];
             //NSCParameterAssert(self.imageView.image);
             //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photoFullsizeChanged:) name:PhotoFullsizeDidChangeNotification object:self.representedObject];
@@ -399,10 +377,8 @@ static NSString *ResolveName(NSString *aName)
 -(BOOL)movieIsPlaying
 {
     float rate = 0.0f;
-    BOOL isIdle = NO;
-    if (self.movieView.movie) {
-        rate = self.movieView.movie.rate;
-        isIdle = self.movieView.movie.isIdling;
+    if (self.movieView.player) {
+        rate = self.movieView.player.rate;
     }
     //DLog(@"rate : %f, isIdle : %d", rate, isIdle);
     BOOL isPlaying = [[NSNumber numberWithFloat:rate] boolValue];

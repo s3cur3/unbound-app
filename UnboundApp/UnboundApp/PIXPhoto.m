@@ -7,7 +7,7 @@
 //
 
 #import <Quartz/Quartz.h>
-#import <QTKit/QTKit.h>
+#import <AVFoundation/AVFoundation.h>
 #import "PIXPhoto.h"
 #import "PIXAlbum.h"
 #import "PIXAppDelegate.h"
@@ -664,119 +664,98 @@ const CGFloat kThumbnailSize = 370.0f;
             return;
         }
         NSError *anError;
-        [QTMovie enterQTKitOnThread];
-        QTMovie *aMovie = [QTMovie movieWithURL:urlForImage error:&anError];
-        NSImage *anImage = aMovie.posterImage;
-        if (anImage) {
-            //DLog(@"Movie posterImage : %@", anImage);
-        } else {
-            DLog(@"Failed to generate thumbnail from QTMovie -posterImage for URL : %@", urlForImage);
-        }
-        [QTMovie exitQTKitOnThread];
-        NSData *rep = [anImage TIFFRepresentation];
-        CGImageSourceRef imageSource = nil;
-        
-        if(rep != nil)
-        {
-            imageSource = CGImageSourceCreateWithData((__bridge CFDataRef)rep, nil);
+
+        AVAsset *asset = [AVAsset assetWithURL:urlForImage];
+        AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+        CMTime time = [asset duration];
+        time.value = 0;
+
+        NSError *err;
+        CGImageRef cgImage = [imageGenerator copyCGImageAtTime:time actualTime:NULL error:&err];
+        if (err != nil) {
+            DLog(@"Failed to generate movie thumbnail: %@\n%@", err, err.userInfo);
+            _thumbnailImageIsLoading = NO;
+            weakSelf.cancelThumbnailLoadOperation = NO;
+
+            [[PIXFileParser sharedFileParser] decrementWorking];
+            return;
         }
 
-        if (imageSource) {
-            
-            if (weakSelf.cancelThumbnailLoadOperation==YES) {
-                //DLog(@"2)thumbnail operation was canceled - return");
-                CFRelease(imageSource);
-                _thumbnailImageIsLoading = NO;
-                weakSelf.cancelThumbnailLoadOperation = NO;
-                
-                [[PIXFileParser sharedFileParser] decrementWorking];
-                return;
-            }
-            
-            // Now, compute the thumbnail
-            image = [[weakSelf class] makeThumbnailImageFromImageSource:imageSource always:NO];
-            
-            // tell the ui to update
-            if(image)
-            {
-                // warm up the image file so it draws faster
-                [image CGImageForProposedRect:nil context:[NSGraphicsContext currentContext] hints:nil];
-                
-                // save the thubm to memory
-                [weakSelf setThumbnailImage:image];
-                
-                //[self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self postPhotoUpdatedNote];
-                });
-            }
+        if (weakSelf.cancelThumbnailLoadOperation==YES) {
+            //DLog(@"2)thumbnail operation was canceled - return");
+            CFRelease(cgImage);
+            _thumbnailImageIsLoading = NO;
+            weakSelf.cancelThumbnailLoadOperation = NO;
+
+            [[PIXFileParser sharedFileParser] decrementWorking];
+            return;
         }
- 
-        if (imageSource) {
-            
+
+        // keep the aspect ratio
+        NSSize size;
+        float aspect = (float) CGImageGetWidth(cgImage) / CGImageGetHeight(cgImage);
+        if (aspect > 1.0f) {
+            size = NSMakeSize(kThumbnailSize, kThumbnailSize * (1.0f / aspect));
+        } else {
+            size = NSMakeSize(kThumbnailSize * aspect, kThumbnailSize);
+        }
+
+        image = [[NSImage alloc] initWithCGImage:cgImage size:size];
+
+        // tell the ui to update
+        if(image) {
+            // warm up the image file so it draws faster
+            [image CGImageForProposedRect:nil context:[NSGraphicsContext currentContext] hints:nil];
+
+            // save the thumb to memory
+            [weakSelf setThumbnailImage:image];
+
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self postPhotoUpdatedNote];
+            });
 
             // we've finished updating the ui with the image, do everythinge else at a lower priority
             self.slowThumbLoad = [NSBlockOperation blockOperationWithBlock:^{
                 
                 // if the load was cancelled then bail
-                if (weakSelf.cancelThumbnailLoadOperation==YES) {
+                if (weakSelf.cancelThumbnailLoadOperation) {
                     //DLog(@"3)thumbnail operation was canceled - return");
-                    CFRelease(imageSource);
                     _thumbnailImageIsLoading = NO;
                     weakSelf.cancelThumbnailLoadOperation = NO;
                     
                     [[PIXFileParser sharedFileParser] decrementWorking];
                     return;
                 }
-                
+
                 // get the exif data
-                CFDictionaryRef cfDict = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil);
-                NSDictionary * exif = (__bridge NSDictionary *)(cfDict);
-                
+                NSDictionary *exif;
+                for (NSImageRep *rep in image.representations) {
+                    if ([rep isKindOfClass:[NSBitmapImageRep class]]) {
+                        NSBitmapImageRep *bRep = (NSBitmapImageRep *) rep;
+                        exif = [bRep valueForProperty:NSImageEXIFData];
+                        break;
+                    }
+                }
+
                 // if the load was cancelled then bail
                 if (weakSelf.cancelThumbnailLoadOperation==YES) {
                     //DLog(@"3)thumbnail operation was canceled - return");
-                    if(cfDict) CFRelease(cfDict);
-                    CFRelease(imageSource);
                     _thumbnailImageIsLoading = NO;
                     weakSelf.cancelThumbnailLoadOperation = NO;
-                    
+
                     [[PIXFileParser sharedFileParser] decrementWorking];
                     return;
-                }
-                
-                // if we need to make an even higher res thumb (using always flag) then create it now
-                if(image.size.height < kThumbnailSize && image.size.width < kThumbnailSize)
-                {
-                    image = [[weakSelf class] makeThumbnailImageFromImageSource:imageSource always:YES];
-                    
-                    // tell the main thread we're done
-                    if(image)
-                    {
-                        
-                        // warm up the image file so it draws faster
-                        [image CGImageForProposedRect:nil context:[NSGraphicsContext currentContext] hints:nil];
-                        
-                        // save the thumb to memory
-                        [weakSelf setThumbnailImage:image];
-                        
-                        //[self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [self postPhotoUpdatedNote];
-                        });
-                    }
                 }
                 
                 // get the bitmap data
                 NSData *data = [image TIFFRepresentation];
                 
-                
                 // now create a jpeg representation:
                 NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData:data];
-                
-                NSDictionary *imageProperties = @{NSImageCompressionFactor : [NSNumber numberWithFloat:0.6],
-                                                  //NSImageProgressive : [NSNumber numberWithBool:YES]
-                                                  };
+                NSDictionary *imageProperties = @{
+                        NSImageCompressionFactor : @0.6F,
+                        //NSImageProgressive : [NSNumber numberWithBool:YES]
+                };
                 
                 data = [imageRep representationUsingType:NSJPEGFileType properties:imageProperties];
                 
@@ -795,7 +774,8 @@ const CGFloat kThumbnailSize = 370.0f;
                 {
                     threadPhoto = nil;
                 }
-                
+
+
                 [threadPhoto forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
                 [threadPhoto setThumbnailFilePath:newThumbPath];
                 
@@ -824,10 +804,6 @@ const CGFloat kThumbnailSize = 370.0f;
                 //                });
                 //
                 //////////////// end options
-                
-                // clean up
-                if(cfDict) CFRelease(cfDict);
-                CFRelease(imageSource);
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
@@ -905,17 +881,44 @@ const CGFloat kThumbnailSize = 370.0f;
         NSURL *urlForImage = [NSURL fileURLWithPath:aPath];
         
         if ([[weakSelf class] isVideoPath:aPath]) {
-            NSError *anError;
-            [QTMovie enterQTKitOnThread];
-            QTMovie *aMovie = [QTMovie movieWithURL:urlForImage error:&anError];
-            NSImage *anImage = aMovie.posterImage;
-            if (anImage) {
-                //DLog(@"Movie posterImage : %@", anImage);
-            } else {
-                DLog(@"Failed to generate thumbnail from QTMovie -posterImage for URL : %@", urlForImage);
+
+            AVAsset *asset = [AVAsset assetWithURL:urlForImage];
+            AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+            CMTime time = [asset duration];
+            time.value = 0;
+
+            NSError *err;
+            CGImageRef cgImage = [imageGenerator copyCGImageAtTime:time actualTime:NULL error:&err];
+            if (err != nil) {
+                DLog(@"Failed to generate movie thumbnail: %@\n%@", err, err.userInfo);
+                _thumbnailImageIsLoading = NO;
+                weakSelf.cancelThumbnailLoadOperation = NO;
+
+                [[PIXFileParser sharedFileParser] decrementWorking];
+                return;
             }
-            [QTMovie exitQTKitOnThread];
-            NSData *rep = [anImage TIFFRepresentation];
+
+            if (weakSelf.cancelThumbnailLoadOperation==YES) {
+                //DLog(@"2)thumbnail operation was canceled - return");
+                CFRelease(cgImage);
+                _thumbnailImageIsLoading = NO;
+                weakSelf.cancelThumbnailLoadOperation = NO;
+
+                [[PIXFileParser sharedFileParser] decrementWorking];
+                return;
+            }
+
+            // keep the aspect ratio
+            NSSize size;
+            float aspect = (float) CGImageGetWidth(cgImage) / CGImageGetHeight(cgImage);
+            if (aspect > 1.0f) {
+                size = NSMakeSize(kThumbnailSize, kThumbnailSize * (1.0f / aspect));
+            } else {
+                size = NSMakeSize(kThumbnailSize * aspect, kThumbnailSize);
+            }
+
+            image = [[NSImage alloc] initWithCGImage:cgImage size:size];
+            NSData *rep = [image TIFFRepresentation];
             
             CGImageSourceRef movieImageSource = nil;
             
@@ -1425,21 +1428,11 @@ const CGFloat kThumbnailSize = 370.0f;
     return [[self class] isVideoPath:self.path];
 }
 
--(QTMovie *)videoFile
+-(AVAsset *)videoFile
 {
-    if (_videoFile!=nil) {
-        return _videoFile;
+    if (_videoFile == nil) {
+        _videoFile = [AVAsset assetWithURL:[NSURL fileURLWithPath:self.path]];
     }
-    [QTMovie enterQTKitOnThread];
-    NSError *anError;
-    QTMovie *aMovie = [QTMovie movieWithFile:self.path error:&anError];
-    if (!anError) {
-        _videoFile = aMovie;
-    } else {
-        DLog(@"Unable to load movie file at path : %@, error : %@", self.path, anError);
-    }
-    [QTMovie exitQTKitOnThread];
-    
     return _videoFile;
 }
 
@@ -1448,30 +1441,45 @@ const CGFloat kThumbnailSize = 370.0f;
     if (![self isVideo]) {
         return nil;
     }
-    NSDictionary *videoAttributesDict = [[self videoFile] movieAttributes];
-    NSDictionary *displayKeysDict = @{QTMovieDisplayNameAttribute : @"Name", QTMovieCreationTimeAttribute : @"Created", QTMovieDataSizeAttribute : @"Size", QTMovieDurationAttribute : @"Duration"};
-    NSArray *displayKeys = [displayKeysDict allKeys];
-    NSMutableDictionary *videoAttributesForDisplayDict = [NSMutableDictionary dictionary];
-    for (NSString *aKey in displayKeys) {
-        if ([[videoAttributesDict allKeys] containsObject:aKey]) {
-            id aValue = [videoAttributesDict objectForKey:aKey];
-            if (![aValue isKindOfClass:[NSString class]]) {
-                if ([aValue respondsToSelector:@selector(stringValue)] && ![aValue isKindOfClass:[NSNumber class]]) {
-                    aValue = [aValue stringValue];
-                } else if ([aValue isKindOfClass:[NSDate class]]) {
-                    aValue = [[[self class] exifDateFormatter] stringFromDate:aValue];
-                } else if ([aKey isEqualToString:QTMovieDurationAttribute]) {
-                    QTTime aTime = [[self videoFile] duration];//[(NSValue *) aValue nonretainedObjectValue];
-                    aValue = QTStringFromTime((QTTime)aTime);
-                } else {
-                    DLog(@"parsing video data unexpected type for key: %@ and value : %@", aKey, aValue);
-                }
+
+    NSMutableDictionary *attrs = [NSMutableDictionary dictionaryWithCapacity:4];
+
+    AVAsset *asset = self.videoFile;
+
+    if (asset) {
+
+        // get the duration
+        double durationSeconds = CMTimeGetSeconds(asset.duration);
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970:durationSeconds];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
+        dateFormatter.dateFormat = @"HH:mm:ss";
+        attrs[@"Duration"] = [dateFormatter stringFromDate:date];
+
+        // get the size
+        NSURL *url = [NSURL fileURLWithPath:self.path];
+        NSError *err;
+        NSDictionary *values = [url resourceValuesForKeys:@[NSURLFileSizeKey, NSURLTotalFileSizeKey] error:&err];
+        if (err != nil) {
+            DLog(@"Failed to get file attributes. %@", err)
+        }
+
+        NSNumber *size = values[NSURLFileSizeKey];
+        if (size == nil) {
+            size = values[NSURLTotalFileSizeKey];
+        }
+        attrs[@"Size"] = size;
+
+        for (AVMetadataItem * meta in asset.commonMetadata) {
+            if (meta.commonKey == AVMetadataCommonKeyTitle) {
+                attrs[@"Name"] = meta.stringValue;
+            } else if (meta.commonKey == AVMetadataCommonKeyCreationDate) {
+                attrs[@"Created"] = [self.class.exifDateFormatter stringFromDate:meta.dateValue];
             }
-            [videoAttributesForDisplayDict setObject:aValue forKey:[displayKeysDict objectForKey:aKey]];
         }
     }
-    
-    return videoAttributesForDisplayDict;
+
+    return attrs;
 }
 
 @end

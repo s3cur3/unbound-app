@@ -899,7 +899,7 @@
 		8C35808F1714D99E00352870 /* LeapTutorial3.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = LeapTutorial3.mov; sourceTree = "<group>"; };
 		8C4313511828399600DB0053 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Unbound Trial/Images.xcassets"; sourceTree = "<group>"; };
 		8C4313541828439B00DB0053 /* Unbound-For-Mac-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Unbound-For-Mac-512.png"; sourceTree = "<group>"; };
-		8C43CCF017385A9700A4395F /* UnboundTrial.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = UnboundTrial.entitlements; sourceTree = "<group>"; };
+		8C43CCF017385A9700A4395F /* UnboundTrial.entitlements */ = {isa = PBXFileReference; fileEncoding = 1; lastKnownFileType = text.xml; path = UnboundTrial.entitlements; sourceTree = "<group>"; };
 		8C4B80E616B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPhotoGridViewItem.h; sourceTree = "<group>"; };
 		8C4B80E716B9D9FC00C7E8F4 /* PIXPhotoGridViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhotoGridViewItem.m; sourceTree = "<group>"; };
 		8C4B80F516BB3D8900C7E8F4 /* GeneralPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralPreferencesViewController.h; sourceTree = "<group>"; };
@@ -1809,6 +1809,7 @@
 				TargetAttributes = {
 					1DB2F849167ABE87008AC0F7 = {
 						DevelopmentTeam = R5T2HYENEJ;
+						LastSwiftMigration = 0830;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 0;
@@ -2931,6 +2932,7 @@
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "UnboundApp/Windows/Unbound-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2969,6 +2971,7 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "UnboundApp/Windows/Unbound-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

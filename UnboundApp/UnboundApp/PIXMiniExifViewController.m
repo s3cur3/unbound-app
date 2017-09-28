@@ -9,7 +9,7 @@
 #import "PIXMiniExifViewController.h"
 #import "PIXPhoto.h"
 #import "PIXFileManager.h"
-#import <QTKit/QTKit.h>
+#import <AVFoundation/AVFoundation.h>
 
 @interface PIXMiniExifViewController () <NSTextFieldDelegate>
 
@@ -102,11 +102,12 @@
     NSString * modelString = [[[self.photo exifData] objectForKey:@"{TIFF}"] objectForKey:@"Model"];
     
     if ([self.photo isVideo]) {
-        NSError *anError;
-        QTMovie *aMovie = [QTMovie movieWithFile:self.photo.path error:&anError];
-        if (!anError) {
-            modelString = QTStringFromTime([aMovie duration]);//[NSString stringWithFormat:@"%f", [aMovie duration]];
-        }
+        double durationSeconds = CMTimeGetSeconds(self.photo.videoFile.duration);
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970:durationSeconds];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
+        dateFormatter.dateFormat = @"HH:mm:ss";
+        modelString = [dateFormatter stringFromDate:date];
     }
     
     if(modelString == nil)

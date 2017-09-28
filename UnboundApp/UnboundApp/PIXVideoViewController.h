@@ -12,7 +12,7 @@
 @class PIXPageViewController;
 //@class AutoSizingImageView;
 @protocol PIXLeapResponder;
-@class QTMovieView;
+@class AVPlayerView;
 @class PIXVideoImageOverlayView;
 @class PIXPlayVideoHUDWindow;
 
@@ -25,7 +25,7 @@
 
 @property (nonatomic, assign) PIXPageViewController *pageViewController;
 @property (nonatomic, strong) IBOutlet NSScrollView * scrollView;
-@property (nonatomic, strong) IBOutlet QTMovieView *movieView;
+@property (nonatomic, strong) IBOutlet AVPlayerView *movieView;
 
 @property (nonatomic) BOOL isCurrentView;
 

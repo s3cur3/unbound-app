@@ -11,7 +11,6 @@
 #import "PIXPhoto.h"
 #import "PIXPageViewController.h"
 #import "PIXFileManager.h"
-#import <QTKit/QTKit.h>
 
 @interface PIXInfoPanelViewController () <MKMapViewDelegate, NSTextFieldDelegate>
 
@@ -32,7 +31,9 @@
 
 @end
 
-@implementation PIXInfoPanelViewController
+@implementation PIXInfoPanelViewController {
+    NSDictionary *_exifData;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -77,9 +78,12 @@
     NSDictionary *videoAttributes = nil;
     if (useVideoLabels) {
         videoAttributes = [self.photo videoAttributes];
-        [self.photoName setStringValue:[videoAttributes objectForKey:@"Name"]];
+        NSString *name = videoAttributes[@"Name"];
+        if (name) {
+            self.photoName.stringValue = name;
+        }
         
-        NSUInteger * byteCount = [[videoAttributes objectForKey:@"Size"] unsignedIntegerValue];
+        NSUInteger * byteCount = [videoAttributes[@"Size"] unsignedIntegerValue];
         NSString * sizeString = nil;
         if(byteCount)
         {
@@ -89,10 +93,15 @@
         if(sizeString == nil) sizeString = @"";
         self.filesize.stringValue = sizeString;
         
-        NSString *dateString = [videoAttributes objectForKey:@"Created"];
-        [self.dateTaken setStringValue:dateString];
+        NSString *dateString = videoAttributes[@"Created"];
+        if (dateString) {
+            self.dateTaken.stringValue = dateString;
+        }
         
-        self.cameraModel.stringValue = [videoAttributes objectForKey:@"Duration"];
+        NSString *duration = videoAttributes[@"Duration"];
+        if (duration) {
+            self.cameraModel.stringValue = duration;
+        }
     } else {
 
         NSString * nameString = [self.photo name];
@@ -120,8 +129,8 @@
         [self.dateTaken setStringValue:dateString];
         
         NSString * resolutionString = nil;
-        NSString * pixelHeight = [[self.photo exifData] objectForKey:@"PixelHeight"];
-        NSString * pixelWidth = [[self.photo exifData] objectForKey:@"PixelWidth"];
+        NSString * pixelHeight = self.photo.exifData[@"PixelHeight"];
+        NSString * pixelWidth = self.photo.exifData[@"PixelWidth"];
         
         if(pixelHeight && pixelWidth)
         {

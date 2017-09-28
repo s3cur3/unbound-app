@@ -7,10 +7,9 @@
 //
 
 #import "PIXVideoViewController.h"
-#import <QTKit/QTKit.h>
+#import <AVKit/AVKit.h>
 
-
-@interface AutoSizingVideoView : QTMovieView
+@interface AutoSizingVideoView : AVPlayerView
 
 @property (nonatomic, weak) IBOutlet PIXVideoViewController *pageViewController;
 

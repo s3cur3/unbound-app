@@ -277,7 +277,7 @@
 
 -(NSArray *)draggingImageComponents
 {
-    NSDraggingImageComponent * imageComponent = [[NSDraggingImageComponent alloc] init];
+    NSDraggingImageComponent * imageComponent = [[NSDraggingImageComponent alloc] initWithKey:NSDraggingImageComponentIconKey];
     
     NSImage * dragImage = [PIXAlbumGridViewItem dragImageForAlbums:@[self.album] size:NSMakeSize(180, 180)];
     [imageComponent setContents:dragImage];

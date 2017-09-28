@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Pixite Apps LLC. All rights reserved.
 //
 
-#import <QTKit/QTKit.h>
+#import <AVKit/AVKit.h>
 #import "PIXLeapTutorialWindowController.h"
 #import "PIXLeapInputManager.h"
 #import "PIXHUDMessageController.h"
@@ -14,7 +14,7 @@
 
 @interface PIXLeapTutorialWindowController () <PIXLeapResponder>
 
-@property (weak) IBOutlet QTMovieView * movieView;
+@property (weak) IBOutlet AVPlayerView * movieView;
 @property (weak) IBOutlet NSProgressIndicator * spinner;
 @property int currentSlide;
 
@@ -52,9 +52,20 @@
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     
     [self configureSlide];
-    
+
+    [NSNotificationCenter.defaultCenter addObserver:self
+                                           selector:@selector(playerItemDidReachEnd:)
+                                               name:AVPlayerItemDidPlayToEndTimeNotification
+                                             object:self.movieView.player.currentItem];
+
     [[PIXLeapInputManager sharedInstance] addResponder:self];
 }
+
+- (void)close {
+    [NSNotificationCenter.defaultCenter removeObserver:self];
+    [super close];
+}
+
 
 - (void)restartTutorial
 {
@@ -69,16 +80,13 @@
 
 -(void)configureSlide
 {
-    NSString * movieName = [NSString stringWithFormat:@"LeapTutorial%d.mov", self.currentSlide];
-    
-    NSError * movieLoadError = nil;
-    QTMovie * introMovie = [QTMovie movieNamed:movieName error:&movieLoadError];
-    [introMovie setAttribute:[NSNumber numberWithBool:YES] forKey:@"QTMovieLoopsAttribute"];
-    
-    [self.movieView setMovie:introMovie];
-    
-    [self.movieView play:nil];
-    
+    NSString * movieName = [NSString stringWithFormat:@"LeapTutorial%d", self.currentSlide];
+    NSString *moviePath = [[NSBundle mainBundle] pathForResource:movieName ofType:@"mov"];
+
+    self.movieView.player = [AVPlayer playerWithURL:[NSURL fileURLWithPath:moviePath]];
+    self.movieView.player.actionAtItemEnd = AVPlayerActionAtItemEndNone;
+    [self.movieView.player play];
+
     dispatch_async(dispatch_get_main_queue(), ^{
         
         // stop the animation if it's still going
@@ -139,6 +147,11 @@
         
     });
     
+}
+
+- (void)playerItemDidReachEnd:(id)notification {
+    AVPlayerItem *p = [notification object];
+    [p seekToTime:kCMTimeZero completionHandler:nil];
 }
 
 - (IBAction)skipTutorial:(id)sender

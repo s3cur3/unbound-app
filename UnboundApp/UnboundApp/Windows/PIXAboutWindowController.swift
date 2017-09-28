@@ -15,7 +15,7 @@ class PIXAboutWindowController: NSWindowController {
     @IBOutlet weak var link: NSButton!
     @IBOutlet weak var logo: NSImageView!
 
-    private var url: String = ""
+    fileprivate var url: String = ""
 
     convenience init() {
         self.init(windowNibName: "PIXAboutWindowController")
@@ -26,7 +26,7 @@ class PIXAboutWindowController: NSWindowController {
 
         icon.image = NSApp.applicationIconImage
 
-        let infoDict = NSBundle.mainBundle().infoDictionary!
+        let infoDict = Bundle.main.infoDictionary!
         title.stringValue = infoDict["CFBundleName"] as! String
 
         let versionNumber = infoDict["CFBundleShortVersionString"] as! String
@@ -40,23 +40,23 @@ class PIXAboutWindowController: NSWindowController {
         let center = NSMutableParagraphStyle()
         center.alignment = NSCenterTextAlignment
         let attributes = [
-                NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue,
-                NSForegroundColorAttributeName: NSColor.blueColor(),
+                NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
+                NSForegroundColorAttributeName: NSColor.blue,
                 NSParagraphStyleAttributeName: center
-        ]
+        ] as [String : Any]
         link.attributedTitle = NSAttributedString(string: url, attributes: attributes)
     }
 
-    @IBAction func onAppLinkClicked(sender: AnyObject) {
-        NSWorkspace.sharedWorkspace().openURL(NSURL(string: url)!)
+    @IBAction func onAppLinkClicked(_ sender: AnyObject) {
+        NSWorkspace.shared().open(URL(string: url)!)
     }
 
-    override func keyDown(theEvent: NSEvent) {
-        if theEvent.modifierFlags.contains(.CommandKeyMask) && theEvent.charactersIgnoringModifiers! == "w" {
+    override func keyDown(with theEvent: NSEvent) {
+        if theEvent.modifierFlags.contains(.command) && theEvent.charactersIgnoringModifiers! == "w" {
             self.window?.close()
             return
         }
-        super.keyUp(theEvent)
+        super.keyUp(with: theEvent)
     }
 
 }
