@@ -102,6 +102,13 @@ static NSString *ResolveName(NSString *aName)
     DLog(@"awakeFromNib");
 }
 
+- (void)viewWillDisappear {
+    [self.movieView.player pause];
+
+    [super viewWillDisappear];
+}
+
+
 -(void)playMoviePressed:(NSNotification *)notification
 {
     DLog(@"playMoviePressed");

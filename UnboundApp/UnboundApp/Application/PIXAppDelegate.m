@@ -34,10 +34,6 @@
 #import <Sparkle/Sparkle.h>
 #endif
 
-#ifdef APPIRATOR
-#import "Appirater.h"
-#endif
-
 //extern NSString *kLoadImageDidFinish;
 //extern NSString *kSearchDidFinishNotification;
 
@@ -182,17 +178,6 @@
 #ifdef SPARKLE
     self.showSparkleMenu = YES;
     self.sparkleUpdater = [SUUpdater new];
-#endif
-    
-#ifdef APPIRATOR
-    [Appirater setAppId:@"690375005"];
-    [Appirater setDaysUntilPrompt:3];
-    [Appirater setUsesUntilPrompt:4];
-    [Appirater setSignificantEventsUntilPrompt:-1];
-    [Appirater setTimeBeforeReminding:2];
-    //[Appirater setDebug:YES];
-    
-    [Appirater appLaunched:YES];
 #endif
     
 }

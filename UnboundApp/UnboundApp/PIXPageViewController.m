@@ -1367,13 +1367,6 @@
 }
 
 - (NSViewController *)pageController:(NSPageController *)pageController viewControllerForIdentifier:(NSString *)identifier {
-    //NSLog(@"pageController.selectedIndex : %ld", pageController.selectedIndex);
-//    PIXImageViewController *aVC =  [[PIXImageViewController alloc] initWithNibName:@"AutoSizingImageView" bundle:nil];
-//    [aVC.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-//    aVC.pageViewController = self;
-//    return aVC;
-    
-    //TODO: add video support
     if (![identifier isEqualToString:@"video"])
     {
         PIXImageViewController *aVC =  [[PIXImageViewController alloc] initWithNibName:@"AutoSizingImageView" bundle:nil];

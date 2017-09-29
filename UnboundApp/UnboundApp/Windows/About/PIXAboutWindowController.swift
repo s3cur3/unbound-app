@@ -18,7 +18,7 @@ class PIXAboutWindowController: NSWindowController {
     fileprivate var url: String = ""
 
     convenience init() {
-        self.init(windowNibName: "PIXAboutWindowController")
+        self.init(windowNibName: NSNib.Name(rawValue: "PIXAboutWindowController"))
     }
 
     override func windowDidLoad() {
@@ -38,21 +38,21 @@ class PIXAboutWindowController: NSWindowController {
         url = infoDict["PIXAppLink"] as! String
 
         let center = NSMutableParagraphStyle()
-        center.alignment = NSCenterTextAlignment
+        center.alignment = .center
         let attributes = [
-                NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
-                NSForegroundColorAttributeName: NSColor.blue,
-                NSParagraphStyleAttributeName: center
-        ] as [String : Any]
+                .underlineStyle: NSUnderlineStyle.styleSingle,
+                .foregroundColor: NSColor.blue,
+                .paragraphStyle: center
+            ] as [NSAttributedStringKey : Any]
         link.attributedTitle = NSAttributedString(string: url, attributes: attributes)
     }
 
     @IBAction func onAppLinkClicked(_ sender: AnyObject) {
-        NSWorkspace.shared().open(URL(string: url)!)
+        NSWorkspace.shared.open(URL(string: url)!)
     }
 
     override func keyDown(with theEvent: NSEvent) {
-        if theEvent.modifierFlags.contains(.command) && theEvent.charactersIgnoringModifiers! == "w" {
+        if theEvent.modifierFlags.contains(NSEvent.ModifierFlags.command) && theEvent.charactersIgnoringModifiers! == "w" {
             self.window?.close()
             return
         }
