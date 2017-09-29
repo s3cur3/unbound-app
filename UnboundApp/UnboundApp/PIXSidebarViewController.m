@@ -11,14 +11,12 @@
 #import "PIXFileManager.h"
 #import "PIXSidebarTableCellView.h"
 #import "PIXSplitViewController.h"
-#import "PIXPhotoGridViewController.h"
 #import "PIXPhotoCollectionViewController.h"
 #import "PIXFileParser.h"
 #import "PIXAlbum.h"
 #import "PIXPhoto.h"
 #import "PIXDefines.h"
 #import "PIXMainWindowController.h"
-#import "PIXAlbumGridViewItem.h"
 #import "PIXNavigationController.h"
 
 @interface PIXSidebarViewController ()
@@ -287,7 +285,7 @@
 
     DLog(@"Sidebar acccepting drop with source : %@, option key presssed : %@", [info draggingSource], ([PIXViewController optionKeyIsPressed] ? @"YES" : @"NO"));
     //TODO: find out why this doesn't work
-    if ( [[info draggingSource] class] == [PIXPhotoGridViewController class])
+    if ( [[info draggingSource] class] == [PIXPhotoCollectionViewController class])
     {
         if (![PIXViewController optionKeyIsPressed])
         {
@@ -342,7 +340,7 @@
     
     DLog(@"Sidebar validating drop with source : %@, option key presssed : %@", [info draggingSource], ([PIXViewController optionKeyIsPressed] ? @"YES" : @"NO"));
     
-    if ( [[info draggingSource] class] == [PIXPhotoGridViewController class])
+    if ( [[info draggingSource] class] == [PIXPhotoCollectionViewController class])
     {
 		
         if ([PIXViewController optionKeyIsPressed]) {

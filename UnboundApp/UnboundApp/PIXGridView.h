@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "PIXLeapInputManager.h"
 #import "PIXCollectionViewItem.h"
 
 @protocol PIXGridViewDelegate;
@@ -17,7 +16,7 @@ typedef struct _PIXItemPoint {
     NSUInteger row;
 } PIXItemPoint;
 
-@interface PIXGridView : NSCollectionView <PIXLeapResponder>
+@interface PIXGridView : NSCollectionView
 
 @property (nonatomic, assign) id<PIXGridViewDelegate> gridViewDelegate;
 

@@ -8,19 +8,16 @@
 
 #import "PIXSplitViewController.h"
 #import "PIXSidebarViewController.h"
-//#import "PIXImageBrowserViewController.h"
-#import "PIXPhotoGridViewController.h"
 #import "PIXNavigationController.h"
 #import "PIXAppDelegate.h"
 #import "PIXMainWindowController.h"
-#import "PIXLeapInputManager.h"
 #import "PIXCustomShareSheetViewController.h"
 #import "PIXShareManager.h"
 #import "PIXFileManager.h"
 #import "PIXDefines.h"
 #import "PIXPhotoCollectionViewController.h"
 
-@interface PIXSplitViewController () <PIXLeapResponder>
+@interface PIXSplitViewController ()
 
 
 @property (nonatomic, strong) NSViewController *mainViewController;
@@ -105,10 +102,6 @@
         
     });
     
-    // become a leap responder to watch for the back swipe
-    [[PIXLeapInputManager sharedInstance] addResponder:self];
-    [[PIXLeapInputManager sharedInstance] addResponder:(id<PIXLeapResponder>)self.imageBrowserViewController.gridView];
-    
     [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] setTitle:[self.selectedAlbum title]];
 }
 
@@ -127,9 +120,6 @@
     
     [self.sidebarViewController willHidePIXView];
     [self.imageBrowserViewController willHidePIXView];
-    
-    [[PIXLeapInputManager sharedInstance] removeResponder:self];
-    [[PIXLeapInputManager sharedInstance] removeResponder:(id<PIXLeapResponder>)self.imageBrowserViewController.gridView];
 }
 
 -(void)setupToolbar
@@ -185,7 +175,7 @@
     [buttonView setBordered:YES];
     [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
     [buttonView setTitle:@""];
-    [buttonView.cell setArrowPosition:NSPopUpNoArrow];
+    [(NSPopUpButtonCell *) buttonView.cell setArrowPosition:NSPopUpNoArrow];
     
     _sortButton.view = buttonView;
     

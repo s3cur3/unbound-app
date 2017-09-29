@@ -8,12 +8,7 @@
 
 #import "AutoSizingImageView.h"
 
-#import "PIXLeapInputManager.h"
-
-//#import "ImageViewController.h"
-//#import "PageViewController.h"
-
-@interface AutoSizingImageView () <PIXLeapResponder>
+@interface AutoSizingImageView ()
 
 @end
 

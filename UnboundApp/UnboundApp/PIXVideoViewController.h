@@ -7,16 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "PIXLeapInputManager.h"
 
 @class PIXPageViewController;
-//@class AutoSizingImageView;
-@protocol PIXLeapResponder;
 @class AVPlayerView;
 @class PIXVideoImageOverlayView;
 @class PIXPlayVideoHUDWindow;
 
-@interface PIXVideoViewController : NSViewController <PIXLeapResponder>
+@interface PIXVideoViewController : NSViewController
 {
     //NSWindow		*overlayWindow;
     

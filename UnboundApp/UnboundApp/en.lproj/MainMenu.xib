@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -28,17 +28,6 @@
                                 <connections>
                                     <action selector="macAppStore:" target="494" id="643"/>
                                     <binding destination="494" name="hidden" keyPath="self.showSparkleMenu" id="642">
-                                        <dictionary key="options">
-                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                        </dictionary>
-                                    </binding>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Cool Leap Apps" id="572">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="coolLeapAppsPressed:" target="494" id="580"/>
-                                    <binding destination="574" name="hidden" keyPath="values.LeapTutorialHasShown" id="579">
                                         <dictionary key="options">
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                         </dictionary>
@@ -209,15 +198,6 @@
                                     </binding>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="606">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
-                            <menuItem title="Leap Motion Controller Tutorial" id="603">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="showLeapTutorialPressed:" target="494" id="607"/>
-                                </connections>
-                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="570">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
@@ -225,17 +205,6 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="analogOceanWebsitePressed:" target="494" id="584"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Cool Leap Apps" id="581">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="coolLeapAppsPressed:" target="494" id="582"/>
-                                    <binding destination="574" name="hidden" keyPath="values.LeapTutorialHasShown" id="583">
-                                        <dictionary key="options">
-                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                        </dictionary>
-                                    </binding>
                                 </connections>
                             </menuItem>
                         </items>

@@ -13,7 +13,6 @@
 @class Album;
 @class PIXAlbum;
 @class PIXSidebarViewController;
-@class PIXPhotoGridViewController;
 @class PIXPhotoCollectionViewController;
 
 @protocol PIXSplitViewControllerDelegate <NSObject>

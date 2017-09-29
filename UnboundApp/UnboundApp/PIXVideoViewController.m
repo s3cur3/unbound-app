@@ -15,7 +15,6 @@
 #import "PIXAppDelegate.h"
 #import "PIXMainWindowController.h"
 #import "PIXPageViewController.h"
-#import "PIXLeapInputManager.h"
 #import <AVKit/AVKit.h>
 #import <objc/runtime.h>
 

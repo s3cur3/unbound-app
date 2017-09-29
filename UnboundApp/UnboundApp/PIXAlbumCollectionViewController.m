@@ -136,8 +136,6 @@
     });
     
     
-    [[PIXLeapInputManager sharedInstance] addResponder:self.gridView];
-    
     [[PIXFileParser sharedFileParser] addObserver:self forKeyPath:@"fullScanProgress" options:NSKeyValueObservingOptionNew context:nil];
     
     [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] setTitle:@"Unbound"];
@@ -172,8 +170,6 @@
 - (void)willHidePIXView
 {
     [super willHidePIXView];
-    
-    [[PIXLeapInputManager sharedInstance] removeResponder:self.gridView];
     
     [[PIXFileParser sharedFileParser] removeObserver:self forKeyPath:@"fullScanProgress"];
 }
@@ -225,8 +221,8 @@
     buttonView.image = [NSImage imageNamed:NSImageNameTrashEmpty];
     [buttonView setImagePosition:NSImageOnly];
     [buttonView setBordered:NO];
-    [buttonView.cell setImageScaling:NSImageScaleProportionallyDown];
-    [buttonView.cell setHighlightsBy:NSPushInCellMask];
+    [(NSButtonCell *) buttonView.cell setImageScaling:NSImageScaleProportionallyDown];
+    [(NSButtonCell *) buttonView.cell setHighlightsBy:NSPushInCellMask];
     
     _trashbutton.view = buttonView;
     
@@ -268,7 +264,7 @@
     [buttonView setBordered:YES];
     [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
     [buttonView setTitle:@""];
-    [buttonView.cell setArrowPosition:NSPopUpNoArrow];
+    [(NSPopUpButtonCell *) buttonView.cell setArrowPosition:NSPopUpNoArrow];
     
     _sortButton.view = buttonView;
     
@@ -474,7 +470,7 @@
     
     //[self.searchField setFocusRingType:NSFocusRingTypeNone];
     self.searchField.delegate = self;
-    [self.searchField.cell setPlaceholderString:@"Search Albums"];
+    [(NSFormCell *) self.searchField.cell setPlaceholderString:@"Search Albums"];
     [self.searchField.cell setFont:[NSFont fontWithName:@"Helvetica" size:13]];
     
     _searchBar = [[NSToolbarItem alloc] initWithItemIdentifier:@"SearchBar"];

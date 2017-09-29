@@ -15,7 +15,6 @@
 #import "PIXPhoto.h"
 #import "PIXImageViewController.h"
 #import "PIXVideoViewController.h"
-#import "PIXLeapInputManager.h"
 #import "PIXNavigationController.h"
 
 #import "PIXPageHUDWindow.h"
@@ -36,7 +35,7 @@
 
 #import "PIXPlayVideoHUDWindow.h"
 
-@interface PIXPageViewController () <PIXLeapResponder, PIXSlideshowOptonsDelegate, NSMenuDelegate>
+@interface PIXPageViewController () <PIXSlideshowOptonsDelegate, NSMenuDelegate>
 
 @property NSArray * viewControllers;
 
@@ -436,8 +435,6 @@
 
 - (void)willShowPIXView
 {
-    [[PIXLeapInputManager sharedInstance] addResponder:self];
-    
     [self.pageController addObserver:self forKeyPath:@"selectedIndex" options:NSKeyValueObservingOptionNew context:nil];
 
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -699,9 +696,7 @@
     if (self.isPlayingSlideshow) {
         [self stopSlideShow:nil];
     }
-    
-    [[PIXLeapInputManager sharedInstance] removeResponder:self];
-    
+
     [self.pageController removeObserver:self forKeyPath:@"selectedIndex"];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -803,17 +798,6 @@
     
     [self restartNextSlideIfNeeded];
 }
-
--(void)leapPanZoomStart
-{
-    [[self currentImageVC] leapPanZoomStart];
-}
-
--(void)leapPanZoomPosition:(NSPoint)position andScale:(CGFloat)scale
-{
-    [[self currentImageVC] leapPanZoomPosition:position andScale:scale];
-}
-
 
 -(void)keyDown:(NSEvent *)theEvent
 {

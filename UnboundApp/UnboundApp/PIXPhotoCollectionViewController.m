@@ -19,7 +19,7 @@
 #import "PIXCustomButton.h"
 #import "PIXShareManager.h"
 
-@interface PIXPhotoCollectionViewController () <PIXLeapResponder, PIXGridViewDelegate>
+@interface PIXPhotoCollectionViewController () <PIXGridViewDelegate>
 
 @property(nonatomic,strong) NSDateFormatter * titleDateFormatter;
 @property CGFloat startPinchZoom;
@@ -85,13 +85,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self updateToolbar];
     });
-    
-    [[PIXLeapInputManager sharedInstance] addResponder:self];
-    [[PIXLeapInputManager sharedInstance] addResponder:self.gridView];
-    
-    //[self.gridView setNextResponder:self];
-    //[self setNextResponder:self.scrollView];
-    
+
 }
 
 // handle escape key here if needed
@@ -122,12 +116,6 @@
     
     [super keyDown:event];
     
-}
-
--(void)willHidePIXView
-{
-    [[PIXLeapInputManager sharedInstance] removeResponder:self];
-    [[PIXLeapInputManager sharedInstance] removeResponder:self.gridView];
 }
 
 // send a size between 0 and 1 (will be transformed into appropriate sizes)

@@ -11,8 +11,6 @@
 #import "PIXPhoto.h"
 #import "PIXDefines.h"
 
-#import "PIXLeapInputManager.h"
-
 @interface PIXImageViewController ()
 
 @property CGFloat startPinchZoom;

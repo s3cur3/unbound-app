@@ -8,7 +8,6 @@
 
 #import "PIXMainWindowController.h"
 #import "PIXNavigationController.h"
-#import "PIXAlbumGridViewController.h"
 #import "PIXAlbumCollectionViewController.h"
 #import "PIXDefines.h"
 #import "PIXAppDelegate.h"
@@ -75,7 +74,6 @@
     
     [self.navigationViewController.view setWantsLayer:YES];
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-    //self.albumViewController = [[PIXAlbumGridViewController alloc] initWithNibName:@"PIXGridViewController" bundle:nil];
     self.albumViewController = [[PIXAlbumCollectionViewController alloc] initWithNibName:@"PIXAlbumCollectionViewController" bundle:nil];
     [self.albumViewController view];
 

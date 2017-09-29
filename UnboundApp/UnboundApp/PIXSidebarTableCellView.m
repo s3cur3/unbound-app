@@ -11,8 +11,7 @@
 #import "PIXPhoto.h"
 #import "PIXDefines.h"
 #import "PIXFileManager.h"
-#import "NSColor+CNGridViewPalette.h"
-#import "PIXAlbumGridViewItem.h"
+#import "PIXAlbumCollectionViewItem.h"
 
 @implementation PIXSidebarTableCellView
 
@@ -279,7 +278,7 @@
 {
     NSDraggingImageComponent * imageComponent = [[NSDraggingImageComponent alloc] initWithKey:NSDraggingImageComponentIconKey];
     
-    NSImage * dragImage = [PIXAlbumGridViewItem dragImageForAlbums:@[self.album] size:NSMakeSize(180, 180)];
+    NSImage * dragImage = [PIXAlbumCollectionViewItemView dragImageForAlbums:@[self.album] size:NSMakeSize(180, 180)];
     [imageComponent setContents:dragImage];
     [imageComponent setFrame:NSMakeRect(0, 0, 180, 180)];
     
