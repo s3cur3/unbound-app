@@ -85,7 +85,6 @@
 		458AD2090C9AB642EB3338A5 /* PIXVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD908CFF0ECDB629551E6 /* PIXVideoViewController.m */; };
 		458AD20AD998C3D787758B9B /* PIXInfoPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD2F03843EA9EBD3FBBE3 /* PIXInfoPanelViewController.m */; };
 		458AD21403CED9CAFA9C48F5 /* nophoto_200x200.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 458AD7A85609DBC2EA41D16C /* nophoto_200x200.jpg */; };
-		458AD215958334816B0D12CD /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458ADC52AA03BF1D91475CC1 /* VideoViewController.swift */; };
 		458AD226C44ADBBC9E7436D2 /* PIXInfoWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD986EE85D82D4FAEAE8C /* PIXInfoWindowController.xib */; };
 		458AD22D705A9D6A10330F8C /* leapconnected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD255978776B70A48B1EB /* leapconnected@2x.png */; };
 		458AD22F207F8F62ADC1610E /* tempVideo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 458ADF0B7AB7C27DAB8C90EF /* tempVideo.jpg */; };
@@ -502,13 +501,11 @@
 		458ADF269B153E82EB99117A /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD87192D1A882871AF625 /* Preferences.m */; };
 		458ADF27E899EEB4402D83FC /* PIXRoundedProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD8D8DCCF4F655556036A /* PIXRoundedProgressIndicator.m */; };
 		458ADF2C8FAB7DB3CF7321A0 /* videoview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADC9B40BB250A64BFC7EA /* videoview.xib */; };
-		458ADF2DD3CE95D882303D1B /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458ADC52AA03BF1D91475CC1 /* VideoViewController.swift */; };
 		458ADF309B1C42BFF4BF75D5 /* btn-roundrect-up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD80F5F6AF0C2AE9A11E5 /* btn-roundrect-up@2x.png */; };
 		458ADF346B2B9BDD987C89CE /* PIXHUDMessageController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADA4FAB1BF804741362BA /* PIXHUDMessageController.xib */; };
 		458ADF348D2C58B4C70CB879 /* softtap.wav in Resources */ = {isa = PBXBuildFile; fileRef = 458AD5FF319903D39A279CDA /* softtap.wav */; };
 		458ADF35FD5BA9D5C086A953 /* PIXOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD286784546D2A0E9F6E7 /* PIXOutlineView.m */; };
 		458ADF362D117149BCB9FE3E /* buttongrid_email@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD1A07A96C822C47C889F /* buttongrid_email@2x.png */; };
-		458ADF4A803B37E511F6FBB7 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458ADC52AA03BF1D91475CC1 /* VideoViewController.swift */; };
 		458ADF4CA85A1EE9DFC32DA6 /* addbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD35E12120DDC441E4289 /* addbutton.png */; };
 		458ADF59CECF0F65FA3F3473 /* PIXSplitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADDEDF9EFD7B90D25E4C6 /* PIXSplitViewController.xib */; };
 		458ADF6151B4DD3DFA7763CC /* AutoSizingVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADC11B7C82C25F0002393 /* AutoSizingVideoView.m */; };
@@ -818,7 +815,6 @@
 		458ADC4C05748A68EBC14116 /* buttongrid_facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttongrid_facebook.png; sourceTree = "<group>"; };
 		458ADC4D5760C6B3DE08C77F /* PIXSlideshowOptonsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXSlideshowOptonsViewController.h; sourceTree = "<group>"; };
 		458ADC4FD0D1DAB3C4D18373 /* PIXFileParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXFileParser.h; sourceTree = "<group>"; };
-		458ADC52AA03BF1D91475CC1 /* VideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		458ADC52BAB370DAF7386F52 /* PIXDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PIXDataModel.xcdatamodel; sourceTree = "<group>"; };
 		458ADC57230B09F3D94C2732 /* PIXPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPageViewController.m; sourceTree = "<group>"; };
 		458ADC5AF3A37C7F6E48EC61 /* contract@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contract@2x.png"; sourceTree = "<group>"; };
@@ -1281,7 +1277,6 @@
 				458AD4BECFE86583CCD5346D /* PIXVideoViewController.h */,
 				458AD908CFF0ECDB629551E6 /* PIXVideoViewController.m */,
 				458ADC9B40BB250A64BFC7EA /* videoview.xib */,
-				458ADC52AA03BF1D91475CC1 /* VideoViewController.swift */,
 			);
 			path = PageView;
 			sourceTree = "<group>";
@@ -1509,7 +1504,6 @@
 			buildConfigurationList = 1DB2F868167ABE87008AC0F7 /* Build configuration list for PBXNativeTarget "Unbound" */;
 			buildPhases = (
 				D19DCCD844E4975002E5CC81 /* 📦 Check Pods Manifest.lock */,
-				0CA0A84F4293CE0324A74D70 /* Check Pods Manifest.lock */,
 				1DB2F846167ABE87008AC0F7 /* Sources */,
 				8C53DFF316FB7DF4008EF8B1 /* Copy Frameworks */,
 				1DB2F847167ABE87008AC0F7 /* Frameworks */,
@@ -1517,8 +1511,6 @@
 				7645624AC3056208B26A9B46 /* 📦 Embed Pods Frameworks */,
 				D7FEE8385452F8E911A19637 /* 📦 Copy Pods Resources */,
 				042991741D0619CB00BBA95A /* ShellScript */,
-				7C99438DEA9A0BF468FFB819 /* Embed Pods Frameworks */,
-				36A692AC8FFEC2F12580D730 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2000,21 +1992,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" 2d7dec3d45e8c12d3d51e10f742ccd405d097f97 00c88cbd24f188ff3b9d936e5cd215aa8b2e35b3062af111d5bcf647e7ba4ea6";
 		};
-		0CA0A84F4293CE0324A74D70 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
 		1E66F5274F2E59D79A2CE0CB /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2043,21 +2020,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Unbound-Unbound Non-Sandbox/Pods-Unbound-Unbound Non-Sandbox-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		36A692AC8FFEC2F12580D730 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Unbound/Pods-Unbound-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		401F74DD79699DDB896F25E9 /* Check Pods Manifest.lock */ = {
@@ -2103,21 +2065,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Unbound-Unbound Non-Sandbox/Pods-Unbound-Unbound Non-Sandbox-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7C99438DEA9A0BF468FFB819 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Unbound/Pods-Unbound-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8594447F430C92377BB2D85E /* Embed Pods Frameworks */ = {
@@ -2342,7 +2289,6 @@
 				458ADC15AAFF403C3E5C2293 /* PIXTransitionSetup.m in Sources */,
 				458AD095AAD1662CB2C22B31 /* PIXVideoImageOverlayView.m in Sources */,
 				458AD157D58D09CCDCEA7088 /* PIXVideoViewController.m in Sources */,
-				458AD215958334816B0D12CD /* VideoViewController.swift in Sources */,
 				458ADEFFCFC8EB27D8B971B8 /* PIXAlbum.m in Sources */,
 				458AD6004550C984953B0481 /* PIXPhoto.m in Sources */,
 				458ADCC36CEB33C5E4DC6069 /* PIXAccount.m in Sources */,
@@ -2419,7 +2365,6 @@
 				458ADCA9F2ACDFA8CA68A7D7 /* PIXTransitionSetup.m in Sources */,
 				458AD405AE75ED465147BB3E /* PIXVideoImageOverlayView.m in Sources */,
 				458ADFEF169BA3EA6E3F72B2 /* PIXVideoViewController.m in Sources */,
-				458ADF4A803B37E511F6FBB7 /* VideoViewController.swift in Sources */,
 				458AD9029029B61965654D12 /* PIXAlbum.m in Sources */,
 				458AD6F233473D8441CA9006 /* PIXPhoto.m in Sources */,
 				458AD88C8DCB3AA650035330 /* PIXAccount.m in Sources */,
@@ -2496,7 +2441,6 @@
 				458ADF220B6ED091D765B261 /* PIXTransitionSetup.m in Sources */,
 				458AD1268AE06E9E41AD5A04 /* PIXVideoImageOverlayView.m in Sources */,
 				458AD2090C9AB642EB3338A5 /* PIXVideoViewController.m in Sources */,
-				458ADF2DD3CE95D882303D1B /* VideoViewController.swift in Sources */,
 				458ADE4CDB6A080AE13DA981 /* PIXAlbum.m in Sources */,
 				458AD0B6F64A5A68A7604174 /* PIXPhoto.m in Sources */,
 				458ADD8A4A8CB2F780141E38 /* PIXAccount.m in Sources */,
@@ -2557,6 +2501,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;

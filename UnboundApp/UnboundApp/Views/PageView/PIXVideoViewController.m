@@ -7,7 +7,6 @@
 //
 
 #import "PIXVideoViewController.h"
-//#import "AutoSizingImageView.h"
 #import "PIXVideoImageOverlayView.h"
 #import "PIXPlayVideoHUDWindow.h"
 #import "PIXPhoto.h"
@@ -16,12 +15,12 @@
 #import "PIXMainWindowController.h"
 #import "PIXPageViewController.h"
 #import <AVKit/AVKit.h>
-#import <objc/runtime.h>
 
 @interface PIXVideoViewController ()
 
 @property CGFloat startPinchZoom;
 @property NSPoint startPinchPosition;
+@property AVPlayer *player;
 
 @end
 
@@ -43,39 +42,77 @@
     DLog(@"awakeFromNib");
 }
 
-- (void)viewWillDisappear {
-    [self.movieView.player pause];
+- (void)viewWillAppear {
+    [super viewWillAppear];
+    [NSNotificationCenter.defaultCenter addObserver:self
+                                           selector:@selector(movieFinishedPlaying:)
+                                               name:AVPlayerItemDidPlayToEndTimeNotification
+                                             object:nil];
+}
 
+- (void)viewWillDisappear {
+    [NSNotificationCenter.defaultCenter removeObserver:self
+                                                  name:AVPlayerItemDidPlayToEndTimeNotification
+                                                object:nil];
     [super viewWillDisappear];
 }
 
 
+
 -(void)playMoviePressed:(NSNotification *)notification
 {
+    DLog(@"Player failed to load video. %@", self.player);
+
     DLog(@"playMoviePressed");
     [[self pageViewController] tryFadeControls];
     [self dismissOverlay];
 
-    [self.movieView.player addObserver:self forKeyPath:@"rate" options:nil context:nil];
+    if(self.player.rate == 0) {
+        // start over if we're at the end
+        if (self.player.currentTime.value >= self.player.currentItem.duration.value) {
+            [self.player seekToTime:CMTimeMake(0, 1)];
+        }
 
-    if(self.movieView.player.rate == 0)
-    {
-        [self.movieView.player play];
+        [self.player play];
     }
     
     else
     {
-        [self.movieView.player pause];
+        [self.player pause];
     }
 }
 
 - (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSKeyValueChangeKey, id> *)change context:(nullable void *)context {
-    if (object == self.movieView.player && [@"rate" isEqualToString:keyPath]) {
-        if (self.movieView.player.rate == 0) {
+    if (object == self.player && [@"rate" isEqualToString:keyPath]) {
+        DLog(@"Received notification for rate change. rate=%f", self.player.rate);
+        if (self.player.rate == 0) {
             [self movieFinishedPlaying:nil];
+        }
+    } else if (object == self.player && [@"status" isEqualToString:keyPath]) {
+        DLog(@"Received notification for player status.");
+        switch (self.player.status) {
+            case AVPlayerStatusReadyToPlay: {
+                DLog(@"Player is ready to play, pausing.")
+                [self.player pause];
+                [self.player seekToTime:CMTimeMake(0, 1)];
+                break;
+            }
+
+            case AVPlayerStatusFailed: {
+                DLog(@"Player failed to load video. %@", self.player.error)
+                break;
+            }
         }
     } else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
+- (void)keyDown:(NSEvent *)event {
+    if (event.type == NSKeyDown && [event.characters isEqualToString:@"\r"]) {
+        [self playMoviePressed:nil];
+    } else {
+        [super keyDown:event];
     }
 }
 
@@ -84,7 +121,6 @@
  {
      if ([self isCurrentView]) {
          [self displayOverlay];
-         [self.movieView.player removeObserver:self forKeyPath:@"rate"];
      }
  }
 
@@ -207,11 +243,29 @@
 
 -(void)dealloc {
     [self dismissOverlay];
-    [self.movieView.player pause];
+    self.player = nil;
 }
 
 -(void)setRepresentedObject:(id)representedObject {
     [self setPhoto:(PIXPhoto *)representedObject];
+}
+
+- (AVPlayer *)player {
+    return self.movieView.player;
+}
+
+-(void)setPlayer:(AVPlayer *)player {
+    if (self.movieView.player != nil) {
+        [self.movieView.player removeObserver:self forKeyPath:@"rate"];
+        [self.movieView.player removeObserver:self forKeyPath:@"status"];
+    }
+
+    self.movieView.player = player;
+
+    if (player != nil) {
+        [self.movieView.player addObserver:self forKeyPath:@"status" options:nil context:nil];
+        [self.movieView.player addObserver:self forKeyPath:@"rate" options:nil context:nil];
+    }
 }
 
 -(void)photoFullsizeChanged:(NSNotification *)notification
@@ -222,7 +276,8 @@
     id obj = notification.object;
     //DLog(@"obj class : %@", [obj class]);
     PIXPhoto *aPhoto = (PIXPhoto *)obj;
-    self.movieView.player = [AVPlayer playerWithURL:aPhoto.filePath];
+
+    self.player = [AVPlayer playerWithURL:aPhoto.filePath];
 }
 
 -(void)setPhoto:(PIXPhoto *)newPhoto
@@ -239,17 +294,15 @@
         }
         
         [super setRepresentedObject:newPhoto];
-        
+        [NSNotificationCenter.defaultCenter addObserver:self
+                                               selector:@selector(photoFullsizeChanged:)
+                                                   name:PhotoFullsizeDidChangeNotification
+                                                 object:self.representedObject];
+
         if (self.representedObject!=nil) {
-            //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photoChanged:) name:PhotoThumbDidChangeNotification object:self.representedObject];
-            self.movieView.player = [AVPlayer playerWithURL:newPhoto.filePath];
-            //[self.imageView setNeedsDisplay];
-            //NSCParameterAssert(self.imageView.image);
-            //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photoFullsizeChanged:) name:PhotoFullsizeDidChangeNotification object:self.representedObject];
+            self.player = [AVPlayer playerWithURL:[NSURL fileURLWithPath:newPhoto.path]];
         }
         
-    } else if (newPhoto!=nil) {
-        //DLog(@"same non-nil representedObject being set.");
     }
     
 }
@@ -271,8 +324,8 @@
 -(BOOL)movieIsPlaying
 {
     float rate = 0.0f;
-    if (self.movieView.player) {
-        rate = self.movieView.player.rate;
+    if (self.player) {
+        rate = self.player.rate;
     }
     //DLog(@"rate : %f, isIdle : %d", rate, isIdle);
     BOOL isPlaying = [[NSNumber numberWithFloat:rate] boolValue];

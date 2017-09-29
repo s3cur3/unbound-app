@@ -808,11 +808,6 @@
         if ([pressedChars length] == 1)
         {
             unichar pressedUnichar = [pressedChars characterAtIndex:0];
-            if(pressedUnichar == ' ') // space is the same as cancle
-            {
-                [self cancelOperation:theEvent];
-                return;
-            }
             
             if(pressedUnichar == 'f') // f should togge fullscreen
             {
@@ -824,19 +819,6 @@
             {
                 [self deleteItems:nil];
                 return;
-            }
-            
-            if(pressedUnichar == '\r') // return should play if it's a video
-            {
-                if ([self.pageController.selectedViewController isKindOfClass:[PIXVideoViewController class]]) {
-                    PIXVideoViewController *videoVC = (PIXVideoViewController *)self.pageController.selectedViewController;
-                    
-                        
-                    [videoVC playMoviePressed:nil];
-                    
-                    return;
-                    
-                }
             }
         }
     }
@@ -1108,8 +1090,8 @@
     // set the first image in our list to the main magnifying view
     if ([self.pagerData count] > 0) {
         [self.pageController setArrangedObjects:self.pagerData];
+
         NSInteger index = [self.album.sortedPhotos indexOfObject:self.initialSelectedObject];
-        
         if(index >= 0 && index < [self.pagerData count])
         {
             [self.pageController setSelectedIndex:index];
@@ -1339,15 +1321,12 @@
 
 @implementation PIXPageViewController (NSPageControllerDelegate)
 - (NSString *)pageController:(NSPageController *)pageController identifierForObject:(id)object {
-//    if (object==nil) {
-//        DLog(@"identifierForObject has nil object");
-//    }
-    //return @"picture";
-    
-    if (![[object imageRepresentationType] isEqualToString:IKImageBrowserQTMoviePathRepresentationType]) {
+    PIXPhoto *photo = (PIXPhoto *) object;
+    if (photo.isVideo) {
+        return @"video";
+    } else {
         return @"picture";
     }
-    return @"video";
 }
 
 - (NSViewController *)pageController:(NSPageController *)pageController viewControllerForIdentifier:(NSString *)identifier {
@@ -1365,11 +1344,6 @@
 }
 
 -(void)pageController:(NSPageController *)pageController prepareViewController:(NSViewController *)viewController withObject:(id)object {
-    
-//    if(object == nil) {
-//        return;
-//    }
-    
     if ([viewController isKindOfClass:[PIXVideoViewController class]]) {
         PIXVideoViewController *videoVC = (PIXVideoViewController *)viewController;
         [videoVC.overlayWindow close];
@@ -1380,7 +1354,7 @@
     
     // Normally, we want to reset the magnification value to 1 as the user swipes to other images. However if the user cancels the swipe, we want to leave the original magnificaiton and scroll position alone.
     
-    BOOL isRepreparingOriginalView = (self.initialSelectedObject && self.initialSelectedObject == object) ? YES : NO;
+    BOOL isRepreparingOriginalView = self.initialSelectedObject && self.initialSelectedObject == object;
     if (!isRepreparingOriginalView) {
         if ([viewController.view respondsToSelector:@selector(setMagnification:)]) {
             [(NSScrollView*)viewController.view setMagnification:1.0];
@@ -1388,9 +1362,6 @@
         //[self makeSelectedViewFirstResponder];
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(startPreloadForController:) object:pageController];
     }
-//    else {
-//        
-//    }
 }
 
 - (void)pageControllerWillStartLiveTransition:(NSPageController *)pageController {

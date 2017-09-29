@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
-        <plugIn identifier="com.apple.MapKitIBPlugin" version="10117"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
+        <plugIn identifier="com.apple.MapKitIBPlugin" version="13196"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PIXPageViewController">
@@ -69,14 +70,11 @@
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="235">
+                                <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="235">
                                     <rect key="frame" x="12" y="38" width="200" height="13"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="9" id="387"/>
                                     </constraints>
-                                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    <font key="titleFont" metaFont="system"/>
                                 </box>
                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="992" translatesAutoresizingMaskIntoConstraints="NO" id="236">
                                     <rect key="frame" x="10" y="28" width="37" height="17"/>
@@ -141,8 +139,8 @@
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="92" id="1045"/>
                             </constraints>
                         </customView>
-                        <mapView ambiguous="YES" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="3xp-tL-6jo">
-                            <rect key="frame" x="10" y="11" width="220" height="250"/>
+                        <mapView ambiguous="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="3xp-tL-6jo">
+                            <rect key="frame" x="10" y="10" width="220" height="250"/>
                             <constraints>
                                 <constraint firstAttribute="height" relation="lessThanOrEqual" constant="250" id="NJm-La-S4Q"/>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="150" id="Qqw-pc-ng1"/>
@@ -201,7 +199,7 @@
             <windowStyleMask key="styleMask" nonactivatingPanel="YES"/>
             <windowPositionMask key="initialPositionMask" bottomStrut="YES"/>
             <rect key="contentRect" x="163" y="100" width="438" height="70"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <view key="contentView" wantsLayer="YES" id="78">
                 <rect key="frame" x="0.0" y="0.0" width="438" height="70"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -326,15 +324,13 @@
                 <rect key="frame" x="0.0" y="0.0" width="411" height="33"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" incrementalSearchingEnabled="YES" continuousSpellChecking="YES" allowsUndo="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" smartInsertDelete="YES" id="967">
+                    <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" incrementalSearchingEnabled="YES" continuousSpellChecking="YES" allowsUndo="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" smartInsertDelete="YES" id="967">
                         <rect key="frame" x="0.0" y="0.0" width="411" height="33"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.94940981660000001" green="0.94940981660000001" blue="0.94940981660000001" alpha="1" colorSpace="calibratedRGB"/>
                         <size key="minSize" width="411" height="33"/>
                         <size key="maxSize" width="463" height="10000000"/>
                         <color key="insertionPointColor" red="1" green="1" blue="1" alpha="0.44" colorSpace="calibratedRGB"/>
-                        <size key="minSize" width="411" height="33"/>
-                        <size key="maxSize" width="463" height="10000000"/>
                         <connections>
                             <outlet property="delegate" destination="107" id="974"/>
                         </connections>
@@ -355,10 +351,10 @@
             <rect key="frame" x="0.0" y="0.0" width="203" height="152"/>
             <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="KcG-Dw-QC7">
                 <rect key="frame" x="0.0" y="0.0" width="203" height="152"/>
-                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="none" selectionHighlightStyle="none" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" id="1011">
-                        <rect key="frame" x="0.0" y="0.0" width="203" height="19"/>
+                        <rect key="frame" x="0.0" y="0.0" width="203" height="152"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <size key="intercellSpacing" width="3" height="2"/>
                         <color key="backgroundColor" red="0.18550441579999999" green="0.18550441579999999" blue="0.18550441579999999" alpha="0.0" colorSpace="calibratedRGB"/>
