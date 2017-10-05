@@ -96,7 +96,7 @@
     self.imageLayer.shadowOffset = CGSizeMake(0, 1);
     self.imageLayer.shadowRadius = 3.0;
     self.imageLayer.shadowOpacity = 0.4;
-    self.imageLayer.borderWidth = 6.0;
+    self.imageLayer.borderWidth = 3.0;
     
     // disable all animatsion on the image layer
     NSMutableDictionary *newActions = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSNull null], @"onOrderIn",
@@ -107,8 +107,6 @@
                                        nil];
     self.imageLayer.actions = newActions;
     self.layer.actions = newActions;
-    
-    
     
     [self.layer addSublayer:self.imageLayer];
     [self setWantsLayer:YES];
@@ -250,17 +248,7 @@
 -(void)setFrame:(NSRect)frameRect
 {
     if(CGRectEqualToRect(self.frame, frameRect)) return;
-    
-    if(frameRect.size.width < 150)
-    {
-        self.imageLayer.borderWidth = 4;
-    }
-    
-    else
-    {
-        self.imageLayer.borderWidth = 6;
-    }
-    
+
     [super setFrame:frameRect];
     [self updateLayer];
 }
@@ -336,7 +324,7 @@
     
     
     NSImage * photo = self.itemImage;
-    CGRect rect = CGRectInset(self.bounds, 15, 15);
+    CGRect rect = self.bounds;
     
     // calculate the proportional image frame
     CGSize imageSize = [photo size];
@@ -411,17 +399,8 @@
     
     CGPathRelease(path);
     
-    
-    
-    
     [self.imageLayer setContents:self.itemImage];
-    
-    // set the video layover frame:
-    
-    
-    
-    //[CATransaction commit];
-    
+
     self.contentFrame = imageFrame;
 }
 

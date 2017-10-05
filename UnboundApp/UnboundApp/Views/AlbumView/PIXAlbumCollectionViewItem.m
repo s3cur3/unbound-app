@@ -480,13 +480,7 @@
     CGRect imageFrame = [[self class] drawBorderedPhoto:self.albumThumb inRect:albumFrame];
     //PIXPhoto * thumbPhoto = [[self.album stackPhotos] objectAtIndex:0];
     if (self.topLevelThumbIsVideo) {
-        CGRect imageRect = CGRectInset(imageFrame, 6, 6);
-        
-        // make a smaller border when the photos are smaller
-        if(imageFrame.size.width < 120)
-        {
-            imageRect = CGRectInset(imageFrame, 3, 3);
-        }
+        CGRect imageRect = CGRectInset(imageFrame, 3, 3);
         //[photo drawInRect:imageRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
         NSImage *playButtonImage = [NSImage imageNamed:@"playbutton"];
         [playButtonImage setScalesWhenResized:YES];

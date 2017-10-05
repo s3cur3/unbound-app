@@ -19,8 +19,9 @@
 #import "PIXCustomButton.h"
 #import "PIXShareManager.h"
 
-@interface PIXPhotoCollectionViewController () <PIXGridViewDelegate>
+@interface PIXPhotoCollectionViewController () <PIXGridViewDelegate, NSCollectionViewDataSource>
 
+@property(nonatomic, strong) NSCollectionViewFlowLayout *layout;
 @property(nonatomic,strong) NSDateFormatter * titleDateFormatter;
 @property CGFloat startPinchZoom;
 
@@ -56,15 +57,14 @@
 {
     [super awakeFromNib];
     [self performSelector:@selector(updateAlbum:) withObject:nil afterDelay:0.1];
-    
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadItems:) name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
-    
-    //
-    //    [[NSNotificationCenter defaultCenter] addObserver:self
-    //                                             selector:@selector(albumsChanged:)
-    //                                                 name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM
-    //                                               object:nil];
-    
+
+    self.layout = [[NSCollectionViewFlowLayout alloc] init];
+    self.layout.sectionInset = NSEdgeInsetsMake(10, 10, 10, 10);
+    self.layout.minimumInteritemSpacing = 0;
+    self.layout.minimumLineSpacing = 0;
+    self.gridView.collectionViewLayout = self.layout;
+
+    self.view.wantsLayer = YES;
 }
 
 -(void)willShowPIXView
@@ -122,11 +122,12 @@
 -(void)setThumbSize:(CGFloat)size
 {
     // sizes mapped between 140 and 400
-    float transformedSize = rint(140+(260.0 * size));
-    [self.gridView setItemSize:CGSizeMake(transformedSize, transformedSize)];
-    // Need to refresh gridView
-    //[self.gridView reloadData];
-    
+    float transformedSize = rint(140 + (260 * size));
+    self.layout.itemSize = NSMakeSize(transformedSize, transformedSize);
+    for (NSCollectionViewItem *item in self.gridView.visibleItems) {
+        [item.view updateLayer];
+    }
+
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.gridView setScrollElasticity:YES];
     });
@@ -169,11 +170,7 @@
 #pragma mark - Album
 -(void)setAlbum:(id)album
 {
-    
-    
-    if (album != _album)
-    {
-        
+    if (album != _album) {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:_album];
         
         _album = album;
@@ -192,7 +189,8 @@
         //[[PIXFileParser sharedFileParser] dateScanAlbum:self.album];
         
         [self.album checkDates];
-        
+
+        [self.gridView reloadData];
     }
 }
 
@@ -325,6 +323,23 @@
         }
     }
 }
+
+#pragma mark - NSCollectionViewDataSource Methods
+
+- (NSInteger)collectionView:(NSCollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.album.sortedPhotos.count;
+}
+
+- (NSCollectionViewItem *)collectionView:(NSCollectionView *)collectionView itemForRepresentedObjectAtIndexPath:(NSIndexPath *)indexPath {
+    PIXPhotoCollectionViewItem *item = [collectionView makeItemWithIdentifier:@"PIXPhotoCollectionViewItem" forIndexPath:indexPath];
+    item.representedObject = self.album.sortedPhotos[indexPath.item];
+    return item;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(NSCollectionView *)collectionView {
+    return 1;
+}
+
 
 #pragma mark - PIXGridViewDelegate
 - (BOOL)gridView:(PIXGridView *)gridView itemIsSelectedAtIndex:(NSInteger)index inSection:(NSInteger)section

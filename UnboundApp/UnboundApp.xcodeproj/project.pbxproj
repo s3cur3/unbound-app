@@ -98,6 +98,7 @@
 		458AD26EE9CD3FF0CFBFF1D5 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADC9C3AE71F62D3DAE869 /* pause.png */; };
 		458AD289B90EE6781FE52E1A /* dark_bg@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD640AC49C26D97186ABC /* dark_bg@2X.png */; };
 		458AD2933166DA060E4C5FCF /* PIXRoundedProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD8D8DCCF4F655556036A /* PIXRoundedProgressIndicator.m */; };
+		458AD29D6087F52234C716BD /* PIXPhotoCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD959BA4E5D02CA238515 /* PIXPhotoCollectionViewItem.xib */; };
 		458AD29DAE2166DCA4947F23 /* greendot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD064BA379620B4069086 /* greendot@2x.png */; };
 		458AD29FB4EE4F5AA98711E1 /* PIXFileTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADFEE6D6FDA5319AB20EE /* PIXFileTextField.m */; };
 		458AD2A02E01B6FF375550CD /* success-backward.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADD063AFA30D8AD2DB197 /* success-backward.png */; };
@@ -135,6 +136,7 @@
 		458AD3ACB3D4AB42237B57FF /* btn-roundrect-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADFFA74933BC5491504CE /* btn-roundrect-down@2x.png */; };
 		458AD3B6ED19827F561573D1 /* PIXCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD933DEAABBEEB83AD143 /* PIXCollectionViewController.m */; };
 		458AD3B923225F0E1F1568CE /* PIXSidebarTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD3C7EF7BCCDA3F134013 /* PIXSidebarTableCellView.m */; };
+		458AD3C2B28672CD6DF44579 /* PIXPhotoCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD959BA4E5D02CA238515 /* PIXPhotoCollectionViewItem.xib */; };
 		458AD3C751EB401D18C2FE66 /* PIXCustomShareSheetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADEF55400A22EB408AC57 /* PIXCustomShareSheetViewController.xib */; };
 		458AD3C9E055B78134438764 /* buttongrid_twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD5CE5FDF9CBD97A532F5 /* buttongrid_twitter.png */; };
 		458AD3CF5D91D070EE12F7F2 /* success.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADD9D4028408F39A03381 /* success.png */; };
@@ -161,6 +163,7 @@
 		458AD4C06432617B0B32FD6D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 458AD37DC4662B5210A16790 /* InfoPlist.strings */; };
 		458AD4CFE60A095249F33C7E /* PIXPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADC385DD20D2328DC6B8F /* PIXPageView.m */; };
 		458AD4D4A897C6B41D6BB68E /* softtap.wav in Resources */ = {isa = PBXBuildFile; fileRef = 458AD5FF319903D39A279CDA /* softtap.wav */; };
+		458AD4DB1AA94C2854425F57 /* PIXPhotoCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD959BA4E5D02CA238515 /* PIXPhotoCollectionViewItem.xib */; };
 		458AD4E0CB1647F70FAD6880 /* arrow-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADC7A1895762EB303572D /* arrow-left.png */; };
 		458AD4E8056703A93D2DB3E5 /* expand.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD24137913A817EC0CDB7 /* expand.png */; };
 		458AD4F518E65A154FC420A7 /* buttongrid_emaillink@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD6D0BD8F0AEAEE740273 /* buttongrid_emaillink@2x.png */; };
@@ -776,6 +779,7 @@
 		458AD933DEAABBEEB83AD143 /* PIXCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXCollectionViewController.m; sourceTree = "<group>"; };
 		458AD945555DF37ECBB3554F /* GetPathsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetPathsOperation.m; sourceTree = "<group>"; };
 		458AD948F91477D9F2AC3597 /* MapViewAdditions.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = MapViewAdditions.css; sourceTree = "<group>"; };
+		458AD959BA4E5D02CA238515 /* PIXPhotoCollectionViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PIXPhotoCollectionViewItem.xib; sourceTree = "<group>"; };
 		458AD9609883CECD8290C8B6 /* PIXSlideshowOptonsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PIXSlideshowOptonsViewController.xib; sourceTree = "<group>"; };
 		458AD96A93428C422C3262D8 /* PIXSidebarScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSidebarScrollView.m; sourceTree = "<group>"; };
 		458AD9705B131DECC624E295 /* buttongrid_facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttongrid_facebook@2x.png"; sourceTree = "<group>"; };
@@ -1403,6 +1407,7 @@
 				458AD22B845F74730E6086A4 /* PIXSelectionLayer.h */,
 				458AD579446C0450949B3DCA /* PIXPhotoCollectionViewController.h */,
 				458AD7722EB84DA229B90B0B /* PIXSelectionLayer.m */,
+				458AD959BA4E5D02CA238515 /* PIXPhotoCollectionViewItem.xib */,
 			);
 			path = PhotoBrowserView;
 			sourceTree = "<group>";
@@ -1755,6 +1760,7 @@
 				458AD70293CA8D335694E004 /* MainMenu.xib in Resources */,
 				458AD0A34157691A6BB33AAD /* InfoPlist.strings in Resources */,
 				458AD180BC115721CB9BC296 /* PIXAlbumCollectionViewItem.xib in Resources */,
+				458AD29D6087F52234C716BD /* PIXPhotoCollectionViewItem.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1867,6 +1873,7 @@
 				458AD5B0D0B7827AC88BEAF2 /* MainMenu.xib in Resources */,
 				458AD55533B629BB45DCB1BD /* InfoPlist.strings in Resources */,
 				458AD892258BE9F7BDC6FE52 /* PIXAlbumCollectionViewItem.xib in Resources */,
+				458AD4DB1AA94C2854425F57 /* PIXPhotoCollectionViewItem.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1981,6 +1988,7 @@
 				458ADC6B40EC6E86CB2ECD85 /* MainMenu.xib in Resources */,
 				458AD4C06432617B0B32FD6D /* InfoPlist.strings in Resources */,
 				458AD505BCC3A86E2020DEC1 /* PIXAlbumCollectionViewItem.xib in Resources */,
+				458AD3C2B28672CD6DF44579 /* PIXPhotoCollectionViewItem.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
