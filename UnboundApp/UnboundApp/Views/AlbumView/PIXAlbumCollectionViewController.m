@@ -26,7 +26,6 @@
 @property(nonatomic,strong) NSArray * albums;
 @property(nonatomic,strong) NSArray * searchedAlbums;
 
-@property (nonatomic, strong) NSToolbarItem * trashbutton;
 @property (nonatomic, strong) NSToolbarItem * sortButton;
 @property (nonatomic, strong) NSToolbarItem * neuAlbumButton;
 @property (nonatomic, strong) NSToolbarItem * searchBar;
@@ -208,47 +207,6 @@
 {
     NSArray * items = @[self.importItem, self.navigationViewController.activityIndicator, self.navigationViewController.middleSpacer, self.neuAlbumButton, self.searchBar, self.sortButton];
     [self.navigationViewController setToolbarItems:items];
-}
-
-- (NSToolbarItem *)trashbutton
-{
-    if(_trashbutton != nil) return _trashbutton;
-    
-    _trashbutton = [[NSToolbarItem alloc] initWithItemIdentifier:@"TrashButton"];
-    //_trashbutton.image = [NSImage imageNamed:NSImageNameTrashEmpty];
-    
-    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
-    buttonView.image = [NSImage imageNamed:NSImageNameTrashEmpty];
-    [buttonView setImagePosition:NSImageOnly];
-    [buttonView setBordered:NO];
-    [(NSButtonCell *) buttonView.cell setImageScaling:NSImageScaleProportionallyDown];
-    [(NSButtonCell *) buttonView.cell setHighlightsBy:NSPushInCellMask];
-    
-    _trashbutton.view = buttonView;
-    
-    [_trashbutton setLabel:@"Trash"];
-    [_trashbutton setPaletteLabel:@"Trash"];
-    
-    // Set up a reasonable tooltip, and image
-    // you will likely want to localize many of the item's properties
-    [_trashbutton setToolTip:@"View Trash"];
-    
-    // Tell the item what message to send when it is clicked
-    //[_trashbutton setTarget:self];
-    //[_trashbutton setAction:@selector(showTrash)];
-#ifdef DEBUG
-    // Tell the item what message to send when it is clicked
-    //[_trashbutton setTarget:[PIXAppDelegate sharedAppDelegate]];
-    //[_trashbutton setAction:@selector(deleteAllAlbums:)];
-    
-    [buttonView setTarget:[PIXAppDelegate sharedAppDelegate]];
-    [buttonView setAction:@selector(clearDatabase)];
-    
-#endif
-    
-    
-    return _trashbutton;
-    
 }
 
 - (NSToolbarItem *)sortButton

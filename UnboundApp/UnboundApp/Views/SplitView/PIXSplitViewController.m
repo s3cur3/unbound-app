@@ -397,8 +397,8 @@
     
     _importItem = [[NSToolbarItem alloc] initWithItemIdentifier:@"importAlbumButton"];
     //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
-    
-    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, -2, 60, 25)];
+
+    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 60, 29)];
     
     [buttonView setImage:nil];
     [buttonView setImagePosition:NSImageLeft];

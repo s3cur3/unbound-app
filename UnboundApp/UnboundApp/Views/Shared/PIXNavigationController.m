@@ -223,15 +223,16 @@
     
     _backButton = [[NSToolbarItem alloc] initWithItemIdentifier:@"NormalBackButton"];
     
-    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 60, 25)];
-    buttonView.image = [NSImage imageNamed:@"NSLeftFacingTriangleTemplate"];
-    [buttonView setImagePosition:NSImageLeft];
-    [buttonView setBordered:YES];
-    [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
-    [buttonView setTitle:@"Back"];
-    
-    
-    
+    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 79, 25)];
+    buttonView.image = [NSImage imageNamed:NSImageNameLeftFacingTriangleTemplate];
+    buttonView.imagePosition = NSImageLeft;
+    buttonView.imageScaling = NSImageScaleProportionallyDown;
+    buttonView.alignment = NSTextAlignmentCenter;
+    buttonView.imageHugsTitle = YES;
+    buttonView.bordered = YES;
+    buttonView.bezelStyle = NSTexturedSquareBezelStyle;
+    buttonView.title = @"Back";
+
     _backButton.view = buttonView;
 
     [_backButton setLabel:@"Back"];
