@@ -380,7 +380,7 @@
         textColor = [NSColor colorWithCalibratedWhite:0.9 alpha:1.0];
         subtitleColor = [NSColor colorWithCalibratedWhite:0.55 alpha:1.0];
     }
-    
+
     [bgColor setFill];
     [contentRectPath fill];
     

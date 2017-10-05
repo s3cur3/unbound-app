@@ -21,7 +21,7 @@
 
 #import "PIXAlbumCollectionViewItem.h"
 
-@interface PIXAlbumCollectionViewController () <PIXGridViewDelegate, PIXSplitViewControllerDelegate>
+@interface PIXAlbumCollectionViewController () <PIXGridViewDelegate, NSCollectionViewDataSource, PIXSplitViewControllerDelegate>
 
 @property(nonatomic,strong) NSArray * albums;
 @property(nonatomic,strong) NSArray * searchedAlbums;
@@ -93,6 +93,15 @@
     [self.scrollView setIdentifier:@"albumGridScroller"];
     
     [self setBGColor];
+
+    NSCollectionViewFlowLayout *flowLayout = [[NSCollectionViewFlowLayout alloc] init];
+    flowLayout.itemSize = NSMakeSize(190, 210);
+    flowLayout.sectionInset = NSEdgeInsetsMake(10, 20, 10, 20);
+    flowLayout.minimumInteritemSpacing = 20;
+    flowLayout.minimumLineSpacing = 20;
+    self.gridView.collectionViewLayout = flowLayout;
+
+    self.view.wantsLayer = true;
     
     [self albumsChanged:nil];
     
@@ -850,6 +859,23 @@
     
     [super keyDown:event];
 }
+
+#pragma mark - NSCollectionViewDataSource Methods
+
+- (NSInteger)collectionView:(NSCollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.albums.count;
+}
+
+- (NSCollectionViewItem *)collectionView:(NSCollectionView *)collectionView itemForRepresentedObjectAtIndexPath:(NSIndexPath *)indexPath {
+    PIXAlbumCollectionViewItem *item = [collectionView makeItemWithIdentifier:@"PIXAlbumCollectionViewItem" forIndexPath:indexPath];
+    item.representedObject = self.albums[indexPath.item];
+    return item;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(NSCollectionView *)collectionView {
+    return 1;
+}
+
 
 #pragma mark - PIXGridViewDelegate
 - (void)gridView:(PIXGridView *)gridView didDoubleClickItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
