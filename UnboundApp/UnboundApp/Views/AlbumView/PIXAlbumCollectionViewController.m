@@ -20,8 +20,9 @@
 #import "PIXShareManager.h"
 
 #import "PIXAlbumCollectionViewItem.h"
+#import "PIXCollectionToolbar.h"
 
-@interface PIXAlbumCollectionViewController () <PIXGridViewDelegate, NSCollectionViewDataSource, PIXSplitViewControllerDelegate>
+@interface PIXAlbumCollectionViewController () <NSCollectionViewDelegate, NSCollectionViewDataSource, PIXSplitViewControllerDelegate, PIXCollectionToolbarDelegate>
 
 @property(nonatomic,strong) NSArray * albums;
 @property(nonatomic,strong) NSArray * searchedAlbums;
@@ -70,10 +71,11 @@
     [self.gridView reloadData];
     [self.gridView setUseHover:NO];
     */
-    
-    [self.gridView setAllowsMultipleSelection:YES];
-    [self.gridView setItemSize:NSMakeSize(190, 210)];
-    [self.gridView setGridViewDelegate:self];
+
+    self.gridView.delegate = self;
+
+    self.toolbar.collectionView = self.gridView;
+    self.toolbar.delegate = self;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(albumsChanged:)
@@ -91,8 +93,6 @@
                                                object:nil];
     
     [self.scrollView setIdentifier:@"albumGridScroller"];
-    
-    [self setBGColor];
 
     NSCollectionViewFlowLayout *flowLayout = [[NSCollectionViewFlowLayout alloc] init];
     flowLayout.itemSize = NSMakeSize(190, 210);
@@ -101,8 +101,9 @@
     flowLayout.minimumLineSpacing = 20;
     self.gridView.collectionViewLayout = flowLayout;
 
-    self.view.wantsLayer = true;
-    
+    self.view.wantsLayer = YES;
+    [self setBGColor];
+
     [self albumsChanged:nil];
     
 }
@@ -136,8 +137,8 @@
     }
     
     [self updateSearch];
-    
-    [self hideToolbar:NO];
+
+    [self.toolbar hideToolbar:NO];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self updateToolbar];
@@ -147,8 +148,7 @@
     [[PIXFileParser sharedFileParser] addObserver:self forKeyPath:@"fullScanProgress" options:NSKeyValueObservingOptionNew context:nil];
     
     [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] setTitle:@"Unbound"];
-    
-    [self.gridView reloadSelection];
+
 }
 
 // this is called when the full scan progress changes
@@ -207,11 +207,12 @@
         color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
         //[[self enclosingScrollView] setBackgroundColor:color];
     }
-    
-    [self.gridView setBackgroundColor:color];
+
+    self.gridView.layer.backgroundColor = color.CGColor;
 }
 
 #pragma mark - ToolBar
+
 - (void)setupToolbar
 {
     NSArray * items = @[self.importItem, self.navigationViewController.activityIndicator, self.navigationViewController.middleSpacer, self.neuAlbumButton, self.searchBar, self.sortButton];
@@ -338,7 +339,8 @@
 -(void)importPhotosPressed:(id)sender
 {
     PIXAlbum * currentAlbum = nil;
-    
+
+    if (self.gridView)
     if(self.selectedItems.count == 1)
     {
         currentAlbum = [self.selectedItems anyObject];
@@ -396,14 +398,11 @@
     // the above method will automatically call a notification that causes the album list to refresh
     
     NSUInteger index = [self.albums indexOfObject:newAlbum];
-    
-    
+
     NSAssert(index != NSNotFound, @"We should always find the album");
 
     // select just this item
-    [self.selectedItems removeAllObjects];
-    [self.selectedItems addObject:newAlbum];
-    [self.gridView reloadSelection];
+    self.gridView.selectionIndexPaths = [NSSet setWithObject:[NSIndexPath indexPathForItem:index inSection:0]];
     [self updateToolbar];
 
     /*
@@ -457,42 +456,39 @@
 
 -(void)updateToolbar
 {
-    [super updateToolbar];
-    
+    if (self.gridView.selectionIndexPaths.count == 0) {
+        [self.toolbar hideToolbar:YES];
+    } else {
+        [self.toolbar showToolbar:YES];
+    }
+
+    [self.toolbar setTitle:@"So many albums selected"];
+
     PIXCustomButton * deleteButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
-    [deleteButton setTitle:@"Delete Album"];
+    if([self.selectedItems count] > 1) {
+        [deleteButton setTitle:[NSString stringWithFormat:@"Delete %ld Albums", [self.selectedItems count]]];
+    } else {
+        [deleteButton setTitle:@"Delete Album"];
+    }
     [deleteButton setTarget:self];
     [deleteButton setAction:@selector(deleteItems:)];
-    
+
     PIXCustomButton * shareButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
     [shareButton setTitle:@"Share"];
     [shareButton setTarget:self];
     [shareButton setAction:@selector(share:)];
-    
+
     PIXCustomButton * mergeButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
     [mergeButton setTitle:@"Merge Albums"];
     [mergeButton setTarget:self];
-    //[deleteButton setAction:@selector(deleteItems:)];
-    
-    if([self.selectedItems count] > 1)
-    {
-        [deleteButton setTitle:[NSString stringWithFormat:@"Delete %ld Albums", [self.selectedItems count]]];
-        [self.toolbar setButtons:@[deleteButton]];
-    }
-    
-    else
-    {
-        [self.toolbar setButtons:@[deleteButton]];
-    }
-    
+
+
+    [self.toolbar setButtons:@[deleteButton]];
+
     // keep the the currently selected album updated for importing photos
-    if([self.selectedItems count] == 1)
-    {
+    if([self.selectedItems count] == 1) {
         [[PIXAppDelegate sharedAppDelegate] setCurrentlySelectedAlbum:[self.selectedItems anyObject]];
-    }
-    
-    else
-    {
+    } else {
         [[PIXAppDelegate sharedAppDelegate] setCurrentlySelectedAlbum:nil];
     }
     
@@ -504,27 +500,16 @@
                                                    relativeToRect:[sender bounds]
                                                            ofView:sender
                                                     preferredEdge:NSMaxXEdge];
-    /*
-     PIXCustomShareSheetViewController *controller = [[PIXCustomShareSheetViewController alloc] initWithNibName:@"PIXCustomShareSheetViewController"     bundle:nil];
-     
-     [controller setAlbumsToShare:[self.selectedItems allObjects]];
-     
-     NSPopover *popover = [[NSPopover alloc] init];
-     
-     [popover setContentViewController:controller];
-     [popover setAnimates:YES];
-     [popover setBehavior:NSPopoverBehaviorTransient];
-     [popover showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMaxYEdge];*/
-    
 }
 
 - (IBAction)deleteItems:(id)inSender
 {
-    // if we have nothing to delete then do nothing
-    if([self.selectedItems count] == 0) return;
-    
-    [[PIXFileManager sharedInstance] deleteItemsWorkflow:self.selectedItems];
-    
+    NSSet<NSIndexPath *> *selectionIndexPaths = self.gridView.selectionIndexPaths;
+    if (selectionIndexPaths.count == 0) {
+        return;
+    }
+
+    [PIXFileManager.sharedInstance deleteItemsWorkflow:self.selectedItems];
 }
 
 #pragma mark - Album
@@ -658,75 +643,56 @@
     }
     
     if (index != -1) {
-        [self.selectedItems removeAllObjects];
-        [self.selectedItems addObject:myAlbum];
-        
-        [self.gridView reloadSelection];
-        
-        /*
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.gridView scrollToAndReturnItemAtIndex:index animated:NO];
-        });
-         */
+        self.gridView.selectionIndexPaths = [NSSet setWithObject:[NSIndexPath indexPathForItem:index inSection:0]];
     }
 }
 
 #pragma mark - Selection
--(void)reselectItems:(NSArray *)itemsToReselect
-{
-    [self.selectedItems removeAllObjects];
-    
-    for(NSObject * item in itemsToReselect)
-    {
-        if([self.albums containsObject:item])
-        {
-            [self.selectedItems addObject:item];
+- (NSSet<PIXAlbum *> *)selectedItems {
+    NSSet<NSIndexPath *> *selectionIndexPaths = self.gridView.selectionIndexPaths;
+    if (selectionIndexPaths.count == 0) {
+        return [NSSet set];
+    }
+
+    NSArray<NSIndexPath *> *selectionArray = [selectionIndexPaths sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"self" ascending:NO]]];
+    NSMutableSet<PIXAlbum *> *items = [NSMutableSet setWithCapacity:selectionArray.count];
+    for (NSIndexPath *item in selectionArray) {
+        PIXAlbum *album = self.albums[item.item];
+        [items addObject:album];
+    }
+
+    return items;
+}
+
+- (void)highlightIndexPaths:(NSSet<NSIndexPath *> *)indexPaths selected:(BOOL)selected {
+    for (NSIndexPath *indexPath in indexPaths) {
+        NSCollectionViewItem *item = [self.gridView itemAtIndexPath:indexPath];
+        if (item) {
+            ((PIXCollectionViewItem *) item).selected = selected;
         }
     }
-    
-    [self updateToolbar];
-    [self.gridView reloadSelection];
-    
+    if (self.gridView.selectionIndexPaths.count > 0) {
+        [self.toolbar showToolbar:YES];
+    } else {
+        [self.toolbar hideToolbar:YES];
+    }
+}
+
+-(void)reselectItems:(NSArray *)itemsToReselect
+{
+    NSMutableSet<NSIndexPath *> *indices = [NSMutableSet setWithCapacity:itemsToReselect.count];
+    for (NSObject *item in itemsToReselect) {
+        NSUInteger index = [self.albums indexOfObject:item];
+        if (index != NSNotFound) {
+            [indices addObject:[NSIndexPath indexPathForItem:index inSection:0]];
+        }
+    }
+    self.gridView.animator.selectionIndexPaths = indices;
+
     NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
     [undoManager registerUndoWithTarget:self selector:@selector(gridViewDidDeselectAllItems:) object:self.gridView];
     [undoManager setActionName:@"Deselect Albums"];
     [undoManager setActionIsDiscardable:YES];
-}
-
--(void)selectAll:(id)sender
-{
-    if(self.searchedAlbums)
-    {
-        self.selectedItems = [NSMutableSet setWithArray:self.searchedAlbums];
-    }
-    
-    else
-    {
-        self.selectedItems = [NSMutableSet setWithArray:self.albums];
-    }
-    
-    [self.gridView reloadSelection];
-    [self updateToolbar];
-}
-
--(void)toggleSelection:(id)sender
-{
-    NSMutableSet * visibleItems = [NSMutableSet setWithArray:self.albums];
-    
-    if(self.searchedAlbums)
-    {
-        visibleItems = [NSMutableSet setWithArray:self.searchedAlbums];
-    }
-    
-    
-    // now remove items from the list that are already selected
-    [visibleItems minusSet:self.selectedItems];
-    
-    self.selectedItems = visibleItems;
-    
-    [self.gridView reloadSelection];
-    [self updateToolbar];
-    
 }
 
 #pragma mark - Filtering
@@ -773,29 +739,17 @@
         visibleArray = self.searchedAlbums;
     }
     
-    NSArray * selectedCopy = [self.selectedItems copy];
-    
-    // find any albums that were selected and no longer in the list
-    for(PIXAlbum * album in selectedCopy)
-    {
-        NSUInteger index = [visibleArray indexOfObject:album];
-        if(index == NSNotFound)
-        {
-            [self.selectedItems removeObject:album];
-        }
-    }
-    
-    
     [self updateToolbar];
     [self updateGridTitle];
-    
-    
-    // Remove Old Albums
-    NSArray * oldAlbums = [self.arrayController arrangedObjects];
-    [self.arrayController removeObjects:oldAlbums];
-    
-    // Add New Albums
-    [self.arrayController addObjects:visibleArray];
+
+    // TODO filter the items
+//
+//    // Remove Old Albums
+//    NSArray * oldAlbums = [self.arrayController arrangedObjects];
+//    [self.arrayController removeObjects:oldAlbums];
+//
+//    // Add New Albums
+//    [self.arrayController addObjects:visibleArray];
 }
 
 - (void)updateGridTitle
@@ -860,6 +814,24 @@
     [super keyDown:event];
 }
 
+#pragma mark - PIXCollectionToolbarDelegate Methods
+
+- (void)toolbar:(PIXCollectionToolbar *)toolbar deleteSelectedItems:(id)sender {
+    NSSet<NSIndexPath *> *selectionIndexPaths = self.gridView.selectionIndexPaths;
+    if (selectionIndexPaths.count == 0) {
+        return;
+    }
+
+    NSArray<NSIndexPath *> *selectionArray = [selectionIndexPaths sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"self" ascending:NO]]];
+    NSMutableSet<PIXAlbum *> *items = [NSMutableSet setWithCapacity:selectionArray.count];
+    for (NSIndexPath *item in selectionArray) {
+        PIXAlbum *album = self.albums[item.item];
+        [items addObject:album];
+    }
+
+    [PIXFileManager.sharedInstance deleteItemsWorkflow:items];
+}
+
 #pragma mark - NSCollectionViewDataSource Methods
 
 - (NSInteger)collectionView:(NSCollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -876,198 +848,17 @@
     return 1;
 }
 
+#pragma mark - NSCollectionViewDelegate Methods
 
-#pragma mark - PIXGridViewDelegate
-- (void)gridView:(PIXGridView *)gridView didDoubleClickItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
-{
-    //[gridView deselectAllItems];
-    
-    if(index == NSNotFound) return;
-    
-    //DLog(@"didDoubleClickItemAtIndex: %li", index);
-    PIXAlbum * album = nil;
-    
-    if(self.searchedAlbums)
-    {
-        album = [self.searchedAlbums objectAtIndex:index];
-    }
-    
-    else
-    {
-        album = [self.albums objectAtIndex:index];
-    }
-    
-    
-    //dispatch_async(dispatch_get_main_queue(), ^{
-    [self showPhotosForAlbum:album];
-    //});
+- (void)collectionView:(NSCollectionView *)collectionView didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
+    [self highlightIndexPaths:indexPaths selected:YES];
 }
 
-- (void)gridView:(PIXGridView *)gridView rightMouseButtonClickedOnItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section andEvent:(NSEvent *)event
-{
-    PIXAlbum * albumClicked = [self albumForIndex:index];
-    
-    // we don't handle clicks off of an album right now
-    if(albumClicked == nil) return;
-    
-    // if this album isn't in the selection than re-select only this one
-    if(albumClicked != nil && ![self.selectedItems containsObject:albumClicked])
-    {
-        [self.selectedItems removeAllObjects];
-        [self.selectedItems addObject:albumClicked];
-        [self.gridView reloadSelection];
-        [self updateToolbar];
-    }
-    
-    // otherwise we're doing an operation on the whole selected list
-    
-    
-    NSMenu *contextMenu = [self menuForObject:albumClicked];
-    [NSMenu popUpContextMenu:contextMenu withEvent:event forView:self.view];
-    
-    
-    DLog(@"rightMouseButtonClickedOnItemAtIndex: %li", index);
+- (void)collectionView:(NSCollectionView *)collectionView didDeselectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
+    [self highlightIndexPaths:indexPaths selected:NO];
 }
 
-- (BOOL)gridView:(PIXGridView *)gridView itemIsSelectedAtIndex:(NSInteger)index inSection:(NSInteger)section
-{
-    return [self.selectedItems containsObject:[self albumForIndex:index]];
-}
-
-- (void)gridView:(PIXGridView*)gridView didSelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
-{
-    [self.selectedItems addObject:[self albumForIndex:index]];
-    
-    [self updateToolbar];
-}
-
-- (void)gridView:(PIXGridView*)gridView didDeselectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
-{
-    [self.selectedItems removeObject:[self albumForIndex:index]];
-    
-    [self updateToolbar];
-}
-
-- (void)gridView:(PIXGridView*)gridView didShiftSelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
-{
-    if([self.selectedItems count] == 0)
-    {
-        [self.selectedItems addObject:[self albumForIndex:index]];
-    }
-    
-    else
-    {
-        // loop through the current selection and find the index that's closest the the newly clicked index
-        NSUInteger startIndex = NSNotFound;
-        NSUInteger distance = NSUIntegerMax;
-        
-        for(PIXAlbum * aSelectedAlbum in self.selectedItems)
-        {
-            NSUInteger thisIndex = [self indexForAlbum:aSelectedAlbum];
-            NSUInteger thisDistance = abs((int)(thisIndex-index));
-            
-            if(thisIndex != NSNotFound && thisDistance < distance)
-            {
-                startIndex = thisIndex;
-                distance = thisDistance;
-            }
-        }
-        
-        // prep the indexes we're going to loop through
-        NSUInteger endIndex = index;
-        
-        // flip them so we always go the right rections
-        if(endIndex < startIndex)
-        {
-            endIndex = startIndex;
-            startIndex = index;
-        }
-        
-        // now add all the items between the two indexes to the selection
-        for(NSUInteger i = startIndex; i <= endIndex; i++)
-        {
-            [self.selectedItems addObject:[self albumForIndex:i]];
-        }
-    }
-    
-    [self.gridView reloadSelection];
-    [self updateToolbar];
-}
-
-- (void)gridViewDidDeselectAllItems:(PIXGridView *)gridView
-{
-    NSArray * oldItems = [self.selectedItems copy];
-    
-    [self.selectedItems removeAllObjects];
-    [self updateToolbar];
-    
-    [self.gridView reloadSelection];
-    
-    NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
-    //NSDictionary *undoInfo = @{@"albumID" : anAlbum.objectID, @"name" : oldAlbumName};
-    [undoManager registerUndoWithTarget:self selector:@selector(reselectItems:) object:oldItems];
-    [undoManager setActionName:@"Deselect Albums"];
-    [undoManager setActionIsDiscardable:YES];
-}
-
-- (void)gridView:(PIXGridView *)gridView didKeySelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
-{
-    // if we're holding shift or command then keep the selection
-    if(!([NSEvent modifierFlags] & (NSCommandKeyMask | NSShiftKeyMask)))
-    {
-        [self.selectedItems removeAllObjects];
-    }
-    
-    [self.selectedItems addObject:[self albumForIndex:index]];
-    
-    [self updateToolbar];
-    [self.gridView reloadSelection];
-    
-}
-
-#pragma mark - Leap Methods
-- (void)gridView:(PIXGridView *)gridView didPointItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
-{
-    [self.selectedItems removeAllObjects];
-    [self.selectedItems addObject:[self albumForIndex:index]];
-    [self updateToolbar];
-    [self.gridView reloadSelection];
-}
-
-- (void)gridView:(PIXGridView *)gridView dragDidBeginAtIndex:(NSUInteger)index inSection:(NSUInteger)section andEvent:(NSEvent *)event
-{
-    // move the item we just selected to the front (so it will show up correctly in the drag image)
-    PIXAlbum * topAlbum = [self albumForIndex:index];
-    
-    NSMutableArray * selectedArray = [[self.selectedItems allObjects] mutableCopy];
-    
-    if(topAlbum)
-    {
-        [selectedArray removeObject:topAlbum];
-        [selectedArray insertObject:topAlbum atIndex:0];
-    }
-    
-    
-    NSPasteboard *dragPBoard = [NSPasteboard pasteboardWithName:NSDragPboard];
-    [dragPBoard declareTypes:[NSArray arrayWithObject:NSFilenamesPboardType] owner:nil];
-    
-    NSMutableArray * filenames = [[NSMutableArray alloc] initWithCapacity:[selectedArray count]];
-    
-    for(PIXAlbum * anAlbum in selectedArray)
-    {
-        [filenames addObject:anAlbum.path];
-        //[dragPBoard setString:anAlbum.path forType:NSFilenamesPboardType];
-    }
-    
-    [dragPBoard setPropertyList:filenames
-                        forType:NSFilenamesPboardType];
-    NSPoint location = [self.gridView convertPoint:[event locationInWindow] fromView:nil];
-    location.x -= 90;
-    location.y += 90;
-    
-    NSImage * dragImage = [PIXAlbumCollectionViewItemView dragImageForAlbums:selectedArray size:NSMakeSize(180, 180)];
-    [self.gridView dragImage:dragImage at:location offset:NSZeroSize event:event pasteboard:dragPBoard source:self slideBack:YES];
-}
+// TODO handle double click
 
 #pragma mark - Drop Operations
 - (NSDragOperation)dropOperationsForDrag:(id < NSDraggingInfo >)sender

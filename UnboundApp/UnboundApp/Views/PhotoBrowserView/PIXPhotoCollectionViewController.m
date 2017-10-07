@@ -18,6 +18,7 @@
 #import "PIXFileManager.h"
 #import "PIXCustomButton.h"
 #import "PIXShareManager.h"
+#import "PIXCollectionToolbar.h"
 
 @interface PIXPhotoCollectionViewController () <PIXGridViewDelegate, NSCollectionViewDataSource>
 
@@ -64,6 +65,8 @@
     self.layout.minimumLineSpacing = 0;
     self.gridView.collectionViewLayout = self.layout;
 
+    self.toolbar.collectionView = self.gridView;
+
     self.view.wantsLayer = YES;
 }
 
@@ -71,16 +74,12 @@
 {
     [super willShowPIXView];
 
-    [self.gridView setGridViewDelegate:self];
-    
     [self updateAlbum:nil];
 
-    [self.gridView reloadSelection];
-    
     // this will allow droping files into the larger grid view
     [self.gridView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
-    
-    [self hideToolbar:NO];
+
+    [self.toolbar hideToolbar:NO];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self updateToolbar];
@@ -127,10 +126,6 @@
     for (NSCollectionViewItem *item in self.gridView.visibleItems) {
         [item.view updateLayer];
     }
-
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.gridView setScrollElasticity:YES];
-    });
     
 }
 
@@ -175,12 +170,11 @@
         
         _album = album;
         [[[PIXAppDelegate sharedAppDelegate] window] setTitle:[self.album title]];
-        
-        [self.selectedItems removeAllObjects];
+
+        [self.gridView deselectAll:nil];
         [self updateToolbar];
         [self updateAlbum:nil];
 
-        [self.gridView resetSelection];
         [self.gridView scrollPoint:NSZeroPoint];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAlbum:) name:AlbumDidChangeNotification object:_album];
@@ -201,37 +195,25 @@
     //[self.selectedItems intersectSet:[NSSet setWithArray:self.items]];
     //[self.gridView reloadData];
 
-    NSMutableArray * newPhotos = [self fetchItems];
+    // TODO Update hte selection
+    for (PIXPhoto *photo in self.selectedItems) {
 
-    [self.selectedItems intersectSet:[NSSet setWithArray:newPhotos]];
-    
-    // Remove Old Photos
-    NSArray * oldPhotos = [self.arrayController arrangedObjects];
-    [self.arrayController removeObjects:oldPhotos];
-    
-    if( [newPhotos count] > 0 )
-    {
-        // Add New Photos
-        [self.arrayController addObjects:newPhotos];
     }
-    
+
     NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
     [numberFormatter setNumberStyle: NSNumberFormatterDecimalStyle];
-    NSString *photosCount = [numberFormatter stringFromNumber:[NSNumber numberWithLong:[self.items count]]];
-    
-    
+    NSString *photosCount = [numberFormatter stringFromNumber:@((self.album.photos.count))];
+
     NSString * gridTitle = nil;
     
     // if we've got more than one photo then display the whole date range
-    if([self.items count] >= 2)
-    {
+    if (self.album.photos.count > 1) {
         NSDate * startDate = [self.album startDate];
         NSDate * endDate = [self.album albumDate];
-        
-        
+
         NSCalendar* calendar = [NSCalendar currentCalendar];
         
-        unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
+        unsigned unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
         NSDateComponents* startComponents = [calendar components:unitFlags fromDate:startDate];
         NSDateComponents* endComponents = [calendar components:unitFlags fromDate:endDate];
         
@@ -241,22 +223,13 @@
             // don't show the year on the first date if they're the same
             [self.titleDateFormatter setDateFormat:@"MMMM d"];
         }
-        
         NSString * startDateString = [self.titleDateFormatter stringFromDate:startDate];
         
         [self.titleDateFormatter setDateFormat:@"MMMM d, YYYY"];
-        
-        
-        
+
         // if the date goes multiple days print the span
         if(([startComponents day] != [endComponents day] || [startComponents month] != [endComponents month] || [startComponents year] != [endComponents year]) && [startDate compare:endDate] == NSOrderedAscending)
         {
-            /*// This will remove the second month name if they are the same
-             if([startComponents month] == [endComponents month])
-             {
-             [self.titleDateFormatter setDateFormat:@"d, YYYY"];
-             }*/
-            
             NSString * endDateString = [self.titleDateFormatter stringFromDate:endDate];
             gridTitle = [NSString stringWithFormat:@"%@ photos from %@ to %@", photosCount, startDateString, endDateString];
         }
@@ -268,7 +241,7 @@
         }
     }
     
-    else if ([self.items count] == 1)
+    else if (self.album.photos.count == 1)
     {
         [self.titleDateFormatter setDateStyle:NSDateFormatterLongStyle];
         
@@ -289,18 +262,12 @@
     
 }
 
--(NSMutableArray *)fetchItems
-{
-    //return [[[PIXAppDelegate sharedAppDelegate] fetchAllPhotos] mutableCopy];
-    return [NSMutableArray arrayWithArray:[self.album sortedPhotos]];
-}
-
 #pragma mark - Page View Controller
 -(void)showPageControllerForIndex:(NSUInteger)index
 {
     PIXPageViewController *pageViewController = [[PIXPageViewController alloc] initWithNibName:@"PIXPageViewController" bundle:nil];
     
-    pageViewController.initialSelectedObject = [self.items objectAtIndex:index];
+    pageViewController.initialSelectedObject = self.album.sortedPhotos[index];
     
     pageViewController.album = self.album;
     
@@ -312,14 +279,13 @@
 //PIXPageViewControllerDelegate callback
 -(void)pagerDidMoveToPhotoWithPath:(NSString *)aPhotoPath atIndex:(NSUInteger)index;
 {
-    if(index < [self.items count])
+    if(index < self.album.sortedPhotos.count)
     {
-        PIXPhoto * photo = nil;
-        photo = [self.items objectAtIndex:index];
+        PIXPhoto *photo = self.album.sortedPhotos[index];
         if ([photo.path isEqualToString:aPhotoPath]) {
-            [self.selectedItems removeAllObjects];
-            [self.selectedItems addObject:photo];
-            [self.gridView scrollToAndReturnItemAtIndex:index animated:YES];
+            [self.gridView deselectAll:nil];
+            [self.gridView selectItemsAtIndexPaths:[NSSet setWithObject:[NSIndexPath indexPathForItem:index inSection:0]]
+                                    scrollPosition:NSCollectionViewScrollPositionNearestVerticalEdge];
         }
     }
 }
@@ -340,108 +306,22 @@
     return 1;
 }
 
+#pragma mark - Selection
 
-#pragma mark - PIXGridViewDelegate
-- (BOOL)gridView:(PIXGridView *)gridView itemIsSelectedAtIndex:(NSInteger)index inSection:(NSInteger)section
-{
-    PIXPhoto * photo = nil;
-    
-    if(index < [self.items count])
-    {
-        photo = [self.items objectAtIndex:index];
-        return [self.selectedItems containsObject:photo];
+- (NSSet<PIXPhoto *> *)selectedItems {
+    NSSet<NSIndexPath *> *selectionIndexPaths = self.gridView.selectionIndexPaths;
+    if (selectionIndexPaths.count == 0) {
+        return [NSSet set];
     }
-    
-    return NO;
-}
 
-- (void)gridView:(PIXGridView *)gridView didDoubleClickItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
-{
-    if(index == NSNotFound) return;
-    
-    //CNLog(@"didDoubleClickItemAtIndex: %li", index);
-    [self showPageControllerForIndex:index];
-}
+    NSArray<NSIndexPath *> *selectionArray = [selectionIndexPaths sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"self" ascending:NO]]];
+    NSMutableSet<PIXPhoto *> *items = [NSMutableSet setWithCapacity:selectionArray.count];
+    for (NSIndexPath *item in selectionArray) {
+        PIXPhoto *album = self.album.sortedPhotos[item.item];
+        [items addObject:album];
+    }
 
-- (void)gridView:(PIXGridView *)gridView rightMouseButtonClickedOnItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section andEvent:(NSEvent *)event
-{
-    PIXPhoto * itemClicked = nil;
-    
-    if(index < [self.items count])
-    {
-        itemClicked = [self.items objectAtIndex:index];
-    }
-    
-    // we don't handle clicks off of an album right now
-    if(itemClicked == nil) return;
-    
-    // if this photo isn't in the selection than re-select only this
-    if(itemClicked != nil && ![self.selectedItems containsObject:itemClicked])
-    {
-        [self.selectedItems removeAllObjects];
-        [self.selectedItems addObject:itemClicked];
-        [self.gridView reloadSelection];
-        
-        [self updateToolbar];
-    }
-    
-    
-    NSMenu *contextMenu = [self menuForObject:itemClicked];
-    [NSMenu popUpContextMenu:contextMenu withEvent:event forView:self.view];
-    
-    // can use this and the self.selectedAlbum array to build a right click menu here
-    
-    DLog(@"rightMouseButtonClickedOnItemAtIndex: %li", index);
-}
-
-- (void)gridView:(PIXGridView *)gridView dragDidBeginAtIndex:(NSUInteger)index inSection:(NSUInteger)section andEvent:(NSEvent *)event
-{
-    if(index == NSNotFound) return;
-    
-    // move the item we just selected to the front (so it will show up correctly in the drag image)
-    PIXPhoto * topPhoto = [self.items objectAtIndex:index];
-    
-    NSMutableArray * selectedArray = [[self.selectedItems allObjects] mutableCopy];
-    
-    if(topPhoto)
-    {
-        [selectedArray removeObject:topPhoto];
-        [selectedArray insertObject:topPhoto atIndex:0];
-    }
-    
-    
-    NSPasteboard *dragPBoard = [NSPasteboard pasteboardWithName:NSDragPboard];
-    [dragPBoard declareTypes:[NSArray arrayWithObject:NSFilenamesPboardType] owner:nil];
-    
-    NSMutableArray * filenames = [[NSMutableArray alloc] initWithCapacity:[self.selectedItems count]];
-    
-    for(PIXPhoto * aPhoto in selectedArray)
-    {
-        [filenames addObject:aPhoto.path];
-        //[dragPBoard setString:anAlbum.path forType:NSFilenamesPboardType];
-    }
-    
-    [dragPBoard setPropertyList:filenames
-                        forType:NSFilenamesPboardType];
-    NSPoint location = [self.gridView convertPoint:[event locationInWindow] fromView:nil];
-    location.x -= 90;
-    location.y += 90;
-    
-    
-    
-    NSImage * dragImage = [PIXPhotoCollectionViewItemView dragImageForPhotos:selectedArray size:NSMakeSize(180, 180)];
-    [self.gridView dragImage:dragImage at:location offset:NSZeroSize event:event pasteboard:dragPBoard source:self slideBack:YES];
-}
-
-- (void)gridViewDidPressLeftArrowKeyAtFirstColumn:(PIXGridView *)gridView
-{
-    // make the album view the first responder if it's open
-    if(![self.splitViewController.splitView isSubviewCollapsed:self.splitViewController.leftPane] &&
-       [self.selectedItems count] == 1) // make sure only one item is selected
-    {
-        [self.view.window makeFirstResponder:self.splitViewController.sidebarViewController.outlineView];
-        [self selectNone:nil];
-    }
+    return items;
 }
 
 #pragma mark - Drop Operation
@@ -539,7 +419,11 @@
 
 -(void)updateToolbar
 {
-    [super updateToolbar];
+    if (self.gridView.selectionIndexPaths.count == 0) {
+        [self.toolbar hideToolbar:YES];
+    } else {
+        [self.toolbar showToolbar:YES];
+    }
     
     PIXCustomButton * deleteButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
     [deleteButton setTitle:@"Delete"];

@@ -40,8 +40,6 @@
     NSLog(@"Selected: %d", s);
     PIXAlbumCollectionViewItemView * view = (PIXAlbumCollectionViewItemView *)self.view;
     view.selected = s;
-    if( view.album != nil )
-        [view setNeedsDisplay:YES];
 }
 
 - (BOOL)isSelected
@@ -396,7 +394,7 @@
     
     /// draw selection ring
     if (self.selected) {
-        
+
         NSRect innerbounds = CGRectInset(self.bounds, 6, 6);
         NSBezierPath *selectionRectPath = [NSBezierPath bezierPathWithRoundedRect:innerbounds xRadius:10 yRadius:10];
         [[NSColor colorWithCalibratedRed:0.189 green:0.657 blue:0.859 alpha:1.000] setStroke];
@@ -589,7 +587,7 @@
 
 -(void)mouseDown:(NSEvent *)theEvent
 {
-    if(self.selected) {
+    if (self.selected) {
         self.allowTitleEdit = YES;
     } else {
         self.allowTitleEdit = NO;
@@ -609,13 +607,11 @@
 {
     NSLog(@"PIXAlbumCollectionViewItem: mouseUp");
     // only check for title edits if this was already selected on mouse down
-    if(self.allowTitleEdit)
-    {
+    if (self.allowTitleEdit) {
         NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
         
         // if the user clicked up in title box
-        if(CGRectContainsPoint(self.titleEditFrame, location))
-        {
+        if (CGRectContainsPoint(self.titleEditFrame, location)) {
             [self startEditing];
             return;
         }

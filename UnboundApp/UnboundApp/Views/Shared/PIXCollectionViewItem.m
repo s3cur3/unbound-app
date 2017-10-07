@@ -37,6 +37,13 @@
     return YES;
 }
 
+- (void)setSelected:(BOOL)selected {
+    if (_selected != selected) {
+        self.needsDisplay = YES;
+    }
+    _selected = selected;
+}
+
 #pragma mark - ViewDrawing
 
 // draws an image with a border in the rect. Returns the rect where the photo was drawn (using aspect ratio)

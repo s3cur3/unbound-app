@@ -15,14 +15,17 @@
 #import "PIXFileParser.h"
 #import "PIXPhoto.h"
 #import "PIXAlbum.h"
+#import "PIXCollectionToolbar.h"
 #import <Quartz/Quartz.h>
 
 static NSString *kContentTitleKey, *kContentImageKey;
 
-@interface PIXCollectionViewController () <NSMenuDelegate, PIXGridViewDelegate>
+@interface PIXCollectionViewController () <NSMenuDelegate, NSCollectionViewDelegate>
 
 @property (strong) IBOutlet NSLayoutConstraint *toolbarPosition;
 @property BOOL toolbarIsShowing;
+
+@property NSSet *selectedItems;
 
 @end
 
@@ -39,7 +42,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if( self != nil )
     {
-        self.items = [NSMutableArray array];
+
     }
     
     return self;
@@ -58,9 +61,10 @@ static NSString *kContentTitleKey, *kContentImageKey;
     [self.gridView setItemSize:CGSizeMake(200, 200)];
     [self.gridView setAllowsMultipleSelection:YES];
     */
-    
-    [self.gridView setAllowsMultipleSelection:YES];
-    
+
+    self.gridView.allowsEmptySelection = YES;
+    self.gridView.allowsMultipleSelection = YES;
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(defaultThemeChanged:)
                                                  name:@"backgroundThemeChanged"
@@ -72,15 +76,13 @@ static NSString *kContentTitleKey, *kContentImageKey;
     CABasicAnimation * toolBarAnim = [CABasicAnimation animation];
     toolBarAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     toolBarAnim.duration = 0.1;
-    self.toolbarPosition.animations = [NSDictionary dictionaryWithObject:toolBarAnim forKey:@"constant"];
+    self.toolbarPosition.animations = @{@"constant": toolBarAnim};
     
     // make the toolbar animate a little faster than default
     CABasicAnimation * scrollAnim = [CABasicAnimation animation];
     scrollAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     scrollAnim.duration = 0.1;
-    self.gridView.superview.animations = [NSDictionary dictionaryWithObject:scrollAnim forKey:@"bounds"];
-    
-    [self updateToolbar];
+    self.gridView.superview.animations = @{@"bounds": scrollAnim};
 }
 
 -(void)willShowPIXView
@@ -118,79 +120,13 @@ static NSString *kContentTitleKey, *kContentImageKey;
         color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
         //[[self enclosingScrollView] setBackgroundColor:color];
     }
-    
-    [_gridView  setBackgroundColor:color];
+
+    self.gridView.layer.backgroundColor = color.CGColor;
 }
 
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-#pragma mark - Show/Hide Toolbar
-- (void)showToolbar:(BOOL)animated
-{
-    if(!self.toolbarIsShowing)
-    {
-        
-        CGPoint origin = self.scrollView.bounds.origin;
-        origin.y += 35;
-        
-        
-        //NSClipView *clipView = (NSClipView *)[self.gridView superview];
-        
-        
-        [NSAnimationContext beginGrouping];
-        [self.toolbarPosition.animator setConstant:0];
-        //[[clipView animator] setBoundsOrigin:origin];
-        [NSAnimationContext endGrouping];
-        
-        self.toolbarIsShowing = YES;
-    }
-    
-}
-
-- (void)hideToolbar:(BOOL)animated
-{
-    if(self.toolbarIsShowing)
-    {
-        [self.toolbarPosition.animator setConstant:-self.toolbar.frame.size.height];
-        //[self.view updateConstraintsForSubtreeIfNeeded];
-        self.toolbarIsShowing = NO;
-    }
-}
-
-- (void)updateToolbar
-{
-    if([self.selectedItems count] > 0)
-    {
-        if([self.selectedItems count] > 1)
-        {
-            [self.toolbarTitle setStringValue:[NSString stringWithFormat:@"%ld %@s selected", (unsigned long)[self.selectedItems count], self.selectedItemsName]];
-        }
-        
-        else
-        {
-            [self.toolbarTitle setStringValue:[NSString stringWithFormat:@"1 %@ selected", self.selectedItemsName]];
-        }
-        
-        double delayInSeconds = 0.25;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [self showToolbar:YES];
-        });
-        
-    }
-    
-    else
-    {
-        double delayInSeconds = 0.25;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [self hideToolbar:YES];
-        });
-        
-    }
 }
 
 #pragma mark - Menu
@@ -230,11 +166,9 @@ static NSString *kContentTitleKey, *kContentImageKey;
     // only show open with options on Photo objects
     if([object isKindOfClass:[PIXPhoto class]])
     {
-        
-        
         // Open with Defualt
         NSString *defaultAppName = [[PIXFileManager sharedInstance] defaultAppNameForOpeningFileWithPath:[object path]];
-        if (defaultAppName!=nil && ([defaultAppName isEqualToString:@"Finder"]==NO)) {
+        if (defaultAppName!=nil && ![defaultAppName isEqualToString:@"Finder"]) {
             [menu addItemWithTitle:[NSString stringWithFormat:@"Open with %@", defaultAppName] action:
              @selector(openInApp:) keyEquivalent:@""];
         }
@@ -421,182 +355,14 @@ static NSString *kContentTitleKey, *kContentImageKey;
     [[PIXFileManager sharedInstance] importPhotosToAlbum:nil allowDirectories:YES];
 }
 
-#pragma mark - Item Selection
-- (NSMutableSet *)selectedItems
-{
-    if(_selectedItems != nil) return _selectedItems;
-    
-    _selectedItems = [NSMutableSet new];
-    
-    return _selectedItems;
-}
-
-- (IBAction)selectAll:(id)sender
-{
-    self.selectedItems = [NSMutableSet setWithArray:self.items];
-    [self.gridView reloadSelection];
-    [self updateToolbar];
-}
-
-- (IBAction)selectNone:(id)sender
-{
-    [self.selectedItems removeAllObjects];
-    [self.gridView reloadSelection];
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self updateToolbar];
-    });
-}
-
-- (IBAction)toggleSelection:(id)sender
-{
-    NSMutableSet * mutableItems = [NSMutableSet setWithArray:self.items];
-    
-    // now remove items from the list that are already selected
-    [mutableItems minusSet:self.selectedItems];
-    
-    self.selectedItems = mutableItems;
-    
-    [self.gridView reloadSelection];
-    [self updateToolbar];
-}
-
-- (IBAction)deleteItems:(id )inSender
-{
-    // if we have nothing to delete then do nothing
-    if([self.selectedItems count] == 0) return;
-    
-    [[PIXFileManager sharedInstance] deleteItemsWorkflow:self.selectedItems];
-    
-}
-
 - (void)reselectItems:(NSArray *)itemsToReselect
 {
-    [self.selectedItems removeAllObjects];
-    
-    for(NSObject * item in itemsToReselect)
-    {
-        if([self.items containsObject:item])
-        {
-            [self.selectedItems addObject:item];
-        }
-    }
-    
-    [self updateToolbar];
-    //[self.gridView reloadSelection];
+    // Subclasses should implement this
     
     NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
     [undoManager registerUndoWithTarget:self selector:@selector(gridViewDidDeselectAllItems:) object:self.gridView];
     [undoManager setActionName:@"Deselect Items"];
     [undoManager setActionIsDiscardable:YES];
-}
-
-#pragma mark - PIXGridViewDelegate
-- (void)gridViewDeleteKeyPressed:(PIXGridView *)gridView
-{
-    [self deleteItems:gridView];
-}
-
-- (void)gridView:(PIXGridView *)gridView didSelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
-{
-    [self.selectedItems addObject:[self.items objectAtIndex:index]];
-    [self updateToolbar];
-}
-
-- (void)gridView:(PIXGridView *)gridView didShiftSelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
-{
-    if([self.selectedItems count] == 0)
-    {
-        [self.selectedItems addObject:[self.items objectAtIndex:index]];
-    }
-    
-    else
-    {
-        // loop through the current selection and find the index that's closest the the newly clicked index
-        NSUInteger startIndex = NSNotFound;
-        NSUInteger distance = NSUIntegerMax;
-        
-        for(PIXAlbum * aSelectedAlbum in self.selectedItems)
-        {
-            NSUInteger thisIndex = [self.items indexOfObject:aSelectedAlbum];
-            NSUInteger thisDistance = abs((int)(thisIndex-index));
-            
-            if(thisIndex != NSNotFound && thisDistance < distance)
-            {
-                startIndex = thisIndex;
-                distance = thisDistance;
-            }
-        }
-        
-        // prep the indexes we're going to loop through
-        NSUInteger endIndex = index;
-        
-        // flip them so we always go the right rections
-        if(endIndex < startIndex)
-        {
-            endIndex = startIndex;
-            startIndex = index;
-        }
-        
-        // now add all the items between the two indexes to the selection
-        for(NSUInteger i = startIndex; i <= endIndex; i++)
-        {
-            [self.selectedItems addObject:[self.items objectAtIndex:i]];
-        }
-    }
-    
-    [self.gridView reloadSelection];
-    [self updateToolbar];
-}
-
-- (void)gridView:(PIXGridView *)gridView didKeySelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
-{
-    // if we're holding shift or command then keep the selection
-    if(!([NSEvent modifierFlags] & (NSCommandKeyMask | NSShiftKeyMask)))
-    {
-        [self.selectedItems removeAllObjects];
-    }
-    
-    id item = [self.items objectAtIndex:index];
-    
-    [self.selectedItems addObject:item];
-    [self updateToolbar];
-    [self.gridView reloadSelection];
-}
-
-- (void)gridView:(PIXGridView *)gridView didKeyOpenItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
-{
-    [self gridView:gridView didDoubleClickItemAtIndex:index inSection:section];
-}
-
-- (void)gridView:(PIXGridView *)gridView didDeselectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
-{
-    [self.selectedItems removeObject:[self.items objectAtIndex:index]];
-    [self updateToolbar];
-}
-
-- (void)gridViewDidDeselectAllItems:(PIXGridView *)gridView
-{
-    NSArray * oldItems = [self.selectedItems copy];
-    
-    [self.selectedItems removeAllObjects];
-    [self updateToolbar];
-    
-    [self.gridView reloadSelection];
-    
-    NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
-    //NSDictionary *undoInfo = @{@"albumID" : anAlbum.objectID, @"name" : oldAlbumName};
-    [undoManager registerUndoWithTarget:self selector:@selector(reselectItems:) object:oldItems];
-    [undoManager setActionName:@"Deselect Items"];
-    [undoManager setActionIsDiscardable:YES];
-}
-
-- (void)gridView:(PIXGridView *)gridView didPointItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
-{
-    [self.selectedItems removeAllObjects];
-    [self.selectedItems addObject:[self.items objectAtIndex:index]];
-    [self updateToolbar];
-    [self.gridView reloadSelection];
 }
 
 @end

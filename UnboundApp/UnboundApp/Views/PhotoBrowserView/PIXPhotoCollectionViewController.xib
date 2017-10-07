@@ -195,11 +195,11 @@
                 </customView>
                 <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lQ1-RR-8z3">
                     <rect key="frame" x="0.0" y="0.0" width="652" height="335"/>
-                    <clipView key="contentView" id="dHo-0i-AJM">
+                    <clipView key="contentView" drawsBackground="NO" id="dHo-0i-AJM">
                         <rect key="frame" x="0.0" y="0.0" width="652" height="335"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView id="KUn-vc-UwM" customClass="PIXGridView">
+                            <collectionView selectable="YES" allowsMultipleSelection="YES" id="KUn-vc-UwM">
                                 <rect key="frame" x="0.0" y="0.0" width="652" height="335"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="qgz-ha-WrA">

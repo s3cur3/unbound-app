@@ -19,6 +19,7 @@
 		458AD00889384A0AE9107BEA /* PIXCustomShareSheetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADEF55400A22EB408AC57 /* PIXCustomShareSheetViewController.xib */; };
 		458AD0154F582F515CBE5755 /* buttongrid_print@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADBDE8312055857F9D061 /* buttongrid_print@2x.png */; };
 		458AD0189F91D52F82F775EB /* PIXSlideshowOptonsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD432DBC6664426ADB328 /* PIXSlideshowOptonsViewController.m */; };
+		458AD01FBD59225A8AD793B2 /* NSCollectionView+PIXSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD2E290E211201DFD9034 /* NSCollectionView+PIXSelection.m */; };
 		458AD0265B8C6C0B664911BA /* click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 458AD192078CC315C6CB2FF8 /* click.wav */; };
 		458AD0312FDDE50970D2DF2C /* PIXPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADC385DD20D2328DC6B8F /* PIXPageView.m */; };
 		458AD0315FD66E80E9275040 /* PIXPhotoCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADC35FEA31B0D8312AF84 /* PIXPhotoCollectionViewItem.m */; };
@@ -47,6 +48,7 @@
 		458AD0B3D816FF41583FADE3 /* SquareImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADFD7749564AA2947E8E3 /* SquareImageView.m */; };
 		458AD0B6F64A5A68A7604174 /* PIXPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD756CBDDCC823D0AAF0F /* PIXPhoto.m */; };
 		458AD0BA1A0F2C332A96EEF9 /* PIXHUDMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADC39E936C0CABFBCE7FE /* PIXHUDMessageController.m */; };
+		458AD0BAA89DFD1CCF9DBECC /* PIXCollectionToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD176E79B1F4CC3782AA3 /* PIXCollectionToolbar.m */; };
 		458AD0C1193275A566491AB1 /* arrow-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD929D4BAE762435AD021 /* arrow-right.png */; };
 		458AD0C906A87C4A0C624468 /* NSURL+DirectoryObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADF4966855685A12B5403 /* NSURL+DirectoryObserver.m */; };
 		458AD0D33DE1453DB9071ACD /* expand@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD3070947054FA0A87DB8 /* expand@2x.png */; };
@@ -195,6 +197,7 @@
 		458AD5948210BBAFA77C6366 /* buttongrid_copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADE2912FB560A5B898EA5 /* buttongrid_copy.png */; };
 		458AD5956C41A091492393D6 /* PIXMainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD2FEBC5E4E4554A1C5C0 /* PIXMainWindow.xib */; };
 		458AD5A46B7890395A0E7C02 /* temp@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 458AD6ACE1BB18907BC5338E /* temp@2x.jpg */; };
+		458AD5A5BACB12ED72838495 /* PIXCollectionToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD176E79B1F4CC3782AA3 /* PIXCollectionToolbar.m */; };
 		458AD5A64C03540A01C7E839 /* PIXProgressWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD9FAE54C35D446B3C313 /* PIXProgressWindowController.m */; };
 		458AD5A76702E464230F66CC /* PIXCustomButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD2072C4E666D9558696E /* PIXCustomButtonCell.m */; };
 		458AD5ABEC0EF942AAEB8E7A /* PIXAlbumCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD37BDFC8466136334D42 /* PIXAlbumCollectionViewItem.m */; };
@@ -353,6 +356,7 @@
 		458ADA22496E33966D9E20FE /* preferences_dark_theme.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADA5D25C211D99C7CF0AE /* preferences_dark_theme.png */; };
 		458ADA2353839919BBB00370 /* PIXSidebarClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD8E33DE2AFDC141579B5 /* PIXSidebarClipView.m */; };
 		458ADA2D53883C40CF3C0B9F /* PIXPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADFFDF3A1A1BF7EC453CA /* PIXPageViewController.xib */; };
+		458ADA347B1449F3CB15ED8A /* PIXCollectionToolbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD71320CADBE71CE7A030 /* PIXCollectionToolbar.xib */; };
 		458ADA39C8C7FC4ADF9C0478 /* PIXGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD4658771C75C94273B47 /* PIXGridView.m */; };
 		458ADA4035805F8C0DF08CDE /* PIXPageHUDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD45CE55653295C7278F1 /* PIXPageHUDWindow.m */; };
 		458ADA48AA7EE51DF21B9B05 /* MakeThumbnailOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD57EF9C057A646A2B2CA /* MakeThumbnailOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -418,6 +422,7 @@
 		458ADC56683018FF4F64BAA8 /* GeneralPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD3A0A1A9CF60B68D4384 /* GeneralPreferencesViewController.m */; };
 		458ADC573817D87E10CF7D1D /* success@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD186E9AD92AB0F27512E /* success@2x.png */; };
 		458ADC5917C9660A39F1D3EF /* PIXGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD4658771C75C94273B47 /* PIXGridView.m */; };
+		458ADC59902A90ED790F99DB /* NSCollectionView+PIXSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD2E290E211201DFD9034 /* NSCollectionView+PIXSelection.m */; };
 		458ADC5A454C3C46B0CAD799 /* PIXLoadAlbumOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADEF27A1E4EF5D8706D1C /* PIXLoadAlbumOperation.m */; };
 		458ADC641AC7DA062188B173 /* tempVideo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 458ADF0B7AB7C27DAB8C90EF /* tempVideo.jpg */; };
 		458ADC6B40EC6E86CB2ECD85 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADD65822C627C42A00876 /* MainMenu.xib */; };
@@ -431,6 +436,7 @@
 		458ADCAC6749B8A679DC78D7 /* sortbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD40068BD55BC8D14FEA2 /* sortbutton.png */; };
 		458ADCB2F777602F8267F14A /* PIXInfoPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD2F03843EA9EBD3FBBE3 /* PIXInfoPanelViewController.m */; };
 		458ADCC36CEB33C5E4DC6069 /* PIXAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD86966809D7801FD2562 /* PIXAccount.m */; };
+		458ADCE3B5899EA400B6164E /* PIXCollectionToolbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD71320CADBE71CE7A030 /* PIXCollectionToolbar.xib */; };
 		458ADCE4AAEB8A56E9624012 /* success-backward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD239A9B0AD1C5B855157 /* success-backward@2x.png */; };
 		458ADCEC1D6C6FBD6CEB1B9A /* captionbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD29B2E087EB9581AA773 /* captionbutton@2x.png */; };
 		458ADCFFFE1134C87A0D6C3A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD125AF70605105C0A03D /* main.m */; };
@@ -450,6 +456,7 @@
 		458ADD323CA6F928C879EF51 /* AdvancedPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD75F768F1C109A565AB5 /* AdvancedPreferencesView.xib */; };
 		458ADD355D10AE57BCDA6915 /* nophoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD8FB3BE8810B52005641 /* nophoto@2x.png */; };
 		458ADD3EB330A8D22F2456B7 /* nophoto_200x200.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 458AD7A85609DBC2EA41D16C /* nophoto_200x200.jpg */; };
+		458ADD424B02E2EFD3F008D6 /* PIXCollectionToolbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD71320CADBE71CE7A030 /* PIXCollectionToolbar.xib */; };
 		458ADD4360B96563C7F671BC /* btn-roundrect-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADC5D5B4D6D96C8D749B6 /* btn-roundrect-down.png */; };
 		458ADD6C07A093F3CF916147 /* playbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD2804681F5B382C3E328 /* playbutton@2x.png */; };
 		458ADD7135D46E2E4045F238 /* AdvancedPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADA9A0159B9B244F4C233 /* AdvancedPreferencesViewController.m */; };
@@ -470,6 +477,8 @@
 		458ADE29571941C808C8F2C7 /* buttongrid_facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD9705B131DECC624E295 /* buttongrid_facebook@2x.png */; };
 		458ADE297ADE94834B4E95BD /* logo_ao.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD796B90699411E711F52 /* logo_ao.png */; };
 		458ADE340B6D4200DCE7369C /* AutoSizingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD4AA150A087CF7C81E30 /* AutoSizingImageView.m */; };
+		458ADE361C7A0471CBB9B13A /* PIXCollectionToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD176E79B1F4CC3782AA3 /* PIXCollectionToolbar.m */; };
+		458ADE38B7D7DAD30EBFDDB9 /* NSCollectionView+PIXSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD2E290E211201DFD9034 /* NSCollectionView+PIXSelection.m */; };
 		458ADE4CDB6A080AE13DA981 /* PIXAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD7AA5FA2D7D1B9940541 /* PIXAlbum.m */; };
 		458ADE5383C26102989F0CE3 /* playbutton-tinted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD582BE81CADF4922CE0F /* playbutton-tinted@2x.png */; };
 		458ADE574410DDF01A31019D /* fullnophoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD65C6D07F72EACA1A512 /* fullnophoto.png */; };
@@ -658,6 +667,7 @@
 		458AD125AF70605105C0A03D /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		458AD14FBD86FFB06E7642BE /* PIXPageHUDView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPageHUDView.m; sourceTree = "<group>"; };
 		458AD1672B16A5490895DC92 /* PIXRoundedProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXRoundedProgressIndicator.h; sourceTree = "<group>"; };
+		458AD176E79B1F4CC3782AA3 /* PIXCollectionToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXCollectionToolbar.m; sourceTree = "<group>"; };
 		458AD186E9AD92AB0F27512E /* success@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success@2x.png"; sourceTree = "<group>"; };
 		458AD192078CC315C6CB2FF8 /* click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = click.wav; sourceTree = "<group>"; };
 		458AD1A07A96C822C47C889F /* buttongrid_email@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttongrid_email@2x.png"; sourceTree = "<group>"; };
@@ -667,6 +677,7 @@
 		458AD2072C4E666D9558696E /* PIXCustomButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXCustomButtonCell.m; sourceTree = "<group>"; };
 		458AD212B0BC1C9BA2FA840C /* PIXProgressWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXProgressWindowController.h; sourceTree = "<group>"; };
 		458AD22711F1415BFD14A837 /* contract.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = contract.png; sourceTree = "<group>"; };
+		458AD227EB1A3C4AA24D7C3D /* PIXCollectionToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXCollectionToolbar.h; sourceTree = "<group>"; };
 		458AD228F4F179927A0DE5E8 /* PIXCustomShareSheetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXCustomShareSheetViewController.h; sourceTree = "<group>"; };
 		458AD22B845F74730E6086A4 /* PIXSelectionLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXSelectionLayer.h; sourceTree = "<group>"; };
 		458AD239A9B0AD1C5B855157 /* success-backward@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success-backward@2x.png"; sourceTree = "<group>"; };
@@ -681,6 +692,7 @@
 		458AD2AD4B93493C0934A7DF /* PIXAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXAlbum.h; sourceTree = "<group>"; };
 		458AD2BC5CD7C6B7B1BE994B /* PIXSidebarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSidebarViewController.m; sourceTree = "<group>"; };
 		458AD2C360D0004D8B746AAC /* buttongrid_emaillink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttongrid_emaillink.png; sourceTree = "<group>"; };
+		458AD2E290E211201DFD9034 /* NSCollectionView+PIXSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCollectionView+PIXSelection.m"; sourceTree = "<group>"; };
 		458AD2F03843EA9EBD3FBBE3 /* PIXInfoPanelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXInfoPanelViewController.m; sourceTree = "<group>"; };
 		458AD2FEBC5E4E4554A1C5C0 /* PIXMainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PIXMainWindow.xib; sourceTree = "<group>"; };
 		458AD3029E36086E9FA2BEEA /* temp-portrait@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "temp-portrait@2x.jpg"; sourceTree = "<group>"; };
@@ -742,6 +754,7 @@
 		458AD6D93BCBC98FBE74AF9E /* MakeThumbnailOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakeThumbnailOperation.h; sourceTree = "<group>"; };
 		458AD6E0FD684B94DC56DFEE /* ArchDirectoryObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArchDirectoryObserver.h; sourceTree = "<group>"; };
 		458AD710E50B20A82782789C /* arrow-left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-left@2x.png"; sourceTree = "<group>"; };
+		458AD71320CADBE71CE7A030 /* PIXCollectionToolbar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PIXCollectionToolbar.xib; sourceTree = "<group>"; };
 		458AD737D5A9975B91B517A7 /* PIXCustomShareSheetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXCustomShareSheetViewController.m; sourceTree = "<group>"; };
 		458AD7467EC0275F76CF45F1 /* buttongrid_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttongrid_share@2x.png"; sourceTree = "<group>"; };
 		458AD756CBDDCC823D0AAF0F /* PIXPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhoto.m; sourceTree = "<group>"; };
@@ -770,6 +783,7 @@
 		458AD8B6B7434300FCCD1795 /* PIXExifBGView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXExifBGView.m; sourceTree = "<group>"; };
 		458AD8D8DCCF4F655556036A /* PIXRoundedProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXRoundedProgressIndicator.m; sourceTree = "<group>"; };
 		458AD8E33DE2AFDC141579B5 /* PIXSidebarClipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSidebarClipView.m; sourceTree = "<group>"; };
+		458AD8E445B547B0CBD94DD6 /* NSCollectionView+PIXSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCollectionView+PIXSelection.h"; sourceTree = "<group>"; };
 		458AD8E66E906808B84CAD31 /* PIXInfoPanelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXInfoPanelView.m; sourceTree = "<group>"; };
 		458AD8F9EF6D5359E289CCE5 /* GetPathsOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetPathsOperation.h; sourceTree = "<group>"; };
 		458AD8FB3BE8810B52005641 /* nophoto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nophoto@2x.png"; sourceTree = "<group>"; };
@@ -985,6 +999,7 @@
 				458AD26647CB93B7399B6C52 /* SidebarOutlineView */,
 				458AD753BD94279F29E9068F /* SplitView */,
 				458ADAFEFF6A19C968E3FCCD /* PageView */,
+				458ADC45874A0381718B78EA /* Collection Toolbar */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1192,6 +1207,8 @@
 				458AD2072C4E666D9558696E /* PIXCustomButtonCell.m */,
 				458AD67B578944E70591B68D /* PIXGradientBarView.h */,
 				458ADBE6B4EB3E535CC48668 /* PIXNavigationController.m */,
+				458AD2E290E211201DFD9034 /* NSCollectionView+PIXSelection.m */,
+				458AD8E445B547B0CBD94DD6 /* NSCollectionView+PIXSelection.h */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1288,6 +1305,16 @@
 				458ADC9B40BB250A64BFC7EA /* videoview.xib */,
 			);
 			path = PageView;
+			sourceTree = "<group>";
+		};
+		458ADC45874A0381718B78EA /* Collection Toolbar */ = {
+			isa = PBXGroup;
+			children = (
+				458AD176E79B1F4CC3782AA3 /* PIXCollectionToolbar.m */,
+				458AD227EB1A3C4AA24D7C3D /* PIXCollectionToolbar.h */,
+				458AD71320CADBE71CE7A030 /* PIXCollectionToolbar.xib */,
+			);
+			path = "Collection Toolbar";
 			sourceTree = "<group>";
 		};
 		458ADCDB7A0F7D341274B3F4 /* en.lproj */ = {
@@ -1761,6 +1788,7 @@
 				458AD0A34157691A6BB33AAD /* InfoPlist.strings in Resources */,
 				458AD180BC115721CB9BC296 /* PIXAlbumCollectionViewItem.xib in Resources */,
 				458AD29D6087F52234C716BD /* PIXPhotoCollectionViewItem.xib in Resources */,
+				458ADD424B02E2EFD3F008D6 /* PIXCollectionToolbar.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1874,6 +1902,7 @@
 				458AD55533B629BB45DCB1BD /* InfoPlist.strings in Resources */,
 				458AD892258BE9F7BDC6FE52 /* PIXAlbumCollectionViewItem.xib in Resources */,
 				458AD4DB1AA94C2854425F57 /* PIXPhotoCollectionViewItem.xib in Resources */,
+				458ADA347B1449F3CB15ED8A /* PIXCollectionToolbar.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1989,6 +2018,7 @@
 				458AD4C06432617B0B32FD6D /* InfoPlist.strings in Resources */,
 				458AD505BCC3A86E2020DEC1 /* PIXAlbumCollectionViewItem.xib in Resources */,
 				458AD3C2B28672CD6DF44579 /* PIXPhotoCollectionViewItem.xib in Resources */,
+				458ADCE3B5899EA400B6164E /* PIXCollectionToolbar.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2309,6 +2339,8 @@
 				458AD6004550C984953B0481 /* PIXPhoto.m in Sources */,
 				458ADCC36CEB33C5E4DC6069 /* PIXAccount.m in Sources */,
 				458AD04678D2A1BE2EC5642D /* PIXDataModel.xcdatamodeld in Sources */,
+				458AD0BAA89DFD1CCF9DBECC /* PIXCollectionToolbar.m in Sources */,
+				458AD01FBD59225A8AD793B2 /* NSCollectionView+PIXSelection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2385,6 +2417,8 @@
 				458AD6F233473D8441CA9006 /* PIXPhoto.m in Sources */,
 				458AD88C8DCB3AA650035330 /* PIXAccount.m in Sources */,
 				458AD64DEAB0920DB18F855C /* PIXDataModel.xcdatamodeld in Sources */,
+				458AD5A5BACB12ED72838495 /* PIXCollectionToolbar.m in Sources */,
+				458ADE38B7D7DAD30EBFDDB9 /* NSCollectionView+PIXSelection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2461,6 +2495,8 @@
 				458AD0B6F64A5A68A7604174 /* PIXPhoto.m in Sources */,
 				458ADD8A4A8CB2F780141E38 /* PIXAccount.m in Sources */,
 				458ADBDF43CC3E5188AA492F /* PIXDataModel.xcdatamodeld in Sources */,
+				458ADE361C7A0471CBB9B13A /* PIXCollectionToolbar.m in Sources */,
+				458ADC59902A90ED790F99DB /* NSCollectionView+PIXSelection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

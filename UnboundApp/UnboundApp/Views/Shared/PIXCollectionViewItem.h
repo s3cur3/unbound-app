@@ -21,7 +21,7 @@
 @property CGRect contentFrame;
 @property (strong) IBOutlet NSImage *itemImage;
 @property (strong) IBOutlet NSString *itemTitle;
-@property BOOL selected;
+@property(nonatomic) BOOL selected;
 
 - (void)prepareForReuse;
 

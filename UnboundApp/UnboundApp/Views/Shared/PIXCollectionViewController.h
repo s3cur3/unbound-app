@@ -11,17 +11,15 @@
 #import "PIXGradientBarView.h"
 #import "PIXRoundedProgressIndicator.h"
 
+@class PIXCollectionToolbar;
+
 @interface PIXCollectionViewController : PIXViewController
 
-@property (strong) IBOutlet PIXGridView *gridView;
+@property (strong) IBOutlet NSCollectionView *gridView;
 
-@property (strong) NSMutableArray *items;
-@property (strong) IBOutlet NSArrayController * arrayController;
-
-@property (nonatomic,strong) NSMutableSet * selectedItems;
 @property (strong) NSString * selectedItemsName;
 
-@property (strong) IBOutlet PIXGradientBarView * toolbar;
+@property (strong) IBOutlet PIXCollectionToolbar * toolbar;
 @property (strong) IBOutlet NSTextField * toolbarTitle;
 @property (strong) IBOutlet PIXRoundedProgressIndicator * gridViewProgress;
 @property (strong) IBOutlet NSTextField * gridViewTitle;
@@ -35,15 +33,6 @@
 @property (strong) IBOutlet NSProgressIndicator * progressIndicator;
 
 - (NSMenu *)menuForObject:(id)object;
-
-- (void)showToolbar:(BOOL)animated;
-- (void)hideToolbar:(BOOL)animated;
-- (void)updateToolbar;
-
-- (IBAction)selectAll:(id)sender;
-- (IBAction)selectNone:(id)sender;
-- (IBAction)toggleSelection:(id)sender;
-- (IBAction)deleteItems:(id )inSender;
 
 - (IBAction)importPhotosButtonPressed:(id)sender;
 - (IBAction)chooseFolderButtonPressed:(id)sender;
