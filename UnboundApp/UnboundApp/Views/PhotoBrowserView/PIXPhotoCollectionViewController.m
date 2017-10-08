@@ -83,13 +83,8 @@
 
     // this will allow droping files into the larger grid view
     [self.collectionView registerForDraggedTypes:@[NSURLPboardType]];
-
-    [self.toolbar hideToolbar:NO];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self updateToolbar];
-    });
-
+    [self updateToolbar];
 }
 
 #pragma mark - Background Colors
@@ -104,13 +99,18 @@
 - (void)setBGColor
 {
     NSColor * color = nil;
-    if([[NSUserDefaults standardUserDefaults] integerForKey:@"backgroundTheme"] == 0) {
-        color = [NSColor colorWithCalibratedWhite:0.912 alpha:1.000];
+    NSColor *textColor = nil;
+    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"backgroundTheme"] == 0) {
+        color = [NSColor colorWithCalibratedWhite:0.912 alpha:1.0];
+        textColor = [NSColor colorWithCalibratedWhite:0.45 alpha:1.0];
     } else {
         color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
+        textColor = [NSColor colorWithCalibratedWhite:0.55 alpha:1.000];
     }
 
     self.collectionView.layer.backgroundColor = color.CGColor;
+    self.view.layer.backgroundColor = color.CGColor;
+    self.gridViewTitle.textColor = textColor;
 }
 
 // TODO Move this to the navigation controller and window, respectively
@@ -428,6 +428,13 @@
 
 -(void)updateToolbar
 {
+    NSUInteger count = self.collectionView.selectionIndexPaths.count;
+    if (count == 0) {
+        [self.toolbar hideToolbar:YES];
+    } else {
+        [self.toolbar showToolbar:YES];
+    }
+
     PIXCustomButton * deleteButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
     [deleteButton setTitle:@"Delete"];
     [deleteButton setTarget:self];

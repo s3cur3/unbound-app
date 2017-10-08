@@ -63,27 +63,27 @@
     
     NSGradient* aGradient = nil;
     NSColor *edgeColor = nil;
-    
+
     if ([[self window] isMainWindow]) {
-        
+
         aGradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.9 alpha:1.000]
                                                   endingColor:[NSColor colorWithCalibratedWhite:0.85 alpha:1.000]];
-        
+
         edgeColor = [NSColor colorWithCalibratedWhite:0.6 alpha:1.000];
-        
+
     }
-    
+
     else
     {
         aGradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.95 alpha:1.000]
                                                   endingColor:[NSColor colorWithCalibratedWhite:0.9 alpha:1.000]];
-        
+
         edgeColor = [NSColor colorWithCalibratedWhite:0.9 alpha:1.000];
     }
-    
+
     [aGradient drawInRect:[self bounds] angle:270];
-    
-    
+
+
     [edgeColor drawSwatchInRect:NSMakeRect(0, 0, self.bounds.size.width, 1)];
     
     

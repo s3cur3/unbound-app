@@ -196,18 +196,18 @@
 - (void)setBGColor
 {
     NSColor * color = nil;
-    if([[NSUserDefaults standardUserDefaults] integerForKey:@"backgroundTheme"] == 0)
-    {
-        color = [NSColor colorWithCalibratedWhite:0.912 alpha:1.000];
-    }
-    
-    else
-    {
+    NSColor *textColor = nil;
+    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"backgroundTheme"] == 0) {
+        color = [NSColor colorWithCalibratedWhite:0.912 alpha:1.0];
+        textColor = [NSColor colorWithCalibratedWhite:0.45 alpha:1.0];
+    } else {
         color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
-        //[[self enclosingScrollView] setBackgroundColor:color];
+        textColor = [NSColor colorWithCalibratedWhite:0.55 alpha:1.000];
     }
 
     self.collectionView.layer.backgroundColor = color.CGColor;
+    self.view.layer.backgroundColor = color.CGColor;
+    self.gridViewTitle.textColor = textColor;
 }
 
 #pragma mark - ToolBar
