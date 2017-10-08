@@ -86,6 +86,10 @@
     return self;
 }
 
+- (id)representedObject {
+    return self.photo;
+}
+
 - (void)setup
 {
     self.layer = [CALayer layer];

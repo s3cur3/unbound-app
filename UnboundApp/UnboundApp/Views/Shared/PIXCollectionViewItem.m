@@ -53,7 +53,6 @@
     }
 }
 
-
 #pragma mark - ViewDrawing
 
 // draws an image with a border in the rect. Returns the rect where the photo was drawn (using aspect ratio)

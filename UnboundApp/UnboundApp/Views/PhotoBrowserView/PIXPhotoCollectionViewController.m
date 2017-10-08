@@ -246,25 +246,22 @@
     
 }
 
-#pragma mark - Page View Controller
--(void)showPageControllerForIndex:(NSUInteger)index
-{
-    PIXPageViewController *pageViewController = [[PIXPageViewController alloc] initWithNibName:@"PIXPageViewController" bundle:nil];
-    
-    pageViewController.initialSelectedObject = self.album.sortedPhotos[index];
-    
+#pragma mark - Clicks
+
+- (void)collectionItemViewDoubleClick:(id)sender {
+    PIXPhotoCollectionViewItemView *item = sender;
+    PIXPageViewController *pageViewController = [[PIXPageViewController alloc] initWithNibName:nil bundle:nil];
+    pageViewController.initialSelectedObject = item.photo;
     pageViewController.album = self.album;
-    
     pageViewController.delegate = self;
-    
     [self.navigationViewController pushViewController:pageViewController];
 }
 
-//PIXPageViewControllerDelegate callback
+#pragma mark - PIXPageViewControllerDelegate
+
 -(void)pagerDidMoveToPhotoWithPath:(NSString *)aPhotoPath atIndex:(NSUInteger)index;
 {
-    if(index < self.album.sortedPhotos.count)
-    {
+    if (index < self.album.sortedPhotos.count) {
         PIXPhoto *photo = self.album.sortedPhotos[index];
         if ([photo.path isEqualToString:aPhotoPath]) {
             [self.collectionView deselectAll:nil];
