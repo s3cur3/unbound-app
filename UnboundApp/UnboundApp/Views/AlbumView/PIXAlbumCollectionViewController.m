@@ -456,14 +456,6 @@
 
 -(void)updateToolbar
 {
-    if (self.gridView.selectionIndexPaths.count == 0) {
-        [self.toolbar hideToolbar:YES];
-    } else {
-        [self.toolbar showToolbar:YES];
-    }
-
-    [self.toolbar setTitle:@"So many albums selected"];
-
     PIXCustomButton * deleteButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
     if([self.selectedItems count] > 1) {
         [deleteButton setTitle:[NSString stringWithFormat:@"Delete %ld Albums", [self.selectedItems count]]];
@@ -671,11 +663,15 @@
             ((PIXCollectionViewItem *) item).selected = selected;
         }
     }
-    if (self.gridView.selectionIndexPaths.count > 0) {
-        [self.toolbar showToolbar:YES];
-    } else {
+
+    NSUInteger count = self.gridView.selectionIndexPaths.count;
+    if (count == 0) {
         [self.toolbar hideToolbar:YES];
+    } else {
+        [self.toolbar showToolbar:YES];
     }
+
+    [self.toolbar setTitle:[NSString localizedStringWithFormat:NSLocalizedString(@"%lu album(s) selected", @"Number of selected albums"), (unsigned long)count]];
 }
 
 -(void)reselectItems:(NSArray *)itemsToReselect

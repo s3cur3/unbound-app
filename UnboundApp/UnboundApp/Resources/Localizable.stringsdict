@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>%lu album(s) selected</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@albums@</string>
+		<key>albums</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lu</string>
+			<key>zero</key>
+			<string>No albums selected</string>
+			<key>one</key>
+			<string>%lu album selected</string>
+			<key>other</key>
+			<string>%lu albums selected</string>
+		</dict>
+	</dict>
+</dict>
+</plist>
