@@ -12,10 +12,11 @@
 #import "PIXRoundedProgressIndicator.h"
 
 @class PIXCollectionToolbar;
+@class PIXCollectionView;
 
 @interface PIXCollectionViewController : PIXViewController
 
-@property (strong) IBOutlet NSCollectionView *collectionView;
+@property (strong) IBOutlet PIXCollectionView *collectionView;
 
 @property (strong) NSString * selectedItemsName;
 

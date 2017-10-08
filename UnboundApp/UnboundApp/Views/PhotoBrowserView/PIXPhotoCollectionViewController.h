@@ -23,4 +23,5 @@
 //PIXPageViewControllerDelegate
 //-(void)pagerDidMoveToPhotoAtIndex:(NSUInteger)index;
 
+- (void)selectFirstItem;
 @end

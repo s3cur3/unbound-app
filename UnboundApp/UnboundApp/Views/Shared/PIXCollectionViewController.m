@@ -16,6 +16,7 @@
 #import "PIXPhoto.h"
 #import "PIXAlbum.h"
 #import "PIXCollectionToolbar.h"
+#import "PIXCollectionView.h"
 #import <Quartz/Quartz.h>
 
 static NSString *kContentTitleKey, *kContentImageKey;

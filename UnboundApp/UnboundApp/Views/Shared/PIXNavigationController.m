@@ -93,6 +93,10 @@
 
 -(void)popViewController;
 {
+    if (self.viewControllers.count <= 1) {
+        return;
+    }
+
     [self.mainWindow disableFlushWindow];
     NSDisableScreenUpdates();
     
@@ -151,6 +155,16 @@
 -(NSArray *)viewControllerArray
 {
     return [NSArray arrayWithArray:self.viewControllers];
+}
+
+- (void)keyDown:(NSEvent *)event {
+    switch (event.keyCode) {
+        case 53: // escape
+            [self popViewController];
+            return;
+        default:
+            [super keyDown:event];
+    }
 }
 
 - (IBAction)backPressed:(id)sender;

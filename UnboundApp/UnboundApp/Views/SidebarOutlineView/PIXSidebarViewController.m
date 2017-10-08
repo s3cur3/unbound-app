@@ -421,7 +421,7 @@
 {
     // make the image grid the first responder
     [self.view.window makeFirstResponder:self.splitViewController.imageBrowserViewController.collectionView];
-    [self.splitViewController.imageBrowserViewController.collectionView moveRight:sender];
+    [self.splitViewController.imageBrowserViewController selectFirstItem];
 }
 
 -(void)cancelOperation:(id)sender

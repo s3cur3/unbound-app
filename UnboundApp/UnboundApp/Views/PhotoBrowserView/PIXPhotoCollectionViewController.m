@@ -19,6 +19,7 @@
 #import "PIXCustomButton.h"
 #import "PIXShareManager.h"
 #import "PIXCollectionToolbar.h"
+#import "PIXCollectionView.h"
 
 @interface PIXPhotoCollectionViewController () <NSCollectionViewDelegate, NSCollectionViewDataSource>
 
@@ -115,35 +116,21 @@
     self.gridViewTitle.textColor = textColor;
 }
 
-// TODO Move this to the navigation controller and window, respectively
-// handle escape key here if needed
 -(void)keyDown:(NSEvent *)event
 {
-    if ([event type] == NSKeyDown)
-    {
-        NSString* pressedChars = [event characters];
-        if ([pressedChars length] == 1)
-        {
-            unichar pressedUnichar = [pressedChars characterAtIndex:0];
-            
-            if (pressedUnichar == 0x001B)  // escape key
-            {
-                [self.navigationViewController popViewController];
-                return;
-            }
-            
-            if(pressedUnichar == 'f') // f should togge fullscreen
-            {
-                [self.view.window toggleFullScreen:event];
-                return;
-            }
-            
-        }
+    switch (event.keyCode) {
+        case 36: // return
+        case 76: // enter
+            [self openFirstSelectedItem];
+            return;
     }
-    
-    
+
+    if ([@"f" isEqualToString:event.characters]) {
+        [self.view.window toggleFullScreen:event];
+        return;
+    }
+
     [super keyDown:event];
-    
 }
 
 // send a size between 0 and 1 (will be transformed into appropriate sizes)
@@ -252,8 +239,27 @@
 
 - (void)collectionItemViewDoubleClick:(id)sender {
     PIXPhotoCollectionViewItemView *item = sender;
+    [self openItem:item.photo];
+}
+
+- (void)openFirstSelectedItem {
+    NSSet<NSIndexPath *> *selection = self.collectionView.selectionIndexPaths;
+    if (selection.count > 0) {
+        [self openItemAtIndexPath:selection.anyObject];
+    }
+}
+
+- (void)openItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSInteger index = indexPath.item;
+    if (index >= 0 && index < self.album.sortedPhotos.count) {
+        PIXPhoto *photo = self.album.sortedPhotos[index];
+        [self openItem:photo];
+    }
+}
+
+- (void)openItem:(PIXPhoto *)photo {
     PIXPageViewController *pageViewController = [[PIXPageViewController alloc] initWithNibName:nil bundle:nil];
-    pageViewController.initialSelectedObject = item.photo;
+    pageViewController.initialSelectedObject = photo;
     pageViewController.album = self.album;
     pageViewController.delegate = self;
     [self.navigationViewController pushViewController:pageViewController];
@@ -300,6 +306,10 @@
 }
 
 #pragma mark - Selection
+
+- (void)selectFirstItem {
+    self.collectionView.selectionIndexPaths = [NSSet setWithObject:[NSIndexPath indexPathForItem:0 inSection:0]];
+}
 
 - (NSSet<PIXPhoto *> *)selectedItems {
     NSSet<NSIndexPath *> *selectionIndexPaths = self.collectionView.selectionIndexPaths;

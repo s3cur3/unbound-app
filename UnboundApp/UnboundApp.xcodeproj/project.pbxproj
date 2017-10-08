@@ -71,6 +71,7 @@
 		458AD16B2C9F4B5C063345EC /* buttongrid_email@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD1A07A96C822C47C889F /* buttongrid_email@2x.png */; };
 		458AD16DE4B4543D59AA2A69 /* ArchDirectoryObservationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADDBAA820D680A33ADFB5 /* ArchDirectoryObservationCenter.m */; };
 		458AD16DF9376558A92CFB57 /* buttongrid_email.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADC0F47F8C6A43275CD7C /* buttongrid_email.png */; };
+		458AD16EF4BD15153C72E141 /* PIXCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADA0B500A4B5ADBD8014E /* PIXCollectionView.m */; };
 		458AD17914CC80B490A36996 /* PIXHUDMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADC39E936C0CABFBCE7FE /* PIXHUDMessageController.m */; };
 		458AD17A20B13A0AA6A4D857 /* PIXGetAlbumPathsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADE8122FDF9F4D85CEDFA /* PIXGetAlbumPathsOperation.m */; };
 		458AD17B6B5829D380BD3A77 /* PIXSplitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADDEDF9EFD7B90D25E4C6 /* PIXSplitViewController.xib */; };
@@ -469,6 +470,7 @@
 		458ADD8755B84ADE0395112D /* PIXLoadAlbumOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADEF27A1E4EF5D8706D1C /* PIXLoadAlbumOperation.m */; };
 		458ADD8A4A8CB2F780141E38 /* PIXAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD86966809D7801FD2562 /* PIXAccount.m */; };
 		458ADD8D917CB5895425A1B3 /* temp-portrait.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 458ADE7D1E7845E040AC5001 /* temp-portrait.jpg */; };
+		458ADD9279C5C38C0EB41098 /* PIXCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADA0B500A4B5ADBD8014E /* PIXCollectionView.m */; };
 		458ADD9AF81BE5440B3EE3BA /* leapnotconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADFBAF1890806CFAFBEAA /* leapnotconnected.png */; };
 		458ADD9EB2F713116AAB6740 /* buttongrid_emaillink.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD2C360D0004D8B746AAC /* buttongrid_emaillink.png */; };
 		458ADDADF9071F7A95A220D1 /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD517C4B10B0D32A89962 /* play@2x.png */; };
@@ -535,6 +537,7 @@
 		458ADF77BC694A71EFA04798 /* sortbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADDA68D473D6E60B8E047 /* sortbutton@2x.png */; };
 		458ADF876BEB2EF37EBF249A /* arrow-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD929D4BAE762435AD021 /* arrow-right.png */; };
 		458ADF8CA2CC72647C74DD2D /* GeneralPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADAD62492615181E05C3C /* GeneralPreferencesView.xib */; };
+		458ADF8D765591473CD3008E /* PIXCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADA0B500A4B5ADBD8014E /* PIXCollectionView.m */; };
 		458ADF99ADDDE4420EEDBB98 /* buttongrid_print.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD030F9E9A7E3B1C08718 /* buttongrid_print.png */; };
 		458ADFA9CE2B8264C131C64D /* NSBezierPath+pathUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADA4C9A16191E9DED0AD7 /* NSBezierPath+pathUtilities.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		458ADFD5B8819D6455792F74 /* ArchDirectoryObservationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADDBAA820D680A33ADFB5 /* ArchDirectoryObservationCenter.m */; };
@@ -813,6 +816,7 @@
 		458AD9AFA86D4687002F7DCC /* PIXCustomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXCustomButton.h; sourceTree = "<group>"; };
 		458AD9BBDC50CC837C1EC1F4 /* AutoSizingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoSizingImageView.h; sourceTree = "<group>"; };
 		458AD9FAE54C35D446B3C313 /* PIXProgressWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXProgressWindowController.m; sourceTree = "<group>"; };
+		458ADA0B500A4B5ADBD8014E /* PIXCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXCollectionView.m; sourceTree = "<group>"; };
 		458ADA297AAEBA62BF91A261 /* PIXAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXAccount.h; sourceTree = "<group>"; };
 		458ADA2D4C8A98FFC1810379 /* PIXAlbumCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXAlbumCollectionViewController.h; sourceTree = "<group>"; };
 		458ADA4846A717650BFE249D /* PIXNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXNavigationController.h; sourceTree = "<group>"; };
@@ -840,6 +844,7 @@
 		458ADC2EB8F423821AD43A2A /* PIXPlayVideoHUDWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPlayVideoHUDWindow.m; sourceTree = "<group>"; };
 		458ADC35FEA31B0D8312AF84 /* PIXPhotoCollectionViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhotoCollectionViewItem.m; sourceTree = "<group>"; };
 		458ADC385DD20D2328DC6B8F /* PIXPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPageView.m; sourceTree = "<group>"; };
+		458ADC3988E03CE28BA1D129 /* PIXCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXCollectionView.h; sourceTree = "<group>"; };
 		458ADC39E936C0CABFBCE7FE /* PIXHUDMessageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXHUDMessageController.m; sourceTree = "<group>"; };
 		458ADC4C05748A68EBC14116 /* buttongrid_facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttongrid_facebook.png; sourceTree = "<group>"; };
 		458ADC4D5760C6B3DE08C77F /* PIXSlideshowOptonsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXSlideshowOptonsViewController.h; sourceTree = "<group>"; };
@@ -1219,6 +1224,8 @@
 				458ADBE6B4EB3E535CC48668 /* PIXNavigationController.m */,
 				458AD2E290E211201DFD9034 /* NSCollectionView+PIXSelection.m */,
 				458AD8E445B547B0CBD94DD6 /* NSCollectionView+PIXSelection.h */,
+				458ADA0B500A4B5ADBD8014E /* PIXCollectionView.m */,
+				458ADC3988E03CE28BA1D129 /* PIXCollectionView.h */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -2357,6 +2364,7 @@
 				458AD04678D2A1BE2EC5642D /* PIXDataModel.xcdatamodeld in Sources */,
 				458AD0BAA89DFD1CCF9DBECC /* PIXCollectionToolbar.m in Sources */,
 				458AD01FBD59225A8AD793B2 /* NSCollectionView+PIXSelection.m in Sources */,
+				458ADD9279C5C38C0EB41098 /* PIXCollectionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2435,6 +2443,7 @@
 				458AD64DEAB0920DB18F855C /* PIXDataModel.xcdatamodeld in Sources */,
 				458AD5A5BACB12ED72838495 /* PIXCollectionToolbar.m in Sources */,
 				458ADE38B7D7DAD30EBFDDB9 /* NSCollectionView+PIXSelection.m in Sources */,
+				458AD16EF4BD15153C72E141 /* PIXCollectionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2513,6 +2522,7 @@
 				458ADBDF43CC3E5188AA492F /* PIXDataModel.xcdatamodeld in Sources */,
 				458ADE361C7A0471CBB9B13A /* PIXCollectionToolbar.m in Sources */,
 				458ADC59902A90ED790F99DB /* NSCollectionView+PIXSelection.m in Sources */,
+				458ADF8D765591473CD3008E /* PIXCollectionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

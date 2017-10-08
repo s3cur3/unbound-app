@@ -16,6 +16,7 @@
 #import "PIXFileManager.h"
 #import "PIXDefines.h"
 #import "PIXPhotoCollectionViewController.h"
+#import "PIXCollectionView.h"
 
 @interface PIXSplitViewController ()
 

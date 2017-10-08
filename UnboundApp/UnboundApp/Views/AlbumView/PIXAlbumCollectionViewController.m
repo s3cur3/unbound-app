@@ -21,6 +21,7 @@
 
 #import "PIXAlbumCollectionViewItem.h"
 #import "PIXCollectionToolbar.h"
+#import "PIXCollectionView.h"
 
 @interface PIXAlbumCollectionViewController () <NSCollectionViewDelegate, NSCollectionViewDataSource, PIXSplitViewControllerDelegate>
 
@@ -651,7 +652,27 @@
     [self showPhotosForAlbum:item.representedObject];
 }
 
+- (void)openFirstSelectedItem {
+    NSSet<NSIndexPath *> *selection = self.collectionView.selectionIndexPaths;
+    if (selection.count > 0) {
+        [self openItemAtIndexPath:selection.anyObject];
+    }
+}
+
+- (void)openItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSInteger index = indexPath.item;
+    if (index >= 0 && index < self.albums.count) {
+        PIXAlbum *album = self.albums[index];
+        [self showPhotosForAlbum:album];
+    }
+}
+
 #pragma mark - Selection
+
+- (void)selectFirstItem {
+    self.collectionView.selectionIndexPaths = [NSSet setWithObject:[NSIndexPath indexPathForItem:0 inSection:0]];
+}
+
 - (NSSet<PIXAlbum *> *)selectedItems {
     NSSet<NSIndexPath *> *selectionIndexPaths = self.collectionView.selectionIndexPaths;
     if (selectionIndexPaths.count == 0) {
@@ -803,22 +824,18 @@
 #pragma mark - Keyboard
 -(void)keyDown:(NSEvent *)event
 {
-    if ([event type] == NSKeyDown)
-    {
-        NSString* pressedChars = [event characters];
-        if ([pressedChars length] == 1)
-        {
-            unichar pressedUnichar = [pressedChars characterAtIndex:0];
-            
-            if(pressedUnichar == 'f') // f should togge fullscreen
-            {
-                [self.view.window toggleFullScreen:event];
-                return;
-            }
-            
-        }
+    switch (event.keyCode) {
+        case 36: // return
+        case 76: // enter
+            [self openFirstSelectedItem];
+            return;
     }
-    
+
+    if ([@"f" isEqualToString:event.characters]) {
+        [self.view.window toggleFullScreen:event];
+        return;
+    }
+
     [super keyDown:event];
 }
 

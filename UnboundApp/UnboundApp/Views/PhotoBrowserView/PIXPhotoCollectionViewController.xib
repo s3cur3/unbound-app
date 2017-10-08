@@ -121,7 +121,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="652" height="335"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView selectable="YES" allowsMultipleSelection="YES" id="KUn-vc-UwM">
+                            <collectionView selectable="YES" allowsMultipleSelection="YES" id="KUn-vc-UwM" customClass="PIXCollectionView">
                                 <rect key="frame" x="0.0" y="0.0" width="652" height="335"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="qgz-ha-WrA">

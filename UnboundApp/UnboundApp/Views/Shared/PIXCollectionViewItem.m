@@ -53,6 +53,13 @@
     }
 }
 
+- (void)keyDown:(NSEvent *)event {
+    if ([event.characters characterAtIndex:0] == NSEnterCharacter) {
+        [NSApplication.sharedApplication sendAction:@selector(collectionItemViewDoubleClick:) to:nil from:self];
+    }
+    [super keyDown:event];
+}
+
 #pragma mark - ViewDrawing
 
 // draws an image with a border in the rect. Returns the rect where the photo was drawn (using aspect ratio)
