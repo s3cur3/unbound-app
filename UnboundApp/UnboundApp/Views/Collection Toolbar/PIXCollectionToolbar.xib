@@ -8,20 +8,19 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PIXCollectionToolbar">
             <connections>
-                <outlet property="buttonContainer" destination="EZd-eR-zBG" id="AXf-yf-0J9"/>
-                <outlet property="buttonHolder" destination="EZd-eR-zBG" id="MIy-ib-qgX"/>
-                <outlet property="contentView" destination="c22-O7-iKe" id="wLN-bu-uYS"/>
+                <outlet property="buttonHolder" destination="iPS-px-nbh" id="kY5-Az-dE9"/>
+                <outlet property="contentView" destination="c22-O7-iKe" id="MR6-po-zwV"/>
                 <outlet property="titleField" destination="Vko-NF-F62" id="8Wr-qH-hev"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="672" height="36"/>
+            <rect key="frame" x="0.0" y="0.0" width="672" height="35"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button horizontalHuggingPriority="451" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="m3U-29-rg4">
-                    <rect key="frame" x="150" y="7" width="24" height="23"/>
+                    <rect key="frame" x="150" y="6" width="24" height="23"/>
                     <buttonCell key="cell" type="square" title="All" bezelStyle="shadowlessSquare" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WwB-zS-D53" customClass="PIXCustomButtonCell">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" size="12" name="Helvetica"/>
@@ -31,7 +30,7 @@
                     </connections>
                 </button>
                 <button horizontalHuggingPriority="373" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1" translatesAutoresizingMaskIntoConstraints="NO" id="aob-gY-IMA">
-                    <rect key="frame" x="8" y="7" width="76" height="23"/>
+                    <rect key="frame" x="8" y="6" width="76" height="23"/>
                     <buttonCell key="cell" type="square" title="Select None" bezelStyle="shadowlessSquare" imagePosition="left" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NAz-sl-hGe" customClass="PIXCustomButtonCell">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" size="12" name="Helvetica"/>
@@ -41,7 +40,7 @@
                     </connections>
                 </button>
                 <button horizontalHuggingPriority="537" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1" translatesAutoresizingMaskIntoConstraints="NO" id="yd9-hK-Jvl">
-                    <rect key="frame" x="92" y="7" width="50" height="23"/>
+                    <rect key="frame" x="92" y="6" width="50" height="23"/>
                     <buttonCell key="cell" type="square" title="Inverse" bezelStyle="shadowlessSquare" image="buttonCell:xl7-8q-F2q:image" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xl7-8q-F2q" customClass="PIXCustomButtonCell">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" size="12" name="Helvetica"/>
@@ -58,20 +57,21 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <customView horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EZd-eR-zBG">
-                    <rect key="frame" x="395" y="6" width="269" height="25"/>
-                </customView>
+                <stackView orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iPS-px-nbh">
+                    <rect key="frame" x="395" y="6" width="269" height="23"/>
+                </stackView>
             </subviews>
             <constraints>
                 <constraint firstItem="aob-gY-IMA" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="8" id="4Jd-LJ-8Ii"/>
                 <constraint firstItem="Vko-NF-F62" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="4jU-Tq-fyh"/>
                 <constraint firstItem="yd9-hK-Jvl" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="5wr-4r-2w2"/>
                 <constraint firstItem="m3U-29-rg4" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="8Dc-34-714"/>
-                <constraint firstItem="EZd-eR-zBG" firstAttribute="leading" secondItem="Vko-NF-F62" secondAttribute="trailing" constant="8" id="KFe-a8-ilv"/>
+                <constraint firstAttribute="trailing" secondItem="iPS-px-nbh" secondAttribute="trailing" constant="8" id="B66-D0-waP"/>
+                <constraint firstItem="iPS-px-nbh" firstAttribute="leading" secondItem="Vko-NF-F62" secondAttribute="trailing" constant="8" id="I8Q-BM-hKg"/>
+                <constraint firstItem="iPS-px-nbh" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="6" id="Iee-dI-qoe"/>
                 <constraint firstItem="m3U-29-rg4" firstAttribute="leading" secondItem="yd9-hK-Jvl" secondAttribute="trailing" constant="8" id="ZjW-zX-yYB"/>
+                <constraint firstAttribute="bottom" secondItem="iPS-px-nbh" secondAttribute="bottom" constant="6" id="ZoI-xw-e1U"/>
                 <constraint firstItem="yd9-hK-Jvl" firstAttribute="leading" secondItem="aob-gY-IMA" secondAttribute="trailing" constant="8" id="aLE-hx-Pg0"/>
-                <constraint firstItem="EZd-eR-zBG" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="mpa-u0-mlL"/>
-                <constraint firstAttribute="trailing" secondItem="EZd-eR-zBG" secondAttribute="trailing" constant="8" id="qt4-ze-iyb"/>
                 <constraint firstItem="aob-gY-IMA" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="sd5-Lg-z31"/>
                 <constraint firstItem="Vko-NF-F62" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="xn3-aL-y70"/>
             </constraints>
