@@ -103,6 +103,8 @@
     self.view.wantsLayer = YES;
     [self setBGColor];
 
+    [self setupCollectionToolbar];
+
     [self albumsChanged:nil];
     
 }
@@ -137,12 +139,7 @@
     
     [self updateSearch];
 
-    [self.toolbar hideToolbar:NO];
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self updateToolbar];
-    });
-    
+    [self updateCollectionToolbar];
     
     [[PIXFileParser sharedFileParser] addObserver:self forKeyPath:@"fullScanProgress" options:NSKeyValueObservingOptionNew context:nil];
     
@@ -402,7 +399,7 @@
 
     // select just this item
     self.collectionView.selectionIndexPaths = [NSSet setWithObject:[NSIndexPath indexPathForItem:index inSection:0]];
-    [self updateToolbar];
+    [self updateCollectionToolbar];
 
     /*
     // this will scroll to the item and make the text field the first responder
@@ -453,8 +450,17 @@
     [self updateSearch];
 }
 
--(void)updateToolbar
-{
+- (void)updateCollectionToolbar {
+    NSUInteger count = self.collectionView.selectionIndexPaths.count;
+    if (count == 0) {
+        [self.toolbar hideToolbar:YES];
+    } else {
+        [self.toolbar showToolbar:YES];
+    }
+    [self.toolbar setTitle:[NSString localizedStringWithFormat:NSLocalizedString(@"%lu photo(s) selected", @"Number of selected photos"), (unsigned long)count]];
+}
+
+- (void)setupCollectionToolbar {
     PIXCustomButton * deleteButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
     if([self.selectedItems count] > 1) {
         [deleteButton setTitle:[NSString stringWithFormat:@"Delete %ld Albums", [self.selectedItems count]]];
@@ -740,8 +746,8 @@
     {
         visibleArray = self.searchedAlbums;
     }
-    
-    [self updateToolbar];
+
+    [self updateCollectionToolbar];
     [self updateGridTitle];
 
     // TODO filter the items

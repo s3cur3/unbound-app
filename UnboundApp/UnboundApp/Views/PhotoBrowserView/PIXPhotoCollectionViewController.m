@@ -72,6 +72,8 @@
     self.view.wantsLayer = YES;
     [self setBGColor];
 
+    [self setupToolbar];
+
     [self updateAlbum:nil];
 }
 
@@ -322,15 +324,7 @@
             ((PIXCollectionViewItem *) item).selected = selected;
         }
     }
-
-    NSUInteger count = self.collectionView.selectionIndexPaths.count;
-    if (count == 0) {
-        [self.toolbar hideToolbar:YES];
-    } else {
-        [self.toolbar showToolbar:YES];
-    }
-
-    [self.toolbar setTitle:[NSString localizedStringWithFormat:NSLocalizedString(@"%lu photo(s) selected", @"Number of selected photos"), (unsigned long)count]];
+    [self updateToolbar];
 }
 
 #pragma mark - Drop Operation
@@ -426,15 +420,17 @@
     return YES;
 }
 
--(void)updateToolbar
-{
+- (void)updateToolbar {
     NSUInteger count = self.collectionView.selectionIndexPaths.count;
     if (count == 0) {
         [self.toolbar hideToolbar:YES];
     } else {
         [self.toolbar showToolbar:YES];
     }
+    [self.toolbar setTitle:[NSString localizedStringWithFormat:NSLocalizedString(@"%lu photo(s) selected", @"Number of selected photos"), (unsigned long)count]];
+}
 
+- (void)setupToolbar {
     PIXCustomButton * deleteButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
     [deleteButton setTitle:@"Delete"];
     [deleteButton setTarget:self];
