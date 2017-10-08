@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="PIXCollectionViewController">
+            <connections>
+                <outlet property="centerStatusView" destination="kcO-6j-nBU" id="llt-dx-eAC"/>
+                <outlet property="centerStatusViewSubTextField" destination="SWz-5P-ham" id="O8E-vh-xZS"/>
+                <outlet property="centerStatusViewTextField" destination="WIY-ms-Q0S" id="PJU-rQ-7a3"/>
+                <outlet property="collectionView" destination="KUn-vc-UwM" id="GSd-Nf-rLy"/>
+                <outlet property="gridViewProgress" destination="pyq-Cn-tHT" id="kI1-53-Na8"/>
+                <outlet property="gridViewTitle" destination="iYX-Z2-2rd" id="VhK-FX-B7D"/>
+                <outlet property="scrollView" destination="lQ1-RR-8z3" id="FQa-PA-wZ4"/>
+                <outlet property="toolbar" destination="MuM-uy-GpU" id="Kul-So-Pgn"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="652" height="380"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MuM-uy-GpU" customClass="PIXCollectionToolbar">
+                    <rect key="frame" x="0.0" y="380" width="652" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="Vgy-5R-cXj"/>
+                    </constraints>
+                </customView>
+                <textField hidden="YES" horizontalHuggingPriority="1" verticalHuggingPriority="744" horizontalCompressionResistancePriority="324" translatesAutoresizingMaskIntoConstraints="NO" id="iYX-Z2-2rd">
+                    <rect key="frame" x="48" y="340" width="556" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="3fp-uq-PcH"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="Rjs-BJ-Pjo"/>
+                    </constraints>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="center" title="Loading Albums" id="lEw-Va-h7q">
+                        <font key="font" size="16" name="Helvetica"/>
+                        <color key="textColor" red="0.48806895379999998" green="0.48806895379999998" blue="0.48806895379999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <customView hidden="YES" wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kcO-6j-nBU">
+                    <rect key="frame" x="70" y="70" width="512" height="240"/>
+                    <subviews>
+                        <textField horizontalHuggingPriority="1" verticalHuggingPriority="744" horizontalCompressionResistancePriority="324" preferredMaxLayoutWidth="460" translatesAutoresizingMaskIntoConstraints="NO" id="WIY-ms-Q0S">
+                            <rect key="frame" x="24" y="139" width="464" height="81"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="460" id="Bz8-HE-aOJ"/>
+                                <constraint firstAttribute="height" constant="81" id="LTI-Dn-x7y"/>
+                            </constraints>
+                            <textFieldCell key="cell" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="center" title="Import photos or choose a different main photos folder." id="XKW-Da-us6">
+                                <font key="font" size="16" name="Helvetica"/>
+                                <color key="textColor" red="0.48806895379999998" green="0.48806895379999998" blue="0.48806895379999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="1" verticalHuggingPriority="744" horizontalCompressionResistancePriority="324" preferredMaxLayoutWidth="460" translatesAutoresizingMaskIntoConstraints="NO" id="SWz-5P-ham">
+                            <rect key="frame" x="24" y="113" width="464" height="81"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="81" id="ORd-lu-NhW"/>
+                            </constraints>
+                            <textFieldCell key="cell" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="center" title="Current Folder: " id="tWc-3R-Evy">
+                                <font key="font" size="14" name="Helvetica-Light"/>
+                                <color key="textColor" red="0.57848011359999996" green="0.57848011359999996" blue="0.57848011359999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9oX-k4-h5Y">
+                            <rect key="frame" x="156" y="92" width="200" height="25"/>
+                            <buttonCell key="cell" type="roundTextured" title="Change Main Photos Folder" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jRT-wP-ba9">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" size="12" name="Helvetica"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="chooseFolderButtonPressed:" target="-2" id="hdJ-8F-WWG"/>
+                            </connections>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="m2p-A4-arK">
+                            <rect key="frame" x="156" y="122" width="200" height="25"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="200" id="F0B-bf-jMq"/>
+                            </constraints>
+                            <buttonCell key="cell" type="roundTextured" title="Import Folders" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nLO-27-ZRW">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" size="12" name="Helvetica"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="importPhotosButtonPressed:" target="-2" id="S6y-ta-0Dp"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="SWz-5P-ham" firstAttribute="top" secondItem="kcO-6j-nBU" secondAttribute="top" constant="46" id="2j6-7d-zH4"/>
+                        <constraint firstItem="SWz-5P-ham" firstAttribute="leading" secondItem="WIY-ms-Q0S" secondAttribute="leading" id="2td-A9-npn"/>
+                        <constraint firstItem="m2p-A4-arK" firstAttribute="trailing" secondItem="9oX-k4-h5Y" secondAttribute="trailing" id="5RP-fM-bWx"/>
+                        <constraint firstItem="SWz-5P-ham" firstAttribute="trailing" secondItem="WIY-ms-Q0S" secondAttribute="trailing" id="Api-bO-BKy"/>
+                        <constraint firstItem="9oX-k4-h5Y" firstAttribute="top" secondItem="m2p-A4-arK" secondAttribute="bottom" constant="8" symbolic="YES" id="Dl4-2U-YOr"/>
+                        <constraint firstItem="m2p-A4-arK" firstAttribute="leading" secondItem="9oX-k4-h5Y" secondAttribute="leading" id="Fsk-AB-U0L"/>
+                        <constraint firstItem="WIY-ms-Q0S" firstAttribute="top" secondItem="kcO-6j-nBU" secondAttribute="top" constant="20" symbolic="YES" id="HhO-bx-43d"/>
+                        <constraint firstItem="SWz-5P-ham" firstAttribute="centerX" secondItem="m2p-A4-arK" secondAttribute="centerX" id="RF7-UT-pIk"/>
+                        <constraint firstAttribute="height" constant="240" id="ntv-F5-LaX"/>
+                        <constraint firstAttribute="centerX" secondItem="9oX-k4-h5Y" secondAttribute="centerX" id="qdm-wk-kDD"/>
+                        <constraint firstItem="m2p-A4-arK" firstAttribute="top" secondItem="kcO-6j-nBU" secondAttribute="top" constant="94" id="wHV-3k-Iyf"/>
+                    </constraints>
+                </customView>
+                <customView hidden="YES" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pyq-Cn-tHT" customClass="PIXRoundedProgressIndicator">
+                    <rect key="frame" x="176" y="345" width="300" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="300" id="DAB-Wu-bao"/>
+                        <constraint firstAttribute="height" constant="20" id="pWo-I5-RBN"/>
+                    </constraints>
+                </customView>
+                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lQ1-RR-8z3">
+                    <rect key="frame" x="0.0" y="0.0" width="652" height="345"/>
+                    <clipView key="contentView" drawsBackground="NO" id="dHo-0i-AJM">
+                        <rect key="frame" x="0.0" y="0.0" width="652" height="345"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView selectable="YES" allowsMultipleSelection="YES" id="KUn-vc-UwM" customClass="PIXCollectionView">
+                                <rect key="frame" x="0.0" y="0.0" width="652" height="345"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="dF4-cG-T5n">
+                                    <size key="itemSize" width="50" height="50"/>
+                                </collectionViewFlowLayout>
+                                <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="-2" id="fD0-5L-Vkd"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="SHw-zW-NT7">
+                        <rect key="frame" x="-100" y="-100" width="233" height="15"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="3sq-Yn-RlM">
+                        <rect key="frame" x="636" y="0.0" width="16" height="335"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="iYX-Z2-2rd" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="15" id="CVj-Kp-aL1"/>
+                <constraint firstItem="MuM-uy-GpU" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="MQg-HM-oHn"/>
+                <constraint firstItem="lQ1-RR-8z3" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="35" id="Maa-Bc-du1"/>
+                <constraint firstItem="kcO-6j-nBU" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="N0I-KO-FR1"/>
+                <constraint firstAttribute="trailing" secondItem="lQ1-RR-8z3" secondAttribute="trailing" id="Qbr-C6-ykv"/>
+                <constraint firstItem="lQ1-RR-8z3" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="RQI-Rr-Fvx"/>
+                <constraint firstItem="iYX-Z2-2rd" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="50" id="V8C-3n-deb"/>
+                <constraint firstItem="kcO-6j-nBU" firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" id="dc7-6a-7FW"/>
+                <constraint firstAttribute="bottom" secondItem="lQ1-RR-8z3" secondAttribute="bottom" id="fAA-Gb-e2X"/>
+                <constraint firstItem="pyq-Cn-tHT" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="igh-6G-3Uv"/>
+                <constraint firstItem="MuM-uy-GpU" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="-35" id="qxa-mD-zhj"/>
+                <constraint firstAttribute="trailing" secondItem="iYX-Z2-2rd" secondAttribute="trailing" constant="50" id="tjm-5o-RSJ"/>
+                <constraint firstItem="kcO-6j-nBU" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="70" id="wrJ-TS-Pjm"/>
+                <constraint firstAttribute="trailing" secondItem="MuM-uy-GpU" secondAttribute="trailing" id="yoR-Fe-4rT"/>
+            </constraints>
+            <point key="canvasLocation" x="312" y="16"/>
+        </customView>
+    </objects>
+</document>

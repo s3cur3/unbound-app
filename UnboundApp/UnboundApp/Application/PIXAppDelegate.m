@@ -23,19 +23,12 @@
 #import "GeneralPreferencesViewController.h"
 #import "AdvancedPreferencesViewController.h"
 #import "DebugPrefrencesViewController.h"
-#import "PIXLeapInputManager.h"
-
-#import "PIXLeapTutorialWindowController.h"
 
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 
 #ifdef SPARKLE
 #import <Sparkle/Sparkle.h>
-#endif
-
-#ifdef APPIRATOR
-#import "Appirater.h"
 #endif
 
 //extern NSString *kLoadImageDidFinish;
@@ -47,8 +40,6 @@
 }
 
 @property (readonly, strong, atomic) NSOperationQueue *backgroundSaveQueue;
-
-@property (strong) PIXLeapTutorialWindowController * leapTutorial;
 
 #ifdef SPARKLE
 @property (strong) SUUpdater * sparkleUpdater;
@@ -124,8 +115,13 @@
     
     if([[NSUserDefaults standardUserDefaults] boolForKey:kAppDidNotExitCleanly])
     {
-        if(NSRunAlertPanel(@"Unbound Crashed", @"Unbound seems to have crashed the last time you launched it. Do you want to try again or reset all settings?", @"Start Normally", @"Clear Settings", nil) == 0)
-        {
+        NSAlert *alert = [[NSAlert alloc] init];
+        alert.messageText = @"Unbound Crashed";
+        alert.informativeText = @"Unbound seems to have crashed the last time you launched it. Do you want to try again or reset all settings?";
+        [alert addButtonWithTitle:@"Start Normally"];
+        [alert addButtonWithTitle:@"Clear Settings"];
+        NSModalResponse response = [alert runModal];
+        if (response == NSModalResponseCancel) {
             [self clearAllSettings];
         }
     }
@@ -175,24 +171,10 @@
 #ifdef DEBUG
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
 #endif
-    
-    [[PIXLeapInputManager sharedInstance] run];
 
-    
 #ifdef SPARKLE
     self.showSparkleMenu = YES;
     self.sparkleUpdater = [SUUpdater new];
-#endif
-    
-#ifdef APPIRATOR
-    [Appirater setAppId:@"690375005"];
-    [Appirater setDaysUntilPrompt:3];
-    [Appirater setUsesUntilPrompt:4];
-    [Appirater setSignificantEventsUntilPrompt:-1];
-    [Appirater setTimeBeforeReminding:2];
-    //[Appirater setDebug:YES];
-    
-    [Appirater appLaunched:YES];
 #endif
     
 }
@@ -296,23 +278,6 @@
 {
     NSURL * url = [NSURL URLWithString:@"http://www.analog-ocean.com"];
     [[NSWorkspace sharedWorkspace] openURL:url];
-}
-
-- (IBAction)coolLeapAppsPressed:(id)sender
-{
-    NSURL * url = [NSURL URLWithString:@"http://www.unboundformac.com/coolleapapps.html"];
-    [[NSWorkspace sharedWorkspace] openURL:url];
-}
-
-- (IBAction)showLeapTutorialPressed:(id)sender
-{
-    if(self.leapTutorial == nil)
-    {
-        self.leapTutorial = [[PIXLeapTutorialWindowController alloc] initWithWindowNibName:@"PIXLeapTutorialWindowController"];
-    }
-    
-    [self.leapTutorial restartTutorial];
-    [self.leapTutorial showWindow:self];
 }
 
 - (IBAction)helpPressed:(id)sender

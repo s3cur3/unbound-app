@@ -12,7 +12,7 @@
 #import "PIXAlbum.h"
 #import "PIXMiniExifViewController.h"
 #import "PIXFileManager.h"
-#import "PIXGridViewController.h"
+#import "PIXCollectionViewController.h"
 
 @interface PIXViewController ()
 
@@ -89,7 +89,7 @@
     }
     
     // Selection Options
-    if (objects.count >1 && [self isKindOfClass:[PIXGridViewController class]]) {
+    if (objects.count >1 && [self isKindOfClass:[PIXCollectionViewController class]]) {
         [menu addItemWithTitle:[NSString stringWithFormat:@"Select All"] action:
          @selector(selectAll:) keyEquivalent:@""];
         [menu addItemWithTitle:[NSString stringWithFormat:@"Select None"] action:

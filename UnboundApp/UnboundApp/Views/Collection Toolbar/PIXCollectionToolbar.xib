@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="PIXCollectionToolbar">
+            <connections>
+                <outlet property="buttonHolder" destination="iPS-px-nbh" id="kY5-Az-dE9"/>
+                <outlet property="contentView" destination="c22-O7-iKe" id="MR6-po-zwV"/>
+                <outlet property="titleField" destination="Vko-NF-F62" id="8Wr-qH-hev"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="672" height="35"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button horizontalHuggingPriority="451" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="m3U-29-rg4">
+                    <rect key="frame" x="150" y="6" width="24" height="23"/>
+                    <buttonCell key="cell" type="square" title="All" bezelStyle="shadowlessSquare" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WwB-zS-D53" customClass="PIXCustomButtonCell">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" size="12" name="Helvetica"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="selectAll:" target="-2" id="Znl-kb-6Sm"/>
+                    </connections>
+                </button>
+                <button horizontalHuggingPriority="373" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1" translatesAutoresizingMaskIntoConstraints="NO" id="aob-gY-IMA">
+                    <rect key="frame" x="8" y="6" width="76" height="23"/>
+                    <buttonCell key="cell" type="square" title="Select None" bezelStyle="shadowlessSquare" imagePosition="left" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NAz-sl-hGe" customClass="PIXCustomButtonCell">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" size="12" name="Helvetica"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="selectNone:" target="-2" id="lS2-nP-lGa"/>
+                    </connections>
+                </button>
+                <button horizontalHuggingPriority="537" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1" translatesAutoresizingMaskIntoConstraints="NO" id="yd9-hK-Jvl">
+                    <rect key="frame" x="92" y="6" width="50" height="23"/>
+                    <buttonCell key="cell" type="square" title="Inverse" bezelStyle="shadowlessSquare" image="buttonCell:xl7-8q-F2q:image" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xl7-8q-F2q" customClass="PIXCustomButtonCell">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" size="12" name="Helvetica"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="toggleSelection:" target="-2" id="WXH-pT-bxx"/>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="252" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vko-NF-F62">
+                    <rect key="frame" x="283" y="9" width="106" height="18"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="1 Item Selected" id="3Wp-t5-DAc">
+                        <font key="font" size="14" name="Helvetica-Bold"/>
+                        <color key="textColor" red="0.18412449049999999" green="0.18412449049999999" blue="0.18412449049999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <stackView orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iPS-px-nbh">
+                    <rect key="frame" x="395" y="6" width="269" height="23"/>
+                </stackView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="aob-gY-IMA" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="8" id="4Jd-LJ-8Ii"/>
+                <constraint firstItem="Vko-NF-F62" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="4jU-Tq-fyh"/>
+                <constraint firstItem="yd9-hK-Jvl" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="5wr-4r-2w2"/>
+                <constraint firstItem="m3U-29-rg4" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="8Dc-34-714"/>
+                <constraint firstAttribute="trailing" secondItem="iPS-px-nbh" secondAttribute="trailing" constant="8" id="B66-D0-waP"/>
+                <constraint firstItem="iPS-px-nbh" firstAttribute="leading" secondItem="Vko-NF-F62" secondAttribute="trailing" constant="8" id="I8Q-BM-hKg"/>
+                <constraint firstItem="iPS-px-nbh" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="6" id="Iee-dI-qoe"/>
+                <constraint firstItem="m3U-29-rg4" firstAttribute="leading" secondItem="yd9-hK-Jvl" secondAttribute="trailing" constant="8" id="ZjW-zX-yYB"/>
+                <constraint firstAttribute="bottom" secondItem="iPS-px-nbh" secondAttribute="bottom" constant="6" id="ZoI-xw-e1U"/>
+                <constraint firstItem="yd9-hK-Jvl" firstAttribute="leading" secondItem="aob-gY-IMA" secondAttribute="trailing" constant="8" id="aLE-hx-Pg0"/>
+                <constraint firstItem="aob-gY-IMA" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="sd5-Lg-z31"/>
+                <constraint firstItem="Vko-NF-F62" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="xn3-aL-y70"/>
+            </constraints>
+            <point key="canvasLocation" x="118" y="168"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="buttonCell:xl7-8q-F2q:image" width="1" height="1">
+            <mutableData key="keyedArchiveRepresentation">
+YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
+GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
+c1dOU0NvbG9ygAKADRIgwwAAgAOAC1Z7MSwgMX3SFQoWGFpOUy5vYmplY3RzoReABIAK0hUKGh2iGxyA
+BYAGgAkQANIgCiEiXxAUTlNUSUZGUmVwcmVzZW50YXRpb26AB4AITxEIcE1NACoAAAAKAAAADgEAAAMA
+AAABAAEAAAEBAAMAAAABAAEAAAECAAMAAAACAAgACAEDAAMAAAABAAEAAAEGAAMAAAABAAEAAAERAAQA
+AAABAAAACAESAAMAAAABAAEAAAEVAAMAAAABAAIAAAEWAAMAAAABAAEAAAEXAAQAAAABAAAAAgEcAAMA
+AAABAAEAAAFSAAMAAAABAAEAAAFTAAMAAAACAAEAAYdzAAcAAAe4AAAAuAAAAAAAAAe4YXBwbAIgAABt
+bnRyR1JBWVhZWiAH0AACAA4ADAAAAABhY3NwQVBQTAAAAABub25lAAAAAAAAAAAAAAAAAAAAAAAA9tYA
+AQAAAADTLWFwcGwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVk
+ZXNjAAAAwAAAAG9kc2NtAAABMAAABixjcHJ0AAAHXAAAADh3dHB0AAAHlAAAABRrVFJDAAAHqAAAAA5k
+ZXNjAAAAAAAAABVHZW5lcmljIEdyYXkgUHJvZmlsZQAAAAAAAAAAAAAAFUdlbmVyaWMgR3JheSBQcm9m
+aWxlAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbWx1YwAAAAAA
+AAAeAAAADHNrU0sAAAAqAAABeGhySFIAAAA6AAABomNhRVMAAAAsAAAB3HB0QlIAAAAqAAACCHVrVUEA
+AAAsAAACMmZyRlUAAAAqAAACXnpoVFcAAAAQAAACiGl0SVQAAAAuAAACmG5iTk8AAAAsAAACxmtvS1IA
+AAAYAAAC8mNzQ1oAAAAkAAADCmhlSUwAAAAgAAADLmRlREUAAAA6AAADTmh1SFUAAAAuAAADiHN2U0UA
+AAAuAAADtnpoQ04AAAAQAAAD5GphSlAAAAAWAAAD9HJvUk8AAAAiAAAECmVsR1IAAAAkAAAELHB0UE8A
+AAA4AAAEUG5sTkwAAAAqAAAEiGVzRVMAAAAoAAAEsnRoVEgAAAAkAAAE2nRyVFIAAAAiAAAE/mZpRkkA
+AAAsAAAFIHBsUEwAAAA2AAAFTHJ1UlUAAAAmAAAFgmFyRUcAAAAoAAAFqGVuVVMAAAAoAAAF0GRhREsA
+AAA0AAAF+ABWAWEAZQBvAGIAZQBjAG4A/QAgAHMAaQB2AP0AIABwAHIAbwBmAGkAbABHAGUAbgBlAHIA
+aQENAGsAaQAgAHAAcgBvAGYAaQBsACAAcwBpAHYAaQBoACAAdABvAG4AbwB2AGEAUABlAHIAZgBpAGwA
+IABkAGUAIABnAHIAaQBzACAAZwBlAG4A6AByAGkAYwBQAGUAcgBmAGkAbAAgAEMAaQBuAHoAYQAgAEcA
+ZQBuAOkAcgBpAGMAbwQXBDAEMwQwBDsETAQ9BDgEOQAgBD8EQAQ+BEQEMAQ5BDsAIABHAHIAYQB5AFAA
+cgBvAGYAaQBsACAAZwDpAG4A6QByAGkAcQB1AGUAIABnAHIAaQBzkBp1KHBwlo6Ccl9pY8+P8ABQAHIA
+bwBmAGkAbABvACAAZwByAGkAZwBpAG8AIABnAGUAbgBlAHIAaQBjAG8ARwBlAG4AZQByAGkAcwBrACAA
+ZwByAOUAdABvAG4AZQBwAHIAbwBmAGkAbMd8vBgAIABHAHIAYQB5ACDVBLhc0wzHfABPAGIAZQBjAG4A
+/QAgAWEAZQBkAP0AIABwAHIAbwBmAGkAbAXkBegF1QXkBdkF3AAgAEcAcgBhAHkAIAXbBdwF3AXZAEEA
+bABsAGcAZQBtAGUAaQBuAGUAcwAgAEcAcgBhAHUAcwB0AHUAZgBlAG4ALQBQAHIAbwBmAGkAbADBAGwA
+dABhAGwA4QBuAG8AcwAgAHMAegD8AHIAawBlACAAcAByAG8AZgBpAGwARwBlAG4AZQByAGkAcwBrACAA
+ZwByAOUAcwBrAGEAbABlAHAAcgBvAGYAaQBsZm6QGnBwXqZjz4/wZYdO9k4AgiwwsDDsMKQw1zDtMNUw
+oTCkMOsAUAByAG8AZgBpAGwAIABnAHIAaQAgAGcAZQBuAGUAcgBpA5MDtQO9A7kDugPMACADwAPBA78D
+xgOvA7sAIAOzA7oDwQO5AFAAZQByAGYAaQBsACAAZwBlAG4A6QByAGkAYwBvACAAZABlACAAYwBpAG4A
+egBlAG4AdABvAHMAQQBsAGcAZQBtAGUAZQBuACAAZwByAGkAagBzAHAAcgBvAGYAaQBlAGwAUABlAHIA
+ZgBpAGwAIABnAHIAaQBzACAAZwBlAG4A6QByAGkAYwBvDkIOGw4jDkQOHw4lDkwOKg41DkAOFw4yDhcO
+MQ5IDicORA4bAEcAZQBuAGUAbAAgAEcAcgBpACAAUAByAG8AZgBpAGwAaQBZAGwAZQBpAG4AZQBuACAA
+aABhAHIAbQBhAGEAcAByAG8AZgBpAGkAbABpAFUAbgBpAHcAZQByAHMAYQBsAG4AeQAgAHAAcgBvAGYA
+aQBsACAAcwB6AGEAcgBvAVsAYwBpBB4EMQRJBDgEOQAgBEEENQRABEsEOQAgBD8EQAQ+BEQEOAQ7BEwG
+RQZEBkEAIAYqBjkGMQZKBkEAIABHAHIAYQB5ACAGJwZEBjkGJwZFAEcAZQBuAGUAcgBpAGMAIABHAHIA
+YQB5ACAAUAByAG8AZgBpAGwAZQBHAGUAbgBlAHIAZQBsACAAZwByAOUAdABvAG4AZQBiAGUAcwBrAHIA
+aQB2AGUAbABzAGV0ZXh0AAAAAENvcHlyaWdodCAyMDA3IEFwcGxlIEluYy4sIGFsbCByaWdodHMgcmVz
+ZXJ2ZWQuAFhZWiAAAAAAAADzUQABAAAAARbMY3VydgAAAAAAAAABAc0AANIlJicoWiRjbGFzc25hbWVY
+JGNsYXNzZXNfEBBOU0JpdG1hcEltYWdlUmVwoycpKlpOU0ltYWdlUmVwWE5TT2JqZWN00iUmLC1XTlNB
+cnJheaIsKtIlJi8wXk5TTXV0YWJsZUFycmF5oy8sKtMyMwo0NTZXTlNXaGl0ZVxOU0NvbG9yU3BhY2VE
+MCAwABADgAzSJSY4OVdOU0NvbG9yojgq0iUmOzxXTlNJbWFnZaI7Kl8QD05TS2V5ZWRBcmNoaXZlctE/
+QFRyb290gAEACAARABoAIwAtADIANwBGAEwAVwBeAGUAcgB5AIEAgwCFAIoAjACOAJUAmgClAKcAqQCr
+ALAAswC1ALcAuQC7AMAA1wDZANsJTwlUCV8JaAl7CX8JigmTCZgJoAmjCagJtwm7CcIJygnXCdwJ3gng
+CeUJ7QnwCfUJ/QoAChIKFQoaAAAAAAAAAgEAAAAAAAAAQQAAAAAAAAAAAAAAAAAAChw
+</mutableData>
+        </image>
+    </resources>
+</document>

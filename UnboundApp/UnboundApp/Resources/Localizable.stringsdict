@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>%lu album(s) selected</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@albums@</string>
+		<key>albums</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lu</string>
+			<key>zero</key>
+			<string>No albums selected</string>
+			<key>one</key>
+			<string>%lu album selected</string>
+			<key>other</key>
+			<string>%lu albums selected</string>
+		</dict>
+	</dict>
+	<key>%lu album(s) containing %lu photos</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@albums@</string>
+		<key>albums</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lu</string>
+			<key>zero</key>
+			<string>No albums</string>
+			<key>one</key>
+			<string>%1$lu album containing %2$lu photos</string>
+			<key>other</key>
+			<string>%1$lu albums containing %2$lu photos</string>
+		</dict>
+	</dict>
+	<key>%lu album(s) matched search</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@albums@</string>
+		<key>albums</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lu</string>
+			<key>zero</key>
+			<string>No albums matching "%2$@"</string>
+			<key>one</key>
+			<string>%1$lu album matching "%2$@"</string>
+			<key>other</key>
+			<string>%1$lu albums matching "%2$@"</string>
+		</dict>
+	</dict>
+	<key>%lu photo(s) selected</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@photos@</string>
+		<key>photos</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lu</string>
+			<key>zero</key>
+			<string>No photos selected</string>
+			<key>one</key>
+			<string>%lu photo selected</string>
+			<key>other</key>
+			<string>%lu photos selected</string>
+		</dict>
+	</dict>
+</dict>
+</plist>
