@@ -274,13 +274,9 @@
 {
     [super setSelected:value];
     
-    if(value)
-    {
+    if(value) {
         [self.layer addSublayer:self.selectionLayer];
-    }
-    
-    else
-    {
+    } else {
         [_selectionLayer removeFromSuperlayer];
     }
     
@@ -309,8 +305,6 @@
     //[CATransaction begin];
     //[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
     
-    [_selectionLayer setFrame:self.bounds];
-    
     if(self.isVideo) // use local property for performance reasons (set when photo is set)
     {
         [self.layer addSublayer:self.videoLayover.layer];
@@ -324,7 +318,7 @@
     
     
     NSImage * photo = self.itemImage;
-    CGRect rect = self.bounds;
+    CGRect rect = CGRectInset(self.bounds, 15, 15);
     
     // calculate the proportional image frame
     CGSize imageSize = [photo size];
@@ -359,7 +353,7 @@
     
     
     self.imageLayer.frame = imageFrame;
-    
+
     CGRect videoThumbFrame = CGRectMake(0, 0, 80, 80);
     
     if(imageFrame.size.width > 0 && imageFrame.size.height >  0)

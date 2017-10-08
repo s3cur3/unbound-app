@@ -20,7 +20,7 @@
 #import "PIXShareManager.h"
 #import "PIXCollectionToolbar.h"
 
-@interface PIXPhotoCollectionViewController () <PIXGridViewDelegate, NSCollectionViewDataSource>
+@interface PIXPhotoCollectionViewController () <NSCollectionViewDelegate, NSCollectionViewDataSource>
 
 @property(nonatomic, strong) NSCollectionViewFlowLayout *layout;
 @property(nonatomic,strong) NSDateFormatter * titleDateFormatter;
@@ -40,15 +40,14 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Initialization code here.
-        
 
         self.titleDateFormatter = [[NSDateFormatter alloc] init];
         [self.titleDateFormatter setDateStyle:NSDateFormatterLongStyle];
         [self.titleDateFormatter setTimeStyle:NSDateFormatterNoStyle];
         self.selectedItemsName = @"photo";
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAlbum:) name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
-        
+        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(updateAlbum:) name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
+        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(themeChanged:) name:@"backgroundThemeChanged" object:nil];
     }
     
     return self;
@@ -57,7 +56,10 @@
 -(void)awakeFromNib
 {
     [super awakeFromNib];
-    [self performSelector:@selector(updateAlbum:) withObject:nil afterDelay:0.1];
+
+    self.gridView.delegate = self;
+
+    self.toolbar.collectionView = self.gridView;
 
     self.layout = [[NSCollectionViewFlowLayout alloc] init];
     self.layout.sectionInset = NSEdgeInsetsMake(10, 10, 10, 10);
@@ -68,6 +70,9 @@
     self.toolbar.collectionView = self.gridView;
 
     self.view.wantsLayer = YES;
+    [self setBGColor];
+
+    [self updateAlbum:nil];
 }
 
 -(void)willShowPIXView
@@ -77,7 +82,7 @@
     [self updateAlbum:nil];
 
     // this will allow droping files into the larger grid view
-    [self.gridView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
+    [self.gridView registerForDraggedTypes:@[NSURLPboardType]];
 
     [self.toolbar hideToolbar:NO];
     
@@ -87,6 +92,28 @@
 
 }
 
+#pragma mark - Background Colors
+
+- (void)themeChanged:(NSNotification *)note {
+    [self setBGColor];
+    for (NSView *item in self.gridView.subviews) {
+        item.needsDisplay = YES;
+    }
+}
+
+- (void)setBGColor
+{
+    NSColor * color = nil;
+    if([[NSUserDefaults standardUserDefaults] integerForKey:@"backgroundTheme"] == 0) {
+        color = [NSColor colorWithCalibratedWhite:0.912 alpha:1.000];
+    } else {
+        color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
+    }
+
+    self.gridView.layer.backgroundColor = color.CGColor;
+}
+
+// TODO Move this to the navigation controller and window, respectively
 // handle escape key here if needed
 -(void)keyDown:(NSEvent *)event
 {
@@ -121,46 +148,13 @@
 -(void)setThumbSize:(CGFloat)size
 {
     // sizes mapped between 140 and 400
-    float transformedSize = rint(140 + (260 * size));
+    float transformedSize = (float) rint(140 + (260 * size));
     self.layout.itemSize = NSMakeSize(transformedSize, transformedSize);
     for (NSCollectionViewItem *item in self.gridView.visibleItems) {
         [item.view updateLayer];
     }
     
 }
-
-#pragma mark -
-#pragma mark Leap Thumb Size Adjustment
-
--(void)leapPanZoomStart
-{
-    if(![self.view.window isKeyWindow]) return;
-    
-    self.startPinchZoom = [[NSUserDefaults standardUserDefaults] floatForKey:@"photoThumbSize"];
-    
-}
-
-
-
--(void)leapPanZoomPosition:(NSPoint)position andScale:(CGFloat)scale
-{
-    if(![self.view.window isKeyWindow]) return;
-    
-    
-    float magnification = self.startPinchZoom + (scale - 1.0);
-    
-    magnification = magnification * 0.5;
-    
-    if(magnification < 0.0) magnification = 0.0;
-    if(magnification > 1.0) magnification = 1.0;
-    
-    // set the new default
-    [[NSUserDefaults standardUserDefaults] setFloat:magnification forKey:@"photoThumbSize"];
-    
-    // set the actual maginification
-    [self setThumbSize:magnification];
-}
-
 
 #pragma mark - Album
 -(void)setAlbum:(id)album
@@ -190,16 +184,6 @@
 
 -(void)updateAlbum:(NSNotification *)note
 {
-    //self.items = [self fetchItems];
-    // remove any items that are no longer in the selection
-    //[self.selectedItems intersectSet:[NSSet setWithArray:self.items]];
-    //[self.gridView reloadData];
-
-    // TODO Update hte selection
-    for (PIXPhoto *photo in self.selectedItems) {
-
-    }
-
     NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
     [numberFormatter setNumberStyle: NSNumberFormatterDecimalStyle];
     NSString *photosCount = [numberFormatter stringFromNumber:@((self.album.photos.count))];
@@ -306,6 +290,16 @@
     return 1;
 }
 
+#pragma mark - NSCollectionViewDelegate
+
+- (void)collectionView:(NSCollectionView *)collectionView didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
+    [self highlightIndexPaths:indexPaths selected:YES];
+}
+
+- (void)collectionView:(NSCollectionView *)collectionView didDeselectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
+    [self highlightIndexPaths:indexPaths selected:NO];
+}
+
 #pragma mark - Selection
 
 - (NSSet<PIXPhoto *> *)selectedItems {
@@ -322,6 +316,24 @@
     }
 
     return items;
+}
+
+- (void)highlightIndexPaths:(NSSet<NSIndexPath *> *)indexPaths selected:(BOOL)selected {
+    for (NSIndexPath *indexPath in indexPaths) {
+        NSCollectionViewItem *item = [self.gridView itemAtIndexPath:indexPath];
+        if (item) {
+            ((PIXCollectionViewItem *) item).selected = selected;
+        }
+    }
+
+    NSUInteger count = self.gridView.selectionIndexPaths.count;
+    if (count == 0) {
+        [self.toolbar hideToolbar:YES];
+    } else {
+        [self.toolbar showToolbar:YES];
+    }
+
+    [self.toolbar setTitle:[NSString localizedStringWithFormat:NSLocalizedString(@"%lu photo(s) selected", @"Number of selected photos"), (unsigned long)count]];
 }
 
 #pragma mark - Drop Operation
@@ -419,12 +431,6 @@
 
 -(void)updateToolbar
 {
-    if (self.gridView.selectionIndexPaths.count == 0) {
-        [self.toolbar hideToolbar:YES];
-    } else {
-        [self.toolbar showToolbar:YES];
-    }
-    
     PIXCustomButton * deleteButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
     [deleteButton setTitle:@"Delete"];
     [deleteButton setTarget:self];
@@ -440,9 +446,16 @@
     [shareButton setAction:@selector(share:)];
     
     [self.toolbar setButtons:@[deleteButton, shareButton]];
-    
 }
 
+- (void)deleteItems:(id)sender {
+    NSSet<NSIndexPath *> *selectionIndexPaths = self.gridView.selectionIndexPaths;
+    if (selectionIndexPaths.count == 0) {
+        return;
+    }
+
+    [PIXFileManager.sharedInstance deleteItemsWorkflow:self.selectedItems];
+}
 
 -(void)share:(id)sender
 {

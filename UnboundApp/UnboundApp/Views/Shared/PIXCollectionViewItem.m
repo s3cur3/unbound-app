@@ -44,6 +44,16 @@
     _selected = selected;
 }
 
+#pragma mark - Clicks
+
+- (void)mouseDown:(NSEvent *)event {
+    [super mouseDown:event];
+    if (event.clickCount > 1) {
+        [NSApplication.sharedApplication sendAction:@selector(collectionItemViewDoubleClick:) to:nil from:self];
+    }
+}
+
+
 #pragma mark - ViewDrawing
 
 // draws an image with a border in the rect. Returns the rect where the photo was drawn (using aspect ratio)

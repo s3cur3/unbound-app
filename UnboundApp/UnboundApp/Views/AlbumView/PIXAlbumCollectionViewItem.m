@@ -587,6 +587,8 @@
 
 -(void)mouseDown:(NSEvent *)theEvent
 {
+    [super mouseDown:theEvent];
+
     if (self.selected) {
         self.allowTitleEdit = YES;
     } else {

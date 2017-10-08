@@ -22,7 +22,7 @@
 #import "PIXAlbumCollectionViewItem.h"
 #import "PIXCollectionToolbar.h"
 
-@interface PIXAlbumCollectionViewController () <NSCollectionViewDelegate, NSCollectionViewDataSource, PIXSplitViewControllerDelegate, PIXCollectionToolbarDelegate>
+@interface PIXAlbumCollectionViewController () <NSCollectionViewDelegate, NSCollectionViewDataSource, PIXSplitViewControllerDelegate>
 
 @property(nonatomic,strong) NSArray * albums;
 @property(nonatomic,strong) NSArray * searchedAlbums;
@@ -75,7 +75,6 @@
     self.gridView.delegate = self;
 
     self.toolbar.collectionView = self.gridView;
-    self.toolbar.delegate = self;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(albumsChanged:)
@@ -639,6 +638,13 @@
     }
 }
 
+#pragma mark - Clicks
+
+- (void)collectionItemViewDoubleClick:(id)sender {
+    PIXAlbumCollectionViewItem *item = sender;
+    [self showPhotosForAlbum:item.representedObject];
+}
+
 #pragma mark - Selection
 - (NSSet<PIXAlbum *> *)selectedItems {
     NSSet<NSIndexPath *> *selectionIndexPaths = self.gridView.selectionIndexPaths;
@@ -808,24 +814,6 @@
     }
     
     [super keyDown:event];
-}
-
-#pragma mark - PIXCollectionToolbarDelegate Methods
-
-- (void)toolbar:(PIXCollectionToolbar *)toolbar deleteSelectedItems:(id)sender {
-    NSSet<NSIndexPath *> *selectionIndexPaths = self.gridView.selectionIndexPaths;
-    if (selectionIndexPaths.count == 0) {
-        return;
-    }
-
-    NSArray<NSIndexPath *> *selectionArray = [selectionIndexPaths sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"self" ascending:NO]]];
-    NSMutableSet<PIXAlbum *> *items = [NSMutableSet setWithCapacity:selectionArray.count];
-    for (NSIndexPath *item in selectionArray) {
-        PIXAlbum *album = self.albums[item.item];
-        [items addObject:album];
-    }
-
-    [PIXFileManager.sharedInstance deleteItemsWorkflow:items];
 }
 
 #pragma mark - NSCollectionViewDataSource Methods

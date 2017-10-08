@@ -6,19 +6,11 @@
 #import <Foundation/Foundation.h>
 #import "PIXGradientBarView.h"
 
-@class PIXCollectionToolbar;
-
-@protocol PIXCollectionToolbarDelegate <NSObject>
-@optional
-- (void)toolbar:(PIXCollectionToolbar *)toolbar deleteSelectedItems:(id)sender;
-@end
-
 @interface PIXCollectionToolbar : PIXGradientBarView
 
 @property (nonatomic, strong) IBOutlet NSView *contentView;
 @property (nonatomic, strong) IBOutlet NSTextField *titleField;
 
-@property (nonatomic, weak) id <PIXCollectionToolbarDelegate> delegate;
 @property (nonatomic, strong) NSCollectionView *collectionView;
 
 - (void)showToolbar:(BOOL)animated;

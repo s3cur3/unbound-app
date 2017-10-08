@@ -105,12 +105,4 @@
     }
 }
 
-- (IBAction)deleteItems:(id )sender
-{
-    if ([self.delegate respondsToSelector:@selector(toolbar:deleteSelectedItems:)]) {
-        [self.delegate toolbar:self deleteSelectedItems:sender];
-    }
-}
-
-
 @end
