@@ -36,15 +36,7 @@ class PIXAboutWindowController: NSWindowController {
         copyright.stringValue = infoDict["PIXCopyright"] as! String
 
         url = infoDict["PIXAppLink"] as! String
-
-        let center = NSMutableParagraphStyle()
-        center.alignment = .center
-        let attributes = [
-                .underlineStyle: NSUnderlineStyle.styleSingle,
-                .foregroundColor: NSColor.blue,
-                .paragraphStyle: center
-            ] as [NSAttributedStringKey : Any]
-        link.attributedTitle = NSAttributedString(string: url, attributes: attributes)
+        link.title = url
     }
 
     @IBAction func onAppLinkClicked(_ sender: AnyObject) {
