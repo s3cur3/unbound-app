@@ -23,18 +23,15 @@
 #import "PIXCollectionToolbar.h"
 #import "PIXCollectionView.h"
 
-@interface PIXAlbumCollectionViewController () <NSCollectionViewDelegate, NSCollectionViewDataSource, PIXSplitViewControllerDelegate>
+@interface PIXAlbumCollectionViewController () <NSCollectionViewDelegate, NSCollectionViewDataSource, PIXSplitViewControllerDelegate, NSSearchFieldDelegate>
 
 @property(nonatomic,strong) NSArray * albums;
-@property(nonatomic,strong) NSArray * searchedAlbums;
 
 @property (nonatomic, strong) NSToolbarItem * sortButton;
 @property (nonatomic, strong) NSToolbarItem * neuAlbumButton;
 @property (nonatomic, strong) NSToolbarItem * searchBar;
 @property (nonatomic, strong) NSToolbarItem * importItem;
-
 @property (nonatomic, strong) NSSearchField * searchField;
-@property (nonatomic, strong) NSString * lastSearch;
 
 @property (nonatomic, strong) PIXSplitViewController *aSplitViewController;
 
@@ -123,22 +120,13 @@
     
     
     [[self.view window] setTitle:@"Unbound"];
-    
-    
-    
+
     NSString * searchString = [[NSUserDefaults standardUserDefaults] objectForKey:@"PIX_AlbumSearchString"];
-    
-    if(searchString != nil)
-    {
+    if(searchString != nil) {
         [self.searchField setStringValue:searchString];
-    }
-    
-    else
-    {
+    } else {
         [self.searchField setStringValue:@""];
     }
-    
-    [self updateSearch];
 
     [self updateCollectionToolbar];
     
@@ -384,11 +372,7 @@
 {
     
     // turn off the search if needed
-    if(self.searchedAlbums)
-    {
-        self.searchField.stringValue = @"";
-        [self updateSearch];
-    }
+    self.searchField.stringValue = @"";
     
     PIXAlbum * newAlbum = [[PIXFileManager sharedInstance] createAlbumWithName:@"New Album"];
     
@@ -429,12 +413,11 @@
     if(_searchBar != nil) return _searchBar;
     
     self.searchField = [[NSSearchField alloc] initWithFrame:CGRectMake(0, 0, 150, 55)];
-    //[searchField setFont:[NSFont systemFontOfSize:18]];
-    
-    //[self.searchField setFocusRingType:NSFocusRingTypeNone];
     self.searchField.delegate = self;
-    [(NSFormCell *) self.searchField.cell setPlaceholderString:@"Search Albums"];
-    [self.searchField.cell setFont:[NSFont fontWithName:@"Helvetica" size:13]];
+    self.searchField.sendsWholeSearchString = YES;
+    self.searchField.sendsSearchStringImmediately = NO;
+    self.searchField.placeholderString = NSLocalizedString(@"Search Albums", @"Album Search placeholder string.");
+    self.searchField.font = [NSFont fontWithName:@"Helvetica" size:13];
     
     _searchBar = [[NSToolbarItem alloc] initWithItemIdentifier:@"SearchBar"];
     
@@ -444,11 +427,6 @@
     [_searchBar setPaletteLabel:@"Search"];
     
     return _searchBar;
-}
-
-- (void)controlTextDidChange:(NSNotification *)aNotification
-{
-    [self updateSearch];
 }
 
 - (void)updateCollectionToolbar {
@@ -511,23 +489,17 @@
 }
 
 #pragma mark - Album
+
 - (void)albumsChanged:(NSNotification *)note
 {
     // retain the old set of albums so they won't be released on change
     NSArray * oldAlbums = self.albums;
     
     // set the new one
-    self.albums = [PIXAlbum sortedAlbums];
-    //[self.collectionView reloadData]; // the updateSearch call will reload data always so no need to call this
+    self.albums = [PIXAlbum sortedAlbums:self.searchField.stringValue];
+    [self.collectionView reloadData];
     [self updateGridTitle];
-    
-    self.lastSearch = nil; // clear this out because we need to do a new search when all the albums change
-    [self updateSearch];
-    
-    // this does nothing and is just to keep the old albums retained during the execution of this method
-    [oldAlbums count];
-    
-    
+
     if([self.albums count] == 0 && ![[NSUserDefaults standardUserDefaults] boolForKey:kDeepScanIncompleteKey])
     {
         [self.centerStatusView setHidden:NO];
@@ -584,33 +556,12 @@
     return _albums;
 }
 
-- (PIXAlbum *)albumForIndex:(NSInteger)index
-{
-    PIXAlbum * album = nil;
-    if(self.searchedAlbums)
-    {
-        if(index > [self.searchedAlbums count]) return nil;
-        
-        album = [self.searchedAlbums objectAtIndex:index];
-    }
-    
-    else
-    {
-        if(index > [self.albums count]) return nil;
-        
-        album = [self.albums objectAtIndex:index];
-    }
-    
-    return album;
+- (PIXAlbum *)albumForIndex:(NSInteger)index {
+    if(index > [self.albums count]) return nil;
+    return [self.albums objectAtIndex:index];
 }
 
-- (NSInteger)indexForAlbum:(PIXAlbum *)album
-{
-    if(self.searchedAlbums)
-    {
-        return [self.searchedAlbums indexOfObject:album];
-    }
-    
+- (NSInteger)indexForAlbum:(PIXAlbum *)album {
     return [self.albums indexOfObject:album];
 }
 
@@ -724,94 +675,17 @@
     [undoManager setActionIsDiscardable:YES];
 }
 
-#pragma mark - Filtering
-- (void)updateSearch
-{
-    NSString * searchText = [self.searchField stringValue];
-    if(searchText != nil && [searchText length] > 0)
-    {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.title CONTAINS[cd] %@", searchText];
-        
-        if([self.albums count] > 0)
-        {
-            // if this search is more narrow than the last filter then re-filter based on the last set
-            // (this happens while typing)
-            
-            if(self.lastSearch != nil && [searchText rangeOfString:self.lastSearch].length != 0)
-            {
-                self.searchedAlbums = [self.searchedAlbums filteredArrayUsingPredicate:predicate];
-            }
-            
-            else
-            {
-                self.searchedAlbums = [self.albums filteredArrayUsingPredicate:predicate];
-            }
-            
-            self.lastSearch = searchText;
-        }
-    }
-    
-    else
-    {
-        self.searchedAlbums = nil;
-        self.lastSearch = nil;
-    }
-    
-    [[NSUserDefaults standardUserDefaults] setObject:searchText forKey:@"PIX_AlbumSearchString"];
-    
-    
-    
-    NSArray * visibleArray = self.albums;
-    
-    if(self.searchedAlbums)
-    {
-        visibleArray = self.searchedAlbums;
-    }
-
-    [self updateCollectionToolbar];
-    [self updateGridTitle];
-
-    // TODO filter the items
-//
-//    // Remove Old Albums
-//    NSArray * oldAlbums = [self.arrayController arrangedObjects];
-//    [self.arrayController removeObjects:oldAlbums];
-//
-//    // Add New Albums
-//    [self.arrayController addObjects:visibleArray];
-}
-
 - (void)updateGridTitle
 {
-    if(self.searchedAlbums)
-    {
-        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-        [numberFormatter setNumberStyle: NSNumberFormatterDecimalStyle];
-        NSString *albumCount = [numberFormatter stringFromNumber:[NSNumber numberWithLong:[self.searchedAlbums count]]];
-        
-        
-        if([self.searchedAlbums count] == 1)
-        {
-            [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"1 album matched \"%@\"", self.lastSearch]];
-        }
-        
-        else
-        {
-            [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%@ albums matched \"%@\"", albumCount, self.lastSearch]];
-        }
-    }
-    else
-    {
+    if (self.isSearching) {
+        NSString *format = NSLocalizedString(@"%lu album(s) matched search", @"Count albums matching search");
+        self.gridViewTitle.stringValue = [NSString stringWithFormat:format, self.albums.count, self.searchField.stringValue];
+    } else {
         NSFetchRequest * fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kPhotoEntityName];
-        
         NSUInteger numPhotos = [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] countForFetchRequest:fetchRequest error:nil];
-        
-        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-        [numberFormatter setNumberStyle: NSNumberFormatterDecimalStyle];
-        NSString *albumCount = [numberFormatter stringFromNumber:[NSNumber numberWithLong:[self.albums count]]];
-        NSString *photosCount = [numberFormatter stringFromNumber:[NSNumber numberWithLong:numPhotos]];
-        
-        [self.gridViewTitle setStringValue:[NSString stringWithFormat:@"%@ albums containing %@ photos", albumCount, photosCount]];
+
+        NSString *format = NSLocalizedString(@"%lu album(s) containing %lu photos", @"Count albums and photos");
+        self.gridViewTitle.stringValue = [NSString stringWithFormat:format, self.albums.count, numPhotos];
     }
 }
 
@@ -819,6 +693,22 @@
 {
     self.aSplitViewController.selectedAlbum = anAlbum;
     [self.navigationViewController pushViewController:self.aSplitViewController];
+}
+
+#pragma mark - Search
+
+- (void)controlTextDidChange:(NSNotification *)aNotification
+{
+    [[NSUserDefaults standardUserDefaults] setObject:self.searchField.stringValue forKey:@"PIX_AlbumSearchString"];
+
+    [self albumsChanged:nil];
+
+    [self updateCollectionToolbar];
+    [self updateGridTitle];
+}
+
+- (BOOL)isSearching {
+    return self.searchField.stringValue && self.searchField.stringValue.length > 0;
 }
 
 #pragma mark - Keyboard
@@ -864,8 +754,6 @@
 - (void)collectionView:(NSCollectionView *)collectionView didDeselectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
     [self highlightIndexPaths:indexPaths selected:NO];
 }
-
-// TODO handle double click
 
 #pragma mark - Drop Operations
 - (NSDragOperation)dropOperationsForDrag:(id < NSDraggingInfo >)sender

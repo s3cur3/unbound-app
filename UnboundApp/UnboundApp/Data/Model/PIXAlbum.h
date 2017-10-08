@@ -81,6 +81,7 @@ typedef enum {
 
 
 +(NSArray *)sortedAlbums;
++(NSArray *)sortedAlbums:(NSString *)filterString;
 
 -(void)setPhotos:(NSSet *)photos updateCoverImage:(BOOL)shouldUpdateCoverImage;
 

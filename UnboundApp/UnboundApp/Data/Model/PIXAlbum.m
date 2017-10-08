@@ -105,6 +105,91 @@ static NSString *const kItemsKey = @"photos";
     return fetchedObjects;
 }
 
++(NSArray *)sortedAlbums:(NSString *)filterString
+{
+
+    NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
+
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kAlbumEntityName];
+    [fetchRequest setFetchBatchSize:100];
+
+    // prefetch stack photos. These are used in the album-level views
+    [fetchRequest setRelationshipKeyPathsForPrefetching:@[@"stackPhotos"]];
+
+    NSMutableArray<NSPredicate *> *predicates = [NSMutableArray array];
+    [predicates addObject:[NSPredicate predicateWithFormat:@"path != NULL"]];
+
+    if (filterString && filterString.length > 0) {
+        NSCompoundPredicate *searchPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[
+                [NSPredicate predicateWithFormat:@"title CONTAINS[cd] %@", filterString],
+                [NSPredicate predicateWithFormat:@"subtitle CONTAINS[cd] %@", filterString]
+        ]];
+        [predicates addObject:searchPredicate];
+    }
+    fetchRequest.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
+
+    PIXAlbumSort currentSort = (PIXAlbumSort) [[NSUserDefaults standardUserDefaults] integerForKey:@"PIXAlbumSort"];
+
+    NSSortDescriptor * sort1 = nil;
+    NSSortDescriptor * sort2 = nil;
+
+    switch (currentSort) {
+        case PIXAlbumSortNewToOld:
+
+            sort1 = [[NSSortDescriptor alloc] initWithKey:@"albumDate" ascending:NO];
+            sort2 = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO selector:@selector(localizedStandardCompare:)];
+            [fetchRequest setSortDescriptors:@[sort1, sort2]];
+
+            break;
+
+        case PIXAlbumSortOldToNew:
+
+            sort1 = [[NSSortDescriptor alloc] initWithKey:@"albumDate" ascending:YES];
+            sort2 = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES selector:@selector(localizedStandardCompare:)];
+            [fetchRequest setSortDescriptors:@[sort1, sort2]];
+
+            break;
+
+        case PIXAlbumSortAtoZ:
+
+            sort1 = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES selector:@selector(localizedStandardCompare:)];
+            sort2 = [[NSSortDescriptor alloc] initWithKey:@"albumDate" ascending:YES];
+
+            [fetchRequest setSortDescriptors:@[sort1, sort2]];
+
+            break;
+
+        case PIXAlbumSortZtoA:
+
+            sort1 = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO selector:@selector(localizedStandardCompare:)];
+            sort2 = [[NSSortDescriptor alloc] initWithKey:@"albumDate" ascending:NO];
+
+            [fetchRequest setSortDescriptors:@[sort1, sort2]];
+
+            break;
+
+        default:
+
+            sort1 = [[NSSortDescriptor alloc] initWithKey:@"albumDate" ascending:NO];
+            sort2 = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO];
+            [fetchRequest setSortDescriptors:@[sort1, sort2]];
+
+            break;
+    }
+
+
+
+    NSError *error;
+    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+
+    if (fetchedObjects == nil) {
+        [[NSApplication sharedApplication] presentError:error];
+        return nil;
+    }
+
+    return fetchedObjects;
+}
+
 - (NSURL *)filePathURL
 {
     return [NSURL fileURLWithPath:self.path isDirectory:YES];

@@ -20,6 +20,42 @@
 			<string>%lu albums selected</string>
 		</dict>
 	</dict>
+	<key>%lu album(s) containing %lu photos</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@albums@</string>
+		<key>albums</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lu</string>
+			<key>zero</key>
+			<string>No albums</string>
+			<key>one</key>
+			<string>%1$lu album containing %2$lu photos</string>
+			<key>other</key>
+			<string>%1$lu albums containing %2$lu photos</string>
+		</dict>
+	</dict>
+	<key>%lu album(s) matched search</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@albums@</string>
+		<key>albums</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lu</string>
+			<key>zero</key>
+			<string>No albums matching "%2$@"</string>
+			<key>one</key>
+			<string>%1$lu album matching "%2$@"</string>
+			<key>other</key>
+			<string>%1$lu albums matching "%2$@"</string>
+		</dict>
+	</dict>
 	<key>%lu photo(s) selected</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>

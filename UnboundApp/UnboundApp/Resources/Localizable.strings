@@ -7,4 +7,9 @@
 */
 
 "%lu album(s) selected" = "%lu album(s) selected";
+"%lu album(s) containing %lu photos" = "%1$lu album(s) containing %2$lu photos";
+"%lu album(s) matched search" = "%lu album(s) matched search";
+"Search Albums" = "Search Albums";
+
 "%lu photo(s) selected" = "%lu photo(s) selected";
+
