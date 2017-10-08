@@ -78,7 +78,7 @@
 {
     [self.sidebarViewController willShowPIXView];
     [self.imageBrowserViewController willShowPIXView];
-    [self.sidebarViewController.outlineView setNextKeyView:self.imageBrowserViewController.gridView];
+    [self.sidebarViewController.outlineView setNextKeyView:self.imageBrowserViewController.collectionView];
     [self.imageBrowserViewController.scrollView setNextKeyView:self.sidebarViewController.searchField];
     [self.sidebarViewController.searchField setNextKeyView:self.sidebarViewController.outlineView];
     
@@ -91,7 +91,7 @@
         
         if([self.splitView isSubviewCollapsed:self.leftPane] || self.gridWasLastResponder)
         {
-            [self.view.window makeFirstResponder:self.imageBrowserViewController.gridView];
+            [self.view.window makeFirstResponder:self.imageBrowserViewController.collectionView];
         }
         
         else
@@ -108,7 +108,7 @@
 
 -(void)willHidePIXView
 {
-    if([self.imageBrowserViewController.gridView isFirstResponder])
+    if([self.imageBrowserViewController.collectionView isFirstResponder])
     {
         self.gridWasLastResponder = YES;
     }
@@ -467,7 +467,7 @@
         [[NSUserDefaults standardUserDefaults] setFloat:currentPosition forKey:@"albumSideBarToggleWidth"];
         [self.splitView setPosition:0 ofDividerAtIndex:0];
         
-        [self.view.window makeFirstResponder:self.imageBrowserViewController.gridView];
+        [self.view.window makeFirstResponder:self.imageBrowserViewController.collectionView];
     }
     
     

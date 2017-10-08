@@ -57,17 +57,17 @@
 {
     [super awakeFromNib];
 
-    self.gridView.delegate = self;
+    self.collectionView.delegate = self;
 
-    self.toolbar.collectionView = self.gridView;
+    self.toolbar.collectionView = self.collectionView;
 
     self.layout = [[NSCollectionViewFlowLayout alloc] init];
     self.layout.sectionInset = NSEdgeInsetsMake(10, 10, 10, 10);
     self.layout.minimumInteritemSpacing = 0;
     self.layout.minimumLineSpacing = 0;
-    self.gridView.collectionViewLayout = self.layout;
+    self.collectionView.collectionViewLayout = self.layout;
 
-    self.toolbar.collectionView = self.gridView;
+    self.toolbar.collectionView = self.collectionView;
 
     self.view.wantsLayer = YES;
     [self setBGColor];
@@ -82,7 +82,7 @@
     [self updateAlbum:nil];
 
     // this will allow droping files into the larger grid view
-    [self.gridView registerForDraggedTypes:@[NSURLPboardType]];
+    [self.collectionView registerForDraggedTypes:@[NSURLPboardType]];
 
     [self.toolbar hideToolbar:NO];
     
@@ -96,7 +96,7 @@
 
 - (void)themeChanged:(NSNotification *)note {
     [self setBGColor];
-    for (NSView *item in self.gridView.subviews) {
+    for (NSView *item in self.collectionView.subviews) {
         item.needsDisplay = YES;
     }
 }
@@ -110,7 +110,7 @@
         color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
     }
 
-    self.gridView.layer.backgroundColor = color.CGColor;
+    self.collectionView.layer.backgroundColor = color.CGColor;
 }
 
 // TODO Move this to the navigation controller and window, respectively
@@ -150,7 +150,7 @@
     // sizes mapped between 140 and 400
     float transformedSize = (float) rint(140 + (260 * size));
     self.layout.itemSize = NSMakeSize(transformedSize, transformedSize);
-    for (NSCollectionViewItem *item in self.gridView.visibleItems) {
+    for (NSCollectionViewItem *item in self.collectionView.visibleItems) {
         [item.view updateLayer];
     }
     
@@ -165,11 +165,11 @@
         _album = album;
         [[[PIXAppDelegate sharedAppDelegate] window] setTitle:[self.album title]];
 
-        [self.gridView deselectAll:nil];
+        [self.collectionView deselectAll:nil];
         [self updateToolbar];
         [self updateAlbum:nil];
 
-        [self.gridView scrollPoint:NSZeroPoint];
+        [self.collectionView scrollPoint:NSZeroPoint];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAlbum:) name:AlbumDidChangeNotification object:_album];
         
@@ -178,7 +178,7 @@
         
         [self.album checkDates];
 
-        [self.gridView reloadData];
+        [self.collectionView reloadData];
     }
 }
 
@@ -267,8 +267,8 @@
     {
         PIXPhoto *photo = self.album.sortedPhotos[index];
         if ([photo.path isEqualToString:aPhotoPath]) {
-            [self.gridView deselectAll:nil];
-            [self.gridView selectItemsAtIndexPaths:[NSSet setWithObject:[NSIndexPath indexPathForItem:index inSection:0]]
+            [self.collectionView deselectAll:nil];
+            [self.collectionView selectItemsAtIndexPaths:[NSSet setWithObject:[NSIndexPath indexPathForItem:index inSection:0]]
                                     scrollPosition:NSCollectionViewScrollPositionNearestVerticalEdge];
         }
     }
@@ -303,7 +303,7 @@
 #pragma mark - Selection
 
 - (NSSet<PIXPhoto *> *)selectedItems {
-    NSSet<NSIndexPath *> *selectionIndexPaths = self.gridView.selectionIndexPaths;
+    NSSet<NSIndexPath *> *selectionIndexPaths = self.collectionView.selectionIndexPaths;
     if (selectionIndexPaths.count == 0) {
         return [NSSet set];
     }
@@ -320,13 +320,13 @@
 
 - (void)highlightIndexPaths:(NSSet<NSIndexPath *> *)indexPaths selected:(BOOL)selected {
     for (NSIndexPath *indexPath in indexPaths) {
-        NSCollectionViewItem *item = [self.gridView itemAtIndexPath:indexPath];
+        NSCollectionViewItem *item = [self.collectionView itemAtIndexPath:indexPath];
         if (item) {
             ((PIXCollectionViewItem *) item).selected = selected;
         }
     }
 
-    NSUInteger count = self.gridView.selectionIndexPaths.count;
+    NSUInteger count = self.collectionView.selectionIndexPaths.count;
     if (count == 0) {
         [self.toolbar hideToolbar:YES];
     } else {
@@ -449,7 +449,7 @@
 }
 
 - (void)deleteItems:(id)sender {
-    NSSet<NSIndexPath *> *selectionIndexPaths = self.gridView.selectionIndexPaths;
+    NSSet<NSIndexPath *> *selectionIndexPaths = self.collectionView.selectionIndexPaths;
     if (selectionIndexPaths.count == 0) {
         return;
     }

@@ -57,13 +57,13 @@ static NSString *kContentTitleKey, *kContentImageKey;
 - (void)awakeFromNib
 {
     /*
-    [self.gridView setHeaderSpace:35];
-    [self.gridView setItemSize:CGSizeMake(200, 200)];
-    [self.gridView setAllowsMultipleSelection:YES];
+    [self.collectionView setHeaderSpace:35];
+    [self.collectionView setItemSize:CGSizeMake(200, 200)];
+    [self.collectionView setAllowsMultipleSelection:YES];
     */
 
-    self.gridView.allowsEmptySelection = YES;
-    self.gridView.allowsMultipleSelection = YES;
+    self.collectionView.allowsEmptySelection = YES;
+    self.collectionView.allowsMultipleSelection = YES;
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(defaultThemeChanged:)
@@ -82,7 +82,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
     CABasicAnimation * scrollAnim = [CABasicAnimation animation];
     scrollAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     scrollAnim.duration = 0.1;
-    self.gridView.superview.animations = @{@"bounds": scrollAnim};
+    self.collectionView.superview.animations = @{@"bounds": scrollAnim};
 }
 
 -(void)willShowPIXView
@@ -99,9 +99,9 @@ static NSString *kContentTitleKey, *kContentImageKey;
 - (void)defaultThemeChanged:(NSNotification *)note
 {
     [self setBGColor];
-    [self.gridView setNeedsDisplay:YES];
+    [self.collectionView setNeedsDisplay:YES];
     
-    for(NSView * item in self.gridView.subviews)
+    for(NSView * item in self.collectionView.subviews)
     {
         [item setNeedsDisplay:YES];
     }
@@ -121,7 +121,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
         //[[self enclosingScrollView] setBackgroundColor:color];
     }
 
-    self.gridView.layer.backgroundColor = color.CGColor;
+    self.collectionView.layer.backgroundColor = color.CGColor;
 }
 
 -(void)dealloc
@@ -360,7 +360,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
     // Subclasses should implement this
     
     NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
-    [undoManager registerUndoWithTarget:self selector:@selector(gridViewDidDeselectAllItems:) object:self.gridView];
+    [undoManager registerUndoWithTarget:self selector:@selector(gridViewDidDeselectAllItems:) object:self.collectionView];
     [undoManager setActionName:@"Deselect Items"];
     [undoManager setActionIsDiscardable:YES];
 }

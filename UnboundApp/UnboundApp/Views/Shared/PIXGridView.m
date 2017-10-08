@@ -533,7 +533,7 @@ PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     [[self indexesForVisibleItems] enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
         
         PIXCollectionViewItem * item = (PIXCollectionViewItem *)[self itemAtIndex:idx];
-        item.selected = [self gridView:self itemIsSelectedAtIndex:idx inSection:0];
+        item.selected = [self collectionView:self itemIsSelectedAtIndex:idx inSection:0];
         
         if( item.selected )
             lastSelectedItemIndex = idx;
@@ -861,9 +861,9 @@ PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
     if(lastSelectedItemIndex != NSNotFound &&
        [[keyedVisibleItems objectForKey:[NSNumber numberWithInteger:lastSelectedItemIndex]] selected])
     {
-        if([self.delegate respondsToSelector:@selector(gridView:didKeyOpenItemAtIndex:inSection:)])
+        if([self.delegate respondsToSelector:@selector(collectionView:didKeyOpenItemAtIndex:inSection:)])
         {
-            [self.delegate gridView:self didKeyOpenItemAtIndex:lastSelectedItemIndex inSection:0];
+            [self.delegate collectionView:self didKeyOpenItemAtIndex:lastSelectedItemIndex inSection:0];
         }
     }
      */
@@ -1044,7 +1044,7 @@ PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 #pragma mark - Delegate Calls
 - (void)gridViewDidDeselectAllItems:(PIXGridView *)gridView
 {
-    //[nc postNotificationName:CNGridViewDidDeselectAllItemsNotification object:gridView userInfo:nil];
+    //[nc postNotificationName:CNGridViewDidDeselectAllItemsNotification object:collectionView userInfo:nil];
     if ([self.gridViewDelegate respondsToSelector:_cmd]) {
         [self.gridViewDelegate gridViewDidDeselectAllItems:gridView];
     }
@@ -1055,7 +1055,7 @@ PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 - (void)gridView:(PIXGridView*)gridView didShiftSelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
     /*[nc postNotificationName:CNGridViewDidSelectItemNotification
-     object:gridView
+     object:collectionView
      userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInteger:index] forKey:CNGridViewItemIndexKey]];*/
     if ([self.gridViewDelegate respondsToSelector:_cmd]) {
         [self.gridViewDelegate gridView:gridView didShiftSelectItemAtIndex:index inSection:section];
@@ -1065,7 +1065,7 @@ PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 - (void)gridView:(PIXGridView*)gridView willSelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
    /*[nc postNotificationName:CNGridViewWillSelectItemNotification
-                      object:gridView
+                      object:collectionView
                     userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInteger:index] forKey:CNGridViewItemIndexKey]];*/
     if ([self.gridViewDelegate respondsToSelector:_cmd]) {
         [self.gridViewDelegate gridView:gridView willSelectItemAtIndex:index inSection:section];
@@ -1075,7 +1075,7 @@ PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 - (void)gridView:(PIXGridView*)gridView didSelectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
     /*[nc postNotificationName:CNGridViewDidSelectItemNotification
-                      object:gridView
+                      object:collectionView
                     userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInteger:index] forKey:CNGridViewItemIndexKey]];*/
     if ([self.gridViewDelegate respondsToSelector:_cmd]) {
         [self.gridViewDelegate gridView:gridView didSelectItemAtIndex:index inSection:section];
@@ -1085,7 +1085,7 @@ PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 - (void)gridView:(PIXGridView*)gridView willDeselectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
     /*[nc postNotificationName:CNGridViewWillDeselectItemNotification
-                      object:gridView
+                      object:collectionView
                     userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInteger:index] forKey:CNGridViewItemIndexKey]];*/
     if ([self.gridViewDelegate respondsToSelector:_cmd]) {
         [self.gridViewDelegate gridView:gridView willDeselectItemAtIndex:index inSection:section];
@@ -1095,7 +1095,7 @@ PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 - (void)gridView:(PIXGridView*)gridView didDeselectItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
     /*[nc postNotificationName:CNGridViewDidDeselectItemNotification
-                      object:gridView
+                      object:collectionView
                     userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInteger:index] forKey:CNGridViewItemIndexKey]];*/
     if ([self.gridViewDelegate respondsToSelector:_cmd]) {
         [self.gridViewDelegate gridView:gridView didDeselectItemAtIndex:index inSection:section];
@@ -1105,7 +1105,7 @@ PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 - (void)gridView:(PIXGridView *)gridView didClickItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
     /*[nc postNotificationName:CNGridViewDidClickItemNotification
-                      object:gridView
+                      object:collectionView
                     userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInteger:index] forKey:CNGridViewItemIndexKey]];*/
     if ([self.gridViewDelegate respondsToSelector:_cmd]) {
         [self.gridViewDelegate gridView:gridView didClickItemAtIndex:index inSection:section];
@@ -1115,7 +1115,7 @@ PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 - (void)gridView:(PIXGridView *)gridView didDoubleClickItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section
 {
     /*[nc postNotificationName:CNGridViewDidDoubleClickItemNotification
-                      object:gridView
+                      object:collectionView
                     userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInteger:index] forKey:CNGridViewItemIndexKey]];*/
     if ([self.gridViewDelegate respondsToSelector:_cmd]) {
         [self.gridViewDelegate gridView:gridView didDoubleClickItemAtIndex:index inSection:section];
@@ -1125,7 +1125,7 @@ PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 - (void)gridView:(PIXGridView *)gridView rightMouseButtonClickedOnItemAtIndex:(NSUInteger)index inSection:(NSUInteger)section andEvent:(NSEvent *)event
 {
     /*[nc postNotificationName:CNGridViewRightMouseButtonClickedOnItemNotification
-                      object:gridView
+                      object:collectionView
                     userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInteger:index] forKey:CNGridViewItemIndexKey]];*/
     if ([self.gridViewDelegate respondsToSelector:_cmd]) {
         [self.gridViewDelegate gridView:gridView rightMouseButtonClickedOnItemAtIndex:index inSection:section andEvent:event];
@@ -1135,7 +1135,7 @@ PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 - (void)gridView:(PIXGridView *)gridView dragDidBeginAtIndex:(NSUInteger)index inSection:(NSUInteger)section andEvent:(NSEvent *)event
 {
     /*[nc postNotificationName:CNGridViewDragDidBeginNotification
-     object:gridView
+     object:collectionView
      userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInteger:index] forKey:CNGridViewItemIndexKey]];*/
     if ([self.gridViewDelegate respondsToSelector:_cmd]) {
         [self.gridViewDelegate gridView:gridView dragDidBeginAtIndex:index inSection:section andEvent:event];
@@ -1236,9 +1236,9 @@ PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 //     {
 //     lastPointed = index;
 //     
-//     if([self.delegate respondsToSelector:@selector(gridView:didPointItemAtIndex:inSection:)])
+//     if([self.delegate respondsToSelector:@selector(collectionView:didPointItemAtIndex:inSection:)])
 //     {
-//     [self.delegate gridView:self didPointItemAtIndex:index inSection:0];
+//     [self.delegate collectionView:self didPointItemAtIndex:index inSection:0];
 //     }
 //     }
 }

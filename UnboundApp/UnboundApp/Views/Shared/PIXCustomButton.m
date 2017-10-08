@@ -18,8 +18,6 @@
         // Initialization code here.
         //[[self class] setCellClass:[PIXCustomButtonCell class]];
         [self setButtonType:NSTexturedRoundedBezelStyle];
-        
-        
     }
     
     return self;
@@ -35,9 +33,6 @@
 {
     // Drawing code here.
     [super drawRect:dirtyRect];
-    
-    //[[ self cell] drawBezelWithFrame:self.bounds inView:self];
-    //[[ self cell] drawTitleWithFrame:self.bounds inView:self];
 }
 
 @end

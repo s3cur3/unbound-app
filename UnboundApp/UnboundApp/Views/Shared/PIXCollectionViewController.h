@@ -15,7 +15,7 @@
 
 @interface PIXCollectionViewController : PIXViewController
 
-@property (strong) IBOutlet NSCollectionView *gridView;
+@property (strong) IBOutlet NSCollectionView *collectionView;
 
 @property (strong) NSString * selectedItemsName;
 

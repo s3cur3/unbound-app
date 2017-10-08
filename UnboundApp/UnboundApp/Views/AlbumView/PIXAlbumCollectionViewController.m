@@ -66,15 +66,15 @@
     [super awakeFromNib];
     
     /*
-    [self.gridView setItemSize:NSMakeSize(190, 210)];
-    [self.gridView setAllowsMultipleSelection:YES];
-    [self.gridView reloadData];
-    [self.gridView setUseHover:NO];
+    [self.collectionView setItemSize:NSMakeSize(190, 210)];
+    [self.collectionView setAllowsMultipleSelection:YES];
+    [self.collectionView reloadData];
+    [self.collectionView setUseHover:NO];
     */
 
-    self.gridView.delegate = self;
+    self.collectionView.delegate = self;
 
-    self.toolbar.collectionView = self.gridView;
+    self.toolbar.collectionView = self.collectionView;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(albumsChanged:)
@@ -98,7 +98,7 @@
     flowLayout.sectionInset = NSEdgeInsetsMake(10, 20, 10, 20);
     flowLayout.minimumInteritemSpacing = 20;
     flowLayout.minimumLineSpacing = 20;
-    self.gridView.collectionViewLayout = flowLayout;
+    self.collectionView.collectionViewLayout = flowLayout;
 
     self.view.wantsLayer = YES;
     [self setBGColor];
@@ -113,9 +113,9 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
         // make ourselves the first responder after we're added
-        [self.view.window makeFirstResponder:self.gridView];
+        [self.view.window makeFirstResponder:self.collectionView];
         //        [self setNextResponder:self.scrollView];
-        //        [self.gridView setNextResponder:self];
+        //        [self.collectionView setNextResponder:self];
     });
     
     
@@ -184,9 +184,9 @@
 - (void)defaultThemeChanged:(NSNotification *)note
 {
     [self setBGColor];
-    [self.gridView setNeedsDisplay:YES];
+    [self.collectionView setNeedsDisplay:YES];
     
-    for(NSView * item in self.gridView.subviews)
+    for(NSView * item in self.collectionView.subviews)
     {
         [item setNeedsDisplay:YES];
     }
@@ -207,7 +207,7 @@
         //[[self enclosingScrollView] setBackgroundColor:color];
     }
 
-    self.gridView.layer.backgroundColor = color.CGColor;
+    self.collectionView.layer.backgroundColor = color.CGColor;
 }
 
 #pragma mark - ToolBar
@@ -339,7 +339,7 @@
 {
     PIXAlbum * currentAlbum = nil;
 
-    if (self.gridView)
+    if (self.collectionView)
     if(self.selectedItems.count == 1)
     {
         currentAlbum = [self.selectedItems anyObject];
@@ -401,14 +401,14 @@
     NSAssert(index != NSNotFound, @"We should always find the album");
 
     // select just this item
-    self.gridView.selectionIndexPaths = [NSSet setWithObject:[NSIndexPath indexPathForItem:index inSection:0]];
+    self.collectionView.selectionIndexPaths = [NSSet setWithObject:[NSIndexPath indexPathForItem:index inSection:0]];
     [self updateToolbar];
 
     /*
     // this will scroll to the item and make the text field the first responder
-    PIXAlbumGridViewItem * item = (PIXAlbumGridViewItem *)[self.gridView scrollToAndReturnItemAtIndex:index animated:YES];
+    PIXAlbumGridViewItem * item = (PIXAlbumGridViewItem *)[self.collectionView scrollToAndReturnItemAtIndex:index animated:YES];
     */
-    PIXCollectionViewItem * item = (PIXCollectionViewItem *)[self.gridView itemAtIndex:index];
+    PIXCollectionViewItem * item = (PIXCollectionViewItem *)[self.collectionView itemAtIndex:index];
     if( item != nil )
     {
         PIXAlbumCollectionViewItemView * itemView = (PIXAlbumCollectionViewItemView *)item.view;
@@ -495,7 +495,7 @@
 
 - (IBAction)deleteItems:(id)inSender
 {
-    NSSet<NSIndexPath *> *selectionIndexPaths = self.gridView.selectionIndexPaths;
+    NSSet<NSIndexPath *> *selectionIndexPaths = self.collectionView.selectionIndexPaths;
     if (selectionIndexPaths.count == 0) {
         return;
     }
@@ -511,7 +511,7 @@
     
     // set the new one
     self.albums = [PIXAlbum sortedAlbums];
-    //[self.gridView reloadData]; // the updateSearch call will reload data always so no need to call this
+    //[self.collectionView reloadData]; // the updateSearch call will reload data always so no need to call this
     [self updateGridTitle];
     
     self.lastSearch = nil; // clear this out because we need to do a new search when all the albums change
@@ -563,7 +563,7 @@
         if(index != NSNotFound)
         {
 #warning Uncomment the following line
-            //[self.gridView scrollToAndReturnItemAtIndex:index animated:YES];
+            //[self.collectionView scrollToAndReturnItemAtIndex:index animated:YES];
         }
     }
 }
@@ -634,7 +634,7 @@
     }
     
     if (index != -1) {
-        self.gridView.selectionIndexPaths = [NSSet setWithObject:[NSIndexPath indexPathForItem:index inSection:0]];
+        self.collectionView.selectionIndexPaths = [NSSet setWithObject:[NSIndexPath indexPathForItem:index inSection:0]];
     }
 }
 
@@ -647,7 +647,7 @@
 
 #pragma mark - Selection
 - (NSSet<PIXAlbum *> *)selectedItems {
-    NSSet<NSIndexPath *> *selectionIndexPaths = self.gridView.selectionIndexPaths;
+    NSSet<NSIndexPath *> *selectionIndexPaths = self.collectionView.selectionIndexPaths;
     if (selectionIndexPaths.count == 0) {
         return [NSSet set];
     }
@@ -664,13 +664,13 @@
 
 - (void)highlightIndexPaths:(NSSet<NSIndexPath *> *)indexPaths selected:(BOOL)selected {
     for (NSIndexPath *indexPath in indexPaths) {
-        NSCollectionViewItem *item = [self.gridView itemAtIndexPath:indexPath];
+        NSCollectionViewItem *item = [self.collectionView itemAtIndexPath:indexPath];
         if (item) {
             ((PIXCollectionViewItem *) item).selected = selected;
         }
     }
 
-    NSUInteger count = self.gridView.selectionIndexPaths.count;
+    NSUInteger count = self.collectionView.selectionIndexPaths.count;
     if (count == 0) {
         [self.toolbar hideToolbar:YES];
     } else {
@@ -689,10 +689,10 @@
             [indices addObject:[NSIndexPath indexPathForItem:index inSection:0]];
         }
     }
-    self.gridView.animator.selectionIndexPaths = indices;
+    self.collectionView.animator.selectionIndexPaths = indices;
 
     NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
-    [undoManager registerUndoWithTarget:self selector:@selector(gridViewDidDeselectAllItems:) object:self.gridView];
+    [undoManager registerUndoWithTarget:self selector:@selector(gridViewDidDeselectAllItems:) object:self.collectionView];
     [undoManager setActionName:@"Deselect Albums"];
     [undoManager setActionIsDiscardable:YES];
 }

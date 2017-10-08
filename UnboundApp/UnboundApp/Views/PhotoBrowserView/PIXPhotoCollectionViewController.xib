@@ -11,7 +11,7 @@
                 <outlet property="centerStatusView" destination="kcO-6j-nBU" id="llt-dx-eAC"/>
                 <outlet property="centerStatusViewSubTextField" destination="SWz-5P-ham" id="O8E-vh-xZS"/>
                 <outlet property="centerStatusViewTextField" destination="WIY-ms-Q0S" id="PJU-rQ-7a3"/>
-                <outlet property="gridView" destination="KUn-vc-UwM" id="GSd-Nf-rLy"/>
+                <outlet property="collectionView" destination="KUn-vc-UwM" id="GSd-Nf-rLy"/>
                 <outlet property="gridViewProgress" destination="pyq-Cn-tHT" id="kI1-53-Na8"/>
                 <outlet property="gridViewTitle" destination="iYX-Z2-2rd" id="VhK-FX-B7D"/>
                 <outlet property="scrollView" destination="lQ1-RR-8z3" id="FQa-PA-wZ4"/>

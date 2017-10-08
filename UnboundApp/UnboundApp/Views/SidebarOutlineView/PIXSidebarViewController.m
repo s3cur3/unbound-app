@@ -420,8 +420,8 @@
 -(void)moveRight:(id)sender
 {
     // make the image grid the first responder
-    [self.view.window makeFirstResponder:self.splitViewController.imageBrowserViewController.gridView];
-    [self.splitViewController.imageBrowserViewController.gridView moveRight:sender];
+    [self.view.window makeFirstResponder:self.splitViewController.imageBrowserViewController.collectionView];
+    [self.splitViewController.imageBrowserViewController.collectionView moveRight:sender];
 }
 
 -(void)cancelOperation:(id)sender
