@@ -18,7 +18,7 @@ import Cocoa
      }
   }
 
-  private var viewControllers = [PIXViewController]()
+  fileprivate var viewControllers = [PIXViewController]()
 
   private var toolbarItems: [NSToolbarItem]?
   private var leftItems: [NSToolbarItem]?
@@ -52,6 +52,7 @@ import Cocoa
     titleView.isBordered = false
     titleView.backgroundColor = NSColor(white: 0, alpha: 0)
     titleItem.view = titleView
+    titleItem.visibilityPriority = NSToolbarItem.VisibilityPriority.high
 
     var button: NSButton
     if #available(OSX 10.12, *) {
@@ -237,7 +238,7 @@ extension NavigationController {
       items.append(contentsOf: leftItems)
     }
     items.append(activityIndicator)
-    items.append(NSToolbarItem(itemIdentifier: .flexibleSpace))
+    items.append(AdaptiveToolbarSpaceItem(itemIdentifier: NSToolbarItem.Identifier("AdaptiveSpace")))
 
     items.append(titleItem)
     items.append(NSToolbarItem(itemIdentifier: .flexibleSpace))

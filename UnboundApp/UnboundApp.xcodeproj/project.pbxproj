@@ -147,6 +147,7 @@
 		458AD3D43A8C451140F7281D /* playbutton-tinted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD582BE81CADF4922CE0F /* playbutton-tinted@2x.png */; };
 		458AD3D4792461F591CB5D4A /* btn-roundrect-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD11157B13244BB3EEE4F /* btn-roundrect-up.png */; };
 		458AD3DCFFCED9EA8D385280 /* PIXNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADBE6B4EB3E535CC48668 /* PIXNavigationController.m */; };
+		458AD3DFAD94B50851A2BFB8 /* AdaptiveToolbarSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AD2D4D1380902CA593631 /* AdaptiveToolbarSpace.swift */; };
 		458AD3E74C55CB64F09CF4E7 /* PIXPageHUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD14FBD86FFB06E7642BE /* PIXPageHUDView.m */; };
 		458AD3E7FFF167F6718DAA48 /* Mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 458ADEC56F74773AFE527439 /* Mask.jpg */; };
 		458AD405AE75ED465147BB3E /* PIXVideoImageOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD05956EDFEFFBDA833F3 /* PIXVideoImageOverlayView.m */; };
@@ -357,6 +358,7 @@
 		458ADA0D918BBF3FA348BCEC /* playbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD2804681F5B382C3E328 /* playbutton@2x.png */; };
 		458ADA126784A00937E27C53 /* Unbound-For-Mac-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADE903A39B8A52515D9E2 /* Unbound-For-Mac-512.png */; };
 		458ADA1BC43ECFE3B2BC08E5 /* PIXCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADEAC60834A9F1E87886F /* PIXCollectionViewItem.m */; };
+		458ADA20C3E7369A700A73FA /* AdaptiveToolbarSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AD2D4D1380902CA593631 /* AdaptiveToolbarSpace.swift */; };
 		458ADA22496E33966D9E20FE /* preferences_dark_theme.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADA5D25C211D99C7CF0AE /* preferences_dark_theme.png */; };
 		458ADA2353839919BBB00370 /* PIXSidebarClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD8E33DE2AFDC141579B5 /* PIXSidebarClipView.m */; };
 		458ADA2D53883C40CF3C0B9F /* PIXPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADFFDF3A1A1BF7EC453CA /* PIXPageViewController.xib */; };
@@ -365,6 +367,7 @@
 		458ADA4035805F8C0DF08CDE /* PIXPageHUDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD45CE55653295C7278F1 /* PIXPageHUDWindow.m */; };
 		458ADA48AA7EE51DF21B9B05 /* MakeThumbnailOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD57EF9C057A646A2B2CA /* MakeThumbnailOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		458ADA49391C756F217F21A1 /* PIXPageHUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD14FBD86FFB06E7642BE /* PIXPageHUDView.m */; };
+		458ADA4B9E97D1AA60E6E267 /* AdaptiveToolbarSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AD2D4D1380902CA593631 /* AdaptiveToolbarSpace.swift */; };
 		458ADA6577B94C54A54B64FA /* PIXPhotoCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADC35FEA31B0D8312AF84 /* PIXPhotoCollectionViewItem.m */; };
 		458ADA65C0424EE72D21FEF5 /* PIXMiniExifViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD0D497ED6EB0B04EF6C6 /* PIXMiniExifViewController.xib */; };
 		458ADA71AE025E00E7A7B142 /* leapnotconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADFBAF1890806CFAFBEAA /* leapnotconnected.png */; };
@@ -701,6 +704,7 @@
 		458AD2AD4B93493C0934A7DF /* PIXAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXAlbum.h; sourceTree = "<group>"; };
 		458AD2BC5CD7C6B7B1BE994B /* PIXSidebarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSidebarViewController.m; sourceTree = "<group>"; };
 		458AD2C360D0004D8B746AAC /* buttongrid_emaillink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttongrid_emaillink.png; sourceTree = "<group>"; };
+		458AD2D4D1380902CA593631 /* AdaptiveToolbarSpace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdaptiveToolbarSpace.swift; sourceTree = "<group>"; };
 		458AD2E290E211201DFD9034 /* NSCollectionView+PIXSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCollectionView+PIXSelection.m"; sourceTree = "<group>"; };
 		458AD2F03843EA9EBD3FBBE3 /* PIXInfoPanelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXInfoPanelViewController.m; sourceTree = "<group>"; };
 		458AD2FEBC5E4E4554A1C5C0 /* PIXMainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PIXMainWindow.xib; sourceTree = "<group>"; };
@@ -1460,6 +1464,7 @@
 			isa = PBXGroup;
 			children = (
 				458AD00542DA420882593B32 /* NavigationController.swift */,
+				458AD2D4D1380902CA593631 /* AdaptiveToolbarSpace.swift */,
 			);
 			path = NavigationController;
 			sourceTree = "<group>";
@@ -2371,6 +2376,7 @@
 				458AD01FBD59225A8AD793B2 /* NSCollectionView+PIXSelection.m in Sources */,
 				458ADD9279C5C38C0EB41098 /* PIXCollectionView.m in Sources */,
 				458AD7817E363896733B8673 /* NavigationController.swift in Sources */,
+				458ADA20C3E7369A700A73FA /* AdaptiveToolbarSpace.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2451,6 +2457,7 @@
 				458ADE38B7D7DAD30EBFDDB9 /* NSCollectionView+PIXSelection.m in Sources */,
 				458AD16EF4BD15153C72E141 /* PIXCollectionView.m in Sources */,
 				458AD38194E7A5B3C5D61971 /* NavigationController.swift in Sources */,
+				458ADA4B9E97D1AA60E6E267 /* AdaptiveToolbarSpace.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2531,6 +2538,7 @@
 				458ADC59902A90ED790F99DB /* NSCollectionView+PIXSelection.m in Sources */,
 				458ADF8D765591473CD3008E /* PIXCollectionView.m in Sources */,
 				458ADBA0C7ACD594DFE233A7 /* NavigationController.swift in Sources */,
+				458AD3DFAD94B50851A2BFB8 /* AdaptiveToolbarSpace.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
