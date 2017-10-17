@@ -135,6 +135,7 @@
 		458AD36AC5F4B04D2C0A57DB /* GeneralPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD3A0A1A9CF60B68D4384 /* GeneralPreferencesViewController.m */; };
 		458AD36D210DE2C725E6797D /* MakeThumbnailOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD57EF9C057A646A2B2CA /* MakeThumbnailOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		458AD37F61171FC5AB9FBC59 /* buttongrid_email.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADC0F47F8C6A43275CD7C /* buttongrid_email.png */; };
+		458AD38194E7A5B3C5D61971 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AD00542DA420882593B32 /* NavigationController.swift */; };
 		458AD39F3EFCF715B4EFFD82 /* PIXSeperatedSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADDFF9855AF4ADE9CE808 /* PIXSeperatedSpinnerView.m */; };
 		458AD3ACB3D4AB42237B57FF /* btn-roundrect-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADFFA74933BC5491504CE /* btn-roundrect-down@2x.png */; };
 		458AD3B6ED19827F561573D1 /* PIXCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD933DEAABBEEB83AD143 /* PIXCollectionViewController.m */; };
@@ -272,6 +273,7 @@
 		458AD76EADF1104A544F6FEF /* MapViewAdditions.css in Resources */ = {isa = PBXBuildFile; fileRef = 458AD948F91477D9F2AC3597 /* MapViewAdditions.css */; };
 		458AD77120E55A2E241E3D7C /* expand@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD3070947054FA0A87DB8 /* expand@2x.png */; };
 		458AD77C8D29630930CFAA96 /* buttongrid_share.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD529E82DA964CECCEC23 /* buttongrid_share.png */; };
+		458AD7817E363896733B8673 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AD00542DA420882593B32 /* NavigationController.swift */; };
 		458AD785BE11302AAF4CA92E /* PIXPlayVideoHUDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADC2EB8F423821AD43A2A /* PIXPlayVideoHUDWindow.m */; };
 		458AD79B7F265B43A11BFE36 /* btn-roundrect-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD11157B13244BB3EEE4F /* btn-roundrect-up.png */; };
 		458AD7B1F5C2BB693D1D6267 /* NSBezierPath+pathUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADA4C9A16191E9DED0AD7 /* NSBezierPath+pathUtilities.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -404,6 +406,7 @@
 		458ADB86A8DCD0B8F601C1B6 /* pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD847D4CA9CF915C77020 /* pause@2x.png */; };
 		458ADB8DDA671B0936C2F2F2 /* PIXPhotoCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADC35FEA31B0D8312AF84 /* PIXPhotoCollectionViewItem.m */; };
 		458ADB9309522A0B1D2A2E92 /* arrow-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD710E50B20A82782789C /* arrow-left@2x.png */; };
+		458ADBA0C7ACD594DFE233A7 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AD00542DA420882593B32 /* NavigationController.swift */; };
 		458ADBB28C5B2EE1CC14584A /* contract@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADC5AF3A37C7F6E48EC61 /* contract@2x.png */; };
 		458ADBB2CF64C1EB036C444A /* PIXSidebarScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD96A93428C422C3262D8 /* PIXSidebarScrollView.m */; };
 		458ADBB69FE914117DFCF4D3 /* nophoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADE0CA27821BA7F51E279 /* nophoto.png */; };
@@ -653,6 +656,7 @@
 		1DB2F860167ABE87008AC0F7 /* PIXAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PIXAppDelegate.h; sourceTree = "<group>"; };
 		1DB2F861167ABE87008AC0F7 /* PIXAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PIXAppDelegate.m; sourceTree = "<group>"; };
 		3F1A9DCD905A2E2EDB3FCB20 /* Pods-Unbound-Unbound Trial.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unbound-Unbound Trial.release.xcconfig"; path = "Pods/Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial.release.xcconfig"; sourceTree = "<group>"; };
+		458AD00542DA420882593B32 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		458AD0064549816BE5C03B3A /* pixite-logo-wide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pixite-logo-wide.png"; sourceTree = "<group>"; };
 		458AD02AF6B5C2720F53D137 /* PIXPhotoCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhotoCollectionViewController.m; sourceTree = "<group>"; };
 		458AD030F9E9A7E3B1C08718 /* buttongrid_print.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttongrid_print.png; sourceTree = "<group>"; };
@@ -1009,6 +1013,7 @@
 				458AD753BD94279F29E9068F /* SplitView */,
 				458ADAFEFF6A19C968E3FCCD /* PageView */,
 				458ADC45874A0381718B78EA /* Collection Toolbar */,
+				458ADDF3BC3AB28E39BEAB24 /* NavigationController */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1449,6 +1454,14 @@
 				458AD959BA4E5D02CA238515 /* PIXPhotoCollectionViewItem.xib */,
 			);
 			path = PhotoBrowserView;
+			sourceTree = "<group>";
+		};
+		458ADDF3BC3AB28E39BEAB24 /* NavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				458AD00542DA420882593B32 /* NavigationController.swift */,
+			);
+			path = NavigationController;
 			sourceTree = "<group>";
 		};
 		458ADE7E87D0E60CE797672E /* Helpers */ = {
@@ -2357,6 +2370,7 @@
 				458AD0BAA89DFD1CCF9DBECC /* PIXCollectionToolbar.m in Sources */,
 				458AD01FBD59225A8AD793B2 /* NSCollectionView+PIXSelection.m in Sources */,
 				458ADD9279C5C38C0EB41098 /* PIXCollectionView.m in Sources */,
+				458AD7817E363896733B8673 /* NavigationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2436,6 +2450,7 @@
 				458AD5A5BACB12ED72838495 /* PIXCollectionToolbar.m in Sources */,
 				458ADE38B7D7DAD30EBFDDB9 /* NSCollectionView+PIXSelection.m in Sources */,
 				458AD16EF4BD15153C72E141 /* PIXCollectionView.m in Sources */,
+				458AD38194E7A5B3C5D61971 /* NavigationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2515,6 +2530,7 @@
 				458ADE361C7A0471CBB9B13A /* PIXCollectionToolbar.m in Sources */,
 				458ADC59902A90ED790F99DB /* NSCollectionView+PIXSelection.m in Sources */,
 				458ADF8D765591473CD3008E /* PIXCollectionView.m in Sources */,
+				458ADBA0C7ACD594DFE233A7 /* NavigationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2667,7 +2683,7 @@
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2700,7 +2716,7 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(inherited)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = app;
 			};

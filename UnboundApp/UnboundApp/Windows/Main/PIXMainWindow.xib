@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PIXMainWindowController">
@@ -15,18 +16,18 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customObject id="156" userLabel="Navigation View Controller" customClass="PIXNavigationController">
+        <customObject id="156" userLabel="Navigation View Controller" customClass="NavigationController" customModule="Unbound" customModuleProvider="target">
             <connections>
-                <outlet property="mainWindow" destination="1" id="222"/>
-                <outlet property="toolbar" destination="190" id="220"/>
-                <outlet property="view" destination="171" id="187"/>
+                <outlet property="mainWindow" destination="1" id="ybn-tS-gWY"/>
+                <outlet property="toolbar" destination="190" id="wEF-QH-YUn"/>
+                <outlet property="view" destination="171" id="VM8-xf-Hlo"/>
             </connections>
         </customObject>
         <window title="Unbound" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" frameAutosaveName="UnboundMainWindow" animationBehavior="default" id="1">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="335" y="287" width="1328" height="741"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1028"/>
             <view key="contentView" id="2">
                 <rect key="frame" x="0.0" y="0.0" width="1328" height="741"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -46,7 +47,7 @@
                 <allowedToolbarItems/>
                 <defaultToolbarItems/>
                 <connections>
-                    <outlet property="delegate" destination="156" id="221"/>
+                    <outlet property="delegate" destination="156" id="qvc-jG-j0A"/>
                 </connections>
             </toolbar>
         </window>

@@ -10,6 +10,7 @@
 #import "PIXNavigationController.h"
 #import "PIXAlbumCollectionViewController.h"
 #import "PIXDefines.h"
+#import "Unbound-Swift.h"
 #import "PIXAppDelegate.h"
 
 
@@ -73,12 +74,13 @@
     }
     
     [self.navigationViewController.view setWantsLayer:YES];
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+
+
     self.albumViewController = [[PIXAlbumCollectionViewController alloc] initWithNibName:@"PIXAlbumCollectionViewController" bundle:nil];
     [self.albumViewController view];
 
-    [self.navigationViewController pushViewController:self.albumViewController];
-    
+    [self.navigationViewController pushViewControllerWithViewController:self.albumViewController];
+
 #ifdef TRIAL_MODE
     
     NSDate * today = [NSDate date];

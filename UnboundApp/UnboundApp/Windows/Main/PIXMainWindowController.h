@@ -7,9 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "Unbound-Swift.h"
 
 @class PIXAlbumViewController;
-@class PIXNavigationController;
 @class PIXViewController;
 
 @class PIXAlbumGridViewController;
@@ -20,7 +20,7 @@
     
 }
 
-@property (nonatomic, strong) IBOutlet PIXNavigationController *navigationViewController;
+@property (nonatomic, strong) IBOutlet NavigationController *navigationViewController;
 //@property (nonatomic, strong) PIXAlbumGridViewController *albumViewController;
 @property (nonatomic, strong) PIXAlbumCollectionViewController * albumViewController;
 

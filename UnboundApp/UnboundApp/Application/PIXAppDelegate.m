@@ -309,19 +309,9 @@
 
 -(IBAction)importPhotosPressed:(id)sender
 {
-    BOOL allowDirectories = NO;
-    
-    // if we're at the top level view then allow directories for import
-    if([[[self.mainWindowController navigationViewController] viewControllerArray] count] == 1)
-    {
-        allowDirectories = YES;
-    }
-    
+    BOOL allowDirectories = YES;
     [[PIXFileManager sharedInstance] importPhotosToAlbum:self.currentlySelectedAlbum allowDirectories:allowDirectories];
 }
-
-
-
 
 #pragma mark - MASPreferences Class methods:
 

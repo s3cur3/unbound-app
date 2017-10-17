@@ -104,6 +104,17 @@
     });
     
     [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] setTitle:[self.selectedAlbum title]];
+
+
+    [self.backButtonSegment setSelected:NO forSegment:0];
+
+    // set the toggle to the correct view
+    [self.backButtonSegment setSelected:![self.splitView isSubviewCollapsed:self.leftPane]
+                             forSegment:1];
+
+    self.navigationViewController.showBackButton = false;
+    self.navigationViewController.leftToolbarItems = @[self.backButtonSegmentItem, self.importItem];
+    self.navigationViewController.rightToolbarItems = @[self.sliderItem, self.deleteAlbumItem, self.sortButton];
 }
 
 
@@ -121,20 +132,6 @@
     
     [self.sidebarViewController willHidePIXView];
     [self.imageBrowserViewController willHidePIXView];
-}
-
--(void)setupToolbar
-{
-    [self.backButtonSegment setSelected:NO forSegment:0];
-    
-    // set the toggle to the correct view
-    [self.backButtonSegment setSelected:![self.splitView isSubviewCollapsed:self.leftPane]
-                             forSegment:1];
-    
-    NSArray * items = @[self.backButtonSegmentItem, self.importItem, self.navigationViewController.activityIndicator, self.navigationViewController.middleSpacer, self.sliderItem, self.deleteAlbumItem, self.sortButton];
-    
-    [self.navigationViewController setNavBarHidden:NO];
-    [self.navigationViewController setToolbarItems:items];
 }
 
 - (NSToolbarItem *)sliderItem
@@ -170,7 +167,7 @@
     _sortButton = [[NSToolbarItem alloc] initWithItemIdentifier:@"sortButton"];
     //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
     
-    NSPopUpButton * buttonView = [[NSPopUpButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25) pullsDown:YES];
+    NSPopUpButton * buttonView = [[NSPopUpButton alloc] initWithFrame:CGRectMake(0, 0, 30, 25) pullsDown:YES];
     
     [buttonView setImagePosition:NSImageOverlaps];
     [buttonView setBordered:YES];
@@ -195,7 +192,7 @@
     [buttonView insertItemWithTitle:@"Old to New" atIndex:2];
     [buttonView insertItemWithTitle:@"Filename A to Z" atIndex:3];
     [buttonView insertItemWithTitle:@"Filename Z to A" atIndex:4];
-    
+
     NSMenuItem * item = [[buttonView itemArray] objectAtIndex:0];
     item.image = [NSImage imageNamed:@"sortbutton"];
     [item.image setTemplate:YES];
@@ -399,7 +396,7 @@
     _importItem = [[NSToolbarItem alloc] initWithItemIdentifier:@"importAlbumButton"];
     //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
 
-    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 60, 29)];
+    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 60, 27)];
     
     [buttonView setImage:nil];
     [buttonView setImagePosition:NSImageLeft];

@@ -211,14 +211,6 @@
     return self;
 }
 
--(void)setupToolbar
-{
-    NSArray * items = @[self.navigationViewController.backButton];
-    
-    [self.navigationViewController setToolbarItems:items];
-     
-}
-
 -(void)willShowPIXView
 {
     

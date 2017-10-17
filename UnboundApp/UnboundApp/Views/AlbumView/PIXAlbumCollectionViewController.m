@@ -134,6 +134,8 @@
     
     [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] setTitle:@"Unbound"];
 
+    self.navigationViewController.leftToolbarItems = @[self.importItem];
+    self.navigationViewController.rightToolbarItems = @[self.self.neuAlbumButton, self.sortButton, self.searchBar];
 }
 
 // this is called when the full scan progress changes
@@ -198,12 +200,6 @@
 
 #pragma mark - ToolBar
 
-- (void)setupToolbar
-{
-    NSArray * items = @[self.importItem, self.navigationViewController.activityIndicator, self.navigationViewController.middleSpacer, self.neuAlbumButton, self.searchBar, self.sortButton];
-    [self.navigationViewController setToolbarItems:items];
-}
-
 - (NSToolbarItem *)sortButton
 {
     if(_sortButton != nil) return _sortButton;
@@ -211,7 +207,7 @@
     _sortButton = [[NSToolbarItem alloc] initWithItemIdentifier:@"sortButton"];
     //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
     
-    NSPopUpButton * buttonView = [[NSPopUpButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25) pullsDown:YES];
+    NSPopUpButton * buttonView = [[NSPopUpButton alloc] initWithFrame:CGRectMake(0, 0, 30, 25) pullsDown:YES];
     
     [buttonView setImagePosition:NSImageOverlaps];
     [buttonView setBordered:YES];
@@ -692,7 +688,7 @@
 -(void)showPhotosForAlbum:(id)anAlbum
 {
     self.aSplitViewController.selectedAlbum = anAlbum;
-    [self.navigationViewController pushViewController:self.aSplitViewController];
+    [self.navigationViewController pushViewControllerWithViewController:self.aSplitViewController];
 }
 
 #pragma mark - Search

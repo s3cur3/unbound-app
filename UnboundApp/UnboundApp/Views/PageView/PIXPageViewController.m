@@ -482,6 +482,10 @@
         [self.currentImageVC setIsCurrentView:YES];
         
     });
+
+    self.navigationViewController.leftToolbarItems = nil;
+    self.navigationViewController.rightToolbarItems = @[self.deleteItem, self.shareItem, self.infoItem];
+
 }
 
 
@@ -529,15 +533,6 @@
     }
 }
 
--(void)setupToolbar
-{
-    NSArray * items = @[self.navigationViewController.backButton, self.navigationViewController.middleSpacer, self.deleteItem, self.shareItem, self.infoItem];
-    
-    [self.navigationViewController setNavBarHidden:NO];
-    [self.navigationViewController setToolbarItems:items];
-    
-}
-
 - (NSToolbarItem *)deleteItem
 {
     if(_deleteItem != nil) return _deleteItem;
@@ -546,8 +541,6 @@
     //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
     
     NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 60, 25)];
-
-    [NSImage imageNamed:NSImageNameTrashEmpty]
     [buttonView setImagePosition:NSNoImage];
     [buttonView setBordered:YES];
     [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
@@ -1059,7 +1052,7 @@
     } else {
         [self.controlWindow showAnimated:NO];
     }
-    [self.navigationViewController setNavBarHidden:NO];
+    [self.navigationViewController setToolbarHidden:NO];
 }
 
 -(void)tryFadeControls
@@ -1072,7 +1065,7 @@
         // if we're in fullscreen mode then also fade the top toolbar
         if([self.view.window styleMask] & NSFullScreenWindowMask && !self.infoPanelShowing)
         {
-            [self.navigationViewController setNavBarHidden:YES];
+            [self.navigationViewController setToolbarHidden:YES];
         }
         
         // hide the cursor until it moves
