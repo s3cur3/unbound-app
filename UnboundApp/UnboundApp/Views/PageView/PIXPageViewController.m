@@ -546,7 +546,8 @@
     //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
     
     NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 60, 25)];
-    
+
+    [NSImage imageNamed:NSImageNameTrashEmpty]
     [buttonView setImagePosition:NSNoImage];
     [buttonView setBordered:YES];
     [buttonView setBezelStyle:NSTexturedSquareBezelStyle];

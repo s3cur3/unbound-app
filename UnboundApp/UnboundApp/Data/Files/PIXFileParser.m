@@ -1281,16 +1281,12 @@ NSDictionary * dictionaryForURL(NSURL * url)
 {
     NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
 
-    
     // fetch any the albums with these ids
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kAlbumEntityName];
     [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(self IN %@)", albumIDS]];
-    
-    
+
     NSError * error;
-    
     NSArray * editedAlbums = [context executeFetchRequest:fetchRequest error:&error];
-    
     for(PIXAlbum * album in editedAlbums)
     {
         [album flush];
