@@ -7,7 +7,6 @@
 //
 
 #import "PIXViewController.h"
-#import "PIXNavigationController.h"
 #import "PIXPhoto.h"
 #import "PIXAlbum.h"
 #import "PIXMiniExifViewController.h"
@@ -158,46 +157,6 @@
 -(NSMenu *)menuForObject:(id)object;
 {
     return [self menuForObjects:[NSArray arrayWithObject:object] selectedObject:object];
-//    NSMenu*  menu = nil;
-//    
-//    menu = [[NSMenu alloc] initWithTitle:@"menu"];
-//    [menu setAutoenablesItems:NO];
-//    
-//    
-//    // only show the mini exif view on photos
-//    if([object isKindOfClass:[PIXPhoto class]])
-//    {
-//        NSMenuItem * miniExifDisplay = [[NSMenuItem alloc] init];
-//        
-//        PIXMiniExifViewController * exifVC = [[PIXMiniExifViewController alloc] initWithNibName:@"PIXMiniExifViewController" bundle:nil];
-//        
-//        exifVC.photo = object;
-//        
-//        miniExifDisplay.view = exifVC.view;
-//        
-//        [miniExifDisplay.view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-//        
-//        [menu addItem:miniExifDisplay];
-//    }
-//    
-//    // Get Info
-//    //TODO: pop up message if multiple items selected for these actions
-//    [menu addItemWithTitle:[NSString stringWithFormat:@"Get Info"] action:
-//     @selector(getInfo:) keyEquivalent:@""];
-//    
-//    // Show in Finder
-//    [menu addItemWithTitle:[NSString stringWithFormat:@"Show in Finder"] action:
-//     @selector(revealInFinder:) keyEquivalent:@""];
-//    
-//    for (NSMenuItem * anItem in [menu itemArray])
-//    {
-//        [anItem setRepresentedObject:object];
-//        [anItem setTarget:self];
-//    }
-//    
-//    return menu;
-    
-    //[menu addItem:[NSMenuItem separatorItem]];
 }
 
 
@@ -209,14 +168,6 @@
     }
     
     return self;
-}
-
--(void)setupToolbar
-{
-    NSArray * items = @[self.navigationViewController.backButton];
-    
-    [self.navigationViewController setToolbarItems:items];
-     
 }
 
 -(void)willShowPIXView

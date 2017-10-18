@@ -19,8 +19,6 @@
 #import "PIXDefines.h"
 #import "PIXMainWindowController.h"
 
-#import "PIXNavigationController.h"
-
 #import "PIXProgressWindowController.h"
 
 //#define DEBUG_DELETE_ITEMS 1
@@ -112,18 +110,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     [panel setAllowsMultipleSelection:NO];
     [panel setCanChooseFiles:YES];
     [panel setCanChooseDirectories:NO];
-    
-    /* this was deprecated, replaced it with the code below
-    [panel beginSheetForDirectory:@"/Applications"
-                             file:nil
-                            types:nil
-                   modalForWindow:[[PIXAppDelegate sharedAppDelegate] window]
-                    modalDelegate:self
-                   didEndSelector:@selector(chooseAppSheetClosed:returnCode:contextInfo:)
-                      contextInfo:nil];
-    */
-    
-    
+
     [panel setDirectoryURL:[NSURL fileURLWithPath:@"/Applications"]];
     [panel beginSheetModalForWindow:[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] completionHandler:^(NSInteger result) {
         
@@ -138,19 +125,6 @@ typedef NSUInteger PIXOverwriteStrategy;
         }
     }];
 }
-/*
-- (void)chooseAppSheetClosed:(NSOpenPanel *)panel returnCode:(int)code contextInfo:(NSNumber *)useOptions
-{
-    NSArray *someFilePaths = [self.selectedFilePaths copy];
-    self.selectedFilePaths = nil;
-    if (code == NSOKButton)
-    {
-		[panel close];
-        
-        [self openFileWithPaths:someFilePaths withApplication:[[panel URL] path]];
-        //[self openSelectedFileWithApplication:[panel filename]];
-    }
-}*/
 
 /// construct menu item for app
 - (NSMenuItem *)menuItemForOpenWithForApplication:(NSString *)appName appPath:(NSString *)appPath filePaths:(NSArray *)filePaths
@@ -326,13 +300,6 @@ typedef NSUInteger PIXOverwriteStrategy;
             [urlsToDelete addObject:deleteURL];
         }
     }
-#ifdef DEBUG_DELETE_ITEMS
-    NSURL *failURL = [NSURL fileURLWithPath:@"/tmp/bafdlsjkfasfasdss.txt"];
-    if(failURL)
-    {
-        [urlsToDelete addObject:failURL];
-    }
-#endif
     
     // Delete the items from the db ahead of time (the actul file deletion will happen after a dispatch)
     NSMutableSet *albumsToUpdate = [[NSMutableSet alloc] init];
@@ -360,34 +327,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     }
     
     DLog(@"About to recycle the following items : %@", urlsToDelete);
-    
 
-    /*
-    NSMutableDictionary * newURLs = [[NSMutableDictionary alloc] initWithCapacity:[urlsToDelete count];
-    error = nil;
-    
-    
-    NSFileManager * fm = [NSFileManager defaultManager];
-    
-    for(NSURL * aURL in urlsToDelete)
-    {
-        NSURL * newURL = nil;
-        [fm trashItemAtURL:aURL resultingItemURL:&newURL error:&error];
-        
-        if(error)
-        {
-            
-            break;
-        }
-        
-        [newURLs setObject:newURL forKey:aURL];
-        
-    }
-    */
-    
-    
-    
-    
     [[NSWorkspace sharedWorkspace] recycleURLs:urlsToDelete completionHandler:^(NSDictionary *newURLs, NSError *error) {
         if (nil==error) {
             
@@ -659,19 +599,6 @@ typedef NSUInteger PIXOverwriteStrategy;
     //return [self renameAlbumWithObjectID:albumID withName:name];
 }
 
-//-(BOOL)renameAlbumWithObjectID:(NSManagedObjectID *)anAlbumID withName:(NSString *)aNewName
-//{
-//    NSError *error = nil;
-//    PIXAlbum *anAlbum = (PIXAlbum *)[[[PIXAppDelegate sharedAppDelegate] managedObjectContext] existingObjectWithID:anAlbumID error:&error];
-//    
-//    if (anAlbum==nil) {
-//        NSString *errMsg = [NSString stringWithFormat:@"Unable to undo album rename operation.\n(%@)", error];
-//        NSRunCriticalAlertPanel(errMsg, @"Undo Failed", @"OK", @"Cancel", nil);
-//        return NO;
-//    }
-//    return [self renameAlbum:anAlbum withName:aNewName];
-//}
-
 -(BOOL)renameAlbumWithPath:(NSString *)anAlbumPath withName:(NSString *)aNewName
 {
     NSManagedObjectContext *context = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
@@ -864,17 +791,6 @@ typedef NSUInteger PIXOverwriteStrategy;
         
         
         [alert setAlertStyle: NSWarningAlertStyle];
-        
-        //			alertResult = NSRunAlertPanel(
-        //                                              @"Output file already exists.",
-        //                                              [NSString stringWithFormat:@"\"%@\" already exists. Do you want to replace it?",
-        //                                               name],
-        //                                              @"Cancel All",
-        //                                              @"Yes to All",
-        //                                              nil
-        //                                              );
-        
-    
         alertResult = [alert runModal];
         
         if (alertResult == NSAlertFirstButtonReturn)	// Keep
@@ -1061,21 +977,6 @@ typedef NSUInteger PIXOverwriteStrategy;
         if (nil==error) {
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                
-//                NSMutableSet *albumsToUpdate = [[NSMutableSet alloc] init];
-//                
-//                for (PIXPhoto *anItem in items)
-//                {
-//                    [albumsToUpdate addObject:[(PIXPhoto *)anItem album]];
-//                    [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] deleteObject:anItem];
-//                }
-//                
-//                for (PIXAlbum *anAlbum in albumsToUpdate)
-//                {
-//                    [anAlbum updateAlbumBecausePhotosDidChange];
-//                    [anAlbum flush];
-//                }
-                
                 [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
@@ -1616,50 +1517,6 @@ typedef NSUInteger PIXOverwriteStrategy;
 #pragma mark	-
 #pragma mark	Helpers
 
-//- (BOOL)checkOutputPath:(NSString *)finalOutputPath
-//{
-//	if ([[NSFileManager defaultManager] fileExistsAtPath:[self finalOutputPath]]) {
-//		
-//		// Overwrite existing file
-//		if (overwriteStrategy == UCExistingOverwrite)
-//			return YES;
-//		
-//		// Find sequentually numbered unused name
-//		else if (overwriteStrategy == UCExistingNumberSequentially) {
-//			
-//			pathNumbering = 0;
-//			NSString *newPath;
-//			
-//			do {
-//				pathNumbering++;
-//				newPath = [self finalOutputPath];
-//			} while ([[NSFileManager defaultManager] fileExistsAtPath:newPath]);
-//            
-//            // Open choose dialog
-////		} else if (overwriteStrategy == UCExistingChooseNew) {
-////			
-////			return [self chooseNewOutputPath];
-////            
-////            // Display an error
-//		} else if (overwriteStrategy == UCExistingError) {
-//			
-//			NSInteger reply = NSRunAlertPanel(
-//                                              @"Output file already exists.",
-//                                              [NSString stringWithFormat:@"\"%@\" already exists. Do you want to replace it?",
-//                                               [outputPath lastPathComponent]],
-//                                              @"Abort",
-//                                              @"Replace",
-//                                              nil
-//                                              );
-//			
-//			if (reply == NSAlertDefaultReturn)
-//				return NO;
-//		}
-//	}
-//	[self updateOutputPath];
-//	return YES;
-//}
-
 - (NSString*)finalOutputPath:(NSString *)outputPath
 {
 	if (pathNumbering > 0) {
@@ -1715,14 +1572,6 @@ typedef NSUInteger PIXOverwriteStrategy;
 	for(id file in files)
 	{
         NSString *sourcePath = [file objectForKey:@"source"];
-//		if (yesToAll)
-//		{
-//			[validatedFiles addObject: item];
-//            
-//			continue;
-//		}
-        
-        
 		NSString* const name = [sourcePath lastPathComponent];
         NSString *destPath = [[destinationURL path] stringByAppendingPathComponent: name];
 		if ([[NSFileManager defaultManager]
@@ -1754,15 +1603,6 @@ typedef NSUInteger PIXOverwriteStrategy;
                 }
                 
                 [alert setAlertStyle: NSWarningAlertStyle];
-                
-                //			alertResult = NSRunAlertPanel(
-                //                                              @"Output file already exists.",
-                //                                              [NSString stringWithFormat:@"\"%@\" already exists. Do you want to replace it?",
-                //                                               name],
-                //                                              @"Cancel All",
-                //                                              @"Yes to All",
-                //                                              nil
-                //                                              );
                 alertResult = [alert runModal];
                 
                 if (alertResult == NSAlertFirstButtonReturn)	// Keep

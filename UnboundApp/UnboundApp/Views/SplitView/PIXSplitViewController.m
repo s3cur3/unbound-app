@@ -8,7 +8,6 @@
 
 #import "PIXSplitViewController.h"
 #import "PIXSidebarViewController.h"
-#import "PIXNavigationController.h"
 #import "PIXAppDelegate.h"
 #import "PIXMainWindowController.h"
 #import "PIXCustomShareSheetViewController.h"
@@ -17,11 +16,9 @@
 #import "PIXDefines.h"
 #import "PIXPhotoCollectionViewController.h"
 #import "PIXCollectionView.h"
+#import "Unbound-Swift.h"
 
 @interface PIXSplitViewController ()
-
-
-@property (nonatomic, strong) NSViewController *mainViewController;
 
 @property (nonatomic, strong) NSToolbarItem * backButtonSegmentItem;
 @property (nonatomic, strong) NSToolbarItem * sliderItem;
@@ -54,14 +51,8 @@
         // Initialization code here.
         self.sidebarViewController = [[PIXSidebarViewController alloc] initWithNibName:@"PIXSidebarViewController" bundle:nil];
         self.sidebarViewController.splitViewController = self;
-        
-#ifndef USE_NSCOLLECTIONVIEW
-        self.imageBrowserViewController = [[PIXPhotoGridViewController alloc] initWithNibName:@"PIXGridViewController" bundle:nil];
-#else
-        self.imageBrowserViewController = [[PIXPhotoCollectionViewController alloc] initWithNibName:@"PIXPhotoCollectionViewController" bundle:nil];
-#endif
         self.imageBrowserViewController.splitViewController = self;
-        
+        self.imageBrowserViewController = [[PIXPhotoCollectionViewController alloc] initWithNibName:@"PIXPhotoCollectionViewController" bundle:nil];
         
         [self.splitView adjustSubviews];
     }
@@ -104,6 +95,17 @@
     });
     
     [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] setTitle:[self.selectedAlbum title]];
+
+
+    [self.backButtonSegment setSelected:NO forSegment:0];
+
+    // set the toggle to the correct view
+    [self.backButtonSegment setSelected:![self.splitView isSubviewCollapsed:self.leftPane]
+                             forSegment:1];
+
+    self.navigationViewController.showBackButton = false;
+    self.navigationViewController.leftToolbarItems = @[self.backButtonSegmentItem, self.importItem];
+    self.navigationViewController.rightToolbarItems = @[self.sliderItem, self.deleteAlbumItem, self.sortButton];
 }
 
 
@@ -123,18 +125,12 @@
     [self.imageBrowserViewController willHidePIXView];
 }
 
--(void)setupToolbar
-{
-    [self.backButtonSegment setSelected:NO forSegment:0];
-    
-    // set the toggle to the correct view
-    [self.backButtonSegment setSelected:![self.splitView isSubviewCollapsed:self.leftPane]
-                             forSegment:1];
-    
-    NSArray * items = @[self.backButtonSegmentItem, self.importItem, self.navigationViewController.activityIndicator, self.navigationViewController.middleSpacer, self.sliderItem, self.deleteAlbumItem, self.sortButton];
-    
-    [self.navigationViewController setNavBarHidden:NO];
-    [self.navigationViewController setToolbarItems:items];
+- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSKeyValueChangeKey, id> *)change context:(nullable void *)context {
+    if (object == self.imageBrowserViewController && [@"title" isEqualToString:keyPath]) {
+        self.title = ((NSViewController *) object).title;
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 - (NSToolbarItem *)sliderItem
@@ -170,7 +166,7 @@
     _sortButton = [[NSToolbarItem alloc] initWithItemIdentifier:@"sortButton"];
     //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
     
-    NSPopUpButton * buttonView = [[NSPopUpButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25) pullsDown:YES];
+    NSPopUpButton * buttonView = [[NSPopUpButton alloc] initWithFrame:CGRectMake(0, 0, 30, 25) pullsDown:YES];
     
     [buttonView setImagePosition:NSImageOverlaps];
     [buttonView setBordered:YES];
@@ -195,7 +191,7 @@
     [buttonView insertItemWithTitle:@"Old to New" atIndex:2];
     [buttonView insertItemWithTitle:@"Filename A to Z" atIndex:3];
     [buttonView insertItemWithTitle:@"Filename Z to A" atIndex:4];
-    
+
     NSMenuItem * item = [[buttonView itemArray] objectAtIndex:0];
     item.image = [NSImage imageNamed:@"sortbutton"];
     [item.image setTemplate:YES];
@@ -339,18 +335,6 @@
                                                    relativeToRect:[sender bounds]
                                                            ofView:sender
                                                     preferredEdge:NSMaxXEdge];
-    
-    /*
-    PIXCustomShareSheetViewController *controller = [[PIXCustomShareSheetViewController alloc] initWithNibName:@"PIXCustomShareSheetViewController"     bundle:nil];
-    
-    [controller setAlbumsToShare:@[self.selectedAlbum]];
-    
-    NSPopover *popover = [[NSPopover alloc] init];
-    [popover setContentViewController:controller];
-    [popover setAnimates:YES];
-    [popover setBehavior:NSPopoverBehaviorTransient];
-    [popover showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMaxYEdge];
-     */
 }
 
 - (NSToolbarItem *)deleteAlbumItem
@@ -399,7 +383,7 @@
     _importItem = [[NSToolbarItem alloc] initWithItemIdentifier:@"importAlbumButton"];
     //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
 
-    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 60, 29)];
+    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 60, 27)];
     
     [buttonView setImage:nil];
     [buttonView setImagePosition:NSImageLeft];
@@ -478,7 +462,7 @@
     
 }
 
--(void)setNavigationViewController:(PIXNavigationController *)navigationViewController
+-(void)setNavigationViewController:(NavigationController *)navigationViewController
 {
     [super setNavigationViewController:navigationViewController];
     self.sidebarViewController.navigationViewController = self.navigationViewController;
@@ -545,9 +529,19 @@
     return YES;
 }
 
--(void)dealloc
-{
-    DLog(@"dealloc of splitview");
+- (void)setImageBrowserViewController:(PIXPhotoCollectionViewController *)imageBrowserViewController {
+    if (_imageBrowserViewController != nil) {
+        [_imageBrowserViewController removeObserver:self forKeyPath:@"title"];
+    }
+    _imageBrowserViewController = imageBrowserViewController;
+    self.title = imageBrowserViewController.title;
+    [self.imageBrowserViewController addObserver:self forKeyPath:@"title" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:nil];
+}
+
+-(void)dealloc {
+    if (self.imageBrowserViewController != nil) {
+        [self.imageBrowserViewController removeObserver:self forKeyPath:@"title"];
+    }
 }
 
 @end

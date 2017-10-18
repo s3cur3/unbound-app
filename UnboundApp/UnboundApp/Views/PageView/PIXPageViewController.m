@@ -15,8 +15,6 @@
 #import "PIXPhoto.h"
 #import "PIXImageViewController.h"
 #import "PIXVideoViewController.h"
-#import "PIXNavigationController.h"
-
 #import "PIXPageHUDWindow.h"
 #import "PIXPageHUDView.h"
 
@@ -159,18 +157,6 @@
     
     
 }
-/*
--(void)setupToolbar
-{
-//    [self.navigationViewController setNavBarHidden:YES];
- 
- [NSAnimationContext beginGrouping];
- [self.toolbarPosition.animator setConstant:0];
- //[[clipView animator] setBoundsOrigin:origin];
- [NSAnimationContext endGrouping];
-}
-*/
-
 
 -(IBAction)toggleInfoPanel:(id)sender;
 {
@@ -383,12 +369,6 @@
         if (type==nil) {
             [animation setFilter:coreImageFilter];
             [animation setDuration:0.5+(interval/4.0)];
-//            NSUInteger fiterCount = aPageView.transitions.count;
-//            NSUInteger filterIndex = self.currentSlide % fiterCount;
-//            DLog(@"Using filter at index : %ld", filterIndex);
-//            CIFilter *aFilter = [aPageView.transitions objectAtIndex:filterIndex];
-//            [animation setFilter:aFilter];
-//            [animation setDuration:2.0+(interval/10.0)];
         } else {
             [animation setType:type];
             [animation setSubtype:kCATransitionFromRight];
@@ -442,8 +422,7 @@
         [self updateData];
         
         [self.view.window makeFirstResponder:self];
-//        self.nextResponder = self.view;
-        
+
         [self.view.window addChildWindow:self.controlWindow ordered:NSWindowAbove];        
         [self.controlWindow orderFront:self];
         
@@ -482,6 +461,10 @@
         [self.currentImageVC setIsCurrentView:YES];
         
     });
+
+    self.navigationViewController.leftToolbarItems = nil;
+    self.navigationViewController.rightToolbarItems = @[self.deleteItem, self.shareItem, self.infoItem];
+
 }
 
 
@@ -529,15 +512,6 @@
     }
 }
 
--(void)setupToolbar
-{
-    NSArray * items = @[self.navigationViewController.backButton, self.navigationViewController.middleSpacer, self.deleteItem, self.shareItem, self.infoItem];
-    
-    [self.navigationViewController setNavBarHidden:NO];
-    [self.navigationViewController setToolbarItems:items];
-    
-}
-
 - (NSToolbarItem *)deleteItem
 {
     if(_deleteItem != nil) return _deleteItem;
@@ -546,8 +520,6 @@
     //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
     
     NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 60, 25)];
-
-    [NSImage imageNamed:NSImageNameTrashEmpty]
     [buttonView setImagePosition:NSNoImage];
     [buttonView setBordered:YES];
     [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
@@ -609,20 +581,6 @@
                                                    relativeToRect:[sender bounds]
                                                            ofView:sender
                                                     preferredEdge:NSMaxXEdge];
-    
-    /*
-    PIXCustomShareSheetViewController *controller = [[PIXCustomShareSheetViewController alloc] initWithNibName:@"PIXCustomShareSheetViewController"     bundle:nil];
-    
-    PIXPhoto * thisPhoto = [self.pagerData objectAtIndex:self.pageController.selectedIndex];
-    
-    [controller setPhotosToShare:@[thisPhoto]];
-    
-    NSPopover *popover = [[NSPopover alloc] init];
-    [popover setContentViewController:controller];
-    [popover setAnimates:YES];
-    [popover setBehavior:NSPopoverBehaviorTransient];
-    [popover showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMaxYEdge];
-     */
 }
 
 - (NSToolbarItem *)infoItem
@@ -834,8 +792,6 @@
 {
     [self.navigationViewController popViewController];
 }
-
-
 
 -(void)moveForward:(id)sender
 {
@@ -1059,7 +1015,7 @@
     } else {
         [self.controlWindow showAnimated:NO];
     }
-    [self.navigationViewController setNavBarHidden:NO];
+    [self.navigationViewController setToolbarHidden:NO];
 }
 
 -(void)tryFadeControls
@@ -1072,7 +1028,7 @@
         // if we're in fullscreen mode then also fade the top toolbar
         if([self.view.window styleMask] & NSFullScreenWindowMask && !self.infoPanelShowing)
         {
-            [self.navigationViewController setNavBarHidden:YES];
+            [self.navigationViewController setToolbarHidden:YES];
         }
         
         // hide the cursor until it moves
@@ -1150,49 +1106,6 @@
             break;
         }
     }
-    
-    
-//    PIXPhoto *aPhoto = (PIXPhoto *)[self.pagerData objectAtIndex:anIndex];
-//    [(PIXPhoto *)aPhoto fullsizeImageStartLoadingIfNeeded:YES];
-    
-//    NSUInteger pagerDataCount = [self.pagerData count];
-//    NSUInteger startIndex = anIndex>=1 ? anIndex-1 : 0;
-//    
-//    NSUInteger rangeLength = 5;
-//    if (startIndex+5 > pagerDataCount) {
-//        rangeLength = pagerDataCount-startIndex;
-//    }
-//    
-//    NSRange nearbyItemsRange = NSMakeRange(startIndex, rangeLength);
-    //NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
-   
-
-
-//    int rangeLength = (int)self.slideshowPhotoIndexes.count-(currentSelectedIndex+1);
-//    if (rangeLength > 5) {
-//        rangeLength = 5;
-//    }
-    //NSArray *subArray = [self.slideshowPhotoIndexes subarrayWithRange:NSMakeRange(currentSelectedIndex, rangeLength)];
-    
-
-//    for (id aShuffledPhotoIndex in subArray)
-//    {
-//        [indexSet addIndex:[aShuffledPhotoIndex intValue]];
-//    }
-//    DLog(@"indexSet : %@", indexSet);
-//    NSSet *newPhotosToPreload = [NSSet setWithArray:[self.pagerData objectsAtIndexes:indexSet]];
-////    for (id aPreloadPhoto in newPhotosToPreload) {
-////        [(PIXPhoto *)aPreloadPhoto fullsizeImageStartLoadingIfNeeded:YES];
-////    }
-//    
-//    [newPhotosToPreload enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-//        //
-//        [(PIXPhoto *)obj fullsizeImageStartLoadingIfNeeded:YES];
-//    }];
-    
-
-
-    
 }
 
 -(void)preloadNextImagesForIndex:(NSUInteger)anIndex
@@ -1210,24 +1123,7 @@
     
     NSRange nearbyItemsRange = NSMakeRange(startIndex, rangeLength);
     NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSetWithIndexesInRange:nearbyItemsRange];
-    //DLog(@"indexSet : %@", indexSet);
-    
-//    // if we're playing a slideshow and we're in shuffle, then also preload the next two shuffle photos
-//    if(self.isPlayingSlideshow && [[NSUserDefaults standardUserDefaults] boolForKey:@"slideshowShouldShuffle"])
-//    {
-//        [indexSet removeAllIndexes];
-//        
-//        int slideToLoad = (int)self.currentSlide+1;
-//        
-//        if(slideToLoad < self.slideshowPhotoIndexes.count)
-//        {
-//            [indexSet addIndex:[[self.slideshowPhotoIndexes objectAtIndex:slideToLoad] intValue]];
-//        }
-//        DLog(@"Slideshow shuffled indexSet : %@", indexSet);
-//    } else if (self.isPlayingSlideshow) {
-//        DLog(@"Slideshow not shuffled indexSet : %@", indexSet);
-//    }
-    
+
     NSSet *newPhotosToPreload = [NSSet setWithArray:[self.pagerData objectsAtIndexes:indexSet]];
     
     
@@ -1273,16 +1169,7 @@
             [aPhoto setFullsizeImage:nil];
         }
     }];
-    
-//    for(NSUInteger i = anIndex -2; i <= anIndex+2; i++)
-//    {
-//        if(i < [self.pagerData count])
-//        {
-//            // this will cause the image to preload
-//            [(PIXPhoto *)[self.pagerData objectAtIndex:i] fullsizeImageStartLoadingIfNeeded:YES];
-//        }
-//    }
-    
+
 }
 
 -(void)startPreloadForController:(NSPageController *)pageController
@@ -1293,11 +1180,6 @@
     } else {
         [self preloadNextImagesForIndex:pageController.selectedIndex];
     }
-//    double delayInSeconds = 0.1;
-//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-//        [self preloadNextImagesForIndex:pageController.selectedIndex];
-//    });
 }
 
 -(BOOL)isPlayingVideo;
@@ -1382,39 +1264,8 @@
     self.initialSelectedObject = [pageController.arrangedObjects objectAtIndex:pageController.selectedIndex];
 }
 
-/*
--(void)makeSelectedViewFirstResponder
-{
-    NSWindow *mainWindow = [[NSApplication sharedApplication] mainWindow];
-    //[mainWindow setContentView:aViewController.view];
-    
-    NSView *aView = self.pageController.selectedViewController.view;//
-    //aView = [self.pageController.selectedViewController.view enclosingScrollView];
-
-    
-    
-    //[mainWindow makeFirstResponder:self];
-}*/
-
-
 - (void)pageController:(NSPageController *)pageController didTransitionToObject:(id)object
 {
-    //NSLog(@"didTransitionToObject : %@", object);
-    
-    
- //   [self makeSelectedViewFirstResponder];
-    /*dispatch_async(dispatch_get_current_queue(), ^{
-     
-     NSWindow *mainWindow = [[NSApplication sharedApplication] mainWindow];
-     //[mainWindow setContentView:aViewController.view];
-     
-     NSView *aView = self.pageController.selectedViewController.view;//
-     //aView = [self.pageController.selectedViewController.view enclosingScrollView];
-     
-     
-     [mainWindow makeFirstResponder:aView];
-     
-     });*/
     if ([pageController.selectedViewController isKindOfClass:[PIXVideoViewController class]]) {
         PIXVideoViewController *videoVC = (PIXVideoViewController *)pageController.selectedViewController;
         [videoVC dismissOverlay];
@@ -1428,16 +1279,9 @@
 
     
     [self performSelector:@selector(startPreloadForController:) withObject:pageController afterDelay:0.0f];
-    //[self preloadNextImagesForIndex:pageController.selectedIndex];
-    
-
 }
 
 - (void)pageControllerDidEndLiveTransition:(NSPageController *)aPageController {
-//    PIXPhoto *aPhoto = (PIXPhoto *)pageController.representedObject;
-//    if (aPhoto.fullsizeImage == nil) {
-//        DLog(@"pageControllerDidEndLiveTransition fullsizeImage not loaded : %@", aPhoto);
-//    }
     if ([aPageController.selectedViewController isKindOfClass:[PIXVideoViewController class]]) {
         PIXVideoViewController *videoVC = (PIXVideoViewController *)aPageController.selectedViewController;
         [videoVC dismissOverlay];
@@ -1460,8 +1304,6 @@
     
 
     [self restartNextSlideIfNeeded];
-    
-    //[self makeSelectedViewFirstResponder];
 }
 
 

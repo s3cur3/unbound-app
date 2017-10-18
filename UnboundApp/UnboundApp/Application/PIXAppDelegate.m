@@ -11,7 +11,6 @@
 #import "PIXInfoWindowController.h"
 #import "PIXMainWindowController.h"
 
-#import "PIXNavigationController.h"
 #import "Unbound-Swift.h"
  
 #import "Preferences.h"
@@ -91,24 +90,6 @@
     return _backgroundSaveQueue;
 }
 
-//- (void)applicationDidFinishLaunching:(NSNotification *)notification
-//{
-//    Preferences * preferences = [Preferences instance];
-//    NSAssert(preferences, @"Failed to create preferences");
-//    self.dataSource = [PIXFileSystemDataSource sharedInstance];
-//    NSAssert(self.dataSource, @"Failed to create dataSource");
-//    if ([[NSUserDefaults standardUserDefaults] boolForKey:kAppFirstRun]==YES)
-//    {
-//        [self showIntroWindow:self];
-//        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kAppFirstRun];
-//        [[NSUserDefaults standardUserDefaults] synchronize];
-//    } else {
-//        
-//        [self showMainWindow:self];
-//        [self performSelector:@selector(startFileSystemLoading) withObject:self afterDelay:0.1];
-//    }
-//}
-
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [Fabric with:@[[Crashlytics class]]];
@@ -142,16 +123,6 @@
     
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photosFinishedLoading:) name:SearchDidFinishNotification object:self.spotLightFetchController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminate:) name:NSApplicationWillTerminateNotification object:nil];
-    
-    /*
-    //Notification for spotlight fetches
-    [[NSNotificationCenter defaultCenter] addObserverForName:kSearchDidFinishNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-        //[[NSNotificationCenter defaultCenter] removeObserver:self name:kSearchDidFinishNotification object:nil];
-        DLog(@"Finished loading photos");
-        [self photosFinishedLoading:note];
-        //[self updateAlbumsPhotos];
-    }];
-    */
 
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kAppFirstRun]==YES)
     {
@@ -309,19 +280,9 @@
 
 -(IBAction)importPhotosPressed:(id)sender
 {
-    BOOL allowDirectories = NO;
-    
-    // if we're at the top level view then allow directories for import
-    if([[[self.mainWindowController navigationViewController] viewControllerArray] count] == 1)
-    {
-        allowDirectories = YES;
-    }
-    
+    BOOL allowDirectories = YES;
     [[PIXFileManager sharedInstance] importPhotosToAlbum:self.currentlySelectedAlbum allowDirectories:allowDirectories];
 }
-
-
-
 
 #pragma mark - MASPreferences Class methods:
 
@@ -1093,50 +1054,5 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
                          didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:)
                             contextInfo:nil];
 }
-
-
-//TODO: possibly add a link to the help file in certain Alert Views
-// -------------------------------------------------------------------------------
-//	alertShowHelp
-//
-//	The delegate method for displaying alert help.
-//// -------------------------------------------------------------------------------
-//- (BOOL)alertShowHelp:(NSAlert *)alert
-//{
-//	// get the localized name of our help book
-//    //
-//    // to make this work, the help book name needs to be defined in your InfoPlist.strings
-//    // file with an entry for "CFBundleHelpBookName"
-//    //
-//    NSString *helpBookName = [[[NSBundle mainBundle] localizedInfoDictionary] objectForKey:@"CFBundleHelpBookName"];
-//
-//	[[NSHelpManager sharedHelpManager] openHelpAnchor:[alert helpAnchor] inBook:helpBookName];
-//
-//	return YES;
-//}
-
-// -------------------------------------------------------------------------------
-//	rescanAction:
-//
-//	The user clicked the "Rescan" button from the Alert View - UNUSED.
-// -------------------------------------------------------------------------------
-//- (IBAction)rescanAction:(id)sender
-//{
-//	DLog(@"Re-scan button was clicked.");
-//    self.fileParser = [PIXFileParser sharedFileParser];
-//    if (![self.fileParser canAccessObservedDirectories])
-//    {
-//        [self.fileParser incrementWorking];
-//        double delayInSeconds = 2.0;
-//        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-//        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-//            [self openAlert:@"Re-scan Failed" withMessage:kRootFolderUnavailableDetailMessage];
-//            [self.fileParser decrementWorking];
-//        });
-//    } else {
-//        [self startFileSystemLoading];
-//    }
-//}
-
 
 @end

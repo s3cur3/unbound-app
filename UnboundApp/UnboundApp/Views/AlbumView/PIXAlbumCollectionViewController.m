@@ -9,8 +9,6 @@
 #import "PIXAlbumCollectionViewController.h"
 #import "PIXSplitViewController.h"
 #import "PIXMainWindowController.h"
-#import "PIXNavigationController.h"
-
 #import "PIXDefines.h"
 #import "PIXAppDelegate.h"
 #import "PIXFileParser.h"
@@ -62,13 +60,6 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    
-    /*
-    [self.collectionView setItemSize:NSMakeSize(190, 210)];
-    [self.collectionView setAllowsMultipleSelection:YES];
-    [self.collectionView reloadData];
-    [self.collectionView setUseHover:NO];
-    */
 
     self.collectionView.delegate = self;
 
@@ -114,8 +105,6 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         // make ourselves the first responder after we're added
         [self.view.window makeFirstResponder:self.collectionView];
-        //        [self setNextResponder:self.scrollView];
-        //        [self.collectionView setNextResponder:self];
     });
     
     
@@ -134,6 +123,8 @@
     
     [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] setTitle:@"Unbound"];
 
+    self.navigationViewController.leftToolbarItems = @[self.importItem];
+    self.navigationViewController.rightToolbarItems = @[self.self.neuAlbumButton, self.sortButton, self.searchBar];
 }
 
 // this is called when the full scan progress changes
@@ -198,12 +189,6 @@
 
 #pragma mark - ToolBar
 
-- (void)setupToolbar
-{
-    NSArray * items = @[self.importItem, self.navigationViewController.activityIndicator, self.navigationViewController.middleSpacer, self.neuAlbumButton, self.searchBar, self.sortButton];
-    [self.navigationViewController setToolbarItems:items];
-}
-
 - (NSToolbarItem *)sortButton
 {
     if(_sortButton != nil) return _sortButton;
@@ -211,7 +196,7 @@
     _sortButton = [[NSToolbarItem alloc] initWithItemIdentifier:@"sortButton"];
     //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
     
-    NSPopUpButton * buttonView = [[NSPopUpButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25) pullsDown:YES];
+    NSPopUpButton * buttonView = [[NSPopUpButton alloc] initWithFrame:CGRectMake(0, 0, 30, 25) pullsDown:YES];
     
     [buttonView setImagePosition:NSImageOverlaps];
     [buttonView setBordered:YES];
@@ -692,7 +677,7 @@
 -(void)showPhotosForAlbum:(id)anAlbum
 {
     self.aSplitViewController.selectedAlbum = anAlbum;
-    [self.navigationViewController pushViewController:self.aSplitViewController];
+    [self.navigationViewController pushViewControllerWithViewController:self.aSplitViewController];
 }
 
 #pragma mark - Search

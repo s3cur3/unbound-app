@@ -8,15 +8,16 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class PIXNavigationController;
 @class PIXMiniExifViewController;
+
+@class NavigationController;
 
 @interface PIXViewController : NSViewController
 {
     
 }
 
-@property (weak, nonatomic) PIXNavigationController *navigationViewController;
+@property (weak, nonatomic) NavigationController *navigationViewController;
 @property (strong, nonatomic) PIXMiniExifViewController * miniExifViewController;
 
 +(BOOL)optionKeyIsPressed;

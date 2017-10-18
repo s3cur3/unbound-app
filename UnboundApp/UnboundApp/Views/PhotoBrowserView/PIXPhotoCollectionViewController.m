@@ -10,7 +10,6 @@
 #import "PIXAppDelegate.h"
 #import "PIXDefines.h"
 #import "PIXAlbum.h"
-#import "PIXNavigationController.h"
 #import "PIXSplitViewController.h"
 #import "PIXSidebarViewController.h"
 #import "PIXPhoto.h"
@@ -20,6 +19,7 @@
 #import "PIXShareManager.h"
 #import "PIXCollectionToolbar.h"
 #import "PIXCollectionView.h"
+#import "Unbound-Swift.h"
 
 @interface PIXPhotoCollectionViewController () <NSCollectionViewDelegate, NSCollectionViewDataSource>
 
@@ -154,6 +154,7 @@
         _album = album;
         [[[PIXAppDelegate sharedAppDelegate] window] setTitle:[self.album title]];
 
+        self.title = _album.title;
         [self.collectionView deselectAll:nil];
         [self updateToolbar];
         [self updateAlbum:nil];
@@ -262,7 +263,7 @@
     pageViewController.initialSelectedObject = photo;
     pageViewController.album = self.album;
     pageViewController.delegate = self;
-    [self.navigationViewController pushViewController:pageViewController];
+    [self.navigationViewController pushViewControllerWithViewController:pageViewController];
 }
 
 #pragma mark - PIXPageViewControllerDelegate

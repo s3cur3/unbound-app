@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -62,12 +63,12 @@
             </constraints>
         </customView>
         <segmentedControl verticalHuggingPriority="750" id="60">
-            <rect key="frame" x="0.0" y="0.0" width="102" height="25"/>
+            <rect key="frame" x="0.0" y="0.0" width="102" height="28"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="selectOne" id="61">
-                <font key="font" metaFont="cellTitle"/>
+                <font key="font" metaFont="system"/>
                 <segments>
-                    <segment label="Albums" toolTip="Back to Albums" image="NSLeftFacingTriangleTemplate" width="76"/>
+                    <segment label="Albums" toolTip="Back to Albums" image="NSGoLeftTemplate" width="76"/>
                     <segment toolTip="Toggle Albums Side Bar" image="NSListViewTemplate" width="23" selected="YES" tag="1"/>
                 </segments>
             </segmentedCell>
@@ -93,7 +94,7 @@
         <userDefaultsController representsSharedInstance="YES" id="89"/>
     </objects>
     <resources>
-        <image name="NSLeftFacingTriangleTemplate" width="9" height="12"/>
+        <image name="NSGoLeftTemplate" width="9" height="12"/>
         <image name="NSListViewTemplate" width="14" height="10"/>
     </resources>
 </document>
