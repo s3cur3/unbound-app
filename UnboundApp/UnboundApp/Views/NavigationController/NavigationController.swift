@@ -147,6 +147,7 @@ import Cocoa
       }
       newViewController.view.frame = self.view.bounds
       newViewController.willShowPIXView()
+      self.setTitle(title: newViewController.title)
       self.view.addSubview(newViewController.view)
     }
 
