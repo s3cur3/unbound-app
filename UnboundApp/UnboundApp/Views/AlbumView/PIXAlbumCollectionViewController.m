@@ -84,9 +84,9 @@
 
     NSCollectionViewFlowLayout *flowLayout = [[NSCollectionViewFlowLayout alloc] init];
     flowLayout.itemSize = NSMakeSize(190, 210);
-    flowLayout.sectionInset = NSEdgeInsetsMake(10, 20, 10, 20);
-    flowLayout.minimumInteritemSpacing = 20;
-    flowLayout.minimumLineSpacing = 20;
+    flowLayout.sectionInset = NSEdgeInsetsMake(5, 5, 5, 5);
+    flowLayout.minimumInteritemSpacing = 10;
+    flowLayout.minimumLineSpacing = 10;
     self.collectionView.collectionViewLayout = flowLayout;
 
     self.view.wantsLayer = YES;
