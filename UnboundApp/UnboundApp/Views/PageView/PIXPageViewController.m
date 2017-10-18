@@ -7,6 +7,7 @@
 //
 #import <Quartz/Quartz.h>
 
+#import "Unbound-Swift.h"
 #import "PIXPageViewController.h"
 #import "PIXAppDelegate.h"
 #import "PIXDefines.h"
@@ -17,20 +18,13 @@
 #import "PIXVideoViewController.h"
 #import "PIXPageHUDWindow.h"
 #import "PIXPageHUDView.h"
-
 #import "PIXCustomShareSheetViewController.h"
 #import "PIXShareManager.h"
-
 #import "PIXInfoPanelViewController.h"
-
 #import "PIXSlideshowOptonsViewController.h"
-
 #import "PIXViewController.h"
-
 #import "PIXFileManager.h"
-
 #import "PIXPageView.h"
-
 #import "PIXPlayVideoHUDWindow.h"
 
 @interface PIXPageViewController () <PIXSlideshowOptonsDelegate, NSMenuDelegate>
@@ -514,63 +508,25 @@
 
 - (NSToolbarItem *)deleteItem
 {
-    if(_deleteItem != nil) return _deleteItem;
-    
-    _deleteItem = [[NSToolbarItem alloc] initWithItemIdentifier:@"deletePhotoButton"];
-    //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
-    
-    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 60, 25)];
-    [buttonView setImagePosition:NSNoImage];
-    [buttonView setBordered:YES];
-    [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
-    [buttonView setTitle:@"Delete"];
-    
-    _deleteItem.view = buttonView;
-    
-    [_deleteItem setLabel:@"Delete Photo"];
-    [_deleteItem setPaletteLabel:@"Delete Photo"];
-    
-    // Set up a reasonable tooltip, and image
-    // you will likely want to localize many of the item's properties
-    [_deleteItem setToolTip:@"Delete a Photo"];
-    
-    // Tell the item what message to send when it is clicked
-    [buttonView setTarget:self];
-    [buttonView setAction:@selector(deleteItems:)];
-    
+    if (_deleteItem == nil) {
+        _deleteItem = [[NSToolbarItem alloc] initWithItemIdentifier:@"deletePhotoButton"];
+        _deleteItem.label = @"Delete Photo";
+        _deleteItem.paletteLabel = @"Delete Photo";
+        _deleteItem.toolTip = @"Delete a Photo";
+        _deleteItem.view = [[ToolbarButton alloc] initWithImageNamed:NSImageNameRemoveTemplate target:self action:@selector(deleteItems:)];
+    }
     return _deleteItem;
-    
 }
 
-- (NSToolbarItem *)shareItem
-{
-    if(_shareItem != nil) return _shareItem;
-    
-    _shareItem = [[NSToolbarItem alloc] initWithItemIdentifier:@"sharePhotoButton"];
-    //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
-    
-    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 60, 25)];
-    
-    [buttonView setImagePosition:NSNoImage];
-    [buttonView setBordered:YES];
-    [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
-    [buttonView setTitle:@"Share"];
-    
-    _shareItem.view = buttonView;
-    
-    [_shareItem setLabel:@"Share Photo"];
-    [_shareItem setPaletteLabel:@"Share Photo"];
-    
-    // Set up a reasonable tooltip, and image
-    // you will likely want to localize many of the item's properties
-    [_shareItem setToolTip:@"Share a Photo"];
-    
-    // Tell the item what message to send when it is clicked
-    [buttonView setTarget:self];
-    [buttonView setAction:@selector(shareButtonPressed:)];
-    
+- (NSToolbarItem *)shareItem {
+    if (_shareItem == nil) {
+        _shareItem = [[NSToolbarItem alloc] initWithItemIdentifier:@"sharePhotoButton"];
+        _shareItem.label = @"Share Photo";
+        _shareItem.paletteLabel = @"Share Photo";
+        _shareItem.toolTip = @"Share a Photo";
+        _shareItem.view = [[ToolbarButton alloc] initWithImageNamed:NSImageNameShareTemplate target:self action:@selector(shareButtonPressed:)];
+    }
     return _shareItem;
-    
 }
 
 -(IBAction)shareButtonPressed:(id)sender
@@ -608,19 +564,9 @@
 
 -(NSButton *)infoButton
 {
-    if(_infoButton != nil) return _infoButton;
-    
-    _infoButton = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 60, 25)];
-    
-    [_infoButton setImagePosition:NSNoImage];
-    [_infoButton setBordered:YES];
-    [_infoButton setBezelStyle:NSTexturedSquareBezelStyle];
-    [_infoButton setTitle:@"Info"];
-    
-    // Tell the item what message to send when it is clicked
-    [_infoButton setTarget:self];
-    [_infoButton setAction:@selector(toggleInfoPanel:)];
-    
+    if(_infoButton == nil) {
+        _infoButton = [[ToolbarButton alloc] initWithImageNamed:@"ic_info" target:self action:@selector(toggleInfoPanel:)];
+    }
     return _infoButton;
 }
 

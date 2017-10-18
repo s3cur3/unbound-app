@@ -174,6 +174,7 @@
 		458AD501AD215AE841998935 /* success.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADD9D4028408F39A03381 /* success.png */; };
 		458AD505BCC3A86E2020DEC1 /* PIXAlbumCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD5215011F886FBE6168E /* PIXAlbumCollectionViewItem.xib */; };
 		458AD50CC07DC2D20AC8C82C /* buttongrid_twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD5CE5FDF9CBD97A532F5 /* buttongrid_twitter.png */; };
+		458AD512E47B0FD2D69945D0 /* ToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AD1CE63CE6EE36850866D /* ToolbarButton.swift */; };
 		458AD5130B31A95DB2A48C5A /* success-forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD38C6DAAD91B83968E87 /* success-forward.png */; };
 		458AD516271B2F3106BB8A13 /* AutoSizingImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD1F43E241A31FF963441 /* AutoSizingImageView.xib */; };
 		458AD516F802942AD6931DF8 /* PIXHUDMessageController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADA4FAB1BF804741362BA /* PIXHUDMessageController.xib */; };
@@ -205,6 +206,7 @@
 		458AD5ABEC0EF942AAEB8E7A /* PIXAlbumCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD37BDFC8466136334D42 /* PIXAlbumCollectionViewItem.m */; };
 		458AD5AF7D77B40AC21193E3 /* PIXMainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADFFFA4241E3DBDE5107E /* PIXMainWindowController.m */; };
 		458AD5B0D0B7827AC88BEAF2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADD65822C627C42A00876 /* MainMenu.xib */; };
+		458AD5B1A93184B226286527 /* ToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AD1CE63CE6EE36850866D /* ToolbarButton.swift */; };
 		458AD5C6B74711EF41882385 /* success-forward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADF03AFB95E95EFC72862 /* success-forward@2x.png */; };
 		458AD5CC3622EBD73DBEC972 /* expand@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD3070947054FA0A87DB8 /* expand@2x.png */; };
 		458AD5CEA1F1B252F864F06D /* Unbound-For-Mac-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADE903A39B8A52515D9E2 /* Unbound-For-Mac-512.png */; };
@@ -280,6 +282,7 @@
 		458AD7C3376CCB8E72B6FEFD /* MapViewAdditions.css in Resources */ = {isa = PBXBuildFile; fileRef = 458AD948F91477D9F2AC3597 /* MapViewAdditions.css */; };
 		458AD7C594916B31A8607BF7 /* PIXProgressWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD9FAE54C35D446B3C313 /* PIXProgressWindowController.m */; };
 		458AD7D25ED917389E74B87E /* PIXSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADF4BB78C718EDD51FB71 /* PIXSplitViewController.m */; };
+		458AD7D59BFBE817142BA09B /* ToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AD1CE63CE6EE36850866D /* ToolbarButton.swift */; };
 		458AD7D903BD13B3FB354601 /* addbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADABA1CBECB0B648C4752 /* addbutton@2x.png */; };
 		458AD7E48F2748B731B04F68 /* PIXPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADFFDF3A1A1BF7EC453CA /* PIXPageViewController.xib */; };
 		458AD7EC5012A078E020915A /* buttongrid_facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADC4C05748A68EBC14116 /* buttongrid_facebook.png */; };
@@ -680,6 +683,7 @@
 		458AD186E9AD92AB0F27512E /* success@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success@2x.png"; sourceTree = "<group>"; };
 		458AD192078CC315C6CB2FF8 /* click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = click.wav; sourceTree = "<group>"; };
 		458AD1A07A96C822C47C889F /* buttongrid_email@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttongrid_email@2x.png"; sourceTree = "<group>"; };
+		458AD1CE63CE6EE36850866D /* ToolbarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarButton.swift; sourceTree = "<group>"; };
 		458AD1E6974366335F9278C7 /* AutoSizingVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoSizingVideoView.h; sourceTree = "<group>"; };
 		458AD1ECF269BD22A87EEFDA /* PIXPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPageView.h; sourceTree = "<group>"; };
 		458AD1F43E241A31FF963441 /* AutoSizingImageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AutoSizingImageView.xib; sourceTree = "<group>"; };
@@ -1476,6 +1480,7 @@
 				458AD7D8AD43163F649B5CAD /* PIXShareManager.h */,
 				458ADE4D110629F393847F8F /* PIXThumbnailLoadingDelegate.h */,
 				458AD3E69A89DECC011321D4 /* PIXDefines.h */,
+				458AD1CE63CE6EE36850866D /* ToolbarButton.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -2369,6 +2374,7 @@
 				458ADD9279C5C38C0EB41098 /* PIXCollectionView.m in Sources */,
 				458AD7817E363896733B8673 /* NavigationController.swift in Sources */,
 				458ADA20C3E7369A700A73FA /* AdaptiveToolbarSpace.swift in Sources */,
+				458AD512E47B0FD2D69945D0 /* ToolbarButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2449,6 +2455,7 @@
 				458AD16EF4BD15153C72E141 /* PIXCollectionView.m in Sources */,
 				458AD38194E7A5B3C5D61971 /* NavigationController.swift in Sources */,
 				458ADA4B9E97D1AA60E6E267 /* AdaptiveToolbarSpace.swift in Sources */,
+				458AD5B1A93184B226286527 /* ToolbarButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2529,6 +2536,7 @@
 				458ADF8D765591473CD3008E /* PIXCollectionView.m in Sources */,
 				458ADBA0C7ACD594DFE233A7 /* NavigationController.swift in Sources */,
 				458AD3DFAD94B50851A2BFB8 /* AdaptiveToolbarSpace.swift in Sources */,
+				458AD7D59BFBE817142BA09B /* ToolbarButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

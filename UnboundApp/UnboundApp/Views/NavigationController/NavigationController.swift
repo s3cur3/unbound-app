@@ -59,9 +59,9 @@ import Cocoa
     var button: NSButton
     if #available(OSX 10.12, *) {
       button = NSButton(title: "Back", image: NSImage(named: .goLeftTemplate)!, target: self, action: #selector(NavigationController.popViewController))
-      button.frame = NSMakeRect(0, 0, 79, 25)
+      button.frame = NSMakeRect(0, 0, 79, 29)
     } else {
-      button = NSButton(frame: NSMakeRect(0, 0, 79, 25))
+      button = NSButton(frame: NSMakeRect(0, 0, 79, 29))
       button.title = "Back"
       button.image = NSImage(named: .goLeftTemplate)!
       button.target = self

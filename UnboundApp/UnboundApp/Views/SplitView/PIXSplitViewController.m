@@ -300,7 +300,7 @@
     _shareItem = [[NSToolbarItem alloc] initWithItemIdentifier:@"shareAlbumButton"];
     //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
     
-    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 110, 25)];
+    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 110, 29)];
 
     [buttonView setImage:[NSImage imageNamed:NSImageNameShareTemplate]];
     [buttonView setImagePosition:NSImageLeft];
@@ -344,7 +344,7 @@
     _deleteAlbumItem = [[NSToolbarItem alloc] initWithItemIdentifier:@"deleteAlbumButton"];
     //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
     
-    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, -2, 100, 25)];
+    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, -2, 100, 29)];
     
     [buttonView setImage:nil];
     [buttonView setImagePosition:NSImageLeft];
@@ -383,7 +383,7 @@
     _importItem = [[NSToolbarItem alloc] initWithItemIdentifier:@"importAlbumButton"];
     //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
 
-    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 60, 27)];
+    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 60, 29)];
     
     [buttonView setImage:nil];
     [buttonView setImagePosition:NSImageLeft];
