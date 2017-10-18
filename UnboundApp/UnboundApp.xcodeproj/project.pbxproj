@@ -58,7 +58,6 @@
 		458AD11EED5D909E7AF348DB /* PIXInfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD23BD2135A2FD65FC002 /* PIXInfoWindowController.m */; };
 		458AD1268AE06E9E41AD5A04 /* PIXVideoImageOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD05956EDFEFFBDA833F3 /* PIXVideoImageOverlayView.m */; };
 		458AD14B512DD60FE1EEA04A /* temp-portrait@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 458AD3029E36086E9FA2BEEA /* temp-portrait@2x.jpg */; };
-		458AD14D9F34E41DB9A0472F /* PIXNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADBE6B4EB3E535CC48668 /* PIXNavigationController.m */; };
 		458AD15185BEB0FFF293DFCC /* logo_ao.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD796B90699411E711F52 /* logo_ao.png */; };
 		458AD157D58D09CCDCEA7088 /* PIXVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD908CFF0ECDB629551E6 /* PIXVideoViewController.m */; };
 		458AD15C1767F4B45CDBA44E /* buttongrid_facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADC4C05748A68EBC14116 /* buttongrid_facebook.png */; };
@@ -146,7 +145,6 @@
 		458AD3CF5D91D070EE12F7F2 /* success.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADD9D4028408F39A03381 /* success.png */; };
 		458AD3D43A8C451140F7281D /* playbutton-tinted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD582BE81CADF4922CE0F /* playbutton-tinted@2x.png */; };
 		458AD3D4792461F591CB5D4A /* btn-roundrect-up.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD11157B13244BB3EEE4F /* btn-roundrect-up.png */; };
-		458AD3DCFFCED9EA8D385280 /* PIXNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADBE6B4EB3E535CC48668 /* PIXNavigationController.m */; };
 		458AD3DFAD94B50851A2BFB8 /* AdaptiveToolbarSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AD2D4D1380902CA593631 /* AdaptiveToolbarSpace.swift */; };
 		458AD3E74C55CB64F09CF4E7 /* PIXPageHUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD14FBD86FFB06E7642BE /* PIXPageHUDView.m */; };
 		458AD3E7FFF167F6718DAA48 /* Mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 458ADEC56F74773AFE527439 /* Mask.jpg */; };
@@ -339,7 +337,6 @@
 		458AD96BCEDB0DF1DDCB4046 /* buttongrid_email.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADC0F47F8C6A43275CD7C /* buttongrid_email.png */; };
 		458AD96F05CD9B6E9864D91F /* buttongrid_share.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD529E82DA964CECCEC23 /* buttongrid_share.png */; };
 		458AD9711323C8D1A39AFC9E /* GetPathsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD945555DF37ECBB3554F /* GetPathsOperation.m */; };
-		458AD982360913A8A66146B3 /* PIXNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADBE6B4EB3E535CC48668 /* PIXNavigationController.m */; };
 		458AD98E4D7F6E8DE3BC57E6 /* expand.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD24137913A817EC0CDB7 /* expand.png */; };
 		458AD997FF259CEFE5C82DF6 /* btn-roundrect-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADC5D5B4D6D96C8D749B6 /* btn-roundrect-down.png */; };
 		458AD9A399761058DB14C4AE /* PIXCustomShareSheetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADEF55400A22EB408AC57 /* PIXCustomShareSheetViewController.xib */; };
@@ -823,7 +820,6 @@
 		458ADA0B500A4B5ADBD8014E /* PIXCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXCollectionView.m; sourceTree = "<group>"; };
 		458ADA297AAEBA62BF91A261 /* PIXAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXAccount.h; sourceTree = "<group>"; };
 		458ADA2D4C8A98FFC1810379 /* PIXAlbumCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXAlbumCollectionViewController.h; sourceTree = "<group>"; };
-		458ADA4846A717650BFE249D /* PIXNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXNavigationController.h; sourceTree = "<group>"; };
 		458ADA4C9A16191E9DED0AD7 /* NSBezierPath+pathUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBezierPath+pathUtilities.m"; sourceTree = "<group>"; };
 		458ADA4FAB1BF804741362BA /* PIXHUDMessageController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PIXHUDMessageController.xib; sourceTree = "<group>"; };
 		458ADA5D25C211D99C7CF0AE /* preferences_dark_theme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = preferences_dark_theme.png; sourceTree = "<group>"; };
@@ -839,7 +835,6 @@
 		458ADB472F60235A199FF75D /* PIXSidebarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PIXSidebarViewController.xib; sourceTree = "<group>"; };
 		458ADBBC24E135DE94A5E04D /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
 		458ADBDE8312055857F9D061 /* buttongrid_print@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttongrid_print@2x.png"; sourceTree = "<group>"; };
-		458ADBE6B4EB3E535CC48668 /* PIXNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXNavigationController.m; sourceTree = "<group>"; };
 		458ADBEE76890868D0424E6B /* PIXInfoWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXInfoWindowController.h; sourceTree = "<group>"; };
 		458ADBFF6E4299773365C212 /* DebugPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugPreferencesViewController.m; sourceTree = "<group>"; };
 		458ADC0318AE26BE59FB9784 /* leapnotconnected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leapnotconnected@2x.png"; sourceTree = "<group>"; };
@@ -1214,7 +1209,6 @@
 				458ADFEE6D6FDA5319AB20EE /* PIXFileTextField.m */,
 				458AD933DEAABBEEB83AD143 /* PIXCollectionViewController.m */,
 				458AD8B6B7434300FCCD1795 /* PIXExifBGView.m */,
-				458ADA4846A717650BFE249D /* PIXNavigationController.h */,
 				458AD737D5A9975B91B517A7 /* PIXCustomShareSheetViewController.m */,
 				458AD9A597215949892DA8C8 /* PIXCollectionViewItem.h */,
 				458AD0D497ED6EB0B04EF6C6 /* PIXMiniExifViewController.xib */,
@@ -1225,7 +1219,6 @@
 				458AD99163C98A361F2E4523 /* PIXGridView.h */,
 				458AD2072C4E666D9558696E /* PIXCustomButtonCell.m */,
 				458AD67B578944E70591B68D /* PIXGradientBarView.h */,
-				458ADBE6B4EB3E535CC48668 /* PIXNavigationController.m */,
 				458AD2E290E211201DFD9034 /* NSCollectionView+PIXSelection.m */,
 				458AD8E445B547B0CBD94DD6 /* NSCollectionView+PIXSelection.h */,
 				458ADA0B500A4B5ADBD8014E /* PIXCollectionView.m */,
@@ -2346,7 +2339,6 @@
 				458AD0E7F5CBECCF1D3B2AFC /* PIXCustomShareSheetViewController.m in Sources */,
 				458AD62129B78A69FF99791E /* PIXMiniExifViewController.m in Sources */,
 				458AD842A496BAC131163B19 /* PIXCustomButtonCell.m in Sources */,
-				458AD982360913A8A66146B3 /* PIXNavigationController.m in Sources */,
 				458AD5E0C625406D898B259F /* PIXSidebarScrollView.m in Sources */,
 				458AD056A0A92AEB26ABB3AF /* SquareImageView.m in Sources */,
 				458AD74C32D1580DDFC3FF8C /* PIXSidebarViewController.m in Sources */,
@@ -2427,7 +2419,6 @@
 				458ADFEB7BE6D4B3622B71B8 /* PIXCustomShareSheetViewController.m in Sources */,
 				458AD661406D28C4A4A00716 /* PIXMiniExifViewController.m in Sources */,
 				458AD5A76702E464230F66CC /* PIXCustomButtonCell.m in Sources */,
-				458AD14D9F34E41DB9A0472F /* PIXNavigationController.m in Sources */,
 				458AD51FA26411F692D8CFEA /* PIXSidebarScrollView.m in Sources */,
 				458AD0B3D816FF41583FADE3 /* SquareImageView.m in Sources */,
 				458AD75AB2EFBB624634963C /* PIXSidebarViewController.m in Sources */,
@@ -2508,7 +2499,6 @@
 				458AD331AC2CD5D6D76080C0 /* PIXCustomShareSheetViewController.m in Sources */,
 				458AD04762AE6A7C78CEBE8D /* PIXMiniExifViewController.m in Sources */,
 				458AD1BFF746EC40170F7A48 /* PIXCustomButtonCell.m in Sources */,
-				458AD3DCFFCED9EA8D385280 /* PIXNavigationController.m in Sources */,
 				458ADBB2CF64C1EB036C444A /* PIXSidebarScrollView.m in Sources */,
 				458AD002443833543FCF1E40 /* SquareImageView.m in Sources */,
 				458AD64559E279FE2AD19653 /* PIXSidebarViewController.m in Sources */,

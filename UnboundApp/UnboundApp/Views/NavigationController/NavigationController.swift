@@ -197,10 +197,9 @@ import Cocoa
     default:
       super.keyDown(with: event)
     }
-    super.keyDown(with: event)
   }
 
-  // MARK: - Visibility
+  // MARK: - Appearance
 
   @objc func setToolbarHidden(_ hidden: Bool) {
     if hidden && self.toolbar.isVisible {
@@ -208,6 +207,33 @@ import Cocoa
     } else if !self.toolbar.isVisible {
       self.view.window?.toggleToolbarShown(self)
     }
+  }
+
+  func setTitle(title: String?) {
+    if let title = title {
+      titleView.stringValue = title
+    } else {
+      titleView.stringValue = "Unbound"
+    }
+
+    // re-apply the string value, needed for the text field to correctly calculate it's width
+    titleView.stringValue = titleView.stringValue
+
+    // calculate new dimensions
+    let maxWidth: CGFloat = 500
+    let maxHeight: CGFloat = titleView.frame.size.height
+    let size = titleView.sizeThatFits(NSSize(width: maxWidth, height: maxHeight))
+
+    var frame = titleView.frame
+    frame.size.width = size.width
+    titleView.frame = frame
+
+    var titleMinSize = titleItem.minSize
+    titleMinSize.width = size.width
+    titleItem.minSize = titleMinSize
+    adaptiveSpace.updateWidth()
+
+    self.view.window?.viewsNeedDisplay = true
   }
 
   // MARK: - Toolbar Methods
@@ -270,35 +296,5 @@ extension NavigationController {
 extension NavigationController: NSToolbarDelegate {
   func toolbar(_ toolbar: NSToolbar, itemForItemIdentifier itemIdentifier: NSToolbarItem.Identifier, willBeInsertedIntoToolbar flag: Bool) -> NSToolbarItem? {
     return toolbarItems?.first { item in item.itemIdentifier == itemIdentifier }
-  }
-}
-
-extension NavigationController {
-
-  func setTitle(title: String?) {
-    if let title = title {
-      titleView.stringValue = title
-    } else {
-      titleView.stringValue = "Unbound"
-    }
-
-    // re-apply the string value, needed for the text field to correctly calculate it's width
-    titleView.stringValue = titleView.stringValue
-
-    // calculate new dimensions
-    let maxWidth: CGFloat = 500
-    let maxHeight: CGFloat = titleView.frame.size.height
-    let size = titleView.sizeThatFits(NSSize(width: maxWidth, height: maxHeight))
-
-    var frame = titleView.frame
-    frame.size.width = size.width
-    titleView.frame = frame
-
-    var titleMinSize = titleItem.minSize
-    titleMinSize.width = size.width
-    titleItem.minSize = titleMinSize
-    adaptiveSpace.updateWidth()
-
-    self.view.window?.viewsNeedDisplay = true
   }
 }

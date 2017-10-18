@@ -9,8 +9,6 @@
 #import "PIXAlbumCollectionViewController.h"
 #import "PIXSplitViewController.h"
 #import "PIXMainWindowController.h"
-#import "PIXNavigationController.h"
-
 #import "PIXDefines.h"
 #import "PIXAppDelegate.h"
 #import "PIXFileParser.h"
@@ -62,13 +60,6 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    
-    /*
-    [self.collectionView setItemSize:NSMakeSize(190, 210)];
-    [self.collectionView setAllowsMultipleSelection:YES];
-    [self.collectionView reloadData];
-    [self.collectionView setUseHover:NO];
-    */
 
     self.collectionView.delegate = self;
 
@@ -114,8 +105,6 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         // make ourselves the first responder after we're added
         [self.view.window makeFirstResponder:self.collectionView];
-        //        [self setNextResponder:self.scrollView];
-        //        [self.collectionView setNextResponder:self];
     });
     
     

@@ -17,7 +17,6 @@
 #import "PIXPhoto.h"
 #import "PIXDefines.h"
 #import "PIXMainWindowController.h"
-#import "PIXNavigationController.h"
 
 @interface PIXSidebarViewController ()
 
@@ -32,30 +31,10 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Initialization code here.
-        //self.topLevelItems = [[[PIXDataSource fileSystemDataSource] albums] mutableCopy];
-        
     }
     
     return self;
 }
-
--(void)loadView {
-    [super loadView];
-    
-//    Class vibrantClass=NSClassFromString(@"NSVisualEffectView");
-//    if (vibrantClass)
-//    {
-//        NSVisualEffectView * vibrant=[[vibrantClass alloc] initWithFrame:self.view.bounds];
-//        [vibrant setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
-//        [vibrant setBlendingMode:mode];
-//        [self addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
-//    }
-    
-}
-
-
-
 
 -(NSArray *)albums
 {
@@ -158,23 +137,7 @@
     }
     
     [self updateSearch];
-    
-    // this will be called by updateSearch so no need to call  it here
-    //[self scrollToSelectedAlbum];
 }
-
-
-
-
-
-//-(void)awakeFromNib
-//{
-//    [super awakeFromNib];
-//
-//    //[self.outlineView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
-//    
-//    ///[self.outlineView setWantsLayer:NO];
-//}
 
 -(void)scrollToSelectedAlbum
 {
@@ -218,46 +181,12 @@
     return self.splitViewController.selectedAlbum;
 }
 
-
-
-/*-(void)setSelectedAlbum:(Album *)anAlbum
-{
-    [self setSelectedAlbum:anAlbum shouldEdit:NO];
-}
-
--(void)setSelectedAlbum:(Album *)anAlbum shouldEdit:(BOOL)isEditing
-{
-    _selectedAlbum = anAlbum;
-    if (_selectedAlbum!=nil)
-    {
-        NSUInteger index = [self.topLevelItems indexOfObject:self.selectedAlbum];
-        [self.outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
-        [self.outlineView scrollRowToVisible:index];
-        if (isEditing)
-        {
-            //set the newly selected albums's label to editing mode
-            [self.outlineView editColumn:0 row:index
-                               withEvent:nil select:YES];
-        }
-        
-        
-    }
-}
-
--(void)setSelectedAlbumAndEdit:(Album *)anAlbum
-{
-    [self setSelectedAlbum:anAlbum shouldEdit:YES];
-}*/
-
-//Drag and Drop Support
+#pragma mark - Drag and Drop Support
 
 -(BOOL)outlineView:(NSOutlineView *)outlineView acceptDrop:(id < NSDraggingInfo >)info item:(id)item childIndex:(NSInteger)index
 {
     if (index != -1 || item==nil)
     {
-//        if (item==nil && index==-1) {
-//            DLog(@"drag drop info %@", info);
-//        }
         return NO;
     }
     //DLog(@"drragging info %@", info);
@@ -277,11 +206,6 @@
         DLog(@"No files to drop after filtering return NO");
         return NO;
     }
-    
-//    for (NSString * path in files)
-//    {
-//        [pathsToPaste addObject:@{@"source" : path, @"destination" : destPath}];
-//    }
 
     DLog(@"Sidebar acccepting drop with source : %@, option key presssed : %@", [info draggingSource], ([PIXViewController optionKeyIsPressed] ? @"YES" : @"NO"));
     //TODO: find out why this doesn't work
@@ -318,9 +242,6 @@
 {
     if (index != -1 || item==nil)
     {
-//        if (item==nil && index==-1) {
-//            DLog(@"drag drop info %@", info);
-//        }
         return NSDragOperationNone;
     }
     DLog(@"drragging info %@", info);
@@ -364,11 +285,7 @@
     
 }
 
-
-
-#pragma mark -
-#pragma mark Dragging Source Methods:
-
+#pragma mark - Dragging Source Methods:
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard
 {
@@ -454,53 +371,7 @@
 -(void)rightMouseDown:(NSEvent *)theEvent {
     DLog(@"rightMouseDown:%@", theEvent);
     [[self nextResponder] rightMouseDown:theEvent];
-    //    NSMenu *theMenu = [[NSMenu alloc] initWithTitle:@"Options"];
-    //    [theMenu insertItemWithTitle:@"Set As Desktop Background" action:@selector(setDesktopImage:) keyEquivalent:@""atIndex:0];
-    //    [NSMenu popUpContextMenu:theMenu withEvent:theEvent forView:self.imageView];
 }
-
-
-//- (IBAction) openInApp:(id)sender
-//{
-//    PIXAlbum *anAlbum =  [self.outlineView itemAtRow:[self.outlineView selectedRow]];
-//    NSArray *itemsToOpen = [NSArray arrayWithObject:anAlbum];
-//    
-//    for (id obj in itemsToOpen) {
-//        
-//        NSString* path = [obj path];
-//        [[NSWorkspace sharedWorkspace] openFile:path];
-//        
-//    }
-//}
-
-//- (IBAction) revealInFinder:(id)inSender
-//{
-//    PIXAlbum *anAlbum =  [self.outlineView itemAtRow:[self.outlineView selectedRow]];
-//    NSSet *aSet = [NSSet setWithObject:anAlbum];
-//    [aSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-//        
-//        NSString* path = [obj path];
-//        NSString* folder = [path stringByDeletingLastPathComponent];
-//        [[NSWorkspace sharedWorkspace] selectFile:path inFileViewerRootedAtPath:folder];
-//        
-//    }];
-//}
-//
-//-(IBAction)getInfo:(id)sender;
-//{
-//    PIXAlbum *anAlbum =  [self.outlineView itemAtRow:[self.outlineView selectedRow]];
-//    NSSet *aSet = [NSSet setWithObject:anAlbum];
-//    [aSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-//        
-//        NSPasteboard *pboard = [NSPasteboard pasteboardWithUniqueName];
-//        [pboard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
-//        [pboard setString:[obj path]  forType:NSStringPboardType];
-//        NSPerformService(@"Finder/Show Info", pboard);
-//        
-//    }];
-//    
-//}
-
 
 @end
 

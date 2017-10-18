@@ -8,7 +8,6 @@
 
 #import "PIXSplitViewController.h"
 #import "PIXSidebarViewController.h"
-#import "PIXNavigationController.h"
 #import "PIXAppDelegate.h"
 #import "PIXMainWindowController.h"
 #import "PIXCustomShareSheetViewController.h"
@@ -17,6 +16,7 @@
 #import "PIXDefines.h"
 #import "PIXPhotoCollectionViewController.h"
 #import "PIXCollectionView.h"
+#import "Unbound-Swift.h"
 
 @interface PIXSplitViewController ()
 
@@ -335,18 +335,6 @@
                                                    relativeToRect:[sender bounds]
                                                            ofView:sender
                                                     preferredEdge:NSMaxXEdge];
-    
-    /*
-    PIXCustomShareSheetViewController *controller = [[PIXCustomShareSheetViewController alloc] initWithNibName:@"PIXCustomShareSheetViewController"     bundle:nil];
-    
-    [controller setAlbumsToShare:@[self.selectedAlbum]];
-    
-    NSPopover *popover = [[NSPopover alloc] init];
-    [popover setContentViewController:controller];
-    [popover setAnimates:YES];
-    [popover setBehavior:NSPopoverBehaviorTransient];
-    [popover showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMaxYEdge];
-     */
 }
 
 - (NSToolbarItem *)deleteAlbumItem
@@ -474,7 +462,7 @@
     
 }
 
--(void)setNavigationViewController:(PIXNavigationController *)navigationViewController
+-(void)setNavigationViewController:(NavigationController *)navigationViewController
 {
     [super setNavigationViewController:navigationViewController];
     self.sidebarViewController.navigationViewController = self.navigationViewController;
