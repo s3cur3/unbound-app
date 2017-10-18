@@ -81,6 +81,7 @@ class AdaptiveToolbarSpaceItem: NSToolbarItem {
       super.minSize = newValue
     }
   }
+
   override var maxSize: NSSize {
     get {
       let size = super.maxSize
@@ -91,7 +92,7 @@ class AdaptiveToolbarSpaceItem: NSToolbarItem {
     }
   }
 
-  fileprivate func updateWidth() {
+  func updateWidth() {
     super.minSize = self.minSize
     super.maxSize = self.maxSize
   }

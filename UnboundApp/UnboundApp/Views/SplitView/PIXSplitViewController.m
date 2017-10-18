@@ -20,9 +20,6 @@
 
 @interface PIXSplitViewController ()
 
-
-@property (nonatomic, strong) NSViewController *mainViewController;
-
 @property (nonatomic, strong) NSToolbarItem * backButtonSegmentItem;
 @property (nonatomic, strong) NSToolbarItem * sliderItem;
 @property (nonatomic, strong) NSToolbarItem * shareItem;
@@ -54,14 +51,8 @@
         // Initialization code here.
         self.sidebarViewController = [[PIXSidebarViewController alloc] initWithNibName:@"PIXSidebarViewController" bundle:nil];
         self.sidebarViewController.splitViewController = self;
-        
-#ifndef USE_NSCOLLECTIONVIEW
-        self.imageBrowserViewController = [[PIXPhotoGridViewController alloc] initWithNibName:@"PIXGridViewController" bundle:nil];
-#else
-        self.imageBrowserViewController = [[PIXPhotoCollectionViewController alloc] initWithNibName:@"PIXPhotoCollectionViewController" bundle:nil];
-#endif
         self.imageBrowserViewController.splitViewController = self;
-        
+        self.imageBrowserViewController = [[PIXPhotoCollectionViewController alloc] initWithNibName:@"PIXPhotoCollectionViewController" bundle:nil];
         
         [self.splitView adjustSubviews];
     }
@@ -132,6 +123,14 @@
     
     [self.sidebarViewController willHidePIXView];
     [self.imageBrowserViewController willHidePIXView];
+}
+
+- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSKeyValueChangeKey, id> *)change context:(nullable void *)context {
+    if (object == self.imageBrowserViewController && [@"title" isEqualToString:keyPath]) {
+        self.title = ((NSViewController *) object).title;
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 - (NSToolbarItem *)sliderItem
@@ -542,9 +541,19 @@
     return YES;
 }
 
--(void)dealloc
-{
-    DLog(@"dealloc of splitview");
+- (void)setImageBrowserViewController:(PIXPhotoCollectionViewController *)imageBrowserViewController {
+    if (_imageBrowserViewController != nil) {
+        [_imageBrowserViewController removeObserver:self forKeyPath:@"title"];
+    }
+    _imageBrowserViewController = imageBrowserViewController;
+    self.title = imageBrowserViewController.title;
+    [self.imageBrowserViewController addObserver:self forKeyPath:@"title" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:nil];
+}
+
+-(void)dealloc {
+    if (self.imageBrowserViewController != nil) {
+        [self.imageBrowserViewController removeObserver:self forKeyPath:@"title"];
+    }
 }
 
 @end

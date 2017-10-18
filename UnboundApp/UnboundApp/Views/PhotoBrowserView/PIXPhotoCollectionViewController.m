@@ -154,6 +154,7 @@
         _album = album;
         [[[PIXAppDelegate sharedAppDelegate] window] setTitle:[self.album title]];
 
+        self.title = _album.title;
         [self.collectionView deselectAll:nil];
         [self updateToolbar];
         [self updateAlbum:nil];

@@ -19,12 +19,15 @@ import Cocoa
   }
 
   fileprivate var viewControllers = [PIXViewController]()
+  private var titleObservation: NSKeyValueObservation?
 
   private var toolbarItems: [NSToolbarItem]?
   private var leftItems: [NSToolbarItem]?
   private var rightItems: [NSToolbarItem]?
 
+  private var titleView: NSTextField!
   private let titleItem = NSToolbarItem(itemIdentifier: NSToolbarItem.Identifier("Title"))
+  private let adaptiveSpace = AdaptiveToolbarSpaceItem(itemIdentifier: NSToolbarItem.Identifier("AdaptiveSpace"))
   private let backButton = NSToolbarItem(itemIdentifier: NSToolbarItem.Identifier("BackButton"))
   private let activityIndicator = NSToolbarItem(itemIdentifier: NSToolbarItem.Identifier("ActivityIndicator"))
 
@@ -40,7 +43,6 @@ import Cocoa
     super.viewDidLoad()
     self.mainWindow.titleVisibility = .hidden
 
-    var titleView: NSTextField
     if #available(OSX 10.12, *) {
       titleView = NSTextField(string: "Unbound")
     } else {
@@ -90,12 +92,12 @@ import Cocoa
   }
 
   // MARK: - ViewController Management
-
   @objc func pushViewController(viewController: PIXViewController) {
     self.mainWindow.disableFlushing()
     NSDisableScreenUpdates()
 
     if let currentViewController = self.viewControllers.last {
+      titleObservation = nil
       currentViewController.willHidePIXView()
       currentViewController.view.removeFromSuperview()
     }
@@ -103,14 +105,14 @@ import Cocoa
     // reset the back button state
     self.showBackButton = true
 
+    titleObservation = viewController.observe(\.title) { object, change in
+        self.setTitle(title: object.title)
+    }
+    viewController.addObserver(self, forKeyPath: "title", context: nil)
     viewController.navigationViewController = self
     viewController.view.frame = self.view.bounds
     viewController.willShowPIXView()
-    if let title = viewController.title {
-      (titleItem.view as! NSTextField).stringValue = title
-    } else {
-      (titleItem.view as! NSTextField).stringValue = "Unbound"
-    }
+    self.setTitle(title: viewController.title)
     self.view.addSubview(viewController.view)
     viewController.view.autoresizingMask = [NSView.AutoresizingMask.width, NSView.AutoresizingMask.height]
 
@@ -134,11 +136,15 @@ import Cocoa
     oldViewController.willHidePIXView()
     oldViewController.view.removeFromSuperview()
     oldViewController.navigationViewController = nil
+    titleObservation = nil
 
     // reset the back button state
     self.showBackButton = true
 
     if let newViewController = self.viewControllers.last {
+      titleObservation = newViewController.observe(\.title) { object, change in
+        self.setTitle(title: object.title)
+      }
       newViewController.view.frame = self.view.bounds
       newViewController.willShowPIXView()
       self.view.addSubview(newViewController.view)
@@ -159,6 +165,7 @@ import Cocoa
     oldViewController.willHidePIXView()
     oldViewController.view.removeFromSuperview()
     oldViewController.navigationViewController = nil
+    titleObservation = nil
 
     while self.viewControllers.count > 1 {
       let controller = self.viewControllers.removeLast()
@@ -169,6 +176,9 @@ import Cocoa
     self.showBackButton = true
 
     if let newViewController = self.viewControllers.last {
+      titleObservation = newViewController.observe(\.title) { object, change in
+        self.setTitle(title: object.title)
+      }
       newViewController.view.frame = self.view.bounds
       newViewController.willShowPIXView()
       self.view.addSubview(newViewController.view)
@@ -238,7 +248,7 @@ extension NavigationController {
       items.append(contentsOf: leftItems)
     }
     items.append(activityIndicator)
-    items.append(AdaptiveToolbarSpaceItem(itemIdentifier: NSToolbarItem.Identifier("AdaptiveSpace")))
+    items.append(adaptiveSpace)
 
     items.append(titleItem)
     items.append(NSToolbarItem(itemIdentifier: .flexibleSpace))
@@ -259,5 +269,35 @@ extension NavigationController {
 extension NavigationController: NSToolbarDelegate {
   func toolbar(_ toolbar: NSToolbar, itemForItemIdentifier itemIdentifier: NSToolbarItem.Identifier, willBeInsertedIntoToolbar flag: Bool) -> NSToolbarItem? {
     return toolbarItems?.first { item in item.itemIdentifier == itemIdentifier }
+  }
+}
+
+extension NavigationController {
+
+  func setTitle(title: String?) {
+    if let title = title {
+      titleView.stringValue = title
+    } else {
+      titleView.stringValue = "Unbound"
+    }
+
+    // re-apply the string value, needed for the text field to correctly calculate it's width
+    titleView.stringValue = titleView.stringValue
+
+    // calculate new dimensions
+    let maxWidth: CGFloat = 500
+    let maxHeight: CGFloat = titleView.frame.size.height
+    let size = titleView.sizeThatFits(NSSize(width: maxWidth, height: maxHeight))
+
+    var frame = titleView.frame
+    frame.size.width = size.width
+    titleView.frame = frame
+
+    var titleMinSize = titleItem.minSize
+    titleMinSize.width = size.width
+    titleItem.minSize = titleMinSize
+    adaptiveSpace.updateWidth()
+
+    self.view.window?.viewsNeedDisplay = true
   }
 }
