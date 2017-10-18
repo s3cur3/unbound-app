@@ -322,8 +322,8 @@
     
     
     NSImage * photo = self.itemImage;
-    CGRect rect = CGRectInset(self.bounds, 15, 15);
-    
+    CGRect rect = CGRectInset(self.bounds, 10, 10);
+
     // calculate the proportional image frame
     CGSize imageSize = [photo size];
     
@@ -354,9 +354,9 @@
         }
     }
     
-    
-    
     self.imageLayer.frame = imageFrame;
+
+    self.selectionLayer.frame = CGRectInset(imageFrame, -15, -15);
 
     CGRect videoThumbFrame = CGRectMake(0, 0, 80, 80);
     
