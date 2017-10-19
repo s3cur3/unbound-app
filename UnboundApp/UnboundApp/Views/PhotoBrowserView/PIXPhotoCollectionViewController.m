@@ -179,6 +179,8 @@
     NSString *photosCount = [numberFormatter stringFromNumber:@((self.album.photos.count))];
 
     NSString * gridTitle = nil;
+
+    // TODO Update sort based on settings
     
     // if we've got more than one photo then display the whole date range
     if (self.album.photos.count > 1) {

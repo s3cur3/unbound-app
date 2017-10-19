@@ -22,9 +22,6 @@
 
 @property (nonatomic, strong) NSToolbarItem * backButtonSegmentItem;
 @property (nonatomic, strong) NSToolbarItem * sliderItem;
-@property (nonatomic, strong) NSToolbarItem * shareItem;
-@property (nonatomic, strong) NSToolbarItem * importItem;
-@property (nonatomic, strong) NSToolbarItem * deleteAlbumItem;
 @property (nonatomic, strong) NSToolbarItem * sortButton;
 
 @property float lastSplitviewWidth;
@@ -104,8 +101,8 @@
                              forSegment:1];
 
     self.navigationViewController.showBackButton = false;
-    self.navigationViewController.leftToolbarItems = @[self.backButtonSegmentItem, self.importItem];
-    self.navigationViewController.rightToolbarItems = @[self.sliderItem, self.deleteAlbumItem, self.sortButton];
+    self.navigationViewController.leftToolbarItems = @[self.backButtonSegmentItem];
+    self.navigationViewController.rightToolbarItems = @[self.sliderItem, self.sortButton];
 }
 
 
@@ -161,64 +158,45 @@
 
 - (NSToolbarItem *)sortButton
 {
-    if(_sortButton != nil) return _sortButton;
-    
-    _sortButton = [[NSToolbarItem alloc] initWithItemIdentifier:@"sortButton"];
-    //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
-    
-    NSPopUpButton * buttonView = [[NSPopUpButton alloc] initWithFrame:CGRectMake(0, 0, 30, 25) pullsDown:YES];
-    
-    [buttonView setImagePosition:NSImageOverlaps];
-    [buttonView setBordered:YES];
-    [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
-    [buttonView setTitle:@""];
-    [(NSPopUpButtonCell *) buttonView.cell setArrowPosition:NSPopUpNoArrow];
-    
-    _sortButton.view = buttonView;
-    
-    [_sortButton setLabel:@"Sort Photos"];
-    [_sortButton setPaletteLabel:@"Sort Photos"];
-    
-    // Set up a reasonable tooltip, and image
-    // you will likely want to localize many of the item's properties
-    [_sortButton setToolTip:@"Choose Photo Sort"];
-    
-    
-    // Tell the item what message to send when it is clicked
-    
-    [buttonView insertItemWithTitle:@"" atIndex:0]; // first index is always the title
-    [buttonView insertItemWithTitle:@"New to Old" atIndex:1];
-    [buttonView insertItemWithTitle:@"Old to New" atIndex:2];
-    [buttonView insertItemWithTitle:@"Filename A to Z" atIndex:3];
-    [buttonView insertItemWithTitle:@"Filename Z to A" atIndex:4];
+    if (_sortButton == nil) {
+        NSPopUpButton *buttonView = [[NSPopUpButton alloc] initWithFrame:CGRectMake(0, 0, 46, 29) pullsDown:YES];
+        buttonView.imagePosition = NSImageOverlaps;
+        buttonView.bordered = YES;
+        buttonView.bezelStyle = NSBezelStyleTexturedSquare;
+        buttonView.title = @"";
+        ((NSPopUpButtonCell *) buttonView.cell).arrowPosition = NSPopUpNoArrow;
 
-    NSMenuItem * item = [[buttonView itemArray] objectAtIndex:0];
-    item.image = [NSImage imageNamed:@"sortbutton"];
-    [item.image setTemplate:YES];
-    
-    
-    int sortOrder = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"PIXPhotoSort"];
-    
-    for (int i = 1; i <= 4; i++) {
-        
-        NSMenuItem * item = [[buttonView itemArray] objectAtIndex:i];
-        
-        if(i-1 == sortOrder)
-        {
-            [item setState:NSOnState];
+        [buttonView addItemsWithTitles:@[
+                @"", // first index is always the title
+                @"New to Old",
+                @"Old to New",
+                @"Filename A to Z",
+                @"Filename Z to A"
+        ]];
+
+        NSMenuItem *firstItem = [buttonView itemAtIndex:0];
+        firstItem.image = [NSImage imageNamed:@"ic_sort"];
+        firstItem.image.template = YES;
+
+        NSInteger sortOrder = [[NSUserDefaults standardUserDefaults] integerForKey:@"PIXPhotoSort"];
+        for (NSUInteger i = 0; i < 5; i++) {
+            NSMenuItem * item = buttonView.itemArray[i];
+            if (i == sortOrder) {
+                item.state = NSOnState;
+            }
+            item.tag = i;
+            item.target = self;
+            item.action = @selector(sortChanged:);
         }
-        
-        [item setTag:i-1];
-        [item setTarget:self];
-        [item setAction:@selector(sortChanged:)];
-        
+
+        _sortButton = [[NSToolbarItem alloc] initWithItemIdentifier:@"sortButton"];
+        _sortButton.label = @"Sort Photos";
+        _sortButton.paletteLabel = @"Sort Photos";
+        _sortButton.toolTip = @"Choose Photo Sort";
+        _sortButton.view = buttonView;
     }
-    
     return _sortButton;
-    
 }
-
-
 
 -(void)sortChanged:(id)sender
 {
@@ -226,20 +204,16 @@
     if([sender isKindOfClass:[NSMenuItem class]])
     {
         NSArray * menuItems = [(NSPopUpButton *)self.sortButton.view itemArray];
-        
-        for(NSMenuItem * anItem in menuItems)
-        {
+        for(NSMenuItem * anItem in menuItems) {
             [anItem setState:NSOffState];
         }
-        
-        
+
         NSMenuItem * thisItem = sender;
         [thisItem setState:NSOnState];
         [[NSUserDefaults standardUserDefaults] setInteger:[thisItem tag] forKey:@"PIXPhotoSort"];
         
         // update any albums views
         [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
-        
     }
 }
 
@@ -292,138 +266,6 @@
                                  forSegment:1];
     }
 }
-
-- (NSToolbarItem *)shareItem
-{
-    if(_shareItem != nil) return _shareItem;
-    
-    _shareItem = [[NSToolbarItem alloc] initWithItemIdentifier:@"shareAlbumButton"];
-    //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
-    
-    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 110, 29)];
-
-    [buttonView setImage:[NSImage imageNamed:NSImageNameShareTemplate]];
-    [buttonView setImagePosition:NSImageLeft];
-    [buttonView setBordered:YES];
-    [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
-    [buttonView setTitle:@"Share Album"];
-        
-    _shareItem.view = buttonView;
-    
-    [_shareItem setLabel:@"Share Album"];
-    [_shareItem setPaletteLabel:@"Share Album"];
-    
-    // Set up a reasonable tooltip, and image
-    // you will likely want to localize many of the item's properties
-    [_shareItem setToolTip:@"Share an Album"];
-    
-    // Tell the item what message to send when it is clicked
-    [buttonView setTarget:self];
-    [buttonView setAction:@selector(shareButtonPressed:)];
-    
-    return _shareItem;
-    
-}
-
-
-
-
--(IBAction)shareButtonPressed:(id)sender
-{
-    
-    [[PIXShareManager defaultShareManager] showShareSheetForItems:@[self.selectedAlbum]
-                                                   relativeToRect:[sender bounds]
-                                                           ofView:sender
-                                                    preferredEdge:NSMaxXEdge];
-}
-
-- (NSToolbarItem *)deleteAlbumItem
-{
-    if(_deleteAlbumItem != nil) return _deleteAlbumItem;
-    
-    _deleteAlbumItem = [[NSToolbarItem alloc] initWithItemIdentifier:@"deleteAlbumButton"];
-    //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
-    
-    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, -2, 100, 29)];
-    
-    [buttonView setImage:nil];
-    [buttonView setImagePosition:NSImageLeft];
-    [buttonView setBordered:YES];
-    [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
-    [buttonView setTitle:@"Delete Album"];
-    
-    _deleteAlbumItem.view = buttonView;
-    
-    [_deleteAlbumItem setLabel:@"Delete Album"];
-    [_deleteAlbumItem setPaletteLabel:@"Delete Album"];
-    
-    
-    // Set up a reasonable tooltip, and image
-    // you will likely want to localize many of the item's properties
-    [_deleteAlbumItem setToolTip:@"Delete Album"];
-    
-    // Tell the item what message to send when it is clicked
-    [buttonView setTarget:self];
-    [buttonView setAction:@selector(deleteAlbumPressed:)];
-    
-    return _deleteAlbumItem;
-    
-}
-
--(void)deleteAlbumPressed:(id)sender
-{
-    NSSet *itemsToDelete = [NSSet setWithObject:self.selectedAlbum];
-    [[PIXFileManager sharedInstance] deleteItemsWorkflow:itemsToDelete];
-}
-
-- (NSToolbarItem *)importItem
-{
-    if(_importItem != nil) return _importItem;
-    
-    _importItem = [[NSToolbarItem alloc] initWithItemIdentifier:@"importAlbumButton"];
-    //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
-
-    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 60, 29)];
-    
-    [buttonView setImage:nil];
-    [buttonView setImagePosition:NSImageLeft];
-    [buttonView setBordered:YES];
-    [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
-    [buttonView setTitle:@"Import"];
-    
-    _importItem.view = buttonView;
-    
-    [_importItem setLabel:@"Import"];
-    [_importItem setPaletteLabel:@"Import"];
-    
-    
-    // Set up a reasonable tooltip, and image
-    // you will likely want to localize many of the item's properties
-    [_importItem setToolTip:@"Import photos"];
-    
-    // Tell the item what message to send when it is clicked
-    [buttonView setTarget:self];
-    [buttonView setAction:@selector(importPhotosPressed:)];
-    
-    return _importItem;
-    
-}
-
--(void)importPhotosPressed:(id)sender
-{
-    [[PIXFileManager sharedInstance] importPhotosToAlbum:self.selectedAlbum allowDirectories:NO];
-}
-
--(void)leapSwipeUp
-{
-    if(self.view.window == nil) return;
-    
-    [(NSSound *)[NSSound soundNamed:@"Pop"] play];
-    
-    [self popViewAndUpdateAlbumSelectionForDelegate];
-    //[self.navigationViewController popViewController];
-}
-
 
 -(void)toggleSidebar
 {
