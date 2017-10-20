@@ -26,7 +26,8 @@
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 
-#ifdef SPARKLE
+#ifdef TRIAL
+#import <DevMateKit/DevMateKit.h>
 #import <Sparkle/Sparkle.h>
 #endif
 
@@ -40,7 +41,7 @@
 
 @property (readonly, strong, atomic) NSOperationQueue *backgroundSaveQueue;
 
-#ifdef SPARKLE
+#ifdef TRIAL
 @property (strong) SUUpdater * sparkleUpdater;
 #endif
 
@@ -93,6 +94,10 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [Fabric with:@[[Crashlytics class]]];
+
+#ifdef TRIAL
+    [DevMateKit sendTrackingReport:nil delegate: nil];
+#endif
     
     if([[NSUserDefaults standardUserDefaults] boolForKey:kAppDidNotExitCleanly])
     {
@@ -143,8 +148,8 @@
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
 #endif
 
-#ifdef SPARKLE
-    self.showSparkleMenu = YES;
+#ifdef TRIAL
+    self.isTrialBuild = YES;
     self.sparkleUpdater = [SUUpdater new];
 #endif
     
@@ -152,8 +157,7 @@
 
 - (IBAction)checkForUpdates:(id)sender
 {
-    
-#ifdef SPARKLE
+#ifdef TRIAL
     [self.sparkleUpdater checkForUpdates:sender];
 #endif
 }
@@ -253,10 +257,13 @@
 
 - (IBAction)helpPressed:(id)sender
 {
+#ifdef TRIAL
+    [DevMateKit showFeedbackDialog:nil inMode:DMFeedbackDefaultMode];
+#else
     NSURL * url = [NSURL URLWithString:@"mailto:info@unboundformac.com?subject=Unbound%20for%20Mac%20Support"];
     [[NSWorkspace sharedWorkspace] openURL:url];
+#endif
 }
-
 
 - (IBAction)requestFeaturePressed:(id)sender
 {
@@ -694,7 +701,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     
     
     //set it to the App Delegates persistant store coordinator
-    //[context setPersistentStoreCoordinator:[self persistentStoreCoordinator]];
+//    [context setPersistentStoreCoordinator:[self persistentStoreCoordinator]];
     
     [context setParentContext:self.managedObjectContext];
     
@@ -719,11 +726,11 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     
     
     //set it to the App Delegates persistant store coordinator
-    //[context setPersistentStoreCoordinator:[self persistentStoreCoordinator]];
-    
-    if(self.privateWriterContext)
-    {
+
+    if (self.privateWriterContext) {
         [context setParentContext:self.privateWriterContext];
+    } else {
+        [context setPersistentStoreCoordinator:[self persistentStoreCoordinator]];
     }
     
     // overwrite the database with updates from this context

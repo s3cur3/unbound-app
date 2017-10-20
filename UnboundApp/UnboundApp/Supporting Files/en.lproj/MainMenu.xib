@@ -27,11 +27,7 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="macAppStore:" target="494" id="643"/>
-                                    <binding destination="494" name="hidden" keyPath="self.showSparkleMenu" id="642">
-                                        <dictionary key="options">
-                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                        </dictionary>
-                                    </binding>
+                                    <binding destination="494" name="hidden" keyPath="self.isTrialBuild" id="RB8-d4-pCH"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="236">
@@ -49,7 +45,7 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="checkForUpdates:" target="494" id="593"/>
-                                    <binding destination="494" name="hidden" keyPath="self.showSparkleMenu" id="602">
+                                    <binding destination="494" name="hidden" keyPath="self.isTrialBuild" id="BVU-eD-Umo">
                                         <dictionary key="options">
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                         </dictionary>
@@ -180,7 +176,7 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="checkForUpdates:" target="494" id="594"/>
-                                    <binding destination="494" name="hidden" keyPath="self.showSparkleMenu" id="598">
+                                    <binding destination="494" name="hidden" keyPath="self.isTrialBuild" id="HtD-Br-5Hy">
                                         <dictionary key="options">
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                         </dictionary>
@@ -191,11 +187,7 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="macAppStore:" target="494" id="640"/>
-                                    <binding destination="494" name="hidden" keyPath="self.showSparkleMenu" id="638">
-                                        <dictionary key="options">
-                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                        </dictionary>
-                                    </binding>
+                                    <binding destination="494" name="hidden" keyPath="self.isTrialBuild" id="vCz-Wn-lvR"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="570">

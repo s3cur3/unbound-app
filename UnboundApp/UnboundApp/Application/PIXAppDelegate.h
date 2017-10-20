@@ -33,16 +33,14 @@
 - (IBAction)showIntroWindow:(id)sender;
 - (IBAction)showAboutWindow:(id)sender;
 - (IBAction)analogOceanWebsitePressed:(id)sender;
-- (IBAction)coolLeapAppsPressed:(id)sender;
-- (IBAction)showLeapTutorialPressed:(id)sender;
 - (IBAction)helpPressed:(id)sender;
 
 - (IBAction)chooseFolder:(id)sender;
 - (IBAction)rescanPhotosPressed:(id)sender;
 -(IBAction)importPhotosPressed:(id)sender;
-
-@property BOOL showSparkleMenu;
 - (IBAction)checkForUpdates:(id)sender;
+
+@property BOOL isTrialBuild;
 
 @property (nonatomic, strong) IBOutlet NSMenuItem * progressItem;
 // for MASPreferences class:
