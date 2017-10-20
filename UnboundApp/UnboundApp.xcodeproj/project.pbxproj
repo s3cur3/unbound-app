@@ -226,6 +226,7 @@
 		458AD94F35E1E51A0BD5F889 /* playbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD82B85DA516339EB66E0 /* playbutton.png */; };
 		458AD951C95DD569FE639AFC /* PIXExifBGView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD8B6B7434300FCCD1795 /* PIXExifBGView.m */; };
 		458AD9586C69AAFA0FDD3809 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD6C92707DD5F3571D5B8 /* MASPreferencesWindowController.m */; };
+		458AD968C885E83BB3868BAC /* libkevlar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 458AD94A039D8149DEDA04E9 /* libkevlar.a */; };
 		458AD96BCEDB0DF1DDCB4046 /* buttongrid_email.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADC0F47F8C6A43275CD7C /* buttongrid_email.png */; };
 		458AD96F05CD9B6E9864D91F /* buttongrid_share.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD529E82DA964CECCEC23 /* buttongrid_share.png */; };
 		458AD9711323C8D1A39AFC9E /* GetPathsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD945555DF37ECBB3554F /* GetPathsOperation.m */; };
@@ -583,6 +584,7 @@
 		458AD933DEAABBEEB83AD143 /* PIXCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXCollectionViewController.m; sourceTree = "<group>"; };
 		458AD945555DF37ECBB3554F /* GetPathsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetPathsOperation.m; sourceTree = "<group>"; };
 		458AD948F91477D9F2AC3597 /* MapViewAdditions.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = MapViewAdditions.css; sourceTree = "<group>"; };
+		458AD94A039D8149DEDA04E9 /* libkevlar.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libkevlar.a; sourceTree = "<group>"; };
 		458AD959BA4E5D02CA238515 /* PIXPhotoCollectionViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PIXPhotoCollectionViewItem.xib; sourceTree = "<group>"; };
 		458AD9609883CECD8290C8B6 /* PIXSlideshowOptonsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PIXSlideshowOptonsViewController.xib; sourceTree = "<group>"; };
 		458AD96A93428C422C3262D8 /* PIXSidebarScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSidebarScrollView.m; sourceTree = "<group>"; };
@@ -594,6 +596,7 @@
 		458AD98F5BC554FB3D5E46D4 /* LoadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadOperation.h; sourceTree = "<group>"; };
 		458AD99163C98A361F2E4523 /* PIXGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXGridView.h; sourceTree = "<group>"; };
 		458AD9A597215949892DA8C8 /* PIXCollectionViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXCollectionViewItem.h; sourceTree = "<group>"; };
+		458AD9AA88B50074A3AAF206 /* DMKevlarApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMKevlarApplication.h; sourceTree = "<group>"; };
 		458AD9AFA86D4687002F7DCC /* PIXCustomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXCustomButton.h; sourceTree = "<group>"; };
 		458AD9BBDC50CC837C1EC1F4 /* AutoSizingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoSizingImageView.h; sourceTree = "<group>"; };
 		458AD9FAE54C35D446B3C313 /* PIXProgressWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXProgressWindowController.m; sourceTree = "<group>"; };
@@ -741,6 +744,7 @@
 				8C2860AE17308566009A0B35 /* QuartzCore.framework in Frameworks */,
 				8C2860AF17308566009A0B35 /* Cocoa.framework in Frameworks */,
 				516CD5C0AB64DE4E4C0C2C51 /* Pods_Unbound_Unbound_Trial.framework in Frameworks */,
+				458AD968C885E83BB3868BAC /* libkevlar.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1012,6 +1016,15 @@
 			path = MASPreferences;
 			sourceTree = "<group>";
 		};
+		458AD53A2EC96B549DB6C3B5 /* Kevlar */ = {
+			isa = PBXGroup;
+			children = (
+				458AD94A039D8149DEDA04E9 /* libkevlar.a */,
+				458AD9AA88B50074A3AAF206 /* DMKevlarApplication.h */,
+			);
+			path = Kevlar;
+			sourceTree = "<group>";
+		};
 		458AD64D8715ED21F286E048 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -1239,6 +1252,7 @@
 				458ADE4D110629F393847F8F /* PIXThumbnailLoadingDelegate.h */,
 				458AD3E69A89DECC011321D4 /* PIXDefines.h */,
 				458AD1CE63CE6EE36850866D /* ToolbarButton.swift */,
+				458AD53A2EC96B549DB6C3B5 /* Kevlar */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1733,14 +1747,10 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial-frameworks.sh",
 				"${PODS_ROOT}/DevMateKit/DevMateKit.framework",
-				"${PODS_ROOT}/Sparkle/Sparkle.framework",
-				"${PODS_ROOT}/Sparkle/Sparkle.framework.dSYM",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DevMateKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sparkle.framework",
-				"${DWARF_DSYM_FOLDER_PATH}/Sparkle.framework.dSYM",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2211,8 +2221,27 @@
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
 					"\"$(SRCROOT)/UnboundApp/MapKit.framework\"/**",
 					"$(PROJECT_DIR)/UnboundApp/Leap",
+					"\"${PROJECT_DIR}/UnboundApp/Helpers/Kevlar\"/**",
 				);
 				OTHER_CODE_SIGN_FLAGS = "--deep";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-l\"z\"",
+					"-framework",
+					"\"Crashlytics\"",
+					"-framework",
+					"\"DevMateKit\"",
+					"-framework",
+					"\"Fabric\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					IOKit,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.analog-ocean.Unbound";
 				PRODUCT_NAME = Unbound;
 				PROVISIONING_PROFILE = "ff2f58fa-fdea-4a3f-911c-e1c10bead6fb";
@@ -2253,8 +2282,27 @@
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
 					"\"$(SRCROOT)/UnboundApp/MapKit.framework\"/**",
 					"$(PROJECT_DIR)/UnboundApp/Leap",
+					"\"${PROJECT_DIR}/UnboundApp/Helpers/Kevlar\"/**",
 				);
 				OTHER_CODE_SIGN_FLAGS = "--deep";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-l\"z\"",
+					"-framework",
+					"\"Crashlytics\"",
+					"-framework",
+					"\"DevMateKit\"",
+					"-framework",
+					"\"Fabric\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					IOKit,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.analog-ocean.Unbound";
 				PRODUCT_NAME = Unbound;
 				PROVISIONING_PROFILE = "ff2f58fa-fdea-4a3f-911c-e1c10bead6fb";

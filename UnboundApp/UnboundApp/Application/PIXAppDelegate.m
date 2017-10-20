@@ -27,8 +27,8 @@
 #import <Crashlytics/Crashlytics.h>
 
 #ifdef TRIAL
+#import "DMKevlarApplication.h"
 #import <DevMateKit/DevMateKit.h>
-#import <Sparkle/Sparkle.h>
 #endif
 
 //extern NSString *kLoadImageDidFinish;
@@ -145,12 +145,23 @@
     
     // show constraint debug info if debuging
 #ifdef DEBUG
+    self.isDebugBuild = YES;
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
 #endif
 
 #ifdef TRIAL
     self.isTrialBuild = YES;
     self.sparkleUpdater = [SUUpdater new];
+
+    // Add debug menu
+    DMKitDebugAddDevMateMenu();
+
+    // activate the timed trial
+    if (!DMKIsApplicationActivated(NULL)) {
+        [DevMateKit setupTimeTrial:nil withTimeInterval:kDMTrialWeek];
+    } else {
+        self.isOwned = YES;
+    }
 #endif
     
 }
@@ -289,6 +300,22 @@
 {
     BOOL allowDirectories = YES;
     [[PIXFileManager sharedInstance] importPhotosToAlbum:self.currentlySelectedAlbum allowDirectories:allowDirectories];
+}
+
+- (IBAction)purchaseOnlinePressed:(id)sender; {
+    [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:@"http://www.unboundformac.com/"]];
+}
+
+- (IBAction)showHomepagePressed:(id)sender; {
+    [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:@"http://www.unboundformac.com/"]];
+}
+
+- (IBAction)startActivationProcess:(id)sender {
+#ifdef TRIAL
+    if (!DMKIsApplicationActivated(NULL)) {
+        [DevMateKit runActivationDialog:nil inMode:DMActivationModeFloating];
+    }
+#endif
 }
 
 #pragma mark - MASPreferences Class methods:

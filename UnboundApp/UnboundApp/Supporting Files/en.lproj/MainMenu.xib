@@ -11,7 +11,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customObject id="-3" userLabel="Application"/>
         <menu title="AMainMenu" systemMenu="main" id="29">
             <items>
                 <menuItem title="UnboundApp" id="56">
@@ -156,6 +156,35 @@
                             </menuItem>
                         </items>
                     </menu>
+                </menuItem>
+                <menuItem title="Purchase" id="NgJ-t2-hRX">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Purchase" id="353-td-7oi">
+                        <items>
+                            <menuItem title="Purchase Unbound Online..." id="22i-E5-pr9">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="purchaseOnlinePressed:" target="494" id="dOn-7h-Kfl"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Unbound Homepage" id="mpS-qr-ksY">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showHomepagePressed:" target="494" id="wf5-Vu-gr2"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="zby-Jo-zOJ"/>
+                            <menuItem title="Unlock Unbound..." id="K9g-8J-PRC">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="startActivationProcess:" target="494" id="uuM-Xp-8zQ"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                    <connections>
+                        <binding destination="494" name="hidden" keyPath="self.isOwned" id="xnU-Ln-AhJ"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="Help" id="490">
                     <modifierMask key="keyEquivalentModifierMask"/>

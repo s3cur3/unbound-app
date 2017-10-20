@@ -8,9 +8,6 @@ target 'Unbound' do
 
   target 'Unbound Trial' do
     pod 'DevMateKit', '~>1.7'
-    pod 'Sparkle', '~>1.13.1'
   end
-  
-  target 'Unbound Non-Sandbox'
   
 end
