@@ -49,7 +49,6 @@
 
 @implementation PIXAppDelegate
 
-
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize managedObjectContext = _managedObjectContext;
@@ -159,8 +158,6 @@
     // activate the timed trial
     if (!DMKIsApplicationActivated(NULL)) {
         [DevMateKit setupTimeTrial:nil withTimeInterval:kDMTrialWeek];
-    } else {
-        self.isOwned = YES;
     }
 #endif
     

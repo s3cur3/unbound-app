@@ -2248,6 +2248,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "Unbound Developer ID";
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2308,6 +2309,7 @@
 				PROVISIONING_PROFILE = "ff2f58fa-fdea-4a3f-911c-e1c10bead6fb";
 				PROVISIONING_PROFILE_SPECIFIER = "Unbound Developer ID";
 				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
