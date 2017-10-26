@@ -23,24 +23,6 @@
                                     <action selector="showAboutWindow:" target="494" id="563"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Buy on Mac App Store" id="641">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="macAppStore:" target="494" id="643"/>
-                                    <binding destination="494" name="hidden" keyPath="self.isTrialBuild" id="RB8-d4-pCH"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="236">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
-                            <menuItem title="Preferences…" keyEquivalent="," id="129">
-                                <connections>
-                                    <action selector="openPreferences:" target="494" id="538"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="592">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
                             <menuItem title="Check for Updates" id="590">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
@@ -52,7 +34,15 @@
                                     </binding>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="144">
+                            <menuItem isSeparatorItem="YES" id="236">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Preferences…" keyEquivalent="," id="129">
+                                <connections>
+                                    <action selector="openPreferences:" target="494" id="538"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="592">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
                             <menuItem title="Hide Unbound" keyEquivalent="h" id="134">
@@ -190,42 +180,24 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Help" systemMenu="help" id="491">
                         <items>
-                            <menuItem title="Contact Support" keyEquivalent="?" id="492">
-                                <connections>
-                                    <action selector="helpPressed:" target="494" id="571"/>
-                                </connections>
-                            </menuItem>
                             <menuItem title="Request a Feature" id="644">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="requestFeaturePressed:" target="494" id="646"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Check for Updates" id="587">
+                            <menuItem title="Analog Ocean Website" id="568">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="checkForUpdates:" target="494" id="594"/>
-                                    <binding destination="494" name="hidden" keyPath="self.isTrialBuild" id="HtD-Br-5Hy">
-                                        <dictionary key="options">
-                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                        </dictionary>
-                                    </binding>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Buy on Mac App Store" id="637">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="macAppStore:" target="494" id="640"/>
-                                    <binding destination="494" name="hidden" keyPath="self.isTrialBuild" id="vCz-Wn-lvR"/>
+                                    <action selector="analogOceanWebsitePressed:" target="494" id="584"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="570">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Analog Ocean Website" id="568">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Contact Support" keyEquivalent="?" id="492">
                                 <connections>
-                                    <action selector="analogOceanWebsitePressed:" target="494" id="584"/>
+                                    <action selector="helpPressed:" target="494" id="571"/>
                                 </connections>
                             </menuItem>
                         </items>

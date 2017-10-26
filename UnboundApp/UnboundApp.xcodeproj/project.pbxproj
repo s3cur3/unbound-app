@@ -67,6 +67,7 @@
 		458AD22D705A9D6A10330F8C /* leapconnected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD255978776B70A48B1EB /* leapconnected@2x.png */; };
 		458AD23310A739BF61ED5D4A /* sortbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADDA68D473D6E60B8E047 /* sortbutton@2x.png */; };
 		458AD234B9BA9F7C855DBB0B /* buttongrid_twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADD92E51BB3E57C7D63E0 /* buttongrid_twitter@2x.png */; };
+		458AD23654D5CE0FFFBCC98B /* PIXApplicationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD017B144ACEDD80831B3 /* PIXApplicationExtensions.m */; };
 		458AD2430C6D30002C10F3AF /* success-forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD38C6DAAD91B83968E87 /* success-forward.png */; };
 		458AD25F55D5F580029FC167 /* captionbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD29B2E087EB9581AA773 /* captionbutton@2x.png */; };
 		458AD29D6087F52234C716BD /* PIXPhotoCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD959BA4E5D02CA238515 /* PIXPhotoCollectionViewItem.xib */; };
@@ -438,6 +439,7 @@
 		3F1A9DCD905A2E2EDB3FCB20 /* Pods-Unbound-Unbound Trial.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unbound-Unbound Trial.release.xcconfig"; path = "Pods/Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial.release.xcconfig"; sourceTree = "<group>"; };
 		458AD00542DA420882593B32 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		458AD0064549816BE5C03B3A /* pixite-logo-wide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pixite-logo-wide.png"; sourceTree = "<group>"; };
+		458AD017B144ACEDD80831B3 /* PIXApplicationExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXApplicationExtensions.m; sourceTree = "<group>"; };
 		458AD02AF6B5C2720F53D137 /* PIXPhotoCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhotoCollectionViewController.m; sourceTree = "<group>"; };
 		458AD030F9E9A7E3B1C08718 /* buttongrid_print.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttongrid_print.png; sourceTree = "<group>"; };
 		458AD05012A12FFB65C860AA /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
@@ -684,6 +686,7 @@
 		458ADFBAF1890806CFAFBEAA /* leapnotconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leapnotconnected.png; sourceTree = "<group>"; };
 		458ADFBE2416277109DCD2F3 /* PIXSidebarTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXSidebarTableCellView.h; sourceTree = "<group>"; };
 		458ADFBE5E3326D375EAB428 /* PIXFileParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXFileParser.m; sourceTree = "<group>"; };
+		458ADFC33AEE787BA4A70ED6 /* PIXApplicationExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXApplicationExtensions.h; sourceTree = "<group>"; };
 		458ADFC8EBDF8B44C4588481 /* ArchDirectoryObserverTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArchDirectoryObserverTypes.h; sourceTree = "<group>"; };
 		458ADFD7749564AA2947E8E3 /* SquareImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SquareImageView.m; sourceTree = "<group>"; };
 		458ADFEE6D6FDA5319AB20EE /* PIXFileTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXFileTextField.m; sourceTree = "<group>"; };
@@ -1021,6 +1024,8 @@
 			children = (
 				458AD94A039D8149DEDA04E9 /* libkevlar.a */,
 				458AD9AA88B50074A3AAF206 /* DMKevlarApplication.h */,
+				458AD017B144ACEDD80831B3 /* PIXApplicationExtensions.m */,
+				458ADFC33AEE787BA4A70ED6 /* PIXApplicationExtensions.h */,
 			);
 			path = Kevlar;
 			sourceTree = "<group>";
@@ -1922,6 +1927,7 @@
 				458AD7817E363896733B8673 /* NavigationController.swift in Sources */,
 				458ADA20C3E7369A700A73FA /* AdaptiveToolbarSpace.swift in Sources */,
 				458AD512E47B0FD2D69945D0 /* ToolbarButton.swift in Sources */,
+				458AD23654D5CE0FFFBCC98B /* PIXApplicationExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -170,14 +170,6 @@
 #endif
 }
 
-- (IBAction)macAppStore:(id)sender
-{
-    NSURL * url = [NSURL URLWithString:@"https://itunes.apple.com/us/app/unbound/id690375005?ls=1&mt=12#"];
-    [[NSWorkspace sharedWorkspace] openURL:url];
-}
-
-
-
 - (void)setupProgressIndicator
 {
     NSProgressIndicator * indicator = [[NSProgressIndicator alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
