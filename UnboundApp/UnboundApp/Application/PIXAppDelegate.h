@@ -33,16 +33,18 @@
 - (IBAction)showIntroWindow:(id)sender;
 - (IBAction)showAboutWindow:(id)sender;
 - (IBAction)analogOceanWebsitePressed:(id)sender;
-- (IBAction)coolLeapAppsPressed:(id)sender;
-- (IBAction)showLeapTutorialPressed:(id)sender;
 - (IBAction)helpPressed:(id)sender;
-
 - (IBAction)chooseFolder:(id)sender;
 - (IBAction)rescanPhotosPressed:(id)sender;
--(IBAction)importPhotosPressed:(id)sender;
-
-@property BOOL showSparkleMenu;
+- (IBAction)importPhotosPressed:(id)sender;
 - (IBAction)checkForUpdates:(id)sender;
+- (IBAction)purchaseOnlinePressed:(id)sender;
+- (IBAction)showHomepagePressed:(id)sender;
+- (IBAction)startActivationProcess:(id)sender;
+
+@property BOOL isDebugBuild;
+@property BOOL isTrialBuild;
+@property BOOL isOwned;
 
 @property (nonatomic, strong) IBOutlet NSMenuItem * progressItem;
 // for MASPreferences class:

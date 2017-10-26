@@ -26,8 +26,9 @@
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 
-#ifdef SPARKLE
-#import <Sparkle/Sparkle.h>
+#ifdef TRIAL
+#import "DMKevlarApplication.h"
+#import <DevMateKit/DevMateKit.h>
 #endif
 
 //extern NSString *kLoadImageDidFinish;
@@ -40,14 +41,13 @@
 
 @property (readonly, strong, atomic) NSOperationQueue *backgroundSaveQueue;
 
-#ifdef SPARKLE
+#ifdef TRIAL
 @property (strong) SUUpdater * sparkleUpdater;
 #endif
 
 @end
 
 @implementation PIXAppDelegate
-
 
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize managedObjectModel = _managedObjectModel;
@@ -93,6 +93,10 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [Fabric with:@[[Crashlytics class]]];
+
+#ifdef TRIAL
+    [DevMateKit sendTrackingReport:nil delegate: nil];
+#endif
     
     if([[NSUserDefaults standardUserDefaults] boolForKey:kAppDidNotExitCleanly])
     {
@@ -140,31 +144,31 @@
     
     // show constraint debug info if debuging
 #ifdef DEBUG
+    self.isDebugBuild = YES;
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
 #endif
 
-#ifdef SPARKLE
-    self.showSparkleMenu = YES;
+#ifdef TRIAL
+    self.isTrialBuild = YES;
     self.sparkleUpdater = [SUUpdater new];
+
+    // Add debug menu
+    DMKitDebugAddDevMateMenu();
+
+    // activate the timed trial
+    if (!DMKIsApplicationActivated(NULL)) {
+        [DevMateKit setupTimeTrial:nil withTimeInterval:kDMTrialWeek];
+    }
 #endif
     
 }
 
 - (IBAction)checkForUpdates:(id)sender
 {
-    
-#ifdef SPARKLE
+#ifdef TRIAL
     [self.sparkleUpdater checkForUpdates:sender];
 #endif
 }
-
-- (IBAction)macAppStore:(id)sender
-{
-    NSURL * url = [NSURL URLWithString:@"https://itunes.apple.com/us/app/unbound/id690375005?ls=1&mt=12#"];
-    [[NSWorkspace sharedWorkspace] openURL:url];
-}
-
-
 
 - (void)setupProgressIndicator
 {
@@ -253,10 +257,13 @@
 
 - (IBAction)helpPressed:(id)sender
 {
+#ifdef TRIAL
+    [DevMateKit showFeedbackDialog:nil inMode:DMFeedbackDefaultMode];
+#else
     NSURL * url = [NSURL URLWithString:@"mailto:info@unboundformac.com?subject=Unbound%20for%20Mac%20Support"];
     [[NSWorkspace sharedWorkspace] openURL:url];
+#endif
 }
-
 
 - (IBAction)requestFeaturePressed:(id)sender
 {
@@ -282,6 +289,22 @@
 {
     BOOL allowDirectories = YES;
     [[PIXFileManager sharedInstance] importPhotosToAlbum:self.currentlySelectedAlbum allowDirectories:allowDirectories];
+}
+
+- (IBAction)purchaseOnlinePressed:(id)sender; {
+    [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:@"http://www.unboundformac.com/"]];
+}
+
+- (IBAction)showHomepagePressed:(id)sender; {
+    [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:@"http://www.unboundformac.com/"]];
+}
+
+- (IBAction)startActivationProcess:(id)sender {
+#ifdef TRIAL
+    if (!DMKIsApplicationActivated(NULL)) {
+        [DevMateKit runActivationDialog:nil inMode:DMActivationModeFloating];
+    }
+#endif
 }
 
 #pragma mark - MASPreferences Class methods:
@@ -694,7 +717,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     
     
     //set it to the App Delegates persistant store coordinator
-    //[context setPersistentStoreCoordinator:[self persistentStoreCoordinator]];
+//    [context setPersistentStoreCoordinator:[self persistentStoreCoordinator]];
     
     [context setParentContext:self.managedObjectContext];
     
@@ -719,11 +742,11 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     
     
     //set it to the App Delegates persistant store coordinator
-    //[context setPersistentStoreCoordinator:[self persistentStoreCoordinator]];
-    
-    if(self.privateWriterContext)
-    {
+
+    if (self.privateWriterContext) {
         [context setParentContext:self.privateWriterContext];
+    } else {
+        [context setPersistentStoreCoordinator:[self persistentStoreCoordinator]];
     }
     
     // overwrite the database with updates from this context

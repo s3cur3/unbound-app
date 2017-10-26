@@ -23,11 +23,11 @@
                                     <action selector="showAboutWindow:" target="494" id="563"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Buy on Mac App Store" id="641">
+                            <menuItem title="Check for Updates" id="590">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="macAppStore:" target="494" id="643"/>
-                                    <binding destination="494" name="hidden" keyPath="self.showSparkleMenu" id="642">
+                                    <action selector="checkForUpdates:" target="494" id="593"/>
+                                    <binding destination="494" name="hidden" keyPath="self.isTrialBuild" id="BVU-eD-Umo">
                                         <dictionary key="options">
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                         </dictionary>
@@ -43,20 +43,6 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="592">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
-                            <menuItem title="Check for Updates" id="590">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="checkForUpdates:" target="494" id="593"/>
-                                    <binding destination="494" name="hidden" keyPath="self.showSparkleMenu" id="602">
-                                        <dictionary key="options">
-                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                        </dictionary>
-                                    </binding>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="144">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
                             <menuItem title="Hide Unbound" keyEquivalent="h" id="134">
@@ -161,50 +147,57 @@
                         </items>
                     </menu>
                 </menuItem>
+                <menuItem title="Purchase" id="NgJ-t2-hRX">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Purchase" id="353-td-7oi">
+                        <items>
+                            <menuItem title="Purchase Unbound Online..." id="22i-E5-pr9">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="purchaseOnlinePressed:" target="494" id="dOn-7h-Kfl"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Unbound Homepage" id="mpS-qr-ksY">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showHomepagePressed:" target="494" id="wf5-Vu-gr2"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="zby-Jo-zOJ"/>
+                            <menuItem title="Unlock Unbound..." id="K9g-8J-PRC">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="startActivationProcess:" target="494" id="uuM-Xp-8zQ"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                    <connections>
+                        <binding destination="-3" name="hidden" keyPath="self.isActivated" id="chk-uP-TRg"/>
+                    </connections>
+                </menuItem>
                 <menuItem title="Help" id="490">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Help" systemMenu="help" id="491">
                         <items>
-                            <menuItem title="Contact Support" keyEquivalent="?" id="492">
-                                <connections>
-                                    <action selector="helpPressed:" target="494" id="571"/>
-                                </connections>
-                            </menuItem>
                             <menuItem title="Request a Feature" id="644">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="requestFeaturePressed:" target="494" id="646"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Check for Updates" id="587">
+                            <menuItem title="Analog Ocean Website" id="568">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="checkForUpdates:" target="494" id="594"/>
-                                    <binding destination="494" name="hidden" keyPath="self.showSparkleMenu" id="598">
-                                        <dictionary key="options">
-                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                        </dictionary>
-                                    </binding>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Buy on Mac App Store" id="637">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="macAppStore:" target="494" id="640"/>
-                                    <binding destination="494" name="hidden" keyPath="self.showSparkleMenu" id="638">
-                                        <dictionary key="options">
-                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                        </dictionary>
-                                    </binding>
+                                    <action selector="analogOceanWebsitePressed:" target="494" id="584"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="570">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Analog Ocean Website" id="568">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Contact Support" keyEquivalent="?" id="492">
                                 <connections>
-                                    <action selector="analogOceanWebsitePressed:" target="494" id="584"/>
+                                    <action selector="helpPressed:" target="494" id="571"/>
                                 </connections>
                             </menuItem>
                         </items>
