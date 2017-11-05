@@ -332,9 +332,9 @@ static NSString *const kItemsKey = @"photos";
     }
 }
 
--(NSArray *)sortedPhotos
+-(NSArray<PIXPhoto *> *)sortedPhotos
 {
-    return [(NSSet *)self.photos sortedArrayUsingDescriptors:[self photoSortDescriptors]];
+    return [self.photos sortedArrayUsingDescriptors:[self photoSortDescriptors]];
 }
 
 -(NSArray *)photoSortDescriptors

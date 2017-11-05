@@ -74,5 +74,23 @@
 			<string>%lu photos selected</string>
 		</dict>
 	</dict>
+	<key>%lu photo(s)</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@photos@</string>
+		<key>photos</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lu</string>
+			<key>zero</key>
+			<string>No photos</string>
+			<key>one</key>
+			<string>%lu photo</string>
+			<key>other</key>
+			<string>%lu photos</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

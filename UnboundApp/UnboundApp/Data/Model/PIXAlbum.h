@@ -47,8 +47,8 @@ typedef enum {
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) PIXAccount *account;
 @property (nonatomic, retain) PIXPhoto *datePhoto;
-@property (nonatomic, retain) NSSet *photos;
-@property (nonatomic, retain) NSOrderedSet *stackPhotos;
+@property (nonatomic, retain) NSSet<PIXPhoto *> *photos;
+@property (nonatomic, retain) NSOrderedSet<PIXPhoto *> *stackPhotos;
 @property (nonatomic, retain) NSNumber *needsDateScan;
 @end
 
@@ -85,7 +85,7 @@ typedef enum {
 
 -(void)setPhotos:(NSSet *)photos updateCoverImage:(BOOL)shouldUpdateCoverImage;
 
--(NSArray *)sortedPhotos;
+-(NSArray<PIXPhoto *> *)sortedPhotos;
 -(NSArray *)photoSortDescriptors;
 
 -(void)updateDatePhoto;
