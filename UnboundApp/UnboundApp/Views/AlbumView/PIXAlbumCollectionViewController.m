@@ -196,7 +196,7 @@
     _sortButton = [[NSToolbarItem alloc] initWithItemIdentifier:@"sortButton"];
     //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
     
-    NSPopUpButton * buttonView = [[NSPopUpButton alloc] initWithFrame:CGRectMake(0, 0, 30, 25) pullsDown:YES];
+    NSPopUpButton * buttonView = [[NSPopUpButton alloc] initWithFrame:CGRectMake(0, 0, 46, 29) pullsDown:YES];
     
     [buttonView setImagePosition:NSImageOverlaps];
     [buttonView setBordered:YES];
@@ -222,8 +222,8 @@
     [buttonView insertItemWithTitle:@"A to Z" atIndex:3];
     [buttonView insertItemWithTitle:@"Z to A" atIndex:4];
     
-    NSMenuItem * item = [[buttonView itemArray] objectAtIndex:0];
-    item.image = [NSImage imageNamed:@"sortbutton"];
+    NSMenuItem * item = buttonView.itemArray[0];
+    item.image = [NSImage imageNamed:@"ic_sort"];
     [item.image setTemplate:YES];
     
     
@@ -231,7 +231,7 @@
     
     for (int i = 1; i <= 4; i++) {
         
-        NSMenuItem * item = [[buttonView itemArray] objectAtIndex:i];
+        NSMenuItem * item = buttonView.itemArray[i];
         
         if(i-1 == sortOrder)
         {
@@ -324,33 +324,14 @@
     if(_neuAlbumButton != nil) return _neuAlbumButton;
     
     _neuAlbumButton = [[NSToolbarItem alloc] initWithItemIdentifier:@"NewAlbumButton"];
-    //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
-    
-    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 100, 25)];
-    buttonView.image = [NSImage imageNamed:@"addbutton"];
-    [buttonView.image setTemplate:YES];
-    [buttonView setImagePosition:NSImageLeft];
-    [buttonView setBordered:YES];
-    [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
-    [buttonView setTitle:@"New Album"];
-    
-    [buttonView setFont:[NSFont fontWithName:@"Helvetica" size:13]];
-    
+    _neuAlbumButton.label = NSLocalizedString(@"New Album", @"New Album");
+    _neuAlbumButton.paletteLabel = NSLocalizedString(@"New Album", @"New Album");
+    _neuAlbumButton.toolTip = NSLocalizedString(@"Create new album", @"Create new album");
+
+    NSButton *buttonView = [[ToolbarButton alloc] initWithImageNamed:NSImageNameAddTemplate target:self action:@selector(newAlbumPressed:)];
     _neuAlbumButton.view = buttonView;
-    
-    [_neuAlbumButton setLabel:@"New Album"];
-    [_neuAlbumButton setPaletteLabel:@"New Album"];
-    
-    // Set up a reasonable tooltip, and image
-    // you will likely want to localize many of the item's properties
-    [_neuAlbumButton setToolTip:@"Create a New Album"];
-    
-    // Tell the item what message to send when it is clicked
-    [buttonView setTarget:self];
-    [buttonView setAction:@selector(newAlbumPressed:)];
-    
+
     return _neuAlbumButton;
-    
 }
 
 - (IBAction)newAlbumPressed:(id)sender
