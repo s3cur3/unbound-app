@@ -16,3 +16,7 @@
 
 "Create new album" = "Create new album";
 "New Album" = "New Album";
+"menu.reveal" = "Reveal in Finder";
+"menu.rename" = "Rename";
+"menu.open" = "Open";
+"menu.move_to_trash" = "Move to Trash";

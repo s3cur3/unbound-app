@@ -23,6 +23,7 @@
 
 @interface PIXAlbumCollectionViewController () <NSCollectionViewDelegate, NSCollectionViewDataSource, PIXSplitViewControllerDelegate, NSSearchFieldDelegate>
 
+@property (strong) PIXAlbumCollectionViewItem *clickedItem;
 @property(nonatomic,strong) NSArray * albums;
 
 @property (nonatomic, strong) NSToolbarItem * sortButton;
@@ -44,8 +45,6 @@
     if (self) {
         // Initialization code here.
         self.selectedItemsName = @"album";
-        
-        
     }
     
     return self;
@@ -544,6 +543,28 @@
     }
 }
 
+- (void) openItem {
+    if (self.clickedItem == nil) return;
+    [self openItemAtIndexPath:[self.collectionView indexPathForItem:self.clickedItem]];
+}
+
+- (void) revealItems {
+    if (self.selectedItems.count == 0) return;
+
+    NSMutableArray<NSURL *> *urls = [NSMutableArray arrayWithCapacity:self.selectedItems.count];
+    [self.selectedItems enumerateObjectsUsingBlock:^(PIXAlbum *obj, BOOL *stop) {
+        [urls addObject:obj.filePathURL];
+    }];
+    [NSWorkspace.sharedWorkspace activateFileViewerSelectingURLs:urls];
+}
+
+- (void) renameItem {
+    if (self.clickedItem == nil) return;
+
+    PIXAlbumCollectionViewItemView *itemView = (PIXAlbumCollectionViewItemView *) self.clickedItem.view;
+    [itemView startEditing];
+}
+
 #pragma mark - Clicks
 
 - (void)collectionItemViewDoubleClick:(id)sender {
@@ -564,6 +585,43 @@
         PIXAlbum *album = self.albums[index];
         [self showPhotosForAlbum:album];
     }
+}
+
+- (void)rightMouseUp:(NSEvent *)event {
+    [super rightMouseUp:event];
+
+    NSPoint localPoint = [self.collectionView convertPoint:event.locationInWindow fromView:nil];
+    for (NSCollectionViewItem *item in self.collectionView.visibleItems) {
+        if (NSPointInRect(localPoint, item.view.frame)) {
+            self.clickedItem = (PIXAlbumCollectionViewItem *) item;
+            break;
+        }
+    }
+
+    if (self.clickedItem != nil) {
+        NSMenu *menu = [[NSMenu alloc] init];
+
+        // if the clicked item isn't part of the current selection, reset the current selection
+        if (![self.collectionView.selectionIndexPaths containsObject:[self.collectionView indexPathForItem:self.clickedItem]]) {
+            self.collectionView.selectionIndexPaths = [NSSet setWithObject:[self.collectionView indexPathForItem:self.clickedItem]];
+            [self updateSelectedTitle];
+        }
+
+        NSUInteger count = self.collectionView.selectionIndexPaths.count;
+        if (count > 0) {
+            [menu insertItemWithTitle:NSLocalizedString(@"menu.open", @"Open")
+                               action:@selector(openItem) keyEquivalent:@"" atIndex:0];
+            [menu insertItem:[NSMenuItem separatorItem] atIndex:1];
+
+            [menu insertItemWithTitle:NSLocalizedString(@"menu.rename", @"Rename") action:@selector(renameItem) keyEquivalent:@"" atIndex:2];
+            [menu insertItemWithTitle:NSLocalizedString(@"menu.move_to_trash", @"Move to Trash") action:@selector(deleteItems:) keyEquivalent:@"" atIndex:3];
+            [menu insertItem:[NSMenuItem separatorItem] atIndex:4];
+
+            [menu insertItemWithTitle:NSLocalizedString(@"menu.reveal", @"Reveal in Finder") action:@selector(revealItems) keyEquivalent:@"" atIndex:5];
+            [NSMenu popUpContextMenu:menu withEvent:event forView:self.clickedItem.view];
+        }
+    }
+
 }
 
 #pragma mark - Selection
@@ -595,7 +653,10 @@
             ((PIXCollectionViewItem *) item).selected = selected;
         }
     }
+    [self updateSelectedTitle];
+}
 
+- (void)updateSelectedTitle {
     NSUInteger count = self.collectionView.selectionIndexPaths.count;
     if (count == 0) {
         [self.toolbar hideToolbar:YES];

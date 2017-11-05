@@ -71,7 +71,7 @@
         
         // Open with Defualt
         NSString *defaultAppName = [[PIXFileManager sharedInstance] defaultAppNameForOpeningFileWithPath:[object path]];
-        if (defaultAppName!=nil && ([defaultAppName isEqualToString:@"Finder"]==NO)) {
+        if (defaultAppName!=nil && ![defaultAppName isEqualToString:@"Finder"]) {
             [menu addItemWithTitle:[NSString stringWithFormat:@"Open with %@", defaultAppName] action:
              @selector(openInApp:) keyEquivalent:@""];
         }
