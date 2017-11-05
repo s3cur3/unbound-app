@@ -278,32 +278,14 @@
     if(_importItem != nil) return _importItem;
     
     _importItem = [[NSToolbarItem alloc] initWithItemIdentifier:@"importAlbumButton"];
-    //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
-    
-    NSButton * buttonView = [[NSButton alloc] initWithFrame:CGRectMake(0, -2, 60, 25)];
-    
-    [buttonView setImage:nil];
-    [buttonView setImagePosition:NSImageLeft];
-    [buttonView setBordered:YES];
-    [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
-    [buttonView setTitle:@"Import"];
-    
-    _importItem.view = buttonView;
-    
     [_importItem setLabel:@"Import"];
     [_importItem setPaletteLabel:@"Import"];
-    
-    
-    // Set up a reasonable tooltip, and image
-    // you will likely want to localize many of the item's properties
     [_importItem setToolTip:@"Import photos"];
-    
-    // Tell the item what message to send when it is clicked
-    [buttonView setTarget:self];
-    [buttonView setAction:@selector(importPhotosPressed:)];
-    
+
+    NSButton *button = [[ToolbarButton alloc] initWithImageNamed:@"ic_import" target:self action:@selector(importPhotosPressed:)];
+    _importItem.view = button;
+
     return _importItem;
-    
 }
 
 -(void)importPhotosPressed:(id)sender
