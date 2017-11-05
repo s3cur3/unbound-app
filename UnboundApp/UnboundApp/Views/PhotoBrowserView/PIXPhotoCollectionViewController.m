@@ -23,6 +23,7 @@
 
 @interface PIXPhotoCollectionViewController () <NSCollectionViewDelegate, NSCollectionViewDataSource>
 
+@property (nonatomic, strong) PIXPhotoCollectionViewItem *clickedItem;
 @property(nonatomic, strong) NSCollectionViewFlowLayout *layout;
 @property(nonatomic,strong) NSDateFormatter * titleDateFormatter;
 @property CGFloat startPinchZoom;
@@ -266,6 +267,87 @@
     pageViewController.album = self.album;
     pageViewController.delegate = self;
     [self.navigationViewController pushViewControllerWithViewController:pageViewController];
+}
+
+- (void)openItem {
+    [self openItem:self.clickedItem.representedObject];
+}
+
+- (void)revealItems {
+    if (self.selectedItems.count == 0) return;
+
+    NSMutableArray<NSURL *> *urls = [NSMutableArray arrayWithCapacity:self.selectedItems.count];
+    [self.selectedItems enumerateObjectsUsingBlock:^(PIXPhoto *obj, BOOL *stop) {
+        [urls addObject:obj.filePath];
+    }];
+    [NSWorkspace.sharedWorkspace activateFileViewerSelectingURLs:urls];
+}
+
+- (void)shareItems:(NSMenuItem *)menuItem {
+    NSSharingService *service = menuItem.representedObject;
+    NSMutableArray<NSURL *> *urls = [NSMutableArray arrayWithCapacity:self.selectedItems.count];
+    [self.selectedItems enumerateObjectsUsingBlock:^(PIXPhoto *obj, BOOL *stop) {
+        [urls addObject:obj.filePath];
+    }];
+    [service performWithItems:urls];
+}
+
+- (void)rightMouseUp:(NSEvent *)event {
+    [super rightMouseUp:event];
+
+    NSPoint localPoint = [self.collectionView convertPoint:event.locationInWindow fromView:nil];
+    for (NSCollectionViewItem *item in self.collectionView.visibleItems) {
+        if (NSPointInRect(localPoint, item.view.frame)) {
+            self.clickedItem = (PIXPhotoCollectionViewItem *) item;
+            break;
+        }
+    }
+
+    if (self.clickedItem != nil) {
+        NSMenu *menu = [[NSMenu alloc] init];
+
+        // if the clicked item isn't part of the current selection, reset the current selection
+        if (![self.collectionView.selectionIndexPaths containsObject:[self.collectionView indexPathForItem:self.clickedItem]]) {
+            self.collectionView.selectionIndexPaths = [NSSet setWithObject:[self.collectionView indexPathForItem:self.clickedItem]];
+            [self updateToolbar];
+        }
+
+        NSUInteger count = self.collectionView.selectionIndexPaths.count;
+        if (count > 0) {
+            [menu addItemWithTitle:NSLocalizedString(@"menu.open", @"Open") action:@selector(openItem) keyEquivalent:@""];
+
+            NSMutableArray<NSURL *> *urls = [NSMutableArray arrayWithCapacity:self.selectedItems.count];
+            [self.selectedItems enumerateObjectsUsingBlock:^(PIXPhoto *obj, BOOL *stop) {
+                [urls addObject:obj.filePath];
+            }];
+            NSArray<NSSharingService *> *sharingServices = [NSSharingService sharingServicesForItems:urls];
+            if (sharingServices.count > 0) {
+                NSMenu *sharingSubmenu = [[NSMenu alloc] init];
+                for (NSSharingService *service in sharingServices) {
+                    NSMenuItem *item = [[NSMenuItem alloc] init];
+                    item.representedObject = service;
+                    item.title = service.menuItemTitle;
+                    item.image = service.image;
+                    item.action = @selector(shareItems:);
+                    [sharingSubmenu addItem:item];
+                }
+
+                NSMenuItem *shareItem = [[NSMenuItem alloc] init];
+                shareItem.title = NSLocalizedString(@"menu.share", "Share");
+                shareItem.submenu = sharingSubmenu;
+                [menu addItem:shareItem];
+            }
+
+            [menu addItem:[NSMenuItem separatorItem]];
+
+            [menu addItemWithTitle:NSLocalizedString(@"menu.move_to_trash", @"Move to Trash") action:@selector(deleteItems:) keyEquivalent:@""];
+            [menu addItem:[NSMenuItem separatorItem]];
+
+            [menu addItemWithTitle:NSLocalizedString(@"menu.reveal", @"Reveal in Finder") action:@selector(revealItems) keyEquivalent:@""];
+            [NSMenu popUpContextMenu:menu withEvent:event forView:self.clickedItem.view];
+        }
+    }
+
 }
 
 #pragma mark - PIXPageViewControllerDelegate
