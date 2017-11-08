@@ -23,6 +23,7 @@
 
 @interface PIXPhotoCollectionViewController () <NSCollectionViewDelegate, NSCollectionViewDataSource>
 
+@property (nonatomic, strong) NSArray<PIXPhoto *> *photos;
 @property (nonatomic, strong) PIXPhotoCollectionViewItem *clickedItem;
 @property(nonatomic, strong) NSCollectionViewFlowLayout *layout;
 @property(nonatomic,strong) NSDateFormatter * titleDateFormatter;
@@ -49,6 +50,7 @@
         self.selectedItemsName = @"photo";
         
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(updateAlbum:) name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
+
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(themeChanged:) name:@"backgroundThemeChanged" object:nil];
     }
     
@@ -153,6 +155,7 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:_album];
         
         _album = album;
+        self.photos = _album.sortedPhotos;
         [[[PIXAppDelegate sharedAppDelegate] window] setTitle:[self.album title]];
 
         self.title = _album.title;
@@ -181,8 +184,9 @@
 
     NSString * gridTitle = nil;
 
-    // TODO Update sort based on settings
-    
+    self.photos = _album.sortedPhotos;
+    [self.collectionView reloadData];
+
     // if we've got more than one photo then display the whole date range
     if (self.album.photos.count > 1) {
         NSDate * startDate = [self.album startDate];
@@ -255,8 +259,8 @@
 
 - (void)openItemAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger index = indexPath.item;
-    if (index >= 0 && index < self.album.sortedPhotos.count) {
-        PIXPhoto *photo = self.album.sortedPhotos[index];
+    if (index >= 0 && index < self.photos.count) {
+        PIXPhoto *photo = self.photos[index];
         [self openItem:photo];
     }
 }
@@ -354,8 +358,8 @@
 
 -(void)pagerDidMoveToPhotoWithPath:(NSString *)aPhotoPath atIndex:(NSUInteger)index;
 {
-    if (index < self.album.sortedPhotos.count) {
-        PIXPhoto *photo = self.album.sortedPhotos[index];
+    if (index < self.photos.count) {
+        PIXPhoto *photo = self.photos[index];
         if ([photo.path isEqualToString:aPhotoPath]) {
             [self.collectionView deselectAll:nil];
             [self.collectionView selectItemsAtIndexPaths:[NSSet setWithObject:[NSIndexPath indexPathForItem:index inSection:0]]
@@ -367,12 +371,12 @@
 #pragma mark - NSCollectionViewDataSource Methods
 
 - (NSInteger)collectionView:(NSCollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.album.sortedPhotos.count;
+    return self.photos.count;
 }
 
 - (NSCollectionViewItem *)collectionView:(NSCollectionView *)collectionView itemForRepresentedObjectAtIndexPath:(NSIndexPath *)indexPath {
     PIXPhotoCollectionViewItem *item = [collectionView makeItemWithIdentifier:@"PIXPhotoCollectionViewItem" forIndexPath:indexPath];
-    item.representedObject = self.album.sortedPhotos[indexPath.item];
+    item.representedObject = self.photos[indexPath.item];
     return item;
 }
 
@@ -397,7 +401,7 @@
 - (BOOL)collectionView:(NSCollectionView *)collectionView writeItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths toPasteboard:(NSPasteboard *)pasteboard {
     NSMutableArray<NSURL *> *photoUrls = [NSMutableArray arrayWithCapacity:indexPaths.count];
     for (NSIndexPath *path in indexPaths) {
-        PIXPhoto *photo = self.album.sortedPhotos[path.item];
+        PIXPhoto *photo = self.photos[path.item];
         [photoUrls addObject:photo.filePath];
     }
     [pasteboard clearContents];
@@ -410,7 +414,7 @@
     NSMutableArray<PIXPhoto *> *photos = [NSMutableArray arrayWithCapacity:indexPaths.count];
     int i = 0;
     for (NSIndexPath *path in indexPaths) {
-        PIXPhoto *photo = self.album.sortedPhotos[path.item];
+        PIXPhoto *photo = self.photos[path.item];
         [photos addObject:photo];
         if (++i > 3) break;
     }
@@ -432,7 +436,7 @@
     NSArray<NSIndexPath *> *selectionArray = [selectionIndexPaths sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"self" ascending:NO]]];
     NSMutableSet<PIXPhoto *> *items = [NSMutableSet setWithCapacity:selectionArray.count];
     for (NSIndexPath *item in selectionArray) {
-        PIXPhoto *album = self.album.sortedPhotos[item.item];
+        PIXPhoto *album = self.photos[item.item];
         [items addObject:album];
     }
 

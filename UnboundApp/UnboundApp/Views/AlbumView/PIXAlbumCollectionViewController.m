@@ -258,8 +258,7 @@
         {
             [anItem setState:NSOffState];
         }
-        
-        
+
         NSMenuItem * thisItem = sender;
         [thisItem setState:NSOnState];
         [[NSUserDefaults standardUserDefaults] setInteger:[thisItem tag] forKey:@"PIXAlbumSort"];

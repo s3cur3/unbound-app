@@ -158,44 +158,61 @@
 
 - (NSToolbarItem *)sortButton
 {
-    if (_sortButton == nil) {
-        NSPopUpButton *buttonView = [[NSPopUpButton alloc] initWithFrame:CGRectMake(0, 0, 46, 29) pullsDown:YES];
-        buttonView.imagePosition = NSImageOverlaps;
-        buttonView.bordered = YES;
-        buttonView.bezelStyle = NSBezelStyleTexturedSquare;
-        buttonView.title = @"";
-        ((NSPopUpButtonCell *) buttonView.cell).arrowPosition = NSPopUpNoArrow;
+    if(_sortButton != nil) return _sortButton;
 
-        [buttonView addItemsWithTitles:@[
-                @"", // first index is always the title
-                @"New to Old",
-                @"Old to New",
-                @"Filename A to Z",
-                @"Filename Z to A"
-        ]];
+    _sortButton = [[NSToolbarItem alloc] initWithItemIdentifier:@"sortButton"];
+    //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
 
-        NSMenuItem *firstItem = [buttonView itemAtIndex:0];
-        firstItem.image = [NSImage imageNamed:@"ic_sort"];
-        firstItem.image.template = YES;
+    NSPopUpButton * buttonView = [[NSPopUpButton alloc] initWithFrame:CGRectMake(0, 0, 46, 29) pullsDown:YES];
 
-        NSInteger sortOrder = [[NSUserDefaults standardUserDefaults] integerForKey:@"PIXPhotoSort"];
-        for (NSUInteger i = 0; i < 5; i++) {
-            NSMenuItem * item = buttonView.itemArray[i];
-            if (i == sortOrder) {
-                item.state = NSOnState;
-            }
-            item.tag = i;
-            item.target = self;
-            item.action = @selector(sortChanged:);
+    [buttonView setImagePosition:NSImageOverlaps];
+    [buttonView setBordered:YES];
+    [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
+    [buttonView setTitle:@""];
+    [(NSPopUpButtonCell *) buttonView.cell setArrowPosition:NSPopUpNoArrow];
+
+    _sortButton.view = buttonView;
+
+    [_sortButton setLabel:@"Sort Photos"];
+    [_sortButton setPaletteLabel:@"Sort Photos"];
+
+    // Set up a reasonable tooltip, and image
+    // you will likely want to localize many of the item's properties
+    [_sortButton setToolTip:@"Choose Photo Sort"];
+
+
+    // Tell the item what message to send when it is clicked
+
+    [buttonView insertItemWithTitle:@"" atIndex:0]; // first index is always the title
+    [buttonView insertItemWithTitle:@"New to Old" atIndex:1];
+    [buttonView insertItemWithTitle:@"Old to New" atIndex:2];
+    [buttonView insertItemWithTitle:@"A to Z" atIndex:3];
+    [buttonView insertItemWithTitle:@"Z to A" atIndex:4];
+
+    NSMenuItem * item = buttonView.itemArray[0];
+    item.image = [NSImage imageNamed:@"ic_sort"];
+    [item.image setTemplate:YES];
+
+
+    int sortOrder = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"PIXPhotoSort"];
+
+    for (int i = 1; i <= 4; i++) {
+
+        NSMenuItem * item = buttonView.itemArray[i];
+
+        if(i-1 == sortOrder)
+        {
+            [item setState:NSOnState];
         }
 
-        _sortButton = [[NSToolbarItem alloc] initWithItemIdentifier:@"sortButton"];
-        _sortButton.label = @"Sort Photos";
-        _sortButton.paletteLabel = @"Sort Photos";
-        _sortButton.toolTip = @"Choose Photo Sort";
-        _sortButton.view = buttonView;
+        [item setTag:i-1];
+        [item setTarget:self];
+        [item setAction:@selector(sortChanged:)];
+
     }
+
     return _sortButton;
+
 }
 
 -(void)sortChanged:(id)sender
@@ -211,6 +228,7 @@
         NSMenuItem * thisItem = sender;
         [thisItem setState:NSOnState];
         [[NSUserDefaults standardUserDefaults] setInteger:[thisItem tag] forKey:@"PIXPhotoSort"];
+        [NSUserDefaults.standardUserDefaults synchronize];
         
         // update any albums views
         [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];

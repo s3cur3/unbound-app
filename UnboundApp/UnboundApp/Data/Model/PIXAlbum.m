@@ -339,58 +339,33 @@ static NSString *const kItemsKey = @"photos";
 
 -(NSArray *)photoSortDescriptors
 {
-    PIXPhotoSort currentSort = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"PIXPhotoSort"];
-    
-    NSSortDescriptor * sort1 = nil;
-    NSSortDescriptor * sort2 = nil;
-    NSArray * sortDescriptors;
-    
+    PIXPhotoSort currentSort = (PIXPhotoSort) [[NSUserDefaults standardUserDefaults] integerForKey:@"PIXPhotoSort"];
     switch (currentSort) {
-        case PIXPhotoSortNewToOld:
-            
-            sort1 = [[NSSortDescriptor alloc] initWithKey:@"sortDate" ascending:NO];
-            sort2 = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO selector:@selector(localizedStandardCompare:)];
-            sortDescriptors = @[sort1, sort2];
-            
-            break;
-            
         case PIXPhotoSortOldToNew:
-            
-            sort1 = [[NSSortDescriptor alloc] initWithKey:@"sortDate" ascending:YES];
-            sort2 = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES selector:@selector(localizedStandardCompare:)];
-            sortDescriptors = @[sort1, sort2];
-            
-            break;
-            
-        case PIXPhotoSortAtoZ:
-            
-            sort1 = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES selector:@selector(localizedStandardCompare:)];
-            sort2 = [[NSSortDescriptor alloc] initWithKey:@"sortDate" ascending:YES];
-            
-            sortDescriptors = @[sort1, sort2];
-            
-            break;
-            
-        case PIXPhotoSortZtoA:
-            
-            sort1 = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO selector:@selector(localizedStandardCompare:)];
-            sort2 = [[NSSortDescriptor alloc] initWithKey:@"sortDate" ascending:NO];
-            
-            sortDescriptors = @[sort1, sort2];
-            
-            break;
-            
-        default:
-            
-            sort1 = [[NSSortDescriptor alloc] initWithKey:@"sortDate" ascending:NO];
-            sort2 = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO];
-            sortDescriptors = @[sort1, sort2];
-            
-            break;
-    }
-    
-    return sortDescriptors;
+            return @[
+                    [NSSortDescriptor sortDescriptorWithKey:@"sortDate" ascending:YES],
+                    [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES selector:@selector(localizedStandardCompare:)]
+            ];
 
+        case PIXPhotoSortAtoZ:
+            return @[
+                    [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES selector:@selector(localizedStandardCompare:)],
+                    [NSSortDescriptor sortDescriptorWithKey:@"sortDate" ascending:YES]
+            ];
+
+        case PIXPhotoSortZtoA:
+            return @[
+                    [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:NO selector:@selector(localizedStandardCompare:)],
+                    [NSSortDescriptor sortDescriptorWithKey:@"sortDate" ascending:NO]
+            ];
+
+        case PIXPhotoSortNewToOld:
+        default:
+            return @[
+                    [NSSortDescriptor sortDescriptorWithKey:@"sortDate" ascending:NO],
+                    [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:NO selector:@selector(localizedStandardCompare:)]
+            ];
+    }
 }
 /*
 - (NSOrderedSet *)stackPhotos
