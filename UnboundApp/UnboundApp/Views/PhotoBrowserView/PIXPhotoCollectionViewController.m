@@ -128,12 +128,14 @@
             return;
     }
 
+    int modifiers = event.modifierFlags & NSEventModifierFlagDeviceIndependentFlagsMask;
+
     if ([@"f" isEqualToString:event.characters]) {
         [self.view.window toggleFullScreen:event];
         return;
     }
 
-    if ([@"e" isEqualToString:event.characters] && event.modifierFlags == NSEventModifierFlagCommand) {
+    if ([@"e" isEqualToString:event.characters] &&  modifiers == NSEventModifierFlagCommand) {
         [self openInApp];
         return;
     }

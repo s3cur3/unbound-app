@@ -704,22 +704,22 @@
     [self restartNextSlideIfNeeded];
 }
 
--(void)keyDown:(NSEvent *)theEvent
+-(void)keyDown:(NSEvent *)event
 {
-    
-    if ([theEvent type] == NSKeyDown)
+
+    if ([event type] == NSKeyDown)
     {
-        NSString* pressedChars = [theEvent characters];
+        NSString* pressedChars = [event characters];
         if ([pressedChars length] == 1)
         {
             unichar pressedUnichar = [pressedChars characterAtIndex:0];
-            
+
             if(pressedUnichar == 'f') // f should togge fullscreen
             {
-                [self.view.window toggleFullScreen:theEvent];
+                [self.view.window toggleFullScreen:event];
                 return;
             }
-            
+
             if(pressedUnichar == '') // delete shoudl delete items
             {
                 [self deleteItems:nil];
@@ -727,11 +727,19 @@
             }
         }
     }
-    
-    
-    [super keyDown:theEvent];
-    
-    
+
+
+    int modifiers = event.modifierFlags & NSEventModifierFlagDeviceIndependentFlagsMask;
+
+    if ([@"e" isEqualToString:event.characters] &&  modifiers == NSEventModifierFlagCommand) {
+        [self openInApp:nil];
+        return;
+    }
+
+
+    [super keyDown:event];
+
+
 }
 
 -(void)cancelOperation:(id)sender
@@ -814,18 +822,72 @@
      [self.currentImageVC setIsCurrentView:YES];
 }
 
+#pragma mark - Right Click Menu
 
--(void)rightMouseDown:(NSEvent *)theEvent {
-    DLog(@"rightMouseDown:%@", theEvent);
-    PIXPhoto *aPhoto = [self.pagerData objectAtIndex:self.pageController.selectedIndex];
-    NSMenu *contextMenu = [self menuForObject:aPhoto];
-    contextMenu.delegate = self;
-    NSMenuItem *desktopBackgroundMenuItem = [[NSMenuItem alloc] initWithTitle:@"Set As Desktop Background" action:@selector(setDesktopImage:) keyEquivalent:@""];
-    desktopBackgroundMenuItem.target = self;
-    [contextMenu addItem:desktopBackgroundMenuItem];
-    //[contextMenu addItemWithTitle:@"Set As Desktop Background" action:@selector(setDesktopImage:) keyEquivalent:@""];
-    //[contextMenu insertItemWithTitle:@"Set As Desktop Background" action:@selector(setDesktopImage:) keyEquivalent:@""atIndex:0];
-    [NSMenu popUpContextMenu:contextMenu withEvent:theEvent forView:self.pageController.selectedViewController.view];
+- (void)shareItems:(NSMenuItem *)menuItem {
+    NSSharingService *service = menuItem.representedObject;
+    NSArray<NSURL *> *urls = @[((PIXPhoto *) self.pagerData[self.pageController.selectedIndex]).filePath];
+    [service performWithItems:urls];
+}
+
+- (void)rightMouseUp:(NSEvent *)event {
+    [super rightMouseUp:event];
+
+    PIXPhoto *selectedPhoto = ((PIXPhoto *) self.pagerData[self.pageController.selectedIndex]);
+    NSMenu *menu = [[NSMenu alloc] init];
+
+    NSArray<NSURL *> *urls = @[selectedPhoto.filePath];
+    NSArray<NSSharingService *> *sharingServices = [NSSharingService sharingServicesForItems:urls];
+    if (sharingServices.count > 0) {
+        NSMenu *sharingSubmenu = [[NSMenu alloc] init];
+        for (NSSharingService *service in sharingServices) {
+            NSMenuItem *item = [[NSMenuItem alloc] init];
+            item.representedObject = service;
+            item.title = service.menuItemTitle;
+            item.image = service.image;
+            item.action = @selector(shareItems:);
+            [sharingSubmenu addItem:item];
+        }
+
+        NSMenuItem *shareItem = [[NSMenuItem alloc] init];
+        shareItem.title = NSLocalizedString(@"menu.share", "Share");
+        shareItem.submenu = sharingSubmenu;
+        [menu addItem:shareItem];
+    }
+
+    [menu addItem:[NSMenuItem separatorItem]];
+
+    NSString *defaultAppName = [[PIXFileManager sharedInstance] defaultAppNameForOpeningFileWithPath:selectedPhoto.path];
+    NSMenuItem *editWithDefault = [[NSMenuItem alloc] init];
+    editWithDefault.title = [NSString stringWithFormat:NSLocalizedString(@"menu.edit_with_default", @"Edit with %@"), defaultAppName];
+    editWithDefault.action = @selector(openInApp:);
+    editWithDefault.keyEquivalent = @"e";
+    editWithDefault.keyEquivalentModifierMask = NSEventModifierFlagCommand;
+    [menu addItem:editWithDefault];
+
+    NSMenuItem *editWithMenuItem = [[NSMenuItem alloc] init];
+    editWithMenuItem.title = NSLocalizedString(@"menu.edit_with", @"Edit with");
+    NSMutableArray<NSString *> *stringPaths = [NSMutableArray arrayWithCapacity:urls.count];
+    [urls enumerateObjectsUsingBlock:^(NSURL *obj, NSUInteger idx, BOOL *stop) {
+        [stringPaths addObject:obj.path];
+    }];
+    editWithMenuItem.submenu = [PIXFileManager.sharedInstance openWithMenuItemForFiles:stringPaths];
+    [menu addItem:editWithMenuItem];
+
+    [menu addItem:[NSMenuItem separatorItem]];
+
+    [menu addItemWithTitle:NSLocalizedString(@"menu.get_info", @"Get Info") action:@selector(getInfo:) keyEquivalent:@""];
+    [menu addItemWithTitle:NSLocalizedString(@"menu.move_to_trash", @"Move to Trash") action:@selector(deleteItems:) keyEquivalent:@""];
+    [menu addItem:[NSMenuItem separatorItem]];
+
+    NSMenuItem *desktopMenuItem = [[NSMenuItem alloc] init];
+    desktopMenuItem.title = NSLocalizedString(@"menu.set_desktop_picture", @"Set Desktop Picture");
+    desktopMenuItem.action = @selector(setDesktopImage:);
+    desktopMenuItem.representedObject = selectedPhoto;
+    [menu addItem:desktopMenuItem];
+
+    [menu addItemWithTitle:NSLocalizedString(@"menu.reveal", @"Reveal in Finder") action:@selector(revealInFinder:) keyEquivalent:@""];
+    [NSMenu popUpContextMenu:menu withEvent:event forView:self.pageController.selectedViewController.view];
 }
 
 - (IBAction) openInApp:(id)sender
