@@ -127,7 +127,7 @@ typedef NSUInteger PIXOverwriteStrategy;
 }
 
 /// construct menu item for app
-- (NSMenuItem *)menuItemForOpenWithForApplication:(NSString *)appName appPath:(NSString *)appPath filePaths:(NSArray *)filePaths
+- (NSMenuItem *)menuItemForOpenWithForApplication:(NSString *)appName appPath:(NSString *)appPath filePaths:(NSArray<NSString *> *)filePaths
 {
     NSMenuItem *newAppItem = [[NSMenuItem alloc] init];
     [newAppItem setTitle:appName];
@@ -136,7 +136,9 @@ typedef NSUInteger PIXOverwriteStrategy;
     NSDictionary *pathsDict = @{@"appPath" : appPath, @"filePaths": filePaths};
     [newAppItem setRepresentedObject:pathsDict];
     //[newAppItem setRepresentedObject:appPath];
-    [newAppItem setImage:[[NSWorkspace sharedWorkspace] iconForFile:appPath]];
+    NSImage *icon = [NSWorkspace.sharedWorkspace iconForFile:appPath];
+    icon.size = NSMakeSize(16.0, 16.0);
+    newAppItem.image = icon;
     return newAppItem;
 }
 
@@ -169,17 +171,12 @@ typedef NSUInteger PIXOverwriteStrategy;
 }
 
 /// this method return open with menu for specified files
-- (NSMenu *)openWithMenuItemForFiles:(NSArray *)filePaths
-{
+- (NSMenu *)openWithMenuItemForFiles:(NSArray<NSString *> *)filePaths {
     NSMenu *subMenu = [[NSMenu alloc] init];
-    NSString *filePath = [filePaths lastObject];
-    if (filePath==nil) {
-        return nil;
-    }
-    NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+    NSURL *fileURL = [NSURL fileURLWithPath:filePaths.lastObject];
     CFArrayRef cfArrayOfApps = LSCopyApplicationURLsForURL((__bridge CFURLRef)fileURL, kLSRolesAll);
     CFIndex maxCount = 12;
-    NSMutableSet *alreadyAdded = [NSMutableSet setWithCapacity:maxCount];
+    NSMutableSet *alreadyAdded = [NSMutableSet setWithCapacity:(NSUInteger) maxCount];
 	if (cfArrayOfApps != nil)
 	{
 		CFIndex count = CFArrayGetCount(cfArrayOfApps);
@@ -187,10 +184,9 @@ typedef NSUInteger PIXOverwriteStrategy;
             count = maxCount;
         }
         //get and add default app
-        CFURLRef defaultApp;
-        LSGetApplicationForURL((__bridge CFURLRef)fileURL, kLSRolesAll, NULL, &defaultApp);
+        CFURLRef defaultApp = LSCopyDefaultApplicationURLForURL((__bridge CFURLRef)fileURL, kLSRolesAll, NULL);
         if (!defaultApp) {
-            NSLog(@"There is no default App for %@", filePath);
+            NSLog(@"There is no default App for %@", fileURL);
             NSMenuItem *noneItem = [[NSMenuItem alloc] init];
             [noneItem setTitle:@"<None>"];
             [noneItem setEnabled:NO];

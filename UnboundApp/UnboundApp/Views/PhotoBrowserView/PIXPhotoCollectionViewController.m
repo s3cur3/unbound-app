@@ -133,6 +133,11 @@
         return;
     }
 
+    if ([@"e" isEqualToString:event.characters] && event.modifierFlags == NSEventModifierFlagCommand) {
+        [self openInApp];
+        return;
+    }
+
     [super keyDown:event];
 }
 
@@ -277,6 +282,22 @@
     [self openItem:self.clickedItem.representedObject];
 }
 
+- (void)openInApp {
+    if (self.selectedItems.count == 0) return;
+
+    NSMutableArray<NSURL *> *urls = [NSMutableArray arrayWithCapacity:self.selectedItems.count];
+    [self.selectedItems enumerateObjectsUsingBlock:^(PIXPhoto *obj, BOOL *stop) {
+        [NSWorkspace.sharedWorkspace openFile:obj.path];
+    }];
+}
+
+- (void)setDesktopPicture:(id)sender {
+    if (![sender isKindOfClass:NSMenuItem.class]) return;
+
+    PIXPhoto *photo = ((NSMenuItem *) sender).representedObject;
+    [PIXFileManager.sharedInstance setDesktopImage:photo];
+}
+
 - (void)revealItems {
     if (self.selectedItems.count == 0) return;
 
@@ -285,6 +306,21 @@
         [urls addObject:obj.filePath];
     }];
     [NSWorkspace.sharedWorkspace activateFileViewerSelectingURLs:urls];
+}
+
+- (void)deleteItems {
+    if (self.selectedItems.count == 0) return;
+    [PIXFileManager.sharedInstance deleteItemsWorkflow:self.selectedItems];
+}
+
+- (void)getInfo {
+    if (self.selectedItems.count == 0) return;
+    [self.selectedItems enumerateObjectsUsingBlock:^(PIXPhoto *obj, BOOL *stop) {
+        NSPasteboard *pboard = [NSPasteboard pasteboardWithUniqueName];
+        [pboard declareTypes:@[NSStringPboardType] owner:nil];
+        [pboard setString:obj.path forType:NSStringPboardType];
+        NSPerformService(@"Finder/Show Info", pboard);
+    }];
 }
 
 - (void)shareItems:(NSMenuItem *)menuItem {
@@ -344,8 +380,34 @@
 
             [menu addItem:[NSMenuItem separatorItem]];
 
-            [menu addItemWithTitle:NSLocalizedString(@"menu.move_to_trash", @"Move to Trash") action:@selector(deleteItems:) keyEquivalent:@""];
+            NSString *defaultAppName = [[PIXFileManager sharedInstance] defaultAppNameForOpeningFileWithPath:((PIXPhoto *) self.clickedItem.representedObject).path];
+            NSMenuItem *editWithDefault = [[NSMenuItem alloc] init];
+            editWithDefault.title = [NSString stringWithFormat:NSLocalizedString(@"menu.edit_with_default", @"Edit with %@"), defaultAppName];
+            editWithDefault.action = @selector(openInApp);
+            editWithDefault.keyEquivalent = @"e";
+            editWithDefault.keyEquivalentModifierMask = NSEventModifierFlagCommand;
+            [menu addItem:editWithDefault];
+
+            NSMenuItem *editWithMenuItem = [[NSMenuItem alloc] init];
+            editWithMenuItem.title = NSLocalizedString(@"menu.edit_with", @"Edit with");
+            NSMutableArray<NSString *> *stringPaths = [NSMutableArray arrayWithCapacity:urls.count];
+            [urls enumerateObjectsUsingBlock:^(NSURL *obj, NSUInteger idx, BOOL *stop) {
+                [stringPaths addObject:obj.path];
+            }];
+            editWithMenuItem.submenu = [PIXFileManager.sharedInstance openWithMenuItemForFiles:stringPaths];
+            [menu addItem:editWithMenuItem];
+
             [menu addItem:[NSMenuItem separatorItem]];
+
+            [menu addItemWithTitle:NSLocalizedString(@"menu.get_info", @"Get Info") action:@selector(getInfo) keyEquivalent:@""];
+            [menu addItemWithTitle:NSLocalizedString(@"menu.move_to_trash", @"Move to Trash") action:@selector(deleteItems) keyEquivalent:@""];
+            [menu addItem:[NSMenuItem separatorItem]];
+
+            NSMenuItem *desktopMenuItem = [[NSMenuItem alloc] init];
+            desktopMenuItem.title = NSLocalizedString(@"menu.set_desktop_picture", @"Set Desktop Picture");
+            desktopMenuItem.action = @selector(setDesktopPicture:);
+            desktopMenuItem.representedObject = self.clickedItem.representedObject;
+            [menu addItem:desktopMenuItem];
 
             [menu addItemWithTitle:NSLocalizedString(@"menu.reveal", @"Reveal in Finder") action:@selector(revealItems) keyEquivalent:@""];
             [NSMenu popUpContextMenu:menu withEvent:event forView:self.clickedItem.view];

@@ -21,3 +21,7 @@
 "menu.open" = "Open";
 "menu.move_to_trash" = "Move to Trash";
 "menu.share" = "Share";
+"menu.edit_with" = "Edit with";
+"menu.edit_with_default" = "Edit with %@";
+"menu.get_info" = "Get Info";
+"menu.set_desktop_picture" = "Set Desktop Picture";

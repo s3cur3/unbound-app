@@ -35,7 +35,7 @@
 - (NSString *)defaultAppPathForOpeningFileWithPath:(NSString *)filePath;
 - (NSString *)defaultAppNameForOpeningFileWithPath:(NSString *)filePath;
 //- (NSMenu *)openWithMenuItemForFile:(NSString *)filePath;
-- (NSMenu *)openWithMenuItemForFiles:(NSArray *)filePaths;
+- (NSMenu *)openWithMenuItemForFiles:(NSArray<NSString *> *)filePaths;
 - (void)openFileWithPath:(NSString *)filePath withApplication:(NSString *)appPath;
 
 -(NSArray *)itemsForDraggingInfo:(id <NSDraggingInfo>) draggingInfo forDestination:(NSString *)destPath;
