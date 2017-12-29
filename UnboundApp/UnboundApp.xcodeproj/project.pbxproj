@@ -519,6 +519,7 @@
 		458AD5215011F886FBE6168E /* PIXAlbumCollectionViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PIXAlbumCollectionViewItem.xib; sourceTree = "<group>"; };
 		458AD529E82DA964CECCEC23 /* buttongrid_share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttongrid_share.png; sourceTree = "<group>"; };
 		458AD53917227C3C0B403744 /* PIXSidebarScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXSidebarScrollView.h; sourceTree = "<group>"; };
+		458AD543623D03B2E21995ED /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		458AD5531FBDF91065623B14 /* MASPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASPreferencesWindowController.h; sourceTree = "<group>"; };
 		458AD566A19A1EF9FDA43F12 /* PIXCustomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXCustomButton.m; sourceTree = "<group>"; };
 		458AD579446C0450949B3DCA /* PIXPhotoCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPhotoCollectionViewController.h; sourceTree = "<group>"; };
@@ -807,6 +808,7 @@
 				8CFC2E611A5864B9004FCE5F /* Unbound copy2-Info.plist */,
 				794FE24E5BD73BE16BC39A0A /* Pods */,
 				04DF27BB1F7DA73600CDA9F1 /* Recovered References */,
+				458AD543623D03B2E21995ED /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
