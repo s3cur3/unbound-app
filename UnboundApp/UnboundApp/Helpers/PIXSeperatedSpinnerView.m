@@ -102,9 +102,11 @@
     
     //newRect.origin.x += self.mainWindow.frame.origin.x;
     //newRect.origin.y += self.mainWindow.frame.origin.y;
-    
-    [self.spinnerwindow setFrame:newRect display:YES];
-    [self.spinnerwindow setAlphaValue:1.0];
+
+    if (self.spinnerwindow != nil) {
+        [self.spinnerwindow setFrame:newRect display:YES];
+        [self.spinnerwindow setAlphaValue:1.0];
+    }
     
     //DLog(@"New Spinner Position: %f, %f", newRect.origin.x, newRect.origin.y);
 }
