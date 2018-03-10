@@ -122,6 +122,8 @@
 
 -(void)keyDown:(NSEvent *)event
 {
+    DLog("Keycode pressed: %d", event.keyCode);
+
     switch (event.keyCode) {
         case 36: // return
         case 76: // enter
@@ -136,9 +138,15 @@
         return;
     }
 
-    if ([@"e" isEqualToString:event.characters] &&  modifiers == NSEventModifierFlagCommand) {
-        [self openInApp];
-        return;
+    // command modified keystrokes
+    if (modifiers == NSEventModifierFlagCommand) {
+        if ([@"e" isEqualToString:event.characters]) {
+            [self openInApp];
+            return;
+        } else if (event.keyCode == 51) {
+            [self deleteItems];
+            return;
+        }
     }
 
     [super keyDown:event];
@@ -403,7 +411,14 @@
             [menu addItem:[NSMenuItem separatorItem]];
 
             [menu addItemWithTitle:NSLocalizedString(@"menu.get_info", @"Get Info") action:@selector(getInfo) keyEquivalent:@""];
-            [menu addItemWithTitle:NSLocalizedString(@"menu.move_to_trash", @"Move to Trash") action:@selector(deleteItems) keyEquivalent:@""];
+
+            NSMenuItem *deleteItem = [[NSMenuItem alloc] init];
+            deleteItem.title = NSLocalizedString(@"menu.move_to_trash", @"Move to Trash");
+            deleteItem.action = @selector(deleteItems);
+            deleteItem.keyEquivalent = [NSString stringWithFormat:@"%c", 0x08];
+            deleteItem.keyEquivalentModifierMask = NSEventModifierFlagCommand;
+            [menu addItem:deleteItem];
+
             [menu addItem:[NSMenuItem separatorItem]];
 
             NSMenuItem *desktopMenuItem = [[NSMenuItem alloc] init];

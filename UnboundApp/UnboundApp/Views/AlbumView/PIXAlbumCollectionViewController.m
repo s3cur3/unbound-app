@@ -609,15 +609,21 @@
 
         NSUInteger count = self.collectionView.selectionIndexPaths.count;
         if (count > 0) {
-            [menu insertItemWithTitle:NSLocalizedString(@"menu.open", @"Open")
-                               action:@selector(openItem) keyEquivalent:@"" atIndex:0];
-            [menu insertItem:[NSMenuItem separatorItem] atIndex:1];
+            [menu addItemWithTitle:NSLocalizedString(@"menu.open", @"Open") action:@selector(openItem) keyEquivalent:@""];
+            [menu addItem:[NSMenuItem separatorItem]];
 
-            [menu insertItemWithTitle:NSLocalizedString(@"menu.rename", @"Rename") action:@selector(renameItem) keyEquivalent:@"" atIndex:2];
-            [menu insertItemWithTitle:NSLocalizedString(@"menu.move_to_trash", @"Move to Trash") action:@selector(deleteItems:) keyEquivalent:@"" atIndex:3];
-            [menu insertItem:[NSMenuItem separatorItem] atIndex:4];
+            [menu addItemWithTitle:NSLocalizedString(@"menu.rename", @"Rename") action:@selector(renameItem) keyEquivalent:@""];
 
-            [menu insertItemWithTitle:NSLocalizedString(@"menu.reveal", @"Reveal in Finder") action:@selector(revealItems) keyEquivalent:@"" atIndex:5];
+            NSMenuItem *deleteItem = [[NSMenuItem alloc] init];
+            deleteItem.title = NSLocalizedString(@"menu.move_to_trash", @"Move to Trash");
+            deleteItem.action = @selector(deleteItems:);
+            deleteItem.keyEquivalent = [NSString stringWithFormat:@"%c", 0x08];
+            deleteItem.keyEquivalentModifierMask = NSEventModifierFlagCommand;
+            [menu addItem:deleteItem];
+
+            [menu addItem:[NSMenuItem separatorItem]];
+
+            [menu addItemWithTitle:NSLocalizedString(@"menu.reveal", @"Reveal in Finder") action:@selector(revealItems) keyEquivalent:@""];
             [NSMenu popUpContextMenu:menu withEvent:event forView:self.clickedItem.view];
         }
     }
@@ -733,6 +739,15 @@
     if ([@"f" isEqualToString:event.characters]) {
         [self.view.window toggleFullScreen:event];
         return;
+    }
+
+    // command modified keystrokes
+    int modifiers = event.modifierFlags & NSEventModifierFlagDeviceIndependentFlagsMask;
+    if (modifiers == NSEventModifierFlagCommand) {
+        if (event.keyCode == 51) {
+            [self deleteItems:nil];
+            return;
+        }
     }
 
     [super keyDown:event];
