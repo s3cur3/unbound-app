@@ -89,6 +89,7 @@
     self.collectionView.collectionViewLayout = flowLayout;
 
     self.view.wantsLayer = YES;
+    self.collectionView.wantsLayer = YES;
     [self setBGColor];
 
     [self setupCollectionToolbar];

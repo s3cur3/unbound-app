@@ -74,6 +74,7 @@
     self.toolbar.collectionView = self.collectionView;
 
     self.view.wantsLayer = YES;
+    self.collectionView.wantsLayer = YES;
     [self setBGColor];
 
     [self setupToolbar];
