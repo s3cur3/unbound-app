@@ -8,7 +8,7 @@
 
 #import "PIXSeperatedSpinnerView.h"
 #import "PIXAppDelegate.h"
-#import "PIXMainWindowController.h"
+#import "Unbound-Swift.h"
 
 @interface PIXSeperatedSpinnerView()
 

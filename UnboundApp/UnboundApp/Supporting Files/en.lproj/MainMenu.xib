@@ -37,7 +37,7 @@
                             <menuItem isSeparatorItem="YES" id="236">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Preferences…" keyEquivalent="," id="129">
+                            <menuItem title="preferences.window.title…" keyEquivalent="," id="129">
                                 <connections>
                                     <action selector="openPreferences:" target="494" id="538"/>
                                 </connections>

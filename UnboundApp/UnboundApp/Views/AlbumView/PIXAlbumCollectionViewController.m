@@ -8,7 +8,7 @@
 
 #import "PIXAlbumCollectionViewController.h"
 #import "PIXSplitViewController.h"
-#import "PIXMainWindowController.h"
+#import "Unbound-Swift.h"
 #import "PIXDefines.h"
 #import "PIXAppDelegate.h"
 #import "PIXFileParser.h"

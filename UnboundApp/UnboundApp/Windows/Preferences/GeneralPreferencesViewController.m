@@ -42,34 +42,31 @@
 {
     NSArray * directoryURLs = [[PIXFileParser sharedFileParser] observedDirectories];
     
-    if([directoryURLs count])
-    {
-        self.folderDisplay.stringValue = [(NSURL *)[directoryURLs objectAtIndex:0] path];
-    }
-    
-    else
-    {
+    if([directoryURLs count]) {
+        NSString *path = [(NSURL *) directoryURLs[0] path];
+        self.folderDisplay.stringValue = path;
+        self.folderDisplay.toolTip = path;
+    } else {
         self.folderDisplay.stringValue = @"No Folders Observed!";
+        self.folderDisplay.toolTip = @"";
     }
 }
 
-#pragma mark -
-#pragma mark MASPreferencesViewController
+#pragma mark - MASPreferencesViewController
 
-- (NSString *)identifier
-{
+- (NSString *)viewIdentifier {
     return @"GeneralPreferences";
 }
 
-- (NSImage *)toolbarItemImage
-{
+- (NSImage *)toolbarItemImage {
     return [NSImage imageNamed:NSImageNamePreferencesGeneral];
 }
 
-- (NSString *)toolbarItemLabel
-{
-    return NSLocalizedString(@"General", @"General Unbound Preferences");
+- (NSString *)toolbarItemLabel {
+    return NSLocalizedString(@"preferences.general.title", @"General Unbound Preferences");
 }
+
+#pragma mark - IBActions
 
 -(IBAction)themeChanged:(id)sender
 {

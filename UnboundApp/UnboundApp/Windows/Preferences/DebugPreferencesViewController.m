@@ -49,7 +49,7 @@
 
 - (NSString *)toolbarItemLabel
 {
-    return NSLocalizedString(@"Debug", @"Unbound Debug Preferences");
+    return NSLocalizedString(@"Debug", @"Unbound Debug preferences.window.title");
 }
 
 

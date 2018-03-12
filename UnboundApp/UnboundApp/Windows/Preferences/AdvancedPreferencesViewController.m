@@ -26,7 +26,7 @@
 
 - (NSString *)toolbarItemLabel
 {
-    return NSLocalizedString(@"Advanced", @"Advanced Unbound Preferences");
+    return NSLocalizedString(@"Advanced", @"Advanced Unbound preferences.window.title");
 }
 
 - (NSView *)initialKeyView

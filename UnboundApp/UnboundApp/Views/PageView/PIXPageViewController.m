@@ -11,7 +11,7 @@
 #import "PIXPageViewController.h"
 #import "PIXAppDelegate.h"
 #import "PIXDefines.h"
-#import "PIXMainWindowController.h"
+#import "Unbound-Swift.h"
 #import "PIXAlbum.h"
 #import "PIXPhoto.h"
 #import "PIXImageViewController.h"

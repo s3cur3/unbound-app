@@ -6,7 +6,7 @@
 
 @interface GeneralPreferencesViewController : NSViewController <MASPreferencesViewController>
 
--(IBAction)themeChanged:(id)sender;
+- (IBAction)themeChanged:(id)sender;
 - (IBAction)chooseFolder:(id)sender;
 - (IBAction)reloadFiles:(id)sender;
 

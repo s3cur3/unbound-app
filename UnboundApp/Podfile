@@ -5,6 +5,7 @@ use_frameworks!
 target 'Unbound' do
   pod 'Fabric'
   pod 'Crashlytics'
+  pod 'MASPreferences'
 
   target 'Unbound Trial' do
     pod 'DevMateKit', '~>1.7'
