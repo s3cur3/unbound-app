@@ -28,4 +28,5 @@
 
 "preferences.window.title" = "Preferences";
 "preferences.general.title" = "General";
+"preferences.general.no_folders" = "No folder set";
 "preferences.interface.title" = "Appearance";

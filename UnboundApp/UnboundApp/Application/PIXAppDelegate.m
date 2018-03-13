@@ -11,24 +11,16 @@
 #import "PIXInfoWindowController.h"
 #import "Unbound-Swift.h"
 
-#import "Unbound-Swift.h"
- 
 #import "Preferences.h"
 #import "PIXFileParser.h"
 #import "PIXFileManager.h"
 #import "PIXDefines.h"
-
-#import "MASPreferencesWindowController.h"
-#import "GeneralPreferencesViewController.h"
-#import "AdvancedPreferencesViewController.h"
-#import "DebugPrefrencesViewController.h"
 
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 
 #ifdef TRIAL
 #import "DMKevlarApplication.h"
-#import "PIXPreferencesWindowController.h"
 #import <DevMateKit/DevMateKit.h>
 #endif
 
@@ -317,7 +309,7 @@
 
 - (NSWindowController *)preferencesWindowController {
     if (_preferencesWindowController == nil) {
-        _preferencesWindowController = [[PIXPreferencesWindowController alloc] init];
+        _preferencesWindowController = [PreferencesWindowController create];
     }
     return _preferencesWindowController;
 }
@@ -342,12 +334,11 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 {
         
     if (self.mainWindowController == nil) {
-        self.mainWindowController = [[MainWindowController alloc] initWithWindowNibName:@"MainWindow"];
+        self.mainWindowController = [[MainWindowController alloc] initWithWindowNibName:@"MainWindowController"];
     }
     self.mainWindowController.window.delegate = self;
     [self.mainWindowController showWindow:self];
 }
-
 
 - (NSError *)application:(NSApplication *)application willPresentError:(NSError *)error;
 {

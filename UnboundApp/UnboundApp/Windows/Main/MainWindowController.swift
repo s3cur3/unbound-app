@@ -29,8 +29,7 @@ class MainWindowController: NSWindowController {
   }
 
   override func keyDown(with event: NSEvent) {
-    // intercept cmd-w
-    if (event.modifierFlags.contains(NSEvent.ModifierFlags.command) && event.characters == "w") {
+    if (event.isCommandW()) {
       self.close()
       return
     }

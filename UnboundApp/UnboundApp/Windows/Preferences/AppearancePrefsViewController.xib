@@ -6,7 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="PIXInterfacePreferencesViewController">
+        <customObject id="-2" userLabel="File's Owner" customClass="AppearancePrefsViewController" customModule="Unbound" customModuleProvider="target">
             <connections>
                 <outlet property="view" destination="c22-O7-iKe" id="dV3-yb-Eyi"/>
             </connections>
@@ -32,14 +32,14 @@
                     </buttonCell>
                     <cells>
                         <column>
-                            <buttonCell type="bevel" title=" Light" image="btn_theme_light" imagePosition="above" alignment="center" alternateImage="btn_theme_light_selected" state="on" inset="2" id="fgI-ti-MrD">
+                            <buttonCell type="bevel" title=" Light" image="btn_theme_light" imagePosition="above" alignment="center" alternateImage="btn_theme_light_selected" refusesFirstResponder="YES" state="on" inset="2" id="fgI-ti-MrD">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                         </column>
                     </cells>
                     <connections>
-                        <action selector="themeChanged:" target="-2" id="gqL-UX-TPc"/>
+                        <action selector="themeChangedWithSender:" target="-2" id="BE1-QV-G6C"/>
                         <binding destination="tdO-kq-TsS" name="selectedTag" keyPath="values.backgroundTheme" id="zpC-IZ-elh"/>
                     </connections>
                 </matrix>
@@ -64,7 +64,7 @@
                         </column>
                     </cells>
                     <connections>
-                        <action selector="themeChanged:" target="-2" id="QG3-WJ-yMY"/>
+                        <action selector="themeChangedWithSender:" target="-2" id="fMf-ji-jke"/>
                         <binding destination="tdO-kq-TsS" name="selectedTag" keyPath="values.backgroundTheme" id="e8q-dO-K8B"/>
                     </connections>
                 </matrix>

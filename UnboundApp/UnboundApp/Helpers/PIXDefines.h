@@ -46,6 +46,11 @@
 
 #define kDeepScanIncompleteKey @"deepScanIncomplete"
 
+//MARK Preference Keys
+#define kPrefSupressDeleteWarning @"PIX_supressDeleteWarning"
+#define kPrefSupressAlbumDeleteWarning @"PIX_supressAlbumDeleteWarning"
+
+
 // key for obtaining the path of an image field
 #define kPathKey @"path"
 

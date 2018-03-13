@@ -6,7 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="GeneralPreferencesViewController">
+        <customObject id="-2" userLabel="File's Owner" customClass="GeneralPrefsViewController" customModule="Unbound" customModuleProvider="target">
             <connections>
                 <outlet property="folderDisplay" destination="232" id="274"/>
                 <outlet property="view" destination="1" id="2"/>
@@ -20,7 +20,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="232">
-                    <rect key="frame" x="192" y="138" width="216" height="17"/>
+                    <rect key="frame" x="161" y="282" width="286" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="mini" lineBreakMode="truncatingHead" sendsActionOnEndEditing="YES" title="/" id="233">
                         <font key="font" metaFont="system"/>
@@ -29,90 +29,40 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="246">
-                    <rect key="frame" x="194" y="106" width="74" height="19"/>
+                    <rect key="frame" x="163" y="250" width="74" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundRect" title="Change..." bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="248">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="cellTitle"/>
                     </buttonCell>
                     <connections>
-                        <action selector="chooseFolder:" target="-2" id="271"/>
+                        <action selector="chooseFolderWithSender:" target="-2" id="wNM-Ej-sHB"/>
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="253">
-                    <rect key="frame" x="276" y="106" width="130" height="19"/>
+                    <rect key="frame" x="245" y="250" width="130" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundRect" title="Rescan for Photos" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="255">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="cellTitle"/>
-                        <connections>
-                            <action selector="reloadFiles:" target="-2" id="270"/>
-                        </connections>
                     </buttonCell>
+                    <connections>
+                        <action selector="reloadFilesWithSender:" target="-2" id="XTi-FA-EuS"/>
+                    </connections>
                 </button>
-                <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="275">
-                    <rect key="frame" x="414" y="108" width="16" height="16"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                </progressIndicator>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a0G-wU-evi">
-                    <rect key="frame" x="194" y="40" width="88" height="19"/>
+                    <rect key="frame" x="163" y="184" width="88" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundRect" title="Alerts" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zsU-7M-JXG">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="cellTitle"/>
                     </buttonCell>
                     <connections>
-                        <action selector="resetAlerts:" target="-2" id="5e0-cR-OUR"/>
+                        <action selector="resetAlertsWithSender:" target="-2" id="Jml-un-plT"/>
                     </connections>
                 </button>
-                <matrix verticalHuggingPriority="750" fixedFrame="YES" allowsEmptySelection="NO" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="189">
-                    <rect key="frame" x="115" y="170" width="110" height="129"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    <size key="cellSize" width="110" height="129"/>
-                    <size key="intercellSpacing" width="4" height="2"/>
-                    <buttonCell key="prototype" type="radio" title="Radio" bezelStyle="regularSquare" imagePosition="left" inset="2" id="190">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <cells>
-                        <column>
-                            <buttonCell type="bevel" title=" Light" image="btn_theme_light" imagePosition="above" alignment="center" state="on" inset="2" id="387">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                        </column>
-                    </cells>
-                    <connections>
-                        <action selector="themeChanged:" target="-2" id="207"/>
-                        <binding destination="199" name="selectedTag" keyPath="values.backgroundTheme" id="216"/>
-                    </connections>
-                </matrix>
-                <matrix verticalHuggingPriority="750" fixedFrame="YES" allowsEmptySelection="NO" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="438">
-                    <rect key="frame" x="240" y="170" width="110" height="129"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    <size key="cellSize" width="110" height="129"/>
-                    <size key="intercellSpacing" width="4" height="2"/>
-                    <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" inset="2" id="442">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <cells>
-                        <column>
-                            <buttonCell type="bevel" title=" Dark" image="btn_theme_dark" imagePosition="above" alignment="center" state="on" tag="1" inset="2" id="439">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                        </column>
-                    </cells>
-                    <connections>
-                        <action selector="themeChanged:" target="-2" id="444"/>
-                        <binding destination="199" name="selectedTag" keyPath="values.backgroundTheme" id="443"/>
-                    </connections>
-                </matrix>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4B3-FF-Al9">
-                    <rect key="frame" x="95" y="138" width="92" height="17"/>
+                    <rect key="frame" x="64" y="282" width="92" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Photos Folder:" id="nhr-ok-IOT">
                         <font key="font" metaFont="system"/>
@@ -121,11 +71,11 @@
                     </textFieldCell>
                 </textField>
                 <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="cIg-La-L6D">
-                    <rect key="frame" x="194" y="80" width="236" height="5"/>
+                    <rect key="frame" x="163" y="224" width="282" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </box>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zer-Ag-27p">
-                    <rect key="frame" x="144" y="42" width="43" height="17"/>
+                    <rect key="frame" x="113" y="186" width="43" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Reset:" id="Ouj-jR-GNP">
                         <font key="font" metaFont="system"/>
@@ -133,13 +83,13 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="275">
+                    <rect key="frame" x="383" y="252" width="16" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                </progressIndicator>
             </subviews>
             <point key="canvasLocation" x="138.5" y="143.5"/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="199"/>
     </objects>
-    <resources>
-        <image name="btn_theme_dark" width="99" height="94"/>
-        <image name="btn_theme_light" width="99" height="94"/>
-    </resources>
 </document>
