@@ -32,7 +32,7 @@
                     </buttonCell>
                     <cells>
                         <column>
-                            <buttonCell type="bevel" title=" Light" image="btn_theme_light" imagePosition="above" alignment="center" alternateImage="btn_theme_light_selected" refusesFirstResponder="YES" state="on" inset="2" id="fgI-ti-MrD">
+                            <buttonCell type="bevel" title=" Light" image="btn_theme_light" imagePosition="above" alignment="center" alternateImage="btn_theme_light_selected" state="on" inset="2" id="fgI-ti-MrD">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>

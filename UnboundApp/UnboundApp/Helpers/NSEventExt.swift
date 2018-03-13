@@ -7,6 +7,6 @@ import Foundation
 
 extension NSEvent {
   func isCommandW() -> Bool {
-    return modifierFlags == NSEvent.ModifierFlags.command && characters == "w"
+    return modifierFlags.contains(.command) && characters == "w"
   }
 }

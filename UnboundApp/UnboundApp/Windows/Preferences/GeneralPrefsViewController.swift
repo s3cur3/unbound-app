@@ -10,7 +10,7 @@ class GeneralPrefsViewController: NSViewController, MASPreferencesViewController
   private var pickerStartURL: NSURL?
 
   @IBOutlet weak var dbFolderButton: NSButton?
-  @IBOutlet weak var folderDisplay: NSTextField?
+  @IBOutlet weak var folderDisplay: NSPathControl?
   @IBOutlet weak var workingSpinner: NSProgressIndicator?
 
   //MARK - MASPreferencesViewController
@@ -26,12 +26,9 @@ class GeneralPrefsViewController: NSViewController, MASPreferencesViewController
   private func updateFolderField() {
     let urls = PIXFileParser.shared().observedDirectories
     if (urls == nil || urls!.isEmpty) {
-      self.folderDisplay?.stringValue = NSLocalizedString("preferences.general.no_folders", comment: "No Folders Observed!")
-      self.folderDisplay?.toolTip = ""
+      self.folderDisplay?.url = nil
     } else {
-      let path = urls![0].path
-      self.folderDisplay?.stringValue = path
-      self.folderDisplay?.toolTip = path
+      self.folderDisplay?.url = urls![0]
     }
   }
 
