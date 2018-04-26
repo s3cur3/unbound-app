@@ -46,7 +46,11 @@
 
 #define kDeepScanIncompleteKey @"deepScanIncomplete"
 
+//MARK Notifications
+#define kNotePhotoStyleChanged @"photoStyleChanged"
+
 //MARK Preference Keys
+#define kPrefPhotoStyle @"photoStyle"
 #define kPrefSupressDeleteWarning @"PIX_supressDeleteWarning"
 #define kPrefSupressAlbumDeleteWarning @"PIX_supressAlbumDeleteWarning"
 

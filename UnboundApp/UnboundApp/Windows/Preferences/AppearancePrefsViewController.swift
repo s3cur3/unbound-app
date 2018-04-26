@@ -18,4 +18,8 @@ class AppearancePrefsViewController: NSViewController, MASPreferencesViewControl
     NotificationCenter.default.post(name: Notification.Name("backgroundThemeChanged"), object: nil)
   }
 
+  @IBAction func photoStyleChanged(sender: Any) {
+    NotificationCenter.default.post(name: Notification.Name(kNotePhotoStyleChanged), object: nil)
+  }
+
 }
