@@ -1,5 +1,4 @@
 # Unbound for Mac
----
 
 A simple photo manager and viewer for Mac.
 
