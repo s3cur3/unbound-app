@@ -28,6 +28,7 @@
 @property(nonatomic, strong) NSCollectionViewFlowLayout *layout;
 @property(nonatomic,strong) NSDateFormatter * titleDateFormatter;
 @property CGFloat startPinchZoom;
+@property CGFloat rowHeight;
 
 @end
 
@@ -66,9 +67,9 @@
     self.toolbar.collectionView = self.collectionView;
 
     self.layout = [[NSCollectionViewFlowLayout alloc] init];
-    self.layout.sectionInset = NSEdgeInsetsMake(10, 10, 10, 10);
-    self.layout.minimumInteritemSpacing = 0;
-    self.layout.minimumLineSpacing = 0;
+    self.layout.sectionInset = NSEdgeInsetsMake(0, 0, 0, 0);
+    self.layout.minimumInteritemSpacing = 5;
+    self.layout.minimumLineSpacing = 5;
     self.collectionView.collectionViewLayout = self.layout;
 
     self.toolbar.collectionView = self.collectionView;
@@ -157,11 +158,13 @@
 {
     // sizes mapped between 140 and 400
     float transformedSize = (float) rint(140 + (260 * size));
-    self.layout.itemSize = NSMakeSize(transformedSize, transformedSize);
-    for (NSCollectionViewItem *item in self.collectionView.visibleItems) {
-        [item.view updateLayer];
-    }
-    
+    self.rowHeight = transformedSize;
+    self.layout.estimatedItemSize = NSMakeSize(transformedSize, transformedSize);
+//    for (NSCollectionViewItem *item in self.collectionView.visibleItems) {
+//        [item.view layout];
+//    }
+    [self.collectionView reloadData];
+    [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
 #pragma mark - Album
@@ -455,8 +458,8 @@
 }
 
 - (NSCollectionViewItem *)collectionView:(NSCollectionView *)collectionView itemForRepresentedObjectAtIndexPath:(NSIndexPath *)indexPath {
-    PIXPhotoCollectionViewItem *item = [collectionView makeItemWithIdentifier:@"PIXPhotoCollectionViewItem" forIndexPath:indexPath];
-    item.representedObject = self.photos[indexPath.item];
+    SimplePhotoItem *item = [collectionView makeItemWithIdentifier:@"SimplePhotoItem" forIndexPath:indexPath];
+    item.photo = self.photos[indexPath.item];
     return item;
 }
 
@@ -500,6 +503,18 @@
     }
     return [PIXPhotoCollectionViewItemView dragImageForPhotos:photos count:indexPaths.count size:NSMakeSize(150, 150)];
 }
+
+- (NSSize)collectionView:(NSCollectionView *)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath; {
+    NSSize size = NSZeroSize;
+    PIXPhoto *photo = self.photos[indexPath.item];
+    NSSize dimens = photo.dimensions;
+    if (dimens.width != 0 && dimens.height != 0) {
+        CGFloat scale = self.rowHeight / dimens.height;
+        size = NSMakeSize(dimens.width * scale, dimens.height * scale);
+    }
+    return size;
+}
+
 
 #pragma mark - Selection
 
