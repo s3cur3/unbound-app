@@ -829,8 +829,8 @@
     [service performWithItems:urls];
 }
 
-- (void)rightMouseUp:(NSEvent *)event {
-    [super rightMouseUp:event];
+- (void)rightMouseDown:(NSEvent *)event {
+    [super rightMouseDown:event];
 
     PIXPhoto *selectedPhoto = ((PIXPhoto *) self.pagerData[self.pageController.selectedIndex]);
     NSMenu *menu = [[NSMenu alloc] init];
