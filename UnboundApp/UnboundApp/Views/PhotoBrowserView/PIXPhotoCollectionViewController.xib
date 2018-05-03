@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -26,12 +26,6 @@
             <rect key="frame" x="0.0" y="0.0" width="652" height="380"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MuM-uy-GpU" customClass="PIXCollectionToolbar">
-                    <rect key="frame" x="0.0" y="380" width="652" height="35"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="35" id="Vgy-5R-cXj"/>
-                    </constraints>
-                </customView>
                 <textField hidden="YES" horizontalHuggingPriority="1" verticalHuggingPriority="744" horizontalCompressionResistancePriority="324" translatesAutoresizingMaskIntoConstraints="NO" id="iYX-Z2-2rd">
                     <rect key="frame" x="48" y="340" width="556" height="25"/>
                     <constraints>
@@ -44,6 +38,12 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MuM-uy-GpU" customClass="PIXCollectionToolbar">
+                    <rect key="frame" x="0.0" y="380" width="652" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="Vgy-5R-cXj"/>
+                    </constraints>
+                </customView>
                 <customView hidden="YES" wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kcO-6j-nBU">
                     <rect key="frame" x="70" y="70" width="512" height="240"/>
                     <subviews>
@@ -123,7 +123,7 @@
                         <subviews>
                             <collectionView selectable="YES" allowsMultipleSelection="YES" id="KUn-vc-UwM" customClass="PIXCollectionView">
                                 <rect key="frame" x="0.0" y="0.0" width="652" height="335"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="qgz-ha-WrA">
                                     <size key="itemSize" width="50" height="50"/>
                                 </collectionViewFlowLayout>
