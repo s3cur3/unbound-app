@@ -10,25 +10,12 @@ let PhotoThumbDidChangeNotification = Notification.Name.init(rawValue: "PhotoThu
 @objc class SimplePhotoItem: NSCollectionViewItem {
 
   override var isSelected: Bool {
-    get {
-      return super.isSelected
-    }
-    set {
-      super.isSelected = newValue
-      if newValue {
-        self.imageView?.layer?.borderWidth = 4.0
-        self.imageView?.layer?.cornerRadius = 2.0
-        self.imageView?.layer?.borderColor = CGColor(red: 0.189, green: 0.657, blue: 0.859, alpha: 1)
-      } else {
-        self.imageView?.layer?.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 0)
-      }
-      self.imageView?.needsDisplay = true
-    }
+    didSet { self.itemView.selected = isSelected }
   }
 
   private let placeholder = NSImage(named: NSImage.Name(rawValue: "temp"))
 
-  @IBOutlet weak var playButton: NSImageView!
+  @IBOutlet weak var itemView: SimplePhotoItemView!
   
   @objc var photo: PIXPhoto? {
     didSet {
@@ -43,10 +30,12 @@ let PhotoThumbDidChangeNotification = Notification.Name.init(rawValue: "PhotoThu
       NotificationCenter.default.addObserver(forName: PhotoThumbDidChangeNotification,
               object: photo!,
               queue: OperationQueue.main) { notification in
-        self.updateView(forPhoto: self.photo!)
+        self.itemView.isVideo = self.photo?.isVideo() ?? false
+        self.itemView.image = self.photo?.thumbnailImage
       }
 
-      self.updateView(forPhoto: self.photo!)
+      self.itemView.isVideo = self.photo?.isVideo() ?? false
+      self.itemView.image = self.photo!.thumbnailImage
     }
   }
 
@@ -56,23 +45,25 @@ let PhotoThumbDidChangeNotification = Notification.Name.init(rawValue: "PhotoThu
   }
 
   override func prepareForReuse() {
-    self.playButton.isHidden = true
-    self.imageView!.image = placeholder
-    self.imageView?.layer?.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 0)
+    self.itemView.isVideo = false
+    self.itemView.image = nil
+    self.itemView.selected = false
   }
 
-  private func updateView(forPhoto photo: PIXPhoto) {
-//    self.imageLoader.load(photo.path)
-//        .placeholder("temp")
-//        .into(self.imageView)
-
-    let image = photo.thumbnailImage ?? placeholder
-    self.imageView?.image = image
-
-    if photo.isVideo() {
-      self.playButton.isHidden = !photo.isVideo()
+  override func mouseDown(with event: NSEvent) {
+    super.mouseDown(with: event)
+    if event.clickCount > 1 {
+      NSApplication.shared.sendAction(#selector(PIXPhotoCollectionViewController.collectionItemViewDoubleClick),
+              to: nil, from: self)
     }
-    self.view.needsDisplay = true
   }
 
+  override func keyDown(with event: NSEvent) {
+    // check for enter or return (from Events.h)
+    if event.keyCode == 3 || event.keyCode == 13 {
+      NSApplication.shared.sendAction(#selector(PIXPhotoCollectionViewController.collectionItemViewDoubleClick),
+              to: nil, from: self)
+    }
+    super.keyDown(with: event)
+  }
 }

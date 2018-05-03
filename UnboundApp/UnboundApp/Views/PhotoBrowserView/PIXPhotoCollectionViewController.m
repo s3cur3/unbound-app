@@ -28,7 +28,9 @@
 @property(nonatomic, strong) NSCollectionViewFlowLayout *layout;
 @property(nonatomic,strong) NSDateFormatter * titleDateFormatter;
 @property CGFloat startPinchZoom;
-@property CGFloat rowHeight;
+@property CGFloat itemSize;
+
+- (void)scrollContainerFrameDidChange;
 
 @end
 
@@ -67,12 +69,17 @@
     self.toolbar.collectionView = self.collectionView;
 
     self.layout = [[NSCollectionViewFlowLayout alloc] init];
-    self.layout.sectionInset = NSEdgeInsetsMake(0, 0, 0, 0);
-    self.layout.minimumInteritemSpacing = 5;
-    self.layout.minimumLineSpacing = 5;
+    self.layout.minimumInteritemSpacing = 10;
+    self.layout.minimumLineSpacing = 10;
+    self.layout.sectionInset = NSEdgeInsetsMake(10, 10, 10, 10);
     self.collectionView.collectionViewLayout = self.layout;
 
     self.toolbar.collectionView = self.collectionView;
+
+    [NSNotificationCenter.defaultCenter addObserver:self
+                                           selector:@selector(scrollContainerFrameDidChange)
+                                               name:NSViewFrameDidChangeNotification
+                                             object:self.scrollView];
 
     self.view.wantsLayer = YES;
     self.collectionView.wantsLayer = YES;
@@ -153,18 +160,34 @@
     [super keyDown:event];
 }
 
+-(void)updateItemDimensions {
+    CGFloat columnCount = (int) (self.scrollView.frame.size.width / (140  + (self.itemSize * 260)));
+    CGFloat actualWidth = (self.scrollView.frame.size.width
+            - self.layout.sectionInset.left
+            - self.layout.sectionInset.right
+            - (self.layout.minimumInteritemSpacing * (columnCount - 1))) - 1;
+    CGFloat width = actualWidth / columnCount;
+    if (width != self.layout.estimatedItemSize.width) {
+        // TODO update this to use estimated item size and delegate size.
+//        self.layout.estimatedItemSize = NSMakeSize(width, width);
+        self.layout.itemSize = NSMakeSize(width, width);
+        for (NSCollectionViewItem *item in self.collectionView.visibleItems) {
+            [item.view updateLayer];
+        }
+    }
+}
+
 // send a size between 0 and 1 (will be transformed into appropriate sizes)
--(void)setThumbSize:(CGFloat)size
-{
-    // sizes mapped between 140 and 400
-    float transformedSize = (float) rint(140 + (260 * size));
-    self.rowHeight = transformedSize;
-    self.layout.estimatedItemSize = NSMakeSize(transformedSize, transformedSize);
-//    for (NSCollectionViewItem *item in self.collectionView.visibleItems) {
-//        [item.view layout];
-//    }
-    [self.collectionView reloadData];
-    [self.collectionView.collectionViewLayout invalidateLayout];
+-(void)setThumbSize:(CGFloat)size {
+    // Instead of mapping directly to thumbnail sizes, this value will map to number of
+    // columns, larger sizes meaning smaller number of columns. The image sizes will
+    // roughly equate to 140-400
+    self.itemSize = size;
+    [self updateItemDimensions];
+}
+
+-(void)scrollContainerFrameDidChange {
+    [self updateItemDimensions];
 }
 
 #pragma mark - Album
@@ -504,16 +527,24 @@
     return [PIXPhotoCollectionViewItemView dragImageForPhotos:photos count:indexPaths.count size:NSMakeSize(150, 150)];
 }
 
-- (NSSize)collectionView:(NSCollectionView *)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath; {
-    NSSize size = NSZeroSize;
-    PIXPhoto *photo = self.photos[indexPath.item];
-    NSSize dimens = photo.dimensions;
-    if (dimens.width != 0 && dimens.height != 0) {
-        CGFloat scale = self.rowHeight / dimens.height;
-        size = NSMakeSize(dimens.width * scale, dimens.height * scale);
-    }
-    return size;
-}
+// TODO This isn't currently working.
+//- (NSSize)collectionView:(NSCollectionView *)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath; {
+//    NSSize size = NSZeroSize;
+//    PIXPhoto *photo = self.photos[indexPath.item];
+//    NSSize dimens = photo.dimensions;
+//    NSSize cellDimens = self.layout.estimatedItemSize;
+//    if (dimens.width != 0 && dimens.height != 0) {
+//        CGFloat scale;
+//        if (dimens.width > dimens.height) {
+//            scale = cellDimens.width / dimens.width;
+//        } else {
+//            scale = cellDimens.height / dimens.height;
+//        }
+//        size = NSMakeSize(dimens.width * scale, dimens.height * scale);
+//    }
+//    NSLog(@"size(%lf, %lf)", size.width, size.height);
+//    return size;
+//}
 
 
 #pragma mark - Selection

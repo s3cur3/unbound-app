@@ -9,37 +9,16 @@
         <customObject id="-2" userLabel="File's Owner"/>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView id="c22-O7-iKe">
+        <customView id="c22-O7-iKe" customClass="SimplePhotoItemView" customModule="Unbound" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <subviews>
-                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nig-XQ-eIw">
-                    <rect key="frame" x="101" y="101" width="48" height="48"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="play" id="WPx-jF-I45"/>
-                </imageView>
-                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fOb-om-32L">
-                    <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
-                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="3dh-Lk-scX"/>
-                </imageView>
-            </subviews>
-            <constraints>
-                <constraint firstAttribute="bottom" secondItem="fOb-om-32L" secondAttribute="bottom" id="ChV-Y1-akO"/>
-                <constraint firstItem="fOb-om-32L" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="Fdy-cO-1SL"/>
-                <constraint firstAttribute="trailing" secondItem="fOb-om-32L" secondAttribute="trailing" id="K5P-vP-Lcd"/>
-                <constraint firstItem="fOb-om-32L" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="wot-7b-N8B"/>
-            </constraints>
             <point key="canvasLocation" x="33" y="181"/>
         </customView>
         <collectionViewItem id="58N-Kn-1XB" customClass="SimplePhotoItem" customModule="Unbound" customModuleProvider="target">
             <connections>
-                <outlet property="imageView" destination="fOb-om-32L" id="8fz-IE-Mre"/>
-                <outlet property="playButton" destination="nig-XQ-eIw" id="0UH-XM-8yb"/>
-                <outlet property="view" destination="c22-O7-iKe" id="NFG-88-GiD"/>
+                <outlet property="itemView" destination="c22-O7-iKe" id="ESg-3i-gmF"/>
+                <outlet property="view" destination="c22-O7-iKe" id="0I7-3h-E7g"/>
             </connections>
         </collectionViewItem>
     </objects>
-    <resources>
-        <image name="play" width="30" height="30"/>
-    </resources>
 </document>

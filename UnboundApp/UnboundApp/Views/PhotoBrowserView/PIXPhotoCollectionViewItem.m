@@ -106,12 +106,11 @@
     self.imageLayer.borderWidth = 3.0;
     
     // disable all animatsion on the image layer
-    NSMutableDictionary *newActions = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSNull null], @"onOrderIn",
-                                       [NSNull null], @"onOrderOut",
-                                       [NSNull null], @"sublayers",
-                                       [NSNull null], @"contents",
-                                       [NSNull null], @"bounds",
-                                       nil];
+    NSMutableDictionary *newActions = [@{@"onOrderIn": [NSNull null],
+            @"onOrderOut": [NSNull null],
+            @"sublayers": [NSNull null],
+            @"contents": [NSNull null],
+            @"bounds": [NSNull null]} mutableCopy];
     self.imageLayer.actions = newActions;
     self.layer.actions = newActions;
 

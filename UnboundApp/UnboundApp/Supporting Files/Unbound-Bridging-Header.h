@@ -1,6 +1,7 @@
 #import "PIXDefines.h"
 #import "PIXAppDelegate.h"
 #import "PIXAlbumCollectionViewController.h"
+#import "PIXPhotoCollectionViewController.h"
 #import "PIXViewController.h"
 #import "PIXPageViewController.h"
 #import "PIXPlayVideoHUDWindow.h"

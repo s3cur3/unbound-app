@@ -9,8 +9,8 @@
 #import "PIXCollectionViewController.h"
 #import "PIXPageViewController.h"
 
-@class PIXAlbum;
 @class PIXSplitViewController;
+
 
 @interface PIXPhotoCollectionViewController : PIXCollectionViewController <PIXPageViewControllerDelegate>
 
@@ -24,4 +24,12 @@
 //-(void)pagerDidMoveToPhotoAtIndex:(NSUInteger)index;
 
 - (void)selectFirstItem;
+
+- (void)collectionItemViewDoubleClick:(id)sender;
+
 @end
+
+@class PIXAlbum;
+@class PIXSplitViewController;
+
+#import "PIXPageViewController.h"
