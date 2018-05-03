@@ -343,8 +343,8 @@
     [service performWithItems:urls];
 }
 
-- (void)rightMouseUp:(NSEvent *)event {
-    [super rightMouseUp:event];
+- (void)rightMouseDown:(NSEvent *)event {
+    [super rightMouseDown:event];
 
     NSPoint localPoint = [self.collectionView convertPoint:event.locationInWindow fromView:nil];
     for (NSCollectionViewItem *item in self.collectionView.visibleItems) {
