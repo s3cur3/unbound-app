@@ -19,9 +19,7 @@ class SimplePhotoItemView: NSView {
 
   override var wantsUpdateLayer: Bool { return true }
   override var isOpaque: Bool { return false }
-  override var frame: NSRect {
-    didSet { updateLayer() }
-  }
+  override var frame: NSRect { didSet { updateLayer() } }
 
   private var playButton: NSImageView?
 
@@ -74,7 +72,6 @@ class SimplePhotoItemView: NSView {
   }
 
   override func updateLayer() {
-
     guard let image = self.image else { return }
     let rect = self.bounds.insetBy(dx: 10, dy: 10)
     let imageSize = image.size

@@ -21,7 +21,7 @@
 #import "PIXCollectionView.h"
 #import "Unbound-Swift.h"
 
-@interface PIXPhotoCollectionViewController () <NSCollectionViewDelegate, NSCollectionViewDataSource>
+@interface PIXPhotoCollectionViewController () <NSCollectionViewDelegate, NSCollectionViewDataSource, NSCollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) NSArray<PIXPhoto *> *photos;
 @property (nonatomic, strong) PIXPhotoCollectionViewItem *clickedItem;
@@ -29,6 +29,7 @@
 @property(nonatomic,strong) NSDateFormatter * titleDateFormatter;
 @property CGFloat startPinchZoom;
 @property CGFloat itemSize;
+@property CGFloat targetItemSize;
 
 - (void)scrollContainerFrameDidChange;
 
@@ -169,11 +170,13 @@
     CGFloat width = actualWidth / columnCount;
     if (width != self.layout.estimatedItemSize.width) {
         // TODO update this to use estimated item size and delegate size.
+        self.targetItemSize = width;
 //        self.layout.estimatedItemSize = NSMakeSize(width, width);
         self.layout.itemSize = NSMakeSize(width, width);
         for (NSCollectionViewItem *item in self.collectionView.visibleItems) {
             [item.view updateLayer];
         }
+        [self.layout invalidateLayout];
     }
 }
 
@@ -532,7 +535,7 @@
 //    NSSize size = NSZeroSize;
 //    PIXPhoto *photo = self.photos[indexPath.item];
 //    NSSize dimens = photo.dimensions;
-//    NSSize cellDimens = self.layout.estimatedItemSize;
+//    NSSize cellDimens = NSMakeSize(self.targetItemSize, self.targetItemSize);
 //    if (dimens.width != 0 && dimens.height != 0) {
 //        CGFloat scale;
 //        if (dimens.width > dimens.height) {
@@ -545,7 +548,6 @@
 //    NSLog(@"size(%lf, %lf)", size.width, size.height);
 //    return size;
 //}
-
 
 #pragma mark - Selection
 
