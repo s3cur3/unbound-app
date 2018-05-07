@@ -30,6 +30,7 @@
 @property CGFloat startPinchZoom;
 @property CGFloat itemSize;
 @property CGFloat targetItemSize;
+@property PhotoStyle photoStyle;
 
 - (void)scrollContainerFrameDidChange;
 
@@ -54,8 +55,8 @@
         self.selectedItemsName = @"photo";
         
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(updateAlbum:) name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
-
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(themeChanged:) name:@"backgroundThemeChanged" object:nil];
+        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(photoViewTypeChanged:) name:kNotePhotoStyleChanged object:nil];
     }
     
     return self;
@@ -171,11 +172,11 @@
     if (width != self.layout.estimatedItemSize.width) {
         // TODO update this to use estimated item size and delegate size.
         self.targetItemSize = width;
-//        self.layout.estimatedItemSize = NSMakeSize(width, width);
-        self.layout.itemSize = NSMakeSize(width, width);
-        for (NSCollectionViewItem *item in self.collectionView.visibleItems) {
-            [item.view updateLayer];
-        }
+        self.layout.estimatedItemSize = NSMakeSize(width, width);
+//        self.layout.itemSize = NSMakeSize(width, width);
+//        for (NSCollectionViewItem *item in self.collectionView.visibleItems) {
+//            [item.view updateLayer];
+//        }
         [self.layout invalidateLayout];
     }
 }
@@ -191,6 +192,20 @@
 
 -(void)scrollContainerFrameDidChange {
     [self updateItemDimensions];
+}
+
+- (void)photoViewTypeChanged:(NSNotification *)note; {
+    NSString *styleName = [NSUserDefaults.standardUserDefaults stringForKey:kPrefPhotoStyle];
+    if (styleName) {
+        if ([styleName isEqualToString:@"Compact"]) {
+            self.photoStyle = PhotoStyleCompact;
+        } else if ([styleName isEqualToString:@"Regular"]) {
+            self.photoStyle = PhotoStyleRegular;
+        } else if ([styleName isEqualToString:@"Detailed"]) {
+            self.photoStyle = PhotoStyleDetailed;
+        }
+        [self.collectionView reloadData];
+    }
 }
 
 #pragma mark - Album
@@ -484,6 +499,7 @@
 }
 
 - (NSCollectionViewItem *)collectionView:(NSCollectionView *)collectionView itemForRepresentedObjectAtIndexPath:(NSIndexPath *)indexPath {
+    // TODO get the correct item based on self.photoStyle
     SimplePhotoItem *item = [collectionView makeItemWithIdentifier:@"SimplePhotoItem" forIndexPath:indexPath];
     item.photo = self.photos[indexPath.item];
     return item;
@@ -531,23 +547,23 @@
 }
 
 // TODO This isn't currently working.
-//- (NSSize)collectionView:(NSCollectionView *)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath; {
-//    NSSize size = NSZeroSize;
-//    PIXPhoto *photo = self.photos[indexPath.item];
-//    NSSize dimens = photo.dimensions;
-//    NSSize cellDimens = NSMakeSize(self.targetItemSize, self.targetItemSize);
-//    if (dimens.width != 0 && dimens.height != 0) {
-//        CGFloat scale;
-//        if (dimens.width > dimens.height) {
-//            scale = cellDimens.width / dimens.width;
-//        } else {
-//            scale = cellDimens.height / dimens.height;
-//        }
-//        size = NSMakeSize(dimens.width * scale, dimens.height * scale);
-//    }
-//    NSLog(@"size(%lf, %lf)", size.width, size.height);
-//    return size;
-//}
+- (NSSize)collectionView:(NSCollectionView *)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath; {
+    NSSize size = NSZeroSize;
+    PIXPhoto *photo = self.photos[indexPath.item];
+    NSSize dimens = photo.dimensions;
+    NSSize cellDimens = NSMakeSize(self.targetItemSize, self.targetItemSize);
+    if (dimens.width != 0 && dimens.height != 0) {
+        CGFloat scale;
+        if (dimens.width > dimens.height) {
+            scale = cellDimens.width / dimens.width;
+        } else {
+            scale = cellDimens.height / dimens.height;
+        }
+        size = NSMakeSize(dimens.width * scale, dimens.height * scale);
+    }
+    NSLog(@"size(%lf, %lf)", size.width, size.height);
+    return size;
+}
 
 #pragma mark - Selection
 

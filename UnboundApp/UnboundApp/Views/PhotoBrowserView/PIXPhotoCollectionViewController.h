@@ -20,6 +20,8 @@
 // send a size between 0 and 1 (will be transformed into appropriate sizes)
 -(void)setThumbSize:(CGFloat)size;
 
+- (void)photoViewTypeChanged:(NSNotification *)note;
+
 //PIXPageViewControllerDelegate
 //-(void)pagerDidMoveToPhotoAtIndex:(NSUInteger)index;
 
