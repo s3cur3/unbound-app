@@ -10,4 +10,4 @@
 #import "PIXFileParser.h"
 #import "PIXPhoto.h"
 
-#import "MASPreferences.h"
+@import MASPreferences;
