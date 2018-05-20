@@ -22,7 +22,6 @@
 		458AD01FBD59225A8AD793B2 /* NSCollectionView+PIXSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD2E290E211201DFD9034 /* NSCollectionView+PIXSelection.m */; };
 		458AD0265B8C6C0B664911BA /* click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 458AD192078CC315C6CB2FF8 /* click.wav */; };
 		458AD0312FDDE50970D2DF2C /* PIXPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADC385DD20D2328DC6B8F /* PIXPageView.m */; };
-		458AD0315FD66E80E9275040 /* PIXPhotoCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADC35FEA31B0D8312AF84 /* PIXPhotoCollectionViewItem.m */; };
 		458AD04678D2A1BE2EC5642D /* PIXDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 458AD488AB617F0797FF5049 /* PIXDataModel.xcdatamodeld */; };
 		458AD04D0370ABD1866F64DC /* SimplePhotoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458ADB3843FEA484E231D7E8 /* SimplePhotoItem.swift */; };
 		458AD050430F1D615216CB9B /* PIXAlbumCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADF5F77BEBD6B0A772875 /* PIXAlbumCollectionViewController.xib */; };
@@ -52,6 +51,7 @@
 		458AD11EED5D909E7AF348DB /* PIXInfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD23BD2135A2FD65FC002 /* PIXInfoWindowController.m */; };
 		458AD14B512DD60FE1EEA04A /* temp-portrait@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 458AD3029E36086E9FA2BEEA /* temp-portrait@2x.jpg */; };
 		458AD15185BEB0FFF293DFCC /* logo_ao.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD796B90699411E711F52 /* logo_ao.png */; };
+		458AD153C9CBBFDC696CBCC2 /* RegularPhotoItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADB41A7C4BB1BD2B67134 /* RegularPhotoItem.xib */; };
 		458AD157D58D09CCDCEA7088 /* PIXVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD908CFF0ECDB629551E6 /* PIXVideoViewController.m */; };
 		458AD161318BFEFA535B360C /* contract.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD22711F1415BFD14A837 /* contract.png */; };
 		458AD163E765F758C976E4B7 /* PIXSlideshowOptonsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD9609883CECD8290C8B6 /* PIXSlideshowOptonsViewController.xib */; };
@@ -69,6 +69,7 @@
 		458AD1E2489A8C932781A5E7 /* PIXSelectionLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD7722EB84DA229B90B0B /* PIXSelectionLayer.m */; };
 		458AD2012E1ABC287E2E500B /* expand.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD24137913A817EC0CDB7 /* expand.png */; };
 		458AD20AD998C3D787758B9B /* PIXInfoPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD2F03843EA9EBD3FBBE3 /* PIXInfoPanelViewController.m */; };
+		458AD210A5A20B40FD742C4D /* PIXPhotoCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD82C214981C9743F83E6 /* PIXPhotoCollectionViewItem.xib */; };
 		458AD21403CED9CAFA9C48F5 /* nophoto_200x200.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 458AD7A85609DBC2EA41D16C /* nophoto_200x200.jpg */; };
 		458AD22D705A9D6A10330F8C /* leapconnected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD255978776B70A48B1EB /* leapconnected@2x.png */; };
 		458AD23310A739BF61ED5D4A /* sortbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADDA68D473D6E60B8E047 /* sortbutton@2x.png */; };
@@ -77,7 +78,6 @@
 		458AD2430C6D30002C10F3AF /* success-forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD38C6DAAD91B83968E87 /* success-forward.png */; };
 		458AD25F55D5F580029FC167 /* captionbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD29B2E087EB9581AA773 /* captionbutton@2x.png */; };
 		458AD26D858FE945231E9234 /* NSEventExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AD1BE1E5C7795F3963715 /* NSEventExt.swift */; };
-		458AD29D6087F52234C716BD /* PIXPhotoCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD959BA4E5D02CA238515 /* PIXPhotoCollectionViewItem.xib */; };
 		458AD29DAE2166DCA4947F23 /* greendot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD064BA379620B4069086 /* greendot@2x.png */; };
 		458AD2A60F98DABA8B0AD970 /* PIXProgressWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD63C0591513EB9215146 /* PIXProgressWindowController.xib */; };
 		458AD2A791FDAF767B2FBF25 /* pixite-logo-wide.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD0064549816BE5C03B3A /* pixite-logo-wide.png */; };
@@ -93,6 +93,7 @@
 		458AD2F9CE8EDCADF9A87453 /* PIXAlbumCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD37BDFC8466136334D42 /* PIXAlbumCollectionViewItem.m */; };
 		458AD3059A3FCF4CA2734DF4 /* buttongrid_print@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADBDE8312055857F9D061 /* buttongrid_print@2x.png */; };
 		458AD3084420CACF9C85F0B5 /* graydot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD6983A712666EC328F2C /* graydot@2x.png */; };
+		458AD320CABE3975F0629D54 /* PIXPhotoCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD2F8DD082EA4D79DA49F /* PIXPhotoCollectionViewItem.m */; };
 		458AD349A5CDF6A96888D280 /* nophoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADE0CA27821BA7F51E279 /* nophoto.png */; };
 		458AD34C02D2A78F11B41332 /* PIXExifBGView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD8B6B7434300FCCD1795 /* PIXExifBGView.m */; };
 		458AD3594B74C3E86859DBAE /* NSBezierPath+pathUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADA4C9A16191E9DED0AD7 /* NSBezierPath+pathUtilities.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -120,7 +121,6 @@
 		458AD4A52CA45C433D533E97 /* PIXPhotoCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD02AF6B5C2720F53D137 /* PIXPhotoCollectionViewController.m */; };
 		458AD4C2F6AEB03E7D0D5642 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458ADCD3C8485C10E61A9EB2 /* MainWindowController.swift */; };
 		458AD4D4A897C6B41D6BB68E /* softtap.wav in Resources */ = {isa = PBXBuildFile; fileRef = 458AD5FF319903D39A279CDA /* softtap.wav */; };
-		458AD4DB1AA94C2854425F57 /* PIXPhotoCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD959BA4E5D02CA238515 /* PIXPhotoCollectionViewItem.xib */; };
 		458AD4E0CB1647F70FAD6880 /* arrow-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADC7A1895762EB303572D /* arrow-left.png */; };
 		458AD4F518E65A154FC420A7 /* buttongrid_emaillink@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD6D0BD8F0AEAEE740273 /* buttongrid_emaillink@2x.png */; };
 		458AD501AD215AE841998935 /* success.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADD9D4028408F39A03381 /* success.png */; };
@@ -133,9 +133,11 @@
 		458AD5250E0ADC4197404162 /* PIXRoundRectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADDF3AF98643F8FF2A368 /* PIXRoundRectView.m */; };
 		458AD53077A558806586807F /* buttongrid_copy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD817F34864B8EA8D7948 /* buttongrid_copy@2x.png */; };
 		458AD5460649727AFE850D02 /* Shading.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 458ADDA36051A6D8BD5E28FE /* Shading.tiff */; };
+		458AD5468DCA1AFFF22C29D2 /* PIXPhotoCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD2F8DD082EA4D79DA49F /* PIXPhotoCollectionViewItem.m */; };
 		458AD55533B629BB45DCB1BD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 458AD37DC4662B5210A16790 /* InfoPlist.strings */; };
 		458AD557A5FB2AB2CC67D40F /* LoadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADB31E3568B66E3D3AB62 /* LoadOperation.m */; };
 		458AD55AC030E79418335410 /* PIXPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADFFDF3A1A1BF7EC453CA /* PIXPageViewController.xib */; };
+		458AD55B31E9A091B5149977 /* RegularPhotoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458ADFD6FF726827F4F3B793 /* RegularPhotoItem.swift */; };
 		458AD560700838388CD47D32 /* GeneralPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458ADEA9EA4AD69C80E6A1B7 /* GeneralPrefsViewController.swift */; };
 		458AD57C1BBAD974F5F4C4A3 /* PIXHUDMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADC39E936C0CABFBCE7FE /* PIXHUDMessageController.m */; };
 		458AD57DD59A32B522A1347D /* PIXSidebarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADB472F60235A199FF75D /* PIXSidebarViewController.xib */; };
@@ -259,7 +261,6 @@
 		458ADA49391C756F217F21A1 /* PIXPageHUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD14FBD86FFB06E7642BE /* PIXPageHUDView.m */; };
 		458ADA4B9E97D1AA60E6E267 /* AdaptiveToolbarSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AD2D4D1380902CA593631 /* AdaptiveToolbarSpace.swift */; };
 		458ADA595F31A84CEB5CB5D1 /* NSEventExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AD1BE1E5C7795F3963715 /* NSEventExt.swift */; };
-		458ADA6577B94C54A54B64FA /* PIXPhotoCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADC35FEA31B0D8312AF84 /* PIXPhotoCollectionViewItem.m */; };
 		458ADA65C0424EE72D21FEF5 /* PIXMiniExifViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD0D497ED6EB0B04EF6C6 /* PIXMiniExifViewController.xib */; };
 		458ADA71AE025E00E7A7B142 /* leapnotconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADFBAF1890806CFAFBEAA /* leapnotconnected.png */; };
 		458ADA81C5F11CD8361C5A03 /* fullnophoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD65C6D07F72EACA1A512 /* fullnophoto.png */; };
@@ -332,6 +333,7 @@
 		458ADD424B02E2EFD3F008D6 /* PIXCollectionToolbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD71320CADBE71CE7A030 /* PIXCollectionToolbar.xib */; };
 		458ADD83AD7EB2CE8080639D /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD05012A12FFB65C860AA /* play.png */; };
 		458ADD8755B84ADE0395112D /* PIXLoadAlbumOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADEF27A1E4EF5D8706D1C /* PIXLoadAlbumOperation.m */; };
+		458ADD91EDDC640B98D01106 /* PIXPhotoCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD82C214981C9743F83E6 /* PIXPhotoCollectionViewItem.xib */; };
 		458ADD9279C5C38C0EB41098 /* PIXCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADA0B500A4B5ADBD8014E /* PIXCollectionView.m */; };
 		458ADD9EB2F713116AAB6740 /* buttongrid_emaillink.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD2C360D0004D8B746AAC /* buttongrid_emaillink.png */; };
 		458ADDBA42A9C1E165986AC4 /* success-backward.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADD063AFA30D8AD2DB197 /* success-backward.png */; };
@@ -351,6 +353,7 @@
 		458ADE8B5A343BB864F8EA95 /* PIXHUDMessageController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADA4FAB1BF804741362BA /* PIXHUDMessageController.xib */; };
 		458ADE9A6CF4AF9D385653A7 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADC9C3AE71F62D3DAE869 /* pause.png */; };
 		458ADE9F7212717EA72315DC /* captionbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD872EE3DF9B6B59D8D96 /* captionbutton.png */; };
+		458ADEB3CC15920733AEAF73 /* RegularPhotoItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADB41A7C4BB1BD2B67134 /* RegularPhotoItem.xib */; };
 		458ADEB5956A97C1FA63242D /* buttongrid_copy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD817F34864B8EA8D7948 /* buttongrid_copy@2x.png */; };
 		458ADEB7157A5D452C4D2FF3 /* PIXAlbumCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADF5F77BEBD6B0A772875 /* PIXAlbumCollectionViewController.xib */; };
 		458ADEC0F0EB166681128027 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD05012A12FFB65C860AA /* play.png */; };
@@ -367,6 +370,7 @@
 		458ADF309B1C42BFF4BF75D5 /* btn-roundrect-up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD80F5F6AF0C2AE9A11E5 /* btn-roundrect-up@2x.png */; };
 		458ADF346B2B9BDD987C89CE /* PIXHUDMessageController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADA4FAB1BF804741362BA /* PIXHUDMessageController.xib */; };
 		458ADF362D117149BCB9FE3E /* buttongrid_email@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD1A07A96C822C47C889F /* buttongrid_email@2x.png */; };
+		458ADF43DD27366FB6912ECA /* RegularPhotoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458ADFD6FF726827F4F3B793 /* RegularPhotoItem.swift */; };
 		458ADF45565BA330BACCDD3F /* ThemedWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AD7A043DE9C2FE50165EC /* ThemedWindow.swift */; };
 		458ADF4CA85A1EE9DFC32DA6 /* addbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD35E12120DDC441E4289 /* addbutton.png */; };
 		458ADF6215A0BCF6D62019B7 /* Blank.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 458AD4F622B4A4314991FA45 /* Blank.jpg */; };
@@ -495,6 +499,7 @@
 		458AD2D4D1380902CA593631 /* AdaptiveToolbarSpace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdaptiveToolbarSpace.swift; sourceTree = "<group>"; };
 		458AD2E290E211201DFD9034 /* NSCollectionView+PIXSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCollectionView+PIXSelection.m"; sourceTree = "<group>"; };
 		458AD2F03843EA9EBD3FBBE3 /* PIXInfoPanelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXInfoPanelViewController.m; sourceTree = "<group>"; };
+		458AD2F8DD082EA4D79DA49F /* PIXPhotoCollectionViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhotoCollectionViewItem.m; sourceTree = "<group>"; };
 		458AD2FEBC5E4E4554A1C5C0 /* MainWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindowController.xib; sourceTree = "<group>"; };
 		458AD3029E36086E9FA2BEEA /* temp-portrait@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "temp-portrait@2x.jpg"; sourceTree = "<group>"; };
 		458AD3070947054FA0A87DB8 /* expand@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "expand@2x.png"; sourceTree = "<group>"; };
@@ -567,6 +572,7 @@
 		458AD817F34864B8EA8D7948 /* buttongrid_copy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttongrid_copy@2x.png"; sourceTree = "<group>"; };
 		458AD81E1D8D1F86C5F3BBB0 /* PIXFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXFileManager.h; sourceTree = "<group>"; };
 		458AD82B85DA516339EB66E0 /* playbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playbutton.png; sourceTree = "<group>"; };
+		458AD82C214981C9743F83E6 /* PIXPhotoCollectionViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PIXPhotoCollectionViewItem.xib; sourceTree = "<group>"; };
 		458AD847D4CA9CF915C77020 /* pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pause@2x.png"; sourceTree = "<group>"; };
 		458AD849574325C47243A590 /* PIXAboutWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PIXAboutWindowController.xib; sourceTree = "<group>"; };
 		458AD85EA167AACCAFA816FA /* PIXPageHUDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPageHUDView.h; sourceTree = "<group>"; };
@@ -588,7 +594,6 @@
 		458AD945555DF37ECBB3554F /* GetPathsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetPathsOperation.m; sourceTree = "<group>"; };
 		458AD948F91477D9F2AC3597 /* MapViewAdditions.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = MapViewAdditions.css; sourceTree = "<group>"; };
 		458AD94A039D8149DEDA04E9 /* libkevlar.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libkevlar.a; sourceTree = "<group>"; };
-		458AD959BA4E5D02CA238515 /* PIXPhotoCollectionViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PIXPhotoCollectionViewItem.xib; sourceTree = "<group>"; };
 		458AD9609883CECD8290C8B6 /* PIXSlideshowOptonsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PIXSlideshowOptonsViewController.xib; sourceTree = "<group>"; };
 		458AD96A93428C422C3262D8 /* PIXSidebarScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSidebarScrollView.m; sourceTree = "<group>"; };
 		458AD9705B131DECC624E295 /* buttongrid_facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttongrid_facebook@2x.png"; sourceTree = "<group>"; };
@@ -618,6 +623,7 @@
 		458ADB2A58512D0D81E1400C /* PIXVideoImageOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXVideoImageOverlayView.h; sourceTree = "<group>"; };
 		458ADB31E3568B66E3D3AB62 /* LoadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadOperation.m; sourceTree = "<group>"; };
 		458ADB3843FEA484E231D7E8 /* SimplePhotoItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimplePhotoItem.swift; sourceTree = "<group>"; };
+		458ADB41A7C4BB1BD2B67134 /* RegularPhotoItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RegularPhotoItem.xib; sourceTree = "<group>"; };
 		458ADB472F60235A199FF75D /* PIXSidebarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PIXSidebarViewController.xib; sourceTree = "<group>"; };
 		458ADB7775E55DE386008EF9 /* AppearancePrefsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearancePrefsViewController.swift; sourceTree = "<group>"; };
 		458ADBBC24E135DE94A5E04D /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
@@ -628,7 +634,6 @@
 		458ADC11B7C82C25F0002393 /* AutoSizingVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoSizingVideoView.m; sourceTree = "<group>"; };
 		458ADC12F63763E4EA69A933 /* PhotoStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoStyle.swift; sourceTree = "<group>"; };
 		458ADC2EB8F423821AD43A2A /* PIXPlayVideoHUDWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPlayVideoHUDWindow.m; sourceTree = "<group>"; };
-		458ADC35FEA31B0D8312AF84 /* PIXPhotoCollectionViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhotoCollectionViewItem.m; sourceTree = "<group>"; };
 		458ADC385DD20D2328DC6B8F /* PIXPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPageView.m; sourceTree = "<group>"; };
 		458ADC3988E03CE28BA1D129 /* PIXCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXCollectionView.h; sourceTree = "<group>"; };
 		458ADC39E936C0CABFBCE7FE /* PIXHUDMessageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXHUDMessageController.m; sourceTree = "<group>"; };
@@ -644,6 +649,7 @@
 		458ADC9B40BB250A64BFC7EA /* videoview.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = videoview.xib; sourceTree = "<group>"; };
 		458ADC9B4816E59B01749072 /* arrow-right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-right@2x.png"; sourceTree = "<group>"; };
 		458ADC9C3AE71F62D3DAE869 /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
+		458ADCA4181AC4DA0F59B7CA /* PIXPhotoCollectionViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPhotoCollectionViewItem.h; sourceTree = "<group>"; };
 		458ADCC737C7FC004D5D2434 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		458ADCD3C8485C10E61A9EB2 /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		458ADD063AFA30D8AD2DB197 /* success-backward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success-backward.png"; sourceTree = "<group>"; };
@@ -665,7 +671,6 @@
 		458ADE0CA27821BA7F51E279 /* nophoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nophoto.png; sourceTree = "<group>"; };
 		458ADE2912FB560A5B898EA5 /* buttongrid_copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttongrid_copy.png; sourceTree = "<group>"; };
 		458ADE4D110629F393847F8F /* PIXThumbnailLoadingDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXThumbnailLoadingDelegate.h; sourceTree = "<group>"; };
-		458ADE63C7D11EA15A54EC77 /* PIXPhotoCollectionViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPhotoCollectionViewItem.h; sourceTree = "<group>"; };
 		458ADE6A599607882E77F638 /* PIXPhotoUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPhotoUtils.h; sourceTree = "<group>"; };
 		458ADE7D1E7845E040AC5001 /* temp-portrait.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "temp-portrait.jpg"; sourceTree = "<group>"; };
 		458ADE8122FDF9F4D85CEDFA /* PIXGetAlbumPathsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXGetAlbumPathsOperation.m; sourceTree = "<group>"; };
@@ -692,6 +697,7 @@
 		458ADFBE5E3326D375EAB428 /* PIXFileParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXFileParser.m; sourceTree = "<group>"; };
 		458ADFC33AEE787BA4A70ED6 /* PIXApplicationExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXApplicationExtensions.h; sourceTree = "<group>"; };
 		458ADFC8EBDF8B44C4588481 /* ArchDirectoryObserverTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArchDirectoryObserverTypes.h; sourceTree = "<group>"; };
+		458ADFD6FF726827F4F3B793 /* RegularPhotoItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegularPhotoItem.swift; sourceTree = "<group>"; };
 		458ADFD7749564AA2947E8E3 /* SquareImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SquareImageView.m; sourceTree = "<group>"; };
 		458ADFE50F496C8D4211A65D /* SimplePhotoItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimplePhotoItemView.swift; sourceTree = "<group>"; };
 		458ADFEE6D6FDA5319AB20EE /* PIXFileTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXFileTextField.m; sourceTree = "<group>"; };
@@ -1223,18 +1229,20 @@
 			children = (
 				458ADFF1CD97CD30EF1B2BC0 /* PIXPhotoCollectionViewController.xib */,
 				458ADA4C9A16191E9DED0AD7 /* NSBezierPath+pathUtilities.m */,
-				458ADE63C7D11EA15A54EC77 /* PIXPhotoCollectionViewItem.h */,
 				458AD02AF6B5C2720F53D137 /* PIXPhotoCollectionViewController.m */,
-				458ADC35FEA31B0D8312AF84 /* PIXPhotoCollectionViewItem.m */,
 				458AD252F3AF0389A35912F4 /* NSBezierPath+pathUtilities.h */,
 				458AD22B845F74730E6086A4 /* PIXSelectionLayer.h */,
 				458AD579446C0450949B3DCA /* PIXPhotoCollectionViewController.h */,
 				458AD7722EB84DA229B90B0B /* PIXSelectionLayer.m */,
-				458AD959BA4E5D02CA238515 /* PIXPhotoCollectionViewItem.xib */,
 				458ADC12F63763E4EA69A933 /* PhotoStyle.swift */,
 				458ADB3843FEA484E231D7E8 /* SimplePhotoItem.swift */,
 				458AD4DDCF81B3FE7AD83DD2 /* SimplePhotoItem.xib */,
 				458ADFE50F496C8D4211A65D /* SimplePhotoItemView.swift */,
+				458ADFD6FF726827F4F3B793 /* RegularPhotoItem.swift */,
+				458ADB41A7C4BB1BD2B67134 /* RegularPhotoItem.xib */,
+				458ADCA4181AC4DA0F59B7CA /* PIXPhotoCollectionViewItem.h */,
+				458AD2F8DD082EA4D79DA49F /* PIXPhotoCollectionViewItem.m */,
+				458AD82C214981C9743F83E6 /* PIXPhotoCollectionViewItem.xib */,
 			);
 			path = PhotoBrowserView;
 			sourceTree = "<group>";
@@ -1560,12 +1568,13 @@
 				458AD70293CA8D335694E004 /* MainMenu.xib in Resources */,
 				458AD0A34157691A6BB33AAD /* InfoPlist.strings in Resources */,
 				458AD180BC115721CB9BC296 /* PIXAlbumCollectionViewItem.xib in Resources */,
-				458AD29D6087F52234C716BD /* PIXPhotoCollectionViewItem.xib in Resources */,
 				458ADD424B02E2EFD3F008D6 /* PIXCollectionToolbar.xib in Resources */,
 				458AD93CA9FB9A1A858417C7 /* Localizable.strings in Resources */,
 				458AD5E7813AD54948D98FEA /* Localizable.stringsdict in Resources */,
 				458AD822D55D75B3603B5623 /* AppearancePrefsViewController.xib in Resources */,
 				458AD88787C4D505ABB71837 /* SimplePhotoItem.xib in Resources */,
+				458ADEB3CC15920733AEAF73 /* RegularPhotoItem.xib in Resources */,
+				458AD210A5A20B40FD742C4D /* PIXPhotoCollectionViewItem.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1674,13 +1683,14 @@
 				458AD5B0D0B7827AC88BEAF2 /* MainMenu.xib in Resources */,
 				458AD55533B629BB45DCB1BD /* InfoPlist.strings in Resources */,
 				458AD892258BE9F7BDC6FE52 /* PIXAlbumCollectionViewItem.xib in Resources */,
-				458AD4DB1AA94C2854425F57 /* PIXPhotoCollectionViewItem.xib in Resources */,
 				458ADA347B1449F3CB15ED8A /* PIXCollectionToolbar.xib in Resources */,
 				458ADAEC8D42E95CBA6ED16A /* Localizable.strings in Resources */,
 				458ADAF6F511F512B382DAC5 /* Localizable.stringsdict in Resources */,
 				458ADCB23CCC2C76DBFF2069 /* Images.xcassets in Resources */,
 				458AD006CB3407A33D3B47A9 /* AppearancePrefsViewController.xib in Resources */,
 				458AD01EDC848882298D9A2D /* SimplePhotoItem.xib in Resources */,
+				458AD153C9CBBFDC696CBCC2 /* RegularPhotoItem.xib in Resources */,
+				458ADD91EDDC640B98D01106 /* PIXPhotoCollectionViewItem.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1899,7 +1909,6 @@
 				458ADF27E899EEB4402D83FC /* PIXRoundedProgressIndicator.m in Sources */,
 				458ADFA9CE2B8264C131C64D /* NSBezierPath+pathUtilities.m in Sources */,
 				458ADBE50AA83CF3152E2A12 /* PIXPhotoCollectionViewController.m in Sources */,
-				458AD0315FD66E80E9275040 /* PIXPhotoCollectionViewItem.m in Sources */,
 				458AD1E2489A8C932781A5E7 /* PIXSelectionLayer.m in Sources */,
 				458ADA1BC43ECFE3B2BC08E5 /* PIXCollectionViewItem.m in Sources */,
 				458AD917CE1C936CFE509F90 /* PIXGridView.m in Sources */,
@@ -1952,6 +1961,8 @@
 				458ADC62CD570F3AA553DB7B /* PhotoStyle.swift in Sources */,
 				458AD04D0370ABD1866F64DC /* SimplePhotoItem.swift in Sources */,
 				458ADAD1E08FBF403859C69D /* SimplePhotoItemView.swift in Sources */,
+				458ADF43DD27366FB6912ECA /* RegularPhotoItem.swift in Sources */,
+				458AD320CABE3975F0629D54 /* PIXPhotoCollectionViewItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1985,7 +1996,6 @@
 				458AD9ECE8A05127DCE74B44 /* PIXRoundedProgressIndicator.m in Sources */,
 				458AD3594B74C3E86859DBAE /* NSBezierPath+pathUtilities.m in Sources */,
 				458AD4A52CA45C433D533E97 /* PIXPhotoCollectionViewController.m in Sources */,
-				458ADA6577B94C54A54B64FA /* PIXPhotoCollectionViewItem.m in Sources */,
 				458AD5197A400018C1D6A70F /* PIXSelectionLayer.m in Sources */,
 				458ADD0AAFB4BECFF889329E /* PIXCollectionViewItem.m in Sources */,
 				458ADC5917C9660A39F1D3EF /* PIXGridView.m in Sources */,
@@ -2037,6 +2047,8 @@
 				458AD0D299993914E58C7A81 /* PhotoStyle.swift in Sources */,
 				458AD16456E42F03AB822093 /* SimplePhotoItem.swift in Sources */,
 				458AD8CED4DEB1EA34F8932D /* SimplePhotoItemView.swift in Sources */,
+				458AD55B31E9A091B5149977 /* RegularPhotoItem.swift in Sources */,
+				458AD5468DCA1AFFF22C29D2 /* PIXPhotoCollectionViewItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

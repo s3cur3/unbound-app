@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="293" height="262"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z0b-Vx-AbD" customClass="SimplePhotoItemView" customModule="Unbound" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="20" width="293" height="242"/>
+                </customView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SRH-gT-XRp">
+                    <rect key="frame" x="-2" y="0.0" width="297" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="6cP-f9-2LX">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="SRH-gT-XRp" firstAttribute="top" secondItem="z0b-Vx-AbD" secondAttribute="bottom" constant="4" id="9DE-ZY-26L"/>
+                <constraint firstAttribute="trailing" secondItem="z0b-Vx-AbD" secondAttribute="trailing" id="YbJ-b4-NJf"/>
+                <constraint firstItem="z0b-Vx-AbD" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="brl-BH-feT"/>
+                <constraint firstItem="z0b-Vx-AbD" firstAttribute="centerX" secondItem="SRH-gT-XRp" secondAttribute="centerX" id="dJf-Ua-g5g"/>
+                <constraint firstAttribute="bottom" secondItem="SRH-gT-XRp" secondAttribute="bottom" constant="9" id="hHD-tz-M4n"/>
+                <constraint firstItem="z0b-Vx-AbD" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="vdb-h3-XOh"/>
+            </constraints>
+            <point key="canvasLocation" x="45.5" y="203"/>
+        </customView>
+        <collectionViewItem id="fXE-Ug-xP6" customClass="RegularPhotoItem" customModule="Unbound" customModuleProvider="target">
+            <connections>
+                <outlet property="itemView" destination="z0b-Vx-AbD" id="rVg-kZ-ZkZ"/>
+                <outlet property="titleView" destination="SRH-gT-XRp" id="xSh-uX-ska"/>
+                <outlet property="view" destination="c22-O7-iKe" id="E4b-2G-edh"/>
+            </connections>
+        </collectionViewItem>
+    </objects>
+</document>

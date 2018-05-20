@@ -56,10 +56,13 @@
         [self.titleDateFormatter setDateStyle:NSDateFormatterLongStyle];
         [self.titleDateFormatter setTimeStyle:NSDateFormatterNoStyle];
         self.selectedItemsName = @"photo";
-        
+
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(updateAlbum:) name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(themeChanged:) name:@"backgroundThemeChanged" object:nil];
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(photoViewTypeChanged:) name:kNotePhotoStyleChanged object:nil];
+
+        // initialize the photo view type
+        [self photoViewTypeChanged:nil];
     }
     
     return self;
@@ -520,10 +523,19 @@
 }
 
 - (NSCollectionViewItem *)collectionView:(NSCollectionView *)collectionView itemForRepresentedObjectAtIndexPath:(NSIndexPath *)indexPath {
-    // TODO get the correct item based on self.photoStyle
-    SimplePhotoItem *item = [collectionView makeItemWithIdentifier:@"SimplePhotoItem" forIndexPath:indexPath];
-    item.photo = self.photos[indexPath.item];
-    return item;
+    switch (self.photoStyle) {
+        case PhotoStyleCompact: {
+            SimplePhotoItem *item = [collectionView makeItemWithIdentifier:@"SimplePhotoItem" forIndexPath:indexPath];
+            item.photo = self.photos[indexPath.item];
+            return item;
+        }
+        case PhotoStyleRegular: {
+            RegularPhotoItem *item = [collectionView makeItemWithIdentifier:@"RegularPhotoItem" forIndexPath:indexPath];
+            item.photo = self.photos[indexPath.item];
+            return item;
+        }
+    }
+
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(NSCollectionView *)collectionView {
@@ -581,7 +593,6 @@
         }
         size = NSMakeSize(dimens.width * scale, dimens.height * scale);
     }
-    NSLog(@"size(%lf, %lf)", size.width, size.height);
     return size;
 }
 
