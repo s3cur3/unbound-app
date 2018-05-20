@@ -170,15 +170,9 @@
             - (self.layout.minimumInteritemSpacing * (columnCount - 1))) - 1;
     CGFloat width = actualWidth / columnCount;
     if (width != self.targetItemSize) {
-        // TODO update this to use estimated item size and delegate size.
         self.targetItemSize = width;
-//        self.layout.estimatedItemSize = NSMakeSize(width, width);
-//        self.layout.itemSize = NSMakeSize(width, width);
-//        for (NSCollectionViewItem *item in self.collectionView.visibleItems) {
-//            [item.view updateLayer];
-//        }
         [self.collectionView reloadData];
-        [self.layout invalidateLayout];
+//        [self.layout invalidateLayout];
     }
 }
 
