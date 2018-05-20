@@ -172,7 +172,6 @@
     if (width != self.targetItemSize) {
         self.targetItemSize = width;
         [self.collectionView reloadData];
-//        [self.layout invalidateLayout];
     }
 }
 
@@ -221,10 +220,7 @@
         [self.collectionView scrollPoint:NSZeroPoint];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAlbum:) name:AlbumDidChangeNotification object:_album];
-        
-        // start a date scan for this album
-        //[[PIXFileParser sharedFileParser] dateScanAlbum:self.album];
-        
+
         [self.album checkDates];
 
         [self.collectionView reloadData];
@@ -541,7 +537,6 @@
     return [PIXPhotoCollectionViewItemView dragImageForPhotos:photos count:indexPaths.count size:NSMakeSize(150, 150)];
 }
 
-// TODO This isn't currently working.
 - (NSSize)collectionView:(NSCollectionView *)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath; {
     NSSize size = NSZeroSize;
     PIXPhoto *photo = self.photos[indexPath.item];
