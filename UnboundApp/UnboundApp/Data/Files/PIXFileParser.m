@@ -1413,7 +1413,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
 
 
 
--(NSArray *) observedDirectories
+-(NSArray<NSURL *> *) observedDirectories
 {
     if (_observedDirectories==nil) {
         
@@ -1431,7 +1431,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
         // otherwise loop through and create NSUrls from the strings
         else
         {
-            NSMutableArray * urlArray = [NSMutableArray new];
+            NSMutableArray<NSURL *> * urlArray = [NSMutableArray new];
             
             for(NSData * bookmark in bookmarkArray)
             {

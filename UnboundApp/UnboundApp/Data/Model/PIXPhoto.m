@@ -11,7 +11,7 @@
 #import "PIXPhoto.h"
 #import "PIXAlbum.h"
 #import "PIXAppDelegate.h"
-#import "PIXMainWindowController.h"
+#import "Unbound-Swift.h"
 //#import "PIXAppDelegate+CoreDataUtils.h"
 #import "MakeThumbnailOperation.h"
 #import "PIXDefines.h"
@@ -56,6 +56,8 @@ const CGFloat kThumbnailSize = 370.0f;
 @dynamic fileSize;
 @dynamic latitude;
 @dynamic longitude;
+@dynamic width;
+@dynamic height;
 
 @synthesize cancelThumbnailLoadOperation;
 @synthesize cancelThumbnailLoadOperationDelayFlag;
@@ -505,9 +507,7 @@ const CGFloat kThumbnailSize = 370.0f;
                 // this seems to perform a little faster than [NSImage initWithContentsOfFile:] 
                 NSData * imgData = [NSData dataWithContentsOfFile:imagePath];
                 NSImage * thumb = [[NSImage alloc] initWithData:imgData];
-                
-                
-                
+
                 if(thumb != nil)
                 {
                     
@@ -864,7 +864,7 @@ const CGFloat kThumbnailSize = 370.0f;
     __weak PIXPhoto *weakSelf = self;
     
     self.fastThumbLoad = [NSBlockOperation blockOperationWithBlock:^{
-        
+        DLog(@"Fast loading thumb.")
         
         if (weakSelf == nil || aPath==nil || weakSelf.cancelThumbnailLoadOperation==YES) {
             DLog(@"thumbnail operation completed after object was dealloced or canceled - return");
@@ -909,8 +909,13 @@ const CGFloat kThumbnailSize = 370.0f;
             }
 
             // keep the aspect ratio
+            size_t nativeWidth = CGImageGetWidth(cgImage);
+            size_t nativeHeight = CGImageGetHeight(cgImage);
+            self.width = @(nativeWidth);
+            self.height = @(nativeHeight);
+
             NSSize size;
-            float aspect = (float) CGImageGetWidth(cgImage) / CGImageGetHeight(cgImage);
+            float aspect = (float) nativeWidth / nativeHeight;
             if (aspect > 1.0f) {
                 size = NSMakeSize(kThumbnailSize, kThumbnailSize * (1.0f / aspect));
             } else {
@@ -977,6 +982,19 @@ const CGFloat kThumbnailSize = 370.0f;
                 [[PIXFileParser sharedFileParser] decrementWorking];
                 return;
             }
+
+            // get the size
+            NSDictionary *options = @{(NSString *) kCGImageSourceShouldCache: @(NO)};
+            NSDictionary *properties = (__bridge NSDictionary *) CGImageSourceCopyPropertiesAtIndex(imageSource, 0, (__bridge CFDictionaryRef)options);
+            if (properties) {
+                NSNumber *width = properties[(NSString *)kCGImagePropertyPixelWidth];
+                NSNumber *height = properties[(NSString *)kCGImagePropertyPixelHeight];
+                if (width != nil && height != nil) {
+                    self.width = width;
+                    self.height = height;
+                    [self.managedObjectContext save:nil];
+                }
+            }
             
             // Now, compute the thumbnail
             image = [[weakSelf class] makeThumbnailImageFromImageSource:imageSource always:NO];
@@ -990,7 +1008,7 @@ const CGFloat kThumbnailSize = 370.0f;
                 
                 // save the thubm to memory
                 [weakSelf setThumbnailImage:image];
-                
+
                 //[self performSelectorOnMainThread:@selector(postPhotoUpdatedNote) withObject:nil waitUntilDone:NO];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self postPhotoUpdatedNote];
@@ -999,6 +1017,7 @@ const CGFloat kThumbnailSize = 370.0f;
             
             // we've finished updating the ui with the image, do everythinge else at a lower priority
             self.slowThumbLoad = [NSBlockOperation blockOperationWithBlock:^{
+                NSLog(@"slow loading thumbnail");
                 
                 // if the load was cancelled then bail
                 if (weakSelf.cancelThumbnailLoadOperation==YES) {
@@ -1032,9 +1051,9 @@ const CGFloat kThumbnailSize = 370.0f;
                 {
                     image = [[weakSelf class] makeThumbnailImageFromImageSource:imageSource always:YES];
                     //NSBitmapImageRep *rep = [[image representations] objectAtIndex: 0];
-                    
-                    
-                    
+
+                    NSLog(@"Resized image");
+
                     // tell the main thread we're done
                     if(image)
                     {
@@ -1059,9 +1078,7 @@ const CGFloat kThumbnailSize = 370.0f;
                 // now create a jpeg representation:
                 NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData:data];
                 
-                NSDictionary *imageProperties = @{NSImageCompressionFactor : [NSNumber numberWithFloat:0.6],
-                                                  //NSImageProgressive : [NSNumber numberWithBool:YES]
-                                                  };
+                NSDictionary *imageProperties = @{NSImageCompressionFactor : @0.6F};
                 
                 data = [imageRep representationUsingType:NSJPEGFileType properties:imageProperties];
                 
@@ -1148,7 +1165,8 @@ const CGFloat kThumbnailSize = 370.0f;
     {
         [self.fastThumbLoad setQueuePriority:NSOperationQueuePriorityNormal];
     }
-    
+
+    DLog(@"Submitting thumb load.")
     [[self sharedThumbnailLoadQueue] addOperation:self.fastThumbLoad];
 }
 
@@ -1180,33 +1198,17 @@ const CGFloat kThumbnailSize = 370.0f;
     
 }
 
+- (NSSize) dimensions {
+    if (self.width == nil || [self.width isEqualToNumber:@0] || self.height == nil || [self.height isEqualToNumber:@0]) {
+        [self findExifData:YES];
+    }
+    return NSMakeSize(self.width.floatValue, self.height.floatValue);
+}
+
 -(NSDate *)findDisplayDate
 {
-    // if we don't have exif data already then load it right now
-    if(self.exifData == nil)
-    {
-        NSURL * imageURL = nil;
-        CGImageSourceRef imageSrc = nil;
-        
-        if(self.path)
-        {
-            imageURL = [NSURL fileURLWithPath:self.path];
-            imageSrc = CGImageSourceCreateWithURL((__bridge CFURLRef)imageURL, nil);
-        }
-        
-        if (imageSrc!=nil)
-        {
-            // get the exif data
-            CFDictionaryRef cfDict = CGImageSourceCopyPropertiesAtIndex(imageSrc, 0, nil);
-            NSDictionary * exif = (__bridge NSDictionary *)(cfDict);
-            
-            
-            [self forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
-            
-            CFRelease(imageSrc);
-            if(cfDict) CFRelease(cfDict);
-        }
-    }
+    // load exif data if we need to
+    [self findExifData:NO];
     
     // check if we have a dateTaken
     if(self.dateTaken)
@@ -1220,7 +1222,12 @@ const CGFloat kThumbnailSize = 370.0f;
 
 -(void)findExifData
 {
-    if(self.exifData != nil) return;
+    [self findExifData:NO];
+}
+
+-(void)findExifData:(BOOL)force
+{
+    if(!force && self.exifData != nil) return;
     
     NSURL * imageURL = nil;
     CGImageSourceRef imageSrc = nil;
@@ -1234,14 +1241,15 @@ const CGFloat kThumbnailSize = 370.0f;
     if (imageSrc!=nil)
     {
         // get the exif data
-        CFDictionaryRef cfDict = CGImageSourceCopyPropertiesAtIndex(imageSrc, 0, nil);
-        NSDictionary * exif = (__bridge NSDictionary *)(cfDict);
+        NSDictionary *options = @{(NSString *) kCGImageSourceShouldCache: @(NO)};
+        CFDictionaryRef cfDict = CGImageSourceCopyPropertiesAtIndex(imageSrc, 0, (__bridge CFDictionaryRef)options);
+        NSDictionary *exif = (__bridge NSDictionary *) cfDict;
         
         // now set it
         [self forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
  
         CFRelease(imageSrc);
-        if(cfDict) CFRelease(cfDict);
+        if (cfDict) CFRelease(cfDict);
     }
 
  }
@@ -1298,8 +1306,17 @@ const CGFloat kThumbnailSize = 370.0f;
             if ([longRef isEqualToString: @"W"]) {
                 longitude = -longitude;
             }
-            [self setLatitude: [NSNumber numberWithDouble: latitude]];
-            [self setLongitude: [NSNumber numberWithDouble: longitude]];
+            [self setLatitude:@(latitude)];
+            [self setLongitude:@(longitude)];
+        }
+
+        // set the dimensions if they haven't been set by the actual image
+
+        if (self.width == nil || [self.width isEqualToNumber:@0]) {
+            self.width = newExifData[(NSString *)kCGImagePropertyPixelWidth];
+        }
+        if (self.height == nil || [self.height isEqualToNumber:@0]) {
+            self.height = newExifData[(NSString *)kCGImagePropertyPixelHeight];
         }
     }
 }

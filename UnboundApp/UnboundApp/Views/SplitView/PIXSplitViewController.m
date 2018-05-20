@@ -9,7 +9,7 @@
 #import "PIXSplitViewController.h"
 #import "PIXSidebarViewController.h"
 #import "PIXAppDelegate.h"
-#import "PIXMainWindowController.h"
+#import "Unbound-Swift.h"
 #import "PIXCustomShareSheetViewController.h"
 #import "PIXShareManager.h"
 #import "PIXFileManager.h"

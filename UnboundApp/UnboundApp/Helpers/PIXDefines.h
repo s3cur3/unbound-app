@@ -46,6 +46,15 @@
 
 #define kDeepScanIncompleteKey @"deepScanIncomplete"
 
+//MARK Notifications
+#define kNotePhotoStyleChanged @"photoStyleChanged"
+
+//MARK Preference Keys
+#define kPrefPhotoStyle @"photoStyle"
+#define kPrefSupressDeleteWarning @"PIX_supressDeleteWarning"
+#define kPrefSupressAlbumDeleteWarning @"PIX_supressAlbumDeleteWarning"
+
+
 // key for obtaining the path of an image field
 #define kPathKey @"path"
 
@@ -78,7 +87,7 @@
 // key for the trial period expiration user default -- obfuscate this very slightly
 #define kTrialExpirationDate @"photoTimeInterval"
 
-#define FFString(msg, description) NSLocalizedStringFromTableInBundle(msg, @"Unbound", [NSBundle bundleForClass:[PIXMainWindowController class]], description)
+#define FFString(msg, description) NSLocalizedStringFromTableInBundle(msg, @"Unbound", [NSBundle bundleForClass:[MainWindowController class]], description)
 
 // ===========================
 // = Constant Localized NSStrings =

@@ -41,7 +41,7 @@
 		1D4A1DCC167AE1A500C9A895 /* PIXMainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DCB167AE1A500C9A895 /* PIXMainWindowController.m */; };
 		1D4A1DD0167AE22A00C9A895 /* PIXInfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DCE167AE22A00C9A895 /* PIXInfoWindowController.m */; };
 		1D4A1DD1167AE22A00C9A895 /* PIXInfoWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A1DCF167AE22A00C9A895 /* PIXInfoWindowController.xib */; };
-		1D4A1DD4167AEEDE00C9A895 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DD3167AEEDE00C9A895 /* Preferences.m */; };
+		1D4A1DD4167AEEDE00C9A895 /* preferences.window.title.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DD3167AEEDE00C9A895 /* preferences.window.title.m */; };
 		1D4A1E00167BEAF300C9A895 /* PIXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DFF167BEAF200C9A895 /* PIXViewController.m */; };
 		1D4A1E03167BEC1800C9A895 /* PIXNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E02167BEC1700C9A895 /* PIXNavigationController.m */; };
 		1D4A1E08167C056D00C9A895 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4A1E07167C056C00C9A895 /* QuartzCore.framework */; };
@@ -110,7 +110,7 @@
 		8C28605C17308566009A0B35 /* PIXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2F861167ABE87008AC0F7 /* PIXAppDelegate.m */; };
 		8C28605D17308566009A0B35 /* PIXMainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DCB167AE1A500C9A895 /* PIXMainWindowController.m */; };
 		8C28605E17308566009A0B35 /* PIXInfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DCE167AE22A00C9A895 /* PIXInfoWindowController.m */; };
-		8C28605F17308566009A0B35 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DD3167AEEDE00C9A895 /* Preferences.m */; };
+		8C28605F17308566009A0B35 /* preferences.window.title.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DD3167AEEDE00C9A895 /* preferences.window.title.m */; };
 		8C28606017308566009A0B35 /* PIXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1DFF167BEAF200C9A895 /* PIXViewController.m */; };
 		8C28606117308566009A0B35 /* PIXNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E02167BEC1700C9A895 /* PIXNavigationController.m */; };
 		8C28606217308566009A0B35 /* PIXSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D4A1E2E167D2D8E00C9A895 /* PIXSplitViewController.m */; };
@@ -494,8 +494,8 @@
 		1D4A1DCD167AE22A00C9A895 /* PIXInfoWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXInfoWindowController.h; sourceTree = "<group>"; };
 		1D4A1DCE167AE22A00C9A895 /* PIXInfoWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXInfoWindowController.m; sourceTree = "<group>"; };
 		1D4A1DCF167AE22A00C9A895 /* PIXInfoWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PIXInfoWindowController.xib; sourceTree = "<group>"; };
-		1D4A1DD2167AEEDE00C9A895 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
-		1D4A1DD3167AEEDE00C9A895 /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; };
+		1D4A1DD2167AEEDE00C9A895 /* preferences.window.title.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = preferences.window.title.h; sourceTree = "<group>"; };
+		1D4A1DD3167AEEDE00C9A895 /* preferences.window.title.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = preferences.window.title.m; sourceTree = "<group>"; };
 		1D4A1DD6167AF00000C9A895 /* PIXDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXDefines.h; sourceTree = "<group>"; };
 		1D4A1DFE167BEAF200C9A895 /* PIXViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXViewController.h; sourceTree = "<group>"; };
 		1D4A1DFF167BEAF200C9A895 /* PIXViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXViewController.m; sourceTree = "<group>"; };
@@ -981,12 +981,12 @@
 			name = AlbumView;
 			sourceTree = "<group>";
 		};
-		1D4A1DD5167AEF4A00C9A895 /* Preferences */ = {
+		1D4A1DD5167AEF4A00C9A895 /* preferences.window.title */ = {
 			isa = PBXGroup;
 			children = (
 				8C4B80F416BB3D5000C7E8F4 /* MASPreferences */,
-				1D4A1DD2167AEEDE00C9A895 /* Preferences.h */,
-				1D4A1DD3167AEEDE00C9A895 /* Preferences.m */,
+				1D4A1DD2167AEEDE00C9A895 /* preferences.window.title.h */,
+				1D4A1DD3167AEEDE00C9A895 /* preferences.window.title.m */,
 				8C4B80F516BB3D8900C7E8F4 /* GeneralPreferencesViewController.h */,
 				8C4B80F616BB3D8A00C7E8F4 /* GeneralPreferencesViewController.m */,
 				8C4B80F716BB3D8A00C7E8F4 /* GeneralPreferencesView.xib */,
@@ -997,7 +997,7 @@
 				8CE8F62316BD8C9E00DC6014 /* DebugPreferencesViewController.m */,
 				8CE8F62416BD8C9E00DC6014 /* DebugPrefrencesViewController.h */,
 			);
-			name = Preferences;
+			name = preferences.window.title;
 			sourceTree = "<group>";
 		};
 		1D4A1DD7167AFB8600C9A895 /* Model */ = {
@@ -1164,7 +1164,7 @@
 				1D4A1DD7167AFB8600C9A895 /* Model */,
 				1D1419A5167FC49100A8A920 /* Windows */,
 				1D1419A6167FC50100A8A920 /* Views */,
-				1D4A1DD5167AEF4A00C9A895 /* Preferences */,
+				1D4A1DD5167AEF4A00C9A895 /* preferences.window.title */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -1654,7 +1654,7 @@
 				1DB2F862167ABE87008AC0F7 /* PIXAppDelegate.m in Sources */,
 				1D4A1DCC167AE1A500C9A895 /* PIXMainWindowController.m in Sources */,
 				1D4A1DD0167AE22A00C9A895 /* PIXInfoWindowController.m in Sources */,
-				1D4A1DD4167AEEDE00C9A895 /* Preferences.m in Sources */,
+				1D4A1DD4167AEEDE00C9A895 /* preferences.window.title.m in Sources */,
 				1D4A1E00167BEAF300C9A895 /* PIXViewController.m in Sources */,
 				1D4A1E03167BEC1800C9A895 /* PIXNavigationController.m in Sources */,
 				1D4A1E30167D2D8F00C9A895 /* PIXSplitViewController.m in Sources */,
@@ -1741,7 +1741,7 @@
 				8C28605C17308566009A0B35 /* PIXAppDelegate.m in Sources */,
 				8C28605D17308566009A0B35 /* PIXMainWindowController.m in Sources */,
 				8C28605E17308566009A0B35 /* PIXInfoWindowController.m in Sources */,
-				8C28605F17308566009A0B35 /* Preferences.m in Sources */,
+				8C28605F17308566009A0B35 /* preferences.window.title.m in Sources */,
 				8C28606017308566009A0B35 /* PIXViewController.m in Sources */,
 				8C28606117308566009A0B35 /* PIXNavigationController.m in Sources */,
 				8C28606217308566009A0B35 /* PIXSplitViewController.m in Sources */,

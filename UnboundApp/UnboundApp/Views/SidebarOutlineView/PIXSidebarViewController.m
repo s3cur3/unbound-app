@@ -16,7 +16,7 @@
 #import "PIXAlbum.h"
 #import "PIXPhoto.h"
 #import "PIXDefines.h"
-#import "PIXMainWindowController.h"
+#import "Unbound-Swift.h"
 
 @interface PIXSidebarViewController ()
 

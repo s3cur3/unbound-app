@@ -12,7 +12,7 @@
 #import "PIXPhoto.h"
 #import "PIXDefines.h"
 #import "PIXAppDelegate.h"
-#import "PIXMainWindowController.h"
+#import "Unbound-Swift.h"
 #import "PIXPageViewController.h"
 #import <AVKit/AVKit.h>
 

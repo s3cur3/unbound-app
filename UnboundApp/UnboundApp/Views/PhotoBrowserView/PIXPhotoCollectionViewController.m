@@ -21,13 +21,18 @@
 #import "PIXCollectionView.h"
 #import "Unbound-Swift.h"
 
-@interface PIXPhotoCollectionViewController () <NSCollectionViewDelegate, NSCollectionViewDataSource>
+@interface PIXPhotoCollectionViewController () <NSCollectionViewDelegate, NSCollectionViewDataSource, NSCollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) NSArray<PIXPhoto *> *photos;
 @property (nonatomic, strong) PIXPhotoCollectionViewItem *clickedItem;
 @property(nonatomic, strong) NSCollectionViewFlowLayout *layout;
 @property(nonatomic,strong) NSDateFormatter * titleDateFormatter;
 @property CGFloat startPinchZoom;
+@property CGFloat itemSize;
+@property CGFloat targetItemSize;
+@property PhotoStyle photoStyle;
+
+- (void)scrollContainerFrameDidChange;
 
 @end
 
@@ -50,8 +55,8 @@
         self.selectedItemsName = @"photo";
         
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(updateAlbum:) name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
-
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(themeChanged:) name:@"backgroundThemeChanged" object:nil];
+        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(photoViewTypeChanged:) name:kNotePhotoStyleChanged object:nil];
     }
     
     return self;
@@ -66,12 +71,17 @@
     self.toolbar.collectionView = self.collectionView;
 
     self.layout = [[NSCollectionViewFlowLayout alloc] init];
+    self.layout.minimumInteritemSpacing = 10;
+    self.layout.minimumLineSpacing = 10;
     self.layout.sectionInset = NSEdgeInsetsMake(10, 10, 10, 10);
-    self.layout.minimumInteritemSpacing = 0;
-    self.layout.minimumLineSpacing = 0;
     self.collectionView.collectionViewLayout = self.layout;
 
     self.toolbar.collectionView = self.collectionView;
+
+    [NSNotificationCenter.defaultCenter addObserver:self
+                                           selector:@selector(scrollContainerFrameDidChange)
+                                               name:NSViewFrameDidChangeNotification
+                                             object:self.scrollView];
 
     self.view.wantsLayer = YES;
     self.collectionView.wantsLayer = YES;
@@ -152,16 +162,44 @@
     [super keyDown:event];
 }
 
-// send a size between 0 and 1 (will be transformed into appropriate sizes)
--(void)setThumbSize:(CGFloat)size
-{
-    // sizes mapped between 140 and 400
-    float transformedSize = (float) rint(140 + (260 * size));
-    self.layout.itemSize = NSMakeSize(transformedSize, transformedSize);
-    for (NSCollectionViewItem *item in self.collectionView.visibleItems) {
-        [item.view updateLayer];
+-(void)updateItemDimensions {
+    CGFloat columnCount = (int) (self.scrollView.frame.size.width / (140  + (self.itemSize * 260)));
+    CGFloat actualWidth = (self.scrollView.frame.size.width
+            - self.layout.sectionInset.left
+            - self.layout.sectionInset.right
+            - (self.layout.minimumInteritemSpacing * (columnCount - 1))) - 1;
+    CGFloat width = actualWidth / columnCount;
+    if (width != self.targetItemSize) {
+        self.targetItemSize = width;
+        [self.collectionView reloadData];
     }
-    
+}
+
+// send a size between 0 and 1 (will be transformed into appropriate sizes)
+-(void)setThumbSize:(CGFloat)size {
+    // Instead of mapping directly to thumbnail sizes, this value will map to number of
+    // columns, larger sizes meaning smaller number of columns. The image sizes will
+    // roughly equate to 140-400
+    self.itemSize = size;
+    [self updateItemDimensions];
+}
+
+-(void)scrollContainerFrameDidChange {
+    [self updateItemDimensions];
+}
+
+- (void)photoViewTypeChanged:(NSNotification *)note; {
+    NSString *styleName = [NSUserDefaults.standardUserDefaults stringForKey:kPrefPhotoStyle];
+    if (styleName) {
+        if ([styleName isEqualToString:@"Compact"]) {
+            self.photoStyle = PhotoStyleCompact;
+        } else if ([styleName isEqualToString:@"Regular"]) {
+            self.photoStyle = PhotoStyleRegular;
+        } else if ([styleName isEqualToString:@"Detailed"]) {
+            self.photoStyle = PhotoStyleDetailed;
+        }
+        [self.collectionView reloadData];
+    }
 }
 
 #pragma mark - Album
@@ -182,10 +220,7 @@
         [self.collectionView scrollPoint:NSZeroPoint];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAlbum:) name:AlbumDidChangeNotification object:_album];
-        
-        // start a date scan for this album
-        //[[PIXFileParser sharedFileParser] dateScanAlbum:self.album];
-        
+
         [self.album checkDates];
 
         [self.collectionView reloadData];
@@ -455,8 +490,9 @@
 }
 
 - (NSCollectionViewItem *)collectionView:(NSCollectionView *)collectionView itemForRepresentedObjectAtIndexPath:(NSIndexPath *)indexPath {
-    PIXPhotoCollectionViewItem *item = [collectionView makeItemWithIdentifier:@"PIXPhotoCollectionViewItem" forIndexPath:indexPath];
-    item.representedObject = self.photos[indexPath.item];
+    // TODO get the correct item based on self.photoStyle
+    SimplePhotoItem *item = [collectionView makeItemWithIdentifier:@"SimplePhotoItem" forIndexPath:indexPath];
+    item.photo = self.photos[indexPath.item];
     return item;
 }
 
@@ -499,6 +535,24 @@
         if (++i > 3) break;
     }
     return [PIXPhotoCollectionViewItemView dragImageForPhotos:photos count:indexPaths.count size:NSMakeSize(150, 150)];
+}
+
+- (NSSize)collectionView:(NSCollectionView *)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath; {
+    NSSize size = NSZeroSize;
+    PIXPhoto *photo = self.photos[indexPath.item];
+    NSSize dimens = photo.dimensions;
+    NSSize cellDimens = NSMakeSize(self.targetItemSize, self.targetItemSize);
+    if (dimens.width != 0 && dimens.height != 0) {
+        CGFloat scale;
+        if (dimens.width > dimens.height) {
+            scale = cellDimens.width / dimens.width;
+        } else {
+            scale = cellDimens.height / dimens.height;
+        }
+        size = NSMakeSize(dimens.width * scale, dimens.height * scale);
+    }
+    NSLog(@"size(%lf, %lf)", size.width, size.height);
+    return size;
 }
 
 #pragma mark - Selection

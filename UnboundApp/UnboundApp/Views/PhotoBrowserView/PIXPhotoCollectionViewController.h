@@ -9,8 +9,8 @@
 #import "PIXCollectionViewController.h"
 #import "PIXPageViewController.h"
 
-@class PIXAlbum;
 @class PIXSplitViewController;
+
 
 @interface PIXPhotoCollectionViewController : PIXCollectionViewController <PIXPageViewControllerDelegate>
 
@@ -20,8 +20,18 @@
 // send a size between 0 and 1 (will be transformed into appropriate sizes)
 -(void)setThumbSize:(CGFloat)size;
 
+- (void)photoViewTypeChanged:(NSNotification *)note;
+
 //PIXPageViewControllerDelegate
 //-(void)pagerDidMoveToPhotoAtIndex:(NSUInteger)index;
 
 - (void)selectFirstItem;
+
+- (void)collectionItemViewDoubleClick:(id)sender;
+
 @end
+
+@class PIXAlbum;
+@class PIXSplitViewController;
+
+#import "PIXPageViewController.h"

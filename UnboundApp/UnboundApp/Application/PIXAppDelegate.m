@@ -9,19 +9,12 @@
 #import "PIXAppDelegate.h"
 //#import "PIXAppDelegate+CoreDataUtils.h"
 #import "PIXInfoWindowController.h"
-#import "PIXMainWindowController.h"
-
 #import "Unbound-Swift.h"
- 
+
 #import "Preferences.h"
 #import "PIXFileParser.h"
 #import "PIXFileManager.h"
 #import "PIXDefines.h"
-
-#import "MASPreferencesWindowController.h"
-#import "GeneralPreferencesViewController.h"
-#import "AdvancedPreferencesViewController.h"
-#import "DebugPrefrencesViewController.h"
 
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
@@ -128,7 +121,7 @@
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photosFinishedLoading:) name:SearchDidFinishNotification object:self.spotLightFetchController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminate:) name:NSApplicationWillTerminateNotification object:nil];
 
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kAppFirstRun]==YES)
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kAppFirstRun])
     {
         [self showIntroWindow:self];
 
@@ -311,41 +304,13 @@
 
 - (IBAction)openPreferences:(id)sender
 {
-    NSWindowController * prefWindow = self.preferencesWindowController;
-    [prefWindow showWindow:sender];
+    [self.preferencesWindowController showWindow:sender];
 }
 
-- (NSWindowController *)preferencesWindowController
-{
-    //if (_preferencesWindowController == nil)
-    //{
-        NSViewController *generalViewController = [[GeneralPreferencesViewController alloc] init];
-        //NSViewController *advancedViewController = [[AdvancedPreferencesViewController alloc] init];
-        
-
-        NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, nil];
-        
-        
-        BOOL debug = NO;
-        // add the debug preferences pane if we're on a debug build
-#ifdef DEBUG
-        
-        //debug = YES;
-#endif
-        
-        if(debug || [NSEvent modifierFlags] & NSAlternateKeyMask)
-        {
-            NSViewController *debugController = [[DebugPrefrencesViewController alloc] init];
-            controllers = [controllers arrayByAddingObject:debugController];
-        }
-        
-        
-        // To add a flexible space between General and Advanced preference panes insert [NSNull null]:
-        //     NSArray *controllers = [[NSArray alloc] initWithObjects:generalViewController, [NSNull null], advancedViewController, nil];
-        
-        NSString *title = NSLocalizedString(@"Preferences", @"Common title for Preferences window");
-        _preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:controllers title:title];
-    //}
+- (NSWindowController *)preferencesWindowController {
+    if (_preferencesWindowController == nil) {
+        _preferencesWindowController = [PreferencesWindowController create];
+    }
     return _preferencesWindowController;
 }
 
@@ -369,13 +334,11 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 {
         
     if (self.mainWindowController == nil) {
-        self.mainWindowController = [[PIXMainWindowController alloc] initWithWindowNibName:@"PIXMainWindow"];
-        //mainWindowController = (PIXMainWindowController *)[self.window windowController];
+        self.mainWindowController = [[MainWindowController alloc] initWithWindowNibName:@"MainWindowController"];
     }
     self.mainWindowController.window.delegate = self;
     [self.mainWindowController showWindow:self];
 }
-
 
 - (NSError *)application:(NSApplication *)application willPresentError:(NSError *)error;
 {
@@ -1047,7 +1010,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 	NSString *useSecondButtonStr = @"Cancel";
     //Possibly offer ability to re-check from alert view?
 	//NSString *useAlternateButtonStr = @"Re-scan";
-    NSString *defaultButtonTitle = @"Open Preferences";
+    NSString *defaultButtonTitle = @"Open preferences.window.title";
 	
 	NSAlert *testAlert = [NSAlert alertWithMessageText:message
                                          defaultButton:defaultButtonTitle

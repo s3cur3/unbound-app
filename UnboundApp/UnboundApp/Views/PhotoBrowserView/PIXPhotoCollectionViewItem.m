@@ -10,6 +10,7 @@
 #import "PIXPhoto.h"
 #import "PIXDefines.h"
 #import "PIXSelectionLayer.h"
+#import "Unbound-Swift.h"
 
 @interface PIXPhotoCollectionViewItem ()
 
@@ -64,6 +65,7 @@
 @property (nonatomic, strong) CALayer * selectionLayer;
 @property (nonatomic, strong) NSImageView * videoLayover;
 @property BOOL isVideo;
+@property PhotoStyle style;
 @end
 
 @implementation PIXPhotoCollectionViewItemView
@@ -104,15 +106,22 @@
     self.imageLayer.borderWidth = 3.0;
     
     // disable all animatsion on the image layer
-    NSMutableDictionary *newActions = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSNull null], @"onOrderIn",
-                                       [NSNull null], @"onOrderOut",
-                                       [NSNull null], @"sublayers",
-                                       [NSNull null], @"contents",
-                                       [NSNull null], @"bounds",
-                                       nil];
+    NSMutableDictionary *newActions = [@{@"onOrderIn": [NSNull null],
+            @"onOrderOut": [NSNull null],
+            @"sublayers": [NSNull null],
+            @"contents": [NSNull null],
+            @"bounds": [NSNull null]} mutableCopy];
     self.imageLayer.actions = newActions;
     self.layer.actions = newActions;
-    
+
+    [[NSNotificationCenter defaultCenter] addObserverForName:kNotePhotoStyleChanged
+                                                      object:self
+                                                       queue:[NSOperationQueue mainQueue]
+                                                  usingBlock:^(NSNotification *note) {
+        NSString *value = [NSUserDefaults.standardUserDefaults valueForKey:kPrefPhotoStyle];
+        NSLog(value);
+    }];
+
     [self.layer addSublayer:self.imageLayer];
     [self setWantsLayer:YES];
 }

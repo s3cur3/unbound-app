@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 @class PIXInfoWindowController;
-@class PIXMainWindowController;
+@class MainWindowController;
 @class PIXAboutWindowController;
 @class PIXFileParser;
 @class PIXAlbum;
@@ -48,7 +48,7 @@
 
 @property (nonatomic, strong) IBOutlet NSMenuItem * progressItem;
 // for MASPreferences class:
-@property (nonatomic, strong) PIXMainWindowController *mainWindowController;
+@property (nonatomic, strong) MainWindowController *mainWindowController;
 @property (nonatomic, strong) NSWindowController * introWindow;
 
 @property (nonatomic, strong) NSWindowController *preferencesWindowController;

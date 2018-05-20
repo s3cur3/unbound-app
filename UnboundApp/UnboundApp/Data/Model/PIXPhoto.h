@@ -35,6 +35,9 @@
 @property (atomic, retain) PIXAlbum *stackPhotoAlbum;
 @property (atomic, retain) NSDictionary * exifData;
 @property (atomic, retain) NSNumber * fileSize;
+@property (atomic, retain) NSNumber *width;
+@property (atomic, retain) NSNumber *height;
+@property (atomic, readonly) NSSize dimensions;
 
 @property (atomic, copy) NSString * thumbnailFilePath;
 
@@ -53,7 +56,7 @@
 -(NSURL *)filePath;
 
 //PIXThumbnailLoadingDelegate methods
--(NSImage *)thumbnailImage;
+//-(NSImage *)thumbnailImage;
 // if this is a faster thumb load image (for the top images in album stacks, so they load at a higher priority)
 -(NSImage *)thumbnailImageFast;
 -(void)cancelThumbnailLoading;
@@ -70,6 +73,7 @@
 -(NSDate *)findDisplayDate;
 
 -(void)findExifData;
+-(void)findExifData:(BOOL)force;
 
 -(void)postPhotoUpdatedNote;
 

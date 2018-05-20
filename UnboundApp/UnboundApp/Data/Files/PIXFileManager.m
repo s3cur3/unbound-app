@@ -17,7 +17,7 @@
 #import "PIXPhoto.h"
 #import <CoreFoundation/CoreFoundation.h>
 #import "PIXDefines.h"
-#import "PIXMainWindowController.h"
+#import "Unbound-Swift.h"
 
 #import "PIXProgressWindowController.h"
 

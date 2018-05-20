@@ -30,7 +30,7 @@ typedef enum {
  */
 
 @property (nonatomic, strong) NSArray *sandboxScopeURLs;
-@property (nonatomic, strong) NSArray *observedDirectories;
+@property (nonatomic, strong) NSArray<NSURL *> *observedDirectories;
 
 
 @property BOOL isWorking;
