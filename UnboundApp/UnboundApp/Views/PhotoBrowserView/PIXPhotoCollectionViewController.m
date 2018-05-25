@@ -22,10 +22,12 @@
 #import "Unbound-Swift.h"
 @import Quartz;
 
+@protocol PhotoItem;
+
 @interface PIXPhotoCollectionViewController () <NSCollectionViewDelegate, NSCollectionViewDataSource, NSCollectionViewDelegateFlowLayout, QLPreviewPanelDataSource>
 
 @property (nonatomic, strong) NSArray<PIXPhoto *> *photos;
-@property (nonatomic, strong) PIXPhotoCollectionViewItem *clickedItem;
+@property (nonatomic, strong) NSObject<PhotoItem> *clickedItem;
 @property(nonatomic, strong) NSCollectionViewFlowLayout *layout;
 @property(nonatomic,strong) NSDateFormatter * titleDateFormatter;
 @property CGFloat startPinchZoom;
@@ -358,7 +360,7 @@
 }
 
 - (void)openItem {
-    [self openItem:self.clickedItem.representedObject];
+    [self openItem:self.clickedItem.photo];
 }
 
 - (void)openInApp {
@@ -417,7 +419,7 @@
     NSPoint localPoint = [self.collectionView convertPoint:event.locationInWindow fromView:nil];
     for (NSCollectionViewItem *item in self.collectionView.visibleItems) {
         if (NSPointInRect(localPoint, item.view.frame)) {
-            self.clickedItem = (PIXPhotoCollectionViewItem *) item;
+            self.clickedItem = item;
             break;
         }
     }
@@ -459,7 +461,7 @@
 
             [menu addItem:[NSMenuItem separatorItem]];
 
-            NSString *defaultAppName = [[PIXFileManager sharedInstance] defaultAppNameForOpeningFileWithPath:((PIXPhoto *) self.clickedItem.representedObject).path];
+            NSString *defaultAppName = [[PIXFileManager sharedInstance] defaultAppNameForOpeningFileWithPath:self.clickedItem.photo.path];
             NSMenuItem *editWithDefault = [[NSMenuItem alloc] init];
             editWithDefault.title = [NSString stringWithFormat:NSLocalizedString(@"menu.edit_with_default", @"Edit with %@"), defaultAppName];
             editWithDefault.action = @selector(openInApp);
@@ -492,7 +494,7 @@
             NSMenuItem *desktopMenuItem = [[NSMenuItem alloc] init];
             desktopMenuItem.title = NSLocalizedString(@"menu.set_desktop_picture", @"Set Desktop Picture");
             desktopMenuItem.action = @selector(setDesktopPicture:);
-            desktopMenuItem.representedObject = self.clickedItem.representedObject;
+            desktopMenuItem.representedObject = self.clickedItem.photo;
             [menu addItem:desktopMenuItem];
 
             [menu addItemWithTitle:NSLocalizedString(@"menu.reveal", @"Reveal in Finder") action:@selector(revealItems) keyEquivalent:@""];

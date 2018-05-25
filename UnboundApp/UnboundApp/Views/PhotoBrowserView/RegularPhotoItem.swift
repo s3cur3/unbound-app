@@ -5,7 +5,7 @@
 
 import Cocoa
 
-class RegularPhotoItem : NSCollectionViewItem {
+class RegularPhotoItem : NSCollectionViewItem, PhotoItem {
 
   let PhotoThumbDidChangeNotification = Notification.Name.init(rawValue: "PhotoThumbDidChangeNotification")
 

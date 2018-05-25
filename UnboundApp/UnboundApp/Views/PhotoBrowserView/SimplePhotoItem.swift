@@ -7,7 +7,7 @@ import Cocoa
 
 let PhotoThumbDidChangeNotification = Notification.Name.init(rawValue: "PhotoThumbDidChangeNotification")
 
-@objc class SimplePhotoItem: NSCollectionViewItem {
+@objc class SimplePhotoItem: NSCollectionViewItem, PhotoItem {
 
   override var isSelected: Bool {
     didSet { self.itemView.selected = isSelected }
