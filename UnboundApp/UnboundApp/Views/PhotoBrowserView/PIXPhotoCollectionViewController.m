@@ -28,8 +28,9 @@
 
 @property (nonatomic, strong) NSArray<PIXPhoto *> *photos;
 @property (nonatomic, strong) NSObject<PhotoItem> *clickedItem;
-@property(nonatomic, strong) NSCollectionViewFlowLayout *layout;
-@property(nonatomic,strong) NSDateFormatter * titleDateFormatter;
+@property (nonatomic, strong) NSCollectionViewFlowLayout *layout;
+@property (nonatomic, strong) NSDateFormatter * titleDateFormatter;
+@property (nonatomic, strong) NSMutableDictionary *prototypes;
 @property CGFloat startPinchZoom;
 @property CGFloat itemSize;
 @property CGFloat targetItemSize;
@@ -54,6 +55,7 @@
     if (self) {
         // Initialization code here.
 
+        self.prototypes = [NSMutableDictionary dictionaryWithCapacity:3];
         self.titleDateFormatter = [[NSDateFormatter alloc] init];
         [self.titleDateFormatter setDateStyle:NSDateFormatterLongStyle];
         [self.titleDateFormatter setTimeStyle:NSDateFormatterNoStyle];
@@ -219,8 +221,6 @@
             self.photoStyle = PhotoStyleCompact;
         } else if ([styleName isEqualToString:@"Regular"]) {
             self.photoStyle = PhotoStyleRegular;
-        } else if ([styleName isEqualToString:@"Detailed"]) {
-            self.photoStyle = PhotoStyleDetailed;
         }
         [self.collectionView reloadData];
     }
@@ -520,24 +520,25 @@
 
 #pragma mark - NSCollectionViewDataSource Methods
 
+- (NSString *)photoItemIdentifier {
+    switch (self.photoStyle) {
+        case PhotoStyleCompact: return @"SimplePhotoItem";
+        case PhotoStyleRegular: return @"RegularPhotoItem";
+    }
+}
+
+- (NSObject<PhotoItem> *)photoItemForObjectAtIndexPath:(NSIndexPath *)indexPath inCollectionView:(NSCollectionView *)collectionView {
+    return [collectionView makeItemWithIdentifier:self.photoItemIdentifier forIndexPath:indexPath];
+}
+
 - (NSInteger)collectionView:(NSCollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.photos.count;
 }
 
 - (NSCollectionViewItem *)collectionView:(NSCollectionView *)collectionView itemForRepresentedObjectAtIndexPath:(NSIndexPath *)indexPath {
-    switch (self.photoStyle) {
-        case PhotoStyleCompact: {
-            SimplePhotoItem *item = [collectionView makeItemWithIdentifier:@"SimplePhotoItem" forIndexPath:indexPath];
-            item.photo = self.photos[indexPath.item];
-            return item;
-        }
-        case PhotoStyleRegular: {
-            RegularPhotoItem *item = [collectionView makeItemWithIdentifier:@"RegularPhotoItem" forIndexPath:indexPath];
-            item.photo = self.photos[indexPath.item];
-            return item;
-        }
-    }
-
+    NSObject<PhotoItem> *item = [self photoItemForObjectAtIndexPath:indexPath inCollectionView:collectionView];
+    item.photo = self.photos[indexPath.item];
+    return item;
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(NSCollectionView *)collectionView {
@@ -569,7 +570,6 @@
     return YES;
 }
 
-
 - (NSImage *)collectionView:(NSCollectionView *)collectionView draggingImageForItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths withEvent:(NSEvent *)event offset:(NSPointPointer)dragImageOffset {
     NSMutableArray<PIXPhoto *> *photos = [NSMutableArray arrayWithCapacity:indexPaths.count];
     int i = 0;
@@ -583,19 +583,30 @@
 
 - (NSSize)collectionView:(NSCollectionView *)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath; {
     NSSize size = NSZeroSize;
-    PIXPhoto *photo = self.photos[indexPath.item];
-    NSSize dimens = photo.dimensions;
-    NSSize cellDimens = NSMakeSize(self.targetItemSize, self.targetItemSize);
-    if (dimens.width != 0 && dimens.height != 0) {
-        CGFloat scale;
-        if (dimens.width > dimens.height) {
-            scale = cellDimens.width / dimens.width;
-        } else {
-            scale = cellDimens.height / dimens.height;
-        }
-        size = NSMakeSize(dimens.width * scale, dimens.height * scale);
+    NSString *identifier = [self photoItemIdentifier];
+    NSObject<PhotoItem> *prototype = self.prototypes[identifier];
+    if (prototype == nil) {
+        prototype = [self photoItemForObjectAtIndexPath:indexPath inCollectionView:collectionView];
+        self.prototypes[identifier] = prototype;
     }
-    return size;
+    prototype.photo = self.photos[indexPath.item];
+    prototype.view.needsLayout = true;
+    [prototype.view layout];
+    return prototype.view.fittingSize;
+
+
+//    NSSize dimens = photo.dimensions;
+//    NSSize cellDimens = NSMakeSize(self.targetItemSize, self.targetItemSize);
+//    if (dimens.width != 0 && dimens.height != 0) {
+//        CGFloat scale;
+//        if (dimens.width > dimens.height) {
+//            scale = cellDimens.width / dimens.width;
+//        } else {
+//            scale = cellDimens.height / dimens.height;
+//        }
+//        size = NSMakeSize(dimens.width * scale, dimens.height * scale);
+//    }
+//    return size;
 }
 
 #pragma mark - Selection
