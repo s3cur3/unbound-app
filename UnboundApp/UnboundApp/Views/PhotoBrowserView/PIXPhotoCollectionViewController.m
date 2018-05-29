@@ -20,8 +20,9 @@
 #import "PIXCollectionToolbar.h"
 #import "PIXCollectionView.h"
 #import "Unbound-Swift.h"
+@import Quartz;
 
-@interface PIXPhotoCollectionViewController () <NSCollectionViewDelegate, NSCollectionViewDataSource, NSCollectionViewDelegateFlowLayout>
+@interface PIXPhotoCollectionViewController () <NSCollectionViewDelegate, NSCollectionViewDataSource, NSCollectionViewDelegateFlowLayout, QLPreviewPanelDataSource>
 
 @property (nonatomic, strong) NSArray<PIXPhoto *> *photos;
 @property (nonatomic, strong) PIXPhotoCollectionViewItem *clickedItem;
@@ -41,6 +42,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
+
+    [self.collectionView addObserver:self forKeyPath:@"selectionIndexPaths" options:0 context:nil];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -92,6 +95,19 @@
     [self updateAlbum:nil];
 }
 
+- (void)dealloc {
+    [self.collectionView removeObserver:self forKeyPath:@"selectionIndexPaths"];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey, id> *)change context:(void *)context {
+
+    if ([keyPath isEqualToString:@"selectionIndexPaths"]) {
+        if ([QLPreviewPanel sharedPreviewPanelExists] && [[QLPreviewPanel sharedPreviewPanel] isVisible]) {
+            [[QLPreviewPanel sharedPreviewPanel] reloadData];
+        }
+    }
+}
+
 -(void)willShowPIXView
 {
     [super willShowPIXView];
@@ -138,6 +154,9 @@
         case 36: // return
         case 76: // enter
             [self openFirstSelectedItem];
+            return;
+        case 49: // space
+            [self togglePreviewPanel];
             return;
     }
 
@@ -305,6 +324,17 @@
     NSSet<NSIndexPath *> *selection = self.collectionView.selectionIndexPaths;
     if (selection.count > 0) {
         [self openItemAtIndexPath:selection.anyObject];
+    }
+}
+
+- (void)togglePreviewPanel {
+    NSSet<NSIndexPath *> *selection = self.collectionView.selectionIndexPaths;
+
+    if ([QLPreviewPanel sharedPreviewPanelExists] && [[QLPreviewPanel sharedPreviewPanel] isVisible]) {
+        [[QLPreviewPanel sharedPreviewPanel] orderOut:nil];
+
+    } else if (selection.count > 0) {
+        [[QLPreviewPanel sharedPreviewPanel] makeKeyAndOrderFront:nil];
     }
 }
 
@@ -737,6 +767,71 @@
      [popover setBehavior:NSPopoverBehaviorTransient];
      [popover showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMaxYEdge];
      */
+}
+
+// MARK: - QLPreviewPanelDataSource
+
+- (NSInteger)numberOfPreviewItemsInPreviewPanel:(QLPreviewPanel *)panel {
+    NSSet<NSIndexPath *> *selection = self.collectionView.selectionIndexPaths;
+    return selection.count > 0 ? 1 : 0;
+}
+
+- (id<QLPreviewItem>)previewPanel:(QLPreviewPanel *)panel previewItemAtIndex:(NSInteger)index {
+    NSSet<NSIndexPath *> *selection = self.collectionView.selectionIndexPaths;
+
+    if (selection.count > 0) {
+        NSInteger index = selection.anyObject.item;
+        if (index >= 0 && index < self.photos.count) {
+            PIXPhoto *photo = self.photos[index];
+            return photo.filePath;
+        }
+    }
+
+    return nil;
+}
+
+- (BOOL)acceptsPreviewPanelControl:(QLPreviewPanel *)panel {
+    return true;
+}
+
+- (void)beginPreviewPanelControl:(QLPreviewPanel *)panel {
+    panel.dataSource = self;
+    panel.delegate = self;
+}
+
+- (void)endPreviewPanelControl:(QLPreviewPanel *)panel {
+    panel.dataSource = nil;
+    panel.delegate = nil;
+}
+
+// MARK: - QLPreviewPanelDelegate
+
+- (BOOL)previewPanel:(QLPreviewPanel *)panel handleEvent:(NSEvent *)event {
+    // handle user changing selection via d-pad
+    switch (event.keyCode) {
+        case 123: // left
+        case 124: // right
+        case 126: // up
+        case 125: // down
+            if (event.type == NSEventTypeKeyDown) {
+                [self.collectionView keyDown:event];
+
+            } else if (event.type == NSEventTypeKeyUp) {
+                [self.collectionView keyUp:event];
+
+            } else {
+                break;
+            }
+
+            // don't need to manually reload the panel here, because we do that via KVO of the collection view's selection
+
+            return YES;
+
+        default:
+            break;
+    }
+
+    return NO;
 }
 
 @end
