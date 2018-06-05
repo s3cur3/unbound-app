@@ -27,6 +27,8 @@ let PhotoThumbDidChangeNotification = Notification.Name.init(rawValue: "PhotoThu
         return
       }
 
+      self.representedObject = photo
+
       NotificationCenter.default.addObserver(forName: PhotoThumbDidChangeNotification,
               object: photo!,
               queue: OperationQueue.main) { notification in

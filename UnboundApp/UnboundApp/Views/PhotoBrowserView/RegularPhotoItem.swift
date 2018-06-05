@@ -9,7 +9,6 @@ class RegularPhotoItem : NSCollectionViewItem, PhotoItem {
 
   let PhotoThumbDidChangeNotification = Notification.Name.init(rawValue: "PhotoThumbDidChangeNotification")
 
-
   override var isSelected: Bool {
     didSet { self.itemView.selected = isSelected }
   }
@@ -28,6 +27,8 @@ class RegularPhotoItem : NSCollectionViewItem, PhotoItem {
         self.prepareForReuse()
         return
       }
+
+      self.representedObject = photo
 
       NotificationCenter.default.addObserver(forName: PhotoThumbDidChangeNotification,
               object: photo!,

@@ -24,7 +24,7 @@
 
 @protocol PhotoItem;
 
-@interface PIXPhotoCollectionViewController () <NSCollectionViewDelegate, NSCollectionViewDataSource, NSCollectionViewDelegateFlowLayout, QLPreviewPanelDataSource>
+@interface PIXPhotoCollectionViewController () <NSCollectionViewDelegate, NSCollectionViewDelegateFlowLayout, NSCollectionViewDataSource, QLPreviewPanelDataSource>
 
 @property (nonatomic, strong) NSArray<PIXPhoto *> *photos;
 @property (nonatomic, strong) NSObject<PhotoItem> *clickedItem;
@@ -81,9 +81,9 @@
     self.toolbar.collectionView = self.collectionView;
 
     self.layout = [[NSCollectionViewFlowLayout alloc] init];
-    self.layout.minimumInteritemSpacing = 10;
-    self.layout.minimumLineSpacing = 10;
-    self.layout.sectionInset = NSEdgeInsetsMake(10, 10, 10, 10);
+    self.layout.minimumInteritemSpacing = 2;
+    self.layout.minimumLineSpacing = 2;
+    self.layout.sectionInset = NSEdgeInsetsMake(2, 2, 2, 2);
     self.collectionView.collectionViewLayout = self.layout;
 
     self.toolbar.collectionView = self.collectionView;
@@ -197,6 +197,7 @@
     CGFloat width = actualWidth / columnCount;
     if (width != self.targetItemSize) {
         self.targetItemSize = width;
+        self.layout.itemSize = NSMakeSize(width, width);
         [self.collectionView reloadData];
     }
 }
@@ -583,30 +584,19 @@
 
 - (NSSize)collectionView:(NSCollectionView *)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath; {
     NSSize size = NSZeroSize;
-    NSString *identifier = [self photoItemIdentifier];
-    NSObject<PhotoItem> *prototype = self.prototypes[identifier];
-    if (prototype == nil) {
-        prototype = [self photoItemForObjectAtIndexPath:indexPath inCollectionView:collectionView];
-        self.prototypes[identifier] = prototype;
+    PIXPhoto *photo = self.photos[indexPath.item];
+    NSSize dimens = photo.dimensions;
+    NSSize cellDimens = NSMakeSize(self.targetItemSize, self.targetItemSize);
+    if (dimens.width != 0 && dimens.height != 0) {
+        CGFloat scale;
+        if (dimens.width > dimens.height) {
+            scale = cellDimens.width / dimens.width;
+        } else {
+            scale = cellDimens.height / dimens.height;
+        }
+        size = NSMakeSize(dimens.width * scale, dimens.height * scale);
     }
-    prototype.photo = self.photos[indexPath.item];
-    prototype.view.needsLayout = true;
-    [prototype.view layout];
-    return prototype.view.fittingSize;
-
-
-//    NSSize dimens = photo.dimensions;
-//    NSSize cellDimens = NSMakeSize(self.targetItemSize, self.targetItemSize);
-//    if (dimens.width != 0 && dimens.height != 0) {
-//        CGFloat scale;
-//        if (dimens.width > dimens.height) {
-//            scale = cellDimens.width / dimens.width;
-//        } else {
-//            scale = cellDimens.height / dimens.height;
-//        }
-//        size = NSMakeSize(dimens.width * scale, dimens.height * scale);
-//    }
-//    return size;
+    return size;
 }
 
 #pragma mark - Selection

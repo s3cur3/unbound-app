@@ -73,7 +73,7 @@ class SimplePhotoItemView: NSView {
 
   override func updateLayer() {
     guard let image = self.image else { return }
-    let rect = self.bounds.insetBy(dx: 10, dy: 10)
+    let rect = self.bounds.insetBy(dx: 5.0, dy: 5.0)
     let imageSize = image.size
     var imageFrame = CGRect(x: 0, y: 0, width: imageSize.width, height: imageSize.height)
     if imageSize.width > 0 && imageSize.height > 0 {
@@ -96,7 +96,7 @@ class SimplePhotoItemView: NSView {
     self.imageLayer.frame = imageFrame
 
     if selected {
-      self.selectionLayer.frame = imageFrame.insetBy(dx: -5, dy: -5)
+      self.selectionLayer.frame = imageFrame.insetBy(dx: -5.0, dy: -5.0)
       self.layer!.addSublayer(self.selectionLayer)
     } else {
       self.selectionLayer.removeFromSuperlayer()

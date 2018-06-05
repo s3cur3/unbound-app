@@ -14,24 +14,23 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="z0b-Vx-AbD" customClass="SimplePhotoItemView" customModule="Unbound" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="22" width="293" height="245"/>
+                    <rect key="frame" x="0.0" y="14" width="293" height="253"/>
                 </customView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SRH-gT-XRp">
-                    <rect key="frame" x="129" y="9" width="35" height="13"/>
+                    <rect key="frame" x="129" y="0.0" width="37" height="14"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="6cP-f9-2LX">
-                        <font key="font" metaFont="system" size="10"/>
+                        <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="SRH-gT-XRp" secondAttribute="bottom" constant="9" id="8Jo-XJ-f0G"/>
                 <constraint firstItem="SRH-gT-XRp" firstAttribute="top" secondItem="z0b-Vx-AbD" secondAttribute="bottom" id="GRB-9k-nbc"/>
                 <constraint firstAttribute="trailing" secondItem="z0b-Vx-AbD" secondAttribute="trailing" id="YbJ-b4-NJf"/>
                 <constraint firstItem="z0b-Vx-AbD" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="brl-BH-feT"/>
                 <constraint firstItem="z0b-Vx-AbD" firstAttribute="centerX" secondItem="SRH-gT-XRp" secondAttribute="centerX" id="dJf-Ua-g5g"/>
-                <constraint firstAttribute="bottom" secondItem="SRH-gT-XRp" secondAttribute="bottom" constant="9" id="hHD-tz-M4n"/>
+                <constraint firstAttribute="bottom" secondItem="SRH-gT-XRp" secondAttribute="bottom" id="hHD-tz-M4n"/>
                 <constraint firstItem="z0b-Vx-AbD" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="vdb-h3-XOh"/>
             </constraints>
             <point key="canvasLocation" x="45.5" y="205.5"/>
