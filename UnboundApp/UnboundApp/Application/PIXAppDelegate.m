@@ -153,7 +153,10 @@
         [DevMateKit setupTimeTrial:nil withTimeInterval:kDMTrialWeek];
     }
 #endif
-    
+
+    [NSValueTransformer setValueTransformer:[TextColorForThemeTransformer newInstance]
+                                    forName:@"TextColorForThemeTransformer"];
+
 }
 
 - (IBAction)checkForUpdates:(id)sender

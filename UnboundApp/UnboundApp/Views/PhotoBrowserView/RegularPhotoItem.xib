@@ -17,12 +17,19 @@
                     <rect key="frame" x="0.0" y="14" width="293" height="253"/>
                 </customView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SRH-gT-XRp">
-                    <rect key="frame" x="129" y="0.0" width="37" height="14"/>
+                    <rect key="frame" x="128" y="0.0" width="37" height="14"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="6cP-f9-2LX">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <binding destination="uT6-C6-91a" name="textColor" keyPath="values.backgroundTheme" id="bxd-vt-ih2">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">TextColorForThemeTransformer</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
                 </textField>
             </subviews>
             <constraints>
@@ -42,5 +49,6 @@
                 <outlet property="view" destination="c22-O7-iKe" id="E4b-2G-edh"/>
             </connections>
         </collectionViewItem>
+        <userDefaultsController representsSharedInstance="YES" id="uT6-C6-91a"/>
     </objects>
 </document>
