@@ -8,6 +8,7 @@
 #import "PIXVideoImageOverlayView.h"
 #import "PIXSeperatedSpinnerView.h"
 #import "PIXFileParser.h"
+#import "PIXFileManager.h"
 #import "PIXPhoto.h"
 
 @import MASPreferences;
