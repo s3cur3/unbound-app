@@ -56,12 +56,12 @@
         [self.titleDateFormatter setDateStyle:NSDateFormatterLongStyle];
         [self.titleDateFormatter setTimeStyle:NSDateFormatterNoStyle];
         self.selectedItemsName = @"photo";
-        
+
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(updateAlbum:) name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(themeChanged:) name:@"backgroundThemeChanged" object:nil];
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(photoViewTypeChanged:) name:kNotePhotoStyleChanged object:nil];
     }
-    
+
     return self;
 }
 
@@ -116,7 +116,7 @@
 
     // this will allow droping files into the larger grid view
     [self.collectionView registerForDraggedTypes:@[NSURLPboardType]];
-    
+
     [self updateToolbar];
 }
 
@@ -226,7 +226,7 @@
 {
     if (album != _album) {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:_album];
-        
+
         _album = album;
         self.photos = _album.sortedPhotos;
         [[[PIXAppDelegate sharedAppDelegate] window] setTitle:[self.album title]];
@@ -237,7 +237,7 @@
         [self updateAlbum:nil];
 
         [self.collectionView scrollPoint:NSZeroPoint];
-        
+
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAlbum:) name:AlbumDidChangeNotification object:_album];
 
         [self.album checkDates];
@@ -263,11 +263,11 @@
         NSDate * endDate = [self.album albumDate];
 
         NSCalendar* calendar = [NSCalendar currentCalendar];
-        
+
         unsigned unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
         NSDateComponents* startComponents = [calendar components:unitFlags fromDate:startDate];
         NSDateComponents* endComponents = [calendar components:unitFlags fromDate:endDate];
-        
+
         [self.titleDateFormatter setDateFormat:@"MMMM d, YYYY"];
         if([startComponents year] == [endComponents year])
         {
@@ -275,7 +275,7 @@
             [self.titleDateFormatter setDateFormat:@"MMMM d"];
         }
         NSString * startDateString = [self.titleDateFormatter stringFromDate:startDate];
-        
+
         [self.titleDateFormatter setDateFormat:@"MMMM d, YYYY"];
 
         // if the date goes multiple days print the span
@@ -284,33 +284,33 @@
             NSString * endDateString = [self.titleDateFormatter stringFromDate:endDate];
             gridTitle = [NSString stringWithFormat:@"%@ photos from %@ to %@", photosCount, startDateString, endDateString];
         }
-        
+
         else
         {
             NSString * endDateString = [self.titleDateFormatter stringFromDate:endDate];
             gridTitle = [NSString stringWithFormat:@"%@ photos from %@", photosCount, endDateString];
         }
     }
-    
+
     else if (self.album.photos.count == 1)
     {
         [self.titleDateFormatter setDateStyle:NSDateFormatterLongStyle];
-        
+
         gridTitle = [NSString stringWithFormat:@"%@ photo from %@", photosCount, [self.titleDateFormatter stringFromDate:self.album.albumDate]];
     }
-    
+
     else
     {
         gridTitle = @"No Photos";
     }
-    
+
     [self.gridViewTitle setStringValue:gridTitle];
-    
+
     dispatch_async(dispatch_get_main_queue(), ^{
         [self updateToolbar];
     });
-    
-    
+
+
 }
 
 #pragma mark - Clicks
@@ -356,6 +356,20 @@
 
 - (void)openItem {
     [self openItem:self.clickedItem.representedObject];
+}
+
+- (void)openInDefaultApp {
+    if (self.selectedItems.count == 0) return;
+
+    NSString *appPath = [[NSUserDefaults standardUserDefaults] stringForKey:@"defaultEditorPath"];
+    NSMutableArray<NSURL *> *urls = [NSMutableArray arrayWithCapacity:self.selectedItems.count];
+    [self.selectedItems enumerateObjectsUsingBlock:^(PIXPhoto *obj, BOOL *stop) {
+        if (appPath) {
+            [NSWorkspace.sharedWorkspace openFile:obj.path withApplication:appPath];
+        } else {
+            [NSWorkspace.sharedWorkspace openFile:obj.path];
+        }
+    }];
 }
 
 - (void)openInApp {
@@ -456,10 +470,13 @@
 
             [menu addItem:[NSMenuItem separatorItem]];
 
-            NSString *defaultAppName = [[PIXFileManager sharedInstance] defaultAppNameForOpeningFileWithPath:((PIXPhoto *) self.clickedItem.representedObject).path];
+            NSString *defaultAppName = [[NSUserDefaults standardUserDefaults] stringForKey:@"defaultEditorName"];
+            if (!defaultAppName) {
+                defaultAppName = [[PIXFileManager sharedInstance] defaultAppNameForOpeningFileWithPath:((PIXPhoto *) self.clickedItem.representedObject).path];
+            }
             NSMenuItem *editWithDefault = [[NSMenuItem alloc] init];
             editWithDefault.title = [NSString stringWithFormat:NSLocalizedString(@"menu.edit_with_default", @"Edit with %@"), defaultAppName];
-            editWithDefault.action = @selector(openInApp);
+            editWithDefault.action = @selector(openInDefaultApp);
             editWithDefault.keyEquivalent = @"e";
             editWithDefault.keyEquivalentModifierMask = NSEventModifierFlagCommand;
             [menu addItem:editWithDefault];
@@ -508,7 +525,7 @@
         if ([photo.path isEqualToString:aPhotoPath]) {
             [self.collectionView deselectAll:nil];
             [self.collectionView selectItemsAtIndexPaths:[NSSet setWithObject:[NSIndexPath indexPathForItem:index inSection:0]]
-                                    scrollPosition:NSCollectionViewScrollPositionNearestVerticalEdge];
+                                          scrollPosition:NSCollectionViewScrollPositionNearestVerticalEdge];
         }
     }
 }
@@ -621,7 +638,7 @@
 - (NSDragOperation)dropOperationsForDrag:(id < NSDraggingInfo >)sender
 {
     // we can check the files here and return NSDragOperationNone if we can't accept them
-    
+
     // for now don't accept drags from our own app (this will be used for re-ordering photos later)
     if([sender draggingSource] != nil)
     {
@@ -633,51 +650,51 @@
     if (fileCount==0) {
         return NSDragOperationNone;
     }
-    
+
     [sender setNumberOfValidItemsForDrop:fileCount];
-    
-    
-    
-    
+
+
+
+
     // check the modifier keys and show with operation we support
     if([NSEvent modifierFlags] & NSAlternateKeyMask)
     {
         return NSDragOperationMove;
     }
-    
+
     return NSDragOperationCopy;
 }
 
 - (NSDragOperation)draggingUpdated:(id<NSDraggingInfo>)sender
 {
     // we can check the files here and return NSDragOperationNone if we can't accept them
-    
+
     // for now don't accept drags from our own app (this will be used for re-ordering photos later)
     if([sender draggingSource] != nil)
     {
         return NSDragOperationNone;
     }
-    
-    
+
+
     // check the modifier keys and show with operation we support
     if([NSEvent modifierFlags] & NSAlternateKeyMask)
     {
         return NSDragOperationMove;
     }
-    
+
     return NSDragOperationCopy;
 }
 
 - (BOOL)prepareForDragOperation:(id < NSDraggingInfo >)sender
 {
     // here we need to return NO if we can't accept the drag
-    
+
     // for now don't accept drags from our own app (this will be used for re-ordering photos later)
     if([sender draggingSource] != nil || (sender.numberOfValidItemsForDrop == 0))
     {
         return NO;
     }
-    
+
     return YES;
 }
 
@@ -685,15 +702,15 @@
 
 - (BOOL)performDragOperation:(id < NSDraggingInfo >)sender
 {
-    
+
     // for now don't accept drags from our own app (this will be used for re-ordering photos later)
     if([sender draggingSource] != nil || (sender.numberOfValidItemsForDrop == 0))
     {
         return NO;
     }
-    
+
     NSArray *pathsToPaste = [[PIXFileManager sharedInstance] itemsForDraggingInfo:sender forDestination:self.album.path];
-    
+
     if (pathsToPaste.count > 0)
     {
         if([NSEvent modifierFlags] & NSAlternateKeyMask)
@@ -701,14 +718,14 @@
             // perform a move here
             [[PIXFileManager sharedInstance] moveFiles:pathsToPaste];
         }
-        
+
         else
         {
             // perform a copy here
             [[PIXFileManager sharedInstance] copyFiles:pathsToPaste];
         }
     }
-    
+
     return YES;
 }
 
@@ -727,16 +744,16 @@
     [deleteButton setTitle:@"Delete"];
     [deleteButton setTarget:self];
     [deleteButton setAction:@selector(deleteItems:)];
-    
+
     PIXCustomButton * shareButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
-    
+
     //[shareButton setImage:[NSImage imageNamed:NSImageNameShareTemplate]];
     //[shareButton setImagePosition:NSImageLeft];
-    
+
     [shareButton setTitle:@"Share"];
     [shareButton setTarget:self];
     [shareButton setAction:@selector(share:)];
-    
+
     [self.toolbar setButtons:@[deleteButton, shareButton]];
 }
 
@@ -755,7 +772,7 @@
                                                    relativeToRect:[sender bounds]
                                                            ofView:sender
                                                     preferredEdge:NSMaxXEdge];
-    
+
     /*
      PIXCustomShareSheetViewController *controller = [[PIXCustomShareSheetViewController alloc] initWithNibName:@"PIXCustomShareSheetViewController"     bundle:nil];
      
