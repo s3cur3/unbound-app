@@ -856,10 +856,13 @@
 
     [menu addItem:[NSMenuItem separatorItem]];
 
-    NSString *defaultAppName = [[PIXFileManager sharedInstance] defaultAppNameForOpeningFileWithPath:selectedPhoto.path];
+    NSString *defaultAppName = [[NSUserDefaults standardUserDefaults] stringForKey:@"defaultEditorName"];
+    if (!defaultAppName) {
+        defaultAppName = [[PIXFileManager sharedInstance] defaultAppNameForOpeningFileWithPath:selectedPhoto.path];
+    }
     NSMenuItem *editWithDefault = [[NSMenuItem alloc] init];
     editWithDefault.title = [NSString stringWithFormat:NSLocalizedString(@"menu.edit_with_default", @"Edit with %@"), defaultAppName];
-    editWithDefault.action = @selector(openInApp:);
+    editWithDefault.action = @selector(openInDefaultApp:);
     editWithDefault.keyEquivalent = @"e";
     editWithDefault.keyEquivalentModifierMask = NSEventModifierFlagCommand;
     [menu addItem:editWithDefault];
@@ -895,6 +898,20 @@
 
     [menu addItemWithTitle:NSLocalizedString(@"menu.reveal", @"Reveal in Finder") action:@selector(revealInFinder:) keyEquivalent:@""];
     [NSMenu popUpContextMenu:menu withEvent:event forView:self.pageController.selectedViewController.view];
+}
+
+- (void)openInDefaultApp {
+    NSArray<PIXPhoto *> *itemsToOpen = @[self.pagerData[self.pageController.selectedIndex]];
+
+    NSString *appPath = [[NSUserDefaults standardUserDefaults] stringForKey:@"defaultEditorPath"];
+    NSMutableArray<NSURL *> *urls = [NSMutableArray arrayWithCapacity:itemsToOpen.count];
+    [itemsToOpen enumerateObjectsUsingBlock:^(PIXPhoto *obj, NSUInteger idx, BOOL *stop) {
+        if (appPath) {
+            [NSWorkspace.sharedWorkspace openFile:obj.path withApplication:appPath];
+        } else {
+            [NSWorkspace.sharedWorkspace openFile:obj.path];
+        }
+    }];
 }
 
 - (IBAction) openInApp:(id)sender
