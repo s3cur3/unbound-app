@@ -727,7 +727,7 @@
     int modifiers = event.modifierFlags & NSEventModifierFlagDeviceIndependentFlagsMask;
     if (modifiers == NSEventModifierFlagCommand) {
         if ([@"e" isEqualToString:event.characters]) {
-            [self openInApp:nil];
+            [self openInDefaultApp];
             return;
         } else if (event.keyCode == 51) {
             [self deleteItems:nil];
@@ -856,10 +856,14 @@
 
     [menu addItem:[NSMenuItem separatorItem]];
 
-    NSString *defaultAppName = [[PIXFileManager sharedInstance] defaultAppNameForOpeningFileWithPath:selectedPhoto.path];
+    NSString *defaultAppName = [[NSUserDefaults standardUserDefaults] stringForKey:@"defaultEditorName"];
+    if (!defaultAppName) {
+        defaultAppName = [[PIXFileManager sharedInstance] defaultAppNameForOpeningFileWithPath:selectedPhoto.path];
+    }
     NSMenuItem *editWithDefault = [[NSMenuItem alloc] init];
     editWithDefault.title = [NSString stringWithFormat:NSLocalizedString(@"menu.edit_with_default", @"Edit with %@"), defaultAppName];
-    editWithDefault.action = @selector(openInApp:);
+    editWithDefault.target = self;
+    editWithDefault.action = @selector(openInDefaultApp:);
     editWithDefault.keyEquivalent = @"e";
     editWithDefault.keyEquivalentModifierMask = NSEventModifierFlagCommand;
     [menu addItem:editWithDefault];
@@ -895,6 +899,20 @@
 
     [menu addItemWithTitle:NSLocalizedString(@"menu.reveal", @"Reveal in Finder") action:@selector(revealInFinder:) keyEquivalent:@""];
     [NSMenu popUpContextMenu:menu withEvent:event forView:self.pageController.selectedViewController.view];
+}
+
+- (void)openInDefaultApp {
+    NSArray<PIXPhoto *> *itemsToOpen = @[self.pagerData[self.pageController.selectedIndex]];
+
+    NSString *appName = [[NSUserDefaults standardUserDefaults] stringForKey:@"defaultEditorName"];
+    NSMutableArray<NSURL *> *urls = [NSMutableArray arrayWithCapacity:itemsToOpen.count];
+    [itemsToOpen enumerateObjectsUsingBlock:^(PIXPhoto *obj, NSUInteger idx, BOOL *stop) {
+        if (appName) {
+            [NSWorkspace.sharedWorkspace openFile:obj.path withApplication:appName];
+        } else {
+            [NSWorkspace.sharedWorkspace openFile:obj.path];
+        }
+    }];
 }
 
 - (IBAction) openInApp:(id)sender
