@@ -992,7 +992,14 @@ const CGFloat kThumbnailSize = 370.0f;
                 if (width != nil && height != nil) {
                     self.width = width;
                     self.height = height;
-                    [self.managedObjectContext save:nil];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        NSError *err;
+                        [self.managedObjectContext save:&err];
+
+                        if (err) {
+                            DLog("Failed to save context: %@", err.localizedDescription);
+                        }
+                    });
                 }
             }
             

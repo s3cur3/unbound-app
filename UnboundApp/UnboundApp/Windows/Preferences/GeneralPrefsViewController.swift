@@ -56,8 +56,7 @@ class GeneralPrefsViewController: NSViewController, MASPreferencesViewController
 
     let defaultPath: String? = defaults[prefDefaultEditorPath] as? String
     var names = [String]()
-    self.editorApps!
-        .forEachIndexed { info, i in
+    for (i, info) in self.editorApps!.enumerated() {
       var name: String
       if names.contains(info.name!) {
         guard let version = info.version else {
