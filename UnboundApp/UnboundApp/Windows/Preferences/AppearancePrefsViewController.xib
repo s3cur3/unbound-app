@@ -68,7 +68,7 @@
                         <binding destination="tdO-kq-TsS" name="selectedTag" keyPath="values.backgroundTheme" id="e8q-dO-K8B"/>
                     </connections>
                 </matrix>
-                <popUpButton hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iLW-9I-q4O">
+                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iLW-9I-q4O">
                     <rect key="frame" x="180" y="61" width="202" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="Compact" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="bqL-5n-qBR" id="KQG-r3-qrw">
@@ -80,7 +80,6 @@
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                 </menuItem>
                                 <menuItem title="Regular" id="xYJ-Qp-17g"/>
-                                <menuItem title="Detailed" id="2V3-Mq-uwb"/>
                             </items>
                         </menu>
                     </popUpButtonCell>
@@ -89,7 +88,7 @@
                         <binding destination="tdO-kq-TsS" name="selectedValue" keyPath="values.photoStyle" id="PV7-q3-vJF"/>
                     </connections>
                 </popUpButton>
-                <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mba-tQ-Gef">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mba-tQ-Gef">
                     <rect key="frame" x="98" y="67" width="78" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Photo Style:" id="xs4-fD-hu7">
@@ -98,7 +97,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <box hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="xcc-HA-vMk">
+                <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="xcc-HA-vMk">
                     <rect key="frame" x="68" y="103" width="345" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </box>

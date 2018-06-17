@@ -22,12 +22,15 @@
 #import "Unbound-Swift.h"
 @import Quartz;
 
-@interface PIXPhotoCollectionViewController () <NSCollectionViewDelegate, NSCollectionViewDataSource, NSCollectionViewDelegateFlowLayout, QLPreviewPanelDataSource>
+@protocol PhotoItem;
+
+@interface PIXPhotoCollectionViewController () <NSCollectionViewDelegate, NSCollectionViewDelegateFlowLayout, NSCollectionViewDataSource, QLPreviewPanelDataSource>
 
 @property (nonatomic, strong) NSArray<PIXPhoto *> *photos;
-@property (nonatomic, strong) PIXPhotoCollectionViewItem *clickedItem;
-@property(nonatomic, strong) NSCollectionViewFlowLayout *layout;
-@property(nonatomic,strong) NSDateFormatter * titleDateFormatter;
+@property (nonatomic, strong) NSObject<PhotoItem> *clickedItem;
+@property (nonatomic, strong) NSCollectionViewFlowLayout *layout;
+@property (nonatomic, strong) NSDateFormatter * titleDateFormatter;
+@property (nonatomic, strong) NSMutableDictionary *prototypes;
 @property CGFloat startPinchZoom;
 @property CGFloat itemSize;
 @property CGFloat targetItemSize;
@@ -52,14 +55,18 @@
     if (self) {
         // Initialization code here.
 
+        self.prototypes = [NSMutableDictionary dictionaryWithCapacity:3];
         self.titleDateFormatter = [[NSDateFormatter alloc] init];
         [self.titleDateFormatter setDateStyle:NSDateFormatterLongStyle];
         [self.titleDateFormatter setTimeStyle:NSDateFormatterNoStyle];
         self.selectedItemsName = @"photo";
-        
+
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(updateAlbum:) name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(themeChanged:) name:@"backgroundThemeChanged" object:nil];
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(photoViewTypeChanged:) name:kNotePhotoStyleChanged object:nil];
+
+        // initialize the photo view type
+        [self photoViewTypeChanged:nil];
     }
     
     return self;
@@ -74,9 +81,9 @@
     self.toolbar.collectionView = self.collectionView;
 
     self.layout = [[NSCollectionViewFlowLayout alloc] init];
-    self.layout.minimumInteritemSpacing = 10;
-    self.layout.minimumLineSpacing = 10;
-    self.layout.sectionInset = NSEdgeInsetsMake(10, 10, 10, 10);
+    self.layout.minimumInteritemSpacing = 2;
+    self.layout.minimumLineSpacing = 2;
+    self.layout.sectionInset = NSEdgeInsetsMake(2, 2, 2, 2);
     self.collectionView.collectionViewLayout = self.layout;
 
     self.toolbar.collectionView = self.collectionView;
@@ -190,6 +197,7 @@
     CGFloat width = actualWidth / columnCount;
     if (width != self.targetItemSize) {
         self.targetItemSize = width;
+        self.layout.itemSize = NSMakeSize(width, width);
         [self.collectionView reloadData];
     }
 }
@@ -214,8 +222,6 @@
             self.photoStyle = PhotoStyleCompact;
         } else if ([styleName isEqualToString:@"Regular"]) {
             self.photoStyle = PhotoStyleRegular;
-        } else if ([styleName isEqualToString:@"Detailed"]) {
-            self.photoStyle = PhotoStyleDetailed;
         }
         [self.collectionView reloadData];
     }
@@ -355,7 +361,7 @@
 }
 
 - (void)openItem {
-    [self openItem:self.clickedItem.representedObject];
+    [self openItem:self.clickedItem.photo];
 }
 
 - (void)openInApp {
@@ -414,7 +420,7 @@
     NSPoint localPoint = [self.collectionView convertPoint:event.locationInWindow fromView:nil];
     for (NSCollectionViewItem *item in self.collectionView.visibleItems) {
         if (NSPointInRect(localPoint, item.view.frame)) {
-            self.clickedItem = (PIXPhotoCollectionViewItem *) item;
+            self.clickedItem = item;
             break;
         }
     }
@@ -456,7 +462,7 @@
 
             [menu addItem:[NSMenuItem separatorItem]];
 
-            NSString *defaultAppName = [[PIXFileManager sharedInstance] defaultAppNameForOpeningFileWithPath:((PIXPhoto *) self.clickedItem.representedObject).path];
+            NSString *defaultAppName = [[PIXFileManager sharedInstance] defaultAppNameForOpeningFileWithPath:self.clickedItem.photo.path];
             NSMenuItem *editWithDefault = [[NSMenuItem alloc] init];
             editWithDefault.title = [NSString stringWithFormat:NSLocalizedString(@"menu.edit_with_default", @"Edit with %@"), defaultAppName];
             editWithDefault.action = @selector(openInApp);
@@ -489,7 +495,7 @@
             NSMenuItem *desktopMenuItem = [[NSMenuItem alloc] init];
             desktopMenuItem.title = NSLocalizedString(@"menu.set_desktop_picture", @"Set Desktop Picture");
             desktopMenuItem.action = @selector(setDesktopPicture:);
-            desktopMenuItem.representedObject = self.clickedItem.representedObject;
+            desktopMenuItem.representedObject = self.clickedItem.photo;
             [menu addItem:desktopMenuItem];
 
             [menu addItemWithTitle:NSLocalizedString(@"menu.reveal", @"Reveal in Finder") action:@selector(revealItems) keyEquivalent:@""];
@@ -515,13 +521,23 @@
 
 #pragma mark - NSCollectionViewDataSource Methods
 
+- (NSString *)photoItemIdentifier {
+    switch (self.photoStyle) {
+        case PhotoStyleCompact: return @"SimplePhotoItem";
+        case PhotoStyleRegular: return @"RegularPhotoItem";
+    }
+}
+
+- (NSObject<PhotoItem> *)photoItemForObjectAtIndexPath:(NSIndexPath *)indexPath inCollectionView:(NSCollectionView *)collectionView {
+    return [collectionView makeItemWithIdentifier:self.photoItemIdentifier forIndexPath:indexPath];
+}
+
 - (NSInteger)collectionView:(NSCollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.photos.count;
 }
 
 - (NSCollectionViewItem *)collectionView:(NSCollectionView *)collectionView itemForRepresentedObjectAtIndexPath:(NSIndexPath *)indexPath {
-    // TODO get the correct item based on self.photoStyle
-    SimplePhotoItem *item = [collectionView makeItemWithIdentifier:@"SimplePhotoItem" forIndexPath:indexPath];
+    NSObject<PhotoItem> *item = [self photoItemForObjectAtIndexPath:indexPath inCollectionView:collectionView];
     item.photo = self.photos[indexPath.item];
     return item;
 }
@@ -555,7 +571,6 @@
     return YES;
 }
 
-
 - (NSImage *)collectionView:(NSCollectionView *)collectionView draggingImageForItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths withEvent:(NSEvent *)event offset:(NSPointPointer)dragImageOffset {
     NSMutableArray<PIXPhoto *> *photos = [NSMutableArray arrayWithCapacity:indexPaths.count];
     int i = 0;
@@ -581,7 +596,6 @@
         }
         size = NSMakeSize(dimens.width * scale, dimens.height * scale);
     }
-    NSLog(@"size(%lf, %lf)", size.width, size.height);
     return size;
 }
 
@@ -635,9 +649,6 @@
     }
     
     [sender setNumberOfValidItemsForDrop:fileCount];
-    
-    
-    
     
     // check the modifier keys and show with operation we support
     if([NSEvent modifierFlags] & NSAlternateKeyMask)

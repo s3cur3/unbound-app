@@ -1,13 +1,13 @@
 //
-// Created by Ryan Harter on 5/1/18.
+// Created by Ryan Harter on 5/19/18.
 // Copyright (c) 2018 Pixite Apps LLC. All rights reserved.
 //
 
 import Cocoa
 
-let PhotoThumbDidChangeNotification = Notification.Name.init(rawValue: "PhotoThumbDidChangeNotification")
+class RegularPhotoItem : NSCollectionViewItem, PhotoItem {
 
-@objc class SimplePhotoItem: NSCollectionViewItem, PhotoItem {
+  let PhotoThumbDidChangeNotification = Notification.Name.init(rawValue: "PhotoThumbDidChangeNotification")
 
   override var isSelected: Bool {
     didSet { self.itemView.selected = isSelected }
@@ -16,7 +16,8 @@ let PhotoThumbDidChangeNotification = Notification.Name.init(rawValue: "PhotoThu
   private let placeholder = NSImage(named: NSImage.Name(rawValue: "temp"))
 
   @IBOutlet weak var itemView: SimplePhotoItemView!
-  
+  @IBOutlet weak var titleView: NSTextField!
+
   @objc var photo: PIXPhoto? {
     didSet {
       if oldValue != nil {
@@ -34,10 +35,16 @@ let PhotoThumbDidChangeNotification = Notification.Name.init(rawValue: "PhotoThu
               queue: OperationQueue.main) { notification in
         self.itemView.isVideo = self.photo?.isVideo() ?? false
         self.itemView.image = self.photo?.thumbnailImage
+        if let title = self.photo?.title {
+          self.titleView.stringValue = title
+        }
       }
 
       self.itemView.isVideo = self.photo?.isVideo() ?? false
       self.itemView.image = self.photo!.thumbnailImage
+      if let title = self.photo?.title {
+        self.titleView.stringValue = title
+      }
     }
   }
 
