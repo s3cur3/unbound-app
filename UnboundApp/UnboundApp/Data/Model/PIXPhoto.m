@@ -1010,7 +1010,7 @@ const CGFloat kThumbnailSize = 370.0f;
                     [threadSafeContext save:&error];
 
                     if (error) {
-                        DLog("Failed to save context: %@", err.localizedDescription);
+                        DLog("Failed to save context: %@", error.localizedDescription);
                     }
                 }
             }
