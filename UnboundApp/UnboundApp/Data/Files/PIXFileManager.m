@@ -217,7 +217,8 @@ typedef NSUInteger PIXOverwriteStrategy;
                 [subMenu addItem:[NSMenuItem separatorItem]];
             }
         }
-        
+
+
         NSMenuItem *otherAppItem = [[NSMenuItem alloc] init];
         [otherAppItem setTitle:@"Other…"];
         [otherAppItem setTarget:self];

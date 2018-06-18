@@ -44,6 +44,7 @@
 		458AD0BAA89DFD1CCF9DBECC /* PIXCollectionToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD176E79B1F4CC3782AA3 /* PIXCollectionToolbar.m */; };
 		458AD0C1193275A566491AB1 /* arrow-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD929D4BAE762435AD021 /* arrow-right.png */; };
 		458AD0C906A87C4A0C624468 /* NSURL+DirectoryObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADF4966855685A12B5403 /* NSURL+DirectoryObserver.m */; };
+		458AD0D1DA9417ECCE67B995 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AD60CDCA59A88F430E419 /* UserDefaults.swift */; };
 		458AD0D299993914E58C7A81 /* PhotoStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458ADC12F63763E4EA69A933 /* PhotoStyle.swift */; };
 		458AD0D33DE1453DB9071ACD /* expand@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD3070947054FA0A87DB8 /* expand@2x.png */; };
 		458AD0E6BBBB46A0087852A0 /* PIXCustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD566A19A1EF9FDA43F12 /* PIXCustomButton.m */; };
@@ -121,6 +122,7 @@
 		458AD46FFB82CD9627A01614 /* PIXMiniExifViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD0D497ED6EB0B04EF6C6 /* PIXMiniExifViewController.xib */; };
 		458AD477154F1778801DD9D7 /* leapconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD5C2569DF7E6F070E872 /* leapconnected.png */; };
 		458AD4822789EBA492BFFC04 /* fullnophoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD2A1FB3673261C73D08A /* fullnophoto@2x.png */; };
+		458AD493B34150767F9E1B64 /* SystemAppHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458ADCC7C3ABC3B0057DB9DE /* SystemAppHelper.swift */; };
 		458AD4A52CA45C433D533E97 /* PIXPhotoCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD02AF6B5C2720F53D137 /* PIXPhotoCollectionViewController.m */; };
 		458AD4C2F6AEB03E7D0D5642 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458ADCD3C8485C10E61A9EB2 /* MainWindowController.swift */; };
 		458AD4D4A897C6B41D6BB68E /* softtap.wav in Resources */ = {isa = PBXBuildFile; fileRef = 458AD5FF319903D39A279CDA /* softtap.wav */; };
@@ -214,6 +216,7 @@
 		458AD84A4516E739E9D130D4 /* buttongrid_copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADE2912FB560A5B898EA5 /* buttongrid_copy.png */; };
 		458AD84C0FEB7495643AB893 /* PIXImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADAF28EE29E1368A10BE6 /* PIXImageViewController.m */; };
 		458AD8650E6FEA53AA652733 /* PIXSeperatedSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADDFF9855AF4ADE9CE808 /* PIXSeperatedSpinnerView.m */; };
+		458AD87DF3839608344CE6AE /* SystemAppHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458ADCC7C3ABC3B0057DB9DE /* SystemAppHelper.swift */; };
 		458AD88787C4D505ABB71837 /* SimplePhotoItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD4DDCF81B3FE7AD83DD2 /* SimplePhotoItem.xib */; };
 		458AD88C8DCB3AA650035330 /* PIXAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD86966809D7801FD2562 /* PIXAccount.m */; };
 		458AD88E932F96F225196166 /* success-backward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD239A9B0AD1C5B855157 /* success-backward@2x.png */; };
@@ -297,6 +300,7 @@
 		458ADB9309522A0B1D2A2E92 /* arrow-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD710E50B20A82782789C /* arrow-left@2x.png */; };
 		458ADBB69FE914117DFCF4D3 /* nophoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADE0CA27821BA7F51E279 /* nophoto.png */; };
 		458ADBCDD50CE0618E925FB3 /* success-forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD38C6DAAD91B83968E87 /* success-forward.png */; };
+		458ADBD38564F99F34156D89 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AD60CDCA59A88F430E419 /* UserDefaults.swift */; };
 		458ADBE2C04CCAD4216602D6 /* nophoto_200x200.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 458AD7A85609DBC2EA41D16C /* nophoto_200x200.jpg */; };
 		458ADBE50AA83CF3152E2A12 /* PIXPhotoCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD02AF6B5C2720F53D137 /* PIXPhotoCollectionViewController.m */; };
 		458ADBE59572301C1C4DE169 /* buttongrid_print.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD030F9E9A7E3B1C08718 /* buttongrid_print.png */; };
@@ -345,6 +349,7 @@
 		458ADDC75851F36AA0AA5739 /* graydot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD6983A712666EC328F2C /* graydot@2x.png */; };
 		458ADDFE9D9738A18B3EBD72 /* MakeThumbnailOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD57EF9C057A646A2B2CA /* MakeThumbnailOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		458ADE01ABC077BC4D1FF7ED /* NSURL+DirectoryObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADF4966855685A12B5403 /* NSURL+DirectoryObserver.m */; };
+		458ADE23E00E239044DAA74E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AD723269D8E19270B0883 /* Constants.swift */; };
 		458ADE297ADE94834B4E95BD /* logo_ao.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD796B90699411E711F52 /* logo_ao.png */; };
 		458ADE340B6D4200DCE7369C /* AutoSizingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD4AA150A087CF7C81E30 /* AutoSizingImageView.m */; };
 		458ADE36AF81BC54C90A4BA2 /* GeneralPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458ADEA9EA4AD69C80E6A1B7 /* GeneralPrefsViewController.swift */; };
@@ -372,6 +377,7 @@
 		458ADF27E899EEB4402D83FC /* PIXRoundedProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD8D8DCCF4F655556036A /* PIXRoundedProgressIndicator.m */; };
 		458ADF2C8FAB7DB3CF7321A0 /* videoview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADC9B40BB250A64BFC7EA /* videoview.xib */; };
 		458ADF309B1C42BFF4BF75D5 /* btn-roundrect-up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD80F5F6AF0C2AE9A11E5 /* btn-roundrect-up@2x.png */; };
+		458ADF31BD22CB67DBDA47F8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AD723269D8E19270B0883 /* Constants.swift */; };
 		458ADF346B2B9BDD987C89CE /* PIXHUDMessageController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADA4FAB1BF804741362BA /* PIXHUDMessageController.xib */; };
 		458ADF362D117149BCB9FE3E /* buttongrid_email@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD1A07A96C822C47C889F /* buttongrid_email@2x.png */; };
 		458ADF43DD27366FB6912ECA /* RegularPhotoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458ADFD6FF726827F4F3B793 /* RegularPhotoItem.swift */; };
@@ -544,6 +550,7 @@
 		458AD5E05F27DD10744F439E /* PIXLoadAlbumOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXLoadAlbumOperation.h; sourceTree = "<group>"; };
 		458AD5FE96809E0ADC59B908 /* greendot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greendot.png; sourceTree = "<group>"; };
 		458AD5FF319903D39A279CDA /* softtap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = softtap.wav; sourceTree = "<group>"; };
+		458AD60CDCA59A88F430E419 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		458AD62424AE111B84796654 /* UnboundTrial-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = "UnboundTrial-Info.plist"; sourceTree = "<group>"; };
 		458AD62BFA47F0D56A53A583 /* PIXFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXFileManager.m; sourceTree = "<group>"; };
 		458AD63918952C5F623BBB61 /* SquareImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SquareImageView.h; sourceTree = "<group>"; };
@@ -561,6 +568,7 @@
 		458AD6E0FD684B94DC56DFEE /* ArchDirectoryObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArchDirectoryObserver.h; sourceTree = "<group>"; };
 		458AD710E50B20A82782789C /* arrow-left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-left@2x.png"; sourceTree = "<group>"; };
 		458AD71320CADBE71CE7A030 /* PIXCollectionToolbar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PIXCollectionToolbar.xib; sourceTree = "<group>"; };
+		458AD723269D8E19270B0883 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		458AD737D5A9975B91B517A7 /* PIXCustomShareSheetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXCustomShareSheetViewController.m; sourceTree = "<group>"; };
 		458AD7467EC0275F76CF45F1 /* buttongrid_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttongrid_share@2x.png"; sourceTree = "<group>"; };
 		458AD756CBDDCC823D0AAF0F /* PIXPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhoto.m; sourceTree = "<group>"; };
@@ -657,6 +665,7 @@
 		458ADC9C3AE71F62D3DAE869 /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
 		458ADCA4181AC4DA0F59B7CA /* PIXPhotoCollectionViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPhotoCollectionViewItem.h; sourceTree = "<group>"; };
 		458ADCC737C7FC004D5D2434 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
+		458ADCC7C3ABC3B0057DB9DE /* SystemAppHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemAppHelper.swift; sourceTree = "<group>"; };
 		458ADCD3C8485C10E61A9EB2 /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		458ADD063AFA30D8AD2DB197 /* success-backward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success-backward.png"; sourceTree = "<group>"; };
 		458ADD15DFC96E38616C0C30 /* PIXCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXCollectionViewController.h; sourceTree = "<group>"; };
@@ -1281,6 +1290,9 @@
 				458AD1CE63CE6EE36850866D /* ToolbarButton.swift */,
 				458AD53A2EC96B549DB6C3B5 /* Kevlar */,
 				458AD1BE1E5C7795F3963715 /* NSEventExt.swift */,
+				458ADCC7C3ABC3B0057DB9DE /* SystemAppHelper.swift */,
+				458AD60CDCA59A88F430E419 /* UserDefaults.swift */,
+				458AD723269D8E19270B0883 /* Constants.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1973,6 +1985,9 @@
 				458AD320CABE3975F0629D54 /* PIXPhotoCollectionViewItem.m in Sources */,
 				458AD533FDA823BF3DD26577 /* PhotoItem.swift in Sources */,
 				458AD1CF2DA40A98882FF09C /* TextColorForThemeTransformer.swift in Sources */,
+				458AD87DF3839608344CE6AE /* SystemAppHelper.swift in Sources */,
+				458ADBD38564F99F34156D89 /* UserDefaults.swift in Sources */,
+				458ADF31BD22CB67DBDA47F8 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2061,6 +2076,9 @@
 				458AD5468DCA1AFFF22C29D2 /* PIXPhotoCollectionViewItem.m in Sources */,
 				458AD06342F0808E31A333AB /* PhotoItem.swift in Sources */,
 				458AD20B9739BB0AC578F929 /* TextColorForThemeTransformer.swift in Sources */,
+				458AD493B34150767F9E1B64 /* SystemAppHelper.swift in Sources */,
+				458AD0D1DA9417ECCE67B995 /* UserDefaults.swift in Sources */,
+				458ADE23E00E239044DAA74E /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

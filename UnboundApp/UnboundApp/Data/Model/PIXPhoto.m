@@ -911,8 +911,18 @@ const CGFloat kThumbnailSize = 370.0f;
             // keep the aspect ratio
             size_t nativeWidth = CGImageGetWidth(cgImage);
             size_t nativeHeight = CGImageGetHeight(cgImage);
-            self.width = @(nativeWidth);
-            self.height = @(nativeHeight);
+
+            // save the width/height in threadsafe context
+            NSManagedObjectContext * threadSafeContext = [[PIXAppDelegate sharedAppDelegate] threadSafePassThroughMOC];
+            PIXPhoto * threadPhoto = [threadSafeContext objectWithID:photoID];
+            threadPhoto.width = @(nativeWidth);
+            threadPhoto.height = @(nativeHeight);
+
+            NSError * error = nil;
+            [threadSafeContext save:&error];
+            if (error) {
+                DLog("Failed to save context: %@", err.localizedDescription);
+            }
 
             NSSize size;
             float aspect = (float) nativeWidth / nativeHeight;
@@ -990,9 +1000,18 @@ const CGFloat kThumbnailSize = 370.0f;
                 NSNumber *width = properties[(NSString *)kCGImagePropertyPixelWidth];
                 NSNumber *height = properties[(NSString *)kCGImagePropertyPixelHeight];
                 if (width != nil && height != nil) {
-                    self.width = width;
-                    self.height = height;
-                    [self.managedObjectContext save:nil];
+                    NSManagedObjectContext * threadSafeContext = [[PIXAppDelegate sharedAppDelegate] threadSafePassThroughMOC];
+
+                    PIXPhoto * threadPhoto = [threadSafeContext objectWithID:photoID];
+                    threadPhoto.width = width;
+                    threadPhoto.height = height;
+
+                    NSError * error = nil;
+                    [threadSafeContext save:&error];
+
+                    if (error) {
+                        DLog("Failed to save context: %@", err.localizedDescription);
+                    }
                 }
             }
             
@@ -1107,26 +1126,7 @@ const CGFloat kThumbnailSize = 370.0f;
                 
                 // we've finished the fast load. decrement working
                 [[PIXFileParser sharedFileParser] decrementWorking];
-                
-                
-                
-                //////////////// option 2 save by dispatching to main
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//
-//                    [self forceSetExifData:exif]; // this will automatically populate dateTaken and other fields
-//
-//                    [self setThumbnailFilePath:newThumbPath];
-//
-//                    //[self.managedObjectContext save:nil];
-//
-//                    // set the thumbnail data (this will save the data into core data, the ui has already been updated)
-//                    //[weakSelf mainThreadComputePreviewThumbnailFinished:data];
-//
-//                    [[PIXFileParser sharedFileParser] decrementWorking];
-//                    
-//                });
-                //
-                //////////////// end options
+
                 
                 // clean up
                 if(cfDict) CFRelease(cfDict);
