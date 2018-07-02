@@ -182,6 +182,9 @@
         } else if (event.keyCode == 51) {
             [self deleteItems];
             return;
+        } else if ([@"d" isEqualToString:event.characters]) {
+            [self duplicateItems];
+            return;
         }
     }
 
@@ -409,6 +412,12 @@
     [PIXFileManager.sharedInstance deleteItemsWorkflow:self.selectedItems];
 }
 
+- (void)duplicateItems {
+    if (self.selectedItems.count == 0) return;
+
+    [PIXFileManager.sharedInstance duplicatePhotos:self.selectedItems];
+}
+
 - (void)getInfo {
     if (self.selectedItems.count == 0) return;
     [self.selectedItems enumerateObjectsUsingBlock:^(PIXPhoto *obj, BOOL *stop) {
@@ -451,6 +460,13 @@
         NSUInteger count = self.collectionView.selectionIndexPaths.count;
         if (count > 0) {
             [menu addItemWithTitle:NSLocalizedString(@"menu.open", @"Open") action:@selector(openItem) keyEquivalent:@""];
+
+            NSMenuItem *duplicateItem = [[NSMenuItem alloc] init];
+            duplicateItem.title = NSLocalizedString(@"menu.duplicate", @"Duplicate");
+            duplicateItem.action = @selector(duplicateItems);
+            duplicateItem.keyEquivalent = @"d";
+            duplicateItem.keyEquivalentModifierMask = NSEventModifierFlagCommand;
+            [menu addItem:duplicateItem];
 
             NSMutableArray<NSURL *> *urls = [NSMutableArray arrayWithCapacity:self.selectedItems.count];
             [self.selectedItems enumerateObjectsUsingBlock:^(PIXPhoto *obj, BOOL *stop) {

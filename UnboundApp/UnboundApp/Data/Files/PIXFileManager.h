@@ -15,6 +15,8 @@
 
 +(PIXFileManager *)sharedInstance;
 
+- (void) duplicatePhotos:(NSSet<PIXPhoto *> *)selectedPhotos;
+
 - (void) deleteItemsWorkflow:(NSSet *)selectedItems;
 
 -(void)moveFiles:(NSArray *)items;
