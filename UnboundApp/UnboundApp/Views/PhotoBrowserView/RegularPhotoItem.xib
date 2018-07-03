@@ -10,16 +10,18 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="293" height="267"/>
+            <rect key="frame" x="0.0" y="0.0" width="293" height="278"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <customView translatesAutoresizingMaskIntoConstraints="NO" id="z0b-Vx-AbD" customClass="SimplePhotoItemView" customModule="Unbound" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="14" width="293" height="253"/>
-                </customView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8We-c5-AjD">
+                    <rect key="frame" x="122" y="121" width="48" height="48"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="play" id="1AK-Qr-ppm"/>
+                </imageView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SRH-gT-XRp">
-                    <rect key="frame" x="128" y="0.0" width="37" height="14"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="6cP-f9-2LX">
-                        <font key="font" metaFont="smallSystem"/>
+                    <rect key="frame" x="6" y="8" width="161" height="14"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Label" id="6cP-f9-2LX">
+                        <font key="font" metaFont="systemBold" size="11"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -31,24 +33,63 @@
                         </binding>
                     </connections>
                 </textField>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="znA-Aw-FuY">
+                    <rect key="frame" x="8" y="30" width="277" height="240"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="XOe-rg-GC2"/>
+                    <connections>
+                        <action selector="image:" target="-1" id="Xds-EV-dY4"/>
+                    </connections>
+                </imageView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="OoK-9U-thg">
+                    <rect key="frame" x="8" y="30" width="277" height="240"/>
+                </customView>
+                <textField horizontalHuggingPriority="252" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jdR-vB-sgL">
+                    <rect key="frame" x="171" y="8" width="116" height="14"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="12/27/2018 10:00 AM" id="jH3-aa-UFq">
+                        <font key="font" metaFont="system" size="11"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="uT6-C6-91a" name="textColor" keyPath="values.backgroundTheme" id="3wC-IB-rcc">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">TextColorForThemeTransformer</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="SRH-gT-XRp" firstAttribute="top" secondItem="z0b-Vx-AbD" secondAttribute="bottom" id="GRB-9k-nbc"/>
-                <constraint firstAttribute="trailing" secondItem="z0b-Vx-AbD" secondAttribute="trailing" id="YbJ-b4-NJf"/>
-                <constraint firstItem="z0b-Vx-AbD" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="brl-BH-feT"/>
-                <constraint firstItem="z0b-Vx-AbD" firstAttribute="centerX" secondItem="SRH-gT-XRp" secondAttribute="centerX" id="dJf-Ua-g5g"/>
-                <constraint firstAttribute="bottom" secondItem="SRH-gT-XRp" secondAttribute="bottom" id="hHD-tz-M4n"/>
-                <constraint firstItem="z0b-Vx-AbD" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="vdb-h3-XOh"/>
+                <constraint firstItem="jdR-vB-sgL" firstAttribute="leading" secondItem="SRH-gT-XRp" secondAttribute="trailing" constant="8" id="1Wj-0p-Kmo"/>
+                <constraint firstItem="jdR-vB-sgL" firstAttribute="top" secondItem="znA-Aw-FuY" secondAttribute="bottom" constant="8" id="6e3-tY-fFt"/>
+                <constraint firstAttribute="bottom" secondItem="jdR-vB-sgL" secondAttribute="bottom" constant="8" id="LFV-wA-qJY"/>
+                <constraint firstItem="SRH-gT-XRp" firstAttribute="top" secondItem="znA-Aw-FuY" secondAttribute="bottom" constant="8" id="Mt1-Fk-Gvz"/>
+                <constraint firstItem="znA-Aw-FuY" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="8" id="OnA-5m-qaI"/>
+                <constraint firstItem="znA-Aw-FuY" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="8" id="P35-hS-Xts"/>
+                <constraint firstAttribute="trailing" secondItem="jdR-vB-sgL" secondAttribute="trailing" constant="8" id="Pfk-yI-Zr8"/>
+                <constraint firstItem="OoK-9U-thg" firstAttribute="top" secondItem="znA-Aw-FuY" secondAttribute="top" id="SiZ-Ej-DRE"/>
+                <constraint firstItem="SRH-gT-XRp" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="8" id="THA-nv-shP"/>
+                <constraint firstItem="OoK-9U-thg" firstAttribute="trailing" secondItem="znA-Aw-FuY" secondAttribute="trailing" id="f4e-iD-cSI"/>
+                <constraint firstAttribute="bottom" secondItem="SRH-gT-XRp" secondAttribute="bottom" constant="8" id="hHD-tz-M4n"/>
+                <constraint firstItem="OoK-9U-thg" firstAttribute="bottom" secondItem="znA-Aw-FuY" secondAttribute="bottom" id="j1O-6v-jYn"/>
+                <constraint firstItem="OoK-9U-thg" firstAttribute="leading" secondItem="znA-Aw-FuY" secondAttribute="leading" id="niB-Cz-69g"/>
+                <constraint firstAttribute="trailing" secondItem="znA-Aw-FuY" secondAttribute="trailing" constant="8" id="yUU-EI-wB1"/>
             </constraints>
-            <point key="canvasLocation" x="45.5" y="205.5"/>
+            <point key="canvasLocation" x="45.5" y="211"/>
         </customView>
         <collectionViewItem id="fXE-Ug-xP6" customClass="RegularPhotoItem" customModule="Unbound" customModuleProvider="target">
             <connections>
-                <outlet property="itemView" destination="z0b-Vx-AbD" id="rVg-kZ-ZkZ"/>
+                <outlet property="dateView" destination="jdR-vB-sgL" id="Rff-XQ-ns6"/>
+                <outlet property="imageView" destination="znA-Aw-FuY" id="ePG-G6-DPo"/>
+                <outlet property="playButton" destination="8We-c5-AjD" id="zhP-Re-H0z"/>
+                <outlet property="selectionView" destination="OoK-9U-thg" id="eb0-8l-13b"/>
                 <outlet property="titleView" destination="SRH-gT-XRp" id="xSh-uX-ska"/>
                 <outlet property="view" destination="c22-O7-iKe" id="E4b-2G-edh"/>
             </connections>
         </collectionViewItem>
         <userDefaultsController representsSharedInstance="YES" id="uT6-C6-91a"/>
     </objects>
+    <resources>
+        <image name="play" width="30" height="30"/>
+    </resources>
 </document>

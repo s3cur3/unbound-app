@@ -8,55 +8,90 @@ import Cocoa
 class RegularPhotoItem : NSCollectionViewItem, PhotoItem {
 
   let PhotoThumbDidChangeNotification = Notification.Name.init(rawValue: "PhotoThumbDidChangeNotification")
+  let normalBgColor = NSColor(calibratedWhite: 0.5, alpha: 0.2).cgColor
+  let selectedBgColor = NSColor(calibratedWhite: 0.5, alpha: 0.4).cgColor
+
+  let dateFormatter: DateFormatter = {
+    let format = DateFormatter()
+    format.dateFormat = "MM/dd/yy h:mm a"
+    return format
+  }()
+
+  private lazy var selectionLayer: CALayer = {
+    let layer = CALayer()
+    layer.borderWidth = 4.0
+    layer.cornerRadius = 2.0
+    layer.borderColor = CGColor(red: 0.189, green: 0.657, blue: 0.859, alpha: 1)
+    self.selectionView?.layer = layer
+    layer.isHidden = true
+    return layer
+  }()
+
 
   override var isSelected: Bool {
-    didSet { self.itemView.selected = isSelected }
+    didSet {
+      selectionLayer.isHidden = !isSelected
+      self.view.layer?.backgroundColor = isSelected ? selectedBgColor : normalBgColor
+    }
   }
 
   private let placeholder = NSImage(named: NSImage.Name(rawValue: "temp"))
 
-  @IBOutlet weak var itemView: SimplePhotoItemView!
+  @IBOutlet weak var selectionView: NSView!
+  @IBOutlet weak var playButton: NSImageView!
+  @IBOutlet weak var dateView: NSTextField!
   @IBOutlet weak var titleView: NSTextField!
 
   @objc var photo: PIXPhoto? {
     didSet {
+      self.representedObject = photo
+      guard self.isViewLoaded else { return }
+
       if oldValue != nil {
         NotificationCenter.default.removeObserver(self, name: PhotoThumbDidChangeNotification, object: oldValue)
       }
-      guard photo != nil else {
+      guard let photo = photo else {
         self.prepareForReuse()
         return
       }
 
-      self.representedObject = photo
+      self.playButton.isHidden = !photo.isVideo()
+      self.titleView.stringValue = photo.name
+      self.dateView.stringValue = dateFormatter.string(from: photo.dateTaken)
+      setImage(image: self.photo?.thumbnailImage)
 
       NotificationCenter.default.addObserver(forName: PhotoThumbDidChangeNotification,
-              object: photo!,
-              queue: OperationQueue.main) { notification in
-        self.itemView.isVideo = self.photo?.isVideo() ?? false
-        self.itemView.image = self.photo?.thumbnailImage
-        if let title = self.photo?.title {
-          self.titleView.stringValue = title
-        }
-      }
-
-      self.itemView.isVideo = self.photo?.isVideo() ?? false
-      self.itemView.image = self.photo!.thumbnailImage
-      if let title = self.photo?.title {
-        self.titleView.stringValue = title
+              object: photo, queue: OperationQueue.main) { notification in
+        self.setImage(image: self.photo?.thumbnailImage)
       }
     }
+  }
+
+  private func setImage(image: NSImage?) {
+    self.imageView?.image = image ?? placeholder
+
+    // Fit the selection layer around the image
+    guard let image = image,
+          let imageView = self.imageView
+            else { return }
+
+    let imageFrame = NSMakeRect(0.0, 0.0, image.size.width, image.size.height)
+    self.selectionLayer.frame = imageFrame.fitting(container: imageView.frame).insetBy(dx: -5.0, dy: -5.0)
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.wantsLayer = true
+    self.view.layer?.backgroundColor = normalBgColor
   }
 
   override func prepareForReuse() {
-    self.itemView.isVideo = false
-    self.itemView.image = nil
-    self.itemView.selected = false
+    isSelected = false
+    playButton.isHidden = true
+    titleView.stringValue = ""
+    dateView.stringValue = ""
+    imageView?.image = nil
+    self.photo?.cancelThumbnailLoadOperation = true
   }
 
   override func mouseDown(with event: NSEvent) {

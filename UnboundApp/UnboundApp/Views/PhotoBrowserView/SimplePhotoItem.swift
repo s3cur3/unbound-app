@@ -5,51 +5,74 @@
 
 import Cocoa
 
-let PhotoThumbDidChangeNotification = Notification.Name.init(rawValue: "PhotoThumbDidChangeNotification")
-
 @objc class SimplePhotoItem: NSCollectionViewItem, PhotoItem {
 
-  override var isSelected: Bool {
-    didSet { self.itemView.selected = isSelected }
-  }
-
+  let PhotoThumbDidChangeNotification = Notification.Name.init(rawValue: "PhotoThumbDidChangeNotification")
   private let placeholder = NSImage(named: NSImage.Name(rawValue: "temp"))
 
-  @IBOutlet weak var itemView: SimplePhotoItemView!
-  
+  private lazy var selectionLayer: CALayer = {
+    let layer = CALayer()
+    layer.borderWidth = 4.0
+    layer.cornerRadius = 2.0
+    layer.borderColor = CGColor(red: 0.189, green: 0.657, blue: 0.859, alpha: 1)
+    self.selectionView?.layer = layer
+    layer.isHidden = true
+    return layer
+  }()
+
+  override var isSelected: Bool {
+    didSet {
+      selectionLayer.isHidden = !isSelected
+    }
+  }
+
+  @IBOutlet weak var selectionView: NSView!
+  @IBOutlet weak var playButton: NSImageView!
+
   @objc var photo: PIXPhoto? {
     didSet {
+      self.representedObject = photo
+      guard self.isViewLoaded else { return }
+
       if oldValue != nil {
         NotificationCenter.default.removeObserver(self, name: PhotoThumbDidChangeNotification, object: oldValue)
       }
-      guard photo != nil else {
+      guard let photo = photo else {
         self.prepareForReuse()
         return
       }
 
-      self.representedObject = photo
+      self.playButton.isHidden = !photo.isVideo()
+      self.setImage(image: photo.thumbnailImage)
 
       NotificationCenter.default.addObserver(forName: PhotoThumbDidChangeNotification,
-              object: photo!,
-              queue: OperationQueue.main) { notification in
-        self.itemView.isVideo = self.photo?.isVideo() ?? false
-        self.itemView.image = self.photo?.thumbnailImage
+              object: photo, queue: OperationQueue.main) { notification in
+        self.setImage(image: self.photo?.thumbnailImage)
       }
-
-      self.itemView.isVideo = self.photo?.isVideo() ?? false
-      self.itemView.image = self.photo!.thumbnailImage
     }
+  }
+
+  private func setImage(image: NSImage?) {
+    self.imageView?.image = image ?? placeholder
+
+    // Fit the selection layer around the image
+    guard let image = image,
+          let imageView = self.imageView
+            else { return }
+
+    let imageFrame = NSMakeRect(0.0, 0.0, image.size.width, image.size.height)
+    self.selectionLayer.frame = imageFrame.fitting(container: imageView.frame).insetBy(dx: -5.0, dy: -5.0)
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.view.wantsLayer = true
+    view.wantsLayer = true
   }
 
   override func prepareForReuse() {
-    self.itemView.isVideo = false
-    self.itemView.image = nil
-    self.itemView.selected = false
+    self.playButton.isHidden = true
+    self.isSelected = false
+    self.imageView?.image = placeholder
   }
 
   override func mouseDown(with event: NSEvent) {

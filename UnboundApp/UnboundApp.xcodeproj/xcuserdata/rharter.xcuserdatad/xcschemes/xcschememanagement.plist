@@ -4,20 +4,49 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>FileImageLoaderTests.testAspectFillMatchesSize.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false />
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
+		<key>FileImageLoaderTests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false />
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>Unbound Trial.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>0</integer>
 		</dict>
 		<key>Unbound.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>3</integer>
+		</dict>
+		<key>UnboundTests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>UnboundUITests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>1DB2F849167ABE87008AC0F7</key>
+		<dict>
+			<key>primary</key>
+			<true />
+		</dict>
+		<key>458AD6AF89AF9152F0611DA5</key>
 		<dict>
 			<key>primary</key>
 			<true />
