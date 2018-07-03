@@ -436,7 +436,101 @@ typedef NSUInteger PIXOverwriteStrategy;
     
 }
 
+- (void) duplicatePhotos:(NSSet<PIXPhoto *> *)selectedPhotos
+{
+    NSMutableArray *urlsToDuplicate = [NSMutableArray arrayWithCapacity:[selectedPhotos count]];
 
+    for (PIXPhoto* photo in selectedPhotos)
+    {
+        NSString *path = [photo path];
+        NSURL *dupeURL = [NSURL fileURLWithPath:path isDirectory:NO];
+
+        if(dupeURL)
+        {
+            [urlsToDuplicate addObject:dupeURL];
+        }
+    }
+
+    [self duplicatePhotoURLs:urlsToDuplicate];
+}
+
+/*
+ The issue addressed below is that `NSUndoManager` only understands that an undo action you register is actually
+ a "redo" if you register while it is still executing a previous undo. And conversely, if you want undo to work
+ after redoing, again it needs to be set up in the same runloop. So we must register the undo action immediately,
+ and then update its context object with the necessary information once we have it.
+ */
+
+- (void) duplicatePhotoURLs:(NSArray<NSURL *> *)urlsToDuplicate
+{
+    // must set this up in the same runloop we are called in for undo/redo to work properly
+    NSMutableDictionary<NSURL *,NSURL *> *duplicatedURLMap = [[NSMutableDictionary alloc] init];
+    NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
+    [undoManager registerUndoWithTarget:[PIXFileManager sharedInstance] selector:@selector(undoDuplicatePhotos:) object:duplicatedURLMap];
+    [undoManager setActionIsDiscardable:YES];
+    [undoManager setActionName:NSLocalizedString(@"undo.duplicate_photo", @"Duplicate Photo")];
+
+    [[NSWorkspace sharedWorkspace] duplicateURLs:urlsToDuplicate completionHandler:^(NSDictionary *newURLs, NSError *error) {
+        if (error != nil) {
+            //Some photos couldn't be duplicated. Present the error.
+            [[NSApplication sharedApplication] presentError:error];
+        }
+
+        NSArray *sucessfullyDuplicatedItems = [newURLs allKeys];
+
+        NSMutableSet<NSURL *> *changedDirectories = [[NSMutableSet alloc] init];
+
+        for (NSURL* url in sucessfullyDuplicatedItems) {
+            NSURL* parentDir = url.URLByDeletingLastPathComponent;
+            [changedDirectories addObject:parentDir];
+        }
+
+        // apparently we must manually rescan or the app will not notice the new file
+        for (NSURL* url in changedDirectories) {
+            [[PIXFileParser sharedFileParser] scanURLForChanges:url withRecursion:PIXFileParserRecursionNone];
+        }
+
+        [duplicatedURLMap addEntriesFromDictionary:newURLs];
+    }];
+}
+
+- (void) undoDuplicatePhotos:(NSDictionary<NSURL *,NSURL *> *)duplicationURLs {
+    NSArray<NSURL*> *urlsToDelete = [duplicationURLs allValues];
+
+    // must set this up in the same runloop we are called in for undo/redo to work properly
+    NSMutableArray<NSURL*> *reduplicableURLs = [[NSMutableArray alloc] init];
+    NSUndoManager *undoManager = [[PIXAppDelegate sharedAppDelegate] undoManager];
+    [undoManager registerUndoWithTarget:[PIXFileManager sharedInstance] selector:@selector(duplicatePhotoURLs:) object:reduplicableURLs];
+    [undoManager setActionIsDiscardable:YES];
+    [undoManager setActionName:NSLocalizedString(@"undo.duplicate_photo", @"Duplicate Photo")];
+
+    [[NSWorkspace sharedWorkspace] recycleURLs:urlsToDelete completionHandler:^(NSDictionary<NSURL *,NSURL *> *newURLs, NSError *error) {
+        if (error != nil) {
+            //Some photos couldn't be un-duplicated. Present the error.
+            [[NSApplication sharedApplication] presentError:error];
+        }
+
+        NSArray *sucessfullyDeletedItems = [newURLs allKeys];
+
+        NSMutableSet<NSURL *> *changedDirectories = [[NSMutableSet alloc] init];
+
+        for (NSURL* url in sucessfullyDeletedItems) {
+            NSURL* parentDir = url.URLByDeletingLastPathComponent;
+            [changedDirectories addObject:parentDir];
+        }
+
+        // rescan or the app will not notice the new file
+        for (NSURL* url in changedDirectories) {
+            [[PIXFileParser sharedFileParser] scanURLForChanges:url withRecursion:PIXFileParserRecursionNone];
+        }
+
+        NSArray<NSURL*> *dupeURLs = [[duplicationURLs keysOfEntriesPassingTest:^BOOL(NSURL * _Nonnull key, NSURL * _Nonnull obj, BOOL * _Nonnull stop) {
+            return [sucessfullyDeletedItems containsObject:obj];
+        }] allObjects];
+
+        [reduplicableURLs addObjectsFromArray:dupeURLs];
+    }];
+}
 
 - (void) deleteItemsWorkflow:(NSSet *)selectedItems
 {
