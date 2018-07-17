@@ -7,7 +7,6 @@ import Cocoa
 
 class RegularPhotoItem : NSCollectionViewItem, PhotoItem {
 
-  let PhotoThumbDidChangeNotification = Notification.Name.init(rawValue: "PhotoThumbDidChangeNotification")
   let normalBgColor = NSColor(calibratedWhite: 0.5, alpha: 0.2).cgColor
   let selectedBgColor = NSColor(calibratedWhite: 0.5, alpha: 0.4).cgColor
 
@@ -48,7 +47,7 @@ class RegularPhotoItem : NSCollectionViewItem, PhotoItem {
       guard self.isViewLoaded else { return }
 
       if oldValue != nil {
-        NotificationCenter.default.removeObserver(self, name: PhotoThumbDidChangeNotification, object: oldValue)
+        NotificationCenter.default.removeObserver(self, name: .photoThumbDidChange, object: oldValue)
       }
       guard let photo = photo else {
         self.prepareForReuse()
@@ -60,7 +59,7 @@ class RegularPhotoItem : NSCollectionViewItem, PhotoItem {
       self.dateView.stringValue = RegularPhotoItem.dateFormatter.string(from: photo.dateTaken)
       setImage(image: self.photo?.thumbnailImage)
 
-      NotificationCenter.default.addObserver(forName: PhotoThumbDidChangeNotification,
+      NotificationCenter.default.addObserver(forName: .photoThumbDidChange,
               object: photo, queue: OperationQueue.main) { notification in
         self.setImage(image: self.photo?.thumbnailImage)
       }

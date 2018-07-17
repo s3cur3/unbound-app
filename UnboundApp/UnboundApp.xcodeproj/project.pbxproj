@@ -299,6 +299,7 @@
 		458ADB7C3F0DA3118CF8F12A /* AutoSizingImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD1F43E241A31FF963441 /* AutoSizingImageView.xib */; };
 		458ADB86A8DCD0B8F601C1B6 /* pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD847D4CA9CF915C77020 /* pause@2x.png */; };
 		458ADB9309522A0B1D2A2E92 /* arrow-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD710E50B20A82782789C /* arrow-left@2x.png */; };
+		458ADBA5D2045E7778911CFE /* Notification+Unbound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AD2CBB6A3C616CE0F6982 /* Notification+Unbound.swift */; };
 		458ADBB69FE914117DFCF4D3 /* nophoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADE0CA27821BA7F51E279 /* nophoto.png */; };
 		458ADBCDD50CE0618E925FB3 /* success-forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD38C6DAAD91B83968E87 /* success-forward.png */; };
 		458ADBD38564F99F34156D89 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AD60CDCA59A88F430E419 /* UserDefaults.swift */; };
@@ -376,6 +377,7 @@
 		458ADEFFCFC8EB27D8B971B8 /* PIXAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD7AA5FA2D7D1B9940541 /* PIXAlbum.m */; };
 		458ADF250EB2C00E151A6F7A /* temp-portrait@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 458AD3029E36086E9FA2BEEA /* temp-portrait@2x.jpg */; };
 		458ADF269B153E82EB99117A /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD87192D1A882871AF625 /* Preferences.m */; };
+		458ADF274CB262B5FF19027C /* Notification+Unbound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AD2CBB6A3C616CE0F6982 /* Notification+Unbound.swift */; };
 		458ADF27E899EEB4402D83FC /* PIXRoundedProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD8D8DCCF4F655556036A /* PIXRoundedProgressIndicator.m */; };
 		458ADF2C8FAB7DB3CF7321A0 /* videoview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADC9B40BB250A64BFC7EA /* videoview.xib */; };
 		458ADF309B1C42BFF4BF75D5 /* btn-roundrect-up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD80F5F6AF0C2AE9A11E5 /* btn-roundrect-up@2x.png */; };
@@ -508,6 +510,7 @@
 		458AD2AD4B93493C0934A7DF /* PIXAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXAlbum.h; sourceTree = "<group>"; };
 		458AD2BC5CD7C6B7B1BE994B /* PIXSidebarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSidebarViewController.m; sourceTree = "<group>"; };
 		458AD2C360D0004D8B746AAC /* buttongrid_emaillink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttongrid_emaillink.png; sourceTree = "<group>"; };
+		458AD2CBB6A3C616CE0F6982 /* Notification+Unbound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notification+Unbound.swift"; sourceTree = "<group>"; };
 		458AD2D4D1380902CA593631 /* AdaptiveToolbarSpace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdaptiveToolbarSpace.swift; sourceTree = "<group>"; };
 		458AD2E290E211201DFD9034 /* NSCollectionView+PIXSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCollectionView+PIXSelection.m"; sourceTree = "<group>"; };
 		458AD2F03843EA9EBD3FBBE3 /* PIXInfoPanelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXInfoPanelViewController.m; sourceTree = "<group>"; };
@@ -1297,6 +1300,7 @@
 				458AD60CDCA59A88F430E419 /* UserDefaults.swift */,
 				458AD723269D8E19270B0883 /* Constants.swift */,
 				458ADEC0AD9131329386D3E9 /* NSRect+Fitting.swift */,
+				458AD2CBB6A3C616CE0F6982 /* Notification+Unbound.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1993,6 +1997,7 @@
 				458ADBD38564F99F34156D89 /* UserDefaults.swift in Sources */,
 				458ADF31BD22CB67DBDA47F8 /* Constants.swift in Sources */,
 				458AD3D2A39F79B8B40237B7 /* NSRect+Fitting.swift in Sources */,
+				458ADBA5D2045E7778911CFE /* Notification+Unbound.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2085,6 +2090,7 @@
 				458AD0D1DA9417ECCE67B995 /* UserDefaults.swift in Sources */,
 				458ADE23E00E239044DAA74E /* Constants.swift in Sources */,
 				458ADDDDB175E31FD0DECDD2 /* NSRect+Fitting.swift in Sources */,
+				458ADF274CB262B5FF19027C /* Notification+Unbound.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
