@@ -9,16 +9,50 @@
         <customObject id="-2" userLabel="File's Owner"/>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView id="c22-O7-iKe" customClass="SimplePhotoItemView" customModule="Unbound" customModuleProvider="target">
+        <customView id="c22-O7-iKe">
             <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vfg-BE-yJ8">
+                    <rect key="frame" x="101" y="101" width="48" height="48"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="48" id="cB2-5v-Exz"/>
+                        <constraint firstAttribute="height" constant="48" id="io8-od-2Wi"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="play" id="H6b-Ui-A3c"/>
+                </imageView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="J2x-v4-Bm1">
+                    <rect key="frame" x="8" y="8" width="234" height="234"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="o6o-wU-BZX"/>
+                </imageView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="tTG-Te-DEJ">
+                    <rect key="frame" x="8" y="8" width="234" height="234"/>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="vfg-BE-yJ8" firstAttribute="centerY" secondItem="tTG-Te-DEJ" secondAttribute="centerY" id="3vf-Ph-3I5"/>
+                <constraint firstItem="vfg-BE-yJ8" firstAttribute="centerX" secondItem="J2x-v4-Bm1" secondAttribute="centerX" id="6qv-o7-yKf"/>
+                <constraint firstAttribute="trailing" secondItem="J2x-v4-Bm1" secondAttribute="trailing" constant="8" id="7qv-6B-EIW"/>
+                <constraint firstItem="J2x-v4-Bm1" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="8" id="DDm-R0-iLS"/>
+                <constraint firstAttribute="bottom" secondItem="J2x-v4-Bm1" secondAttribute="bottom" constant="8" id="H1b-Nh-kSU"/>
+                <constraint firstItem="tTG-Te-DEJ" firstAttribute="trailing" secondItem="J2x-v4-Bm1" secondAttribute="trailing" id="c1d-j9-9bM"/>
+                <constraint firstItem="tTG-Te-DEJ" firstAttribute="leading" secondItem="J2x-v4-Bm1" secondAttribute="leading" id="fgP-Eh-yVi"/>
+                <constraint firstItem="tTG-Te-DEJ" firstAttribute="top" secondItem="J2x-v4-Bm1" secondAttribute="top" id="i6x-2m-p0e"/>
+                <constraint firstItem="tTG-Te-DEJ" firstAttribute="bottom" secondItem="J2x-v4-Bm1" secondAttribute="bottom" id="jpY-bN-aAd"/>
+                <constraint firstItem="J2x-v4-Bm1" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="8" id="mEl-or-YiB"/>
+            </constraints>
             <point key="canvasLocation" x="33" y="181"/>
         </customView>
         <collectionViewItem id="58N-Kn-1XB" customClass="SimplePhotoItem" customModule="Unbound" customModuleProvider="target">
             <connections>
-                <outlet property="itemView" destination="c22-O7-iKe" id="ESg-3i-gmF"/>
+                <outlet property="imageView" destination="J2x-v4-Bm1" id="zFf-na-3jb"/>
+                <outlet property="playButton" destination="vfg-BE-yJ8" id="PU6-wZ-dWc"/>
+                <outlet property="selectionView" destination="tTG-Te-DEJ" id="SLj-31-2L4"/>
                 <outlet property="view" destination="c22-O7-iKe" id="0I7-3h-E7g"/>
             </connections>
         </collectionViewItem>
     </objects>
+    <resources>
+        <image name="play" width="30" height="30"/>
+    </resources>
 </document>

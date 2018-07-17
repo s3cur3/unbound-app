@@ -235,13 +235,13 @@
 {
     if (album != _album) {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:AlbumDidChangeNotification object:_album];
+        [self.collectionView deselectAll:nil];
 
         _album = album;
         self.photos = _album.sortedPhotos;
         [[[PIXAppDelegate sharedAppDelegate] window] setTitle:[self.album title]];
 
         self.title = _album.title;
-        [self.collectionView deselectAll:nil];
         [self updateToolbar];
         [self updateAlbum:nil];
 
