@@ -56,7 +56,18 @@ class RegularPhotoItem : NSCollectionViewItem, PhotoItem {
 
       self.playButton.isHidden = !photo.isVideo()
       self.titleView.stringValue = photo.name
-      self.dateView.stringValue = RegularPhotoItem.dateFormatter.string(from: photo.dateTaken)
+
+      // Date taken is optional (derived from metadata), so we must handle accordingly.
+      if let date = photo.dateTaken {
+        self.dateView.isHidden = false
+        self.dateView.stringValue = RegularPhotoItem.dateFormatter.string(from: date)
+      } else if let date = photo.dateCreated {
+        self.dateView.isHidden = false
+        self.dateView.stringValue = RegularPhotoItem.dateFormatter.string(from: date)
+      } else {
+        self.dateView.isHidden = true
+      }
+
       setImage(image: self.photo?.thumbnailImage)
 
       NotificationCenter.default.addObserver(forName: .photoThumbDidChange,
