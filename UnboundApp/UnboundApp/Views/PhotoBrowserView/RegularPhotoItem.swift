@@ -11,7 +11,7 @@ class RegularPhotoItem : NSCollectionViewItem, PhotoItem {
   let normalBgColor = NSColor(calibratedWhite: 0.5, alpha: 0.2).cgColor
   let selectedBgColor = NSColor(calibratedWhite: 0.5, alpha: 0.4).cgColor
 
-  let dateFormatter: DateFormatter = {
+  private static let dateFormatter: DateFormatter = {
     let format = DateFormatter()
     format.dateFormat = "MM/dd/yy h:mm a"
     return format
@@ -57,7 +57,7 @@ class RegularPhotoItem : NSCollectionViewItem, PhotoItem {
 
       self.playButton.isHidden = !photo.isVideo()
       self.titleView.stringValue = photo.name
-      self.dateView.stringValue = dateFormatter.string(from: photo.dateTaken)
+      self.dateView.stringValue = RegularPhotoItem.dateFormatter.string(from: photo.dateTaken)
       setImage(image: self.photo?.thumbnailImage)
 
       NotificationCenter.default.addObserver(forName: PhotoThumbDidChangeNotification,
