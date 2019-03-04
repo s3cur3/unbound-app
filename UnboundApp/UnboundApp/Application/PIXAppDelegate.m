@@ -208,13 +208,9 @@
         //self.fileParser = [PIXFileParser sharedFileParser];
         [self.fileParser startObserving];
     }
-    
-    // if we never finished the last deep scan then restart it
-    if([[NSUserDefaults standardUserDefaults] boolForKey:kDeepScanIncompleteKey])
-    {
-        [self.fileParser scanFullDirectory];
-    }
 
+    // Files may have changed since we were last open, so scan the directory each load.
+    [self.fileParser scanFullDirectory];
 }
 
 #pragma mark - Menu Items
