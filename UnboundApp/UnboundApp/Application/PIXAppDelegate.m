@@ -253,12 +253,8 @@
 
 - (IBAction)helpPressed:(id)sender
 {
-#ifdef TRIAL
-    [DevMateKit showFeedbackDialog:nil inMode:DMFeedbackDefaultMode];
-#else
     NSURL * url = [NSURL URLWithString:@"mailto:info@unboundformac.com?subject=Unbound%20for%20Mac%20Support"];
     [[NSWorkspace sharedWorkspace] openURL:url];
-#endif
 }
 
 - (IBAction)requestFeaturePressed:(id)sender
