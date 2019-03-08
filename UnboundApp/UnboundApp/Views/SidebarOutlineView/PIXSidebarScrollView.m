@@ -43,10 +43,15 @@
     if (![self.contentView isKindOfClass:PIXSidebarClipView.class] ) {
         [self swapClipView];
     }
+
+    self.wantsLayer = YES;
+}
+
+- (void)updateLayer {
+    self.layer.backgroundColor = NSColor.windowBackgroundColor.CGColor;
 }
 
 - (void)swapClipView {
-    self.wantsLayer = YES;
     
     /*
     id documentView = self.documentView;

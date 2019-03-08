@@ -56,15 +56,15 @@ static NSString *kContentTitleKey, *kContentImageKey;
     self.view.wantsLayer = true;
     self.collectionView.wantsLayer = true;
 
-//    if (@available(macOS 10.14, *)) {
-//        // The collection view actually seems to take it's color from the primary color defined in the
-//        // XIB, but I'm leaving this here for funzies.
-//        self.collectionView.layer.backgroundColor = NSColor.windowBackgroundColor.CGColor;
-//        self.view.layer.backgroundColor = NSColor.windowBackgroundColor.CGColor;
-//        self.gridViewTitle.textColor = NSColor.textColor;
-//    } else {
-//        [self setBGColor];
-//    }
+    if (@available(macOS 10.14, *)) {
+        // The collection view actually seems to take it's color from the primary color defined in the
+        // XIB, but I'm leaving this here for funzies.
+        self.collectionView.layer.backgroundColor = NSColor.windowBackgroundColor.CGColor;
+        self.view.layer.backgroundColor = NSColor.windowBackgroundColor.CGColor;
+        self.gridViewTitle.textColor = NSColor.textColor;
+    } else {
+        [self setBGColor];
+    }
 }
 
 - (void)awakeFromNib
