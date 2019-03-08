@@ -5,6 +5,5 @@
 
 #import <Foundation/Foundation.h>
 
-
 @interface PIXCollectionView : NSCollectionView
 @end

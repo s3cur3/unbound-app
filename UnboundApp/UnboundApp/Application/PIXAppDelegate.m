@@ -85,7 +85,9 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+#ifndef DEBUG
     [Fabric with:@[[Crashlytics class]]];
+#endif
 
 #ifdef TRIAL
     [DevMateKit sendTrackingReport:nil delegate: nil];

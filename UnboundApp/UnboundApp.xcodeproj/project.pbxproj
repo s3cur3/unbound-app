@@ -937,13 +937,13 @@
 		458AD1C93E67FBB52088CC77 /* AlbumView */ = {
 			isa = PBXGroup;
 			children = (
-				458AD1672B16A5490895DC92 /* PIXRoundedProgressIndicator.h */,
 				458ADA2D4C8A98FFC1810379 /* PIXAlbumCollectionViewController.h */,
-				458AD37BDFC8466136334D42 /* PIXAlbumCollectionViewItem.m */,
 				458AD36ACD175C61FC9D9D8C /* PIXAlbumCollectionViewController.m */,
-				458AD8D8DCCF4F655556036A /* PIXRoundedProgressIndicator.m */,
 				458ADF5F77BEBD6B0A772875 /* PIXAlbumCollectionViewController.xib */,
+				458AD1672B16A5490895DC92 /* PIXRoundedProgressIndicator.h */,
+				458AD8D8DCCF4F655556036A /* PIXRoundedProgressIndicator.m */,
 				458AD6823981AFC916B73ADD /* PIXAlbumCollectionViewItem.h */,
+				458AD37BDFC8466136334D42 /* PIXAlbumCollectionViewItem.m */,
 				458AD5215011F886FBE6168E /* PIXAlbumCollectionViewItem.xib */,
 			);
 			path = AlbumView;
@@ -1000,14 +1000,17 @@
 			children = (
 				458ADEAC60834A9F1E87886F /* PIXCollectionViewItem.m */,
 				458AD9AFA86D4687002F7DCC /* PIXCustomButton.h */,
+				458AD566A19A1EF9FDA43F12 /* PIXCustomButton.m */,
 				458ADD4637300F7564781014 /* PIXCustomButtonCell.h */,
+				458AD2072C4E666D9558696E /* PIXCustomButtonCell.m */,
 				458AD0CED41CAD089089ACC4 /* PIXExifBGView.h */,
+				458AD99163C98A361F2E4523 /* PIXGridView.h */,
 				458AD4658771C75C94273B47 /* PIXGridView.m */,
-				458ADD15DFC96E38616C0C30 /* PIXCollectionViewController.h */,
+				458AD67B578944E70591B68D /* PIXGradientBarView.h */,
 				458AD3AD8D9D85E5193490FD /* PIXGradientBarView.m */,
 				458AD228F4F179927A0DE5E8 /* PIXCustomShareSheetViewController.h */,
-				458AD566A19A1EF9FDA43F12 /* PIXCustomButton.m */,
 				458ADFEE6D6FDA5319AB20EE /* PIXFileTextField.m */,
+				458ADD15DFC96E38616C0C30 /* PIXCollectionViewController.h */,
 				458AD933DEAABBEEB83AD143 /* PIXCollectionViewController.m */,
 				458AD8B6B7434300FCCD1795 /* PIXExifBGView.m */,
 				458AD737D5A9975B91B517A7 /* PIXCustomShareSheetViewController.m */,
@@ -1017,9 +1020,6 @@
 				458AD38F3D363A3F99F340B7 /* PIXMiniExifViewController.h */,
 				458AD50BA0667941649E9769 /* PIXFileTextField.h */,
 				458ADE094345FBCF483D7ECF /* PIXMiniExifViewController.m */,
-				458AD99163C98A361F2E4523 /* PIXGridView.h */,
-				458AD2072C4E666D9558696E /* PIXCustomButtonCell.m */,
-				458AD67B578944E70591B68D /* PIXGradientBarView.h */,
 				458AD2E290E211201DFD9034 /* NSCollectionView+PIXSelection.m */,
 				458AD8E445B547B0CBD94DD6 /* NSCollectionView+PIXSelection.h */,
 				458ADA0B500A4B5ADBD8014E /* PIXCollectionView.m */,
@@ -1406,15 +1406,12 @@
 			buildConfigurationList = 8C28611817308566009A0B35 /* Build configuration list for PBXNativeTarget "Unbound Trial" */;
 			buildPhases = (
 				B0AEAA92FC82B6F8CB8FE21E /* [CP] Check Pods Manifest.lock */,
-				401F74DD79699DDB896F25E9 /* Check Pods Manifest.lock */,
 				8C28605A17308566009A0B35 /* Sources */,
 				8C2860A617308566009A0B35 /* Copy Frameworks */,
 				8C2860A917308566009A0B35 /* Frameworks */,
 				8C2860B317308566009A0B35 /* Resources */,
 				8A75FDD0A01A37AD4103A0C1 /* [CP] Embed Pods Frameworks */,
 				BBC948C1A594FBD46BE39839 /* [CP] Copy Pods Resources */,
-				8594447F430C92377BB2D85E /* Embed Pods Frameworks */,
-				E7DA4C9DE7869CECA0E7C4ED /* Copy Pods Resources */,
 				043D2EB22053A6DC00CC7A47 /* ShellScript */,
 			);
 			buildRules = (
@@ -1752,21 +1749,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" 2d7dec3d45e8c12d3d51e10f742ccd405d097f97 00c88cbd24f188ff3b9d936e5cd215aa8b2e35b3062af111d5bcf647e7ba4ea6";
 		};
-		401F74DD79699DDB896F25E9 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
 		7645624AC3056208B26A9B46 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1783,21 +1765,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Unbound/Pods-Unbound-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8594447F430C92377BB2D85E /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8A75FDD0A01A37AD4103A0C1 /* [CP] Embed Pods Frameworks */ = {
@@ -1887,21 +1854,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Unbound/Pods-Unbound-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E7DA4C9DE7869CECA0E7C4ED /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

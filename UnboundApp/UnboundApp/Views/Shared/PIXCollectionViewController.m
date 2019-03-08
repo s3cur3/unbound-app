@@ -52,7 +52,19 @@ static NSString *kContentTitleKey, *kContentImageKey;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do view setup here.
+
+    self.view.wantsLayer = true;
+    self.collectionView.wantsLayer = true;
+
+//    if (@available(macOS 10.14, *)) {
+//        // The collection view actually seems to take it's color from the primary color defined in the
+//        // XIB, but I'm leaving this here for funzies.
+//        self.collectionView.layer.backgroundColor = NSColor.windowBackgroundColor.CGColor;
+//        self.view.layer.backgroundColor = NSColor.windowBackgroundColor.CGColor;
+//        self.gridViewTitle.textColor = NSColor.textColor;
+//    } else {
+//        [self setBGColor];
+//    }
 }
 
 - (void)awakeFromNib
@@ -66,12 +78,12 @@ static NSString *kContentTitleKey, *kContentImageKey;
     self.collectionView.allowsEmptySelection = YES;
     self.collectionView.allowsMultipleSelection = YES;
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(defaultThemeChanged:)
-                                                 name:@"backgroundThemeChanged"
-                                               object:nil];
-    [self setBGColor];
-    
+    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_13) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(defaultThemeChanged:)
+                                                     name:@"backgroundThemeChanged"
+                                                   object:nil];
+    }
     
     // make the toolbar animate a little faster than default
     CABasicAnimation * toolBarAnim = [CABasicAnimation animation];
@@ -84,6 +96,17 @@ static NSString *kContentTitleKey, *kContentImageKey;
     scrollAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     scrollAnim.duration = 0.1;
     self.collectionView.superview.animations = @{@"bounds": scrollAnim};
+}
+
+- (void)viewWillLayout
+{
+    if (@available(macOS 10.14, *)) {
+        self.view.layer.backgroundColor = NSColor.windowBackgroundColor.CGColor;
+        self.collectionView.layer.backgroundColor = NSColor.windowBackgroundColor.CGColor;
+        self.gridViewTitle.textColor = NSColor.textColor;
+    } else {
+        [self setBGColor];
+    }
 }
 
 -(void)willShowPIXView
@@ -110,6 +133,9 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 - (void)setBGColor
 {
+    if (@available(macOS 10.14, *)) {
+        return;
+    }
     NSColor * color = nil;
     if([[NSUserDefaults standardUserDefaults] integerForKey:@"backgroundTheme"] == 0)
     {
