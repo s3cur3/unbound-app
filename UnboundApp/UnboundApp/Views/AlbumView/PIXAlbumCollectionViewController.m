@@ -73,12 +73,7 @@
                                              selector:@selector(albumRenamed:)
                                                  name:AlbumWasRenamedNotification
                                                object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(defaultThemeChanged:)
-                                                 name:@"backgroundThemeChanged"
-                                               object:nil];
-    
+
     [self.scrollView setIdentifier:@"albumGridScroller"];
 
     NSCollectionViewFlowLayout *flowLayout = [[NSCollectionViewFlowLayout alloc] init];
@@ -88,14 +83,9 @@
     flowLayout.minimumLineSpacing = 10;
     self.collectionView.collectionViewLayout = flowLayout;
 
-    self.view.wantsLayer = YES;
-    self.collectionView.wantsLayer = YES;
-    [self setBGColor];
-
     [self setupCollectionToolbar];
 
     [self albumsChanged:nil];
-    
 }
 
 - (void)willShowPIXView
@@ -156,35 +146,6 @@
     [super willHidePIXView];
     
     [[PIXFileParser sharedFileParser] removeObserver:self forKeyPath:@"fullScanProgress"];
-}
-
-- (void)defaultThemeChanged:(NSNotification *)note
-{
-    [self setBGColor];
-    [self.collectionView setNeedsDisplay:YES];
-    
-    for(NSView * item in self.collectionView.subviews)
-    {
-        [item setNeedsDisplay:YES];
-    }
-    
-}
-
-- (void)setBGColor
-{
-    NSColor * color = nil;
-    NSColor *textColor = nil;
-    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"backgroundTheme"] == 0) {
-        color = [NSColor colorWithCalibratedWhite:0.912 alpha:1.0];
-        textColor = [NSColor colorWithCalibratedWhite:0.45 alpha:1.0];
-    } else {
-        color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
-        textColor = [NSColor colorWithCalibratedWhite:0.55 alpha:1.000];
-    }
-
-    self.collectionView.layer.backgroundColor = color.CGColor;
-    self.view.layer.backgroundColor = color.CGColor;
-    self.gridViewTitle.textColor = textColor;
 }
 
 #pragma mark - ToolBar
@@ -387,7 +348,7 @@
 }
 
 - (void)setupCollectionToolbar {
-    PIXCustomButton * deleteButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
+    NSButton * deleteButton = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
     if([self.selectedItems count] > 1) {
         [deleteButton setTitle:[NSString stringWithFormat:@"Delete %ld Albums", [self.selectedItems count]]];
     } else {
@@ -395,16 +356,6 @@
     }
     [deleteButton setTarget:self];
     [deleteButton setAction:@selector(deleteItems:)];
-
-    PIXCustomButton * shareButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
-    [shareButton setTitle:@"Share"];
-    [shareButton setTarget:self];
-    [shareButton setAction:@selector(share:)];
-
-    PIXCustomButton * mergeButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
-    [mergeButton setTitle:@"Merge Albums"];
-    [mergeButton setTarget:self];
-
 
     [self.toolbar setButtons:@[deleteButton]];
 

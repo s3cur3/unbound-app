@@ -365,18 +365,20 @@
     NSColor * subtitleColor = nil;
     NSColor * bgColor = nil;
     
-    if([[NSUserDefaults standardUserDefaults] integerForKey:@"backgroundTheme"] == 0)
-    {
-        bgColor = [NSColor colorWithCalibratedWhite:0.912 alpha:1.000];
-        textColor = [NSColor colorWithCalibratedWhite:0.15 alpha:1.0];
-        subtitleColor = [NSColor colorWithCalibratedWhite:0.35 alpha:1.0];
-    }
-    
-    else
-    {
-        bgColor = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
-        textColor = [NSColor colorWithCalibratedWhite:0.9 alpha:1.0];
-        subtitleColor = [NSColor colorWithCalibratedWhite:0.55 alpha:1.0];
+    if (@available(macOS 10.14, *)) {
+        bgColor = NSColor.windowBackgroundColor;
+        textColor = NSColor.controlTextColor;
+        subtitleColor = NSColor.controlTextColor;
+    } else {
+        if ([[NSUserDefaults standardUserDefaults] integerForKey:@"backgroundTheme"] == 0) {
+            bgColor = [NSColor colorWithCalibratedWhite:0.912 alpha:1.000];
+            textColor = [NSColor colorWithCalibratedWhite:0.15 alpha:1.0];
+            subtitleColor = [NSColor colorWithCalibratedWhite:0.35 alpha:1.0];
+        } else {
+            bgColor = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
+            textColor = [NSColor colorWithCalibratedWhite:0.9 alpha:1.0];
+            subtitleColor = [NSColor colorWithCalibratedWhite:0.55 alpha:1.0];
+        }
     }
 
     [bgColor setFill];

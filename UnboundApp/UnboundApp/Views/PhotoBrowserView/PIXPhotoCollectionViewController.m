@@ -62,7 +62,6 @@
         self.selectedItemsName = @"photo";
 
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(updateAlbum:) name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
-        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(themeChanged:) name:@"backgroundThemeChanged" object:nil];
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(photoViewTypeChanged:) name:kNotePhotoStyleChanged object:nil];
 
         // initialize the photo view type
@@ -95,7 +94,6 @@
 
     self.view.wantsLayer = YES;
     self.collectionView.wantsLayer = YES;
-    [self setBGColor];
 
     [self setupToolbar];
 
@@ -128,30 +126,6 @@
 }
 
 #pragma mark - Background Colors
-
-- (void)themeChanged:(NSNotification *)note {
-    [self setBGColor];
-    for (NSView *item in self.collectionView.subviews) {
-        item.needsDisplay = YES;
-    }
-}
-
-- (void)setBGColor
-{
-    NSColor * color = nil;
-    NSColor *textColor = nil;
-    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"backgroundTheme"] == 0) {
-        color = [NSColor colorWithCalibratedWhite:0.912 alpha:1.0];
-        textColor = [NSColor colorWithCalibratedWhite:0.45 alpha:1.0];
-    } else {
-        color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
-        textColor = [NSColor colorWithCalibratedWhite:0.55 alpha:1.000];
-    }
-
-    self.collectionView.layer.backgroundColor = color.CGColor;
-    self.view.layer.backgroundColor = color.CGColor;
-    self.gridViewTitle.textColor = textColor;
-}
 
 -(void)keyDown:(NSEvent *)event
 {
