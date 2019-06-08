@@ -10,12 +10,9 @@
 #import "PIXAppDelegate.h"
 #import "PIXDefines.h"
 #import "PIXAlbum.h"
-#import "PIXSplitViewController.h"
-#import "PIXSidebarViewController.h"
 #import "PIXPhoto.h"
 #import "PIXPhotoCollectionViewItem.h"
 #import "PIXFileManager.h"
-#import "PIXCustomButton.h"
 #import "PIXShareManager.h"
 #import "PIXCollectionToolbar.h"
 #import "PIXCollectionView.h"
@@ -742,16 +739,12 @@
 }
 
 - (void)setupToolbar {
-    PIXCustomButton * deleteButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
+    NSButton * deleteButton = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
     [deleteButton setTitle:@"Delete"];
     [deleteButton setTarget:self];
     [deleteButton setAction:@selector(deleteItems:)];
 
-    PIXCustomButton * shareButton = [[PIXCustomButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
-
-    //[shareButton setImage:[NSImage imageNamed:NSImageNameShareTemplate]];
-    //[shareButton setImagePosition:NSImageLeft];
-
+    NSButton * shareButton = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
     [shareButton setTitle:@"Share"];
     [shareButton setTarget:self];
     [shareButton setAction:@selector(share:)];
