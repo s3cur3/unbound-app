@@ -100,10 +100,17 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 - (void)viewWillLayout
 {
+    [super viewWillLayout];
+
     if (@available(macOS 10.14, *)) {
+        NSAppearance * saved = [NSAppearance currentAppearance];
+        [NSAppearance setCurrentAppearance:self.view.effectiveAppearance];
+
         self.view.layer.backgroundColor = NSColor.windowBackgroundColor.CGColor;
         self.collectionView.layer.backgroundColor = NSColor.windowBackgroundColor.CGColor;
         self.gridViewTitle.textColor = NSColor.textColor;
+
+        [NSAppearance setCurrentAppearance:saved];
     } else {
         [self setBGColor];
     }
