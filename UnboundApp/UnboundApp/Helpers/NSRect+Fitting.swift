@@ -5,6 +5,7 @@
 import Foundation
 
 extension NSRect {
+  /// Creates a new NSRect that matches this aspect ratio but fits within the supplied container.
   func fitting(container: NSRect) -> NSRect {
     let containerWidth = container.width
     let containerHeight = container.height

@@ -29,7 +29,7 @@ class RegularPhotoItem : NSCollectionViewItem, PhotoItem {
 
   override var isSelected: Bool {
     didSet {
-      selectionLayer.isHidden = !isSelected
+      selectionView.isHidden = !isSelected
       self.view.layer?.backgroundColor = isSelected ? selectedBgColor : normalBgColor
     }
   }
