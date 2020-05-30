@@ -9,7 +9,7 @@ class AppearancePrefsViewController: NSViewController, MASPreferencesViewControl
 
   private(set) var viewIdentifier: String = "Appearance"
   private(set) var toolbarItemLabel: String? = NSLocalizedString("preferences.interface.title", comment: "Appearance")
-  private(set) var toolbarItemImage: NSImage? = NSImage(named: .colorPanel)
+  private(set) var toolbarItemImage: NSImage? = NSImage(named: NSImage.colorPanelName)
 
   //MARK - IBActions
 

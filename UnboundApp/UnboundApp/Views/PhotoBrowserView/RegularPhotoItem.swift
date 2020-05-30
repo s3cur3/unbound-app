@@ -34,7 +34,7 @@ class RegularPhotoItem : NSCollectionViewItem, PhotoItem {
     }
   }
 
-  private let placeholder = NSImage(named: NSImage.Name(rawValue: "temp"))
+  private let placeholder = NSImage(named: "temp")
 
   @IBOutlet weak var selectionView: NSView!
   @IBOutlet weak var playButton: NSImageView!

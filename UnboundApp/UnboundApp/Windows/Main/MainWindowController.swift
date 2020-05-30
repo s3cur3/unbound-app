@@ -23,7 +23,7 @@ class MainWindowController: NSWindowController {
     
     navigationViewController?.view.wantsLayer = true
 
-    let albumController = PIXAlbumCollectionViewController(nibName: NSNib.Name(rawValue: "PIXAlbumCollectionViewController"), bundle: nil)
+    let albumController = PIXAlbumCollectionViewController(nibName: "PIXAlbumCollectionViewController", bundle: nil)
     self.albumViewController = albumController
     navigationViewController?.pushViewController(viewController: albumController)
   }

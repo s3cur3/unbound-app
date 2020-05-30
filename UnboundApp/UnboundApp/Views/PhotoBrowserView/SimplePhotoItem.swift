@@ -7,7 +7,7 @@ import Cocoa
 
 @objc class SimplePhotoItem: NSCollectionViewItem, PhotoItem {
 
-  private let placeholder = NSImage(named: NSImage.Name(rawValue: "temp"))
+  private let placeholder = NSImage(named: "temp")
 
   private lazy var selectionLayer: CALayer = {
     let layer = CALayer()
