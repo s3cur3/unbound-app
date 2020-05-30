@@ -435,11 +435,11 @@
     if(album)
     {
         NSUInteger index = [self.albums indexOfObject:album];
-        
         if(index != NSNotFound)
         {
-#warning Uncomment the following line
-            //[self.collectionView scrollToAndReturnItemAtIndex:index animated:YES];
+#warning Tyler tried to make scrolling update, but failed.
+//			NSSet<NSIndexPath *> * indices = [NSSet setWithObject:[self.collectionView indexPathForItem:[notification object]]];
+//			[self.collectionView scrollToItemsAtIndexPaths:indices scrollPosition:NSCollectionViewScrollPositionNearestHorizontalEdge|NSCollectionViewScrollPositionNearestVerticalEdge];
         }
     }
 }
