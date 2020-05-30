@@ -2,14 +2,16 @@
 //  DMTrackingBase.h
 //  DevMateTracking
 //
-//  Copyright (c) 2013-2016 DevMate Inc. All rights reserved.
+//  Copyright (c) 2013-2018 DevMate Inc. All rights reserved.
 //
 
-#ifndef DevMateTracking__DMTrackingBase_h
-#define DevMateTracking__DMTrackingBase_h
+#if __has_feature(modules)
+@import Foundation;
+#else
+#import <Foundation/Foundation.h>
+#endif
 
-#import <DevMateKit/DMDefines.h>
-#import <Foundation/NSObjCRuntime.h>
+#import "DMDefines.h"
 
 //! Application activation status
 typedef NS_ENUM(NSUInteger, DMAppActivationStatus)
@@ -41,5 +43,3 @@ NS_INLINE DMAppTrialValue DMAppTrialValueMake(NSInteger start, NSInteger end, NS
 }
 
 #define DMAppTrialValueMakeSimple(_end_, _current_) DMAppTrialValueMake(0, (_end_), (_current_))
-
-#endif // DevMateTracking__DMTrackingBase_h

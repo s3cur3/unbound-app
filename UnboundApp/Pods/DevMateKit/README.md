@@ -1,8 +1,8 @@
 <p align="center" >
-    <img src="https://github.com/DevMate/DevMateKit/blob/master/DevMate-logo.png" alt="DevMate-logo">
+<img src="https://github.com/DevMate/DevMateKit/blob/master/DevMate-logo.png" alt="DevMate-logo">
 </p>
 
-##What Is DevMate
+## What Is DevMate
 
 [DevMate](http://devmate.com) is development and distribution platform for OS X developers.
 
@@ -28,11 +28,11 @@ In order to connect your application to DevMate you are to integrate DevMateKit 
 
 * **Feedback.** Your customers can send feedback right from the app.
 
-##Get Started
+## Get Started
 
 1\.  Drag and drop **DevMateKit** folder to your project. Check the '_Copy items if needed_' in the dialogue appeared; check '_Create groups_' control for '_Added folders_' group; check your project target in _'Add to targets'_ table.
 
-####What's Inside
+#### What's Inside
 
 * `DevMateKit.framework` — DevMateKit iteslf.
 
@@ -53,73 +53,93 @@ In order to connect your application to DevMate you are to integrate DevMateKit 
 @executable_path/../Frameworks
 ````
 
-4\. Proceed to the *'Build Settings'* tab and add the following string to the *'Framework Search Paths'*:
+4\.  Proceed to the *'Build Settings'* tab and add the following string to the *'Framework Search Paths'*:
 
 ````
 "$(PROJECT_DIR)/DevMateKit/DevMateKit.framework/Frameworks"
 ````
-
 if DevMateKit folder is located in the project root folder or
-
-
 ````
 "$(PROJECT_DIR)/<Path_to_DevMateKit_folder>/DevMateKit.framework/Frameworks"
 ````
-
 otherwise.
 
-###Test Integration
+5\. For Swift project create bridging header and add its path to *'Objective-C Bridging Header'* build setting of your target if it is absent.
 
-1\.  Add the following string to the import section of your application delegate class file:
+### Test Integration
 
-````
+1\.  Add the following string to the import section of your application Objective-C delegate class file or to the special bridging header of your Swift target:
+
+````objective-c
 #import <DevMateKit/DevMateKit.h>
 ````
 
-2\.  Copy and paste the following code to the `-applicationDidFinishLaunching:` method of your application delegate class:
+2\.  Copy and paste the following code to the `applicationDidFinishLaunching` method of your application delegate class:
 
-````
+````objective-c
 [DevMateKit sendTrackingReport:nil delegate:nil];
+````
+
+For Swift projects:
+
+````Swift
+DevMateKit.sendTrackingReport(nil, delegate: nil)
 ````
 
 After you build and run your application, it will start sending launch reports to DevMate.
 
 You can read more on DevMateKit customization in wiki article.
 
-###CocoaPods Integration
+### CocoaPods Integration
 
-You can integrate DevMateKit into your project using CocoaPods. Add next to your podfile:
+You can integrate DevMateKit into your project using [CocoaPods](http://cocoadocs.org/docsets/DevMateKit/). Here is the podfile:
 
-````
+````ruby
 platform :osx, '10.7'
 pod 'DevMateKit'
 ````
 
-##Activations and Trial
+## Activations and Trial
 
 To manage activations and trial you need to have Kevlar library installed which is generated uniquely for each application. You can read more on it [here](http://docs.devmate.com/v1.0/docs/activations-and-trial).
 
-##Issue Reporter Setup
+## Issue Reporter Setup
 
 DevMateKit allows sending crashes and exception reports that can be viewed later in [Issues Management](http://docs.devmate.com/v1.0/docs/issues-management) section of DevMate Dashboard. Moreover, you will be able to view how issues of your app are distributed by various parameters in [Issues Statistics](http://docs.devmate.com/v1.0/docs/issues-statistics) section, which will help you to detrmine the weaker places of the app.
 
-Enabling issue reporter is that easy as just adding to the `-applicationDidFinishLaunching:` method of your application delegate class the following string:
+Enabling issue reporter is that easy as just adding to the `applicationDidFinishLaunching` method of your application delegate class the following.
 
-````
+For Objective-C projects:
+
+````objective-c
 [DevMateKit setupIssuesController:nil reportingUnhandledIssues:YES];
+````
+
+For Swift projects:
+
+````Swift
+DevMateKit.setupIssuesController(nil, reportingUnhandledIssues: true)
 ````
 
 More info of issue reporter usage you can find in the [wiki article](https://github.com/DevMate/DevMateKit/wiki/Issue-Reporter).
 
-##Feedback Setup
+## Feedback Setup
 
 To allow your users sending feedback messages you need to do the following:
 
 1\. Add the following method to your application delegate class implementation:
 
-````
+````objective-c
 - (IBAction)showFeedbackDialog:(id)sender {
-    [DevMateKit showFeedbackDialog:nil inMode:DMFeedbackDefaultMode];
+    [DevMateKit showFeedbackDialog:nil inMode:DMFeedbackIndependentMode];
+}
+````
+
+For Swift projects:
+
+````Swift
+@IBAction func showFeedbackDialog(sender: AnyObject?)  {
+    DevMateKit.showFeedbackDialog(nil, inMode: DMFeedbackMode.IndependentMode)
 }
 ````
 
@@ -129,14 +149,12 @@ To allow your users sending feedback messages you need to do the following:
 
 You can learn more on feedback setup and configuration in [wiki article](https://github.com/DevMate/DevMateKit/wiki/Feedback).
 
-##Updates Setup
+## Updates Setup
 
 To keep user of your app updated, do the following.
 
 1. Add new Object component from _'Object library'_ to your main XIB file and change its class name to `SUUpdater`.
-
-2. Connect `checkForUpdates` action of the `SUUpdater` object which was created in previous step with the corresponding menu item or button inside the XIB files.
-
+2. Connect `checkForUpdates` action of the `SUUpdater` object which was created in previous step with the corresponding menu item or button inside the XIB files. 
 3. Build and run your application and try to update.
 
 Refer to [wiki article](https://github.com/DevMate/DevMateKit/wiki/Updates) if you need more help.

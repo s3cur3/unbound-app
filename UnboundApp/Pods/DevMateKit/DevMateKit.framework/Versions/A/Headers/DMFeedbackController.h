@@ -2,11 +2,18 @@
 //  DMFeedbackController.h
 //  DevMateFeedback
 //
-//  Copyright (c) 2014-2016 DevMate Inc. All rights reserved.
+//  Copyright (c) 2014-2018 DevMate Inc. All rights reserved.
 //
 
-#import <DevMateKit/DMFeedbackReportWindowController.h>
-#import <DevMateKit/DMRatingView.h>
+#if __has_feature(modules)
+@import Cocoa;
+#else
+#import <Cocoa/Cocoa.h>
+#endif
+
+#import "DMFeedbackReportWindowController.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 //! Different modes for showing feedback window.
 typedef NS_ENUM(NSInteger, DMFeedbackMode)
@@ -37,11 +44,11 @@ typedef NS_ENUM(NSInteger, DMFeedbackTypeTag)
  */
 + (instancetype)sharedController;
 
-@property (nonatomic, assign) id<DMFeedbackControllerDelegate> delegate;
-@property (nonatomic, retain) NSDictionary *defaultUserInfo;
+@property (nonatomic, assign, nullable) id<DMFeedbackControllerDelegate> delegate;
+@property (nonatomic, retain, nullable) NSDictionary *defaultUserInfo;
 
 //! Array of NSURL instances. Set it in case you have custom log files. By default log is obtained from ASL (default NSLog behaviour) for non-sandboxed apps.
-@property (nonatomic, retain) NSArray *logURLs;
+@property (nonatomic, retain, nullable) NSArray *logURLs;
 
 //! Property to get/change feedback type
 @property (nonatomic, assign) DMFeedbackTypeTag currentFeedbackType;
@@ -63,18 +70,13 @@ typedef NS_ENUM(NSInteger, DMFeedbackTypeTag)
 @property (nonatomic, assign) IBOutlet NSTextField *sendAnonymousExplanationField;
 @property (nonatomic, assign) IBOutlet NSButton *sysInfoButton;
 
-@property (nonatomic, assign) IBOutlet NSTextField *ratingTextField;
-@property (nonatomic, assign) IBOutlet DMRatingView *ratingView;
-
-@property (nonatomic, assign) IBOutlet NSBox *separatorLine;
-
 @property (nonatomic, assign) IBOutlet NSButton *sendButton;
 @property (nonatomic, assign) IBOutlet NSProgressIndicator *progressIndicator;
 
-- (IBAction)changeFeedbackType:(id)sender;
-- (IBAction)showSysInfo:(id)sender;
-- (IBAction)attachFile:(id)sender;
-- (IBAction)sendReport:(id)sender;
+- (IBAction)changeFeedbackType:(nullable id)sender;
+- (IBAction)showSysInfo:(nullable id)sender;
+- (IBAction)attachFile:(nullable id)sender;
+- (IBAction)sendReport:(nullable id)sender;
 // -------------------------------
 
 //! User comment that will be sent. Can be overriden by subclasses.
@@ -89,7 +91,7 @@ typedef NS_ENUM(NSInteger, DMFeedbackTypeTag)
     @param mode     Feedback mode.
     @param handler  Completion handler.
  */
-- (void)showFeedbackWindowInMode:(DMFeedbackMode)mode completionHandler:(void (^)(BOOL success))handler;
+- (void)showFeedbackWindowInMode:(DMFeedbackMode)mode completionHandler:(void (^_Nullable)(BOOL success))handler;
 
 @end
 
@@ -104,7 +106,8 @@ typedef NS_ENUM(NSInteger, DMFeedbackTypeTag)
     @param mode         Feedback mode.
     @return Parent window for feedback window.
  */
-- (NSWindow *)feedbackController:(DMFeedbackController *)controller parentWindowForFeedbackMode:(DMFeedbackMode)mode;
+- (NSWindow *)feedbackController:(DMFeedbackController *)controller
+     parentWindowForFeedbackMode:(DMFeedbackMode)mode;
 
 @end
 
@@ -112,3 +115,5 @@ typedef NS_ENUM(NSInteger, DMFeedbackTypeTag)
 FOUNDATION_EXPORT NSString *const DMFeedbackDefaultUserNameKey; // NSString object
 FOUNDATION_EXPORT NSString *const DMFeedbackDefaultUserEmailKey; // NSString object
 FOUNDATION_EXPORT NSString *const DMFeedbackDefaultCommentKey; // NSString object
+
+NS_ASSUME_NONNULL_END

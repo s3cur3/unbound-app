@@ -2,11 +2,18 @@
 //  DMStepController.h
 //  DevMateActivations
 //
-//  Copyright (c) 2012-2016 DevMate Inc. All rights reserved.
+//  Copyright (c) 2012-2018 DevMate Inc. All rights reserved.
 //
 
+#if __has_feature(modules)
+@import Cocoa;
+#else
 #import <Cocoa/Cocoa.h>
-#import <DevMateKit/DMActivationController.h>
+#endif
+
+#import "DMActivationController.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 /*! @interface DMStepController
     @brief Controller for the specific activation step.
@@ -25,7 +32,7 @@
 */
 + (instancetype)defaultViewController;
 
-@property (nonatomic, assign) DMActivationController *activationController;
+@property (nonatomic, assign, nullable) DMActivationController *activationController;
 
 /*! @brief Corrects UI elements properties (localized titles, positions, ...).
     @discussion Will be called right after view was loaded from nib.
@@ -55,8 +62,8 @@
 - (DMActivationProcessResult)activationResultForWindowCloseAction;
 
 // IBOutlets
-@property (nonatomic, assign) IBOutlet NSImageView *applicationIconView;
-@property (nonatomic, assign) IBOutlet NSTextField *stepTitleField;
+@property (nonatomic, assign, nullable) IBOutlet NSImageView *applicationIconView;
+@property (nonatomic, assign, nullable) IBOutlet NSTextField *stepTitleField;
 
 @end
 
@@ -66,3 +73,5 @@ FOUNDATION_EXTERN NSString *const DMActivationErrorKey; // NSError value
 FOUNDATION_EXPORT NSString *const DMActivationUserNameKey; // NSString value
 FOUNDATION_EXPORT NSString *const DMActivationUserEmailKey; // NSString value
 FOUNDATION_EXPORT NSString *const DMActivationKeepUpToDateKey; // NSNumber with BOOL
+
+NS_ASSUME_NONNULL_END

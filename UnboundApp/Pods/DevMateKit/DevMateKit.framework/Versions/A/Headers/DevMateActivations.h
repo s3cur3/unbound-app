@@ -2,27 +2,32 @@
 //  DevMateActivations.h
 //  DevMateActivations
 //
-//  Copyright (c) 2012-2016 DevMate Inc. All rights reserved.
+//  Copyright (c) 2012-2018 DevMate Inc. All rights reserved.
 //
 
+#if __has_feature(modules)
+@import Cocoa;
+#else
 #import <Cocoa/Cocoa.h>
+#endif
 
-#import <DevMateKit/DMDefines.h>
-#import <DevMateKit/DMActivationController.h>
-#import <DevMateKit/DMStepController.h>
-#import <DevMateKit/DMActivator.h>
-#import <DevMateKit/DMTrial.h>
+#import "DMDefines.h"
+#import "DMActivationController.h"
+#import "DMStepController.h"
+#import "DMActivator.h"
+#import "DMTrial.h"
 
 // All standard step controllers
-#import <DevMateKit/DMWelcomeStepController.h>
-#import <DevMateKit/DMActivationStepController.h>
-#import <DevMateKit/DMAdditionalActivationStepController.h>
-#import <DevMateKit/DMSuccessStepController.h>
-#import <DevMateKit/DMFailureStepController.h>
-#import <DevMateKit/DMExpirationStepController.h>
-#import <DevMateKit/DMDeactivationStepController.h>
-#import <DevMateKit/DMTrialWelcomeStepController.h>
-#import <DevMateKit/DMTrialManualReminderStepController.h>
-#import <DevMateKit/DMTrialTimeReminderStepController.h>
-#import <DevMateKit/DMTrialManualExpiredStepController.h>
-#import <DevMateKit/DMTrialTimeExpiredStepController.h>
+#import "DMWelcomeStepController.h"
+#import "DMActivationStepController.h"
+#import "DMAdditionalActivationStepController.h"
+#import "DMSuccessStepController.h"
+#import "DMFailureStepController.h"
+#import "DMExpirationStepController.h"
+#import "DMDeactivationStepController.h"
+#import "DMTrialWelcomeStepController.h"
+#import "DMTrialManualReminderStepController.h"
+#import "DMTrialTimeReminderStepController.h"
+#import "DMTrialManualExpiredStepController.h"
+#import "DMTrialTimeExpiredStepController.h"
+#import "DMEmbeddedStoreStepController.h"

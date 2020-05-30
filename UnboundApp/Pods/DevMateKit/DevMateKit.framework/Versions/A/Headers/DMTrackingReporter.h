@@ -2,10 +2,18 @@
 //  DMTrackingReporter.h
 //  DevMateTracking
 //
-//  Copyright (c) 2013-2016 DevMate Inc. All rights reserved.
+//  Copyright (c) 2013-2018 DevMate Inc. All rights reserved.
 //
 
-#import <DevMateKit/DMTrackingBase.h>
+#if __has_feature(modules)
+@import Foundation;
+#else
+#import <Foundation/Foundation.h>
+#endif
+
+#import "DMTrackingBase.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @protocol DMTrackingReporterInfoProvider;
 @protocol DMTrackingReporterDelegate;
@@ -15,8 +23,8 @@
 - (instancetype)initWithInfoProvider:(id <DMTrackingReporterInfoProvider>)infoProvider;
 + (instancetype)reporterWithInfoProvider:(id <DMTrackingReporterInfoProvider>)infoProvider;
 
-@property (readonly) id <DMTrackingReporterInfoProvider> infoProvider;
-@property (assign) id <DMTrackingReporterDelegate> delegate;
+@property (readonly, nullable) id <DMTrackingReporterInfoProvider> infoProvider;
+@property (assign, nullable) id <DMTrackingReporterDelegate> delegate;
 
 // Passing NO as async parameter is not recommended while calling method from main thread/queue
 - (void)sendReport:(BOOL)async;
@@ -40,3 +48,4 @@
 
 @end
 
+NS_ASSUME_NONNULL_END
