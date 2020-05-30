@@ -87,7 +87,7 @@
     if(resolutionString == nil) resolutionString = @"";
     self.resolution.stringValue = resolutionString;
     
-    NSUInteger * byteCount = [[self.photo fileSize] unsignedIntegerValue];
+    NSUInteger byteCount = [[self.photo fileSize] unsignedIntegerValue];
     
     NSString * sizeString = nil;
     if(byteCount)

@@ -126,7 +126,7 @@
 
         // Create the context that's thumbnailSize x thumbnailSize.
         
-        context = CGBitmapContextCreate(NULL, thumbnailSize, thumbnailSize, 8, 0, space, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
+		context = CGBitmapContextCreate(NULL, sround(thumbnailSize), sround(thumbnailSize), 8, 0, space, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
         if (context != NULL) {
             CGRect  r;
             

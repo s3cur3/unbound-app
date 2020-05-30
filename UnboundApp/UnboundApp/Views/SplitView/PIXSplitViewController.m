@@ -308,7 +308,7 @@
     // close the sidebar
     else
     {
-        CGFloat currentPosition = self.leftPane.frame.size.width;
+        float currentPosition = (float)self.leftPane.frame.size.width;
         [[NSUserDefaults standardUserDefaults] setFloat:currentPosition forKey:@"albumSideBarToggleWidth"];
         [self.splitView setPosition:0 ofDividerAtIndex:0];
         

@@ -1440,7 +1440,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                     BOOL stale = NO;
                     NSError * error = nil;
                     NSURL * url = [NSURL URLByResolvingBookmarkData:bookmark
-                                                            options:nil // these arent security scoped. thats what sandboxScopeURLs are for
+                                                            options:0 // these arent security scoped. thats what sandboxScopeURLs are for
                                                       relativeToURL:nil
                                                 bookmarkDataIsStale:&stale
                                                               error:&error];
@@ -1476,7 +1476,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
         if ([[NSFileManager defaultManager] fileExistsAtPath:url.path isDirectory:&isDir] && isDir) {
             
             NSError * error = nil;
-            NSData * bookMarkData =  [url bookmarkDataWithOptions:nil // these arent security scoped. thats what sandboxScopeURLs are for
+            NSData * bookMarkData =  [url bookmarkDataWithOptions:0 // these arent security scoped. thats what sandboxScopeURLs are for
                                    includingResourceValuesForKeys:nil
                                                     relativeToURL:nil
                                                             error:&error];

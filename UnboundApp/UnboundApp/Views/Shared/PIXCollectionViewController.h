@@ -7,8 +7,6 @@
 //
 
 #import "PIXViewController.h"
-#import "PIXGridView.h"
-#import "PIXGradientBarView.h"
 #import "PIXRoundedProgressIndicator.h"
 
 @class PIXCollectionToolbar;

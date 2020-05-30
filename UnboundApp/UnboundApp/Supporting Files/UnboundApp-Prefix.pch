@@ -20,3 +20,6 @@
 #       define NS_BLOCK_ASSERTIONS
 #   endif
 #endif
+
+#include "MathUtils.h"
+

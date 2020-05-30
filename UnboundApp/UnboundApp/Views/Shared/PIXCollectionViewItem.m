@@ -145,8 +145,8 @@
     // create a bitmap representation
     NSBitmapImageRep *offscreenRep = [[NSBitmapImageRep alloc]
                                       initWithBitmapDataPlanes:NULL
-                                      pixelsWide:size.width
-                                      pixelsHigh:size.height
+                                      pixelsWide:intround(size.width)
+                                      pixelsHigh:intround(size.height)
                                       bitsPerSample:8
                                       samplesPerPixel:4
                                       hasAlpha:YES
