@@ -121,10 +121,10 @@
         CIFilter *maskScalingFilter = [CIFilter filterWithName:@"CILanczosScaleTransform"];
         [maskScalingFilter setDefaults];
         CGRect maskExtent = [self.maskImage extent];
-        float xScale = rect.size.width / maskExtent.size.width;
-        float yScale = rect.size.height / maskExtent.size.height;
-        [maskScalingFilter setValue:[NSNumber numberWithFloat:yScale] forKey:@"inputScale"];
-        [maskScalingFilter setValue:[NSNumber numberWithFloat:xScale / yScale] forKey:@"inputAspectRatio"];
+        CGFloat xScale = rect.size.width / maskExtent.size.width;
+        CGFloat yScale = rect.size.height / maskExtent.size.height;
+        [maskScalingFilter setValue:[NSNumber numberWithDouble:yScale] forKey:@"inputScale"];
+        [maskScalingFilter setValue:[NSNumber numberWithDouble:xScale / yScale] forKey:@"inputAspectRatio"];
         [maskScalingFilter setValue:self.maskImage forKey:@"inputImage"];
         
         [transitionFilter setValue:[maskScalingFilter valueForKey:@"outputImage"] forKey:@"inputMaskImage"];
@@ -136,7 +136,7 @@
     }
     else if ([transition isEqualToString:@"CIPageCurlTransition"])
     {
-        [transitionFilter setValue:[NSNumber numberWithFloat:-M_PI_4] forKey:@"inputAngle"];
+        [transitionFilter setValue:[NSNumber numberWithDouble:-M_PI_4] forKey:@"inputAngle"];
         [transitionFilter setValue:self.shadingImage forKey:@"inputShadingImage"];
         [transitionFilter setValue:self.shadingImage forKey:@"inputBacksideImage"];
         [transitionFilter setValue:[CIVector vectorWithX:rect.origin.x Y:rect.origin.y Z:rect.size.width W:rect.size.height] forKey:@"inputExtent"];

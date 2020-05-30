@@ -476,7 +476,7 @@
 }
 
 //PIXSplitViewControllerDelegate
--(void)albumSelected:(PIXAlbum *)anAlbum atIndex:(NSUInteger)index;
+-(void)albumSelected:(PIXAlbum *)anAlbum atIndex:(NSUInteger)index
 {
     PIXAlbum *myAlbum = [self albumForIndex:index];
     if (![myAlbum.path isEqualToString:anAlbum.path]) {

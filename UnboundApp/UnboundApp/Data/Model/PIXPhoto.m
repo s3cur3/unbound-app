@@ -123,7 +123,7 @@ const CGFloat kThumbnailSize = 370.0f;
 }
 
 //TODO: get rid of this
--(NSURL *)filePath;
+-(NSURL *)filePath
 {
     return [NSURL fileURLWithPath:self.path isDirectory:NO];
 }
@@ -131,7 +131,7 @@ const CGFloat kThumbnailSize = 370.0f;
 //
 #pragma mark photo loading
 
--(void)cancelFullsizeLoading;
+-(void)cancelFullsizeLoading
 {
     self.cancelFullsizeLoadOperation = YES;
 }
@@ -308,7 +308,7 @@ const CGFloat kThumbnailSize = 370.0f;
     if (resizeImage)
     {
         NSRect visibleScreen = [[NSScreen mainScreen] visibleFrame];
-        float maxDimension = (visibleScreen.size.width > visibleScreen.size.height) ? visibleScreen.size.width : visibleScreen.size.height;
+        CGFloat maxDimension = (visibleScreen.size.width > visibleScreen.size.height) ? visibleScreen.size.width : visibleScreen.size.height;
         
         NSNumber *maxPixelSize = [NSNumber numberWithInteger:maxDimension];
         //DLog(@"Using maxPixelSize : %@", maxPixelSize);
@@ -416,7 +416,7 @@ const CGFloat kThumbnailSize = 370.0f;
 }
 
 
--(void)cancelThumbnailLoading;
+-(void)cancelThumbnailLoading
 {
     
     // do nothing if we're not loading
@@ -1440,7 +1440,7 @@ const CGFloat kThumbnailSize = 370.0f;
     return NO;
 }
 
--(BOOL)isVideo;
+-(BOOL)isVideo
 {
     return [[self class] isVideoPath:self.path];
 }
@@ -1453,7 +1453,7 @@ const CGFloat kThumbnailSize = 370.0f;
     return _videoFile;
 }
 
--(NSDictionary *)videoAttributes;
+-(NSDictionary *)videoAttributes
 {
     if (![self isVideo]) {
         return nil;
@@ -1510,7 +1510,7 @@ const CGFloat kThumbnailSize = 370.0f;
  @abstract Returns a unique string that identify this data source item (required).
  @discussion The image browser uses this identifier to keep the correspondance between its cache and the data source item
  */
-- (NSString *)  imageUID;  /* required */
+- (NSString *)  imageUID /* required */
 {
     return self.path;
 }
@@ -1520,7 +1520,7 @@ const CGFloat kThumbnailSize = 370.0f;
  @abstract Returns the representation of the image to display (required).
  @discussion Keys for imageRepresentationType are defined below.
  */
-- (NSString *) imageRepresentationType; /* required */
+- (NSString *) imageRepresentationType /* required */
 {
     if (![PIXPhoto isVideoPath:self.path]) {
         return IKImageBrowserPathRepresentationType;
@@ -1533,7 +1533,7 @@ const CGFloat kThumbnailSize = 370.0f;
  @method imageRepresentation
  @abstract Returns the image to display (required). Can return nil if the item has no image to display.
  */
-- (id) imageRepresentation; /* required */
+- (id) imageRepresentation /* required */
 {
     return self.path;
 }
@@ -1545,7 +1545,7 @@ const CGFloat kThumbnailSize = 370.0f;
  @method imageVersion
  @abstract Returns a version of this item. The receiver can return a new version to let the image browser knows that it shouldn't use its cache for this item
  */
-- (NSUInteger) imageVersion;
+- (NSUInteger) imageVersion
 {
     return 1;
 }
@@ -1554,7 +1554,7 @@ const CGFloat kThumbnailSize = 370.0f;
  @method imageTitle
  @abstract Returns the title to display as a NSString. Use setValue:forKey: with IKImageBrowserCellsTitleAttributesKey on the IKImageBrowserView instance to set text attributes.
  */
-- (NSString *) imageTitle;
+- (NSString *) imageTitle
 {
     return self.name;
 }
@@ -1563,7 +1563,7 @@ const CGFloat kThumbnailSize = 370.0f;
  @method imageSubtitle
  @abstract Returns the subtitle to display as a NSString. Use setValue:forKey: with IKImageBrowserCellsSubtitleAttributesKey on the IKImageBrowserView instance to set text attributes.
  */
-- (NSString *) imageSubtitle;
+- (NSString *) imageSubtitle
 {
     return self.name;
 }
@@ -1573,7 +1573,7 @@ const CGFloat kThumbnailSize = 370.0f;
  @abstract Returns whether this item is selectable.
  @discussion The receiver can implement this methods to forbid selection of this item by returning NO.
  */
-- (BOOL) isSelectable;
+- (BOOL) isSelectable
 {
     return YES;
 }

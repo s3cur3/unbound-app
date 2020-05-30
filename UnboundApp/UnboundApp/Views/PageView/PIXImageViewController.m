@@ -118,7 +118,7 @@
     if(![self.view.window isKeyWindow]) return;
     
     
-    float magnification = self.startPinchZoom * scale;
+    CGFloat magnification = self.startPinchZoom * scale;
     
     
     if(!isnan(magnification))

@@ -104,10 +104,10 @@
     if ([self.photo isVideo]) {
         double durationSeconds = CMTimeGetSeconds(self.photo.videoFile.duration);
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:durationSeconds];
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        dateFormatter.timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
-        dateFormatter.dateFormat = @"HH:mm:ss";
-        modelString = [dateFormatter stringFromDate:date];
+        NSDateFormatter *utcFormatter = [[NSDateFormatter alloc] init];
+        utcFormatter.timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
+        utcFormatter.dateFormat = @"HH:mm:ss";
+        modelString = [utcFormatter stringFromDate:date];
     }
     
     if(modelString == nil)

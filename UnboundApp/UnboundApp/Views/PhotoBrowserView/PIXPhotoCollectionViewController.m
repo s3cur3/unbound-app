@@ -189,7 +189,7 @@
     [self updateItemDimensions];
 }
 
-- (void)photoViewTypeChanged:(NSNotification *)note; {
+- (void)photoViewTypeChanged:(NSNotification *)note {
     NSString *styleName = [NSUserDefaults.standardUserDefaults stringForKey:kPrefPhotoStyle];
     if (styleName) {
         if ([styleName isEqualToString:@"Compact"]) {
@@ -512,7 +512,7 @@
 
 #pragma mark - PIXPageViewControllerDelegate
 
--(void)pagerDidMoveToPhotoWithPath:(NSString *)aPhotoPath atIndex:(NSUInteger)index;
+-(void)pagerDidMoveToPhotoWithPath:(NSString *)aPhotoPath atIndex:(NSUInteger)index
 {
     if (index < self.photos.count) {
         PIXPhoto *photo = self.photos[index];
@@ -587,7 +587,7 @@
     return [PIXPhotoCollectionViewItemView dragImageForPhotos:photos count:indexPaths.count size:NSMakeSize(150, 150)];
 }
 
-- (NSSize)collectionView:(NSCollectionView *)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath; {
+- (NSSize)collectionView:(NSCollectionView *)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSSize size = NSZeroSize;
     PIXPhoto *photo = self.photos[indexPath.item];
     NSSize dimens = photo.dimensions;

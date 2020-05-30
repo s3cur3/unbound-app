@@ -22,3 +22,4 @@
 +(NSImage *)dragImageForPhotos:(NSArray<PIXPhoto *> *)photoArray count:(NSUInteger)count size:(NSSize)size;
 
 @end
+

@@ -281,7 +281,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
     }
 }
 
-- (void)getInfo:(id)sender;
+- (void)getInfo:(id)sender
 {
     NSUInteger fileCount = self.selectedItems.count;
     if (fileCount>6) {

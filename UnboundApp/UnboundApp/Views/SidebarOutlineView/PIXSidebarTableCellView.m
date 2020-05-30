@@ -133,7 +133,7 @@
     }];
 }
 
-- (IBAction)getInfo:(id)sender; {
+- (IBAction)getInfo:(id)sender {
     PIXAlbum *anAlbum = self.album;
     NSSet *aSet = [NSSet setWithObject:anAlbum];
     [aSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
@@ -208,7 +208,7 @@
 //    }
 //}
 
-- (void)menuWillOpen:(NSMenu *)menu; {
+- (void)menuWillOpen:(NSMenu *)menu {
     self.hasContextMenuOpen = YES;
     CGColorRef color = CGColorCreateGenericRGB(0.346, 0.531, 0.792, 1.000);
     //NSColor *color = [NSColor itemSelectionRingColor];
@@ -226,13 +226,13 @@
     [self setNeedsDisplay:YES];
 }
 
-- (void)menuDidClose:(NSMenu *)menu; {
+- (void)menuDidClose:(NSMenu *)menu {
     self.hasContextMenuOpen = NO;
     [self.layer setBorderWidth:0.0f];
     //[self.layer setBorderColor:color];
 }
 
-- (void)rightMouseDown:(NSEvent *)theEvent; {
+- (void)rightMouseDown:(NSEvent *)theEvent {
     [super rightMouseDown:theEvent];
     DLog(@"rightMouseDown : %@", theEvent);
 }

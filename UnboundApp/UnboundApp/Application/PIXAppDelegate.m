@@ -68,7 +68,7 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
     }
 }
 
--(NSOperationQueue *)globalBackgroundSaveQueue;
+-(NSOperationQueue *)globalBackgroundSaveQueue
 {
     if (_backgroundSaveQueue == NULL)
     {
@@ -284,11 +284,11 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
     [[PIXFileManager sharedInstance] importPhotosToAlbum:self.currentlySelectedAlbum allowDirectories:allowDirectories];
 }
 
-- (IBAction)purchaseOnlinePressed:(id)sender; {
+- (IBAction)purchaseOnlinePressed:(id)sender {
     [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:@"http://www.unboundformac.com/"]];
 }
 
-- (IBAction)showHomepagePressed:(id)sender; {
+- (IBAction)showHomepagePressed:(id)sender {
     [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:@"http://www.unboundformac.com/"]];
 }
 
@@ -340,18 +340,18 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     [self.mainWindowController showWindow:self];
 }
 
-- (NSError *)application:(NSApplication *)application willPresentError:(NSError *)error;
+- (NSError *)application:(NSApplication *)application willPresentError:(NSError *)error
 {
     DLog(@"willPresentError :  %@", error);
     return error;
 }
 
-- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender;
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender
 {
     return YES;
 }
 
-- (void)applicationWillTerminate:(NSNotification *)notification;
+- (void)applicationWillTerminate:(NSNotification *)notification
 {
     [self.fileParser stopObserving];
     self.isObservingFileSystem = NO;

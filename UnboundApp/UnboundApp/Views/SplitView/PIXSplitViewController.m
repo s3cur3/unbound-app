@@ -32,7 +32,7 @@
 @implementation PIXSplitViewController
 
 
-- (id)initWithCoder:(NSCoder *)aDecoder;
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
@@ -308,7 +308,7 @@
     // close the sidebar
     else
     {
-        float currentPosition = self.leftPane.frame.size.width;
+        CGFloat currentPosition = self.leftPane.frame.size.width;
         [[NSUserDefaults standardUserDefaults] setFloat:currentPosition forKey:@"albumSideBarToggleWidth"];
         [self.splitView setPosition:0 ofDividerAtIndex:0];
         

@@ -10,7 +10,7 @@
 
 }
 
-+ (NSString *)flattenHTML:(NSString *)html; {
++ (NSString *)flattenHTML:(NSString *)html {
 
     NSScanner *thescanner;
     NSString *text = nil;

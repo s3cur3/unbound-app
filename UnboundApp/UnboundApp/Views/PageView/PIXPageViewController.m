@@ -152,7 +152,7 @@
     
 }
 
--(IBAction)toggleInfoPanel:(id)sender;
+-(IBAction)toggleInfoPanel:(id)sender
 {
     if(self.infoPanelShowing)
     {
@@ -939,7 +939,7 @@
     }];
 }
 
--(IBAction)getInfo:(id)sender;
+-(IBAction)getInfo:(id)sender
 {
     NSSet *aSet = [NSSet setWithObject:[self.pagerData objectAtIndex:self.pageController.selectedIndex]];
     [aSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
@@ -1215,7 +1215,7 @@
     }
 }
 
--(BOOL)isPlayingVideo;
+-(BOOL)isPlayingVideo
 {
     BOOL isPlaying = NO;
     if ([self.pageController.selectedViewController isKindOfClass:[PIXVideoViewController class]]) {
