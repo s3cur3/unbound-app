@@ -310,7 +310,7 @@ const CGFloat kThumbnailSize = 370.0f;
         NSRect visibleScreen = [[NSScreen mainScreen] visibleFrame];
         CGFloat maxDimension = (visibleScreen.size.width > visibleScreen.size.height) ? visibleScreen.size.width : visibleScreen.size.height;
         
-        NSNumber *maxPixelSize = [NSNumber numberWithInteger:maxDimension];
+        NSNumber *maxPixelSize = [NSNumber numberWithInteger:intceil(maxDimension)];
         //DLog(@"Using maxPixelSize : %@", maxPixelSize);
         imageOptions = @{(id)kCGImageSourceCreateThumbnailFromImageIfAbsent: (id)kCFBooleanTrue,
                                        (id)kCGImageSourceCreateThumbnailFromImageAlways: (id)kCFBooleanTrue,
@@ -380,7 +380,7 @@ const CGFloat kThumbnailSize = 370.0f;
         
     // This code needs to be threadsafe, as it will be called from the background thread.
     // The easiest way to ensure you only use stack variables is to make it a class method.
-    NSNumber *maxPixelSize = [NSNumber numberWithInteger:kThumbnailSize];
+    NSNumber *maxPixelSize = [NSNumber numberWithInteger:intceil(kThumbnailSize)];
 
     NSDictionary *imageOptions = nil;
 

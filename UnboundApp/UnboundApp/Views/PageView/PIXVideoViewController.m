@@ -263,8 +263,8 @@
     self.movieView.player = player;
 
     if (player != nil) {
-        [self.movieView.player addObserver:self forKeyPath:@"status" options:nil context:nil];
-        [self.movieView.player addObserver:self forKeyPath:@"rate" options:nil context:nil];
+        [self.movieView.player addObserver:self forKeyPath:@"status" options:0 context:nil];
+        [self.movieView.player addObserver:self forKeyPath:@"rate" options:0 context:nil];
     }
 }
 

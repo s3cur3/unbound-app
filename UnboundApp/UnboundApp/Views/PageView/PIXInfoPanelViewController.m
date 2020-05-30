@@ -12,6 +12,8 @@
 #import "PIXPageViewController.h"
 #import "PIXFileManager.h"
 
+NSString * formatByteCount(NSUInteger byteCount);
+
 @interface PIXInfoPanelViewController () <MKMapViewDelegate, NSTextFieldDelegate>
 
 @property (weak) IBOutlet NSTextField * photoName;
@@ -72,6 +74,13 @@
     }
 }
 
+NSString * formatByteCount(NSUInteger byteCount)
+{
+    return byteCount ?
+           [NSByteCountFormatter stringFromByteCount:(long long)byteCount countStyle:NSByteCountFormatterCountStyleFile] :
+           @"";
+}
+
 -(void)updateLabels
 {
     BOOL useVideoLabels = [self.photo isVideo];
@@ -83,15 +92,7 @@
             self.photoName.stringValue = name;
         }
         
-        NSUInteger * byteCount = [videoAttributes[@"Size"] unsignedIntegerValue];
-        NSString * sizeString = nil;
-        if(byteCount)
-        {
-            sizeString = [NSByteCountFormatter stringFromByteCount:byteCount countStyle:NSByteCountFormatterCountStyleFile];
-        }
-        
-        if(sizeString == nil) sizeString = @"";
-        self.filesize.stringValue = sizeString;
+        self.filesize.stringValue = formatByteCount([videoAttributes[@"Size"] unsignedIntegerValue]);
         
         NSString *dateString = videoAttributes[@"Created"];
         if (dateString) {
@@ -139,22 +140,10 @@
         
         if(resolutionString == nil) resolutionString = @"";
         self.resolution.stringValue = resolutionString;
-        
-        NSUInteger * byteCount = [[self.photo fileSize] unsignedIntegerValue];
-        
-        NSString * sizeString = nil;
-        if(byteCount)
-        {
-            sizeString = [NSByteCountFormatter stringFromByteCount:byteCount countStyle:NSByteCountFormatterCountStyleFile];
-        }
-        
-        if(sizeString == nil) sizeString = @"";
-        self.filesize.stringValue = sizeString;
-        
-        NSString * modelString = [[[self.photo exifData] objectForKey:@"{TIFF}"] objectForKey:@"Model"];
 
-        
-        
+        self.filesize.stringValue = formatByteCount([[self.photo fileSize] unsignedIntegerValue]);
+
+        NSString * modelString = [[[self.photo exifData] objectForKey:@"{TIFF}"] objectForKey:@"Model"];
         if(modelString == nil)
         {
             modelString = @"";

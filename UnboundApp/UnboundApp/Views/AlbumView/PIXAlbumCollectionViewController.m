@@ -14,7 +14,6 @@
 #import "PIXFileParser.h"
 #import "PIXFileManager.h"
 #import "PIXAlbum.h"
-#import "PIXCustomButton.h"
 #import "PIXShareManager.h"
 
 #import "PIXAlbumCollectionViewItem.h"
