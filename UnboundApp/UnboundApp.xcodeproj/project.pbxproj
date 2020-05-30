@@ -1428,7 +1428,7 @@
 				ORGANIZATIONNAME = "Pixite Apps LLC";
 				TargetAttributes = {
 					1DB2F849167ABE87008AC0F7 = {
-						DevelopmentTeam = R5T2HYENEJ;
+						DevelopmentTeam = GCQM9R5G83;
 						LastSwiftMigration = 0900;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
@@ -2169,6 +2169,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = GCQM9R5G83;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -2199,6 +2200,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = GCQM9R5G83;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
