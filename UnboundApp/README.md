@@ -1,3 +1,14 @@
+# Dev setup
+
+1. Install Cocoapods; on Mojave, `sudo gem install cocoapods` was giving me a Ruby interpreter error any time I tried to actually use `pod`, so I had to:
+    1. `sudo gem install -n /usr/local/bin ruby`
+    2. `sudo gem install -n /usr/local/bin cocoapods`
+2. `cd path/to/unbound-mac/UnboundApp`
+3. `pod install`
+4. `open UnboundApp.xcworkspace/`
+5. Manage Schemes and create a new scheme for Unbound and Unbound Trial (this may already be done?)
+6. Build & run Unbound
+
 # Releasing
 
 1. Bump the `Build version` and `Short Build Version String` in the `/UnboundApp/Supporting Files/UnboundApp-Info.plist` file.
