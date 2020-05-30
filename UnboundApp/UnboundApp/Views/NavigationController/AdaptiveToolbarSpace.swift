@@ -49,7 +49,7 @@ class AdaptiveToolbarSpaceItem: NSToolbarItem {
       let size = super.minSize
 
       guard let items = self.toolbar?.items else { return size }
-      guard let index = items.index(of: self) else { return size }
+      guard let index = items.firstIndex(of: self) else { return size }
 
       if index == NSNotFound {
         return size

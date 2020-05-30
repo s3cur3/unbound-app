@@ -62,7 +62,7 @@ class SimplePhotoItemView: NSView {
     }
 
     let imageView = NSImageView()
-    imageView.image = NSImage(named: NSImage.Name(rawValue: "playbutton"))
+    imageView.image = NSImage(named: "playbutton")
     imageView.imageScaling = .scaleProportionallyDown
     imageView.autoresizesSubviews = true
     imageView.wantsLayer = true

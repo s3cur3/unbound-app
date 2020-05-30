@@ -20,7 +20,7 @@ class GeneralPrefsViewController: NSViewController, MASPreferencesViewController
   //MARK - MASPreferencesViewController
   private(set) var viewIdentifier: String = "General"
   private(set) var toolbarItemLabel: String? = NSLocalizedString("preferences.general.title", comment: "General")
-  private(set) var toolbarItemImage: NSImage? = NSImage(named: .preferencesGeneral)
+  private(set) var toolbarItemImage: NSImage? = NSImage(named: NSImage.preferencesGeneralName)
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -39,7 +39,7 @@ class GeneralPrefsViewController: NSViewController, MASPreferencesViewController
 
   private func updateEditors() {
     guard let button = self.defaultEditorButton,
-          let imageUrl = Bundle.main.pathForImageResource(NSImage.Name(rawValue: "temp"))
+          let imageUrl = Bundle.main.pathForImageResource("temp")
         else {
       return
     }

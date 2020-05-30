@@ -18,7 +18,7 @@ class PIXAboutWindowController: NSWindowController {
     fileprivate var url: String = ""
 
     convenience init() {
-        self.init(windowNibName: NSNib.Name(rawValue: "PIXAboutWindowController"))
+        self.init(windowNibName: "PIXAboutWindowController")
     }
 
     override func windowDidLoad() {

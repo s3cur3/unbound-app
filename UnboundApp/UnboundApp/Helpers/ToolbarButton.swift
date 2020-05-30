@@ -10,7 +10,7 @@ import Cocoa
   @objc init(imageNamed imageName: String, target: AnyObject?, action: Selector?) {
     super.init(frame: NSMakeRect(0, 0, 46, 29))
 
-    let image = NSImage(named: NSImage.Name(imageName))!
+    let image = NSImage(named: imageName)!
     image.isTemplate = true
     self.image = image
     self.imagePosition = .imageOverlaps
