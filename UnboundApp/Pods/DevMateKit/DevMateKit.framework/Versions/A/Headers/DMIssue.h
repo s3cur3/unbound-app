@@ -2,10 +2,16 @@
 //  DMIssueReport.h
 //  DevMateIssues
 //
-//  Copyright © 2016 MacPaw Inc. All rights reserved.
+//  Copyright © 2016-2018 DevMate Inc. All rights reserved.
 //
 
+#if __has_feature(modules)
+@import Foundation;
+#else
 #import <Foundation/Foundation.h>
+#endif
+
+NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, DMIssueType)
 {
@@ -24,3 +30,5 @@ typedef NS_ENUM(NSUInteger, DMIssueType)
 - (NSString *)stringRepresentation;
 
 @end
+
+NS_ASSUME_NONNULL_END

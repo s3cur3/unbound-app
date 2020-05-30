@@ -2,13 +2,14 @@
 //  DMTrial.h
 //  DevMateActivations
 //
-//  Copyright (c) 2013-2016 DevMate Inc. All rights reserved.
+//  Copyright (c) 2013-2018 DevMate Inc. All rights reserved.
 //
 
-#ifndef DevMateActivations__DMTrial_h
-#define DevMateActivations__DMTrial_h
-
-#include <CoreFoundation/CoreFoundation.h>
+#if __has_feature(modules)
+@import CoreFoundation;
+#else
+#import <CoreFoundation/CoreFoundation.h>
+#endif
 
 CF_EXTERN_C_BEGIN
 
@@ -184,7 +185,9 @@ static const CFTimeInterval kDMTrialYear    = 365 * kDMTrialDay;
     @param timeInterval     Time interval in seconds (trial MAX time).
     @return Created trial object.
  */
- CF_EXPORT DMTrialRef DMTimeTrialCreate(CFStringRef timeTrialId, DMTrialArea trialArea, CFTimeInterval timeInterval);
+ CF_EXPORT DMTrialRef DMTimeTrialCreate(CFStringRef timeTrialId,
+                                        DMTrialArea trialArea,
+                                        CFTimeInterval timeInterval);
 
 /*! @brief Function to initialize time trial.
     @discussion Trial will be valid for \p timeInterval seconds and then will send notification about invalidation. Trial time will be counted starting from the first initialization (even when application is not running).
@@ -195,8 +198,10 @@ static const CFTimeInterval kDMTrialYear    = 365 * kDMTrialDay;
     @param outTrial         Initialized trial object
     @return Success result.
  */
-CF_EXPORT Boolean DMTimeTrialInitializeTrial(CFStringRef timeTrialId, DMTrialArea trialArea, CFTimeInterval timeInterval, Boolean shouldContinue, DMTrialRef *outTrial);
+CF_EXPORT Boolean DMTimeTrialInitializeTrial(CFStringRef timeTrialId,
+                                             DMTrialArea trialArea,
+                                             CFTimeInterval timeInterval,
+                                             Boolean shouldContinue,
+                                             DMTrialRef *outTrial);
 
 CF_EXTERN_C_END
-
-#endif // DevMateActivations__DMTrial_h

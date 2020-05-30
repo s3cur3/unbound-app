@@ -2,18 +2,22 @@
 //  DMDeactivationStepController.h
 //  DevMateActivations
 //
-//  Copyright (c) 2015-2016 DevMate Inc. All rights reserved.
+//  Copyright (c) 2015-2018 DevMate Inc. All rights reserved.
 //
 
-#import <DevMateKit/DMStepController.h>
+#import "DMStepController.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface DMDeactivationStepController : DMStepController
 
-@property (retain) NSError *deactivationError;
+@property (retain, nullable) NSError *deactivationError;
 
-@property (nonatomic, assign) IBOutlet NSTextField *errorDescriptionField;
-@property (nonatomic, assign) IBOutlet NSButton *confirmButton;
+@property (nonatomic, assign, nullable) IBOutlet NSTextField *errorDescriptionField;
+@property (nonatomic, assign, nullable) IBOutlet NSButton *confirmButton;
 
-- (IBAction)confirmAction:(id)sender;
+- (IBAction)confirmAction:(id _Nullable)sender;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -2,7 +2,7 @@
 //  DMDefines.h
 //  DevMateKit
 //
-//  Copyright (c) 2013-2016 DevMate Inc. All rights reserved.
+//  Copyright (c) 2013-2018 DevMate Inc. All rights reserved.
 //
 
 #ifndef DevMateKit_DMDefines_h
@@ -10,24 +10,12 @@
 
 #include <AvailabilityMacros.h>
 
-#ifndef MAC_OS_X_VERSION_10_7
-#   define MAC_OS_X_VERSION_10_7 1070
+#ifndef MAC_OS_X_VERSION_10_13
+#   define MAC_OS_X_VERSION_10_13 101300
 #endif
 
-#ifndef MAC_OS_X_VERSION_10_8
-#   define MAC_OS_X_VERSION_10_8 1080
-#endif
-
-#ifndef MAC_OS_X_VERSION_10_9
-#   define MAC_OS_X_VERSION_10_9 1090
-#endif
-
-#ifndef MAC_OS_X_VERSION_10_10
-#   define MAC_OS_X_VERSION_10_10 101000
-#endif
-
-#ifndef MAC_OS_X_VERSION_10_11
-#   define MAC_OS_X_VERSION_10_11 101100
+#ifndef MAC_OS_X_VERSION_10_14
+#   define MAC_OS_X_VERSION_10_14 101400
 #endif
 
 #if !__has_feature(objc_instancetype) && !defined(instancetype)

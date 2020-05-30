@@ -2,11 +2,10 @@
 //  DevMateIssues.h
 //  DevMateIssues
 //
-//  Copyright (c) 2013-2016 DevMate Inc. All rights reserved.
+//  Copyright (c) 2013-2018 DevMate Inc. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
-#import <DevMateKit/DMDefines.h>
-#import <DevMateKit/DMIssuesController.h>
-#import <DevMateKit/DMIssuesWindowController.h>
-#import <DevMateKit/DMIssue.h>
+#import "DMDefines.h"
+#import "DMIssuesController.h"
+#import "DMIssuesWindowController.h"
+#import "DMIssue.h"

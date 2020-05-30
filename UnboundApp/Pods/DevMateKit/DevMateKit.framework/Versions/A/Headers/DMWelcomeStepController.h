@@ -2,26 +2,29 @@
 //  DMWelcomeStepController.h
 //  DevMateActivations
 //
-//  Copyright (c) 2012-2016 DevMate Inc. All rights reserved.
+//  Copyright (c) 2012-2018 DevMate Inc. All rights reserved.
 //
 
-#import <DevMateKit/DMStepController.h>
+#import "DMStepController.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface DMWelcomeStepController : DMStepController
 
-@property (nonatomic, assign) IBOutlet NSTextField *welcomeDescriptionField;
-@property (nonatomic, assign) IBOutlet NSButton *continueButton;
-@property (nonatomic, assign) IBOutlet NSButton *cancelButton;
-@property (nonatomic, assign) IBOutlet NSButton *getLicenseButton;
-@property (nonatomic, assign) IBOutlet NSButton *webStoreButton DM_DEPRECATED("Does not present in UI anymore.");
+@property (nonatomic, assign, nullable) IBOutlet NSTextField *welcomeDescriptionField;
+@property (nonatomic, assign, nullable) IBOutlet NSButton *continueButton;
+@property (nonatomic, assign, nullable) IBOutlet NSButton *cancelButton;
+@property (nonatomic, assign, nullable) IBOutlet NSButton *getLicenseButton;
 
-- (IBAction)continueActivation:(id)sender;
-- (IBAction)cancelActivation:(id)sender;
+- (IBAction)continueActivation:(id _Nullable)sender;
+- (IBAction)cancelActivation:(id _Nullable)sender;
 
 //! By default action will open https://devmate.io/gostore/... webpage
-- (IBAction)openWebStore:(id)sender;
+- (IBAction)openWebStore:(id _Nullable)sender;
 
 //! Will open embedded FastSpring store if delegate implements necessary methods or just call -openWebStore: method
-- (IBAction)getLicense:(id)sender;
+- (IBAction)getLicense:(id _Nullable)sender;
 
 @end
+
+NS_ASSUME_NONNULL_END

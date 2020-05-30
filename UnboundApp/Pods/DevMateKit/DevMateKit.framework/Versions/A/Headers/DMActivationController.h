@@ -2,14 +2,22 @@
 //  DMActivationController.h
 //  DevMateActivations
 //
-//  Copyright (c) 2012-2016 DevMate Inc. All rights reserved.
+//  Copyright (c) 2012-2018 DevMate Inc. All rights reserved.
 //
 
+#if __has_feature(modules)
+@import Cocoa;
+@import WebKit;
+#else
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
-#import <DevMateKit/DMDefines.h>
-#import <DevMateKit/DMTrial.h>
-#import <DevMateKit/DMFsprgEmbeddedStoreProtocols.h>
+#endif
+
+#import "DMDefines.h"
+#import "DMTrial.h"
+#import "DMFsprgEmbeddedStoreProtocols.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 //! Standard activation steps implemented in current framework.
 typedef NS_ENUM(NSInteger, DMActivationStandardStep)
@@ -134,13 +142,13 @@ typedef void (^DMCompletionHandler)(DMActivationProcessResult result);
     @discussion Shared delegate object will be used in case of absence concrete controller's delegate.
     @param delegate Shared delegate object for all activation/trial controllers.
  */
-+ (void)setDelegate:(id<DMActivationControllerDelegate>)delegate;
++ (void)setDelegate:(id<DMActivationControllerDelegate> _Nullable)delegate;
 
 //! Required in case of using your own activation scheme instead of Kevlar lib.
-@property (nonatomic, retain) id<DMActivator> activator;
+@property (nonatomic, retain, nullable) id<DMActivator> activator;
 
 //! Controller delegate
-@property (nonatomic, assign) id<DMActivationControllerDelegate> delegate;
+@property (nonatomic, assign, nullable) id<DMActivationControllerDelegate> delegate;
 
 @property (nonatomic, assign, readonly) DMActivationStep currentStep;
 @property (nonatomic, retain, readonly) DMStepController *currentStepController;
@@ -172,8 +180,8 @@ typedef void (^DMCompletionHandler)(DMActivationProcessResult result);
     @param completionHandler        Completion handler.
 */
 - (void)runActivationWindowInMode:(DMActivationMode)activationMode
-            initialActivationInfo:(NSDictionary *)initialActivationInfo
-            withCompletionHandler:(DMCompletionHandler)completionHandler;
+            initialActivationInfo:(NSDictionary *_Nullable)initialActivationInfo
+            withCompletionHandler:(DMCompletionHandler _Nullable)completionHandler;
 
 /*! @brief Updates activation info with received FastSpring order via embedded Web Store.
     @param  order   FastSpring order info.
@@ -186,8 +194,8 @@ typedef void (^DMCompletionHandler)(DMActivationProcessResult result);
     @param controllerNibName    XIB name in main bundle for controller.
     @param step                 activation step (custom or \p DMActivationStandardStep) to register new controller.
 */
-- (void)registerStepController:(NSString *)controllerClassName
-                   withNibName:(NSString *)controllerNibName
+- (void)registerStepController:(NSString *_Nullable)controllerClassName
+                   withNibName:(NSString *_Nullable)controllerNibName
              forActivationStep:(DMActivationStep)step;
 
 /*! @brief Use this method to register own steps with own controllers.
@@ -195,11 +203,11 @@ typedef void (^DMCompletionHandler)(DMActivationProcessResult result);
  @param controller           Controller for registered step. Use \p nil to remove step controller.
  @param step                 activation step (custom or \p DMActivationStandardStep) to register new controller.
  */
-- (void)registerStepController:(DMStepController *)controller
+- (void)registerStepController:(DMStepController *_Nullable)controller
              forActivationStep:(DMActivationStep)step;
 
 //! Outlet for view container for step views to be placed into.
-@property (nonatomic, assign) IBOutlet NSView *containerView;
+@property (nonatomic, assign, nullable) IBOutlet NSView *containerView;
 
 /*! @brief Method to change activation step view.
     @discussion In most cases should be called from step controllers.
@@ -222,7 +230,7 @@ typedef void (^DMCompletionHandler)(DMActivationProcessResult result);
     @param nibName Custom window nib name if exists or \p nil.
     @return Time trial controller.
 */
-+ (DMActivationController *)timeTrialControllerForArea:(DMTrialArea)area timeInterval:(NSTimeInterval)seconds customWindowNib:(NSString *)nibName;
++ (DMActivationController *)timeTrialControllerForArea:(DMTrialArea)area timeInterval:(NSTimeInterval)seconds customWindowNib:(NSString *_Nullable)nibName;
 
 /*! @brief Method for getting manual trial controller.
     @param area Trial area.
@@ -230,16 +238,16 @@ typedef void (^DMCompletionHandler)(DMActivationProcessResult result);
     @param nibName Custom window nib name if exists or \p nil.
     @return Manual trial controller.
 */
-+ (DMActivationController *)manualTrialControllerForArea:(DMTrialArea)area callbacks:(DMTrialCallbacks)callbacks customWindowNib:(NSString *)nibName;
++ (DMActivationController *)manualTrialControllerForArea:(DMTrialArea)area callbacks:(DMTrialCallbacks)callbacks customWindowNib:(NSString *_Nullable)nibName;
 
 /*! @brief Method for getting current trial controller.
     @discussion Will return trial controller that was used to start previous trial process or \p nil if no trial was started.
     @return Current trial controller.
 */
-+ (DMActivationController *)currentTrialController;
++ (DMActivationController *_Nullable)currentTrialController;
 
 //! Trial object getter for trial activation controller; \p nil for standard activation controllers
-@property (nonatomic, readonly) DMTrialRef trialObject;
+@property (nonatomic, readonly, nullable) DMTrialRef trialObject;
 
 //! Method to start trial process.
 - (void)startTrial;
@@ -257,7 +265,7 @@ typedef void (^DMCompletionHandler)(DMActivationProcessResult result);
     @param mode         Activation mode.
     @return Parent window for activation dialog.
 */
-- (NSWindow *)activationController:(DMActivationController *)controller parentWindowForActivationMode:(DMActivationMode)mode;
+- (NSWindow *_Nullable)activationController:(DMActivationController *)controller parentWindowForActivationMode:(DMActivationMode)mode;
 
 /*! @brief Returns new activation step instead of proposed one to customize activation dialog behavior.
     @discussion Delegate should implement this method in case when there is need to customize standard behavior.
@@ -305,13 +313,6 @@ typedef void (^DMCompletionHandler)(DMActivationProcessResult result);
           withAdditionalInfo:(NSDictionary *)additionalInfo proposedActivationMode:(inout DMActivationMode *)ioProposedMode
      completionHandlerSetter:(void (^)(DMCompletionHandler))handlerSetter;
 
-/*!
- Deprecated.
- */
-- (BOOL)activationController:(DMActivationController *)controller shouldShowDialogForReason:(DMShowDialogReason)reason
-          withAdditionalInfo:(NSDictionary *)additionalInfo proposedActivationMode:(inout DMActivationMode *)ioProposedMode
-           completionHandler:(out DMCompletionHandler *)pHandlerCopy DM_DEPRECATED("Use -activationController:shouldShowDialogForReason:withAdditionalInfo:proposedActivationMode:completionHandlerSetter: instead");
-
 /*! @brief Returns confirmation about application termination.
     @discussion If this method is not implemented, application will be terminated.
     @param  controller Activation controller.
@@ -324,7 +325,7 @@ typedef void (^DMCompletionHandler)(DMActivationProcessResult result);
  *  @param controller   Activation controller.
  *  @return Dictionary with key-value pairs. Can be \p nil.
  */
-- (NSDictionary *)additionalStoreURLParameters:(DMActivationController *)controller;
+- (NSDictionary *_Nullable)additionalStoreURLParameters:(DMActivationController *)controller;
 
 @end
 
@@ -377,7 +378,7 @@ typedef void (^DMCompletionHandler)(DMActivationProcessResult result);
  *  @param controller Activation controller.
  *  @param customStoreCompletionHandler Block handler that should be called after custom embedded store will be ended.
  */
-- (void)activationController:(DMActivationController *)controller waitsForCustomFsprgEmbeddedStore:(void (^)(id<DMFsprgOrder> orderOrNil))customStoreCompletionHandler;
+- (void)activationController:(DMActivationController *)controller waitsForCustomFsprgEmbeddedStore:(void (^)(id<DMFsprgOrder> _Nullable order))customStoreCompletionHandler;
 
 @end
 
@@ -406,3 +407,5 @@ typedef void (^DMCompletionHandler)(DMActivationProcessResult result);
  */
 @protocol DMActivationControllerDelegate <DMActivationDelegate, DMTrialDelegate, DMFsprgEmbeddedStoreDelegate>
 @end
+
+NS_ASSUME_NONNULL_END

@@ -1,8 +1,8 @@
 //
-// You create an application preferences.window.title window using code like this:
+// You create an application Preferences window using code like this:
 //     _preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:controllers title:title]
 //
-// To open the preferences.window.title window:
+// To open the Preferences window:
 //     [_preferencesWindowController showWindow:sender]
 //
 

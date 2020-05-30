@@ -2,15 +2,19 @@
 //  DMTrialWelcomeStepController.h
 //  DevMateActivations
 //
-//  Copyright (c) 2014-2016 DevMate Inc. All rights reserved.
+//  Copyright (c) 2014-2018 DevMate Inc. All rights reserved.
 //
 
-#import <DevMateKit/DMWelcomeStepController.h>
+#import "DMWelcomeStepController.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface DMTrialWelcomeStepController : DMWelcomeStepController
 
-@property (nonatomic, assign) IBOutlet NSButton *startUsingAppButton;
+@property (nonatomic, assign, nullable) IBOutlet NSButton *startUsingAppButton;
 
-- (IBAction)startUsingApp:(id)sender;
+- (IBAction)startUsingApp:(id _Nullable)sender;
 
 @end
+
+NS_ASSUME_NONNULL_END

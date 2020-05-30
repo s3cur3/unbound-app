@@ -2,10 +2,16 @@
 //  DMActivationChecker.h
 //  DevMateActivations
 //
-//  Copyright (c) 2012-2016 DevMate Inc. All rights reserved.
+//  Copyright (c) 2012-2018 DevMate Inc. All rights reserved.
 //
 
+#if __has_feature(modules)
+@import Foundation;
+#else
 #import <Foundation/Foundation.h>
+#endif
+
+NS_ASSUME_NONNULL_BEGIN
 
 @protocol DMActivator <NSObject>
 @required
@@ -15,7 +21,7 @@
     @param activationInfo   Dictionary with all activation info from user.
     @param handler          Completion handler.
 */
-- (void)activateWithInfo:(NSDictionary *)activationInfo completionHandler:(void (^)(BOOL success, NSError *error))handler;
+- (void)activateWithInfo:(NSDictionary *)activationInfo completionHandler:(void (^)(BOOL success, NSError *_Nullable error))handler;
 
 @optional
 
@@ -35,3 +41,5 @@
 - (BOOL)needsInAdditionalInfoForKey:(NSString *)activationKey;
 
 @end
+
+NS_ASSUME_NONNULL_END

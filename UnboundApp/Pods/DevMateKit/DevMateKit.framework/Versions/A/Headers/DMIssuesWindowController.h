@@ -2,34 +2,34 @@
 //  DMIssuesWindowController.h
 //  DevMateIssues
 //
-//  Copyright 2009-2016 DevMate Inc. All rights reserved.
+//  Copyright 2009-2018 DevMate Inc. All rights reserved.
 //
 
-#import <DevMateKit/DMIssueReportWindowController.h>
+#import "DMIssueReportWindowController.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface DMIssuesWindowController : DMIssueReportWindowController
 
 + (instancetype)defaultController;
 
 // IBOutlets & IBActions
-@property (nonatomic, assign) IBOutlet NSImageView *appIcon;
-@property (nonatomic, assign) IBOutlet NSTextField *titleField;
-@property (nonatomic, assign) IBOutlet NSTextField *messageField;
+@property (nonatomic, assign, nullable) IBOutlet NSImageView *appIcon;
+@property (nonatomic, assign, nullable) IBOutlet NSTextField *titleField;
+@property (nonatomic, assign, nullable) IBOutlet NSTextField *messageField;
 
-@property (nonatomic, assign) IBOutlet NSTextField *userNameField;
-@property (nonatomic, assign) IBOutlet NSTextField *userEmailField;
+@property (nonatomic, assign, nullable) IBOutlet NSTextField *userNameField;
+@property (nonatomic, assign, nullable) IBOutlet NSTextField *userEmailField;
 
-@property (nonatomic, assign) IBOutlet NSTextView *commentView;
-@property (nonatomic, assign) IBOutlet NSButton *attachmentButton;
+@property (nonatomic, assign, nullable) IBOutlet NSTextView *commentView;
+@property (nonatomic, assign, nullable) IBOutlet NSButton *attachmentButton;
 
-@property (nonatomic, assign) IBOutlet NSTextField *anonymousInfoField;
-@property (nonatomic, assign) IBOutlet NSButton *sysInfoButton;
+@property (nonatomic, assign, nullable) IBOutlet NSTextField *anonymousInfoField;
+@property (nonatomic, assign, nullable) IBOutlet NSButton *sysInfoButton;
 
-@property (nonatomic, assign) IBOutlet NSBox *separatorLine;
-
-@property (nonatomic, assign) IBOutlet NSButton *sendButton;
-@property (nonatomic, assign) IBOutlet NSButton *sendRestartButton;
-@property (nonatomic, assign) IBOutlet NSProgressIndicator *progressIndicator;
+@property (nonatomic, assign, nullable) IBOutlet NSButton *sendButton;
+@property (nonatomic, assign, nullable) IBOutlet NSButton *sendRestartButton;
+@property (nonatomic, assign, nullable) IBOutlet NSProgressIndicator *progressIndicator;
 
 - (IBAction)showSysInfo:(id)sender;
 - (IBAction)attachFile:(id)sender;
@@ -44,3 +44,5 @@
 - (NSArray *)userAttachmentURLs;
 
 @end
+
+NS_ASSUME_NONNULL_END
