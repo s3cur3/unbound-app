@@ -47,11 +47,12 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize privateWriterContext = _privateWriterContext;
 
-//static PIXAppDelegate * _sharedAppDelegate = nil;
+static PIXAppDelegate * _sharedAppDelegate = nil;
 
-+(PIXAppDelegate *) sharedAppDelegate;
++(PIXAppDelegate *) sharedAppDelegate
 {
-    return (PIXAppDelegate *)[[NSApplication sharedApplication] delegate];
+	assert(_sharedAppDelegate);
+    return _sharedAppDelegate;
 }
 
 +(void)presentError:(NSError *)error
@@ -85,6 +86,8 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+	_sharedAppDelegate = (PIXAppDelegate *)[[NSApplication sharedApplication] delegate];
+	
 #ifndef DEBUG
     [Fabric with:@[[Crashlytics class]]];
 #endif
