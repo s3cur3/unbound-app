@@ -822,7 +822,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     return [self renamePhoto:aPhoto withName:aNewName];
 }
 
--(BOOL)renamePhoto:(PIXPhoto *)aPhoto withName:(NSString *)aNewName;
+-(BOOL)renamePhoto:(PIXPhoto *)aPhoto withName:(NSString *)aNewName
 {
     if ([aNewName length]==0 || [aNewName isEqualToString:aPhoto.name])
     {
@@ -1424,7 +1424,7 @@ typedef NSUInteger PIXOverwriteStrategy;
 
 
 //TODO: background thread these operations
--(void)copyFiles:(NSArray *)items;
+-(void)copyFiles:(NSArray *)items
 {
     // present a progress sheet while copying files (this can be slow with lots of files)
     
@@ -1556,7 +1556,7 @@ typedef NSUInteger PIXOverwriteStrategy;
 }
 
 // undo copy will just delete the items (no move to trash in this case (was causing conflicts))
--(void)undoCopyFiles:(NSArray *)items;
+-(void)undoCopyFiles:(NSArray *)items
 {
     NSMutableSet *albumPaths = [[NSMutableSet alloc] init];
     
@@ -1780,7 +1780,7 @@ typedef NSUInteger PIXOverwriteStrategy;
 
 NSString * UserHomeDirectory();
 
--(NSString *)trashFolderPath;
+-(NSString *)trashFolderPath
 {
     NSString *trashFolderPathString = [NSString stringWithFormat:@"%@/.Trash", UserHomeDirectory()];
     return trashFolderPathString;
@@ -1802,7 +1802,7 @@ NSString * UserHomeDirectory();
     return [observedDirectories lastObject];
 }
 
--(PIXAlbum *)createAlbumWithName:(NSString *)aName;
+-(PIXAlbum *)createAlbumWithName:(NSString *)aName
 {
     return [self createAlbumAtPath:nil withName:aName];
 }

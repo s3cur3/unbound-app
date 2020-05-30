@@ -102,7 +102,7 @@
 }
 
 #pragma mark - Show/Hide Toolbar
-- (void)showToolbar:(BOOL)animated; {
+- (void)showToolbar:(BOOL)animated {
     if (!self.isShowing) {
         if (animated) {
             self.position.animator.constant = 0;
@@ -126,7 +126,7 @@
     }
 }
 
-- (void)setTitle:(NSString *)title; {
+- (void)setTitle:(NSString *)title {
     self.titleField.stringValue = title;
 }
 

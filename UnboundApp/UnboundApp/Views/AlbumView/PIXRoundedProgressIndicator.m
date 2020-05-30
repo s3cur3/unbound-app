@@ -20,7 +20,7 @@
     return self;
 }
 
--(void)setProgress:(double)newValue;
+-(void)setProgress:(double)newValue
 {
     _progress = newValue;
     [self setNeedsDisplay:YES];

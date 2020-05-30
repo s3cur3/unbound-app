@@ -472,7 +472,7 @@ PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 - (NSUInteger)columnsInGridView
 {
     NSRect visibleRect  = [self clippedRect];
-    NSUInteger columns = floorf((float)NSWidth(visibleRect) / self.itemSize.width);
+    NSUInteger columns = floor(NSWidth(visibleRect) / self.itemSize.width);
     columns = (columns < 1 ? 1 : columns);
     return columns;
 }
@@ -1249,7 +1249,7 @@ PIXItemPoint PIXMakeItemPoint(NSUInteger aColumn, NSUInteger aRow) {
 @implementation PIXSelectionFrameView
 - (void)drawRect:(NSRect)rect
 {
-    NSRect dirtyRect = NSMakeRect(0.5, 0.5, floorf(NSWidth(self.bounds))-1, floorf(NSHeight(self.bounds))-1);
+    NSRect dirtyRect = NSMakeRect(0.5, 0.5, floor(NSWidth(self.bounds))-1, floor(NSHeight(self.bounds))-1);
     NSBezierPath *selectionFrame = [NSBezierPath bezierPathWithRoundedRect:dirtyRect xRadius:0 yRadius:0];
     
     [[[NSColor blackColor] colorWithAlphaComponent:0.15] setFill];

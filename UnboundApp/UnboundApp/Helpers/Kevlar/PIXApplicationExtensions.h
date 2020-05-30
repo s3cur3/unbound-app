@@ -11,3 +11,4 @@
 @property (nonatomic, readonly) BOOL isActivated;
 
 @end
+

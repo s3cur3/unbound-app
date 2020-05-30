@@ -74,7 +74,7 @@
     {
         if(imageSize.width / imageSize.height > rect.size.width / rect.size.height)
         {
-            float mulitplier = rect.size.width / imageSize.width;
+            CGFloat mulitplier = rect.size.width / imageSize.width;
             
             imageFrame.size.width = mulitplier * imageFrame.size.width;
             imageFrame.size.height = mulitplier * imageFrame.size.height;
@@ -85,7 +85,7 @@
         
         else
         {
-            float mulitplier = rect.size.height / imageSize.height;
+            CGFloat mulitplier = rect.size.height / imageSize.height;
             
             imageFrame.size.width = mulitplier * imageFrame.size.width;
             imageFrame.size.height = mulitplier * imageFrame.size.height;
@@ -221,10 +221,10 @@
     CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
     
     // randomly rotate the first between -.05 and .05
-    float rotate1 = (CGFloat)(arc4random() % 2000)/10000 - .1;
+    CGFloat rotate1 = (CGFloat)(arc4random() % 2000)/10000 - .1;
     
     // the second needs to be the difference so that we rotate the object back
-    float rotate2= (CGFloat)(arc4random() % 2000)/10000 - .1 - rotate1;
+    CGFloat rotate2= (CGFloat)(arc4random() % 2000)/10000 - .1 - rotate1;
     
     CGContextSaveGState(context);
     
@@ -267,12 +267,7 @@
         CGRect countBubbleRect;
         CGRect remainder;
         
-        float bubbleWidth = 25;
-        
-        if(bubbleWidth < stringWidth)
-        {
-            bubbleWidth = stringWidth;
-        }
+        CGFloat bubbleWidth = fmax(25, stringWidth);
         
         CGRectDivide(topImageRect, &countBubbleRect, &remainder, bubbleWidth, CGRectMaxXEdge);
         CGRectDivide(countBubbleRect, &countBubbleRect, &remainder, 25, CGRectMaxYEdge);

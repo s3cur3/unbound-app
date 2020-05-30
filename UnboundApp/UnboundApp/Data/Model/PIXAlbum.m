@@ -209,7 +209,7 @@ static NSString *const kItemsKey = @"photos";
 
 
 
-- (NSString *) imageSubtitle;
+- (NSString *) imageSubtitle
 {
     /*
     if (self.subtitle == nil)
@@ -267,7 +267,7 @@ static NSString *const kItemsKey = @"photos";
 }
 
 
--(void)setPhotos:(NSSet *)photos updateCoverImage:(BOOL)shouldUpdateCoverPhoto;
+-(void)setPhotos:(NSSet *)photos updateCoverImage:(BOOL)shouldUpdateCoverPhoto
 {
     if([self isReallyDeleted]) return;
     

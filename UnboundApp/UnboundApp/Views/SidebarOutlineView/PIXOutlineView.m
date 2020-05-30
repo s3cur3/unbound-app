@@ -46,8 +46,7 @@
 //    }
 }
 
-- (void)rightMouseDown:(NSEvent *)theEvent;
-{
+- (void)rightMouseDown:(NSEvent *)theEvent{
     [super rightMouseDown:theEvent];
     NSPoint selfPoint = [self convertPoint:theEvent.locationInWindow fromView:nil];
     NSInteger row = [self rowAtPoint:selfPoint];

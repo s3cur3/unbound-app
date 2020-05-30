@@ -102,7 +102,7 @@
     self.imageLayer.shadowColor = [[NSColor colorWithGenericGamma22White:0.0 alpha:1.0] CGColor];
     self.imageLayer.shadowOffset = CGSizeMake(0, 1);
     self.imageLayer.shadowRadius = 3.0;
-    self.imageLayer.shadowOpacity = 0.4;
+    self.imageLayer.shadowOpacity = 0.4f;
     self.imageLayer.borderWidth = 3.0;
     
     // disable all animatsion on the image layer
@@ -128,10 +128,10 @@
 
 
 + (NSImage *)dragImageForPhotos:(NSArray<PIXPhoto *> *)photoArray size:(NSSize)size {
-    [PIXPhotoCollectionViewItemView dragImageForPhotos:photoArray count:photoArray.count size:size];
+    return [PIXPhotoCollectionViewItemView dragImageForPhotos:photoArray count:photoArray.count size:size];
 }
 
-+(NSImage *)dragImageForPhotos:(NSArray<PIXPhoto *> *)photoArray count:(NSUInteger)count size:(NSSize)size; {
++(NSImage *)dragImageForPhotos:(NSArray<PIXPhoto *> *)photoArray count:(NSUInteger)count size:(NSSize)size {
     if([photoArray count] == 0) return [NSImage imageNamed:@"nophoto"];
 
     NSMutableArray * imageArray = [NSMutableArray arrayWithCapacity:MIN(photoArray.count, 3)];
@@ -298,7 +298,7 @@
     {
         if(imageSize.width / imageSize.height > rect.size.width / rect.size.height)
         {
-            float mulitplier = rect.size.width / imageSize.width;
+            CGFloat mulitplier = rect.size.width / imageSize.width;
             
             imageFrame.size.width = rint(mulitplier * imageFrame.size.width);
             imageFrame.size.height = rint(mulitplier * imageFrame.size.height);
@@ -309,7 +309,7 @@
         
         else
         {
-            float mulitplier = rect.size.height / imageSize.height;
+            CGFloat mulitplier = rect.size.height / imageSize.height;
             
             imageFrame.size.width = rint(mulitplier * imageFrame.size.width);
             imageFrame.size.height = rint(mulitplier * imageFrame.size.height);
@@ -329,7 +329,7 @@
     {
         if(imageFrame.size.width / imageFrame.size.height > rect.size.width / rect.size.height)
         {
-            float mulitplier = rect.size.width / 200.0;
+            CGFloat mulitplier = rect.size.width / 200.0;
             
             videoThumbFrame.size.width = rint(mulitplier * videoThumbFrame.size.width);
             videoThumbFrame.size.height = rint(mulitplier * videoThumbFrame.size.height);
@@ -340,7 +340,7 @@
         
         else
         {
-            float mulitplier = rect.size.height / 200.0;
+            CGFloat mulitplier = rect.size.height / 200.0;
             
             videoThumbFrame.size.width = rint(mulitplier * videoThumbFrame.size.width);
             videoThumbFrame.size.height = rint(mulitplier * videoThumbFrame.size.height);

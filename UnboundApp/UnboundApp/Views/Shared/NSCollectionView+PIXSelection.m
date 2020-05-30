@@ -8,7 +8,7 @@
 
 @implementation NSCollectionView (PIXSelection)
 
-- (void)selectInverse; {
+- (void)selectInverse {
     if (self.selectionIndexPaths.count == 0) {
         [self selectAll:nil];
         return;
@@ -36,3 +36,4 @@
 }
 
 @end
+

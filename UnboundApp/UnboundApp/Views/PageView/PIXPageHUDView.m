@@ -97,7 +97,7 @@
 
 -(void)setupCaptionSpace
 {
-    float newSpace = 0;
+	CGFloat newSpace = 0;
     if(([self.photo caption] != nil && ![[self.photo caption] isEqualToString:@""]) ||
        [self isTextEditing])
     {
