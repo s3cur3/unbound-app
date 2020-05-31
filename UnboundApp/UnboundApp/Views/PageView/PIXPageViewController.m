@@ -125,7 +125,6 @@
     if(self.infoPanelShowing)
     {
         [self.infoPanelVC setPhoto:thisPhoto];
-        
     }
     
     //DLog(@"New Photo Index = %ld", self.pageController.selectedIndex);
@@ -162,12 +161,8 @@
         
         [self.infoButton highlight:NO];
     }
-    
-    
     else
     {
-        
-        
         [NSAnimationContext beginGrouping];
         [self.infoPanelSpacer.animator setConstant:240];
         [NSAnimationContext endGrouping];
@@ -176,8 +171,6 @@
         
         // update the panel info
         [self.infoPanelVC setPhoto:[self.pagerData objectAtIndex:self.pageController.selectedIndex]];
-        
-        [self.infoPanelVC updateMap];
     }
     
     self.infoPanelShowing = !self.infoPanelShowing;

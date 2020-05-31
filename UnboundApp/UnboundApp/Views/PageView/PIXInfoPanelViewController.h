@@ -25,6 +25,4 @@
 
 -(IBAction)moreExifAction:(id)sender;
 
--(void)updateMap;
-
 @end
