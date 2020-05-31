@@ -70,7 +70,7 @@ import Cocoa
     button.imageScaling = .scaleProportionallyDown
     button.alignment = .center
     button.imagePosition = .imageLeft
-    button.bezelStyle = .texturedSquare
+    button.bezelStyle = .texturedRounded
     button.isBordered = true
     if #available(OSX 10.12, *) {
       button.imageHugsTitle = true
