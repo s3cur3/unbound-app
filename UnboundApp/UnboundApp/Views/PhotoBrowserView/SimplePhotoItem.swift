@@ -13,7 +13,7 @@ import Cocoa
     let layer = CALayer()
     layer.borderWidth = 4.0
     layer.cornerRadius = 2.0
-    layer.borderColor = CGColor(red: 0.189, green: 0.657, blue: 0.859, alpha: 1)
+    layer.borderColor = CGColor(red: 0.189, green: 0.657, blue: 0.859, alpha: 0)
     self.selectionView?.layer = layer
     layer.isHidden = true
     return layer
@@ -21,7 +21,8 @@ import Cocoa
 
   override var isSelected: Bool {
     didSet {
-      selectionLayer.isHidden = !isSelected
+		selectionLayer.isHidden = !isSelected
+		selectionLayer.borderColor = selectionLayer.borderColor?.copy(alpha: isSelected ? 1 : 0)
     }
   }
 
