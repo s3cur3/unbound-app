@@ -11,6 +11,7 @@
 #import "PIXPhoto.h"
 #import "PIXPageViewController.h"
 #import "PIXFileManager.h"
+#import "PIXDefines.h"
 
 NSString * formatByteCount(NSUInteger byteCount);
 
@@ -28,8 +29,9 @@ NSString * formatByteCount(NSUInteger byteCount);
 
 @property (strong) NSMutableArray * exifStringArray;
 
-@property BOOL isShowingMoreExif;
-
+-(void)updateMap;
+-(BOOL)showMoreExif;
+-(void)setShowMoreExif:(BOOL)newValue;
 
 @end
 
@@ -66,11 +68,51 @@ NSString * formatByteCount(NSUInteger byteCount);
         
         [self updateLabels];
         [self updateMap];
-        
-        if(self.isShowingMoreExif)
+        if([self showMoreExif])
         {
             [self convertAndRefreshExif];
         }
+        [self setShowMoreExif:[self showMoreExif]];
+    }
+}
+
+-(BOOL)showMoreExif
+{
+    return [NSUserDefaults.standardUserDefaults boolForKey:kPrefShowMoreExifInfo];
+}
+
+-(void)setShowMoreExif:(BOOL)shouldShow
+{
+    [NSUserDefaults.standardUserDefaults setBool:shouldShow forKey:kPrefShowMoreExifInfo];
+    if(shouldShow)
+    {
+        [self.exifHeight.animator setConstant:92];
+        self.moreExifButton.title = @"More ▾";
+        [self.exifScrollView removeFromSuperview];
+    }
+    else
+    {
+        [self.exifHeight.animator setConstant:500];
+        self.moreExifButton.title = @"Less ▴";
+
+        [self convertAndRefreshExif];
+
+        // add the scroll view to the exif view
+        [self.exifHolder addSubview:self.exifScrollView];
+        [self.exifScrollView setTranslatesAutoresizingMaskIntoConstraints:NO];
+
+        NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(_exifScrollView);
+        NSArray *horizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_exifScrollView]-0-|"
+                                                                                 options:0
+                                                                                 metrics:nil
+                                                                                   views:viewsDictionary];
+        NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-92-[_exifScrollView]-8-|"
+                                                                               options:0
+                                                                               metrics:nil
+                                                                                 views:viewsDictionary];
+
+        [self.exifHolder addConstraints:horizontalConstraints];
+        [self.exifHolder addConstraints:verticalConstraints];
     }
 }
 
@@ -234,49 +276,7 @@ NSString * formatByteCount(NSUInteger byteCount)
 
 -(IBAction)moreExifAction:(id)sender
 {
-    if(self.isShowingMoreExif)
-    {
-        self.isShowingMoreExif = NO;
-        [self.exifHeight.animator setConstant:92];
-        
-        self.moreExifButton.title = @"More ▾";
-        
-        [self.exifScrollView removeFromSuperview];
-    }
-    
-    else
-    {
-        self.isShowingMoreExif = YES;
-        [self.exifHeight.animator setConstant:500];
-    
-        self.moreExifButton.title = @"Less ▴";
-        
-        [self convertAndRefreshExif];
-        
-        // add the scroll view to the exif view
-        
-        [self.exifHolder addSubview:self.exifScrollView];
-        [self.exifScrollView setTranslatesAutoresizingMaskIntoConstraints:NO];
-        
-        NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(_exifScrollView);
-        
-        NSArray *horizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_exifScrollView]-0-|"
-                                                                                 options:0
-                                                                                 metrics:nil
-                                                                                   views:viewsDictionary];
-        
-        NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-92-[_exifScrollView]-8-|"
-                                                                                 options:0
-                                                                                 metrics:nil
-                                                                                   views:viewsDictionary];
-        
-        [self.exifHolder addConstraints:horizontalConstraints];
-        [self.exifHolder addConstraints:verticalConstraints];
-        
-        
-    }
-    
-    
+    [self setShowMoreExif:![self showMoreExif]];
 }
 
 -(void)convertAndRefreshExif
