@@ -589,13 +589,7 @@
 -(void)mouseDown:(NSEvent *)theEvent
 {
     [super mouseDown:theEvent];
-
-    if (self.selected) {
-        self.allowTitleEdit = YES;
-    } else {
-        self.allowTitleEdit = NO;
-    }
-    
+	self.allowTitleEdit = self.selected;
     [[self nextResponder] mouseDown:theEvent];
 }
 
@@ -608,7 +602,6 @@
 
 -(void)mouseUp:(NSEvent *)theEvent
 {
-    NSLog(@"PIXAlbumCollectionViewItem: mouseUp");
     // only check for title edits if this was already selected on mouse down
     if (self.allowTitleEdit) {
         NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
@@ -618,17 +611,14 @@
             [self startEditing];
             return;
         }
-    }
-    [[self nextResponder] mouseUp:theEvent];
+	} else if(!self.selected) {
+		[[self nextResponder] mouseUp:theEvent];
+	}
 }
 
 - (void)prepareForReuse
 {
-    if (self.album )  {
-        
-        self.album = nil;
-    }
-    
+    self.album = nil;
     self.stackThumb1 = [NSImage imageNamed:@"temp"];
     self.stackThumb2 = [NSImage imageNamed:@"temp-portrait"];
     self.stackThumb3 = [NSImage imageNamed:@"temp"];
