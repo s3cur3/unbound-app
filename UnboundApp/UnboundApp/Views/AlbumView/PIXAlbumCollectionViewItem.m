@@ -37,7 +37,6 @@
 
 - (void)setSelected:(BOOL)s
 {
-    NSLog(@"Selected: %d", s);
     PIXAlbumCollectionViewItemView * view = (PIXAlbumCollectionViewItemView *)self.view;
     view.selected = s;
 }
