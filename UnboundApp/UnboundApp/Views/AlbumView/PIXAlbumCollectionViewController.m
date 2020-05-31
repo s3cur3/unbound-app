@@ -110,7 +110,9 @@
     
     [[PIXFileParser sharedFileParser] addObserver:self forKeyPath:@"fullScanProgress" options:NSKeyValueObservingOptionNew context:nil];
     
-    [[[[PIXAppDelegate sharedAppDelegate] mainWindowController] window] setTitle:@"Unbound"];
+	NSWindow * window = [[[PIXAppDelegate sharedAppDelegate] mainWindowController] window];
+    [window setTitle:@"Unbound"];
+	[window setMinSize:NSMakeSize(720, 480)];
 
     self.navigationViewController.leftToolbarItems = @[self.importItem];
     self.navigationViewController.rightToolbarItems = @[self.self.neuAlbumButton, self.sortButton, self.searchBar];
