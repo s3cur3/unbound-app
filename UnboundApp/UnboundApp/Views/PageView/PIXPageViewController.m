@@ -42,8 +42,6 @@
 
 @property (weak) IBOutlet PIXInfoPanelViewController * infoPanelVC;
 
-@property BOOL infoPanelShowing;
-
 @property (nonatomic, strong) NSToolbarItem * deleteItem;
 @property (nonatomic, strong) NSToolbarItem * shareItem;
 @property (nonatomic, strong) NSToolbarItem * infoItem;
@@ -62,6 +60,9 @@
 
 @property (nonatomic, strong) NSMutableSet *preLoadPhotosSet;
 
+-(BOOL)showInfoPanel;
+-(void)setInfoPanelVisibility:(BOOL)visible;
+
 @end
 
 @implementation PIXPageViewController
@@ -71,9 +72,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Initialization code here.
-        
     }
-    
     return self;
 }
 
@@ -86,7 +85,7 @@
         self.pageController.transitionStyle = NSPageControllerTransitionStyleHorizontalStrip;
         
         [self.infoPanelSpacer setConstant:0.0];
-        self.infoPanelShowing = NO;
+		[self setInfoPanelVisibility:[self showInfoPanel]];
         
         //[self.view setNeedsUpdateConstraints:YES];
     }
@@ -122,7 +121,7 @@
     PIXPhoto * thisPhoto = [self.pagerData objectAtIndex:self.pageController.selectedIndex];
     
     // update the info panel if it's visible
-    if(self.infoPanelShowing)
+    if([self showInfoPanel])
     {
         [self.infoPanelVC setPhoto:thisPhoto];
     }
@@ -151,31 +150,38 @@
     
 }
 
+-(BOOL)showInfoPanel
+{
+	return [NSUserDefaults.standardUserDefaults boolForKey:kPrefShowInfoPanel];
+}
+
 -(IBAction)toggleInfoPanel:(id)sender
 {
-    if(self.infoPanelShowing)
-    {
-        [NSAnimationContext beginGrouping];
-        [self.infoPanelSpacer.animator setConstant:0];
-        [NSAnimationContext endGrouping];
-        
-        [self.infoButton highlight:NO];
-    }
-    else
-    {
-        [NSAnimationContext beginGrouping];
-        [self.infoPanelSpacer.animator setConstant:240];
-        [NSAnimationContext endGrouping];
-        
-        [self.infoButton highlight:YES];
-        
-        // update the panel info
-        [self.infoPanelVC setPhoto:[self.pagerData objectAtIndex:self.pageController.selectedIndex]];
-    }
-    
-    self.infoPanelShowing = !self.infoPanelShowing;
-    
-    
+	[self setInfoPanelVisibility:![self showInfoPanel]];
+}
+
+-(void)setInfoPanelVisibility:(BOOL)show
+{
+	[NSUserDefaults.standardUserDefaults setBool:show forKey:kPrefShowInfoPanel];
+	if(show)
+	{
+		[NSAnimationContext beginGrouping];
+		[self.infoPanelSpacer.animator setConstant:260];
+		[NSAnimationContext endGrouping];
+		
+		[self.infoButton highlight:YES];
+		
+		// update the panel info
+		[self.infoPanelVC setPhoto:[self.pagerData objectAtIndex:self.pageController.selectedIndex]];
+	}
+	else
+	{
+		[NSAnimationContext beginGrouping];
+		[self.infoPanelSpacer.animator setConstant:0];
+		[NSAnimationContext endGrouping];
+		
+		[self.infoButton highlight:NO];
+	}
 }
 
 -(void)toggleFullScreen:(id)sender
@@ -486,11 +492,10 @@
     if(thisPhoto == note.object)
     {
         // update the info panel if it's visible
-        if(self.infoPanelShowing)
+        if([self showInfoPanel])
         {
             [self.infoPanelVC setPhoto:nil];
             [self.infoPanelVC setPhoto:thisPhoto];
-            
         }
         
         // update the HUD (caption view)
@@ -538,9 +543,7 @@
     
     _infoItem = [[NSToolbarItem alloc] initWithItemIdentifier:@"infoButton"];
     //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
-    
-    
-    
+
     _infoItem.view = self.infoButton;
     
     [_infoItem setLabel:@"Photo Info"];
@@ -550,7 +553,6 @@
     // you will likely want to localize many of the item's properties
     [_infoItem setToolTip:@"Photo Info"];
 
-    
     return _infoItem;
     
 }
@@ -1052,7 +1054,7 @@
         
         
         // if we're in fullscreen mode then also fade the top toolbar
-        if([self.view.window styleMask] & NSFullScreenWindowMask && !self.infoPanelShowing)
+        if([self.view.window styleMask] & NSFullScreenWindowMask && ![self showInfoPanel])
         {
             [self.navigationViewController setToolbarHidden:YES];
         }
