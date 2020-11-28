@@ -28,7 +28,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="4" customClass="PIXPageView">
-                    <rect key="frame" x="0.0" y="0.0" width="577" height="522"/>
+                    <rect key="frame" x="0.0" y="0.0" width="557" height="522"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="240" id="194"/>
                     </constraints>
@@ -37,13 +37,13 @@
                     </connections>
                 </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="154" customClass="PIXInfoPanelView">
-                    <rect key="frame" x="577" y="0.0" width="240" height="522"/>
+                    <rect key="frame" x="557" y="0.0" width="260" height="522"/>
                     <subviews>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="212" customClass="PIXExifBGView">
-                            <rect key="frame" x="10" y="420" width="220" height="92"/>
+                        <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="212" customClass="PIXExifBGView">
+                            <rect key="frame" x="10" y="420" width="240" height="92"/>
                             <subviews>
                                 <textField focusRingType="exterior" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="238" customClass="PIXFileTextField">
-                                    <rect key="frame" x="6" y="64" width="208" height="22"/>
+                                    <rect key="frame" x="6" y="64" width="218" height="22"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="22" id="242"/>
                                     </constraints>
@@ -63,7 +63,7 @@
                                     </connections>
                                 </textField>
                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="234">
-                                    <rect key="frame" x="153" y="52" width="61" height="13"/>
+                                    <rect key="frame" x="163" y="52" width="61" height="13"/>
                                     <textFieldCell key="cell" lineBreakMode="truncatingMiddle" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Resolution" usesSingleLineMode="YES" id="246">
                                         <font key="font" size="11" name="HelveticaNeue-Bold"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -71,7 +71,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="235">
-                                    <rect key="frame" x="12" y="42" width="200" height="13"/>
+                                    <rect key="frame" x="12" y="42" width="210" height="13"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="9" id="387"/>
                                     </constraints>
@@ -85,7 +85,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="237">
-                                    <rect key="frame" x="173" y="32" width="41" height="12"/>
+                                    <rect key="frame" x="183" y="32" width="41" height="12"/>
                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Filesize" usesSingleLineMode="YES" id="244">
                                         <font key="font" size="11" name="HelveticaNeue"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -104,7 +104,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <button wantsLayer="YES" verticalHuggingPriority="750" alphaValue="0.70000000000000007" translatesAutoresizingMaskIntoConstraints="NO" id="1019">
-                                    <rect key="frame" x="89" y="6" width="47" height="15"/>
+                                    <rect key="frame" x="94" y="6" width="47" height="15"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="47" id="1050"/>
                                     </constraints>
@@ -139,8 +139,8 @@
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="92" id="1045"/>
                             </constraints>
                         </customView>
-                        <mapView ambiguous="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="3xp-tL-6jo">
-                            <rect key="frame" x="10" y="10" width="220" height="250"/>
+                        <mapView ambiguous="YES" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="3xp-tL-6jo">
+                            <rect key="frame" x="10" y="10" width="240" height="250"/>
                             <constraints>
                                 <constraint firstAttribute="height" relation="lessThanOrEqual" constant="250" id="NJm-La-S4Q"/>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="150" id="Qqw-pc-ng1"/>
@@ -148,10 +148,10 @@
                         </mapView>
                     </subviews>
                     <constraints>
-                        <constraint firstAttribute="width" constant="240" id="183"/>
+                        <constraint firstAttribute="width" constant="260" id="183"/>
                         <constraint firstItem="212" firstAttribute="leading" secondItem="154" secondAttribute="leading" constant="10" id="213"/>
                         <constraint firstItem="212" firstAttribute="top" secondItem="154" secondAttribute="top" constant="10" id="422"/>
-                        <constraint firstAttribute="trailing" secondItem="212" secondAttribute="trailing" constant="10" id="446"/>
+                        <constraint firstAttribute="trailing" secondItem="212" secondAttribute="trailing" constant="20" id="446"/>
                         <constraint firstItem="3xp-tL-6jo" firstAttribute="trailing" secondItem="212" secondAttribute="trailing" id="6O9-cN-dlz"/>
                         <constraint firstItem="3xp-tL-6jo" firstAttribute="top" relation="greaterThanOrEqual" secondItem="212" secondAttribute="bottom" constant="10" id="aqz-Ow-sOB"/>
                         <constraint firstAttribute="bottom" secondItem="3xp-tL-6jo" secondAttribute="bottom" constant="10" id="e8P-2K-bha"/>
@@ -168,7 +168,7 @@
                 <constraint firstItem="4" firstAttribute="bottom" secondItem="1" secondAttribute="bottom" id="66"/>
                 <constraint firstItem="154" firstAttribute="top" secondItem="1" secondAttribute="top" id="168"/>
                 <constraint firstItem="154" firstAttribute="bottom" secondItem="1" secondAttribute="bottom" id="172"/>
-                <constraint firstAttribute="trailing" secondItem="4" secondAttribute="trailing" constant="240" id="178"/>
+                <constraint firstAttribute="trailing" secondItem="4" secondAttribute="trailing" constant="260" id="178"/>
                 <constraint firstItem="154" firstAttribute="leading" secondItem="4" secondAttribute="trailing" id="184"/>
             </constraints>
             <point key="canvasLocation" x="92" y="123"/>
