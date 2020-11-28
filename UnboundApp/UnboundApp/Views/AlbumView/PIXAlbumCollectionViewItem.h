@@ -9,8 +9,10 @@
 #import <Cocoa/Cocoa.h>
 #import "PIXCollectionViewItem.h"
 
+/**
+ * An album in the album overview collection. Represented as a cover photo with a "stack" of photos beneath.
+ */
 @interface PIXAlbumCollectionViewItem : PIXCollectionViewItem
-
 @end
 
 
