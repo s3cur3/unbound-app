@@ -39,7 +39,7 @@
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="154" customClass="PIXInfoPanelView">
                     <rect key="frame" x="557" y="0.0" width="260" height="522"/>
                     <subviews>
-                        <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="212" customClass="PIXExifBGView">
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="212" customClass="PIXExifBGView">
                             <rect key="frame" x="10" y="420" width="240" height="92"/>
                             <subviews>
                                 <textField focusRingType="exterior" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="238" customClass="PIXFileTextField">
@@ -125,7 +125,7 @@
                                 <constraint firstItem="238" firstAttribute="top" secondItem="212" secondAttribute="top" constant="6" id="372"/>
                                 <constraint firstItem="238" firstAttribute="leading" secondItem="212" secondAttribute="leading" constant="8" id="377"/>
                                 <constraint firstItem="238" firstAttribute="top" relation="greaterThanOrEqual" secondItem="212" secondAttribute="top" constant="6" id="379"/>
-                                <constraint firstAttribute="trailing" secondItem="238" secondAttribute="trailing" constant="8" id="380"/>
+                                <constraint firstAttribute="trailing" secondItem="238" secondAttribute="trailing" constant="18" id="380"/>
                                 <constraint firstItem="235" firstAttribute="top" secondItem="239" secondAttribute="bottom" constant="-1" id="386"/>
                                 <constraint firstItem="239" firstAttribute="leading" secondItem="235" secondAttribute="leading" id="399"/>
                                 <constraint firstItem="236" firstAttribute="leading" secondItem="235" secondAttribute="leading" id="402"/>
@@ -139,11 +139,10 @@
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="92" id="1045"/>
                             </constraints>
                         </customView>
-                        <mapView ambiguous="YES" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="3xp-tL-6jo">
+                        <mapView mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="3xp-tL-6jo">
                             <rect key="frame" x="10" y="10" width="240" height="250"/>
                             <constraints>
-                                <constraint firstAttribute="height" relation="lessThanOrEqual" constant="250" id="NJm-La-S4Q"/>
-                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="150" id="Qqw-pc-ng1"/>
+                                <constraint firstAttribute="height" constant="250" id="NJm-La-S4Q"/>
                             </constraints>
                         </mapView>
                     </subviews>
@@ -151,9 +150,9 @@
                         <constraint firstAttribute="width" constant="260" id="183"/>
                         <constraint firstItem="212" firstAttribute="leading" secondItem="154" secondAttribute="leading" constant="10" id="213"/>
                         <constraint firstItem="212" firstAttribute="top" secondItem="154" secondAttribute="top" constant="10" id="422"/>
-                        <constraint firstAttribute="trailing" secondItem="212" secondAttribute="trailing" constant="20" id="446"/>
+                        <constraint firstAttribute="trailing" secondItem="212" secondAttribute="trailing" constant="10" id="446"/>
                         <constraint firstItem="3xp-tL-6jo" firstAttribute="trailing" secondItem="212" secondAttribute="trailing" id="6O9-cN-dlz"/>
-                        <constraint firstItem="3xp-tL-6jo" firstAttribute="top" relation="greaterThanOrEqual" secondItem="212" secondAttribute="bottom" constant="10" id="aqz-Ow-sOB"/>
+                        <constraint firstItem="3xp-tL-6jo" firstAttribute="top" relation="greaterThanOrEqual" secondItem="212" secondAttribute="bottom" constant="160" id="aqz-Ow-sOB"/>
                         <constraint firstAttribute="bottom" secondItem="3xp-tL-6jo" secondAttribute="bottom" constant="10" id="e8P-2K-bha"/>
                         <constraint firstItem="3xp-tL-6jo" firstAttribute="leading" secondItem="212" secondAttribute="leading" id="o4c-dV-W4G"/>
                     </constraints>

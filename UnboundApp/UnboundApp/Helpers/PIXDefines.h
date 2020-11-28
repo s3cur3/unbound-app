@@ -54,6 +54,7 @@
 #define kPrefSupressDeleteWarning @"PIX_supressDeleteWarning"
 #define kPrefSupressAlbumDeleteWarning @"PIX_supressAlbumDeleteWarning"
 #define kPrefShowMoreExifInfo @"showExifMore"
+#define kPrefShowInfoPanel @"showInfoPanel"
 
 // key for obtaining the path of an image field
 #define kPathKey @"path"
