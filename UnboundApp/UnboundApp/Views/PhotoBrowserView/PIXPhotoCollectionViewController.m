@@ -339,10 +339,7 @@
 }
 
 - (void)openInDefaultApp {
-    if (self.selectedItems.count == 0) return;
-
     NSString *appName = [[NSUserDefaults standardUserDefaults] stringForKey:@"defaultEditorName"];
-    NSMutableArray<NSURL *> *urls = [NSMutableArray arrayWithCapacity:self.selectedItems.count];
     [self.selectedItems enumerateObjectsUsingBlock:^(PIXPhoto *obj, BOOL *stop) {
         if (appName) {
             [NSWorkspace.sharedWorkspace openFile:obj.path withApplication:appName];
@@ -353,9 +350,6 @@
 }
 
 - (void)openInApp {
-    if (self.selectedItems.count == 0) return;
-
-    NSMutableArray<NSURL *> *urls = [NSMutableArray arrayWithCapacity:self.selectedItems.count];
     [self.selectedItems enumerateObjectsUsingBlock:^(PIXPhoto *obj, BOOL *stop) {
         [NSWorkspace.sharedWorkspace openFile:obj.path];
     }];
