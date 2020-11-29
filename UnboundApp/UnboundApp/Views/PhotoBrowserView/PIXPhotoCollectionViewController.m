@@ -41,8 +41,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do view setup here.
-
     [self.collectionView addObserver:self forKeyPath:@"selectionIndexPaths" options:0 context:nil];
 }
 
@@ -99,10 +97,10 @@
 
 - (void)dealloc {
     [self.collectionView removeObserver:self forKeyPath:@"selectionIndexPaths"];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey, id> *)change context:(void *)context {
-
     if ([keyPath isEqualToString:@"selectionIndexPaths"]) {
         if ([QLPreviewPanel sharedPreviewPanelExists] && [[QLPreviewPanel sharedPreviewPanel] isVisible]) {
             [[QLPreviewPanel sharedPreviewPanel] reloadData];
