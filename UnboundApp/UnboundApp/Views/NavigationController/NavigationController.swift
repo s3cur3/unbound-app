@@ -108,7 +108,6 @@ import Cocoa
     titleObservation = viewController.observe(\.title) { object, change in
         self.setTitle(title: object.title)
     }
-    viewController.addObserver(self, forKeyPath: "title", context: nil)
     viewController.navigationViewController = self
     viewController.view.frame = self.view.bounds
     viewController.willShowPIXView()
