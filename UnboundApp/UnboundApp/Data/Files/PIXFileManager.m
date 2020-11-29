@@ -1187,8 +1187,8 @@ typedef NSUInteger PIXOverwriteStrategy;
     else
     {
         album = nil;
-        panel.prompt = @"Import Folders";
-        panel.message = @"Choose folders to import. To import photo files select an album before importing.";
+        panel.prompt = @"Import Folders into Library";
+        panel.message = @"Choose folders of photos to copy into your library directory.";
         [panel setCanChooseFiles:NO];    
     }
     
