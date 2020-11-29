@@ -656,12 +656,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
 //                });
                 
             });
-            
-            
-            
+
             self.fullScanProgress = 1.0;
-            
-            
         } andGroup:NULL];
         
         [self decrementWorking];
@@ -715,8 +711,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
         //DLog(@"Doing a shallow scan of: %@", url.path);
         
         NSDirectoryEnumerator *dirEnumerator = nil;
-        
-        
+
         if([[NSFileManager defaultManager] fileExistsAtPath:url.path])
         {
             NSFileManager *localFileManager=[[NSFileManager alloc] init];
@@ -745,9 +740,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                                                                             return NO;
                                                                         }];
         }
-        
-        
-        
+
         NSMutableArray *photoFiles = [NSMutableArray new];
         NSMutableArray *directories = [NSMutableArray new];
         NSURL *aURL;
@@ -980,9 +973,6 @@ NSDictionary * dictionaryForURL(NSURL * url)
     [self incrementWorking];
     
     void (^dispatchBlock)(void) = ^(void) {
-        
-        
-        
         // if the parse context has changed then this is an old parse that we're no longer using
         if(self.parseContext == nil)
         {
@@ -1156,13 +1146,8 @@ NSDictionary * dictionaryForURL(NSURL * url)
         [self performSelectorOnMainThread:@selector(flushAlbumsWithIDs:) withObject:[editedAlbumObjectIDs copy] waitUntilDone:NO];
         
         self.fullScanProgress = (float)self.fullScannProgressCurrent / (float)self.fullScannProgressTotal;
-        
-        
-         
+ 
         [self decrementWorking];
-         
-         
-        
     };
     
     
@@ -1296,7 +1281,6 @@ NSDictionary * dictionaryForURL(NSURL * url)
     
    // NSNotification *albumNotification = [NSNotification notificationWithName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
     //[[NSNotificationQueue defaultQueue] enqueueNotification:albumNotification postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnName forModes:nil];
-    
 
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil userInfo:nil];

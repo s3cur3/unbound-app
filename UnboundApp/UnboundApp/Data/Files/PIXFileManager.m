@@ -1034,12 +1034,9 @@ typedef NSUInteger PIXOverwriteStrategy;
     }
     
     // create a progress sheet if we're recycling more than 5 items
-    
     PIXProgressWindowController * progressSheet = nil;
-    
     if([urlsToDelete count] > 5)
     {
-    
         progressSheet = [[PIXProgressWindowController alloc] initWithWindowNibName:@"PIXProgressWindowController"];
         
         progressSheet.messageText = @"Moving Files to the Trash";
@@ -1052,17 +1049,16 @@ typedef NSUInteger PIXOverwriteStrategy;
         [progressSheet.progressBar startAnimation:self];
     }
 
-    
-    
-    
     DLog(@"About to recycle the following items : %@", urlsToDelete);
     [[NSWorkspace sharedWorkspace] recycleURLs:urlsToDelete completionHandler:^(NSDictionary *newURLs, NSError *error) {
-        
-        [NSApp endSheet:[progressSheet window] returnCode:NSOKButton];
-        [[progressSheet window] orderOut:self];
+		if(progressSheet != nil)
+		{
+			[NSApp endSheet:[progressSheet window] returnCode:NSOKButton];
+			[[progressSheet window] orderOut:self];
+		}
+
         //
         if (nil==error) {
-            
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
                 
