@@ -246,11 +246,7 @@
         // the second needs to be the difference so that we rotate the object back
         self.stackThumb2Rotate = (CGFloat)(random % 183)/1300 - .07 - self.stackThumb1Rotate;
         
-        
-        
         //[self displayIfNeeded];
-        
-        
     }
 }
 
