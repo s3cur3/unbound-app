@@ -304,7 +304,6 @@
         [self.superview removeConstraints:self.superview.constraints];
         
         NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(self);
-        
         NSArray *horizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-0-[self]-0-|"
                                                                                  options:0
                                                                                  metrics:nil
@@ -312,34 +311,13 @@
         
         [self.superview addConstraints:horizontalConstraints];
         
-        if(captionIsBelow)
-        {
-            
-            
-            NSArray *constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[self]->=0-|"
-                                                                           options:0
-                                                                           metrics:nil
-                                                                             views:viewsDictionary];
-            
-            
-            [self.superview addConstraints:constraints];
-            
-        }
-        
-        else
-        {
-            
-            NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(self);
-            NSArray *constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|->=0-[self]-0-|"
-                                                                           options:0
-                                                                           metrics:nil
-                                                                             views:viewsDictionary];
-            
-            [self.superview addConstraints:constraints];
-        }
-        
-        
-        
+		NSString * contraintsFmt = captionIsBelow ? @"V:|-0-[self]->=0-|" : @"V:|->=0-[self]-0-|";
+		NSArray *constraints = [NSLayoutConstraint constraintsWithVisualFormat:contraintsFmt
+																	   options:0
+																	   metrics:nil
+																		 views:viewsDictionary];
+		[self.superview addConstraints:constraints];
+
         [self setupCaptionSpace];
     }
 }

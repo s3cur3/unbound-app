@@ -197,8 +197,7 @@
     int sortOrder = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"PIXPhotoSort"];
 
     for (int i = 1; i <= 4; i++) {
-
-        NSMenuItem * item = buttonView.itemArray[i];
+		item = buttonView.itemArray[i];
 
         if(i-1 == sortOrder)
         {

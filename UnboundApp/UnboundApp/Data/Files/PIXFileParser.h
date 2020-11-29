@@ -21,6 +21,10 @@ typedef enum {
     
 } PIXFileParserRecursionOptions;
 
+NSString * UserHomeDirectory(void);
+NSString * aDefaultDropBoxDirectory(void);
+NSString * aDefaultDropBoxPhotosDirectory(void);
+
 @class PIXAlbum;
 
 @interface PIXFileParser : NSObject

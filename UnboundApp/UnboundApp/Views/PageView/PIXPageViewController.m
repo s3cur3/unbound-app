@@ -1153,9 +1153,7 @@
     NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSetWithIndexesInRange:nearbyItemsRange];
 
     NSSet *newPhotosToPreload = [NSSet setWithArray:[self.pagerData objectsAtIndexes:indexSet]];
-    
-    
-    
+
     NSMutableSet *photosToCancel = [self.preLoadPhotosSet mutableCopy];
     [photosToCancel minusSet:newPhotosToPreload];
     
@@ -1178,9 +1176,10 @@
     [prevItemsToRelease enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
         //
         //[(PIXPhoto *)obj setCancelFullsizeLoadOperation:YES];
-        PIXPhoto *aPhoto = (PIXPhoto *)obj;
-        if ([aPhoto isReallyDeleted]==NO) {
-            [aPhoto setFullsizeImage:nil];
+        PIXPhoto * photo = (PIXPhoto *)obj;
+        if ([photo isReallyDeleted]==NO)
+		{
+            [photo setFullsizeImage:nil];
         }
     }];
     
@@ -1192,9 +1191,10 @@
     [nextItemsToRelease enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
         //
         //[(PIXPhoto *)obj setCancelFullsizeLoadOperation:YES];
-        PIXPhoto *aPhoto = (PIXPhoto *)obj;
-        if ([aPhoto isReallyDeleted]==NO) {
-            [aPhoto setFullsizeImage:nil];
+        PIXPhoto * photo = (PIXPhoto *)obj;
+        if ([photo isReallyDeleted]==NO)
+		{
+            [photo setFullsizeImage:nil];
         }
     }];
 

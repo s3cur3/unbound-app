@@ -314,10 +314,9 @@ typedef NSUInteger PIXOverwriteStrategy;
         [context deleteObject:anItem];
     }
     
-    NSError * error = nil;
-    [context save:&error];
-    
-    
+    NSError * error_ignored = nil;
+    [context save:&error_ignored];
+
     for(PIXAlbum * album in albumsToUpdate)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:AlbumDidChangeNotification object:album userInfo:nil];
@@ -327,7 +326,6 @@ typedef NSUInteger PIXOverwriteStrategy;
 
     [[NSWorkspace sharedWorkspace] recycleURLs:urlsToDelete completionHandler:^(NSDictionary *newURLs, NSError *error) {
         if (nil==error) {
-            
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 /*
@@ -354,9 +352,6 @@ typedef NSUInteger PIXOverwriteStrategy;
                 }
                 [undoManager setActionName:undoMessage];
             });
-
-
-
         } else {
             //Some photos coudln't be deleted. Present the error and setup undo operation for items that were succesfully deleted
             [[NSApplication sharedApplication] presentError:error];
@@ -379,6 +374,7 @@ typedef NSUInteger PIXOverwriteStrategy;
                 return;
             }
             
+#warning albumsToUpdate will always be empty below... WTF?
             NSMutableSet *albumsToUpdate = [[NSMutableSet alloc] init];
             NSMutableSet *photosToDelete = [[NSMutableSet alloc] init];
             for (id anItem in sucessfullyDeletedItems)
@@ -1391,14 +1387,13 @@ typedef NSUInteger PIXOverwriteStrategy;
             NSString *filename = [src lastPathComponent];
             
             NSString *fullDestPath = [NSString stringWithFormat:@"%@/%@", dest, filename];
-            NSError *error = nil;
-            if (![[NSFileManager defaultManager] moveItemAtPath:src toPath:fullDestPath error:&error])
+            NSError * move_error = nil;
+            if(![[NSFileManager defaultManager] moveItemAtPath:src toPath:fullDestPath error:&move_error])
             {
-                DLog(@"%@", error);
-                [[NSApplication sharedApplication] presentError:error];
+                DLog(@"%@", move_error);
+                [[NSApplication sharedApplication] presentError:move_error];
             }
         }
-        
         
         // and re-scan the albums in case we screwed up
         for (NSString *albumPath in albumPaths)
@@ -1772,9 +1767,6 @@ typedef NSUInteger PIXOverwriteStrategy;
     }
     return pathsToPaste;
 }
-
-
-NSString * UserHomeDirectory();
 
 -(NSString *)trashFolderPath
 {

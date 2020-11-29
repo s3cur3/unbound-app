@@ -789,16 +789,16 @@
 }
 
 - (id<QLPreviewItem>)previewPanel:(QLPreviewPanel *)panel previewItemAtIndex:(NSInteger)index {
-    NSSet<NSIndexPath *> *selection = self.collectionView.selectionIndexPaths;
-
-    if (selection.count > 0) {
-        NSInteger index = selection.anyObject.item;
-        if (index >= 0 && index < self.photos.count) {
-            PIXPhoto *photo = self.photos[index];
+    NSSet<NSIndexPath *> * selection = self.collectionView.selectionIndexPaths;
+    if (selection.count > 0)
+	{
+        NSInteger selectionIdx = selection.anyObject.item;
+        if (selectionIdx >= 0 && selectionIdx < self.photos.count)
+		{
+            PIXPhoto *photo = self.photos[selectionIdx];
             return photo.filePath;
         }
     }
-
     return nil;
 }
 
