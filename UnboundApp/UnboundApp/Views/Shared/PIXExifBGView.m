@@ -20,7 +20,7 @@
     return self;
 }
 
-BOOL isDarkMode()
+static BOOL isDarkMode()
 {
 	NSAppearance *appearance = NSAppearance.currentAppearance;
 	if (@available(*, macOS 10.14)) {

@@ -20,6 +20,35 @@
 #include <pwd.h>
 #include <unistd.h>
 
+#pragma mark - Directory Methods
+/*
+ * Used to get the home directory of the user, UNIX/C based workaround for sandbox issues
+ */
+NSString * UserHomeDirectory(void)
+{
+	const struct passwd * passwd = getpwnam([NSUserName() UTF8String]);
+	if(!passwd)
+		return nil; // bail out cowardly
+	const char *homeDir_c = getpwnam([NSUserName() UTF8String])->pw_dir;
+	NSString *homeDir = [[NSFileManager defaultManager]
+						 stringWithFileSystemRepresentation:homeDir_c
+						 length:strlen(homeDir_c)];
+	return homeDir;
+}
+
+NSString * aDefaultDropBoxDirectory(void)
+{
+	NSString *dropBoxHome =[UserHomeDirectory() stringByAppendingPathComponent:@"Dropbox/"];
+	return dropBoxHome;
+}
+
+NSString * aDefaultDropBoxPhotosDirectory(void)
+{
+	NSString *dropBoxPhotosHome =[aDefaultDropBoxDirectory() stringByAppendingPathComponent:@"Photos/"];
+	return dropBoxPhotosHome;
+}
+
+
 @interface PIXFileParser () <ArchDirectoryObserver>
 
 @property (nonatomic,strong) NSDate *startDate;
@@ -95,35 +124,6 @@
         _sharedInstance = [[self alloc] init];
     });
     return _sharedInstance;
-}
-
-
-#pragma mark - Directory Methods
-/*
- * Used to get the home directory of the user, UNIX/C based workaround for sandbox issues
- */
-NSString * UserHomeDirectory()
-{
-    const struct passwd * passwd = getpwnam([NSUserName() UTF8String]);
-    if(!passwd)
-        return nil; // bail out cowardly
-    const char *homeDir_c = getpwnam([NSUserName() UTF8String])->pw_dir;
-    NSString *homeDir = [[NSFileManager defaultManager]
-                         stringWithFileSystemRepresentation:homeDir_c
-                         length:strlen(homeDir_c)];
-    return homeDir;
-}
-
-NSString * aDefaultDropBoxDirectory()
-{
-    NSString *dropBoxHome =[UserHomeDirectory() stringByAppendingPathComponent:@"Dropbox/"];
-    return dropBoxHome;
-}
-
-NSString * aDefaultDropBoxPhotosDirectory()
-{
-    NSString *dropBoxPhotosHome =[aDefaultDropBoxDirectory() stringByAppendingPathComponent:@"Photos/"];
-    return dropBoxPhotosHome;
 }
 
 
@@ -736,7 +736,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                                                                 NSURLContentModificationDateKey,
                                                                 NSURLFileSizeKey]
                                                       options:options
-                                                 errorHandler:^(NSURL *url, NSError *error) {
+                                                 errorHandler:^(NSURL * _url, NSError * _error) {
                                                                             return NO;
                                                                         }];
         }
@@ -855,16 +855,13 @@ NSDictionary * dictionaryForURL(NSURL * url)
             
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                
                 // now go through the directories left over and start recursive shallow scans on them
-                for(NSString * path in directories)
+                for(NSString * dir in directories)
                 {
-                    [self scanURLForChanges:[NSURL fileURLWithPath:path] withRecursion:recursionMode];
+                    [self scanURLForChanges:[NSURL fileURLWithPath:dir] withRecursion:recursionMode];
                 }
                 
                 [self.loadingAlbumsDict removeObjectForKey:url.path];
-                
-                
             });
         }
         

@@ -258,16 +258,12 @@
                       nil];
         
         NSString * countString = [NSString stringWithFormat:@"%ld", count];
-        
-        
-        NSSize stringSize = [countString sizeWithAttributes:attributes];
-        
-        CGFloat stringWidth = stringSize.width + 15;
+        CGFloat countStringWidth = [countString sizeWithAttributes:attributes].width + 15;
         
         CGRect countBubbleRect;
         CGRect remainder;
         
-        CGFloat bubbleWidth = fmax(25, stringWidth);
+        CGFloat bubbleWidth = fmax(25, countStringWidth);
         
         CGRectDivide(topImageRect, &countBubbleRect, &remainder, bubbleWidth, CGRectMaxXEdge);
         CGRectDivide(countBubbleRect, &countBubbleRect, &remainder, 25, CGRectMaxYEdge);
