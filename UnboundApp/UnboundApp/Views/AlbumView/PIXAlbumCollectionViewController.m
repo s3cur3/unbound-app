@@ -128,8 +128,6 @@
         {
             [self.gridViewTitle setHidden:YES];
             [self.gridViewProgress setHidden:NO];
-            
-            
             [self.gridViewProgress setProgress:progress];
         }
         

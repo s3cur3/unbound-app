@@ -102,7 +102,6 @@
     {
         [self.rightArrowButton setAlphaValue:0.2];
     }
-    
     else
     {
         [self.rightArrowButton setAlphaValue:1.0];
@@ -112,7 +111,6 @@
     {
         [self.leftArrowButton setAlphaValue:0.2];
     }
-    
     else
     {
         [self.leftArrowButton setAlphaValue:1.0];
@@ -138,8 +136,7 @@
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [self.delegate pagerDidMoveToPhotoWithPath:thisPhoto.path atIndex:self.pageController.selectedIndex];
     });
-    
-    
+
     [self.currentImageVC setIsCurrentView:NO];
     
     self.currentImageVC = (PIXImageViewController *)[self.pageController selectedViewController];
