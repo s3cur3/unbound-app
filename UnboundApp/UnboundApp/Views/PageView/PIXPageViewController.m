@@ -897,7 +897,6 @@
     NSArray<PIXPhoto *> *itemsToOpen = @[self.pagerData[self.pageController.selectedIndex]];
 
     NSString *appName = [[NSUserDefaults standardUserDefaults] stringForKey:@"defaultEditorName"];
-    NSMutableArray<NSURL *> *urls = [NSMutableArray arrayWithCapacity:itemsToOpen.count];
     [itemsToOpen enumerateObjectsUsingBlock:^(PIXPhoto *obj, NSUInteger idx, BOOL *stop) {
         if (appName) {
             [NSWorkspace.sharedWorkspace openFile:obj.path withApplication:appName];
@@ -912,7 +911,6 @@
     NSArray *itemsToOpen = [NSArray arrayWithObject:[self.pagerData objectAtIndex:self.pageController.selectedIndex]];
 
     for (id obj in itemsToOpen) {
-        
         NSString* path = [obj path];
         [[NSWorkspace sharedWorkspace] openFile:path];
         
