@@ -39,7 +39,7 @@
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2017 Conversion Insights, Inc. All rights reserved.</string>
+	<string>Copyright © 2017 Tyler Young. All rights reserved.</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
@@ -47,6 +47,6 @@
 	<key>PIXAppLink</key>
 	<string>http://www.unboundformac.com</string>
 	<key>PIXCopyright</key>
-	<string>Copyright © 2017 Conversion Insights, Inc.</string>
+	<string>Copyright © 2017 Tyler Young</string>
 </dict>
 </plist>
