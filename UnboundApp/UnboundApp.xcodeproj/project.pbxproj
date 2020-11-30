@@ -724,7 +724,6 @@
 		8C9FA5BF183ACB98000AEBC9 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		8CEE1F3C1A083413005A200B /* libLeap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libLeap.dylib; path = UnboundApp/Leap/libLeap.dylib; sourceTree = "<group>"; };
 		8CF05AEE17C3097300AB88B5 /* Licences.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Licences.txt; sourceTree = "<group>"; };
-		8CFC2E611A5864B9004FCE5F /* Unbound copy2-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Unbound copy2-Info.plist"; path = "/Users/scottsykora/Documents/Docs/WebAlbums/code/unbound_osx/UnboundApp/Unbound copy2-Info.plist"; sourceTree = "<absolute>"; };
 		8CFDF7651827123700809018 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		C9FE79A9C318BC57A3185BBD /* Pods_Unbound.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unbound.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBD75E102055F7D818A00C97 /* Pods_Unbound_Unbound_Trial.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unbound_Unbound_Trial.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -820,7 +819,6 @@
 				1DB2F854167ABE87008AC0F7 /* UnboundApp */,
 				1DB2F84D167ABE87008AC0F7 /* Frameworks */,
 				1DB2F84B167ABE87008AC0F7 /* Products */,
-				8CFC2E611A5864B9004FCE5F /* Unbound copy2-Info.plist */,
 				04DF27BB1F7DA73600CDA9F1 /* Recovered References */,
 				458AD543623D03B2E21995ED /* README.md */,
 				438CEA45569AE30A178EA3A2 /* Pods */,
@@ -2139,6 +2137,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8B5A3111AE5117F32775D55D /* Pods-Unbound.debug.xcconfig */;
 			buildSettings = {
+				ARCHS = x86_64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_MODULES = YES;
@@ -2186,6 +2185,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4F4FEEE6E8C3DAB1C0EF95A1 /* Pods-Unbound.release.xcconfig */;
 			buildSettings = {
+				ARCHS = x86_64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_MODULES = YES;
@@ -2233,6 +2233,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1806B2D5516B5118ADD17C11 /* Pods-Unbound-Unbound Trial.debug.xcconfig */;
 			buildSettings = {
+				ARCHS = x86_64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_MODULES = YES;
@@ -2297,6 +2298,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F05E7451FBA6303A9E3CC90E /* Pods-Unbound-Unbound Trial.release.xcconfig */;
 			buildSettings = {
+				ARCHS = x86_64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_MODULES = YES;
