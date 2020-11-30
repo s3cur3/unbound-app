@@ -28,7 +28,7 @@ const CGFloat kThumbnailSize = 370.0f;
 //- (void)thumbnailCommitImage:(NSImage *)image isPlaceholder:(BOOL)isPlaceholder;
 //- (void)thumbnailCommitImageData:(NSImage *)image;
 
-@property (nonatomic, retain) QTMovie * videoFile;
+@property (nonatomic, retain) AVAsset * videoFile;
 
 @property (nonatomic, assign, readwrite) BOOL cancelThumbnailLoadOperationDelayFlag;
 
