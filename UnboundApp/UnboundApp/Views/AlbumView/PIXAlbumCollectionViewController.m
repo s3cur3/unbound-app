@@ -232,7 +232,6 @@
         
         // update any albums views
         [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
-        
     }
 }
 
@@ -417,7 +416,6 @@
             rootFolderInfo = [NSString stringWithFormat:@"Current Folder: %@", [(NSURL *)[directoryURLs objectAtIndex:0] path]];
             [self.centerStatusViewSubTextField setStringValue:rootFolderInfo];
         }
-        
         else
         {
             [self.centerStatusViewSubTextField setStringValue:@"No Current Folder"];
@@ -429,7 +427,6 @@
     }
     
     //NSLog(@"updated");
-    
 }
 
 - (void)albumRenamed:(NSNotification *)notification

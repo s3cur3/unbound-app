@@ -850,9 +850,7 @@ static NSDictionary * dictionaryForURL(NSURL * url)
                     [directories removeObjectAtIndex:index];
                 }
             }
-            
-            
-            
+
             dispatch_async(dispatch_get_main_queue(), ^{
                 // now go through the directories left over and start recursive shallow scans on them
                 for(NSString * dir in directories)
@@ -1029,7 +1027,6 @@ static NSDictionary * dictionaryForURL(NSURL * url)
                     lastAlbum = [NSEntityDescription insertNewObjectForEntityForName:@"PIXAlbum" inManagedObjectContext:context];
                     [lastAlbum setValue:aPath forKey:@"path"];
                 }
-                
                 else
                 {
                     // store the objectID's of any albums we change so we can go through and update them on the main thread later
@@ -1134,8 +1131,6 @@ static NSDictionary * dictionaryForURL(NSURL * url)
         
         // save the context
         [context save:nil];
-        
-        
         
         // update flush albums and the UI with a notification
         // use performSelector instead of dispatch async because it's faster
@@ -1281,8 +1276,6 @@ static NSDictionary * dictionaryForURL(NSURL * url)
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil userInfo:nil];
     });
-    
-     
 }
 
 -(BOOL)deleteObjectsForEntityName:(NSString *)entityName inContext:(NSManagedObjectContext *)context withPredicate:(NSPredicate *)predicate
