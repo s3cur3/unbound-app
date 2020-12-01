@@ -985,6 +985,7 @@ static NSDictionary * dictionaryForURL(NSURL * url)
         
         // i will be used to track the loop count and fire a save every 500 loops
         int i = 0;
+		int UI_UPDATE_INTERVAL = 500;
         
         // lastAlbumPhotos is an array of new photos we have found that belong to lastAlbum
         NSMutableArray *lastAlbumsPhotos = [NSMutableArray new];
@@ -1095,13 +1096,13 @@ static NSDictionary * dictionaryForURL(NSURL * url)
                 [lastAlbumsPhotos addObject:dbPhoto];
                 
                 // update the progress bar every 100 items
-                if(i%100==0)
+                if(i % (UI_UPDATE_INTERVAL / 5) == 0)
                 {
                     self.fullScanProgress = (float)self.fullScannProgressCurrent / (float)self.fullScannProgressTotal;
                 }
                 
                 // save the context and send a UI update notification every 500 loops
-                if (i%500==0) {
+                if(i % UI_UPDATE_INTERVAL == 0) {
                     
                     [context save:nil];
                     
