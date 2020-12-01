@@ -1431,7 +1431,6 @@ typedef NSUInteger PIXOverwriteStrategy;
     {
         [progressSheet.progressBar setIndeterminate:NO];
     }
-    
     else
     {
         [progressSheet.progressBar setIndeterminate:YES];
@@ -1440,10 +1439,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     
     dispatch_async(dispatch_get_main_queue(), ^{
         DLog(@"copying %ld files...", items.count);
-        
-        
-        
-        
+
         NSString *aDestinationPath = [[items lastObject] valueForKey:@"destination"];
         NSURL *destinationURL = [NSURL fileURLWithPath:aDestinationPath isDirectory:YES];
         //NSArray *srcPaths = [items valueForKey:@"source"];
@@ -1454,10 +1450,8 @@ typedef NSUInteger PIXOverwriteStrategy;
         //    }
         NSArray *validatedItems = [self userValidatedFiles:items forDestination:destinationURL];
         if (validatedItems.count == 0) {
-            
             [NSApp endSheet:[progressSheet window] returnCode:NSOKButton];
             [[progressSheet window] orderOut:self];
-            
             return;
         } else {//if (newItems.count != items.count) {
             //Update items based on user's replace preferences
@@ -1474,7 +1468,7 @@ typedef NSUInteger PIXOverwriteStrategy;
         
         float itemCount = validatedItems.count;
         float currentItem = 0;
-        
+		
         for (id aDict in validatedItems)
         {
             BOOL destintationWasRenamed = NO;
@@ -1490,20 +1484,15 @@ typedef NSUInteger PIXOverwriteStrategy;
             }
             
             NSString *fullDestPath = [dest stringByAppendingPathComponent:filename];
-            
-            
             if([[aDict objectForKey:@"isDirectory"] boolValue])
             {
                 [recursiveAlbumPaths addObject:fullDestPath];
             }
-            
             else
             {
                 [albumPaths addObject:dest];
             }
-            
-            
-            
+
             if (!destintationWasRenamed)
             {
                 [[NSWorkspace sharedWorkspace]
@@ -1513,7 +1502,6 @@ typedef NSUInteger PIXOverwriteStrategy;
                  files:[NSArray arrayWithObject:[src lastPathComponent]]
                  tag:nil];
             } else {
-                
                 NSError *error = nil;
                 [[NSFileManager defaultManager] copyItemAtPath:src toPath:fullDestPath error:&error];
             }
