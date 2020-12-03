@@ -1,29 +1,20 @@
 PODS:
-  - Crashlytics (3.14.0):
-    - Fabric (~> 1.10.2)
   - DevMateKit (1.9.3)
-  - Fabric (1.10.2)
   - MASPreferences (1.3)
 
 DEPENDENCIES:
-  - Crashlytics
   - DevMateKit (~> 1.9)
-  - Fabric
   - MASPreferences
 
 SPEC REPOS:
   trunk:
-    - Crashlytics
     - DevMateKit
-    - Fabric
     - MASPreferences
 
 SPEC CHECKSUMS:
-  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   DevMateKit: a7a46f498d4c549125109d826e858a49d508cbb8
-  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   MASPreferences: c08b8622dd17b47da87669e741efd7c92e970e8c
 
-PODFILE CHECKSUM: 0133dd9df735f578b1eeccd320927e997a4ee232
+PODFILE CHECKSUM: f6e2a925a3bb82bfc1a96e8cf757086758d2104f
 
 COCOAPODS: 1.10.0
