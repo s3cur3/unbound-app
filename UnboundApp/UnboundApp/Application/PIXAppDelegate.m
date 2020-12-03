@@ -510,7 +510,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
             if (![coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:options error:&error])
             {
                 NSLog(@"Failed to create/open database file: %@", url);
-                [[NSApplication sharedApplication] presentError:error];
+				[PIXAppDelegate presentError:error];
             }
         }
         
