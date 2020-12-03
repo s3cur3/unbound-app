@@ -2122,7 +2122,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8B5A3111AE5117F32775D55D /* Pods-Unbound.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = x86_64;
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_MODULES = YES;
@@ -2170,7 +2170,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4F4FEEE6E8C3DAB1C0EF95A1 /* Pods-Unbound.release.xcconfig */;
 			buildSettings = {
-				ARCHS = x86_64;
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_MODULES = YES;
