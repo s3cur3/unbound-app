@@ -9,12 +9,21 @@
 5. Manage Schemes and create a new scheme for Unbound and Unbound Trial (this may already be done?)
 6. Build & run Unbound
 
-# Releasing
-
-1. Bump the `Build version` and `Short Build Version String` in the `/UnboundApp/Supporting Files/UnboundApp-Info.plist` file.
+# Releasing via The Mac App Store
+1. Bump the Version and Build fields in Project -> Unbound -> General (these correspond to `Build version` and `Short Build Version String` in the `/UnboundApp/Supporting Files/UnboundApp-Info.plist` file)
 1. Using Xcode, build and archive the `Unbound Trial` target.
 1. Open the Organizer window, and select the created archive.
-1. Click `Export...`, and choose the `Developer ID` distribution method.
+1. Click Distribute App
+1. Mac App Store, Next
+1. Upload, Next
+1. Remain opted in to uploading symbols, Next
+1. Automatically manage signing, Next
+1. If it gives you an error about a missing signing cert, add it (currently in Dropbox/Conversion Insights/Apple Signing Certificate.p12, password is in 1Password under "Conversion Insights signing certificate")
+
+# Releasing via Paddle
+
+1. Open the Organizer window and select the Mac App Store build you did above
+1. Click `Distribute App`, and choose the `Developer ID` distribution method.
 1. Choose the `Ryan Harter` development team.
 1. Zip the resulting `.app` file using ditto.
     ```

@@ -16,9 +16,6 @@
 #import "PIXFileManager.h"
 #import "PIXDefines.h"
 
-#import <Fabric/Fabric.h>
-#import <Crashlytics/Crashlytics.h>
-
 #ifdef TRIAL
 #import "DMKevlarApplication.h"
 #import <DevMateKit/DevMateKit.h>
@@ -87,10 +84,6 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	_sharedAppDelegate = (PIXAppDelegate *)[[NSApplication sharedApplication] delegate];
-	
-#ifndef DEBUG
-    [Fabric with:@[[Crashlytics class]]];
-#endif
 
 #ifdef TRIAL
     [DevMateKit sendTrackingReport:nil delegate: nil];
@@ -517,7 +510,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
             if (![coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:options error:&error])
             {
                 NSLog(@"Failed to create/open database file: %@", url);
-                [[NSApplication sharedApplication] presentError:error];
+				[PIXAppDelegate presentError:error];
             }
         }
         

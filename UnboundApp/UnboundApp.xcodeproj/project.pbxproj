@@ -1362,7 +1362,6 @@
 				8C53DFF316FB7DF4008EF8B1 /* Copy Frameworks */,
 				1DB2F847167ABE87008AC0F7 /* Frameworks */,
 				1DB2F848167ABE87008AC0F7 /* Resources */,
-				042991741D0619CB00BBA95A /* Run Script */,
 				AC5646B920F573802CFD70B8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -1697,20 +1696,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		042991741D0619CB00BBA95A /* Run Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Run Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" 2d7dec3d45e8c12d3d51e10f742ccd405d097f97 00c88cbd24f188ff3b9d936e5cd215aa8b2e35b3062af111d5bcf647e7ba4ea6";
-		};
 		043D2EB22053A6DC00CC7A47 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2137,7 +2122,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8B5A3111AE5117F32775D55D /* Pods-Unbound.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = x86_64;
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_MODULES = YES;
@@ -2152,7 +2137,9 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = GCQM9R5G83;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -2171,6 +2158,7 @@
 				INFOPLIST_FILE = "UnboundApp/Supporting Files/UnboundApp-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = "";
+				MARKETING_VERSION = 1.3.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pixite.UnboundForMac;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2185,7 +2173,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4F4FEEE6E8C3DAB1C0EF95A1 /* Pods-Unbound.release.xcconfig */;
 			buildSettings = {
-				ARCHS = x86_64;
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_MODULES = YES;
@@ -2200,7 +2188,9 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = GCQM9R5G83;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -2219,6 +2209,7 @@
 				INFOPLIST_FILE = "UnboundApp/Supporting Files/UnboundApp-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = "";
+				MARKETING_VERSION = 1.3.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pixite.UnboundForMac;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2244,6 +2235,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = R5T2HYENEJ;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -2309,6 +2301,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = R5T2HYENEJ;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
