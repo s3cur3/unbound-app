@@ -19,6 +19,7 @@
 #import "PIXAlbumCollectionViewItem.h"
 #import "PIXCollectionToolbar.h"
 #import "PIXCollectionView.h"
+#import "PIXApplicationExtensions.h"
 
 @interface PIXAlbumCollectionViewController () <NSCollectionViewDelegate, NSCollectionViewDataSource, PIXSplitViewControllerDelegate, NSSearchFieldDelegate>
 
@@ -414,10 +415,7 @@
         {
             [self.centerStatusViewSubTextField setStringValue:@"No Current Folder"];
         }
-        
-        
     }
-    
     else
     {
         [self.centerStatusView setHidden:YES];
@@ -646,10 +644,20 @@
         self.gridViewTitle.stringValue = [NSString stringWithFormat:format, self.albums.count, self.searchField.stringValue];
     } else {
         NSFetchRequest * fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kPhotoEntityName];
+        #if TRIAL
+            [fetchRequest setFetchLimit:TRIAL_MAX_PHOTOS];
+        #endif
         NSUInteger numPhotos = [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] countForFetchRequest:fetchRequest error:nil];
 
-        NSString *format = NSLocalizedString(@"%lu album(s) containing %lu photos", @"Count albums and photos");
-        self.gridViewTitle.stringValue = [NSString stringWithFormat:format, self.albums.count, numPhotos];
+		if(TRIAL && (self.albums.count == TRIAL_MAX_ALBUMS || numPhotos == TRIAL_MAX_PHOTOS))
+		{
+			self.gridViewTitle.stringValue = [NSString stringWithFormat:@"Trial limited to %d albums & %d photos. Grab the full version from the Mac App Store!", TRIAL_MAX_ALBUMS, TRIAL_MAX_PHOTOS];
+		}
+        else
+		{
+			NSString * format = NSLocalizedString(@"%lu album(s) containing %lu photos", @"Count albums and photos");
+			self.gridViewTitle.stringValue = [NSString stringWithFormat:format, self.albums.count, numPhotos];
+		}
     }
 }
 

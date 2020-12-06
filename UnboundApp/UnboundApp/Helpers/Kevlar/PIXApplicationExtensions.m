@@ -9,11 +9,7 @@
 @implementation NSApplication (Dummy)
 
 - (BOOL)isActivated {
-#ifdef TRIAL
 	return TRIAL;
-#else
-	return YES;
-#endif
 }
 
 @end
