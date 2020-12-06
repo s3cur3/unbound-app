@@ -11,6 +11,7 @@
 #import "PIXPhoto.h"
 #import "PIXDefines.h"
 #import "PIXAppDelegate.h"
+#import "PIXApplicationExtensions.h"
 //#include <unistd.h>
 
 static NSString *const kItemsKey = @"photos";
@@ -32,12 +33,14 @@ static NSString *const kItemsKey = @"photos";
 
 +(NSArray *)sortedAlbums
 {
-    
     NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kAlbumEntityName];
     [fetchRequest setFetchBatchSize:100];
-    
+#if TRIAL
+    [fetchRequest setFetchLimit:TRIAL_MAX_ALBUMS];
+#endif
+
     // prefetch stack photos. These are used in the album-level views
     [fetchRequest setRelationshipKeyPathsForPrefetching:@[@"stackPhotos"]];
     
@@ -112,6 +115,9 @@ static NSString *const kItemsKey = @"photos";
 
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kAlbumEntityName];
     [fetchRequest setFetchBatchSize:100];
+#if TRIAL
+    [fetchRequest setFetchLimit:TRIAL_MAX_ALBUMS];
+#endif
 
     // prefetch stack photos. These are used in the album-level views
     [fetchRequest setRelationshipKeyPathsForPrefetching:@[@"stackPhotos"]];
