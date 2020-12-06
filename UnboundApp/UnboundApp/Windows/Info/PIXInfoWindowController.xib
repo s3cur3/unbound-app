@@ -49,7 +49,7 @@
                                 </constraints>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" id="163">
                                     <font key="font" size="18" name="HelveticaNeue"/>
-                                    <string key="title">Welcome to Unbound, the exceptional photo browser. 
+                                    <string key="title">Welcome to Unbound, the no-nonsense photo browser. 
 
 Where do you keep your photos?</string>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
