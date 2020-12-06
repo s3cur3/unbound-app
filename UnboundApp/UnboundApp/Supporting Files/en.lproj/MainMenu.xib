@@ -23,17 +23,6 @@
                                     <action selector="showAboutWindow:" target="494" id="563"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Check for Updates" id="590">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="checkForUpdates:" target="494" id="593"/>
-                                    <binding destination="494" name="hidden" keyPath="self.isTrialBuild" id="BVU-eD-Umo">
-                                        <dictionary key="options">
-                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                        </dictionary>
-                                    </binding>
-                                </connections>
-                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="236">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
@@ -150,7 +139,7 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Purchase" id="353-td-7oi">
                         <items>
-                            <menuItem title="Purchase Unbound Online..." id="22i-E5-pr9">
+                            <menuItem title="Purchase in the Mac App Store" id="22i-E5-pr9">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="purchaseOnlinePressed:" target="494" id="dOn-7h-Kfl"/>
@@ -160,13 +149,6 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="showHomepagePressed:" target="494" id="wf5-Vu-gr2"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="zby-Jo-zOJ"/>
-                            <menuItem title="Unlock Unbound..." id="K9g-8J-PRC">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="startActivationProcess:" target="494" id="uuM-Xp-8zQ"/>
                                 </connections>
                             </menuItem>
                         </items>

@@ -1,20 +1,16 @@
 PODS:
-  - DevMateKit (1.9.3)
   - MASPreferences (1.3)
 
 DEPENDENCIES:
-  - DevMateKit (~> 1.9)
   - MASPreferences
 
 SPEC REPOS:
   trunk:
-    - DevMateKit
     - MASPreferences
 
 SPEC CHECKSUMS:
-  DevMateKit: a7a46f498d4c549125109d826e858a49d508cbb8
   MASPreferences: c08b8622dd17b47da87669e741efd7c92e970e8c
 
-PODFILE CHECKSUM: f6e2a925a3bb82bfc1a96e8cf757086758d2104f
+PODFILE CHECKSUM: c07b71df6876fed290fc71141969957154c4cc56
 
 COCOAPODS: 1.10.0
