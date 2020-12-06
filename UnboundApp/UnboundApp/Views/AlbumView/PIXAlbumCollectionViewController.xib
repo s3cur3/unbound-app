@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,6 +14,7 @@
                 <outlet property="collectionView" destination="KUn-vc-UwM" id="GSd-Nf-rLy"/>
                 <outlet property="gridViewProgress" destination="pyq-Cn-tHT" id="kI1-53-Na8"/>
                 <outlet property="gridViewTitle" destination="iYX-Z2-2rd" id="VhK-FX-B7D"/>
+                <outlet property="macAppStoreBtn" destination="6rW-PO-Z0Y" id="JG7-BZ-24f"/>
                 <outlet property="scrollView" destination="lQ1-RR-8z3" id="FQa-PA-wZ4"/>
                 <outlet property="toolbar" destination="MuM-uy-GpU" id="Kul-So-Pgn"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
@@ -26,7 +27,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField hidden="YES" horizontalHuggingPriority="1" verticalHuggingPriority="744" horizontalCompressionResistancePriority="324" translatesAutoresizingMaskIntoConstraints="NO" id="iYX-Z2-2rd">
-                    <rect key="frame" x="48" y="386" width="556" height="20"/>
+                    <rect key="frame" x="48" y="387" width="556" height="19"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="Rjs-BJ-Pjo"/>
                     </constraints>
@@ -114,13 +115,13 @@
                     </constraints>
                 </customView>
                 <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lQ1-RR-8z3">
-                    <rect key="frame" x="0.0" y="0.0" width="652" height="378"/>
+                    <rect key="frame" x="0.0" y="0.0" width="652" height="379"/>
                     <clipView key="contentView" id="dHo-0i-AJM">
-                        <rect key="frame" x="0.0" y="0.0" width="652" height="378"/>
+                        <rect key="frame" x="0.0" y="0.0" width="652" height="379"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView selectable="YES" allowsMultipleSelection="YES" id="KUn-vc-UwM" customClass="PIXCollectionView">
-                                <rect key="frame" x="0.0" y="0.0" width="652" height="378"/>
+                                <rect key="frame" x="0.0" y="0.0" width="652" height="379"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="dF4-cG-T5n">
                                     <size key="itemSize" width="50" height="50"/>
@@ -141,6 +142,17 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6rW-PO-Z0Y">
+                    <rect key="frame" x="367" y="379" width="285" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Get the full version in the Mac App Store" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="TET-7E-rZf">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="macAppStoreButtonPressed:" target="-2" id="iLa-5e-Mab"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="MuM-uy-GpU" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="MQg-HM-oHn"/>

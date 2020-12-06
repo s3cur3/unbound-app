@@ -55,6 +55,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
     self.view.wantsLayer = true;
     self.collectionView.wantsLayer = true;
+    self.macAppStoreBtn.hidden = !TRIAL;
 
     if (@available(macOS 10.14, *)) {
         // The collection view actually seems to take it's color from the primary color defined in the
@@ -377,6 +378,11 @@ static NSString *kContentTitleKey, *kContentImageKey;
         [[NSWorkspace sharedWorkspace] openFile:path];
         
     }
+}
+
+- (IBAction)macAppStoreButtonPressed:(id)sender
+{
+    [[PIXAppDelegate sharedAppDelegate] purchaseOnlinePressed:nil];
 }
 
 - (IBAction)chooseFolderButtonPressed:(id)sender
