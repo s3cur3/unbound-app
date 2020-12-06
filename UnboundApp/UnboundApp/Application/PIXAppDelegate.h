@@ -37,13 +37,10 @@
 - (IBAction)chooseFolder:(id)sender;
 - (IBAction)rescanPhotosPressed:(id)sender;
 - (IBAction)importPhotosPressed:(id)sender;
-- (IBAction)checkForUpdates:(id)sender;
 - (IBAction)purchaseOnlinePressed:(id)sender;
 - (IBAction)showHomepagePressed:(id)sender;
-- (IBAction)startActivationProcess:(id)sender;
 
 @property BOOL isDebugBuild;
-@property BOOL isTrialBuild;
 @property BOOL isOwned;
 
 @property (nonatomic, strong) IBOutlet NSMenuItem * progressItem;

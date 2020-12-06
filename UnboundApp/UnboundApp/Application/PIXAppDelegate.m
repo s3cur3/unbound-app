@@ -16,11 +16,6 @@
 #import "PIXFileManager.h"
 #import "PIXDefines.h"
 
-#ifdef TRIAL
-#import "DMKevlarApplication.h"
-#import <DevMateKit/DevMateKit.h>
-#endif
-
 //extern NSString *kLoadImageDidFinish;
 //extern NSString *kSearchDidFinishNotification;
 
@@ -30,10 +25,6 @@
 }
 
 @property (readonly, strong, atomic) NSOperationQueue *backgroundSaveQueue;
-
-#ifdef TRIAL
-@property (strong) SUUpdater * sparkleUpdater;
-#endif
 
 @end
 
@@ -85,10 +76,6 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
 {
 	_sharedAppDelegate = (PIXAppDelegate *)[[NSApplication sharedApplication] delegate];
 
-#ifdef TRIAL
-    [DevMateKit sendTrackingReport:nil delegate: nil];
-#endif
-    
     if([[NSUserDefaults standardUserDefaults] boolForKey:kAppDidNotExitCleanly])
     {
         NSAlert *alert = [[NSAlert alloc] init];
@@ -139,29 +126,9 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
 #endif
 
-#ifdef TRIAL
-    self.isTrialBuild = YES;
-    self.sparkleUpdater = [SUUpdater new];
-
-    // Add debug menu
-    DMKitDebugAddDevMateMenu();
-
-    // activate the timed trial
-    if (!DMKIsApplicationActivated(NULL)) {
-        [DevMateKit setupTimeTrial:nil withTimeInterval:kDMTrialWeek];
-    }
-#endif
-
     [NSValueTransformer setValueTransformer:[TextColorForThemeTransformer newInstance]
                                     forName:@"TextColorForThemeTransformer"];
 
-}
-
-- (IBAction)checkForUpdates:(id)sender
-{
-#ifdef TRIAL
-    [self.sparkleUpdater checkForUpdates:sender];
-#endif
 }
 
 - (void)setupProgressIndicator
@@ -278,19 +245,11 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
 }
 
 - (IBAction)purchaseOnlinePressed:(id)sender {
-    [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:@"http://www.unboundformac.com/"]];
+    [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:@"https://itunes.apple.com/us/app/unbound/id690375005?ls=1&mt=12"]];
 }
 
 - (IBAction)showHomepagePressed:(id)sender {
-    [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:@"http://www.unboundformac.com/"]];
-}
-
-- (IBAction)startActivationProcess:(id)sender {
-#ifdef TRIAL
-    if (!DMKIsApplicationActivated(NULL)) {
-        [DevMateKit runActivationDialog:nil inMode:DMActivationModeFloating];
-    }
-#endif
+    [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:@"https://www.unboundapp.com/"]];
 }
 
 #pragma mark - MASPreferences Class methods:

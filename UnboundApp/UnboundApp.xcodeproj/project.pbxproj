@@ -15,6 +15,8 @@
 		1D4A1E2B167D2A4D00C9A895 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4A1E2A167D2A4C00C9A895 /* Quartz.framework */; };
 		1DB2F84F167ABE87008AC0F7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DB2F84E167ABE87008AC0F7 /* Cocoa.framework */; };
 		1DB2F862167ABE87008AC0F7 /* PIXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2F861167ABE87008AC0F7 /* PIXAppDelegate.m */; };
+		2F670611257C7E5500487B31 /* PIXApplicationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F67060F257C7E5500487B31 /* PIXApplicationExtensions.m */; };
+		2F670612257C7E5500487B31 /* PIXApplicationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F67060F257C7E5500487B31 /* PIXApplicationExtensions.m */; };
 		2FC02C402482C1DC00408258 /* MathUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 2FC02C3F2482C1DC00408258 /* MathUtils.c */; };
 		2FC02C412482C1DC00408258 /* MathUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 2FC02C3F2482C1DC00408258 /* MathUtils.c */; };
 		306DE24CB6BC26FEE2D1E93E /* Pods_Unbound.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9FE79A9C318BC57A3185BBD /* Pods_Unbound.framework */; };
@@ -79,7 +81,6 @@
 		458AD22D705A9D6A10330F8C /* leapconnected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD255978776B70A48B1EB /* leapconnected@2x.png */; };
 		458AD23310A739BF61ED5D4A /* sortbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADDA68D473D6E60B8E047 /* sortbutton@2x.png */; };
 		458AD234B9BA9F7C855DBB0B /* buttongrid_twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADD92E51BB3E57C7D63E0 /* buttongrid_twitter@2x.png */; };
-		458AD23654D5CE0FFFBCC98B /* PIXApplicationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD017B144ACEDD80831B3 /* PIXApplicationExtensions.m */; };
 		458AD2430C6D30002C10F3AF /* success-forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD38C6DAAD91B83968E87 /* success-forward.png */; };
 		458AD25F55D5F580029FC167 /* captionbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD29B2E087EB9581AA773 /* captionbutton@2x.png */; };
 		458AD26D858FE945231E9234 /* NSEventExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AD1BE1E5C7795F3963715 /* NSEventExt.swift */; };
@@ -241,7 +242,6 @@
 		458AD94E5B12B5141AD01CA2 /* buttongrid_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD7467EC0275F76CF45F1 /* buttongrid_share@2x.png */; };
 		458AD94F35E1E51A0BD5F889 /* playbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD82B85DA516339EB66E0 /* playbutton.png */; };
 		458AD951C95DD569FE639AFC /* PIXExifBGView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD8B6B7434300FCCD1795 /* PIXExifBGView.m */; };
-		458AD968C885E83BB3868BAC /* libkevlar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 458AD94A039D8149DEDA04E9 /* libkevlar.a */; };
 		458AD96BCEDB0DF1DDCB4046 /* buttongrid_email.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADC0F47F8C6A43275CD7C /* buttongrid_email.png */; };
 		458AD96F05CD9B6E9864D91F /* buttongrid_share.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD529E82DA964CECCEC23 /* buttongrid_share.png */; };
 		458AD9711323C8D1A39AFC9E /* GetPathsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD945555DF37ECBB3554F /* GetPathsOperation.m */; };
@@ -414,7 +414,7 @@
 		8CF05AF017C30A2500AB88B5 /* Licences.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8CF05AEE17C3097300AB88B5 /* Licences.txt */; };
 		8CF05AF317C33B6E00AB88B5 /* Unbound.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 1D69E646170DD7B70031AF73 /* Unbound.entitlements */; };
 		8CF05AF417C33B7300AB88B5 /* UnboundTrial.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 8C43CCF017385A9700A4395F /* UnboundTrial.entitlements */; };
-		C23F989F4F1B083861471071 /* Pods_Unbound_Unbound_Trial.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBD75E102055F7D818A00C97 /* Pods_Unbound_Unbound_Trial.framework */; };
+		97700A11C7BE61A247F97CD8 /* Pods_Unbound_Unbound_Trial.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38F77FC53C9305D97EB7307A /* Pods_Unbound_Unbound_Trial.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -441,7 +441,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1806B2D5516B5118ADD17C11 /* Pods-Unbound-Unbound Trial.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unbound-Unbound Trial.debug.xcconfig"; path = "Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial.debug.xcconfig"; sourceTree = "<group>"; };
 		1D4A1DFE167BEAF200C9A895 /* PIXViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXViewController.h; sourceTree = "<group>"; };
 		1D4A1DFF167BEAF200C9A895 /* PIXViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXViewController.m; sourceTree = "<group>"; };
 		1D4A1E07167C056C00C9A895 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -454,11 +453,13 @@
 		1DB2F853167ABE87008AC0F7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DB2F860167ABE87008AC0F7 /* PIXAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PIXAppDelegate.h; sourceTree = "<group>"; };
 		1DB2F861167ABE87008AC0F7 /* PIXAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PIXAppDelegate.m; sourceTree = "<group>"; };
+		2F67060F257C7E5500487B31 /* PIXApplicationExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIXApplicationExtensions.m; path = Kevlar/PIXApplicationExtensions.m; sourceTree = "<group>"; };
+		2F670610257C7E5500487B31 /* PIXApplicationExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIXApplicationExtensions.h; path = Kevlar/PIXApplicationExtensions.h; sourceTree = "<group>"; };
 		2FC02C3E2482BEDD00408258 /* MathUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MathUtils.h; sourceTree = "<group>"; };
 		2FC02C3F2482C1DC00408258 /* MathUtils.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = MathUtils.c; sourceTree = "<group>"; };
+		38F77FC53C9305D97EB7307A /* Pods_Unbound_Unbound_Trial.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unbound_Unbound_Trial.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		458AD00542DA420882593B32 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		458AD0064549816BE5C03B3A /* pixite-logo-wide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pixite-logo-wide.png"; sourceTree = "<group>"; };
-		458AD017B144ACEDD80831B3 /* PIXApplicationExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXApplicationExtensions.m; sourceTree = "<group>"; };
 		458AD02AF6B5C2720F53D137 /* PIXPhotoCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhotoCollectionViewController.m; sourceTree = "<group>"; };
 		458AD030F9E9A7E3B1C08718 /* buttongrid_print.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttongrid_print.png; sourceTree = "<group>"; };
 		458AD05012A12FFB65C860AA /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
@@ -601,7 +602,6 @@
 		458AD933DEAABBEEB83AD143 /* PIXCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXCollectionViewController.m; sourceTree = "<group>"; };
 		458AD945555DF37ECBB3554F /* GetPathsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetPathsOperation.m; sourceTree = "<group>"; };
 		458AD948F91477D9F2AC3597 /* MapViewAdditions.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = MapViewAdditions.css; sourceTree = "<group>"; };
-		458AD94A039D8149DEDA04E9 /* libkevlar.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libkevlar.a; sourceTree = "<group>"; };
 		458AD9609883CECD8290C8B6 /* PIXSlideshowOptonsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PIXSlideshowOptonsViewController.xib; sourceTree = "<group>"; };
 		458AD96A93428C422C3262D8 /* PIXSidebarScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSidebarScrollView.m; sourceTree = "<group>"; };
 		458AD9705B131DECC624E295 /* buttongrid_facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttongrid_facebook@2x.png"; sourceTree = "<group>"; };
@@ -611,7 +611,6 @@
 		458AD987F4E4A29479538C2A /* NSURL+DirectoryObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+DirectoryObserver.h"; sourceTree = "<group>"; };
 		458AD98F5BC554FB3D5E46D4 /* LoadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadOperation.h; sourceTree = "<group>"; };
 		458AD9A597215949892DA8C8 /* PIXCollectionViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXCollectionViewItem.h; sourceTree = "<group>"; };
-		458AD9AA88B50074A3AAF206 /* DMKevlarApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMKevlarApplication.h; sourceTree = "<group>"; };
 		458AD9BBDC50CC837C1EC1F4 /* AutoSizingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoSizingImageView.h; sourceTree = "<group>"; };
 		458AD9FAE54C35D446B3C313 /* PIXProgressWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXProgressWindowController.m; sourceTree = "<group>"; };
 		458ADA0B500A4B5ADBD8014E /* PIXCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXCollectionView.m; sourceTree = "<group>"; };
@@ -703,7 +702,6 @@
 		458ADFBAF1890806CFAFBEAA /* leapnotconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leapnotconnected.png; sourceTree = "<group>"; };
 		458ADFBE2416277109DCD2F3 /* PIXSidebarTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXSidebarTableCellView.h; sourceTree = "<group>"; };
 		458ADFBE5E3326D375EAB428 /* PIXFileParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXFileParser.m; sourceTree = "<group>"; };
-		458ADFC33AEE787BA4A70ED6 /* PIXApplicationExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXApplicationExtensions.h; sourceTree = "<group>"; };
 		458ADFC8EBDF8B44C4588481 /* ArchDirectoryObserverTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArchDirectoryObserverTypes.h; sourceTree = "<group>"; };
 		458ADFD6FF726827F4F3B793 /* RegularPhotoItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegularPhotoItem.swift; sourceTree = "<group>"; };
 		458ADFD7749564AA2947E8E3 /* SquareImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SquareImageView.m; sourceTree = "<group>"; };
@@ -713,6 +711,7 @@
 		458ADFFA74933BC5491504CE /* btn-roundrect-down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-roundrect-down@2x.png"; sourceTree = "<group>"; };
 		458ADFFDF3A1A1BF7EC453CA /* PIXPageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PIXPageViewController.xib; sourceTree = "<group>"; };
 		4F4FEEE6E8C3DAB1C0EF95A1 /* Pods-Unbound.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unbound.release.xcconfig"; path = "Target Support Files/Pods-Unbound/Pods-Unbound.release.xcconfig"; sourceTree = "<group>"; };
+		85DD4423077FA45972947A61 /* Pods-Unbound-Unbound Trial.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unbound-Unbound Trial.release.xcconfig"; path = "Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial.release.xcconfig"; sourceTree = "<group>"; };
 		8B5A3111AE5117F32775D55D /* Pods-Unbound.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unbound.debug.xcconfig"; path = "Target Support Files/Pods-Unbound/Pods-Unbound.debug.xcconfig"; sourceTree = "<group>"; };
 		8C14692E1714A5CC009ECCC5 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
 		8C28611B17308566009A0B35 /* Unbound.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unbound.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -726,8 +725,7 @@
 		8CF05AEE17C3097300AB88B5 /* Licences.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Licences.txt; sourceTree = "<group>"; };
 		8CFDF7651827123700809018 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		C9FE79A9C318BC57A3185BBD /* Pods_Unbound.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unbound.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CBD75E102055F7D818A00C97 /* Pods_Unbound_Unbound_Trial.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unbound_Unbound_Trial.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F05E7451FBA6303A9E3CC90E /* Pods-Unbound-Unbound Trial.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unbound-Unbound Trial.release.xcconfig"; path = "Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial.release.xcconfig"; sourceTree = "<group>"; };
+		F52076581B6BC5F6794BBD97 /* Pods-Unbound-Unbound Trial.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unbound-Unbound Trial.debug.xcconfig"; path = "Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -761,8 +759,7 @@
 				8C2860AD17308566009A0B35 /* Quartz.framework in Frameworks */,
 				8C2860AE17308566009A0B35 /* QuartzCore.framework in Frameworks */,
 				8C2860AF17308566009A0B35 /* Cocoa.framework in Frameworks */,
-				458AD968C885E83BB3868BAC /* libkevlar.a in Frameworks */,
-				C23F989F4F1B083861471071 /* Pods_Unbound_Unbound_Trial.framework in Frameworks */,
+				97700A11C7BE61A247F97CD8 /* Pods_Unbound_Unbound_Trial.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -844,7 +841,7 @@
 				1DB2F84E167ABE87008AC0F7 /* Cocoa.framework */,
 				1DB2F850167ABE87008AC0F7 /* Other Frameworks */,
 				C9FE79A9C318BC57A3185BBD /* Pods_Unbound.framework */,
-				CBD75E102055F7D818A00C97 /* Pods_Unbound_Unbound_Trial.framework */,
+				38F77FC53C9305D97EB7307A /* Pods_Unbound_Unbound_Trial.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -893,8 +890,8 @@
 			children = (
 				8B5A3111AE5117F32775D55D /* Pods-Unbound.debug.xcconfig */,
 				4F4FEEE6E8C3DAB1C0EF95A1 /* Pods-Unbound.release.xcconfig */,
-				1806B2D5516B5118ADD17C11 /* Pods-Unbound-Unbound Trial.debug.xcconfig */,
-				F05E7451FBA6303A9E3CC90E /* Pods-Unbound-Unbound Trial.release.xcconfig */,
+				F52076581B6BC5F6794BBD97 /* Pods-Unbound-Unbound Trial.debug.xcconfig */,
+				85DD4423077FA45972947A61 /* Pods-Unbound-Unbound Trial.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1025,17 +1022,6 @@
 				458ADD572EF5936984DA3D62 /* Common */,
 			);
 			path = Windows;
-			sourceTree = "<group>";
-		};
-		458AD53A2EC96B549DB6C3B5 /* Kevlar */ = {
-			isa = PBXGroup;
-			children = (
-				458AD94A039D8149DEDA04E9 /* libkevlar.a */,
-				458AD9AA88B50074A3AAF206 /* DMKevlarApplication.h */,
-				458AD017B144ACEDD80831B3 /* PIXApplicationExtensions.m */,
-				458ADFC33AEE787BA4A70ED6 /* PIXApplicationExtensions.h */,
-			);
-			path = Kevlar;
 			sourceTree = "<group>";
 		};
 		458AD64D8715ED21F286E048 /* Main */ = {
@@ -1267,6 +1253,8 @@
 		458ADE7E87D0E60CE797672E /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				2F670610257C7E5500487B31 /* PIXApplicationExtensions.h */,
+				2F67060F257C7E5500487B31 /* PIXApplicationExtensions.m */,
 				458ADA4FAB1BF804741362BA /* PIXHUDMessageController.xib */,
 				458AD0D14948F58C652A428E /* PIXPhotoUtils.m */,
 				458ADD8B6840D120CCFB7EC8 /* PIXSeperatedSpinnerView.h */,
@@ -1279,7 +1267,6 @@
 				458ADE4D110629F393847F8F /* PIXThumbnailLoadingDelegate.h */,
 				458AD3E69A89DECC011321D4 /* PIXDefines.h */,
 				458AD1CE63CE6EE36850866D /* ToolbarButton.swift */,
-				458AD53A2EC96B549DB6C3B5 /* Kevlar */,
 				458AD1BE1E5C7795F3963715 /* NSEventExt.swift */,
 				458ADCC7C3ABC3B0057DB9DE /* SystemAppHelper.swift */,
 				458AD60CDCA59A88F430E419 /* UserDefaults.swift */,
@@ -1377,14 +1364,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8C28611817308566009A0B35 /* Build configuration list for PBXNativeTarget "Unbound Trial" */;
 			buildPhases = (
-				2A0C701B7F98A2E9022DBD37 /* [CP] Check Pods Manifest.lock */,
+				78DF033F809008C6B9B5C01B /* [CP] Check Pods Manifest.lock */,
 				8C28605A17308566009A0B35 /* Sources */,
 				8C2860A617308566009A0B35 /* Copy Frameworks */,
 				8C2860A917308566009A0B35 /* Frameworks */,
 				8C2860B317308566009A0B35 /* Resources */,
-				043D2EB22053A6DC00CC7A47 /* ShellScript */,
-				797931C68F9898C23BB50DF9 /* [CP] Embed Pods Frameworks */,
-				DEC1F4530E6E3EB7CA3E521B /* [CP] Copy Pods Resources */,
+				996D63A47B749994E66D20C1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1696,20 +1681,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		043D2EB22053A6DC00CC7A47 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" 2d7dec3d45e8c12d3d51e10f742ccd405d097f97 00c88cbd24f188ff3b9d936e5cd215aa8b2e35b3062af111d5bcf647e7ba4ea6";
-		};
-		2A0C701B7F98A2E9022DBD37 /* [CP] Check Pods Manifest.lock */ = {
+		78DF033F809008C6B9B5C01B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1731,7 +1703,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		797931C68F9898C23BB50DF9 /* [CP] Embed Pods Frameworks */ = {
+		996D63A47B749994E66D20C1 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1739,12 +1711,10 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/MASPreferences/MASPreferences.framework",
-				"${PODS_ROOT}/DevMateKit/DevMateKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MASPreferences.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DevMateKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1789,24 +1759,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DEC1F4530E6E3EB7CA3E521B /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial-resources.sh",
-				"${PODS_ROOT}/DevMateKit/DevMateKit.framework",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/DevMateKit.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1881,7 +1833,6 @@
 				458AD7817E363896733B8673 /* NavigationController.swift in Sources */,
 				458ADA20C3E7369A700A73FA /* AdaptiveToolbarSpace.swift in Sources */,
 				458AD512E47B0FD2D69945D0 /* ToolbarButton.swift in Sources */,
-				458AD23654D5CE0FFFBCC98B /* PIXApplicationExtensions.m in Sources */,
 				458ADD1FE1B0094D20A586B3 /* ThemedWindow.swift in Sources */,
 				458AD902BB7B5E83100EB491 /* MainWindowController.swift in Sources */,
 				458ADBF01CCAA09C34846927 /* AppearancePrefsViewController.swift in Sources */,
@@ -1891,6 +1842,7 @@
 				458ADC62CD570F3AA553DB7B /* PhotoStyle.swift in Sources */,
 				458AD04D0370ABD1866F64DC /* SimplePhotoItem.swift in Sources */,
 				458ADAD1E08FBF403859C69D /* SimplePhotoItemView.swift in Sources */,
+				2F670611257C7E5500487B31 /* PIXApplicationExtensions.m in Sources */,
 				458ADF43DD27366FB6912ECA /* RegularPhotoItem.swift in Sources */,
 				458AD320CABE3975F0629D54 /* PIXPhotoCollectionViewItem.m in Sources */,
 				458AD533FDA823BF3DD26577 /* PhotoItem.swift in Sources */,
@@ -1981,6 +1933,7 @@
 				458AD0D299993914E58C7A81 /* PhotoStyle.swift in Sources */,
 				458AD16456E42F03AB822093 /* SimplePhotoItem.swift in Sources */,
 				458AD8CED4DEB1EA34F8932D /* SimplePhotoItemView.swift in Sources */,
+				2F670612257C7E5500487B31 /* PIXApplicationExtensions.m in Sources */,
 				458AD55B31E9A091B5149977 /* RegularPhotoItem.swift in Sources */,
 				458AD5468DCA1AFFF22C29D2 /* PIXPhotoCollectionViewItem.m in Sources */,
 				458AD06342F0808E31A333AB /* PhotoItem.swift in Sources */,
@@ -2222,9 +2175,9 @@
 		};
 		8C28611917308566009A0B35 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1806B2D5516B5118ADD17C11 /* Pods-Unbound-Unbound Trial.debug.xcconfig */;
+			baseConfigurationReference = F52076581B6BC5F6794BBD97 /* Pods-Unbound-Unbound Trial.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = x86_64;
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_MODULES = YES;
@@ -2234,6 +2187,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = R5T2HYENEJ;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2253,20 +2207,14 @@
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
 					"\"$(SRCROOT)/UnboundApp/MapKit.framework\"/**",
 					"$(PROJECT_DIR)/UnboundApp/Leap",
-					"\"${PROJECT_DIR}/UnboundApp/Helpers/Kevlar\"/**",
 				);
+				MARKETING_VERSION = 1.3.4;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-l\"c++\"",
 					"-l\"z\"",
-					"-framework",
-					"\"Crashlytics\"",
-					"-framework",
-					"\"DevMateKit\"",
-					"-framework",
-					"\"Fabric\"",
 					"-framework",
 					"\"Security\"",
 					"-framework",
@@ -2288,9 +2236,9 @@
 		};
 		8C28611A17308566009A0B35 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F05E7451FBA6303A9E3CC90E /* Pods-Unbound-Unbound Trial.release.xcconfig */;
+			baseConfigurationReference = 85DD4423077FA45972947A61 /* Pods-Unbound-Unbound Trial.release.xcconfig */;
 			buildSettings = {
-				ARCHS = x86_64;
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_MODULES = YES;
@@ -2300,6 +2248,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = R5T2HYENEJ;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2319,20 +2268,14 @@
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
 					"\"$(SRCROOT)/UnboundApp/MapKit.framework\"/**",
 					"$(PROJECT_DIR)/UnboundApp/Leap",
-					"\"${PROJECT_DIR}/UnboundApp/Helpers/Kevlar\"/**",
 				);
+				MARKETING_VERSION = 1.3.4;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-l\"c++\"",
 					"-l\"z\"",
-					"-framework",
-					"\"Crashlytics\"",
-					"-framework",
-					"\"DevMateKit\"",
-					"-framework",
-					"\"Fabric\"",
 					"-framework",
 					"\"Security\"",
 					"-framework",

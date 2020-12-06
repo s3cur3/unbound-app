@@ -6,7 +6,5 @@ target 'Unbound' do
   pod 'MASPreferences'
 
   target 'Unbound Trial' do
-    pod 'DevMateKit', '~>1.9'
   end
-  
 end
