@@ -24,6 +24,7 @@
 @property (strong) IBOutlet NSTextField * gridViewTitle;
 @property (strong) IBOutlet NSScrollView * scrollView;
 @property (strong) IBOutlet NSView * layerBackedView;
+@property (strong) IBOutlet NSButton * macAppStoreBtn;
 
 @property (strong) IBOutlet NSView * centerStatusView;
 @property (strong) IBOutlet NSTextField * centerStatusViewTextField;
@@ -33,6 +34,7 @@
 
 - (NSMenu *)menuForObject:(id)object;
 
+- (IBAction)macAppStoreButtonPressed:(id)sender;
 - (IBAction)importPhotosButtonPressed:(id)sender;
 - (IBAction)chooseFolderButtonPressed:(id)sender;
 

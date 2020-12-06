@@ -113,7 +113,12 @@
     
 	NSWindow * window = [[[PIXAppDelegate sharedAppDelegate] mainWindowController] window];
     [window setTitle:@"Unbound"];
-	[window setMinSize:NSMakeSize(720, 480)];
+    #if TRIAL
+        // Gotta have enough room for the big "go to Mac App Store" button next to the centered title
+        [window setMinSize:NSMakeSize(855, 480)];
+	#else
+        [window setMinSize:NSMakeSize(720, 480)];
+	#endif
 
     self.navigationViewController.leftToolbarItems = @[self.importItem];
     self.navigationViewController.rightToolbarItems = @[self.self.neuAlbumButton, self.sortButton, self.searchBar];
@@ -651,7 +656,7 @@
 
 		if(TRIAL && (self.albums.count == TRIAL_MAX_ALBUMS || numPhotos == TRIAL_MAX_PHOTOS))
 		{
-			self.gridViewTitle.stringValue = [NSString stringWithFormat:@"Trial limited to %d albums & %d photos. Grab the full version from the Mac App Store!", TRIAL_MAX_ALBUMS, TRIAL_MAX_PHOTOS];
+			self.gridViewTitle.stringValue = [NSString stringWithFormat:@"Trial limited to %d albums & %d photos.", TRIAL_MAX_ALBUMS, TRIAL_MAX_PHOTOS];
 		}
         else
 		{
