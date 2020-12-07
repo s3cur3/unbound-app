@@ -1410,9 +1410,9 @@
 						};
 					};
 					8C28605917308566009A0B35 = {
-						DevelopmentTeam = R5T2HYENEJ;
+						DevelopmentTeam = GCQM9R5G83;
 						LastSwiftMigration = 1220;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Maps.Mac = {
 								enabled = 1;
@@ -2190,11 +2190,11 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
 				CODE_SIGN_ENTITLEMENTS = UnboundTrial.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
-				CODE_SIGN_STYLE = Manual;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 15;
-				DEVELOPMENT_TEAM = R5T2HYENEJ;
+				DEVELOPMENT_TEAM = GCQM9R5G83;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2215,7 +2215,7 @@
 					"$(PROJECT_DIR)/UnboundApp/Leap",
 				);
 				MARKETING_VERSION = 1.3.4;
-				OTHER_CODE_SIGN_FLAGS = "--deep";
+				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2228,10 +2228,10 @@
 					"-framework",
 					IOKit,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.analog-ocean.Unbound";
+				PRODUCT_BUNDLE_IDENTIFIER = com.pixite.UnboundForMacTrial;
 				PRODUCT_NAME = Unbound;
 				PROVISIONING_PROFILE = "ff2f58fa-fdea-4a3f-911c-e1c10bead6fb";
-				PROVISIONING_PROFILE_SPECIFIER = "Unbound Developer ID";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -2251,11 +2251,11 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
 				CODE_SIGN_ENTITLEMENTS = UnboundTrial.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
-				CODE_SIGN_STYLE = Manual;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 15;
-				DEVELOPMENT_TEAM = R5T2HYENEJ;
+				DEVELOPMENT_TEAM = GCQM9R5G83;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2276,7 +2276,7 @@
 					"$(PROJECT_DIR)/UnboundApp/Leap",
 				);
 				MARKETING_VERSION = 1.3.4;
-				OTHER_CODE_SIGN_FLAGS = "--deep";
+				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2289,10 +2289,10 @@
 					"-framework",
 					IOKit,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.analog-ocean.Unbound";
+				PRODUCT_BUNDLE_IDENTIFIER = com.pixite.UnboundForMacTrial;
 				PRODUCT_NAME = Unbound;
 				PROVISIONING_PROFILE = "ff2f58fa-fdea-4a3f-911c-e1c10bead6fb";
-				PROVISIONING_PROFILE_SPECIFIER = "Unbound Developer ID";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
