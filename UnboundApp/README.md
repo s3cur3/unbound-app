@@ -24,12 +24,14 @@
 
 1. Open the Organizer window and select the Mac App Store build you did above
 1. Click `Distribute App`, and choose the `Developer ID` distribution method.
-1. Choose the `Ryan Harter` development team.
+1. Have it automatically manage signing
+1. Choose to upload to Apple (this is necessary for notarization)
+1. Leave the window open for as long as it takes (usually a couple minutes)
+1. Once notarized, you'll be able to select the Trial build in the Organizer, and the lower right corner will have a button to Export Notarized App. Do that.
+1. Verify the exported app looks good: `$ spctl -a -v "Unbound Trial.app"`
+    - Ensure it says both "accepted" and "source=Notarized Developer ID"—not *just* "source=Developer ID"
 1. Zip the resulting `.app` file using ditto.
     ```
     ditto -ck --rsrc --sequesterRsrc --keepParent input.app output.zip
     ```
-1. Right click the archived file in organizer and show in finder.
-1. Right click the xcarchive file and Show Package Contents.
-1. Zip the dSYM file.
-1. Upload the generated resources to [Paddle](https://vendors.paddle.com/release/519430#!) and [DevMate](https://dashboard.devmate.com/#3880/2/distribution/add)
+1. Upload to the web
