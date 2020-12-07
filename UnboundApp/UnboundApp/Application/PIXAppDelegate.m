@@ -245,7 +245,7 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
 }
 
 - (IBAction)purchaseOnlinePressed:(id)sender {
-    [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:@"https://itunes.apple.com/us/app/unbound/id690375005?ls=1&mt=12"]];
+    [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:@"https://itunes.apple.com/us/app/unbound/id690375005?ls=1&mt=12&uo=demo"]];
 }
 
 - (IBAction)showHomepagePressed:(id)sender {
