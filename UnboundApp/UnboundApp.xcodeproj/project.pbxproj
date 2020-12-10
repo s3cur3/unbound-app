@@ -17,6 +17,7 @@
 		1DB2F862167ABE87008AC0F7 /* PIXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2F861167ABE87008AC0F7 /* PIXAppDelegate.m */; };
 		2F670611257C7E5500487B31 /* PIXApplicationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F67060F257C7E5500487B31 /* PIXApplicationExtensions.m */; };
 		2F670612257C7E5500487B31 /* PIXApplicationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F67060F257C7E5500487B31 /* PIXApplicationExtensions.m */; };
+		2F6706332582B7E100487B31 /* PIXAboutWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD849574325C47243A590 /* PIXAboutWindowController.xib */; };
 		2FC02C402482C1DC00408258 /* MathUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 2FC02C3F2482C1DC00408258 /* MathUtils.c */; };
 		2FC02C412482C1DC00408258 /* MathUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 2FC02C3F2482C1DC00408258 /* MathUtils.c */; };
 		306DE24CB6BC26FEE2D1E93E /* Pods_Unbound.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9FE79A9C318BC57A3185BBD /* Pods_Unbound.framework */; };
@@ -271,7 +272,6 @@
 		458ADA71AE025E00E7A7B142 /* leapnotconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADFBAF1890806CFAFBEAA /* leapnotconnected.png */; };
 		458ADA81C5F11CD8361C5A03 /* fullnophoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD65C6D07F72EACA1A512 /* fullnophoto.png */; };
 		458ADA96B2F61A479E470E29 /* success.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADD9D4028408F39A03381 /* success.png */; };
-		458ADA9AA2691091C1C57221 /* UnboundTrial-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 458AD62424AE111B84796654 /* UnboundTrial-Info.plist */; };
 		458ADAADADA676FBF9E8D20C /* buttongrid_email@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD1A07A96C822C47C889F /* buttongrid_email@2x.png */; };
 		458ADAB26E017AEA4454B8CD /* preferences_light_theme.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD0A0859106907387A481 /* preferences_light_theme.png */; };
 		458ADAB7419CBF7965756F7D /* PIXSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADF4BB78C718EDD51FB71 /* PIXSplitViewController.m */; };
@@ -1535,7 +1535,6 @@
 				458AD4F518E65A154FC420A7 /* buttongrid_emaillink@2x.png in Resources */,
 				458ADBB69FE914117DFCF4D3 /* nophoto.png in Resources */,
 				458AD88E932F96F225196166 /* success-backward@2x.png in Resources */,
-				458ADA9AA2691091C1C57221 /* UnboundTrial-Info.plist in Resources */,
 				458AD66C51FB2F448F1A25D9 /* Images.xcassets in Resources */,
 				458AD050430F1D615216CB9B /* PIXAlbumCollectionViewController.xib in Resources */,
 				458AD2DBAA0FEE2AD3422BA4 /* PIXPhotoCollectionViewController.xib in Resources */,
@@ -1569,6 +1568,7 @@
 				8C4313521828399600DB0053 /* Images.xcassets in Resources */,
 				8CF05AF017C30A2500AB88B5 /* Licences.txt in Resources */,
 				8CF05AF417C33B7300AB88B5 /* UnboundTrial.entitlements in Resources */,
+				2F6706332582B7E100487B31 /* PIXAboutWindowController.xib in Resources */,
 				458AD5E8647725B1B25A9CD4 /* PIXInfoWindowController.xib in Resources */,
 				458AD9FE390F1EC2B4975EAF /* PIXProgressWindowController.xib in Resources */,
 				458AD9BF57E6F189E9A67E69 /* MainWindowController.xib in Resources */,
