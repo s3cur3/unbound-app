@@ -214,7 +214,7 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
 
 - (IBAction)helpPressed:(id)sender
 {
-    NSURL * url = [NSURL URLWithString:@"mailto:info@unboundformac.com?subject=Unbound%20for%20Mac%20Support"];
+    NSURL * url = [NSURL URLWithString:@"mailto:info@unboundapp.com?subject=Unbound%20for%20Mac%20Support"];
     [[NSWorkspace sharedWorkspace] openURL:url];
 }
 
