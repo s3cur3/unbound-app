@@ -240,7 +240,6 @@
 		458AD93B03057DA3211E41AD /* graydot.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADAC134120BEDE8D72B34 /* graydot.png */; };
 		458AD93CA9FB9A1A858417C7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 458ADEA7DE90402F962F3B37 /* Localizable.strings */; };
 		458AD941C23E955E0B143ECE /* btn-roundrect-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADC5D5B4D6D96C8D749B6 /* btn-roundrect-down.png */; };
-		458AD94620389F78DD2E8278 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 458AD3C60928CB6287ECDBFA /* Credits.rtf */; };
 		458AD94E5B12B5141AD01CA2 /* buttongrid_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD7467EC0275F76CF45F1 /* buttongrid_share@2x.png */; };
 		458AD94F35E1E51A0BD5F889 /* playbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD82B85DA516339EB66E0 /* playbutton.png */; };
 		458AD951C95DD569FE639AFC /* PIXExifBGView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD8B6B7434300FCCD1795 /* PIXExifBGView.m */; };
@@ -355,7 +354,6 @@
 		458ADE5749D884460DE19968 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458ADCC737C7FC004D5D2434 /* PreferencesWindowController.swift */; };
 		458ADE576B0792E000FC18FF /* buttongrid_emaillink@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD6D0BD8F0AEAEE740273 /* buttongrid_emaillink@2x.png */; };
 		458ADE5CA146552A5D10F9A5 /* buttongrid_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD7467EC0275F76CF45F1 /* buttongrid_share@2x.png */; };
-		458ADE6329F3A1D8057BDB62 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 458AD3C60928CB6287ECDBFA /* Credits.rtf */; };
 		458ADE8B5A343BB864F8EA95 /* PIXHUDMessageController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADA4FAB1BF804741362BA /* PIXHUDMessageController.xib */; };
 		458ADE9A6CF4AF9D385653A7 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADC9C3AE71F62D3DAE869 /* pause.png */; };
 		458ADE9F7212717EA72315DC /* captionbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD872EE3DF9B6B59D8D96 /* captionbutton.png */; };
@@ -526,7 +524,6 @@
 		458AD414426593B36C72CC6C /* PIXSidebarClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXSidebarClipView.h; sourceTree = "<group>"; };
 		458AD432DBC6664426ADB328 /* PIXSlideshowOptonsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSlideshowOptonsViewController.m; sourceTree = "<group>"; };
 		458AD45CE55653295C7278F1 /* PIXPageHUDWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPageHUDWindow.m; sourceTree = "<group>"; };
-		458AD47FF8E17CB6A41CFC92 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = Credits.rtf; sourceTree = "<group>"; };
 		458AD4807B288ED380565E98 /* PIXSidebarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXSidebarViewController.h; sourceTree = "<group>"; };
 		458AD4AA150A087CF7C81E30 /* AutoSizingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoSizingImageView.m; sourceTree = "<group>"; };
 		458AD4BECFE86583CCD5346D /* PIXVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXVideoViewController.h; sourceTree = "<group>"; };
@@ -1107,7 +1104,6 @@
 		458ADCDB7A0F7D341274B3F4 /* en.lproj */ = {
 			isa = PBXGroup;
 			children = (
-				458AD3C60928CB6287ECDBFA /* Credits.rtf */,
 				458ADD65822C627C42A00876 /* MainMenu.xib */,
 				458AD37DC4662B5210A16790 /* InfoPlist.strings */,
 			);
@@ -1545,7 +1541,6 @@
 				458AD55AC030E79418335410 /* PIXPageViewController.xib in Resources */,
 				458AD4249683A4D61858776F /* PIXSlideshowOptonsViewController.xib in Resources */,
 				458ADBEC220EF1342C4B10D2 /* videoview.xib in Resources */,
-				458ADE6329F3A1D8057BDB62 /* Credits.rtf in Resources */,
 				458AD70293CA8D335694E004 /* MainMenu.xib in Resources */,
 				458AD0A34157691A6BB33AAD /* InfoPlist.strings in Resources */,
 				458AD180BC115721CB9BC296 /* PIXAlbumCollectionViewItem.xib in Resources */,
@@ -1660,7 +1655,6 @@
 				458ADA2D53883C40CF3C0B9F /* PIXPageViewController.xib in Resources */,
 				458AD163E765F758C976E4B7 /* PIXSlideshowOptonsViewController.xib in Resources */,
 				458ADF2C8FAB7DB3CF7321A0 /* videoview.xib in Resources */,
-				458AD94620389F78DD2E8278 /* Credits.rtf in Resources */,
 				458AD5B0D0B7827AC88BEAF2 /* MainMenu.xib in Resources */,
 				458AD55533B629BB45DCB1BD /* InfoPlist.strings in Resources */,
 				458AD892258BE9F7BDC6FE52 /* PIXAlbumCollectionViewItem.xib in Resources */,
@@ -1969,14 +1963,6 @@
 				458ADF7B95E4A7DC688990D4 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		458AD3C60928CB6287ECDBFA /* Credits.rtf */ = {
-			isa = PBXVariantGroup;
-			children = (
-				458AD47FF8E17CB6A41CFC92 /* en */,
-			);
-			name = Credits.rtf;
 			sourceTree = "<group>";
 		};
 		458ADD65822C627C42A00876 /* MainMenu.xib */ = {
