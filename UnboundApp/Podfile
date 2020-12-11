@@ -4,6 +4,7 @@ use_frameworks!
 
 target 'Unbound' do
   pod 'MASPreferences'
+  pod 'SwiftFormat/CLI'
 
   target 'Unbound Trial' do
   end

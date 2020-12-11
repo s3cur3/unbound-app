@@ -6,6 +6,6 @@
 import Foundation
 
 @objc enum PhotoStyle: Int, RawRepresentable {
-  case compact
-  case regular
+    case compact
+    case regular
 }

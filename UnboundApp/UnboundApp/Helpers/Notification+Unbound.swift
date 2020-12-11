@@ -6,5 +6,5 @@
 import Foundation
 
 extension Notification.Name {
-  static let photoThumbDidChange = Notification.Name("PhotoThumbDidChangeNotification")
+    static let photoThumbDidChange = Notification.Name("PhotoThumbDidChangeNotification")
 }

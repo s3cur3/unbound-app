@@ -3,17 +3,16 @@
 // Copyright (c) 2016 Pixite Apps LLC. All rights reserved.
 //
 
-import Foundation
 import AppKit
+import Foundation
 
 class PIXAboutWindowController: NSWindowController {
-
-    @IBOutlet weak var icon: NSImageView!
-    @IBOutlet weak var title: NSTextField!
-    @IBOutlet weak var version: NSTextField!
-    @IBOutlet weak var copyright: NSTextField!
-    @IBOutlet weak var link: NSButton!
-    @IBOutlet weak var logo: NSImageView!
+    @IBOutlet var icon: NSImageView!
+    @IBOutlet var title: NSTextField!
+    @IBOutlet var version: NSTextField!
+    @IBOutlet var copyright: NSTextField!
+    @IBOutlet var link: NSButton!
+    @IBOutlet var logo: NSImageView!
 
     fileprivate var url: String = ""
 
@@ -39,16 +38,15 @@ class PIXAboutWindowController: NSWindowController {
         link.title = url
     }
 
-    @IBAction func onAppLinkClicked(_ sender: AnyObject) {
+    @IBAction func onAppLinkClicked(_: AnyObject) {
         NSWorkspace.shared.open(URL(string: url)!)
     }
 
     override func keyDown(with theEvent: NSEvent) {
-        if theEvent.modifierFlags.contains(NSEvent.ModifierFlags.command) && theEvent.charactersIgnoringModifiers! == "w" {
-            self.window?.close()
+        if theEvent.modifierFlags.contains(NSEvent.ModifierFlags.command), theEvent.charactersIgnoringModifiers! == "w" {
+            window?.close()
             return
         }
         super.keyUp(with: theEvent)
     }
-
 }

@@ -6,12 +6,12 @@
 import Foundation
 
 extension UserDefaults {
-  subscript(key: String) -> Any? {
-    get {
-      return self.object(forKey: key)
+    subscript(key: String) -> Any? {
+        get {
+            object(forKey: key)
+        }
+        set(newValue) {
+            set(newValue, forKey: key)
+        }
     }
-    set(newValue) {
-      self.set(newValue, forKey: key)
-    }
-  }
 }

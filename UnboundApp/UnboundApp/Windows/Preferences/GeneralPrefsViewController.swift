@@ -3,113 +3,111 @@
 // Copyright (c) 2018 Pixite Apps LLC. All rights reserved.
 //
 
-import Foundation
 import CoreServices
+import Foundation
 
 class GeneralPrefsViewController: NSViewController, MASPreferencesViewController {
+    private var defaults = UserDefaults.standard
 
-  private var defaults = UserDefaults.standard
+    @IBOutlet var dbFolderButton: NSButton?
+    @IBOutlet var folderDisplay: NSPathControl?
+    @IBOutlet var workingSpinner: NSProgressIndicator?
+    @IBOutlet var defaultEditorButton: NSPopUpButton?
 
-  @IBOutlet weak var dbFolderButton: NSButton?
-  @IBOutlet weak var folderDisplay: NSPathControl?
-  @IBOutlet weak var workingSpinner: NSProgressIndicator?
-  @IBOutlet weak var defaultEditorButton: NSPopUpButton?
+    private var editorApps: [AppInfo]?
 
-  private var editorApps: [AppInfo]?
+    // MARK: - MASPreferencesViewController
 
-  //MARK - MASPreferencesViewController
-  private(set) var viewIdentifier: String = "General"
-  private(set) var toolbarItemLabel: String? = NSLocalizedString("preferences.general.title", comment: "General")
-  private(set) var toolbarItemImage: NSImage? = NSImage(named: NSImage.preferencesGeneralName)
+    private(set) var viewIdentifier: String = "General"
+    private(set) var toolbarItemLabel: String? = NSLocalizedString("preferences.general.title", comment: "General")
+    private(set) var toolbarItemImage: NSImage? = NSImage(named: NSImage.preferencesGeneralName)
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    updateFolderField()
-    updateEditors()
-  }
-
-  private func updateFolderField() {
-    let urls = PIXFileParser.shared().observedDirectories
-    if (urls == nil || urls!.isEmpty) {
-      self.folderDisplay?.url = nil
-    } else {
-      self.folderDisplay?.url = urls![0]
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        updateFolderField()
+        updateEditors()
     }
-  }
 
-  private func updateEditors() {
-    guard let button = self.defaultEditorButton,
-          let imageUrl = Bundle.main.pathForImageResource("temp")
+    private func updateFolderField() {
+        let urls = PIXFileParser.shared().observedDirectories
+        if urls == nil || urls!.isEmpty {
+            folderDisplay?.url = nil
+        } else {
+            folderDisplay?.url = urls![0]
+        }
+    }
+
+    private func updateEditors() {
+        guard let button = defaultEditorButton,
+              let imageUrl = Bundle.main.pathForImageResource("temp")
         else {
-      return
-    }
-
-    self.editorApps = SystemAppHelper.editorAppsForFileUrl(path: URL(fileURLWithPath: imageUrl))
-        .filter { info in
-          info.name != nil
-        }
-        .sorted { first, second in
-          first.isSystemDefault
+            return
         }
 
-    button.menu?.removeAllItems()
+        editorApps = SystemAppHelper.editorAppsForFileUrl(path: URL(fileURLWithPath: imageUrl))
+            .filter { info in
+                info.name != nil
+            }
+            .sorted { first, _ in
+                first.isSystemDefault
+            }
 
-    let defaultPath: String? = defaults[prefDefaultEditorPath] as? String
-    var names = [String]()
-    for (i, info) in self.editorApps!.enumerated() {
-      var name: String
-      if names.contains(info.name!) {
-        guard let version = info.version else {
-          return
+        button.menu?.removeAllItems()
+
+        let defaultPath: String? = defaults[prefDefaultEditorPath] as? String
+        var names = [String]()
+        for (i, info) in editorApps!.enumerated() {
+            var name: String
+            if names.contains(info.name!) {
+                guard let version = info.version else {
+                    return
+                }
+                name = "\(info.name!) (\(version))"
+            } else {
+                name = info.name!
+            }
+
+            if info.isSystemDefault {
+                name = "\(name) (System Default)"
+            }
+
+            let item = NSMenuItem(title: name, action: nil, keyEquivalent: "")
+            item.tag = i
+            button.menu?.addItem(item)
+            names.append(info.name!)
+
+            if (defaultPath == nil && info.isSystemDefault) || info.path.absoluteString == defaultPath {
+                button.selectItem(withTitle: name)
+            }
         }
-        name = "\(info.name!) (\(version))"
-      } else {
-        name = info.name!
-      }
 
-      if info.isSystemDefault {
-        name = "\(name) (System Default)"
-      }
-
-      let item = NSMenuItem(title: name, action: nil, keyEquivalent: "")
-      item.tag = i
-      button.menu?.addItem(item)
-      names.append(info.name!)
-
-      if (defaultPath == nil && info.isSystemDefault) || info.path.absoluteString == defaultPath {
-        button.selectItem(withTitle: name)
-      }
+        if editorApps!.count > 2 {
+            button.menu?.insertItem(NSMenuItem.separator(), at: 1)
+        }
     }
 
-    if self.editorApps!.count > 2 {
-      button.menu?.insertItem(NSMenuItem.separator(), at: 1)
+    // MARK: - IBActions
+
+    @IBAction func chooseFolder(sender _: NSButton) {
+        PIXFileParser.shared().userChooseFolderDialog()
+        updateFolderField()
     }
 
-  }
+    @IBAction func reloadFiles(sender _: NSButton) {
+        PIXFileParser.shared().rescanFiles()
+    }
 
-  //MARK - IBActions
-
-  @IBAction func chooseFolder(sender: NSButton) {
-    PIXFileParser.shared().userChooseFolderDialog()
-    updateFolderField()
-  }
-
-  @IBAction func reloadFiles(sender: NSButton) {
-    PIXFileParser.shared().rescanFiles()
-  }
-
-  @IBAction func setDefaultEditor(sender: NSPopUpButton) {
-    guard let index = sender.selectedItem?.tag,
-          let item = self.editorApps?[index]
+    @IBAction func setDefaultEditor(sender: NSPopUpButton) {
+        guard let index = sender.selectedItem?.tag,
+              let item = editorApps?[index]
         else { return }
 
-    defaults[prefDefaultEditorPath] = item.path.absoluteString
-    defaults[prefDefaultEditorName] = item.name
-  }
+        defaults[prefDefaultEditorPath] = item.path.absoluteString
+        defaults[prefDefaultEditorName] = item.name
+    }
 
-  @IBAction func resetAlerts(sender: NSButton) {
-    defaults[kPrefSupressDeleteWarning] = false
-    defaults[kPrefSupressAlbumDeleteWarning] = false
-  }
-
+    @IBAction func resetAlerts(sender _: NSButton) {
+        defaults[kPrefSupressDeleteWarning] = false
+        defaults[kPrefSupressAlbumDeleteWarning] = false
+    }
 }

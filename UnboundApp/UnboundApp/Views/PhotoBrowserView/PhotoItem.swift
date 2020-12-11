@@ -6,6 +6,6 @@
 import Foundation
 
 @objc protocol PhotoItem {
-  var photo: PIXPhoto? { get set }
-  var view: NSView { get }
+    var photo: PIXPhoto? { get set }
+    var view: NSView { get }
 }

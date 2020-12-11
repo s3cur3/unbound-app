@@ -1,4 +1,4 @@
-# Dev setup
+## Dev setup
 
 1. Install Cocoapods; on Mojave, `sudo gem install cocoapods` was giving me a Ruby interpreter error any time I tried to actually use `pod`, so I had to:
     1. `sudo gem install -n /usr/local/bin ruby`
@@ -9,7 +9,25 @@
 5. Manage Schemes and create a new scheme for Unbound and Unbound Trial (this may already be done?)
 6. Build & run Unbound
 
-# Releasing via The Mac App Store
+### Using Swift Format
+
+We format our Swift code using SwiftFormat, the proposed-for-standardization formatter from Dave Abrahams et al.
+
+CocoaPods installs it for the sake of providing warnings, but you'll probably want it installed as a command line tool as well for the sake of auto-fixing stuff.
+
+Install it like this: `$ brew install swiftformat`
+
+Use it like this:
+
+    cd UnboundApp
+    swiftformat .
+
+Additionally, you may want to install the Xcode editor extension: `$ brew install swiftformat-for-xcode`
+
+This will install SwiftFormat for Xcode in your Applications folder. Double-click the app to launch it, and then follow the on-screen instructions. Once you have launched the app and restarted Xcode, you'll find a SwiftFormat option under Xcode's Editor menu.
+ 
+
+## Releasing via The Mac App Store
 1. Bump the Version and Build fields in Project -> Unbound -> General (these correspond to `Build version` and `Short Build Version String` in the `/UnboundApp/Supporting Files/UnboundApp-Info.plist` file)
 1. Using Xcode, build and archive the `Unbound Trial` target.
 1. Open the Organizer window, and select the created archive.
@@ -20,7 +38,7 @@
 1. Automatically manage signing, Next
 1. If it gives you an error about a missing signing cert, add it (currently in Dropbox/Conversion Insights/Apple Signing Certificate.p12, password is in 1Password under "Conversion Insights signing certificate")
 
-# Releasing via Paddle
+## Releasing via Paddle
 
 1. Open the Organizer window and select the Mac App Store build you did above
 1. Click `Distribute App`, and choose the `Developer ID` distribution method.

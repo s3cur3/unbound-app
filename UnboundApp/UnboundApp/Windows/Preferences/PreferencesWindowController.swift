@@ -6,22 +6,21 @@
 import Foundation
 
 @objc class PreferencesWindowController: MASPreferencesWindowController {
+    @objc class func create() -> PreferencesWindowController {
+        let title = NSLocalizedString("preferences.window.title", comment: "Preferences window title")
+        let controllers = [
+            GeneralPrefsViewController(),
+            AppearancePrefsViewController(),
+        ]
 
-  @objc class func create() -> PreferencesWindowController {
-    let title = NSLocalizedString("preferences.window.title", comment: "Preferences window title")
-    let controllers = [
-      GeneralPrefsViewController(),
-      AppearancePrefsViewController()
-    ];
-
-    return PreferencesWindowController(viewControllers: controllers, title: title)
-  }
-
-  override func keyDown(with event: NSEvent) {
-    if (event.isCommandW()) {
-      self.close()
-      return
+        return PreferencesWindowController(viewControllers: controllers, title: title)
     }
-    super.keyDown(with: event)
-  }
+
+    override func keyDown(with event: NSEvent) {
+        if event.isCommandW() {
+            close()
+            return
+        }
+        super.keyDown(with: event)
+    }
 }
