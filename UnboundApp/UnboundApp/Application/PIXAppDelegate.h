@@ -32,7 +32,6 @@
 - (IBAction)showMainWindow:(id)sender;
 - (IBAction)showIntroWindow:(id)sender;
 - (IBAction)showAboutWindow:(id)sender;
-- (IBAction)analogOceanWebsitePressed:(id)sender;
 - (IBAction)helpPressed:(id)sender;
 - (IBAction)chooseFolder:(id)sender;
 - (IBAction)rescanPhotosPressed:(id)sender;

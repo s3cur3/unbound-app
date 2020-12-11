@@ -87,6 +87,12 @@
 
 #define FFString(msg, description) NSLocalizedStringFromTableInBundle(msg, @"Unbound", [NSBundle bundleForClass:[MainWindowController class]], description)
 
+#define kAppStoreUrl @"https://itunes.apple.com/us/app/unbound/id690375005?ls=1&mt=12"
+#define kUpgradeTrialUrl [kAppStoreUrl stringByAppendingString:@"&uo=demo"]
+#define kHomepageUrl @"https://www.unboundapp.com/"
+#define kSupportUrl @"mailto:support@unboundapp.com?subject=Unbound%20support"
+#define kFeatureRequestUrl @"mailto:tyler@unboundapp.com?subject=Feature%20request:"
+
 // ===========================
 // = Constant Localized NSStrings =
 // ===========================
