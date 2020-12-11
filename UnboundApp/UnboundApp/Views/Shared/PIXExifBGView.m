@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 Pixite Apps LLC. All rights reserved.
 //
 
-#import <Unbound-Swift.h>
 #import "PIXExifBGView.h"
 #import "PIXAppDelegate.h"
 
@@ -22,15 +21,10 @@
     return self;
 }
 
-static BOOL isDarkMode()
-{
-	return [[[PIXAppDelegate sharedAppDelegate] mainWindowController] wantDarkMode];
-}
-
 - (void)drawRect:(NSRect)dirtyRect
 {
 	// Only draw the green background in light mode
-	if(!isDarkMode()) {
+	if(![[PIXAppDelegate sharedAppDelegate] wantDarkMode]) {
 		// inset the rect by half a pixel so the 1px stroke at the end lines up with the pixels correctly
 		NSRect greenRect = NSInsetRect([self bounds], 0.5, 0.5);
 		

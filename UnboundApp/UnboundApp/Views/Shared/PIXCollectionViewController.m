@@ -145,15 +145,13 @@ static NSString *kContentTitleKey, *kContentImageKey;
         return;
     }
     NSColor * color = nil;
-    if([[NSUserDefaults standardUserDefaults] integerForKey:@"backgroundTheme"] == 0)
-    {
-        color = [NSColor colorWithCalibratedWhite:0.912 alpha:1.000];
-    }
-    
-    else
+    if([[PIXAppDelegate sharedAppDelegate] wantDarkMode])
     {
         color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
-        //[[self enclosingScrollView] setBackgroundColor:color];
+    }
+    else
+    {
+        color = [NSColor colorWithCalibratedWhite:0.912 alpha:1.000];
     }
 
     self.collectionView.layer.backgroundColor = color.CGColor;
