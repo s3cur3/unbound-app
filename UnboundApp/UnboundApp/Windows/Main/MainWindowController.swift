@@ -5,6 +5,7 @@
 
 import Cocoa
 import Foundation
+import StoreKit
 
 class MainWindowController: NSWindowController {
     @IBOutlet public var navigationViewController: NavigationController?
@@ -28,6 +29,8 @@ class MainWindowController: NSWindowController {
         let albumController = PIXAlbumCollectionViewController(nibName: "PIXAlbumCollectionViewController", bundle: nil)
         albumViewController = albumController
         navigationViewController?.pushViewController(viewController: albumController)
+
+        maybeSolicitReview()
     }
 
     override func keyDown(with event: NSEvent) {
@@ -36,5 +39,18 @@ class MainWindowController: NSWindowController {
             return
         }
         super.keyDown(with: event)
+    }
+
+    private func maybeSolicitReview() {
+        let launchCount = defaults.integer(forKey: prefLaunchCount) + 1
+        defaults.set(launchCount, forKey: prefLaunchCount)
+
+        #if !TRIAL
+            if #available(OSX 10.14, *) {
+                if launchCount >= 10 {
+                    SKStoreReviewController.requestReview()
+                }
+            }
+        #endif // !TRIAL
     }
 }

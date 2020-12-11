@@ -20,6 +20,7 @@
 		2F6706332582B7E100487B31 /* PIXAboutWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD849574325C47243A590 /* PIXAboutWindowController.xib */; };
 		2F6706352582EEE100487B31 /* LibraryPickerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6706342582EEE100487B31 /* LibraryPickerWindowController.swift */; };
 		2F6706362582F25000487B31 /* LibraryPickerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6706342582EEE100487B31 /* LibraryPickerWindowController.swift */; };
+		2F6706392583112F00487B31 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F6706372583111600487B31 /* StoreKit.framework */; };
 		2FC02C402482C1DC00408258 /* MathUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 2FC02C3F2482C1DC00408258 /* MathUtils.c */; };
 		2FC02C412482C1DC00408258 /* MathUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 2FC02C3F2482C1DC00408258 /* MathUtils.c */; };
 		306DE24CB6BC26FEE2D1E93E /* Pods_Unbound.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9FE79A9C318BC57A3185BBD /* Pods_Unbound.framework */; };
@@ -454,6 +455,7 @@
 		2F67060F257C7E5500487B31 /* PIXApplicationExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIXApplicationExtensions.m; path = Kevlar/PIXApplicationExtensions.m; sourceTree = "<group>"; };
 		2F670610257C7E5500487B31 /* PIXApplicationExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIXApplicationExtensions.h; path = Kevlar/PIXApplicationExtensions.h; sourceTree = "<group>"; };
 		2F6706342582EEE100487B31 /* LibraryPickerWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryPickerWindowController.swift; sourceTree = "<group>"; };
+		2F6706372583111600487B31 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		2FC02C3E2482BEDD00408258 /* MathUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MathUtils.h; sourceTree = "<group>"; };
 		2FC02C3F2482C1DC00408258 /* MathUtils.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = MathUtils.c; sourceTree = "<group>"; };
 		38F77FC53C9305D97EB7307A /* Pods_Unbound_Unbound_Trial.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unbound_Unbound_Trial.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -729,6 +731,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F6706392583112F00487B31 /* StoreKit.framework in Frameworks */,
 				8C9565051846802800B5627B /* SystemConfiguration.framework in Frameworks */,
 				8C94E027183DA6D800827888 /* WebKit.framework in Frameworks */,
 				8C94E026183DA6D300827888 /* CoreLocation.framework in Frameworks */,
@@ -830,6 +833,7 @@
 		1DB2F84D167ABE87008AC0F7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2F6706372583111600487B31 /* StoreKit.framework */,
 				8C9565041846802800B5627B /* SystemConfiguration.framework */,
 				8C9FA5BF183ACB98000AEBC9 /* WebKit.framework */,
 				8C9FA5BD183ACB90000AEBC9 /* CoreLocation.framework */,
