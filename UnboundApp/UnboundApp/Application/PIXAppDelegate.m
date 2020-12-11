@@ -199,6 +199,11 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
     [showAboutWindow showWindow:self];
 }
 
+- (IBAction)leaveAReview:(id)sender
+{
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:kReviewUrl]];
+}
+
 - (IBAction)helpPressed:(id)sender
 {
     NSURL * url = [NSURL URLWithString:kSupportUrl];
