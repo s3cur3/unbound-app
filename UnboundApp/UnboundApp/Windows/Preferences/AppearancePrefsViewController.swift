@@ -14,6 +14,7 @@ class AppearancePrefsViewController: NSViewController, MASPreferencesViewControl
 
     @IBAction func themeChanged(sender _: Any) {
         // the user default (@"backgroundTheme") is changed through a binding. We just need to send out the notification
+        PIXAppDelegate.shared().mainWindowController.setAppearanceFromPrefs()
         NotificationCenter.default.post(name: Notification.Name("backgroundThemeChanged"), object: nil)
     }
 

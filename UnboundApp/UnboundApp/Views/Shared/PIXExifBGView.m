@@ -6,7 +6,9 @@
 //  Copyright (c) 2013 Pixite Apps LLC. All rights reserved.
 //
 
+#import <Unbound-Swift.h>
 #import "PIXExifBGView.h"
+#import "PIXAppDelegate.h"
 
 @implementation PIXExifBGView
 
@@ -22,12 +24,7 @@
 
 static BOOL isDarkMode()
 {
-	NSAppearance *appearance = NSAppearance.currentAppearance;
-	if (@available(*, macOS 10.14)) {
-		return appearance.name == NSAppearanceNameDarkAqua;
-	}
-
-	return [[NSUserDefaults standardUserDefaults] integerForKey:@"backgroundTheme"] != 0;
+	return [[[PIXAppDelegate sharedAppDelegate] mainWindowController] wantDarkMode];
 }
 
 - (void)drawRect:(NSRect)dirtyRect
