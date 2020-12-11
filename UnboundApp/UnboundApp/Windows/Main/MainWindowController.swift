@@ -7,7 +7,7 @@ import Cocoa
 import Foundation
 import StoreKit
 
-class MainWindowController: NSWindowController {
+@objc class MainWindowController: NSWindowController {
     @IBOutlet public var navigationViewController: NavigationController?
     public var albumViewController: PIXAlbumCollectionViewController?
 
@@ -30,6 +30,7 @@ class MainWindowController: NSWindowController {
         albumViewController = albumController
         navigationViewController?.pushViewController(viewController: albumController)
 
+        setAppearanceFromPrefs()
         maybeSolicitReview()
     }
 
@@ -39,6 +40,24 @@ class MainWindowController: NSWindowController {
             return
         }
         super.keyDown(with: event)
+    }
+
+    @objc func wantDarkMode() -> Bool {
+        if defaults.object(forKey: "backgroundTheme") != nil {
+            return defaults.integer(forKey: "backgroundTheme") != 0
+        } else {
+            if #available(OSX 10.14, *) {
+                return NSApp.appearance == NSAppearance(named: .darkAqua)
+            } else {
+                return false
+            }
+        }
+    }
+
+    func setAppearanceFromPrefs() {
+        if #available(OSX 10.14, *) {
+            NSApp.appearance = NSAppearance(named: wantDarkMode() ? .darkAqua : .aqua)
+        }
     }
 
     private func maybeSolicitReview() {

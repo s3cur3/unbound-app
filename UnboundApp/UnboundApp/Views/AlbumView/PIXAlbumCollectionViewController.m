@@ -53,7 +53,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do view setup here.
 }
 
 - (void)awakeFromNib
