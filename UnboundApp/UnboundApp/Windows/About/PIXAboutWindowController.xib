@@ -21,7 +21,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="310" height="342"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1050"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="310" height="342"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -59,8 +59,8 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fVy-kX-q8l">
-                        <rect key="frame" x="20" y="114" width="270" height="17"/>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fVy-kX-q8l">
+                        <rect key="frame" x="20" y="207" width="270" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="idh-Jz-Sel"/>
                         </constraints>
