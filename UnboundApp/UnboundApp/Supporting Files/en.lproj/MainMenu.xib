@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -167,12 +167,6 @@
                                     <action selector="requestFeaturePressed:" target="494" id="646"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Analog Ocean Website" id="568">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="analogOceanWebsitePressed:" target="494" id="584"/>
-                                </connections>
-                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="570">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
@@ -185,6 +179,7 @@
                     </menu>
                 </menuItem>
             </items>
+            <point key="canvasLocation" x="-136" y="135"/>
         </menu>
         <customObject id="494" customClass="PIXAppDelegate">
             <connections>

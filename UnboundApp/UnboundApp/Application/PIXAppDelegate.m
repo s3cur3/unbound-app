@@ -199,24 +199,17 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
     [showAboutWindow showWindow:self];
 }
 
-- (IBAction)analogOceanWebsitePressed:(id)sender
-{
-    NSURL * url = [NSURL URLWithString:@"http://www.analog-ocean.com"];
-    [[NSWorkspace sharedWorkspace] openURL:url];
-}
-
 - (IBAction)helpPressed:(id)sender
 {
-    NSURL * url = [NSURL URLWithString:@"mailto:info@unboundapp.com?subject=Unbound%20for%20Mac%20Support"];
+    NSURL * url = [NSURL URLWithString:kSupportUrl];
     [[NSWorkspace sharedWorkspace] openURL:url];
 }
 
 - (IBAction)requestFeaturePressed:(id)sender
 {
-    NSURL * url = [NSURL URLWithString:@"https://unboundformac.fider.io/"];
+    NSURL * url = [NSURL URLWithString:kFeatureRequestUrl];
     [[NSWorkspace sharedWorkspace] openURL:url];
 }
-
 
 - (IBAction)chooseFolder:(id)sender
 {
@@ -238,11 +231,11 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
 }
 
 - (IBAction)purchaseOnlinePressed:(id)sender {
-    [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:@"https://itunes.apple.com/us/app/unbound/id690375005?ls=1&mt=12&uo=demo"]];
+    [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:kUpgradeTrialUrl]];
 }
 
 - (IBAction)showHomepagePressed:(id)sender {
-    [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:@"https://www.unboundapp.com/"]];
+    [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:kHomepageUrl]];
 }
 
 #pragma mark - MASPreferences Class methods:
