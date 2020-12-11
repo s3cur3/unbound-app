@@ -12,6 +12,7 @@
 #define TRIAL_MAX_PHOTOS 1000
 
 @property (nonatomic, readonly) BOOL isActivated;
+@property (nonatomic, readonly) BOOL isTrial;
 
 @end
 

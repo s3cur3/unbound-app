@@ -11,6 +11,9 @@
 - (BOOL)isActivated {
 	return !TRIAL;
 }
+- (BOOL)isTrial {
+	return TRIAL;
+}
 
 @end
 

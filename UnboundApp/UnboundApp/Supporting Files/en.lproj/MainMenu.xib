@@ -27,6 +27,7 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="leaveAReview:" target="494" id="kYq-ce-bIy"/>
+                                    <binding destination="-3" name="hidden" keyPath="self.isTrial" id="Hxl-gv-MUd"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="236">
