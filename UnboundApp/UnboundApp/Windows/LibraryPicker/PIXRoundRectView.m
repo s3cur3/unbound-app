@@ -13,23 +13,14 @@
 - (id)initWithFrame:(NSRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code here.
-    }
-    
     return self;
 }
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    // Drawing code here.
-    NSBezierPath * path = [NSBezierPath bezierPathWithRoundedRect:self.bounds xRadius:5 yRadius:5];
-    
-    [[NSColor colorWithCalibratedWhite:0.85 alpha:0.8] setFill];
-    
+    NSBezierPath * path = [NSBezierPath bezierPathWithRoundedRect:self.bounds xRadius:4 yRadius:4];
+    [[NSColor colorWithCalibratedWhite:0.15 alpha:0.8] setFill];
     [path fill];
-    
-    
 }
 
 @end
