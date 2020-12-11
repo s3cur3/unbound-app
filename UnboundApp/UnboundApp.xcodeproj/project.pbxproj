@@ -18,6 +18,8 @@
 		2F670611257C7E5500487B31 /* PIXApplicationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F67060F257C7E5500487B31 /* PIXApplicationExtensions.m */; };
 		2F670612257C7E5500487B31 /* PIXApplicationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F67060F257C7E5500487B31 /* PIXApplicationExtensions.m */; };
 		2F6706332582B7E100487B31 /* PIXAboutWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD849574325C47243A590 /* PIXAboutWindowController.xib */; };
+		2F6706352582EEE100487B31 /* LibraryPickerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6706342582EEE100487B31 /* LibraryPickerWindowController.swift */; };
+		2F6706362582F25000487B31 /* LibraryPickerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6706342582EEE100487B31 /* LibraryPickerWindowController.swift */; };
 		2FC02C402482C1DC00408258 /* MathUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 2FC02C3F2482C1DC00408258 /* MathUtils.c */; };
 		2FC02C412482C1DC00408258 /* MathUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 2FC02C3F2482C1DC00408258 /* MathUtils.c */; };
 		306DE24CB6BC26FEE2D1E93E /* Pods_Unbound.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9FE79A9C318BC57A3185BBD /* Pods_Unbound.framework */; };
@@ -54,9 +56,7 @@
 		458AD0D33DE1453DB9071ACD /* expand@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD3070947054FA0A87DB8 /* expand@2x.png */; };
 		458AD0E7F5CBECCF1D3B2AFC /* PIXCustomShareSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD737D5A9975B91B517A7 /* PIXCustomShareSheetViewController.m */; };
 		458AD10267529097F13A330A /* success-backward.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADD063AFA30D8AD2DB197 /* success-backward.png */; };
-		458AD11EED5D909E7AF348DB /* PIXInfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD23BD2135A2FD65FC002 /* PIXInfoWindowController.m */; };
 		458AD14B512DD60FE1EEA04A /* temp-portrait@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 458AD3029E36086E9FA2BEEA /* temp-portrait@2x.jpg */; };
-		458AD15185BEB0FFF293DFCC /* logo_ao.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD796B90699411E711F52 /* logo_ao.png */; };
 		458AD153C9CBBFDC696CBCC2 /* RegularPhotoItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADB41A7C4BB1BD2B67134 /* RegularPhotoItem.xib */; };
 		458AD157D58D09CCDCEA7088 /* PIXVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD908CFF0ECDB629551E6 /* PIXVideoViewController.m */; };
 		458AD161318BFEFA535B360C /* contract.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD22711F1415BFD14A837 /* contract.png */; };
@@ -164,7 +164,7 @@
 		458AD5E587AFD56E9E532560 /* greendot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD064BA379620B4069086 /* greendot@2x.png */; };
 		458AD5E7813AD54948D98FEA /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 458ADB1C483EB3832673F7AB /* Localizable.stringsdict */; };
 		458AD5E7ED7F03CC6EAFAD54 /* PIXFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD62BFA47F0D56A53A583 /* PIXFileManager.m */; };
-		458AD5E8647725B1B25A9CD4 /* PIXInfoWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD986EE85D82D4FAEAE8C /* PIXInfoWindowController.xib */; };
+		458AD5E8647725B1B25A9CD4 /* LibraryPickerWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD986EE85D82D4FAEAE8C /* LibraryPickerWindowController.xib */; };
 		458AD5FFCAC344919D0FF505 /* AutoSizingVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADC11B7C82C25F0002393 /* AutoSizingVideoView.m */; };
 		458AD6004550C984953B0481 /* PIXPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD756CBDDCC823D0AAF0F /* PIXPhoto.m */; };
 		458AD605ADFBB2688C6D812E /* contract.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD22711F1415BFD14A837 /* contract.png */; };
@@ -214,7 +214,7 @@
 		458AD8180774708F44F91647 /* PIXFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD62BFA47F0D56A53A583 /* PIXFileManager.m */; };
 		458AD81A7BC60CFA93D0514E /* PIXFileParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADFBE5E3326D375EAB428 /* PIXFileParser.m */; };
 		458AD822D55D75B3603B5623 /* AppearancePrefsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD11B406479D2644AA211 /* AppearancePrefsViewController.xib */; };
-		458AD84878C233514E695642 /* PIXInfoWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD986EE85D82D4FAEAE8C /* PIXInfoWindowController.xib */; };
+		458AD84878C233514E695642 /* LibraryPickerWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD986EE85D82D4FAEAE8C /* LibraryPickerWindowController.xib */; };
 		458AD84A4516E739E9D130D4 /* buttongrid_copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADE2912FB560A5B898EA5 /* buttongrid_copy.png */; };
 		458AD84C0FEB7495643AB893 /* PIXImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADAF28EE29E1368A10BE6 /* PIXImageViewController.m */; };
 		458AD8650E6FEA53AA652733 /* PIXSeperatedSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADDFF9855AF4ADE9CE808 /* PIXSeperatedSpinnerView.m */; };
@@ -278,7 +278,6 @@
 		458ADABBCA769211832349F5 /* PIXShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD0E50CED0723BB7D3872 /* PIXShareManager.m */; };
 		458ADAD1E08FBF403859C69D /* SimplePhotoItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458ADFE50F496C8D4211A65D /* SimplePhotoItemView.swift */; };
 		458ADAD5CE405C36421BAB2A /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD87192D1A882871AF625 /* Preferences.m */; };
-		458ADAE3D3FF1F6F70A28064 /* PIXInfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD23BD2135A2FD65FC002 /* PIXInfoWindowController.m */; };
 		458ADAEBF3385C1847B3B393 /* PIXOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD286784546D2A0E9F6E7 /* PIXOutlineView.m */; };
 		458ADAEC8D42E95CBA6ED16A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 458ADEA7DE90402F962F3B37 /* Localizable.strings */; };
 		458ADAF343FACAD6B33DD192 /* playbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD82B85DA516339EB66E0 /* playbutton.png */; };
@@ -349,7 +348,6 @@
 		458ADDFE9D9738A18B3EBD72 /* MakeThumbnailOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD57EF9C057A646A2B2CA /* MakeThumbnailOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		458ADE01ABC077BC4D1FF7ED /* NSURL+DirectoryObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADF4966855685A12B5403 /* NSURL+DirectoryObserver.m */; };
 		458ADE23E00E239044DAA74E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AD723269D8E19270B0883 /* Constants.swift */; };
-		458ADE297ADE94834B4E95BD /* logo_ao.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD796B90699411E711F52 /* logo_ao.png */; };
 		458ADE340B6D4200DCE7369C /* AutoSizingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD4AA150A087CF7C81E30 /* AutoSizingImageView.m */; };
 		458ADE36AF81BC54C90A4BA2 /* GeneralPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458ADEA9EA4AD69C80E6A1B7 /* GeneralPrefsViewController.swift */; };
 		458ADE38B7D7DAD30EBFDDB9 /* NSCollectionView+PIXSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD2E290E211201DFD9034 /* NSCollectionView+PIXSelection.m */; };
@@ -455,6 +453,7 @@
 		1DB2F861167ABE87008AC0F7 /* PIXAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PIXAppDelegate.m; sourceTree = "<group>"; };
 		2F67060F257C7E5500487B31 /* PIXApplicationExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIXApplicationExtensions.m; path = Kevlar/PIXApplicationExtensions.m; sourceTree = "<group>"; };
 		2F670610257C7E5500487B31 /* PIXApplicationExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIXApplicationExtensions.h; path = Kevlar/PIXApplicationExtensions.h; sourceTree = "<group>"; };
+		2F6706342582EEE100487B31 /* LibraryPickerWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryPickerWindowController.swift; sourceTree = "<group>"; };
 		2FC02C3E2482BEDD00408258 /* MathUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MathUtils.h; sourceTree = "<group>"; };
 		2FC02C3F2482C1DC00408258 /* MathUtils.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = MathUtils.c; sourceTree = "<group>"; };
 		38F77FC53C9305D97EB7307A /* Pods_Unbound_Unbound_Trial.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unbound_Unbound_Trial.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -494,7 +493,6 @@
 		458AD228F4F179927A0DE5E8 /* PIXCustomShareSheetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXCustomShareSheetViewController.h; sourceTree = "<group>"; };
 		458AD22B845F74730E6086A4 /* PIXSelectionLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXSelectionLayer.h; sourceTree = "<group>"; };
 		458AD239A9B0AD1C5B855157 /* success-backward@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success-backward@2x.png"; sourceTree = "<group>"; };
-		458AD23BD2135A2FD65FC002 /* PIXInfoWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXInfoWindowController.m; sourceTree = "<group>"; };
 		458AD24137913A817EC0CDB7 /* expand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = expand.png; sourceTree = "<group>"; };
 		458AD252F3AF0389A35912F4 /* NSBezierPath+pathUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBezierPath+pathUtilities.h"; sourceTree = "<group>"; };
 		458AD255978776B70A48B1EB /* leapconnected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leapconnected@2x.png"; sourceTree = "<group>"; };
@@ -569,7 +567,6 @@
 		458AD7467EC0275F76CF45F1 /* buttongrid_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttongrid_share@2x.png"; sourceTree = "<group>"; };
 		458AD756CBDDCC823D0AAF0F /* PIXPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhoto.m; sourceTree = "<group>"; };
 		458AD7722EB84DA229B90B0B /* PIXSelectionLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSelectionLayer.m; sourceTree = "<group>"; };
-		458AD796B90699411E711F52 /* logo_ao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_ao.png; sourceTree = "<group>"; };
 		458AD798D7B474125A7040D2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = MainMenu.xib; sourceTree = "<group>"; };
 		458AD7A043DE9C2FE50165EC /* ThemedWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemedWindow.swift; sourceTree = "<group>"; };
 		458AD7A18CDC3189AB3985D0 /* PIXGetAlbumPathsOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXGetAlbumPathsOperation.h; sourceTree = "<group>"; };
@@ -607,7 +604,7 @@
 		458AD9705B131DECC624E295 /* buttongrid_facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttongrid_facebook@2x.png"; sourceTree = "<group>"; };
 		458AD973DDA0E230AE4E7333 /* temp.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = temp.jpg; sourceTree = "<group>"; };
 		458AD97AFD65B808C04E30AA /* UnboundApp-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UnboundApp-Prefix.pch"; sourceTree = "<group>"; };
-		458AD986EE85D82D4FAEAE8C /* PIXInfoWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PIXInfoWindowController.xib; sourceTree = "<group>"; };
+		458AD986EE85D82D4FAEAE8C /* LibraryPickerWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LibraryPickerWindowController.xib; sourceTree = "<group>"; };
 		458AD987F4E4A29479538C2A /* NSURL+DirectoryObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+DirectoryObserver.h"; sourceTree = "<group>"; };
 		458AD98F5BC554FB3D5E46D4 /* LoadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadOperation.h; sourceTree = "<group>"; };
 		458AD9A597215949892DA8C8 /* PIXCollectionViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXCollectionViewItem.h; sourceTree = "<group>"; };
@@ -634,7 +631,6 @@
 		458ADB7775E55DE386008EF9 /* AppearancePrefsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearancePrefsViewController.swift; sourceTree = "<group>"; };
 		458ADBBC24E135DE94A5E04D /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
 		458ADBDE8312055857F9D061 /* buttongrid_print@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttongrid_print@2x.png"; sourceTree = "<group>"; };
-		458ADBEE76890868D0424E6B /* PIXInfoWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXInfoWindowController.h; sourceTree = "<group>"; };
 		458ADC0318AE26BE59FB9784 /* leapnotconnected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leapnotconnected@2x.png"; sourceTree = "<group>"; };
 		458ADC0F47F8C6A43275CD7C /* buttongrid_email.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttongrid_email.png; sourceTree = "<group>"; };
 		458ADC11B7C82C25F0002393 /* AutoSizingVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoSizingVideoView.m; sourceTree = "<group>"; };
@@ -1015,7 +1011,7 @@
 			isa = PBXGroup;
 			children = (
 				458AD1628B83320481E1F32C /* About */,
-				458ADDD240ECBC67E0619AF7 /* Info */,
+				458ADDD240ECBC67E0619AF7 /* LibraryPicker */,
 				458AD175F85E488B5BCECFA1 /* Progress */,
 				458AD64D8715ED21F286E048 /* Main */,
 				458ADE8EDA170639A9BD136B /* Preferences */,
@@ -1130,7 +1126,6 @@
 				458ADE903A39B8A52515D9E2 /* Unbound-For-Mac-512.png */,
 				458AD0C6143634A8F2236F26 /* dark_bg.png */,
 				458ADDA36051A6D8BD5E28FE /* Shading.tiff */,
-				458AD796B90699411E711F52 /* logo_ao.png */,
 				458AD800141C2A8431FCD9F1 /* intro_bg.jpg */,
 				458AD7A85609DBC2EA41D16C /* nophoto_200x200.jpg */,
 				458AD640AC49C26D97186ABC /* dark_bg@2X.png */,
@@ -1205,16 +1200,15 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
-		458ADDD240ECBC67E0619AF7 /* Info */ = {
+		458ADDD240ECBC67E0619AF7 /* LibraryPicker */ = {
 			isa = PBXGroup;
 			children = (
-				458ADBEE76890868D0424E6B /* PIXInfoWindowController.h */,
-				458AD23BD2135A2FD65FC002 /* PIXInfoWindowController.m */,
-				458AD986EE85D82D4FAEAE8C /* PIXInfoWindowController.xib */,
+				458AD986EE85D82D4FAEAE8C /* LibraryPickerWindowController.xib */,
 				458ADDF3AF98643F8FF2A368 /* PIXRoundRectView.m */,
 				458ADC97EF82B2CFDA69777E /* PIXRoundRectView.h */,
+				2F6706342582EEE100487B31 /* LibraryPickerWindowController.swift */,
 			);
-			path = Info;
+			path = LibraryPicker;
 			sourceTree = "<group>";
 		};
 		458ADDE6A879F5822D3A4443 /* PhotoBrowserView */ = {
@@ -1452,7 +1446,7 @@
 				8CF05AEF17C3097400AB88B5 /* Licences.txt in Resources */,
 				8CF05AF317C33B6E00AB88B5 /* Unbound.entitlements in Resources */,
 				458ADC8F5121EEAC61F20378 /* PIXAboutWindowController.xib in Resources */,
-				458AD84878C233514E695642 /* PIXInfoWindowController.xib in Resources */,
+				458AD84878C233514E695642 /* LibraryPickerWindowController.xib in Resources */,
 				458AD2A60F98DABA8B0AD970 /* PIXProgressWindowController.xib in Resources */,
 				458AD629C6135123E7A4DBB3 /* MainWindowController.xib in Resources */,
 				458ADE8B5A343BB864F8EA95 /* PIXHUDMessageController.xib in Resources */,
@@ -1464,7 +1458,6 @@
 				458ADA126784A00937E27C53 /* Unbound-For-Mac-512.png in Resources */,
 				458ADEE2CFE6E9FC79772AE2 /* dark_bg.png in Resources */,
 				458AD5460649727AFE850D02 /* Shading.tiff in Resources */,
-				458ADE297ADE94834B4E95BD /* logo_ao.png in Resources */,
 				458AD8A2126B1009EC44BC38 /* intro_bg.jpg in Resources */,
 				458ADBE2C04CCAD4216602D6 /* nophoto_200x200.jpg in Resources */,
 				458AD6F5A51AF23FAE3524AA /* dark_bg@2X.png in Resources */,
@@ -1569,7 +1562,7 @@
 				8CF05AF017C30A2500AB88B5 /* Licences.txt in Resources */,
 				8CF05AF417C33B7300AB88B5 /* UnboundTrial.entitlements in Resources */,
 				2F6706332582B7E100487B31 /* PIXAboutWindowController.xib in Resources */,
-				458AD5E8647725B1B25A9CD4 /* PIXInfoWindowController.xib in Resources */,
+				458AD5E8647725B1B25A9CD4 /* LibraryPickerWindowController.xib in Resources */,
 				458AD9FE390F1EC2B4975EAF /* PIXProgressWindowController.xib in Resources */,
 				458AD9BF57E6F189E9A67E69 /* MainWindowController.xib in Resources */,
 				458ADF346B2B9BDD987C89CE /* PIXHUDMessageController.xib in Resources */,
@@ -1581,7 +1574,6 @@
 				458ADD0AA29780005546F599 /* Unbound-For-Mac-512.png in Resources */,
 				458AD7538A471EFE5AA93806 /* dark_bg.png in Resources */,
 				458AD9FBBDCC0F7B43B43E78 /* Shading.tiff in Resources */,
-				458AD15185BEB0FFF293DFCC /* logo_ao.png in Resources */,
 				458AD80F772899A6551C16BF /* intro_bg.jpg in Resources */,
 				458AD21403CED9CAFA9C48F5 /* nophoto_200x200.jpg in Resources */,
 				458AD67EB21740424298583B /* dark_bg@2X.png in Resources */,
@@ -1771,7 +1763,6 @@
 				1DB2F862167ABE87008AC0F7 /* PIXAppDelegate.m in Sources */,
 				1D4A1E00167BEAF300C9A895 /* PIXViewController.m in Sources */,
 				458ADB4C4EB29CEC6E271D7D /* PIXAboutWindowController.swift in Sources */,
-				458ADAE3D3FF1F6F70A28064 /* PIXInfoWindowController.m in Sources */,
 				458AD5A64C03540A01C7E839 /* PIXProgressWindowController.m in Sources */,
 				458ADA05F9F750121405F8BF /* PIXRoundRectView.m in Sources */,
 				458AD186E2F724142E46F51C /* PIXPhotoUtils.m in Sources */,
@@ -1841,6 +1832,7 @@
 				458ADA595F31A84CEB5CB5D1 /* NSEventExt.swift in Sources */,
 				458ADC62CD570F3AA553DB7B /* PhotoStyle.swift in Sources */,
 				458AD04D0370ABD1866F64DC /* SimplePhotoItem.swift in Sources */,
+				2F6706352582EEE100487B31 /* LibraryPickerWindowController.swift in Sources */,
 				458ADAD1E08FBF403859C69D /* SimplePhotoItemView.swift in Sources */,
 				2F670611257C7E5500487B31 /* PIXApplicationExtensions.m in Sources */,
 				458ADF43DD27366FB6912ECA /* RegularPhotoItem.swift in Sources */,
@@ -1862,9 +1854,9 @@
 				8C28605C17308566009A0B35 /* PIXAppDelegate.m in Sources */,
 				8C28606017308566009A0B35 /* PIXViewController.m in Sources */,
 				458AD90A3936F05DFB98A581 /* PIXAboutWindowController.swift in Sources */,
-				458AD11EED5D909E7AF348DB /* PIXInfoWindowController.m in Sources */,
 				458ADD1104108B91EF3C347B /* PIXProgressWindowController.m in Sources */,
 				458AD5250E0ADC4197404162 /* PIXRoundRectView.m in Sources */,
+				2F6706362582F25000487B31 /* LibraryPickerWindowController.swift in Sources */,
 				458AD6919E4F4F10F7D20CC2 /* PIXPhotoUtils.m in Sources */,
 				458ADABBCA769211832349F5 /* PIXShareManager.m in Sources */,
 				458AD39F3EFCF715B4EFFD82 /* PIXSeperatedSpinnerView.m in Sources */,

@@ -8,7 +8,6 @@
 
 #import "PIXAppDelegate.h"
 //#import "PIXAppDelegate+CoreDataUtils.h"
-#import "PIXInfoWindowController.h"
 #import "Unbound-Swift.h"
 
 #import "Preferences.h"
@@ -184,17 +183,11 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
 // -------------------------------------------------------------------------------
 - (IBAction)showIntroWindow:(id)sender
 {
-    PIXInfoWindowController * localIntroWindow = nil;
-    
     if (self.introWindow == nil)
     {
-        localIntroWindow = [[PIXInfoWindowController alloc] initWithWindowNibName:@"PIXInfoWindowController"];
+        self.introWindow = [LibraryPickerWindowController create];
     }
-    
-    [localIntroWindow showWindow:self];
-    
-    self.introWindow = localIntroWindow;
-    
+    [self.introWindow showWindow:self];
 }
 
 - (IBAction)showAboutWindow:(id)sender
