@@ -7,31 +7,30 @@ import Cocoa
 import CoreServices
 
 struct AppInfo {
-  let name: String?
-  let version: String?
-  let path: URL
-  let isSystemDefault: Bool
+    let name: String?
+    let version: String?
+    let path: URL
+    let isSystemDefault: Bool
 }
 
 class SystemAppHelper {
+    class func editorAppsForFileUrl(path: URL) -> [AppInfo] {
+        let apps = LSCopyApplicationURLsForURL(path as CFURL, .editor)!.takeRetainedValue() as? [URL] ?? []
+        let defaultApp = LSCopyDefaultApplicationURLForURL(path as CFURL, .editor, nil)?.takeRetainedValue() as URL?
 
-  class func editorAppsForFileUrl(path: URL) -> [AppInfo] {
-    let apps = LSCopyApplicationURLsForURL(path as CFURL, .editor)!.takeRetainedValue() as? [URL] ?? []
-    let defaultApp = LSCopyDefaultApplicationURLForURL(path as CFURL, .editor, nil)?.takeRetainedValue() as URL?
-
-    return apps.map { url in
-      AppInfo(name: (try? url.resourceValues(forKeys: [.localizedNameKey]).localizedName) as? String,
-              version: Bundle(url: url)?.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String,
-              path: url,
-              isSystemDefault: url == defaultApp)
+        return apps.map { url in
+            AppInfo(name: (try? url.resourceValues(forKeys: [.localizedNameKey]).localizedName) as? String,
+                    version: Bundle(url: url)?.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String,
+                    path: url,
+                    isSystemDefault: url == defaultApp)
+        }
     }
-  }
 
-  class func nameForAppUrl(path: URL) -> String? {
-    return Bundle(url: path)?.object(forInfoDictionaryKey: kCFBundleNameKey as String) as? String
-  }
+    class func nameForAppUrl(path: URL) -> String? {
+        Bundle(url: path)?.object(forInfoDictionaryKey: kCFBundleNameKey as String) as? String
+    }
 
-  class func versionForAppUrl(path: URL) -> String? {
-    return Bundle(url: path)?.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String
-  }
+    class func versionForAppUrl(path: URL) -> String? {
+        Bundle(url: path)?.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String
+    }
 }
