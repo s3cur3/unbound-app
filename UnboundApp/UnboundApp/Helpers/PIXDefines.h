@@ -92,6 +92,7 @@
 #define kHomepageUrl @"https://www.unboundapp.com/"
 #define kSupportUrl @"mailto:support@unboundapp.com?subject=Unbound%20support"
 #define kFeatureRequestUrl @"mailto:tyler@unboundapp.com?subject=Feature%20request:"
+#define kReviewUrl [kAppStoreUrl stringByAppendingString:@"&uo=full&action=write-review"]
 
 // ===========================
 // = Constant Localized NSStrings =
