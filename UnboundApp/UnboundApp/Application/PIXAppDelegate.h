@@ -93,6 +93,7 @@
 
 @property (strong, nonatomic) IBOutlet NSUndoManager *undoManager;
 
+-(BOOL)wantDarkMode;
 
 //find or create helpers
 @property (nonatomic, retain) NSArray *photoFiles;

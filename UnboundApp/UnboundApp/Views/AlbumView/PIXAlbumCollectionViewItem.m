@@ -13,6 +13,7 @@
 #import "PIXDefines.h"
 #import "PIXFileManager.h"
 #import "PIXViewController.h"
+#import "PIXAppDelegate.h" // for wantDarkMode
 #include <stdlib.h>
 
 @implementation PIXAlbumCollectionViewItem
@@ -365,14 +366,14 @@
         textColor = NSColor.controlTextColor;
         subtitleColor = NSColor.controlTextColor;
     } else {
-        if ([[NSUserDefaults standardUserDefaults] integerForKey:@"backgroundTheme"] == 0) {
-            bgColor = [NSColor colorWithCalibratedWhite:0.912 alpha:1.000];
-            textColor = [NSColor colorWithCalibratedWhite:0.15 alpha:1.0];
-            subtitleColor = [NSColor colorWithCalibratedWhite:0.35 alpha:1.0];
-        } else {
+        if([[PIXAppDelegate sharedAppDelegate] wantDarkMode]) {
             bgColor = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
             textColor = [NSColor colorWithCalibratedWhite:0.9 alpha:1.0];
             subtitleColor = [NSColor colorWithCalibratedWhite:0.55 alpha:1.0];
+        } else {
+            bgColor = [NSColor colorWithCalibratedWhite:0.912 alpha:1.000];
+            textColor = [NSColor colorWithCalibratedWhite:0.15 alpha:1.0];
+            subtitleColor = [NSColor colorWithCalibratedWhite:0.35 alpha:1.0];
         }
     }
 

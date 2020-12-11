@@ -561,6 +561,11 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     return _managedObjectContext;
 }
 
+-(BOOL)wantDarkMode
+{
+    return [[self mainWindowController] wantDarkMode];
+}
+
 -(void)saveDBToDiskWithRateLimit
 {
     // cancel any previous delayed calls to this method
