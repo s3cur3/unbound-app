@@ -388,6 +388,8 @@
     }
 
     [PIXFileManager.sharedInstance deleteItemsWorkflow:self.selectedItems];
+	self.collectionView.selectionIndexes = [NSIndexSet new];
+	[self updateSelectedTitle];
 }
 
 #pragma mark - Album
