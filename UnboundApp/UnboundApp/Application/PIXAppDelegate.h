@@ -85,8 +85,8 @@
 
 
 // this will save the db to the disk in the background
-// note error and return value will only be populated if this is called from the main thread
--(BOOL)saveDBToDisk:(NSError **)error;
+// note return value will only be valid if this is called from the main thread
+-(BOOL)saveDBToDisk:(id)ignored;
 
 //The file parsing system (keeps file system in sync)
 @property (nonatomic, strong) PIXFileParser *fileParser;

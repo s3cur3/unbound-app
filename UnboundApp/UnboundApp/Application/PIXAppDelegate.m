@@ -575,7 +575,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     
 }
 
--(BOOL)saveDBToDisk:(NSError **)error
+-(BOOL)saveDBToDisk:(id)sender
 {
 // rchang: this would return early and never advance to the later code.
 // commenting it out appears to fix an issue where restarts were reverting to older captions
@@ -588,25 +588,24 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 //    return YES;
     // perform this on the main thread if needed
     if(![NSThread isMainThread])
-        
     {
         [self performSelectorOnMainThread:@selector(saveDBToDisk:) withObject:nil waitUntilDone:NO];
         return YES;
     }
     
-    if (![self.managedObjectContext save:error])
+	NSError * ctxError = nil;
+    if (![self.managedObjectContext save:&ctxError])
     {
-        DLog(@"ERROR SAVING IN MAIN THREAD: %@", [*error description])
+        DLog(@"ERROR SAVING IN MAIN THREAD: %@", [ctxError description])
         return NO;
     }
         
     // now save to disk on a bg thread
     [self.privateWriterContext performBlock:^{
-        if (![self.privateWriterContext save:error])
+		NSError * writeError = nil;
+        if (![self.privateWriterContext save:&writeError] && writeError != nil)
         {
-            if(error!=nil) {
-                DLog(@"ERROR SAVING IN BG THREAD: %@", [*error description])
-            }
+			DLog(@"ERROR SAVING IN BG THREAD: %@", [writeError description])
         }
     }];
     
