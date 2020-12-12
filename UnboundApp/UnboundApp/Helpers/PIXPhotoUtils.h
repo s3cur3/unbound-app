@@ -6,6 +6,7 @@
 #import <Foundation/Foundation.h>
 
 void alert(NSString * title, NSString * message);
+void alertCritical(NSString * title, NSString * message);
 
 enum modal_response
 {

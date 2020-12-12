@@ -14,6 +14,15 @@ void alert(NSString * title, NSString * message)
     [alert runModal];
 }
 
+void alertCritical(NSString * title, NSString * message)
+{
+    NSAlert * alert = [[NSAlert alloc] init];
+    alert.messageText = title;
+    alert.informativeText = message;
+    alert.alertStyle = NSAlertStyleCritical;
+    [alert runModal];
+}
+
 enum modal_response cancellableAlert(NSString * title, NSString * message)
 {
     NSAlert * alert = [[NSAlert alloc] init];

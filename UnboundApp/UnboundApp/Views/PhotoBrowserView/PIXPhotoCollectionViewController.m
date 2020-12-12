@@ -523,7 +523,7 @@
         case PhotoStyleCompact: return @"SimplePhotoItem";
         case PhotoStyleRegular: return @"RegularPhotoItem";
     }
-    assert(!"Unhandleded photo style");
+    assert(false); // "Unhandleded photo style"
     return @"SimplePhotoItem";
 }
 

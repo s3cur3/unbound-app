@@ -112,7 +112,7 @@ typedef NSUInteger PIXOverwriteStrategy;
         
         NSArray *someFilePaths = [self.selectedFilePaths copy];
         self.selectedFilePaths = nil;
-        if (result == NSOKButton)
+        if (result == NSModalResponseOK)
         {
             [panel close];
             
@@ -1032,7 +1032,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     [[NSWorkspace sharedWorkspace] recycleURLs:urlsToDelete completionHandler:^(NSDictionary *newURLs, NSError *error) {
 		if(progressSheet != nil)
 		{
-			[NSApp endSheet:[progressSheet window] returnCode:NSOKButton];
+			[NSApp endSheet:[progressSheet window] returnCode:NSModalResponseOK];
 			[[progressSheet window] orderOut:self];
 		}
 
@@ -1438,7 +1438,7 @@ typedef NSUInteger PIXOverwriteStrategy;
         NSArray *validatedItems = [self userValidatedFiles:items forDestination:destinationURL];
         if (validatedItems.count == 0) {
             
-            [NSApp endSheet:[progressSheet window] returnCode:NSOKButton];
+            [NSApp endSheet:[progressSheet window] returnCode:NSModalResponseOK];
             [[progressSheet window] orderOut:self];
             
             return;
@@ -1523,7 +1523,7 @@ typedef NSUInteger PIXOverwriteStrategy;
         [undoManager registerUndoWithTarget:self selector:@selector(undoCopyFiles:) object:validatedItems];
         [undoManager setActionName:@"Copy Files"];
         
-        [NSApp endSheet:[progressSheet window] returnCode:NSOKButton];
+        [NSApp endSheet:[progressSheet window] returnCode:NSModalResponseOK];
         [[progressSheet window] orderOut:self];
     });
     
