@@ -7,7 +7,6 @@
 //
 
 #import "PIXAlbum.h"
-#import "PIXAccount.h"
 #import "PIXPhoto.h"
 #import "PIXDefines.h"
 #import "PIXAppDelegate.h"
@@ -25,7 +24,6 @@ static NSString *const kItemsKey = @"photos";
 @dynamic path;
 @dynamic subtitle;
 @dynamic title;
-@dynamic account;
 @dynamic datePhoto;
 @dynamic photos;
 @dynamic stackPhotos;

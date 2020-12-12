@@ -45,7 +45,6 @@ typedef enum {
 @property (nonatomic, retain) NSString * path;
 @property (nonatomic, retain) NSString * subtitle;
 @property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) PIXAccount *account;
 @property (nonatomic, retain) PIXPhoto *datePhoto;
 @property (nonatomic, retain) NSSet<PIXPhoto *> *photos;
 @property (nonatomic, retain) NSOrderedSet<PIXPhoto *> *stackPhotos;

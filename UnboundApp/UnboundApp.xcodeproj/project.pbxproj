@@ -221,7 +221,6 @@
 		458AD8650E6FEA53AA652733 /* PIXSeperatedSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADDFF9855AF4ADE9CE808 /* PIXSeperatedSpinnerView.m */; };
 		458AD87DF3839608344CE6AE /* SystemAppHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458ADCC7C3ABC3B0057DB9DE /* SystemAppHelper.swift */; };
 		458AD88787C4D505ABB71837 /* SimplePhotoItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD4DDCF81B3FE7AD83DD2 /* SimplePhotoItem.xib */; };
-		458AD88C8DCB3AA650035330 /* PIXAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD86966809D7801FD2562 /* PIXAccount.m */; };
 		458AD88E932F96F225196166 /* success-backward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD239A9B0AD1C5B855157 /* success-backward@2x.png */; };
 		458AD892258BE9F7BDC6FE52 /* PIXAlbumCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD5215011F886FBE6168E /* PIXAlbumCollectionViewItem.xib */; };
 		458AD8A2126B1009EC44BC38 /* intro_bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 458AD800141C2A8431FCD9F1 /* intro_bg.jpg */; };
@@ -321,7 +320,6 @@
 		458ADCA9F2ACDFA8CA68A7D7 /* PIXTransitionSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADF1057D8B9C218C82A76 /* PIXTransitionSetup.m */; };
 		458ADCB23CCC2C76DBFF2069 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 458AD912B733EE422B2BF15D /* Images.xcassets */; };
 		458ADCB2F777602F8267F14A /* PIXInfoPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD2F03843EA9EBD3FBBE3 /* PIXInfoPanelViewController.m */; };
-		458ADCC36CEB33C5E4DC6069 /* PIXAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD86966809D7801FD2562 /* PIXAccount.m */; };
 		458ADCEC1D6C6FBD6CEB1B9A /* captionbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD29B2E087EB9581AA773 /* captionbutton@2x.png */; };
 		458ADCFFFE1134C87A0D6C3A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD125AF70605105C0A03D /* main.m */; };
 		458ADD01DAC8B15D22A5BC3D /* fullnophoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD65C6D07F72EACA1A512 /* fullnophoto.png */; };
@@ -581,7 +579,6 @@
 		458AD847D4CA9CF915C77020 /* pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pause@2x.png"; sourceTree = "<group>"; };
 		458AD849574325C47243A590 /* PIXAboutWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PIXAboutWindowController.xib; sourceTree = "<group>"; };
 		458AD85EA167AACCAFA816FA /* PIXPageHUDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXPageHUDView.h; sourceTree = "<group>"; };
-		458AD86966809D7801FD2562 /* PIXAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXAccount.m; sourceTree = "<group>"; };
 		458AD87192D1A882871AF625 /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; };
 		458AD872EE3DF9B6B59D8D96 /* captionbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = captionbutton.png; sourceTree = "<group>"; };
 		458AD8A976929024C47F6C63 /* UnboundApp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = "UnboundApp-Info.plist"; sourceTree = "<group>"; };
@@ -610,7 +607,6 @@
 		458AD9BBDC50CC837C1EC1F4 /* AutoSizingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoSizingImageView.h; sourceTree = "<group>"; };
 		458AD9FAE54C35D446B3C313 /* PIXProgressWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXProgressWindowController.m; sourceTree = "<group>"; };
 		458ADA0B500A4B5ADBD8014E /* PIXCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXCollectionView.m; sourceTree = "<group>"; };
-		458ADA297AAEBA62BF91A261 /* PIXAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXAccount.h; sourceTree = "<group>"; };
 		458ADA2D4C8A98FFC1810379 /* PIXAlbumCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXAlbumCollectionViewController.h; sourceTree = "<group>"; };
 		458ADA4C9A16191E9DED0AD7 /* NSBezierPath+pathUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBezierPath+pathUtilities.m"; sourceTree = "<group>"; };
 		458ADA4FAB1BF804741362BA /* PIXHUDMessageController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PIXHUDMessageController.xib; sourceTree = "<group>"; };
@@ -1311,8 +1307,6 @@
 				458AD7AA5FA2D7D1B9940541 /* PIXAlbum.m */,
 				458AD756CBDDCC823D0AAF0F /* PIXPhoto.m */,
 				458ADE86B70DA362B49D2476 /* PIXPhoto.h */,
-				458AD86966809D7801FD2562 /* PIXAccount.m */,
-				458ADA297AAEBA62BF91A261 /* PIXAccount.h */,
 				458AD488AB617F0797FF5049 /* PIXDataModel.xcdatamodeld */,
 			);
 			path = Model;
@@ -1832,7 +1826,6 @@
 				458AD157D58D09CCDCEA7088 /* PIXVideoViewController.m in Sources */,
 				458ADEFFCFC8EB27D8B971B8 /* PIXAlbum.m in Sources */,
 				458AD6004550C984953B0481 /* PIXPhoto.m in Sources */,
-				458ADCC36CEB33C5E4DC6069 /* PIXAccount.m in Sources */,
 				458AD04678D2A1BE2EC5642D /* PIXDataModel.xcdatamodeld in Sources */,
 				458AD0BAA89DFD1CCF9DBECC /* PIXCollectionToolbar.m in Sources */,
 				458AD01FBD59225A8AD793B2 /* NSCollectionView+PIXSelection.m in Sources */,
@@ -1924,7 +1917,6 @@
 				458ADFEF169BA3EA6E3F72B2 /* PIXVideoViewController.m in Sources */,
 				458AD9029029B61965654D12 /* PIXAlbum.m in Sources */,
 				458AD6F233473D8441CA9006 /* PIXPhoto.m in Sources */,
-				458AD88C8DCB3AA650035330 /* PIXAccount.m in Sources */,
 				458AD64DEAB0920DB18F855C /* PIXDataModel.xcdatamodeld in Sources */,
 				458AD5A5BACB12ED72838495 /* PIXCollectionToolbar.m in Sources */,
 				458ADE38B7D7DAD30EBFDDB9 /* NSCollectionView+PIXSelection.m in Sources */,
