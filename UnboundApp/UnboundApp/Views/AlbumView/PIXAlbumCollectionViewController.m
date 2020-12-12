@@ -397,6 +397,7 @@
 {
     // retain the old set of albums so they won't be released on change
     NSArray * oldAlbums = self.albums;
+	#pragma unused(oldAlbums)
     
     // set the new one
     self.albums = [PIXAlbum sortedAlbums:self.searchField.stringValue];

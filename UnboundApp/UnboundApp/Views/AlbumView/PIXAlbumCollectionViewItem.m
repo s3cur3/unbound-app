@@ -9,12 +9,10 @@
 #import "PIXAlbumCollectionViewItem.h"
 #import "PIXAlbum.h"
 #import "PIXPhoto.h"
-#import <QuartzCore/QuartzCore.h>
 #import "PIXDefines.h"
 #import "PIXFileManager.h"
 #import "PIXViewController.h"
 #import "PIXAppDelegate.h" // for wantDarkMode
-#include <stdlib.h>
 
 @implementation PIXAlbumCollectionViewItem
 
@@ -479,7 +477,6 @@
         CGRect imageRect = CGRectInset(imageFrame, 3, 3);
         //[photo drawInRect:imageRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
         NSImage *playButtonImage = [NSImage imageNamed:@"playbutton"];
-        [playButtonImage setScalesWhenResized:YES];
         CGRect playButtonRect = CGRectMake(CGRectGetMidX(imageRect)-20.0, CGRectGetMidY(imageRect)-20.0, 40.0, 40.0);//CGRectApplyAffineTransform(imageRect, CGAffineTransformMakeScale(0.33, 0.33));
         [playButtonImage drawInRect:playButtonRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];
     }
@@ -557,13 +554,11 @@
 {
     // seem to need to handl
     if (commandSelector == @selector(cancelOperation:)) {
-        
-        
-        [self controlTextDidEndEditing:nil];
-        
+        [self.titleEditField setTarget:nil];
+        [self.titleEditField removeFromSuperview];
+        self.titleEditField = nil;
         return YES;
     }
-    
     return NO;
 }
 
@@ -572,12 +567,6 @@
 {
     if(self.titleEditField != nil)
     {
-        // this will stop the action from being sent if we called this from the cancelOperation detection above
-        if(obj == nil)
-        {
-            [self.titleEditField setTarget:nil];
-        }
-        
         [self.titleEditField removeFromSuperview];
         self.titleEditField = nil;
     }

@@ -114,14 +114,6 @@
     self.imageLayer.actions = newActions;
     self.layer.actions = newActions;
 
-    [[NSNotificationCenter defaultCenter] addObserverForName:kNotePhotoStyleChanged
-                                                      object:self
-                                                       queue:[NSOperationQueue mainQueue]
-                                                  usingBlock:^(NSNotification *note) {
-        NSString *value = [NSUserDefaults.standardUserDefaults valueForKey:kPrefPhotoStyle];
-        NSLog(value);
-    }];
-
     [self.layer addSublayer:self.imageLayer];
     [self setWantsLayer:YES];
 }
@@ -229,7 +221,6 @@
     _videoLayover = [[NSImageView alloc] init];
     _videoLayover.image = [NSImage imageNamed:@"playbutton"];
     [_videoLayover setAutoresizesSubviews:YES];
-    [_videoLayover.image setScalesWhenResized:YES];
     [_videoLayover setImageScaling:NSImageScaleProportionallyDown];
     
     [_videoLayover setWantsLayer:YES];
