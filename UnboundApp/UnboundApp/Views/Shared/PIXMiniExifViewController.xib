@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment version="1070" defaultVersion="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4510"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PIXMiniExifViewController">
@@ -16,18 +17,16 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView wantsLayer="YES" horizontalCompressionResistancePriority="999" id="1">
             <rect key="frame" x="0.0" y="0.0" width="191" height="86"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView wantsLayer="YES" horizontalCompressionResistancePriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="30" customClass="PIXExifBGView">
                     <rect key="frame" x="10" y="10" width="171" height="70"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="997" translatesAutoresizingMaskIntoConstraints="NO" id="76">
-                            <rect key="frame" x="5" y="24" width="28" height="16"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <rect key="frame" x="6" y="24" width="28" height="16"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="16" id="287"/>
                             </constraints>
@@ -38,8 +37,7 @@
                             </textFieldCell>
                         </textField>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="114">
-                            <rect key="frame" x="105" y="23" width="61" height="17"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <rect key="frame" x="104" y="24" width="61" height="13"/>
                             <textFieldCell key="cell" lineBreakMode="truncatingMiddle" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Resolution" usesSingleLineMode="YES" id="115">
                                 <font key="font" size="11" name="HelveticaNeue-Bold"/>
                                 <color key="textColor" white="0.0" alpha="0.59999999999999998" colorSpace="deviceWhite"/>
@@ -47,8 +45,7 @@
                             </textFieldCell>
                         </textField>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="992" translatesAutoresizingMaskIntoConstraints="NO" id="136">
-                            <rect key="frame" x="5" y="5" width="37" height="17"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <rect key="frame" x="6" y="5" width="37" height="13"/>
                             <textFieldCell key="cell" lineBreakMode="truncatingMiddle" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="left" title="Model" usesSingleLineMode="YES" id="141">
                                 <font key="font" size="11" name="HelveticaNeue-Bold"/>
                                 <color key="textColor" white="0.0" alpha="0.59999999999999998" colorSpace="deviceWhite"/>
@@ -56,24 +53,18 @@
                             </textFieldCell>
                         </textField>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="137">
-                            <rect key="frame" x="125" y="7" width="41" height="15"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <rect key="frame" x="124" y="6" width="41" height="12"/>
                             <textFieldCell key="cell" lineBreakMode="truncatingTail" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Filesize" usesSingleLineMode="YES" id="140">
                                 <font key="font" size="11" name="HelveticaNeue"/>
                                 <color key="textColor" white="0.0" alpha="0.59999999999999998" colorSpace="deviceWhite"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <box autoresizesSubviews="NO" verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="128">
+                        <box autoresizesSubviews="NO" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="128">
                             <rect key="frame" x="8" y="18" width="155" height="5"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <font key="titleFont" metaFont="system"/>
                         </box>
                         <textField focusRingType="exterior" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="417" customClass="PIXFileTextField">
-                            <rect key="frame" x="5" y="41" width="162" height="22"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <rect key="frame" x="6" y="41" width="159" height="22"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="22" id="423"/>
                             </constraints>
@@ -118,6 +109,7 @@
                 <constraint firstItem="30" firstAttribute="top" secondItem="1" secondAttribute="top" constant="6" id="37"/>
                 <constraint firstItem="30" firstAttribute="bottom" secondItem="1" secondAttribute="bottom" constant="-10" id="39"/>
             </constraints>
+            <point key="canvasLocation" x="133" y="150"/>
         </customView>
     </objects>
 </document>
