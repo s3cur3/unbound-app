@@ -82,7 +82,7 @@ import Cocoa
 
         // Create activity indicator
         let spinner = PIXSeperatedSpinnerView(frame: NSMakeRect(0, 0, 18, 18))
-        spinner.indicator.bind(NSBindingName("animate"), to: PIXFileParser.shared(), withKeyPath: "isWorking")
+        spinner.indicator.bind(NSBindingName("animate"), to: PIXFileParser.shared()!, withKeyPath: "isWorking")
 
         activityIndicator.view = spinner
         activityIndicator.label = "Activity"
@@ -94,7 +94,6 @@ import Cocoa
 
     @objc func pushViewController(viewController: PIXViewController) {
         mainWindow.disableFlushing()
-        NSDisableScreenUpdates()
 
         if let currentViewController = viewControllers.last {
             titleObservation = nil
@@ -117,7 +116,6 @@ import Cocoa
 
         viewControllers.append(viewController)
 
-        NSEnableScreenUpdates()
         mainWindow.enableFlushing()
 
         updateToolbar()
@@ -129,7 +127,6 @@ import Cocoa
         }
 
         mainWindow.disableFlushing()
-        NSDisableScreenUpdates()
 
         let oldViewController = viewControllers.removeLast()
         oldViewController.willHidePIXView()
@@ -150,7 +147,6 @@ import Cocoa
             view.addSubview(newViewController.view)
         }
 
-        NSEnableScreenUpdates()
         mainWindow.enableFlushing()
 
         updateToolbar()

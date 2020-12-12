@@ -38,9 +38,7 @@ class GeneralPrefsViewController: NSViewController, MASPreferencesViewController
     }
 
     private func updateEditors() {
-        guard let button = defaultEditorButton,
-              let imageUrl = Bundle.main.pathForImageResource("temp")
-        else {
+        guard let button = defaultEditorButton, let imageUrl = Bundle.main.pathForImageResource("temp") else {
             return
         }
 
@@ -98,9 +96,9 @@ class GeneralPrefsViewController: NSViewController, MASPreferencesViewController
     }
 
     @IBAction func setDefaultEditor(sender: NSPopUpButton) {
-        guard let index = sender.selectedItem?.tag,
-              let item = editorApps?[index]
-        else { return }
+        guard let index = sender.selectedItem?.tag, let item = editorApps?[index] else {
+            return
+        }
 
         defaults[prefDefaultEditorPath] = item.path.absoluteString
         defaults[prefDefaultEditorName] = item.name
