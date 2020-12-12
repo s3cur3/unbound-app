@@ -663,7 +663,6 @@ const CGFloat kThumbnailSize = 370.0f;
             DLog(@"Not a vidoe file - returning");
             return;
         }
-        NSError *anError;
 
         AVAsset *asset = [AVAsset assetWithURL:urlForImage];
         AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
