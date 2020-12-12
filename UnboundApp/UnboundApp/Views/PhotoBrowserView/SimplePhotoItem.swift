@@ -55,9 +55,9 @@ import Cocoa
         self.imageView?.image = image ?? placeholder
 
         // Fit the selection layer around the image
-        guard let image = image,
-              let imageView = self.imageView
-        else { return }
+        guard let image = image, let imageView = self.imageView else {
+            return
+        }
 
         let imageFrame = NSMakeRect(0.0, 0.0, image.size.width, image.size.height)
         selectionLayer.frame = imageFrame.fitting(container: imageView.frame).insetBy(dx: -5.0, dy: -5.0)
