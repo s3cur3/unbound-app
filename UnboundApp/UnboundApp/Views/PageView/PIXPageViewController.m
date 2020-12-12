@@ -855,7 +855,7 @@
     NSMenuItem *editWithDefault = [[NSMenuItem alloc] init];
     editWithDefault.title = [NSString stringWithFormat:NSLocalizedString(@"menu.edit_with_default", @"Edit with %@"), defaultAppName];
     editWithDefault.target = self;
-    editWithDefault.action = @selector(openInDefaultApp:);
+    editWithDefault.action = @selector(openInDefaultApp);
     editWithDefault.keyEquivalent = @"e";
     editWithDefault.keyEquivalentModifierMask = NSEventModifierFlagCommand;
     [menu addItem:editWithDefault];
