@@ -641,7 +641,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
                 
-                for(NSURL * aScopeURL in _sandboxScopeURLs)
+				for(NSURL * aScopeURL in self->_sandboxScopeURLs)
                 {
                     [aScopeURL stopAccessingSecurityScopedResource];
                 }
