@@ -15,6 +15,7 @@
 
 #import "ArchDirectoryObservationCenter.h"
 #import "NSURL+DirectoryObserver.h"
+#import "PIXPhotoUtils.h"
 
 #include <sys/types.h>
 #include <pwd.h>
@@ -134,9 +135,8 @@ NSString * aDefaultDropBoxPhotosDirectory(void)
  * tight loops where it's called
  */
  
-NSDictionary * dictionaryForURL(NSURL * url)
+static NSDictionary * dictionaryForURL(NSURL * url)
 {
-    
     BOOL isImageFile = NO;
     NSString *utiValue;
     [url getResourceValue:&utiValue forKey:NSURLTypeIdentifierKey error:nil];
@@ -554,7 +554,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                                                           options:options
                                                      errorHandler:^(NSURL *url, NSError *error) {
                                                          
-                                                         for(NSURL * aScopeURL in _sandboxScopeURLs)
+                                                         for(NSURL * aScopeURL in self->_sandboxScopeURLs)
                                                          {
                                                              [aScopeURL stopAccessingSecurityScopedResource];
                                                          }
@@ -1679,18 +1679,14 @@ NSDictionary * dictionaryForURL(NSURL * url)
 
 -(BOOL)userChooseFolderDialog
 {
-    // Create the File Open Dialog class.
     NSOpenPanel* openPanel = [NSOpenPanel openPanel];
-    
     [openPanel setAllowsMultipleSelection:NO];
     [openPanel setCanChooseDirectories:YES];
     [openPanel setCanChooseFiles:NO];
-    
     [openPanel setCanCreateDirectories:YES];
     //[openPanel setDirectoryURL:[NSURL fileURLWithPath:@"~/"]];
     
     NSInteger result = [openPanel runModal];
-    
     if(result == NSFileHandlingPanelOKButton && [[openPanel URLs] count] == 1)
     {
         NSURL *selectedURL = [[openPanel URLs] lastObject];
@@ -1699,9 +1695,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
             [self mountedVolumesInfo];
 #endif
             NSString *warningMessage = [NSString stringWithFormat:@"The root folder you selected is read-only which may prevent some app features from functioning properly. Continue with this folder anyway?"];
-            if (NSRunAlertPanel(@"Read & Write Permissions Are Required", warningMessage, @"OK", @"Cancel", nil) == NSAlertDefaultReturn) {
-                //User selected to continue with this folder - do nothing
-            } else {
+            if(cancellableAlert(@"Read & Write Permissions Are Required", warningMessage) == modal_response_cancel) {
                 //If user cancels go back to the preferenes view without making a change
                 return NO;
             }
@@ -1713,13 +1707,10 @@ NSDictionary * dictionaryForURL(NSURL * url)
         // Check if the user chose a dropbox folder where we should only use the Photos and Camera Uploads subfolders
         if([[selectedURL lastPathComponent] isEqualToString:@"Dropbox"])
         {
-            
-            
             NSArray * dropboxURLS = @[[selectedURL URLByAppendingPathComponent:@"Photos"],
                                       [selectedURL URLByAppendingPathComponent:@"Camera Uploads"]];
             
             BOOL urlsExist = YES;
-            
             for(NSURL * aURL in dropboxURLS)
             {
                 BOOL isDir = NO;
@@ -1728,19 +1719,21 @@ NSDictionary * dictionaryForURL(NSURL * url)
                     urlsExist = NO;
                 }
             }
-            
-            
-            
+
             // if all the urls are good, ask the user if we should use the subfolders
             if(urlsExist)
             {
-                NSString *message = [NSString stringWithFormat:@"You've selected your Dropbox folder for your photos. Would you like Unbound to scan just the Photos and Camera Uploads subfolders? This matches the default configuration of Unbound for iPhone and iPad."];
-                if (NSRunAlertPanel(@"Use Photos and Camera Uploads Folder?", message, @"Use Subfolders", @"Use entire Dropbox folder", nil) == NSAlertDefaultReturn) {
-                    urls = dropboxURLS;
-                }
+				NSAlert * alert = [[NSAlert alloc] init];
+				alert.messageText = @"Use Photos and Camera Uploads Folder?";
+				alert.informativeText = [NSString stringWithFormat:@"You've selected your Dropbox folder for your photos. Would you like Unbound to scan just the Photos and Camera Uploads subfolders? This is a common usage."];
+				[alert addButtonWithTitle:@"Use Just Photos & Camera Uploads"];
+				[alert addButtonWithTitle:@"Use Entire Dropbox"];
+				if([alert runModal] == NSAlertFirstButtonReturn)
+				{
+					urls = dropboxURLS;
+				}
             }
         }
-        
         
         [[PIXAppDelegate sharedAppDelegate] showMainWindow:nil];
         

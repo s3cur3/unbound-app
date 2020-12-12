@@ -17,6 +17,7 @@
 #import "PIXAlbum.h"
 #import "PIXCollectionToolbar.h"
 #import "PIXCollectionView.h"
+#import "PIXPhotoUtils.h"
 #import <Quartz/Quartz.h>
 
 static NSString *kContentTitleKey, *kContentImageKey;
@@ -273,11 +274,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 - (BOOL)verifyActionForItemsWithTitle:(NSString *)aTitle message:(NSString *)warningMessage
 {
-    if (NSRunAlertPanel(aTitle, warningMessage, @"OK", @"Cancel", nil) == NSAlertDefaultReturn) {
-        return YES;
-    } else {
-        return NO;
-    }
+    return cancellableAlert(aTitle, warningMessage) == modal_response_ok;
 }
 
 - (void)getInfo:(id)sender

@@ -102,6 +102,9 @@
                 DLog(@"Player failed to load video. %@", self.player.error)
                 break;
             }
+				
+			case AVPlayerStatusUnknown:
+				break;
         }
     } else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];

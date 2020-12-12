@@ -523,6 +523,8 @@
         case PhotoStyleCompact: return @"SimplePhotoItem";
         case PhotoStyleRegular: return @"RegularPhotoItem";
     }
+    assert(!"Unhandleded photo style");
+    return @"SimplePhotoItem";
 }
 
 - (NSObject<PhotoItem> *)photoItemForObjectAtIndexPath:(NSIndexPath *)indexPath inCollectionView:(NSCollectionView *)collectionView {

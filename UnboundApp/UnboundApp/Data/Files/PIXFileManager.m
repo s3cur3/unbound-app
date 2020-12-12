@@ -8,15 +8,11 @@
 
 #import "PIXFileManager.h"
 #import "PIXAppDelegate.h"
-//#import "PIXAppDelegate+CoreDataUtils.h"
 #import "PIXFileParser.h"
-//#import "MainWindowController.h"
-//#import "FileSystemEventController.h"
-//#import "Album.h"
 #import "PIXAlbum.h"
 #import "PIXPhoto.h"
-#import <CoreFoundation/CoreFoundation.h>
 #import "PIXDefines.h"
+#import "PIXPhotoUtils.h"
 #import "Unbound-Swift.h"
 
 #import "PIXProgressWindowController.h"
@@ -303,7 +299,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     
     for (PIXPhoto *anItem in items)
     {
-        PIXAlbum * album = [(PIXPhoto *)anItem album];
+        PIXAlbum * album = [anItem album];
         
         if(album)
         {
@@ -534,10 +530,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     if([selectedItems count] == 0) return;
     
     NSMutableArray *itemsToDelete = [[selectedItems allObjects] mutableCopy];
-    
-    
-    NSString * deleteString = @"Delete";
-    
+
     NSManagedObject *object = [itemsToDelete lastObject];
     NSString *objectType = @"Item";
     
@@ -551,12 +544,9 @@ typedef NSUInteger PIXOverwriteStrategy;
         objectType = ALBUM;
         suppressKey = @"PIX_supressAlbumDeleteWarning";
     }
-    if([itemsToDelete count] > 1)
-    {
-        deleteString = [NSString stringWithFormat:@"%ld %@s", [itemsToDelete count], objectType];
-    } else {
-        deleteString = objectType;
-    }
+	NSString * deleteString = [itemsToDelete count] > 1 ?
+							  [NSString stringWithFormat:@"%ld %@s", [itemsToDelete count], objectType] :
+							  objectType;
     
     NSString *warningTitle = [NSString stringWithFormat:@"Delete %@?", deleteString];
     NSString *warningButtonConfirm = [NSString stringWithFormat:@"Delete %@", deleteString];
@@ -649,13 +639,13 @@ typedef NSUInteger PIXOverwriteStrategy;
         }
         
         //if a subdirectory is found, then do not delete
-        if ([isDirectory boolValue] == YES) {
+        if([isDirectory boolValue]) {
             DLog(@"found subdirectory at : %@", url.path);
             return NO;
         }
         
         //If a non-image file is found, do not delete
-        if ([self isImageFile:url.path]==NO)
+        if(![self isImageFile:url.path])
         {
             return NO;
         }
@@ -688,8 +678,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     PIXAlbum *anAlbum = (PIXAlbum *)[[PIXFileParser sharedFileParser] fetchAlbumWithPath:anAlbumPath inContext:context];
     
     if (anAlbum==nil) {
-        NSString *errMsg = [NSString stringWithFormat:@"Unable to undo album rename operation.\n(%@)", anAlbumPath];
-        NSRunAlertPanel(errMsg, @"Undo Failed", @"OK", nil, nil);
+        alert(@"Undo Failed", [NSString stringWithFormat:@"Unable to undo album rename operation.\n(%@)", anAlbumPath]);
         return NO;
     }
     return [self renameAlbum:anAlbum withName:aNewName];
@@ -718,8 +707,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     
     if(numberOfMatches != 0)
     {
-        NSString *errMsg = [NSString stringWithFormat:@"\"%@\" is an invalid name for a folder.", aNewName];
-        NSRunAlertPanel(@"Invalid Folder Name", errMsg, @"OK", nil, nil);
+        alert(@"Invalid Folder Name", [NSString stringWithFormat:@"\"%@\" is an invalid name for a folder.", aNewName]);
         return NO;
     }
     
@@ -729,11 +717,9 @@ typedef NSUInteger PIXOverwriteStrategy;
     NSString *parentFolderPath = [anAlbum.path stringByDeletingLastPathComponent];
     NSString *oldAlbumName = [anAlbum.path lastPathComponent];
     NSString *newFilePath = [parentFolderPath stringByAppendingPathComponent:aNewName];
-    if ([[NSFileManager defaultManager]
-         fileExistsAtPath: newFilePath])
+    if ([[NSFileManager defaultManager] fileExistsAtPath: newFilePath])
     {
-        NSString *errMsg = [NSString stringWithFormat:@"There's already a directory with the name \"%@\" at this album's location. Please enter a different name.", aNewName];
-        NSRunAlertPanel(@"Duplicate Album Name", errMsg, @"OK", nil, nil);
+        alert(@"Duplicate Album Name", [NSString stringWithFormat:@"There's already a directory with the name \"%@\" at this album's location. Please enter a different name.", aNewName]);
         return NO;
     }
 
@@ -811,8 +797,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     PIXPhoto * aPhoto = [photos lastObject];
     
     if (aPhoto==nil) {
-        NSString *errMsg = [NSString stringWithFormat:@"Unable to undo photo rename operation.\n(%@)", aPhotoPath];
-        NSRunAlertPanel(errMsg, @"Undo Failed", @"OK", nil, nil);
+        alert(@"Undo Failed", [NSString stringWithFormat:@"Unable to undo photo rename operation.\n(%@)", aPhotoPath]);
         return NO;
     }
     return [self renamePhoto:aPhoto withName:aNewName];
@@ -903,8 +888,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     
     if(numberOfMatches != 0)
     {
-        NSString *errMsg = [NSString stringWithFormat:@"\"%@\" is an invalid name for a file.", aNewName];
-        NSRunAlertPanel(@"Invalid File Name", errMsg, @"OK", nil, nil);
+        alert(@"Invalid File Name", [NSString stringWithFormat:@"\"%@\" is an invalid name for a file.", aNewName]);
         return NO;
     }
     
@@ -916,8 +900,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     if ([[NSFileManager defaultManager]
          fileExistsAtPath: newFilePath])
     {
-        NSString *errMsg = [NSString stringWithFormat:@"There's already a photo with the name \"%@\" at this album's location. Please enter a different name.", aNewName];
-        NSRunAlertPanel(@"Duplicate Photo Name", errMsg, @"OK", nil, nil);
+        alert(@"Duplicate Photo Name", [NSString stringWithFormat:@"There's already a photo with the name \"%@\" at this album's location. Please enter a different name.", aNewName]);
         return NO;
     }
     
@@ -1759,9 +1742,9 @@ typedef NSUInteger PIXOverwriteStrategy;
     NSMutableArray *pathsToPaste = [NSMutableArray arrayWithCapacity:[files count]];
     for (NSString * path in files)
     {
-        if (([[path stringByDeletingLastPathComponent] isEqualToString:destPath] == NO) &&
-        ([self isImageFile:path]==YES) && ([path isEqualToString:destPath]==NO))
-        {
+		if(![[path stringByDeletingLastPathComponent] isEqualToString:destPath] &&
+		   [self isImageFile:path] && ![path isEqualToString:destPath])
+		{
             [pathsToPaste addObject:@{@"source" : path, @"destination" : destPath}];
         }
     }
@@ -1779,7 +1762,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     NSArray *observedDirectories = [[[PIXFileParser sharedFileParser] observedDirectories] valueForKey:@"path"];
     for (NSString *observedPath in observedDirectories)
     {
-        if ([[observedPath lastPathComponent] isEqualToString:@"Photos"]==YES) {
+        if ([[observedPath lastPathComponent] isEqualToString:@"Photos"]) {
             return observedPath;
         }
     }
