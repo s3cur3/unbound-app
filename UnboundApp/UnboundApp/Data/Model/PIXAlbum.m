@@ -397,13 +397,10 @@ static NSString *const kItemsKey = @"photos";
 
 
 -(void) checkDates
-{    
-    
+{
     if([self isReallyDeleted]) return;
-    
-    
+
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        
         NSManagedObjectContext * threadSafeContext = [[PIXAppDelegate sharedAppDelegate] threadSafePassThroughMOC];
         
         PIXAlbum * threadAlbum = (PIXAlbum *)[threadSafeContext objectWithID:[self objectID]];
@@ -435,14 +432,10 @@ static NSString *const kItemsKey = @"photos";
         
         // dispatch async again to keep the execution after the main thread settings of the exif data
         dispatch_async(dispatch_get_main_queue(), ^{
-            
             [self setPhotos:self.photos updateCoverImage:YES];
             [self flush];
-            
-            [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
- 
+            [[PIXAppDelegate sharedAppDelegate] saveDBToDiskWithRateLimit];
         });
-        
     });
     
 }
