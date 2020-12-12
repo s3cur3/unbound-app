@@ -50,7 +50,7 @@
 @property (atomic, strong) NSImage *fullsizeImage;
 @property (atomic, assign, readwrite) BOOL cancelFullsizeLoadOperation;
 
-@property (atomic) BOOL isReallyDeleted;
+@property (atomic, readonly) BOOL isReallyDeleted;
 
 //TODO: get rid of this
 -(NSURL *)filePath;

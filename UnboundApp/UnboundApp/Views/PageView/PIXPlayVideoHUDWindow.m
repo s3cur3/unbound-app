@@ -21,7 +21,7 @@
  provides a mechanism for controlling how objects of this class are created.
  */
 - (id)initWithContentRect:(NSRect)contentRect
-                styleMask:(NSUInteger)aStyle
+                styleMask:(NSWindowStyleMask)aStyle
                   backing:(NSBackingStoreType)bufferingType
                     defer:(BOOL)flag {
     // Using NSBorderlessWindowMask results in a window without a title bar.
