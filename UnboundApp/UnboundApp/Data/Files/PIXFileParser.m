@@ -634,8 +634,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
             }
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                
-                [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
+                [[PIXAppDelegate sharedAppDelegate] saveDBToDiskWithRateLimit];
                 
                 // use this flag so the deep scan will restart if the app closes half way through
                 [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kDeepScanIncompleteKey];
