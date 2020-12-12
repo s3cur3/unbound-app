@@ -407,7 +407,6 @@
 		8C9FA5C0183ACB98000AEBC9 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C9FA5BF183ACB98000AEBC9 /* WebKit.framework */; };
 		8CF05AEF17C3097400AB88B5 /* Licences.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8CF05AEE17C3097300AB88B5 /* Licences.txt */; };
 		8CF05AF017C30A2500AB88B5 /* Licences.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8CF05AEE17C3097300AB88B5 /* Licences.txt */; };
-		8CF05AF317C33B6E00AB88B5 /* Unbound.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 1D69E646170DD7B70031AF73 /* Unbound.entitlements */; };
 		8CF05AF417C33B7300AB88B5 /* UnboundTrial.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 8C43CCF017385A9700A4395F /* UnboundTrial.entitlements */; };
 		97700A11C7BE61A247F97CD8 /* Pods_Unbound_Unbound_Trial.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38F77FC53C9305D97EB7307A /* Pods_Unbound_Unbound_Trial.framework */; };
 /* End PBXBuildFile section */
@@ -1439,7 +1438,6 @@
 			files = (
 				8C4313531828432E00DB0053 /* Images.xcassets in Resources */,
 				8CF05AEF17C3097400AB88B5 /* Licences.txt in Resources */,
-				8CF05AF317C33B6E00AB88B5 /* Unbound.entitlements in Resources */,
 				458ADC8F5121EEAC61F20378 /* PIXAboutWindowController.xib in Resources */,
 				458AD84878C233514E695642 /* LibraryPickerWindowController.xib in Resources */,
 				458AD2A60F98DABA8B0AD970 /* PIXProgressWindowController.xib in Resources */,

@@ -1,23 +1,23 @@
 {
   "images" : [
     {
+      "filename" : "theme_dark.png",
       "idiom" : "universal",
-      "filename" : "btn_theme_dark.png",
       "scale" : "1x"
     },
     {
+      "filename" : "theme_dark@2x.png",
       "idiom" : "universal",
-      "filename" : "btn_theme_dark@2x.png",
       "scale" : "2x"
     },
     {
-      "idiom" : "universal",
       "filename" : "btn_theme_dark@3x.png",
+      "idiom" : "universal",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }
