@@ -12,6 +12,7 @@ class SwiftUIWindowController<RootView: View>: NSWindowController {
 
 @objc class LibraryPickerObjCBridge: NSView {
     @objc class func makeLibraryPicker() -> NSWindowController {
-        SwiftUIWindowController(rootView: LibraryPicker())
+        // TODO: pull dirs from prefs
+        SwiftUIWindowController(rootView: LibraryPicker(dirs: []))
     }
 }
