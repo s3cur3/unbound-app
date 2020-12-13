@@ -28,6 +28,7 @@
 		2F7781E12585B18800C24525 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F7781DF2585B18000C24525 /* SwiftUI.framework */; };
 		2F7781E32585B48E00C24525 /* LibraryPickerObjCBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7781E22585B48E00C24525 /* LibraryPickerObjCBridge.swift */; };
 		2F7781E42586B21B00C24525 /* LibraryDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7781DD2585AF5900C24525 /* LibraryDirectory.swift */; };
+		2F7781E92586B30600C24525 /* LibraryPickerObjCBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7781E22585B48E00C24525 /* LibraryPickerObjCBridge.swift */; };
 		2FC02C402482C1DC00408258 /* MathUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 2FC02C3F2482C1DC00408258 /* MathUtils.c */; };
 		2FC02C412482C1DC00408258 /* MathUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 2FC02C3F2482C1DC00408258 /* MathUtils.c */; };
 		306DE24CB6BC26FEE2D1E93E /* Pods_Unbound.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9FE79A9C318BC57A3185BBD /* Pods_Unbound.framework */; };
@@ -1938,6 +1939,7 @@
 				458AD6F233473D8441CA9006 /* PIXPhoto.m in Sources */,
 				458AD64DEAB0920DB18F855C /* PIXDataModel.xcdatamodeld in Sources */,
 				458AD5A5BACB12ED72838495 /* PIXCollectionToolbar.m in Sources */,
+				2F7781E92586B30600C24525 /* LibraryPickerObjCBridge.swift in Sources */,
 				458ADE38B7D7DAD30EBFDDB9 /* NSCollectionView+PIXSelection.m in Sources */,
 				458AD16EF4BD15153C72E141 /* PIXCollectionView.m in Sources */,
 				458AD38194E7A5B3C5D61971 /* NavigationController.swift in Sources */,
