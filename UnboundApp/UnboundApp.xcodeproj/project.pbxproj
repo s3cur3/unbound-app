@@ -27,6 +27,7 @@
 		2F7781E02585B18000C24525 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F7781DF2585B18000C24525 /* SwiftUI.framework */; };
 		2F7781E12585B18800C24525 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F7781DF2585B18000C24525 /* SwiftUI.framework */; };
 		2F7781E32585B48E00C24525 /* LibraryPickerObjCBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7781E22585B48E00C24525 /* LibraryPickerObjCBridge.swift */; };
+		2F7781E42586B21B00C24525 /* LibraryDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7781DD2585AF5900C24525 /* LibraryDirectory.swift */; };
 		2FC02C402482C1DC00408258 /* MathUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 2FC02C3F2482C1DC00408258 /* MathUtils.c */; };
 		2FC02C412482C1DC00408258 /* MathUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 2FC02C3F2482C1DC00408258 /* MathUtils.c */; };
 		306DE24CB6BC26FEE2D1E93E /* Pods_Unbound.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9FE79A9C318BC57A3185BBD /* Pods_Unbound.framework */; };
@@ -1883,6 +1884,7 @@
 				458ADD1104108B91EF3C347B /* PIXProgressWindowController.m in Sources */,
 				458AD5250E0ADC4197404162 /* PIXRoundRectView.m in Sources */,
 				2F6706362582F25000487B31 /* LibraryPickerWindowController.swift in Sources */,
+				2F7781E42586B21B00C24525 /* LibraryDirectory.swift in Sources */,
 				458AD6919E4F4F10F7D20CC2 /* PIXPhotoUtils.m in Sources */,
 				458ADABBCA769211832349F5 /* PIXShareManager.m in Sources */,
 				458AD39F3EFCF715B4EFFD82 /* PIXSeperatedSpinnerView.m in Sources */,
