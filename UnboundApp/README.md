@@ -29,7 +29,7 @@ This will install SwiftFormat for Xcode in your Applications folder. Double-clic
 
 ## Releasing via The Mac App Store
 1. Bump the Version and Build fields in Project -> Unbound -> General (these correspond to `Build version` and `Short Build Version String` in the `/UnboundApp/Supporting Files/UnboundApp-Info.plist` file)
-1. Using Xcode, build and archive the `Unbound Trial` target.
+1. Using Xcode, build and archive the `Unbound` target.
 1. Open the Organizer window, and select the created archive.
 1. Click Distribute App
 1. Mac App Store, Next
@@ -37,9 +37,11 @@ This will install SwiftFormat for Xcode in your Applications folder. Double-clic
 1. Remain opted in to uploading symbols, Next
 1. Automatically manage signing, Next
 1. If it gives you an error about a missing signing cert, add it (currently in Dropbox/Conversion Insights/Apple Signing Certificate.p12, password is in 1Password under "Conversion Insights signing certificate")
+1. # **Update release notes!!**
 
-## Releasing via Paddle
+## Releasing the Demo via the Web Site
 
+1. Using Xcode, build and archive the `Unbound Trial` target.
 1. Open the Organizer window and select the Mac App Store build you did above
 1. Click `Distribute App`, and choose the `Developer ID` distribution method.
 1. Have it automatically manage signing
@@ -50,6 +52,10 @@ This will install SwiftFormat for Xcode in your Applications folder. Double-clic
     - Ensure it says both "accepted" and "source=Notarized Developer ID"—not *just* "source=Developer ID"
 1. Zip the resulting `.app` file using ditto.
     ```
-    ditto -ck --rsrc --sequesterRsrc --keepParent input.app output.zip
+    ditto -ck --rsrc --sequesterRsrc --keepParent "Unbound Trial.app" "Unbound Trial.app.zip"
     ```
-1. Upload to the web
+1. Move to the `unboundapp.com` repo: `$ mv "Unbound Trial.app.zip" ~/Documents/repos/unboundapp.com/downloads/`
+1. Add: `$ cd ~/Documents/repos/unboundapp.com/downloads/ && git add "Unbound Trial.app.zip"`
+1. Commit: `$ git commit -m "feat (release): Trial version 1.3.5"`
+1. Push: `$ git push`
+1. # **Update release notes!!**
