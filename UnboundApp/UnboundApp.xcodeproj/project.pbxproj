@@ -21,6 +21,12 @@
 		2F6706352582EEE100487B31 /* LibraryPickerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6706342582EEE100487B31 /* LibraryPickerWindowController.swift */; };
 		2F6706362582F25000487B31 /* LibraryPickerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6706342582EEE100487B31 /* LibraryPickerWindowController.swift */; };
 		2F6706392583112F00487B31 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F6706372583111600487B31 /* StoreKit.framework */; };
+		2F7781DB2585AB5700C24525 /* LibraryPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7781DA2585AB5700C24525 /* LibraryPicker.swift */; };
+		2F7781DC2585AE5700C24525 /* LibraryPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7781DA2585AB5700C24525 /* LibraryPicker.swift */; };
+		2F7781DE2585AF5900C24525 /* LibraryDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7781DD2585AF5900C24525 /* LibraryDirectory.swift */; };
+		2F7781E02585B18000C24525 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F7781DF2585B18000C24525 /* SwiftUI.framework */; };
+		2F7781E12585B18800C24525 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F7781DF2585B18000C24525 /* SwiftUI.framework */; };
+		2F7781E32585B48E00C24525 /* LibraryPickerObjCBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7781E22585B48E00C24525 /* LibraryPickerObjCBridge.swift */; };
 		2FC02C402482C1DC00408258 /* MathUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 2FC02C3F2482C1DC00408258 /* MathUtils.c */; };
 		2FC02C412482C1DC00408258 /* MathUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 2FC02C3F2482C1DC00408258 /* MathUtils.c */; };
 		306DE24CB6BC26FEE2D1E93E /* Pods_Unbound.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9FE79A9C318BC57A3185BBD /* Pods_Unbound.framework */; };
@@ -451,6 +457,10 @@
 		2F670610257C7E5500487B31 /* PIXApplicationExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIXApplicationExtensions.h; path = Kevlar/PIXApplicationExtensions.h; sourceTree = "<group>"; };
 		2F6706342582EEE100487B31 /* LibraryPickerWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryPickerWindowController.swift; sourceTree = "<group>"; };
 		2F6706372583111600487B31 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		2F7781DA2585AB5700C24525 /* LibraryPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryPicker.swift; sourceTree = "<group>"; };
+		2F7781DD2585AF5900C24525 /* LibraryDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryDirectory.swift; sourceTree = "<group>"; };
+		2F7781DF2585B18000C24525 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		2F7781E22585B48E00C24525 /* LibraryPickerObjCBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryPickerObjCBridge.swift; sourceTree = "<group>"; };
 		2FC02C3E2482BEDD00408258 /* MathUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MathUtils.h; sourceTree = "<group>"; };
 		2FC02C3F2482C1DC00408258 /* MathUtils.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = MathUtils.c; sourceTree = "<group>"; };
 		38F77FC53C9305D97EB7307A /* Pods_Unbound_Unbound_Trial.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unbound_Unbound_Trial.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -723,6 +733,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F7781E02585B18000C24525 /* SwiftUI.framework in Frameworks */,
 				2F6706392583112F00487B31 /* StoreKit.framework in Frameworks */,
 				8C9565051846802800B5627B /* SystemConfiguration.framework in Frameworks */,
 				8C94E027183DA6D800827888 /* WebKit.framework in Frameworks */,
@@ -741,6 +752,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F7781E12585B18800C24525 /* SwiftUI.framework in Frameworks */,
 				041C82721F9A487C005C055E /* SystemConfiguration.framework in Frameworks */,
 				8C9FA5C0183ACB98000AEBC9 /* WebKit.framework in Frameworks */,
 				8C9FA5BE183ACB90000AEBC9 /* CoreLocation.framework in Frameworks */,
@@ -825,6 +837,7 @@
 		1DB2F84D167ABE87008AC0F7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2F7781DF2585B18000C24525 /* SwiftUI.framework */,
 				2F6706372583111600487B31 /* StoreKit.framework */,
 				8C9565041846802800B5627B /* SystemConfiguration.framework */,
 				8C9FA5BF183ACB98000AEBC9 /* WebKit.framework */,
@@ -1202,6 +1215,8 @@
 				458ADDF3AF98643F8FF2A368 /* PIXRoundRectView.m */,
 				458ADC97EF82B2CFDA69777E /* PIXRoundRectView.h */,
 				2F6706342582EEE100487B31 /* LibraryPickerWindowController.swift */,
+				2F7781DA2585AB5700C24525 /* LibraryPicker.swift */,
+				2F7781E22585B48E00C24525 /* LibraryPickerObjCBridge.swift */,
 			);
 			path = LibraryPicker;
 			sourceTree = "<group>";
@@ -1307,6 +1322,7 @@
 				458AD756CBDDCC823D0AAF0F /* PIXPhoto.m */,
 				458ADE86B70DA362B49D2476 /* PIXPhoto.h */,
 				458AD488AB617F0797FF5049 /* PIXDataModel.xcdatamodeld */,
+				2F7781DD2585AF5900C24525 /* LibraryDirectory.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1774,6 +1790,7 @@
 				458AD5A64C03540A01C7E839 /* PIXProgressWindowController.m in Sources */,
 				458ADA05F9F750121405F8BF /* PIXRoundRectView.m in Sources */,
 				458AD186E2F724142E46F51C /* PIXPhotoUtils.m in Sources */,
+				2F7781DE2585AF5900C24525 /* LibraryDirectory.swift in Sources */,
 				458ADEFCFF617BDD0AA18258 /* PIXShareManager.m in Sources */,
 				458AD8650E6FEA53AA652733 /* PIXSeperatedSpinnerView.m in Sources */,
 				458AD0BA1A0F2C332A96EEF9 /* PIXHUDMessageController.m in Sources */,
@@ -1827,12 +1844,14 @@
 				458AD04678D2A1BE2EC5642D /* PIXDataModel.xcdatamodeld in Sources */,
 				458AD0BAA89DFD1CCF9DBECC /* PIXCollectionToolbar.m in Sources */,
 				458AD01FBD59225A8AD793B2 /* NSCollectionView+PIXSelection.m in Sources */,
+				2F7781E32585B48E00C24525 /* LibraryPickerObjCBridge.swift in Sources */,
 				458ADD9279C5C38C0EB41098 /* PIXCollectionView.m in Sources */,
 				458AD7817E363896733B8673 /* NavigationController.swift in Sources */,
 				458ADA20C3E7369A700A73FA /* AdaptiveToolbarSpace.swift in Sources */,
 				458AD512E47B0FD2D69945D0 /* ToolbarButton.swift in Sources */,
 				458ADD1FE1B0094D20A586B3 /* ThemedWindow.swift in Sources */,
 				458AD902BB7B5E83100EB491 /* MainWindowController.swift in Sources */,
+				2F7781DB2585AB5700C24525 /* LibraryPicker.swift in Sources */,
 				458ADBF01CCAA09C34846927 /* AppearancePrefsViewController.swift in Sources */,
 				458ADED197ED5AF95CF390CF /* PreferencesWindowController.swift in Sources */,
 				458AD560700838388CD47D32 /* GeneralPrefsViewController.swift in Sources */,
@@ -1923,6 +1942,7 @@
 				458ADA4B9E97D1AA60E6E267 /* AdaptiveToolbarSpace.swift in Sources */,
 				458AD5B1A93184B226286527 /* ToolbarButton.swift in Sources */,
 				458ADF45565BA330BACCDD3F /* ThemedWindow.swift in Sources */,
+				2F7781DC2585AE5700C24525 /* LibraryPicker.swift in Sources */,
 				458AD4C2F6AEB03E7D0D5642 /* MainWindowController.swift in Sources */,
 				458AD082EB9DB013717272CD /* AppearancePrefsViewController.swift in Sources */,
 				458ADE5749D884460DE19968 /* PreferencesWindowController.swift in Sources */,
@@ -2013,7 +2033,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "UnboundApp/Supporting Files/Unbound-Bridging-Header.h";
@@ -2061,7 +2081,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "UnboundApp/Supporting Files/Unbound-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

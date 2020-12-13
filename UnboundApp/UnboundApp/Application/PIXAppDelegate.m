@@ -185,7 +185,7 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
 {
     if (self.introWindow == nil)
     {
-        self.introWindow = [LibraryPickerWindowController create];
+		self.introWindow = [LibraryPickerObjCBridge makeLibraryPicker];
     }
     [self.introWindow showWindow:self];
 }
