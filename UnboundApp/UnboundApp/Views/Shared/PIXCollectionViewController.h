@@ -34,6 +34,10 @@
 
 - (NSMenu *)menuForObject:(id)object;
 
+- (void)updateToolbarForPhotos;
+- (void)updateToolbarForAlbums;
+- (void)updateToolbar:(NSString *)localizerForCount;
+
 - (IBAction)macAppStoreButtonPressed:(id)sender;
 - (IBAction)importPhotosButtonPressed:(id)sender;
 - (IBAction)chooseFolderButtonPressed:(id)sender;

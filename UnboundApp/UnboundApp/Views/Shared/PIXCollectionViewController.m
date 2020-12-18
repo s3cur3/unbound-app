@@ -375,6 +375,24 @@ static NSString *kContentTitleKey, *kContentImageKey;
     }
 }
 
+- (void)updateToolbarForPhotos {
+    [self updateToolbar:NSLocalizedString(@"%lu photo(s) selected", @"Number of selected photos")];
+}
+- (void)updateToolbarForAlbums {
+    [self updateToolbar:NSLocalizedString(@"%lu album(s) selected", @"Number of selected albums")];
+}
+- (void)updateToolbar:(NSString *)localizerForCount {
+    NSUInteger count = self.collectionView.selectionIndexPaths.count;
+    if (count == 0) {
+        [self.toolbar hideToolbar];
+        self.macAppStoreBtn.hidden = !TRIAL;
+    } else {
+        [self.toolbar showToolbar];
+        self.macAppStoreBtn.hidden = YES;
+    }
+    [self.toolbar setTitle:[NSString localizedStringWithFormat:localizerForCount, (unsigned long)count]];
+}
+
 - (IBAction)macAppStoreButtonPressed:(id)sender
 {
     [[PIXAppDelegate sharedAppDelegate] purchaseOnlinePressed:nil];
