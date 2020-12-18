@@ -106,7 +106,7 @@
         [self.searchField setStringValue:@""];
     }
 
-    [self updateCollectionToolbar];
+    [self updateToolbarForAlbums];
     
     [[PIXFileParser sharedFileParser] addObserver:self forKeyPath:@"fullScanProgress" options:NSKeyValueObservingOptionNew context:nil];
     
@@ -295,7 +295,7 @@
 
     // select just this item
     self.collectionView.selectionIndexPaths = [NSSet setWithObject:[NSIndexPath indexPathForItem:index inSection:0]];
-    [self updateCollectionToolbar];
+    [self updateToolbarForAlbums];
 
     /*
     // this will scroll to the item and make the text field the first responder
@@ -340,16 +340,6 @@
     return _searchBar;
 }
 
-- (void)updateCollectionToolbar {
-    NSUInteger count = self.collectionView.selectionIndexPaths.count;
-    if (count == 0) {
-        [self.toolbar hideToolbar:YES];
-    } else {
-        [self.toolbar showToolbar:YES];
-    }
-    [self.toolbar setTitle:[NSString localizedStringWithFormat:NSLocalizedString(@"%lu photo(s) selected", @"Number of selected photos"), (unsigned long)count]];
-}
-
 - (void)setupCollectionToolbar {
     NSButton * deleteButton = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
     if([self.selectedItems count] > 1) {
@@ -388,7 +378,7 @@
 
     [PIXFileManager.sharedInstance deleteItemsWorkflow:self.selectedItems];
 	self.collectionView.selectionIndexes = [NSIndexSet new];
-	[self updateSelectedTitle];
+	[self updateToolbarForAlbums];
 }
 
 #pragma mark - Album
@@ -558,7 +548,7 @@
         // if the clicked item isn't part of the current selection, reset the current selection
         if (![self.collectionView.selectionIndexPaths containsObject:[self.collectionView indexPathForItem:self.clickedItem]]) {
             self.collectionView.selectionIndexPaths = [NSSet setWithObject:[self.collectionView indexPathForItem:self.clickedItem]];
-            [self updateSelectedTitle];
+            [self updateToolbarForAlbums];
         }
 
         NSUInteger count = self.collectionView.selectionIndexPaths.count;
@@ -613,18 +603,7 @@
             ((PIXCollectionViewItem *) item).selected = selected;
         }
     }
-    [self updateSelectedTitle];
-}
-
-- (void)updateSelectedTitle {
-    NSUInteger count = self.collectionView.selectionIndexPaths.count;
-    if (count == 0) {
-        [self.toolbar hideToolbar:YES];
-    } else {
-        [self.toolbar showToolbar:YES];
-    }
-
-    [self.toolbar setTitle:[NSString localizedStringWithFormat:NSLocalizedString(@"%lu album(s) selected", @"Number of selected albums"), (unsigned long)count]];
+    [self updateToolbarForAlbums];
 }
 
 -(void)reselectItems:(NSArray *)itemsToReselect
@@ -682,7 +661,7 @@
 
     [self albumsChanged:nil];
 
-    [self updateCollectionToolbar];
+    [self updateToolbarForAlbums];
     [self updateGridTitle];
 }
 
