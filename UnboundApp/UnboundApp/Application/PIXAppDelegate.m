@@ -75,7 +75,8 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
 {
 	_sharedAppDelegate = (PIXAppDelegate *)[[NSApplication sharedApplication] delegate];
 
-    if([[NSUserDefaults standardUserDefaults] boolForKey:kAppDidNotExitCleanly])
+	BOOL showCrashDialog = [[NSUserDefaults standardUserDefaults] boolForKey:kAppDidNotExitCleanly];
+    if(showCrashDialog)
     {
         NSAlert *alert = [[NSAlert alloc] init];
         alert.messageText = @"Unbound Crashed";
@@ -87,6 +88,7 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
             [self clearAllSettings];
         }
     }
+	[[NSUserDefaults standardUserDefaults] setBool:showCrashDialog forKey:kAppShowedCrashDialog];
     
     // set the did not exit cleanly flag now, it will clear it at the end of 'applicationShouldTerminate'
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kAppDidNotExitCleanly];
