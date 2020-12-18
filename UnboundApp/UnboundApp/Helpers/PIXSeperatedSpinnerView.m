@@ -95,7 +95,7 @@
     NSRect newRect = [self convertRect:self.bounds toView:nil];
     newRect = [self.mainWindow convertRectToScreen:newRect];
     
-    if([self.mainWindow styleMask] & NSFullScreenWindowMask)
+    if([self.mainWindow styleMask] & NSWindowStyleMaskFullScreen)
     {
         newRect.origin.y = self.mainWindow.frame.size.height - newRect.origin.y;
     }

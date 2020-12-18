@@ -468,12 +468,11 @@
 -(void)fullscreenChanged:(id)sender
 {
     // set the right icon on the expand/contract button
-    if([self.view.window styleMask] & NSFullScreenWindowMask)
+    if([self.view.window styleMask] & NSWindowStyleMaskFullScreen)
     {
         self.fullscreenButton.image = [NSImage imageNamed:@"contract"];
         [self.controlWindow setHasMouse:NO]; // the window loses the m
     }
-    
     else
     {
         self.fullscreenButton.image = [NSImage imageNamed:@"expand"];
@@ -1013,7 +1012,7 @@
     
     
     // if we're above the view in fullscreen don't fade (user is activating the toolbar)
-    if(([self.view.window styleMask] & NSFullScreenWindowMask) &&
+    if(([self.view.window styleMask] & NSWindowStyleMaskFullScreen) &&
        location.x > self.view.bounds.origin.x &&
        location.x < self.view.frame.origin.x + self.view.bounds.size.width)
     {
@@ -1049,7 +1048,7 @@
         
         
         // if we're in fullscreen mode then also fade the top toolbar
-        if([self.view.window styleMask] & NSFullScreenWindowMask && ![self showInfoPanel])
+        if([self.view.window styleMask] & NSWindowStyleMaskFullScreen && ![self showInfoPanel])
         {
             [self.navigationViewController setToolbarHidden:YES];
         }
