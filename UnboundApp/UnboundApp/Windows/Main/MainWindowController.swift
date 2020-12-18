@@ -61,15 +61,19 @@ import StoreKit
     }
 
     private func maybeSolicitReview() {
-        let launchCount = defaults.integer(forKey: prefLaunchCount) + 1
-        defaults.set(launchCount, forKey: prefLaunchCount)
+        // If we showed the embarassing "the app crashed, wanna reset?" dialog,
+        // don't count this toward our happy launches, and don't also immediately ask for a review
+        if(!defaults.bool(forKey: kAppShowedCrashDialog)) {
+            let launchCount = defaults.integer(forKey: prefLaunchCount) + 1
+            defaults.set(launchCount, forKey: prefLaunchCount)
 
-        #if !TRIAL
-            if #available(OSX 10.14, *) {
-                if launchCount >= 10 {
-                    SKStoreReviewController.requestReview()
+            #if !TRIAL
+                if #available(OSX 10.14, *) {
+                    if launchCount >= 10 {
+                        SKStoreReviewController.requestReview()
+                    }
                 }
-            }
-        #endif // !TRIAL
+            #endif // !TRIAL
+        }
     }
 }

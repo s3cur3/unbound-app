@@ -35,6 +35,7 @@
 #define kAppFirstRun @"appFirstRun"
 
 #define kAppDidNotExitCleanly @"appDidNotExitCleanly"
+#define kAppShowedCrashDialog @"appShowedCrashDialog"
 
 #define kAppObservedDirectoryUnavailable @"observedDirectoryUnavailable"
 #define kAppObservedDirectoryUnavailableSupressAlert @"observedDirectoryUnavailableSupressAlert"

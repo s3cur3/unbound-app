@@ -40,6 +40,7 @@ static Preferences * instance = nil;
 		[defaults setValue:[NSNumber numberWithInt:wantDark] forKey:@"backgroundTheme"];
 	}
 
+	defaults[kAppShowedCrashDialog] = @NO;
     [defaults setValue:@"Compact" forKey:kPrefPhotoStyle];
 
 	[defaults setValue:[NSNumber numberWithFloat:0.38f] forKey:@"thumbnailSize"];
