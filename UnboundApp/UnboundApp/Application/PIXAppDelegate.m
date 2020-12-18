@@ -306,47 +306,9 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 // Returns the directory the application uses to store the Core Data store file. This code uses a directory named "com.pixite.UnboundCoreDataUtility" in the user's Application Support directory.
 - (NSURL *)applicationFilesDirectory
 {
-    //return [[NSURL fileURLWithPath:NSHomeDirectory()] URLByAppendingPathComponent:@"files"];
-    
-    
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    
-    // THE BELOW CAN BE REMOVED AFTER A VERSION OR TWO
-    // if we have the files in the wrong place delete them
-    NSURL * badFileLocation = [[NSURL fileURLWithPath:NSHomeDirectory()] URLByAppendingPathComponent:@"files"];
-    
-    NSURL * badsqllocation = [badFileLocation URLByAppendingPathComponent:@"UnboundApp.sqlite"];
-    
-    if([fileManager fileExistsAtPath:[badsqllocation path]])
-    {
-        [fileManager removeItemAtPath:[[badFileLocation URLByAppendingPathComponent:@"UnboundApp.sqlite"] path]
-                              error:nil];
-        
-        [fileManager removeItemAtPath:[[badFileLocation URLByAppendingPathComponent:@"thumbnails"] path]
-                              error:nil];
-        
-        // delete the dir if empty
-        NSArray *listOfFiles = [fileManager contentsOfDirectoryAtPath:badFileLocation.path error:nil];
-        if([listOfFiles count] == 0)
-        {
-            [fileManager removeItemAtPath:badFileLocation.path error:nil];
-        }
-        
-        double delayInSeconds = 1.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [[PIXFileParser sharedFileParser] scanFullDirectory];
-        });
-        
-    }
-    
-    // END CODE THAT SHOULD BE REMOVED
-    
     NSURL *appSupportURL = [[fileManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject];
-    appSupportURL = [appSupportURL URLByAppendingPathComponent:@"Unbound"];
-    
-    
-    return appSupportURL;
+    return [appSupportURL URLByAppendingPathComponent:@"Unbound"];
 }
 
 // Creates if necessary and returns the managed object model for the application.
