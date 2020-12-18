@@ -626,10 +626,10 @@ static NSDictionary * dictionaryForURL(NSURL * url)
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dateLastUpdated == NULL || dateLastUpdated < %@", startScanTime, nil];
             
             // be sure to delete albums first so there are less photos to iterate through in the second delete
-            if (![self deleteObjectsForEntityName:@"PIXAlbum" inContext:context withPredicate:predicate]) {
+            if (![self deleteObjectsForEntityName:kAlbumEntityName inContext:context withPredicate:predicate]) {
                 DLog(@"There was a problem trying to delete old objects");
             }
-            if (![self deleteObjectsForEntityName:@"PIXPhoto" inContext:context withPredicate:predicate]) {
+            if (![self deleteObjectsForEntityName:kPhotoEntityName inContext:context withPredicate:predicate]) {
                 DLog(@"There was a problem trying to delete old objects");
             }
             
@@ -804,7 +804,7 @@ static NSDictionary * dictionaryForURL(NSURL * url)
             }
             
             // be sure to delete albums first so there are less photos to iterate through in the second delete
-            if (![self deleteObjectsForEntityName:@"PIXAlbum" inContext:context withPredicate:predicate]) {
+            if (![self deleteObjectsForEntityName:kAlbumEntityName inContext:context withPredicate:predicate]) {
                 DLog(@"There was a problem trying to delete old objects");
             }
             
@@ -816,7 +816,7 @@ static NSDictionary * dictionaryForURL(NSURL * url)
                 predicate = [NSPredicate predicateWithFormat:@"album.path CONTAINS %@ && (dateLastUpdated == NULL || dateLastUpdated < %@)",path, startParseDate, nil];
             }
             
-            if (![self deleteObjectsForEntityName:@"PIXPhoto" inContext:context withPredicate:predicate]) {
+            if (![self deleteObjectsForEntityName:kPhotoEntityName inContext:context withPredicate:predicate]) {
                 DLog(@"There was a problem trying to delete old objects");
             }
             
@@ -905,20 +905,18 @@ static NSDictionary * dictionaryForURL(NSURL * url)
 
         NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] threadSafeSideSaveMOC];
         // be sure to delete albums first so there are less photos to iterate through in the second delete
-        if (![self deleteObjectsForEntityName:@"PIXAlbum" inContext:context withPredicate:predicate]) {
+        if (![self deleteObjectsForEntityName:kAlbumEntityName inContext:context withPredicate:predicate]) {
             DLog(@"There was a problem trying to delete old objects");
         }
-        
         [context save:nil];
     }
-    
     else
     {
         NSPredicate * predicate = [NSPredicate predicateWithFormat:@"path == %@", fileURL.path, nil];
         
         NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] threadSafeSideSaveMOC];
         // be sure to delete albums first so there are less photos to iterate through in the second delete
-        if (![self deleteObjectsForEntityName:@"PIXPhoto" inContext:context withPredicate:predicate]) {
+        if (![self deleteObjectsForEntityName:kPhotoEntityName inContext:context withPredicate:predicate]) {
             DLog(@"There was a problem trying to delete old objects");
         }
         
@@ -936,7 +934,7 @@ static NSDictionary * dictionaryForURL(NSURL * url)
     NSManagedObjectContext *context = [[PIXAppDelegate sharedAppDelegate] threadSafeSideSaveMOC];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PIXAlbum" inManagedObjectContext:context];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:kAlbumEntityName inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
     
     [fetchRequest setPropertiesToFetch:@[@"path"]];
@@ -1026,10 +1024,9 @@ static NSDictionary * dictionaryForURL(NSURL * url)
                 // if we didn't find an existing album then we need to create it
                 if (lastAlbum==nil)
                 {
-                    lastAlbum = [NSEntityDescription insertNewObjectForEntityForName:@"PIXAlbum" inManagedObjectContext:context];
+                    lastAlbum = [NSEntityDescription insertNewObjectForEntityForName:kAlbumEntityName inManagedObjectContext:context];
                     [lastAlbum setValue:aPath forKey:@"path"];
                 }
-                
                 else
                 {
                     // store the objectID's of any albums we change so we can go through and update them on the main thread later
@@ -1080,7 +1077,7 @@ static NSDictionary * dictionaryForURL(NSURL * url)
                 // if we didn't find the photo we'll need to create a new entity
                 if(dbPhoto==nil)
                 {
-                    dbPhoto = [NSEntityDescription insertNewObjectForEntityForName:@"PIXPhoto" inManagedObjectContext:context];
+                    dbPhoto = [NSEntityDescription insertNewObjectForEntityForName:kPhotoEntityName inManagedObjectContext:context];
                 }
                 
                 // if we found the photo, remove it from the album's existing photos
@@ -1240,7 +1237,7 @@ static NSDictionary * dictionaryForURL(NSURL * url)
 -(PIXAlbum *)fetchAlbumWithPath:(NSString *)aPath inContext:(NSManagedObjectContext *)context
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PIXAlbum" inManagedObjectContext:context];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:kAlbumEntityName inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"path == %@", aPath];
