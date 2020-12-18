@@ -452,18 +452,13 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 -(BOOL)clearThumbSorageDirectory
 {
     NSFileManager * fileManager = [NSFileManager defaultManager];
-    
     NSURL * deleteingThumbsDir = [[self applicationFilesDirectory] URLByAppendingPathComponent:@"/thumbnails-deleting"];
-    
     [fileManager moveItemAtURL:[self thumbSorageDirectory] toURL:deleteingThumbsDir error:nil];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        
         // also delete the thumbnails
         [fileManager removeItemAtURL:deleteingThumbsDir error:nil];
-        
     });
-    
     return YES;
 }
 
@@ -509,7 +504,6 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mergeContext:) name:NSManagedObjectContextDidSaveNotification object:nil];
     
     // do a quick test fetch to see if the db is malformed
-    
     NSError * error = nil;
     NSFetchRequest * fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kPhotoEntityName];
     [_managedObjectContext countForFetchRequest:fetchRequest error:&error];
@@ -519,9 +513,6 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
         [self clearDatabase];
         return [self managedObjectContext];
     }
-   
-
-    
     return _managedObjectContext;
 }
 
@@ -587,8 +578,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     //    - The undo manager doesn’t maintain strong references to changed objects and so prevent them from being deallocated
     //-------------------------------------------------------
     [context setUndoManager:nil];
-    
-    
+
     //set it to the App Delegates persistant store coordinator
 //    [context setPersistentStoreCoordinator:[self persistentStoreCoordinator]];
     
@@ -602,7 +592,6 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 
 -(NSManagedObjectContext *)threadSafeSideSaveMOC
 {
-    
     NSManagedObjectContext * context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
     
     //-------------------------------------------------------
@@ -612,8 +601,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     //    - The undo manager doesn’t maintain strong references to changed objects and so prevent them from being deallocated
     //-------------------------------------------------------
     [context setUndoManager:nil];
-    
-    
+
     //set it to the App Delegates persistant store coordinator
 
     if (self.privateWriterContext) {
@@ -647,51 +635,42 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 
 - (void)clearDatabase
 {
-    // pop to the root vc
     [[[self mainWindowController] navigationViewController] popToRootViewController];
-
-    /*
-    for(NSPersistentStore *aStore in _persistentStoreBackgroundCoordinator.persistentStores)
-    {
-        NSError * error = nil;
-        [_persistentStoreBackgroundCoordinator removePersistentStore:aStore error:&error];
-        
-        if(error)
-        {
-            NSLog(@"Error removing persistant store: %@", error.description);
-        }
-    }
     
-    for(NSPersistentStore *aStore in _persistentStoreCoordinator.persistentStores)
-    {
-        NSError * error = nil;
-        [_persistentStoreCoordinator removePersistentStore:aStore error:&error];
-        
-        if(error)
-        {
-            NSLog(@"Error removing persistant store: %@", error.description);
-        }
-    }
-     [self.managedObjectContext setParentContext:nil];
-     */
-    
-    
-    
-    _managedObjectContext = nil;
-    _privateWriterContext = nil;
-    _persistentStoreCoordinator = nil;
-    _persistentStoreBackgroundCoordinator = nil;
-    
-    [[PIXFileParser sharedFileParser] setParseContext:nil];
-    
-    NSURL *url = [[self applicationFilesDirectory] URLByAppendingPathComponent:@"UnboundApp.sqlite"];
-    
-    NSError * error;
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (![fileManager removeItemAtPath:url.path error:&error]) {
-        NSLog(@"Failed to remove database file: %@", url);
-    }
-    
+	// This is kind of hairy.
+	// Deletions are broken into 3 stages.
+	// 1. We perform the actual deletion in our writer context (in memory only).
+	// 2. We merge those changes into the managed object context we give out to the rest of the app.
+	//    This is basically a cache flush for the reader context---without it, the other context will
+	//    keep the now-deleted objects around in memory, maybe until restart (!!).
+	// 3. We write the changes to disk
+	//
+	// More info here: https://stackoverflow.com/questions/53823083/why-entries-are-not-deleted-until-app-is-restarted-or-i-execute-my-nsbatchdelete
+	// And from Apple: https://developer.apple.com/library/archive/featuredarticles/CoreData_Batch_Guide/BatchDeletes/BatchDeletes.html
+	NSManagedObjectContext * moc = [self managedObjectContext];
+	for(NSString * entity in @[kPhotoEntityName, kAlbumEntityName]) {
+		// 1. Do the deletion
+		NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:entity];
+		NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:request];
+		[delete setResultType:NSBatchDeleteResultTypeObjectIDs];
+		NSError *deleteError = nil;
+		id resultIds = [_persistentStoreCoordinator executeRequest:delete withContext:_privateWriterContext error:&deleteError];
+		
+		// 2. Sync the changes across everyone who might have held onto it in memory
+		if(resultIds) {
+			[NSManagedObjectContext mergeChangesFromRemoteContextSave:@{NSDeletedObjectsKey: [resultIds result]} intoContexts:@[moc]];
+		} else {
+			NSLog(@"Error running deletion on %@: %@", entity, [deleteError description]);
+		}
+		
+		// 3. Write the changes to disk before continuing
+		NSError * saveError = nil;
+		[_privateWriterContext save:&saveError];
+		if(saveError) {
+			NSLog(@"Error saving %@: %@", entity, [saveError description]);
+		}
+	}
+	
     [self clearThumbSorageDirectory];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
@@ -702,11 +681,9 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     NSManagedObjectContext *postingContext = [notification object];
     
     // save the writer context in the bg
-    
     if(postingContext.parentContext ==  self.privateWriterContext && postingContext != self.managedObjectContext)
     {
         [self.privateWriterContext performBlock:^{
-            
             NSError * error = nil;
             if (![self.privateWriterContext save:&error])
             {
