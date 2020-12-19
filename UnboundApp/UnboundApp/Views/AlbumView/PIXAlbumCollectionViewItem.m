@@ -511,13 +511,9 @@
 
 -(void)titleEdited:(id)sender
 {
-    DLog(@"titleEdited");
-    
     if([self.album isReallyDeleted]) return;
     
     NSTextField *aTextField =(NSTextField *)sender;
-    
-    
     if ([aTextField.stringValue length]==0 || [aTextField.stringValue isEqualToString:self.album.title])
     {
         DLog(@"renaming to empty string or same name disallowed.");
@@ -525,9 +521,7 @@
     }
     
     PIXAlbum * thisAlbum = self.album;
-    
     BOOL success = [[PIXFileManager sharedInstance] renameAlbum:thisAlbum withName:aTextField.stringValue];
-    
     if (!success)
     {
         //an error occurred when moving so keep the old title
@@ -540,14 +534,10 @@
         
         // scroll to this album in the grid view
         [[NSNotificationCenter defaultCenter] postNotificationName:AlbumWasRenamedNotification object:thisAlbum];
-        
     }
     
     // update the album
     [self albumChanged:nil];
-    
-    
-    
 }
 
 - (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
