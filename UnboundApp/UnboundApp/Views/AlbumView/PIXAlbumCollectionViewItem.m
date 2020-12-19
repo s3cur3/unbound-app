@@ -256,10 +256,6 @@
     
     [self setItemTitle:[self.album title]];
     
-    
-    //self.topLevelThumbIsVideo = NO;
-    
-    
     self.albumThumb = nil;
     self.loadingPhotos = [self.album stackPhotos];
     
@@ -413,37 +409,22 @@
                                      20);
     
     self.titleEditFrame = NSInsetRect(textRect, -3, -3);
-    
-    NSShadow *textShadow    = [[NSShadow alloc] init];
-    [textShadow setShadowColor: [NSColor colorWithCalibratedWhite:0.0 alpha:0.5]];
-    [textShadow setShadowOffset: NSMakeSize(0, -1)];
-    
+
     NSMutableParagraphStyle *textStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
     [textStyle setAlignment: NSCenterTextAlignment];
     
-    NSDictionary * attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                 [NSFont fontWithName:@"Helvetica Neue Bold" size:14], NSFontAttributeName,
-                                 //                           textShadow,                                 NSShadowAttributeName,
-                                 //                           bgColor,                                    NSBackgroundColorAttributeName,
-                                 textColor,                                  NSForegroundColorAttributeName,
-                                 textStyle,                                  NSParagraphStyleAttributeName,
-                                 nil];
-    
-    
-    
-    [[self.album title] drawInRect:textRect withAttributes:attributes];
-    
-    attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                  [NSFont fontWithName:@"Helvetica Neue" size:11], NSFontAttributeName,
-                  //                           textShadow,                                 NSShadowAttributeName,
-                  //                           bgColor,                                    NSBackgroundColorAttributeName,
-                  subtitleColor,                                  NSForegroundColorAttributeName,
-                  textStyle,                                  NSParagraphStyleAttributeName,
-                  nil];
-    
-    NSString * itemSubtitle = self.album.imageSubtitle;
-    
-    [itemSubtitle drawInRect:subTitleRect withAttributes:attributes];
+
+    // TODO: Don't draw if we're editing
+    if(self.titleEditField == nil)
+    {
+        [self.album.title drawInRect:textRect withAttributes:@{NSFontAttributeName: [NSFont fontWithName:@"Helvetica Neue Bold" size:14],
+                                                               NSForegroundColorAttributeName: textColor,
+                                                               NSParagraphStyleAttributeName: textStyle}];
+    }
+
+    [self.album.imageSubtitle drawInRect:subTitleRect withAttributes:@{NSFontAttributeName: [NSFont fontWithName:@"Helvetica Neue" size:11],
+                                                                       NSForegroundColorAttributeName: subtitleColor,
+                                                                       NSParagraphStyleAttributeName: textStyle}];
     
     
     CGRect albumFrame = CGRectInset(self.bounds, 18, 35);
@@ -495,13 +476,18 @@
         self.titleEditField = [[NSTextField alloc] initWithFrame:self.titleEditFrame];
         self.titleEditField.delegate = self;
         self.titleEditField.stringValue = [self.album title];
-        
         [self.titleEditField setFont:[NSFont fontWithName:@"Helvetica Neue Bold" size:14]];
+		[self.titleEditField setTextColor:NSColor.whiteColor];
+
         [self.titleEditField setAlignment:NSCenterTextAlignment];
         
         [self.titleEditField setTarget:self];
         [self.titleEditField setAction:@selector(titleEdited:)];
-        [(NSTextFieldCell *)self.titleEditField.cell setSendsActionOnEndEditing:YES];
+
+		NSTextFieldCell * cell = (NSTextFieldCell *)self.titleEditField.cell;
+        [cell setSendsActionOnEndEditing:YES];
+		[cell setBackgroundColor:NSColor.darkGrayColor];
+		[cell setDrawsBackground:YES];
         
         [self addSubview:self.titleEditField];
         
