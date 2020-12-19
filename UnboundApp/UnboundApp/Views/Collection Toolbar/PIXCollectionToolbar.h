@@ -15,8 +15,8 @@
 @property (nonatomic, strong) NSCollectionView *collectionView;
 
 - (void)setButtons:(NSArray *)buttonArray;
-- (void)showToolbar:(BOOL)animated;
-- (void)hideToolbar:(BOOL)animated;
+- (void)showToolbar;
+- (void)hideToolbar;
 
 - (void)setTitle:(NSString *)title;
 

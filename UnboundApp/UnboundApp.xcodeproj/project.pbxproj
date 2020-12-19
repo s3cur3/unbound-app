@@ -15,6 +15,12 @@
 		1D4A1E2B167D2A4D00C9A895 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4A1E2A167D2A4C00C9A895 /* Quartz.framework */; };
 		1DB2F84F167ABE87008AC0F7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DB2F84E167ABE87008AC0F7 /* Cocoa.framework */; };
 		1DB2F862167ABE87008AC0F7 /* PIXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2F861167ABE87008AC0F7 /* PIXAppDelegate.m */; };
+		2F670611257C7E5500487B31 /* PIXApplicationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F67060F257C7E5500487B31 /* PIXApplicationExtensions.m */; };
+		2F670612257C7E5500487B31 /* PIXApplicationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F67060F257C7E5500487B31 /* PIXApplicationExtensions.m */; };
+		2F6706332582B7E100487B31 /* PIXAboutWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD849574325C47243A590 /* PIXAboutWindowController.xib */; };
+		2F6706352582EEE100487B31 /* LibraryPickerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6706342582EEE100487B31 /* LibraryPickerWindowController.swift */; };
+		2F6706362582F25000487B31 /* LibraryPickerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6706342582EEE100487B31 /* LibraryPickerWindowController.swift */; };
+		2F6706392583112F00487B31 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F6706372583111600487B31 /* StoreKit.framework */; };
 		2FC02C402482C1DC00408258 /* MathUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 2FC02C3F2482C1DC00408258 /* MathUtils.c */; };
 		2FC02C412482C1DC00408258 /* MathUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 2FC02C3F2482C1DC00408258 /* MathUtils.c */; };
 		306DE24CB6BC26FEE2D1E93E /* Pods_Unbound.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9FE79A9C318BC57A3185BBD /* Pods_Unbound.framework */; };
@@ -51,9 +57,7 @@
 		458AD0D33DE1453DB9071ACD /* expand@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD3070947054FA0A87DB8 /* expand@2x.png */; };
 		458AD0E7F5CBECCF1D3B2AFC /* PIXCustomShareSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD737D5A9975B91B517A7 /* PIXCustomShareSheetViewController.m */; };
 		458AD10267529097F13A330A /* success-backward.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADD063AFA30D8AD2DB197 /* success-backward.png */; };
-		458AD11EED5D909E7AF348DB /* PIXInfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD23BD2135A2FD65FC002 /* PIXInfoWindowController.m */; };
 		458AD14B512DD60FE1EEA04A /* temp-portrait@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 458AD3029E36086E9FA2BEEA /* temp-portrait@2x.jpg */; };
-		458AD15185BEB0FFF293DFCC /* logo_ao.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD796B90699411E711F52 /* logo_ao.png */; };
 		458AD153C9CBBFDC696CBCC2 /* RegularPhotoItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADB41A7C4BB1BD2B67134 /* RegularPhotoItem.xib */; };
 		458AD157D58D09CCDCEA7088 /* PIXVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD908CFF0ECDB629551E6 /* PIXVideoViewController.m */; };
 		458AD161318BFEFA535B360C /* contract.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD22711F1415BFD14A837 /* contract.png */; };
@@ -79,7 +83,6 @@
 		458AD22D705A9D6A10330F8C /* leapconnected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD255978776B70A48B1EB /* leapconnected@2x.png */; };
 		458AD23310A739BF61ED5D4A /* sortbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADDA68D473D6E60B8E047 /* sortbutton@2x.png */; };
 		458AD234B9BA9F7C855DBB0B /* buttongrid_twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADD92E51BB3E57C7D63E0 /* buttongrid_twitter@2x.png */; };
-		458AD23654D5CE0FFFBCC98B /* PIXApplicationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD017B144ACEDD80831B3 /* PIXApplicationExtensions.m */; };
 		458AD2430C6D30002C10F3AF /* success-forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD38C6DAAD91B83968E87 /* success-forward.png */; };
 		458AD25F55D5F580029FC167 /* captionbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD29B2E087EB9581AA773 /* captionbutton@2x.png */; };
 		458AD26D858FE945231E9234 /* NSEventExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AD1BE1E5C7795F3963715 /* NSEventExt.swift */; };
@@ -162,7 +165,7 @@
 		458AD5E587AFD56E9E532560 /* greendot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD064BA379620B4069086 /* greendot@2x.png */; };
 		458AD5E7813AD54948D98FEA /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 458ADB1C483EB3832673F7AB /* Localizable.stringsdict */; };
 		458AD5E7ED7F03CC6EAFAD54 /* PIXFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD62BFA47F0D56A53A583 /* PIXFileManager.m */; };
-		458AD5E8647725B1B25A9CD4 /* PIXInfoWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD986EE85D82D4FAEAE8C /* PIXInfoWindowController.xib */; };
+		458AD5E8647725B1B25A9CD4 /* LibraryPickerWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD986EE85D82D4FAEAE8C /* LibraryPickerWindowController.xib */; };
 		458AD5FFCAC344919D0FF505 /* AutoSizingVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADC11B7C82C25F0002393 /* AutoSizingVideoView.m */; };
 		458AD6004550C984953B0481 /* PIXPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD756CBDDCC823D0AAF0F /* PIXPhoto.m */; };
 		458AD605ADFBB2688C6D812E /* contract.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD22711F1415BFD14A837 /* contract.png */; };
@@ -212,7 +215,7 @@
 		458AD8180774708F44F91647 /* PIXFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD62BFA47F0D56A53A583 /* PIXFileManager.m */; };
 		458AD81A7BC60CFA93D0514E /* PIXFileParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADFBE5E3326D375EAB428 /* PIXFileParser.m */; };
 		458AD822D55D75B3603B5623 /* AppearancePrefsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD11B406479D2644AA211 /* AppearancePrefsViewController.xib */; };
-		458AD84878C233514E695642 /* PIXInfoWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD986EE85D82D4FAEAE8C /* PIXInfoWindowController.xib */; };
+		458AD84878C233514E695642 /* LibraryPickerWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD986EE85D82D4FAEAE8C /* LibraryPickerWindowController.xib */; };
 		458AD84A4516E739E9D130D4 /* buttongrid_copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADE2912FB560A5B898EA5 /* buttongrid_copy.png */; };
 		458AD84C0FEB7495643AB893 /* PIXImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADAF28EE29E1368A10BE6 /* PIXImageViewController.m */; };
 		458AD8650E6FEA53AA652733 /* PIXSeperatedSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADDFF9855AF4ADE9CE808 /* PIXSeperatedSpinnerView.m */; };
@@ -237,11 +240,9 @@
 		458AD93B03057DA3211E41AD /* graydot.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADAC134120BEDE8D72B34 /* graydot.png */; };
 		458AD93CA9FB9A1A858417C7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 458ADEA7DE90402F962F3B37 /* Localizable.strings */; };
 		458AD941C23E955E0B143ECE /* btn-roundrect-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADC5D5B4D6D96C8D749B6 /* btn-roundrect-down.png */; };
-		458AD94620389F78DD2E8278 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 458AD3C60928CB6287ECDBFA /* Credits.rtf */; };
 		458AD94E5B12B5141AD01CA2 /* buttongrid_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD7467EC0275F76CF45F1 /* buttongrid_share@2x.png */; };
 		458AD94F35E1E51A0BD5F889 /* playbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD82B85DA516339EB66E0 /* playbutton.png */; };
 		458AD951C95DD569FE639AFC /* PIXExifBGView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD8B6B7434300FCCD1795 /* PIXExifBGView.m */; };
-		458AD968C885E83BB3868BAC /* libkevlar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 458AD94A039D8149DEDA04E9 /* libkevlar.a */; };
 		458AD96BCEDB0DF1DDCB4046 /* buttongrid_email.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADC0F47F8C6A43275CD7C /* buttongrid_email.png */; };
 		458AD96F05CD9B6E9864D91F /* buttongrid_share.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD529E82DA964CECCEC23 /* buttongrid_share.png */; };
 		458AD9711323C8D1A39AFC9E /* GetPathsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD945555DF37ECBB3554F /* GetPathsOperation.m */; };
@@ -271,14 +272,12 @@
 		458ADA71AE025E00E7A7B142 /* leapnotconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADFBAF1890806CFAFBEAA /* leapnotconnected.png */; };
 		458ADA81C5F11CD8361C5A03 /* fullnophoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD65C6D07F72EACA1A512 /* fullnophoto.png */; };
 		458ADA96B2F61A479E470E29 /* success.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADD9D4028408F39A03381 /* success.png */; };
-		458ADA9AA2691091C1C57221 /* UnboundTrial-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 458AD62424AE111B84796654 /* UnboundTrial-Info.plist */; };
 		458ADAADADA676FBF9E8D20C /* buttongrid_email@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD1A07A96C822C47C889F /* buttongrid_email@2x.png */; };
 		458ADAB26E017AEA4454B8CD /* preferences_light_theme.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD0A0859106907387A481 /* preferences_light_theme.png */; };
 		458ADAB7419CBF7965756F7D /* PIXSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADF4BB78C718EDD51FB71 /* PIXSplitViewController.m */; };
 		458ADABBCA769211832349F5 /* PIXShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD0E50CED0723BB7D3872 /* PIXShareManager.m */; };
 		458ADAD1E08FBF403859C69D /* SimplePhotoItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458ADFE50F496C8D4211A65D /* SimplePhotoItemView.swift */; };
 		458ADAD5CE405C36421BAB2A /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD87192D1A882871AF625 /* Preferences.m */; };
-		458ADAE3D3FF1F6F70A28064 /* PIXInfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD23BD2135A2FD65FC002 /* PIXInfoWindowController.m */; };
 		458ADAEBF3385C1847B3B393 /* PIXOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD286784546D2A0E9F6E7 /* PIXOutlineView.m */; };
 		458ADAEC8D42E95CBA6ED16A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 458ADEA7DE90402F962F3B37 /* Localizable.strings */; };
 		458ADAF343FACAD6B33DD192 /* playbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD82B85DA516339EB66E0 /* playbutton.png */; };
@@ -349,14 +348,12 @@
 		458ADDFE9D9738A18B3EBD72 /* MakeThumbnailOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD57EF9C057A646A2B2CA /* MakeThumbnailOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		458ADE01ABC077BC4D1FF7ED /* NSURL+DirectoryObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 458ADF4966855685A12B5403 /* NSURL+DirectoryObserver.m */; };
 		458ADE23E00E239044DAA74E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458AD723269D8E19270B0883 /* Constants.swift */; };
-		458ADE297ADE94834B4E95BD /* logo_ao.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD796B90699411E711F52 /* logo_ao.png */; };
 		458ADE340B6D4200DCE7369C /* AutoSizingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD4AA150A087CF7C81E30 /* AutoSizingImageView.m */; };
 		458ADE36AF81BC54C90A4BA2 /* GeneralPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458ADEA9EA4AD69C80E6A1B7 /* GeneralPrefsViewController.swift */; };
 		458ADE38B7D7DAD30EBFDDB9 /* NSCollectionView+PIXSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AD2E290E211201DFD9034 /* NSCollectionView+PIXSelection.m */; };
 		458ADE5749D884460DE19968 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458ADCC737C7FC004D5D2434 /* PreferencesWindowController.swift */; };
 		458ADE576B0792E000FC18FF /* buttongrid_emaillink@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD6D0BD8F0AEAEE740273 /* buttongrid_emaillink@2x.png */; };
 		458ADE5CA146552A5D10F9A5 /* buttongrid_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD7467EC0275F76CF45F1 /* buttongrid_share@2x.png */; };
-		458ADE6329F3A1D8057BDB62 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 458AD3C60928CB6287ECDBFA /* Credits.rtf */; };
 		458ADE8B5A343BB864F8EA95 /* PIXHUDMessageController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458ADA4FAB1BF804741362BA /* PIXHUDMessageController.xib */; };
 		458ADE9A6CF4AF9D385653A7 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 458ADC9C3AE71F62D3DAE869 /* pause.png */; };
 		458ADE9F7212717EA72315DC /* captionbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 458AD872EE3DF9B6B59D8D96 /* captionbutton.png */; };
@@ -412,9 +409,8 @@
 		8C9FA5C0183ACB98000AEBC9 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C9FA5BF183ACB98000AEBC9 /* WebKit.framework */; };
 		8CF05AEF17C3097400AB88B5 /* Licences.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8CF05AEE17C3097300AB88B5 /* Licences.txt */; };
 		8CF05AF017C30A2500AB88B5 /* Licences.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8CF05AEE17C3097300AB88B5 /* Licences.txt */; };
-		8CF05AF317C33B6E00AB88B5 /* Unbound.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 1D69E646170DD7B70031AF73 /* Unbound.entitlements */; };
 		8CF05AF417C33B7300AB88B5 /* UnboundTrial.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 8C43CCF017385A9700A4395F /* UnboundTrial.entitlements */; };
-		C23F989F4F1B083861471071 /* Pods_Unbound_Unbound_Trial.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBD75E102055F7D818A00C97 /* Pods_Unbound_Unbound_Trial.framework */; };
+		97700A11C7BE61A247F97CD8 /* Pods_Unbound_Unbound_Trial.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38F77FC53C9305D97EB7307A /* Pods_Unbound_Unbound_Trial.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -441,7 +437,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1806B2D5516B5118ADD17C11 /* Pods-Unbound-Unbound Trial.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unbound-Unbound Trial.debug.xcconfig"; path = "Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial.debug.xcconfig"; sourceTree = "<group>"; };
 		1D4A1DFE167BEAF200C9A895 /* PIXViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXViewController.h; sourceTree = "<group>"; };
 		1D4A1DFF167BEAF200C9A895 /* PIXViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXViewController.m; sourceTree = "<group>"; };
 		1D4A1E07167C056C00C9A895 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -454,11 +449,15 @@
 		1DB2F853167ABE87008AC0F7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DB2F860167ABE87008AC0F7 /* PIXAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PIXAppDelegate.h; sourceTree = "<group>"; };
 		1DB2F861167ABE87008AC0F7 /* PIXAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PIXAppDelegate.m; sourceTree = "<group>"; };
+		2F67060F257C7E5500487B31 /* PIXApplicationExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIXApplicationExtensions.m; path = Kevlar/PIXApplicationExtensions.m; sourceTree = "<group>"; };
+		2F670610257C7E5500487B31 /* PIXApplicationExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIXApplicationExtensions.h; path = Kevlar/PIXApplicationExtensions.h; sourceTree = "<group>"; };
+		2F6706342582EEE100487B31 /* LibraryPickerWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryPickerWindowController.swift; sourceTree = "<group>"; };
+		2F6706372583111600487B31 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		2FC02C3E2482BEDD00408258 /* MathUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MathUtils.h; sourceTree = "<group>"; };
 		2FC02C3F2482C1DC00408258 /* MathUtils.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = MathUtils.c; sourceTree = "<group>"; };
+		38F77FC53C9305D97EB7307A /* Pods_Unbound_Unbound_Trial.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unbound_Unbound_Trial.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		458AD00542DA420882593B32 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		458AD0064549816BE5C03B3A /* pixite-logo-wide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pixite-logo-wide.png"; sourceTree = "<group>"; };
-		458AD017B144ACEDD80831B3 /* PIXApplicationExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXApplicationExtensions.m; sourceTree = "<group>"; };
 		458AD02AF6B5C2720F53D137 /* PIXPhotoCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhotoCollectionViewController.m; sourceTree = "<group>"; };
 		458AD030F9E9A7E3B1C08718 /* buttongrid_print.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttongrid_print.png; sourceTree = "<group>"; };
 		458AD05012A12FFB65C860AA /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
@@ -493,7 +492,6 @@
 		458AD228F4F179927A0DE5E8 /* PIXCustomShareSheetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXCustomShareSheetViewController.h; sourceTree = "<group>"; };
 		458AD22B845F74730E6086A4 /* PIXSelectionLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXSelectionLayer.h; sourceTree = "<group>"; };
 		458AD239A9B0AD1C5B855157 /* success-backward@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success-backward@2x.png"; sourceTree = "<group>"; };
-		458AD23BD2135A2FD65FC002 /* PIXInfoWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXInfoWindowController.m; sourceTree = "<group>"; };
 		458AD24137913A817EC0CDB7 /* expand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = expand.png; sourceTree = "<group>"; };
 		458AD252F3AF0389A35912F4 /* NSBezierPath+pathUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBezierPath+pathUtilities.h"; sourceTree = "<group>"; };
 		458AD255978776B70A48B1EB /* leapconnected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leapconnected@2x.png"; sourceTree = "<group>"; };
@@ -525,7 +523,6 @@
 		458AD414426593B36C72CC6C /* PIXSidebarClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXSidebarClipView.h; sourceTree = "<group>"; };
 		458AD432DBC6664426ADB328 /* PIXSlideshowOptonsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSlideshowOptonsViewController.m; sourceTree = "<group>"; };
 		458AD45CE55653295C7278F1 /* PIXPageHUDWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPageHUDWindow.m; sourceTree = "<group>"; };
-		458AD47FF8E17CB6A41CFC92 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = Credits.rtf; sourceTree = "<group>"; };
 		458AD4807B288ED380565E98 /* PIXSidebarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXSidebarViewController.h; sourceTree = "<group>"; };
 		458AD4AA150A087CF7C81E30 /* AutoSizingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoSizingImageView.m; sourceTree = "<group>"; };
 		458AD4BECFE86583CCD5346D /* PIXVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXVideoViewController.h; sourceTree = "<group>"; };
@@ -568,7 +565,6 @@
 		458AD7467EC0275F76CF45F1 /* buttongrid_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttongrid_share@2x.png"; sourceTree = "<group>"; };
 		458AD756CBDDCC823D0AAF0F /* PIXPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXPhoto.m; sourceTree = "<group>"; };
 		458AD7722EB84DA229B90B0B /* PIXSelectionLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSelectionLayer.m; sourceTree = "<group>"; };
-		458AD796B90699411E711F52 /* logo_ao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_ao.png; sourceTree = "<group>"; };
 		458AD798D7B474125A7040D2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = MainMenu.xib; sourceTree = "<group>"; };
 		458AD7A043DE9C2FE50165EC /* ThemedWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemedWindow.swift; sourceTree = "<group>"; };
 		458AD7A18CDC3189AB3985D0 /* PIXGetAlbumPathsOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXGetAlbumPathsOperation.h; sourceTree = "<group>"; };
@@ -601,17 +597,15 @@
 		458AD933DEAABBEEB83AD143 /* PIXCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXCollectionViewController.m; sourceTree = "<group>"; };
 		458AD945555DF37ECBB3554F /* GetPathsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetPathsOperation.m; sourceTree = "<group>"; };
 		458AD948F91477D9F2AC3597 /* MapViewAdditions.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = MapViewAdditions.css; sourceTree = "<group>"; };
-		458AD94A039D8149DEDA04E9 /* libkevlar.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libkevlar.a; sourceTree = "<group>"; };
 		458AD9609883CECD8290C8B6 /* PIXSlideshowOptonsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PIXSlideshowOptonsViewController.xib; sourceTree = "<group>"; };
 		458AD96A93428C422C3262D8 /* PIXSidebarScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXSidebarScrollView.m; sourceTree = "<group>"; };
 		458AD9705B131DECC624E295 /* buttongrid_facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttongrid_facebook@2x.png"; sourceTree = "<group>"; };
 		458AD973DDA0E230AE4E7333 /* temp.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = temp.jpg; sourceTree = "<group>"; };
 		458AD97AFD65B808C04E30AA /* UnboundApp-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UnboundApp-Prefix.pch"; sourceTree = "<group>"; };
-		458AD986EE85D82D4FAEAE8C /* PIXInfoWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PIXInfoWindowController.xib; sourceTree = "<group>"; };
+		458AD986EE85D82D4FAEAE8C /* LibraryPickerWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LibraryPickerWindowController.xib; sourceTree = "<group>"; };
 		458AD987F4E4A29479538C2A /* NSURL+DirectoryObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+DirectoryObserver.h"; sourceTree = "<group>"; };
 		458AD98F5BC554FB3D5E46D4 /* LoadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadOperation.h; sourceTree = "<group>"; };
 		458AD9A597215949892DA8C8 /* PIXCollectionViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXCollectionViewItem.h; sourceTree = "<group>"; };
-		458AD9AA88B50074A3AAF206 /* DMKevlarApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMKevlarApplication.h; sourceTree = "<group>"; };
 		458AD9BBDC50CC837C1EC1F4 /* AutoSizingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoSizingImageView.h; sourceTree = "<group>"; };
 		458AD9FAE54C35D446B3C313 /* PIXProgressWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXProgressWindowController.m; sourceTree = "<group>"; };
 		458ADA0B500A4B5ADBD8014E /* PIXCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXCollectionView.m; sourceTree = "<group>"; };
@@ -635,7 +629,6 @@
 		458ADB7775E55DE386008EF9 /* AppearancePrefsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearancePrefsViewController.swift; sourceTree = "<group>"; };
 		458ADBBC24E135DE94A5E04D /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
 		458ADBDE8312055857F9D061 /* buttongrid_print@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttongrid_print@2x.png"; sourceTree = "<group>"; };
-		458ADBEE76890868D0424E6B /* PIXInfoWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXInfoWindowController.h; sourceTree = "<group>"; };
 		458ADC0318AE26BE59FB9784 /* leapnotconnected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leapnotconnected@2x.png"; sourceTree = "<group>"; };
 		458ADC0F47F8C6A43275CD7C /* buttongrid_email.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttongrid_email.png; sourceTree = "<group>"; };
 		458ADC11B7C82C25F0002393 /* AutoSizingVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoSizingVideoView.m; sourceTree = "<group>"; };
@@ -703,7 +696,6 @@
 		458ADFBAF1890806CFAFBEAA /* leapnotconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leapnotconnected.png; sourceTree = "<group>"; };
 		458ADFBE2416277109DCD2F3 /* PIXSidebarTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXSidebarTableCellView.h; sourceTree = "<group>"; };
 		458ADFBE5E3326D375EAB428 /* PIXFileParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PIXFileParser.m; sourceTree = "<group>"; };
-		458ADFC33AEE787BA4A70ED6 /* PIXApplicationExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PIXApplicationExtensions.h; sourceTree = "<group>"; };
 		458ADFC8EBDF8B44C4588481 /* ArchDirectoryObserverTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArchDirectoryObserverTypes.h; sourceTree = "<group>"; };
 		458ADFD6FF726827F4F3B793 /* RegularPhotoItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegularPhotoItem.swift; sourceTree = "<group>"; };
 		458ADFD7749564AA2947E8E3 /* SquareImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SquareImageView.m; sourceTree = "<group>"; };
@@ -713,6 +705,7 @@
 		458ADFFA74933BC5491504CE /* btn-roundrect-down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-roundrect-down@2x.png"; sourceTree = "<group>"; };
 		458ADFFDF3A1A1BF7EC453CA /* PIXPageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PIXPageViewController.xib; sourceTree = "<group>"; };
 		4F4FEEE6E8C3DAB1C0EF95A1 /* Pods-Unbound.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unbound.release.xcconfig"; path = "Target Support Files/Pods-Unbound/Pods-Unbound.release.xcconfig"; sourceTree = "<group>"; };
+		85DD4423077FA45972947A61 /* Pods-Unbound-Unbound Trial.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unbound-Unbound Trial.release.xcconfig"; path = "Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial.release.xcconfig"; sourceTree = "<group>"; };
 		8B5A3111AE5117F32775D55D /* Pods-Unbound.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unbound.debug.xcconfig"; path = "Target Support Files/Pods-Unbound/Pods-Unbound.debug.xcconfig"; sourceTree = "<group>"; };
 		8C14692E1714A5CC009ECCC5 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
 		8C28611B17308566009A0B35 /* Unbound.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unbound.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -726,8 +719,7 @@
 		8CF05AEE17C3097300AB88B5 /* Licences.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Licences.txt; sourceTree = "<group>"; };
 		8CFDF7651827123700809018 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		C9FE79A9C318BC57A3185BBD /* Pods_Unbound.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unbound.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CBD75E102055F7D818A00C97 /* Pods_Unbound_Unbound_Trial.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unbound_Unbound_Trial.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F05E7451FBA6303A9E3CC90E /* Pods-Unbound-Unbound Trial.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unbound-Unbound Trial.release.xcconfig"; path = "Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial.release.xcconfig"; sourceTree = "<group>"; };
+		F52076581B6BC5F6794BBD97 /* Pods-Unbound-Unbound Trial.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unbound-Unbound Trial.debug.xcconfig"; path = "Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -735,6 +727,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F6706392583112F00487B31 /* StoreKit.framework in Frameworks */,
 				8C9565051846802800B5627B /* SystemConfiguration.framework in Frameworks */,
 				8C94E027183DA6D800827888 /* WebKit.framework in Frameworks */,
 				8C94E026183DA6D300827888 /* CoreLocation.framework in Frameworks */,
@@ -761,8 +754,7 @@
 				8C2860AD17308566009A0B35 /* Quartz.framework in Frameworks */,
 				8C2860AE17308566009A0B35 /* QuartzCore.framework in Frameworks */,
 				8C2860AF17308566009A0B35 /* Cocoa.framework in Frameworks */,
-				458AD968C885E83BB3868BAC /* libkevlar.a in Frameworks */,
-				C23F989F4F1B083861471071 /* Pods_Unbound_Unbound_Trial.framework in Frameworks */,
+				97700A11C7BE61A247F97CD8 /* Pods_Unbound_Unbound_Trial.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -837,6 +829,7 @@
 		1DB2F84D167ABE87008AC0F7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2F6706372583111600487B31 /* StoreKit.framework */,
 				8C9565041846802800B5627B /* SystemConfiguration.framework */,
 				8C9FA5BF183ACB98000AEBC9 /* WebKit.framework */,
 				8C9FA5BD183ACB90000AEBC9 /* CoreLocation.framework */,
@@ -844,7 +837,7 @@
 				1DB2F84E167ABE87008AC0F7 /* Cocoa.framework */,
 				1DB2F850167ABE87008AC0F7 /* Other Frameworks */,
 				C9FE79A9C318BC57A3185BBD /* Pods_Unbound.framework */,
-				CBD75E102055F7D818A00C97 /* Pods_Unbound_Unbound_Trial.framework */,
+				38F77FC53C9305D97EB7307A /* Pods_Unbound_Unbound_Trial.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -893,8 +886,8 @@
 			children = (
 				8B5A3111AE5117F32775D55D /* Pods-Unbound.debug.xcconfig */,
 				4F4FEEE6E8C3DAB1C0EF95A1 /* Pods-Unbound.release.xcconfig */,
-				1806B2D5516B5118ADD17C11 /* Pods-Unbound-Unbound Trial.debug.xcconfig */,
-				F05E7451FBA6303A9E3CC90E /* Pods-Unbound-Unbound Trial.release.xcconfig */,
+				F52076581B6BC5F6794BBD97 /* Pods-Unbound-Unbound Trial.debug.xcconfig */,
+				85DD4423077FA45972947A61 /* Pods-Unbound-Unbound Trial.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1018,24 +1011,13 @@
 			isa = PBXGroup;
 			children = (
 				458AD1628B83320481E1F32C /* About */,
-				458ADDD240ECBC67E0619AF7 /* Info */,
+				458ADDD240ECBC67E0619AF7 /* LibraryPicker */,
 				458AD175F85E488B5BCECFA1 /* Progress */,
 				458AD64D8715ED21F286E048 /* Main */,
 				458ADE8EDA170639A9BD136B /* Preferences */,
 				458ADD572EF5936984DA3D62 /* Common */,
 			);
 			path = Windows;
-			sourceTree = "<group>";
-		};
-		458AD53A2EC96B549DB6C3B5 /* Kevlar */ = {
-			isa = PBXGroup;
-			children = (
-				458AD94A039D8149DEDA04E9 /* libkevlar.a */,
-				458AD9AA88B50074A3AAF206 /* DMKevlarApplication.h */,
-				458AD017B144ACEDD80831B3 /* PIXApplicationExtensions.m */,
-				458ADFC33AEE787BA4A70ED6 /* PIXApplicationExtensions.h */,
-			);
-			path = Kevlar;
 			sourceTree = "<group>";
 		};
 		458AD64D8715ED21F286E048 /* Main */ = {
@@ -1121,7 +1103,6 @@
 		458ADCDB7A0F7D341274B3F4 /* en.lproj */ = {
 			isa = PBXGroup;
 			children = (
-				458AD3C60928CB6287ECDBFA /* Credits.rtf */,
 				458ADD65822C627C42A00876 /* MainMenu.xib */,
 				458AD37DC4662B5210A16790 /* InfoPlist.strings */,
 			);
@@ -1144,7 +1125,6 @@
 				458ADE903A39B8A52515D9E2 /* Unbound-For-Mac-512.png */,
 				458AD0C6143634A8F2236F26 /* dark_bg.png */,
 				458ADDA36051A6D8BD5E28FE /* Shading.tiff */,
-				458AD796B90699411E711F52 /* logo_ao.png */,
 				458AD800141C2A8431FCD9F1 /* intro_bg.jpg */,
 				458AD7A85609DBC2EA41D16C /* nophoto_200x200.jpg */,
 				458AD640AC49C26D97186ABC /* dark_bg@2X.png */,
@@ -1219,16 +1199,15 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
-		458ADDD240ECBC67E0619AF7 /* Info */ = {
+		458ADDD240ECBC67E0619AF7 /* LibraryPicker */ = {
 			isa = PBXGroup;
 			children = (
-				458ADBEE76890868D0424E6B /* PIXInfoWindowController.h */,
-				458AD23BD2135A2FD65FC002 /* PIXInfoWindowController.m */,
-				458AD986EE85D82D4FAEAE8C /* PIXInfoWindowController.xib */,
+				458AD986EE85D82D4FAEAE8C /* LibraryPickerWindowController.xib */,
 				458ADDF3AF98643F8FF2A368 /* PIXRoundRectView.m */,
 				458ADC97EF82B2CFDA69777E /* PIXRoundRectView.h */,
+				2F6706342582EEE100487B31 /* LibraryPickerWindowController.swift */,
 			);
-			path = Info;
+			path = LibraryPicker;
 			sourceTree = "<group>";
 		};
 		458ADDE6A879F5822D3A4443 /* PhotoBrowserView */ = {
@@ -1267,6 +1246,8 @@
 		458ADE7E87D0E60CE797672E /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				2F670610257C7E5500487B31 /* PIXApplicationExtensions.h */,
+				2F67060F257C7E5500487B31 /* PIXApplicationExtensions.m */,
 				458ADA4FAB1BF804741362BA /* PIXHUDMessageController.xib */,
 				458AD0D14948F58C652A428E /* PIXPhotoUtils.m */,
 				458ADD8B6840D120CCFB7EC8 /* PIXSeperatedSpinnerView.h */,
@@ -1279,7 +1260,6 @@
 				458ADE4D110629F393847F8F /* PIXThumbnailLoadingDelegate.h */,
 				458AD3E69A89DECC011321D4 /* PIXDefines.h */,
 				458AD1CE63CE6EE36850866D /* ToolbarButton.swift */,
-				458AD53A2EC96B549DB6C3B5 /* Kevlar */,
 				458AD1BE1E5C7795F3963715 /* NSEventExt.swift */,
 				458ADCC7C3ABC3B0057DB9DE /* SystemAppHelper.swift */,
 				458AD60CDCA59A88F430E419 /* UserDefaults.swift */,
@@ -1358,11 +1338,11 @@
 			buildConfigurationList = 1DB2F868167ABE87008AC0F7 /* Build configuration list for PBXNativeTarget "Unbound" */;
 			buildPhases = (
 				BECA23346C5A3BB828EA9741 /* [CP] Check Pods Manifest.lock */,
+				2F67063A258398C000487B31 /* ShellScript */,
 				1DB2F846167ABE87008AC0F7 /* Sources */,
 				8C53DFF316FB7DF4008EF8B1 /* Copy Frameworks */,
 				1DB2F847167ABE87008AC0F7 /* Frameworks */,
 				1DB2F848167ABE87008AC0F7 /* Resources */,
-				042991741D0619CB00BBA95A /* Run Script */,
 				AC5646B920F573802CFD70B8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -1378,14 +1358,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8C28611817308566009A0B35 /* Build configuration list for PBXNativeTarget "Unbound Trial" */;
 			buildPhases = (
-				2A0C701B7F98A2E9022DBD37 /* [CP] Check Pods Manifest.lock */,
+				78DF033F809008C6B9B5C01B /* [CP] Check Pods Manifest.lock */,
 				8C28605A17308566009A0B35 /* Sources */,
 				8C2860A617308566009A0B35 /* Copy Frameworks */,
 				8C2860A917308566009A0B35 /* Frameworks */,
 				8C2860B317308566009A0B35 /* Resources */,
-				043D2EB22053A6DC00CC7A47 /* ShellScript */,
-				797931C68F9898C23BB50DF9 /* [CP] Embed Pods Frameworks */,
-				DEC1F4530E6E3EB7CA3E521B /* [CP] Copy Pods Resources */,
+				996D63A47B749994E66D20C1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1404,7 +1382,7 @@
 			attributes = {
 				CLASSPREFIX = PIX;
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = "Pixite Apps LLC";
 				TargetAttributes = {
 					1DB2F849167ABE87008AC0F7 = {
@@ -1426,9 +1404,9 @@
 						};
 					};
 					8C28605917308566009A0B35 = {
-						DevelopmentTeam = R5T2HYENEJ;
+						DevelopmentTeam = GCQM9R5G83;
 						LastSwiftMigration = 1220;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Maps.Mac = {
 								enabled = 1;
@@ -1466,9 +1444,8 @@
 			files = (
 				8C4313531828432E00DB0053 /* Images.xcassets in Resources */,
 				8CF05AEF17C3097400AB88B5 /* Licences.txt in Resources */,
-				8CF05AF317C33B6E00AB88B5 /* Unbound.entitlements in Resources */,
 				458ADC8F5121EEAC61F20378 /* PIXAboutWindowController.xib in Resources */,
-				458AD84878C233514E695642 /* PIXInfoWindowController.xib in Resources */,
+				458AD84878C233514E695642 /* LibraryPickerWindowController.xib in Resources */,
 				458AD2A60F98DABA8B0AD970 /* PIXProgressWindowController.xib in Resources */,
 				458AD629C6135123E7A4DBB3 /* MainWindowController.xib in Resources */,
 				458ADE8B5A343BB864F8EA95 /* PIXHUDMessageController.xib in Resources */,
@@ -1480,7 +1457,6 @@
 				458ADA126784A00937E27C53 /* Unbound-For-Mac-512.png in Resources */,
 				458ADEE2CFE6E9FC79772AE2 /* dark_bg.png in Resources */,
 				458AD5460649727AFE850D02 /* Shading.tiff in Resources */,
-				458ADE297ADE94834B4E95BD /* logo_ao.png in Resources */,
 				458AD8A2126B1009EC44BC38 /* intro_bg.jpg in Resources */,
 				458ADBE2C04CCAD4216602D6 /* nophoto_200x200.jpg in Resources */,
 				458AD6F5A51AF23FAE3524AA /* dark_bg@2X.png in Resources */,
@@ -1551,7 +1527,6 @@
 				458AD4F518E65A154FC420A7 /* buttongrid_emaillink@2x.png in Resources */,
 				458ADBB69FE914117DFCF4D3 /* nophoto.png in Resources */,
 				458AD88E932F96F225196166 /* success-backward@2x.png in Resources */,
-				458ADA9AA2691091C1C57221 /* UnboundTrial-Info.plist in Resources */,
 				458AD66C51FB2F448F1A25D9 /* Images.xcassets in Resources */,
 				458AD050430F1D615216CB9B /* PIXAlbumCollectionViewController.xib in Resources */,
 				458AD2DBAA0FEE2AD3422BA4 /* PIXPhotoCollectionViewController.xib in Resources */,
@@ -1564,7 +1539,6 @@
 				458AD55AC030E79418335410 /* PIXPageViewController.xib in Resources */,
 				458AD4249683A4D61858776F /* PIXSlideshowOptonsViewController.xib in Resources */,
 				458ADBEC220EF1342C4B10D2 /* videoview.xib in Resources */,
-				458ADE6329F3A1D8057BDB62 /* Credits.rtf in Resources */,
 				458AD70293CA8D335694E004 /* MainMenu.xib in Resources */,
 				458AD0A34157691A6BB33AAD /* InfoPlist.strings in Resources */,
 				458AD180BC115721CB9BC296 /* PIXAlbumCollectionViewItem.xib in Resources */,
@@ -1585,7 +1559,8 @@
 				8C4313521828399600DB0053 /* Images.xcassets in Resources */,
 				8CF05AF017C30A2500AB88B5 /* Licences.txt in Resources */,
 				8CF05AF417C33B7300AB88B5 /* UnboundTrial.entitlements in Resources */,
-				458AD5E8647725B1B25A9CD4 /* PIXInfoWindowController.xib in Resources */,
+				2F6706332582B7E100487B31 /* PIXAboutWindowController.xib in Resources */,
+				458AD5E8647725B1B25A9CD4 /* LibraryPickerWindowController.xib in Resources */,
 				458AD9FE390F1EC2B4975EAF /* PIXProgressWindowController.xib in Resources */,
 				458AD9BF57E6F189E9A67E69 /* MainWindowController.xib in Resources */,
 				458ADF346B2B9BDD987C89CE /* PIXHUDMessageController.xib in Resources */,
@@ -1597,7 +1572,6 @@
 				458ADD0AA29780005546F599 /* Unbound-For-Mac-512.png in Resources */,
 				458AD7538A471EFE5AA93806 /* dark_bg.png in Resources */,
 				458AD9FBBDCC0F7B43B43E78 /* Shading.tiff in Resources */,
-				458AD15185BEB0FFF293DFCC /* logo_ao.png in Resources */,
 				458AD80F772899A6551C16BF /* intro_bg.jpg in Resources */,
 				458AD21403CED9CAFA9C48F5 /* nophoto_200x200.jpg in Resources */,
 				458AD67EB21740424298583B /* dark_bg@2X.png in Resources */,
@@ -1679,7 +1653,6 @@
 				458ADA2D53883C40CF3C0B9F /* PIXPageViewController.xib in Resources */,
 				458AD163E765F758C976E4B7 /* PIXSlideshowOptonsViewController.xib in Resources */,
 				458ADF2C8FAB7DB3CF7321A0 /* videoview.xib in Resources */,
-				458AD94620389F78DD2E8278 /* Credits.rtf in Resources */,
 				458AD5B0D0B7827AC88BEAF2 /* MainMenu.xib in Resources */,
 				458AD55533B629BB45DCB1BD /* InfoPlist.strings in Resources */,
 				458AD892258BE9F7BDC6FE52 /* PIXAlbumCollectionViewItem.xib in Resources */,
@@ -1697,34 +1670,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		042991741D0619CB00BBA95A /* Run Script */ = {
+		2F67063A258398C000487B31 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-			);
-			name = "Run Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" 2d7dec3d45e8c12d3d51e10f742ccd405d097f97 00c88cbd24f188ff3b9d936e5cd215aa8b2e35b3062af111d5bcf647e7ba4ea6";
-		};
-		043D2EB22053A6DC00CC7A47 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+			inputFileListPaths = (
 			);
 			inputPaths = (
+			);
+			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" 2d7dec3d45e8c12d3d51e10f742ccd405d097f97 00c88cbd24f188ff3b9d936e5cd215aa8b2e35b3062af111d5bcf647e7ba4ea6";
+			shellScript = "cd BuildTools\nSDKROOT=macosx\n\"${PODS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" --lint --lenient \"$SRCROOT\"\n\n";
 		};
-		2A0C701B7F98A2E9022DBD37 /* [CP] Check Pods Manifest.lock */ = {
+		78DF033F809008C6B9B5C01B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1746,7 +1709,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		797931C68F9898C23BB50DF9 /* [CP] Embed Pods Frameworks */ = {
+		996D63A47B749994E66D20C1 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1754,12 +1717,10 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/MASPreferences/MASPreferences.framework",
-				"${PODS_ROOT}/DevMateKit/DevMateKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MASPreferences.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DevMateKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1806,24 +1767,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		DEC1F4530E6E3EB7CA3E521B /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial-resources.sh",
-				"${PODS_ROOT}/DevMateKit/DevMateKit.framework",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/DevMateKit.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Unbound-Unbound Trial/Pods-Unbound-Unbound Trial-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1834,7 +1777,6 @@
 				1DB2F862167ABE87008AC0F7 /* PIXAppDelegate.m in Sources */,
 				1D4A1E00167BEAF300C9A895 /* PIXViewController.m in Sources */,
 				458ADB4C4EB29CEC6E271D7D /* PIXAboutWindowController.swift in Sources */,
-				458ADAE3D3FF1F6F70A28064 /* PIXInfoWindowController.m in Sources */,
 				458AD5A64C03540A01C7E839 /* PIXProgressWindowController.m in Sources */,
 				458ADA05F9F750121405F8BF /* PIXRoundRectView.m in Sources */,
 				458AD186E2F724142E46F51C /* PIXPhotoUtils.m in Sources */,
@@ -1896,7 +1838,6 @@
 				458AD7817E363896733B8673 /* NavigationController.swift in Sources */,
 				458ADA20C3E7369A700A73FA /* AdaptiveToolbarSpace.swift in Sources */,
 				458AD512E47B0FD2D69945D0 /* ToolbarButton.swift in Sources */,
-				458AD23654D5CE0FFFBCC98B /* PIXApplicationExtensions.m in Sources */,
 				458ADD1FE1B0094D20A586B3 /* ThemedWindow.swift in Sources */,
 				458AD902BB7B5E83100EB491 /* MainWindowController.swift in Sources */,
 				458ADBF01CCAA09C34846927 /* AppearancePrefsViewController.swift in Sources */,
@@ -1905,7 +1846,9 @@
 				458ADA595F31A84CEB5CB5D1 /* NSEventExt.swift in Sources */,
 				458ADC62CD570F3AA553DB7B /* PhotoStyle.swift in Sources */,
 				458AD04D0370ABD1866F64DC /* SimplePhotoItem.swift in Sources */,
+				2F6706352582EEE100487B31 /* LibraryPickerWindowController.swift in Sources */,
 				458ADAD1E08FBF403859C69D /* SimplePhotoItemView.swift in Sources */,
+				2F670611257C7E5500487B31 /* PIXApplicationExtensions.m in Sources */,
 				458ADF43DD27366FB6912ECA /* RegularPhotoItem.swift in Sources */,
 				458AD320CABE3975F0629D54 /* PIXPhotoCollectionViewItem.m in Sources */,
 				458AD533FDA823BF3DD26577 /* PhotoItem.swift in Sources */,
@@ -1925,9 +1868,9 @@
 				8C28605C17308566009A0B35 /* PIXAppDelegate.m in Sources */,
 				8C28606017308566009A0B35 /* PIXViewController.m in Sources */,
 				458AD90A3936F05DFB98A581 /* PIXAboutWindowController.swift in Sources */,
-				458AD11EED5D909E7AF348DB /* PIXInfoWindowController.m in Sources */,
 				458ADD1104108B91EF3C347B /* PIXProgressWindowController.m in Sources */,
 				458AD5250E0ADC4197404162 /* PIXRoundRectView.m in Sources */,
+				2F6706362582F25000487B31 /* LibraryPickerWindowController.swift in Sources */,
 				458AD6919E4F4F10F7D20CC2 /* PIXPhotoUtils.m in Sources */,
 				458ADABBCA769211832349F5 /* PIXShareManager.m in Sources */,
 				458AD39F3EFCF715B4EFFD82 /* PIXSeperatedSpinnerView.m in Sources */,
@@ -1996,6 +1939,7 @@
 				458AD0D299993914E58C7A81 /* PhotoStyle.swift in Sources */,
 				458AD16456E42F03AB822093 /* SimplePhotoItem.swift in Sources */,
 				458AD8CED4DEB1EA34F8932D /* SimplePhotoItemView.swift in Sources */,
+				2F670612257C7E5500487B31 /* PIXApplicationExtensions.m in Sources */,
 				458AD55B31E9A091B5149977 /* RegularPhotoItem.swift in Sources */,
 				458AD5468DCA1AFFF22C29D2 /* PIXPhotoCollectionViewItem.m in Sources */,
 				458AD06342F0808E31A333AB /* PhotoItem.swift in Sources */,
@@ -2019,14 +1963,6 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		458AD3C60928CB6287ECDBFA /* Credits.rtf */ = {
-			isa = PBXVariantGroup;
-			children = (
-				458AD47FF8E17CB6A41CFC92 /* en */,
-			);
-			name = Credits.rtf;
-			sourceTree = "<group>";
-		};
 		458ADD65822C627C42A00876 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2042,6 +1978,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -2049,12 +1986,15 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -2094,6 +2034,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -2101,12 +2042,15 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -2137,7 +2081,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8B5A3111AE5117F32775D55D /* Pods-Unbound.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = x86_64;
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_MODULES = YES;
@@ -2152,14 +2096,19 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = GCQM9R5G83;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/UnboundApp\"/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"TRIAL=0",
+				);
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
@@ -2171,6 +2120,7 @@
 				INFOPLIST_FILE = "UnboundApp/Supporting Files/UnboundApp-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = "";
+				MARKETING_VERSION = 1.3.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pixite.UnboundForMac;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2185,7 +2135,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4F4FEEE6E8C3DAB1C0EF95A1 /* Pods-Unbound.release.xcconfig */;
 			buildSettings = {
-				ARCHS = x86_64;
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_MODULES = YES;
@@ -2200,14 +2150,19 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = GCQM9R5G83;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/UnboundApp\"/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"TRIAL=0",
+				);
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
@@ -2219,6 +2174,7 @@
 				INFOPLIST_FILE = "UnboundApp/Supporting Files/UnboundApp-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = "";
+				MARKETING_VERSION = 1.3.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pixite.UnboundForMac;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2231,19 +2187,21 @@
 		};
 		8C28611917308566009A0B35 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1806B2D5516B5118ADD17C11 /* Pods-Unbound-Unbound Trial.debug.xcconfig */;
+			baseConfigurationReference = F52076581B6BC5F6794BBD97 /* Pods-Unbound-Unbound Trial.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = x86_64;
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
 				CODE_SIGN_ENTITLEMENTS = UnboundTrial.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
-				CODE_SIGN_STYLE = Manual;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = R5T2HYENEJ;
+				CURRENT_PROJECT_VERSION = 17;
+				DEVELOPMENT_TEAM = GCQM9R5G83;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -2261,20 +2219,14 @@
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
 					"\"$(SRCROOT)/UnboundApp/MapKit.framework\"/**",
 					"$(PROJECT_DIR)/UnboundApp/Leap",
-					"\"${PROJECT_DIR}/UnboundApp/Helpers/Kevlar\"/**",
 				);
-				OTHER_CODE_SIGN_FLAGS = "--deep";
+				MARKETING_VERSION = 1.3.6;
+				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-l\"c++\"",
 					"-l\"z\"",
-					"-framework",
-					"\"Crashlytics\"",
-					"-framework",
-					"\"DevMateKit\"",
-					"-framework",
-					"\"Fabric\"",
 					"-framework",
 					"\"Security\"",
 					"-framework",
@@ -2282,10 +2234,10 @@
 					"-framework",
 					IOKit,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.analog-ocean.Unbound";
+				PRODUCT_BUNDLE_IDENTIFIER = com.pixite.UnboundForMacTrial;
 				PRODUCT_NAME = Unbound;
 				PROVISIONING_PROFILE = "ff2f58fa-fdea-4a3f-911c-e1c10bead6fb";
-				PROVISIONING_PROFILE_SPECIFIER = "Unbound Developer ID";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -2296,19 +2248,21 @@
 		};
 		8C28611A17308566009A0B35 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F05E7451FBA6303A9E3CC90E /* Pods-Unbound-Unbound Trial.release.xcconfig */;
+			baseConfigurationReference = 85DD4423077FA45972947A61 /* Pods-Unbound-Unbound Trial.release.xcconfig */;
 			buildSettings = {
-				ARCHS = x86_64;
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
 				CODE_SIGN_ENTITLEMENTS = UnboundTrial.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
-				CODE_SIGN_STYLE = Manual;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = R5T2HYENEJ;
+				CURRENT_PROJECT_VERSION = 17;
+				DEVELOPMENT_TEAM = GCQM9R5G83;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -2326,20 +2280,14 @@
 					"\"$(SRCROOT)/UnboundApp/Leap\"/**",
 					"\"$(SRCROOT)/UnboundApp/MapKit.framework\"/**",
 					"$(PROJECT_DIR)/UnboundApp/Leap",
-					"\"${PROJECT_DIR}/UnboundApp/Helpers/Kevlar\"/**",
 				);
-				OTHER_CODE_SIGN_FLAGS = "--deep";
+				MARKETING_VERSION = 1.3.6;
+				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-l\"c++\"",
 					"-l\"z\"",
-					"-framework",
-					"\"Crashlytics\"",
-					"-framework",
-					"\"DevMateKit\"",
-					"-framework",
-					"\"Fabric\"",
 					"-framework",
 					"\"Security\"",
 					"-framework",
@@ -2347,10 +2295,10 @@
 					"-framework",
 					IOKit,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.analog-ocean.Unbound";
+				PRODUCT_BUNDLE_IDENTIFIER = com.pixite.UnboundForMacTrial;
 				PRODUCT_NAME = Unbound;
 				PROVISIONING_PROFILE = "ff2f58fa-fdea-4a3f-911c-e1c10bead6fb";
-				PROVISIONING_PROFILE_SPECIFIER = "Unbound Developer ID";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";

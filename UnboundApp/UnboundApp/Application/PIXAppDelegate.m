@@ -8,21 +8,12 @@
 
 #import "PIXAppDelegate.h"
 //#import "PIXAppDelegate+CoreDataUtils.h"
-#import "PIXInfoWindowController.h"
 #import "Unbound-Swift.h"
 
 #import "Preferences.h"
 #import "PIXFileParser.h"
 #import "PIXFileManager.h"
 #import "PIXDefines.h"
-
-#import <Fabric/Fabric.h>
-#import <Crashlytics/Crashlytics.h>
-
-#ifdef TRIAL
-#import "DMKevlarApplication.h"
-#import <DevMateKit/DevMateKit.h>
-#endif
 
 //extern NSString *kLoadImageDidFinish;
 //extern NSString *kSearchDidFinishNotification;
@@ -33,10 +24,6 @@
 }
 
 @property (readonly, strong, atomic) NSOperationQueue *backgroundSaveQueue;
-
-#ifdef TRIAL
-@property (strong) SUUpdater * sparkleUpdater;
-#endif
 
 @end
 
@@ -87,16 +74,9 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	_sharedAppDelegate = (PIXAppDelegate *)[[NSApplication sharedApplication] delegate];
-	
-#ifndef DEBUG
-    [Fabric with:@[[Crashlytics class]]];
-#endif
 
-#ifdef TRIAL
-    [DevMateKit sendTrackingReport:nil delegate: nil];
-#endif
-    
-    if([[NSUserDefaults standardUserDefaults] boolForKey:kAppDidNotExitCleanly])
+	BOOL showCrashDialog = [[NSUserDefaults standardUserDefaults] boolForKey:kAppDidNotExitCleanly];
+    if(showCrashDialog)
     {
         NSAlert *alert = [[NSAlert alloc] init];
         alert.messageText = @"Unbound Crashed";
@@ -108,6 +88,7 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
             [self clearAllSettings];
         }
     }
+	[[NSUserDefaults standardUserDefaults] setBool:showCrashDialog forKey:kAppShowedCrashDialog];
     
     // set the did not exit cleanly flag now, it will clear it at the end of 'applicationShouldTerminate'
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kAppDidNotExitCleanly];
@@ -146,29 +127,9 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints"];
 #endif
 
-#ifdef TRIAL
-    self.isTrialBuild = YES;
-    self.sparkleUpdater = [SUUpdater new];
-
-    // Add debug menu
-    DMKitDebugAddDevMateMenu();
-
-    // activate the timed trial
-    if (!DMKIsApplicationActivated(NULL)) {
-        [DevMateKit setupTimeTrial:nil withTimeInterval:kDMTrialWeek];
-    }
-#endif
-
     [NSValueTransformer setValueTransformer:[TextColorForThemeTransformer newInstance]
                                     forName:@"TextColorForThemeTransformer"];
 
-}
-
-- (IBAction)checkForUpdates:(id)sender
-{
-#ifdef TRIAL
-    [self.sparkleUpdater checkForUpdates:sender];
-#endif
 }
 
 - (void)setupProgressIndicator
@@ -224,17 +185,11 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
 // -------------------------------------------------------------------------------
 - (IBAction)showIntroWindow:(id)sender
 {
-    PIXInfoWindowController * localIntroWindow = nil;
-    
     if (self.introWindow == nil)
     {
-        localIntroWindow = [[PIXInfoWindowController alloc] initWithWindowNibName:@"PIXInfoWindowController"];
+        self.introWindow = [LibraryPickerWindowController create];
     }
-    
-    [localIntroWindow showWindow:self];
-    
-    self.introWindow = localIntroWindow;
-    
+    [self.introWindow showWindow:self];
 }
 
 - (IBAction)showAboutWindow:(id)sender
@@ -246,24 +201,22 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
     [showAboutWindow showWindow:self];
 }
 
-- (IBAction)analogOceanWebsitePressed:(id)sender
+- (IBAction)leaveAReview:(id)sender
 {
-    NSURL * url = [NSURL URLWithString:@"http://www.analog-ocean.com"];
-    [[NSWorkspace sharedWorkspace] openURL:url];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:kReviewUrl]];
 }
 
 - (IBAction)helpPressed:(id)sender
 {
-    NSURL * url = [NSURL URLWithString:@"mailto:info@unboundformac.com?subject=Unbound%20for%20Mac%20Support"];
+    NSURL * url = [NSURL URLWithString:kSupportUrl];
     [[NSWorkspace sharedWorkspace] openURL:url];
 }
 
 - (IBAction)requestFeaturePressed:(id)sender
 {
-    NSURL * url = [NSURL URLWithString:@"https://unboundformac.fider.io/"];
+    NSURL * url = [NSURL URLWithString:kFeatureRequestUrl];
     [[NSWorkspace sharedWorkspace] openURL:url];
 }
-
 
 - (IBAction)chooseFolder:(id)sender
 {
@@ -285,19 +238,11 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
 }
 
 - (IBAction)purchaseOnlinePressed:(id)sender {
-    [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:@"http://www.unboundformac.com/"]];
+    [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:kUpgradeTrialUrl]];
 }
 
 - (IBAction)showHomepagePressed:(id)sender {
-    [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:@"http://www.unboundformac.com/"]];
-}
-
-- (IBAction)startActivationProcess:(id)sender {
-#ifdef TRIAL
-    if (!DMKIsApplicationActivated(NULL)) {
-        [DevMateKit runActivationDialog:nil inMode:DMActivationModeFloating];
-    }
-#endif
+    [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:kHomepageUrl]];
 }
 
 #pragma mark - MASPreferences Class methods:
@@ -361,47 +306,9 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 // Returns the directory the application uses to store the Core Data store file. This code uses a directory named "com.pixite.UnboundCoreDataUtility" in the user's Application Support directory.
 - (NSURL *)applicationFilesDirectory
 {
-    //return [[NSURL fileURLWithPath:NSHomeDirectory()] URLByAppendingPathComponent:@"files"];
-    
-    
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    
-    // THE BELOW CAN BE REMOVED AFTER A VERSION OR TWO
-    // if we have the files in the wrong place delete them
-    NSURL * badFileLocation = [[NSURL fileURLWithPath:NSHomeDirectory()] URLByAppendingPathComponent:@"files"];
-    
-    NSURL * badsqllocation = [badFileLocation URLByAppendingPathComponent:@"UnboundApp.sqlite"];
-    
-    if([fileManager fileExistsAtPath:[badsqllocation path]])
-    {
-        [fileManager removeItemAtPath:[[badFileLocation URLByAppendingPathComponent:@"UnboundApp.sqlite"] path]
-                              error:nil];
-        
-        [fileManager removeItemAtPath:[[badFileLocation URLByAppendingPathComponent:@"thumbnails"] path]
-                              error:nil];
-        
-        // delete the dir if empty
-        NSArray *listOfFiles = [fileManager contentsOfDirectoryAtPath:badFileLocation.path error:nil];
-        if([listOfFiles count] == 0)
-        {
-            [fileManager removeItemAtPath:badFileLocation.path error:nil];
-        }
-        
-        double delayInSeconds = 1.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [[PIXFileParser sharedFileParser] scanFullDirectory];
-        });
-        
-    }
-    
-    // END CODE THAT SHOULD BE REMOVED
-    
     NSURL *appSupportURL = [[fileManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject];
-    appSupportURL = [appSupportURL URLByAppendingPathComponent:@"Unbound"];
-    
-    
-    return appSupportURL;
+    return [appSupportURL URLByAppendingPathComponent:@"Unbound"];
 }
 
 // Creates if necessary and returns the managed object model for the application.
@@ -517,7 +424,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
             if (![coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:options error:&error])
             {
                 NSLog(@"Failed to create/open database file: %@", url);
-                [[NSApplication sharedApplication] presentError:error];
+				[PIXAppDelegate presentError:error];
             }
         }
         
@@ -545,18 +452,13 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 -(BOOL)clearThumbSorageDirectory
 {
     NSFileManager * fileManager = [NSFileManager defaultManager];
-    
     NSURL * deleteingThumbsDir = [[self applicationFilesDirectory] URLByAppendingPathComponent:@"/thumbnails-deleting"];
-    
     [fileManager moveItemAtURL:[self thumbSorageDirectory] toURL:deleteingThumbsDir error:nil];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        
         // also delete the thumbnails
         [fileManager removeItemAtURL:deleteingThumbsDir error:nil];
-        
     });
-    
     return YES;
 }
 
@@ -602,7 +504,6 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mergeContext:) name:NSManagedObjectContextDidSaveNotification object:nil];
     
     // do a quick test fetch to see if the db is malformed
-    
     NSError * error = nil;
     NSFetchRequest * fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kPhotoEntityName];
     [_managedObjectContext countForFetchRequest:fetchRequest error:&error];
@@ -612,10 +513,12 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
         [self clearDatabase];
         return [self managedObjectContext];
     }
-   
-
-    
     return _managedObjectContext;
+}
+
+-(BOOL)wantDarkMode
+{
+    return [[self mainWindowController] wantDarkMode];
 }
 
 -(void)saveDBToDiskWithRateLimit
@@ -627,7 +530,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     
 }
 
--(BOOL)saveDBToDisk:(NSError **)error
+-(BOOL)saveDBToDisk:(id)sender
 {
 // rchang: this would return early and never advance to the later code.
 // commenting it out appears to fix an issue where restarts were reverting to older captions
@@ -640,25 +543,24 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 //    return YES;
     // perform this on the main thread if needed
     if(![NSThread isMainThread])
-        
     {
         [self performSelectorOnMainThread:@selector(saveDBToDisk:) withObject:nil waitUntilDone:NO];
         return YES;
     }
     
-    if (![self.managedObjectContext save:error])
+	NSError * ctxError = nil;
+    if (![self.managedObjectContext save:&ctxError])
     {
-        DLog(@"ERROR SAVING IN MAIN THREAD: %@", [*error description])
+        DLog(@"ERROR SAVING IN MAIN THREAD: %@", [ctxError description])
         return NO;
     }
         
     // now save to disk on a bg thread
     [self.privateWriterContext performBlock:^{
-        if (![self.privateWriterContext save:error])
+		NSError * writeError = nil;
+        if (![self.privateWriterContext save:&writeError] && writeError != nil)
         {
-            if(error!=nil) {
-                DLog(@"ERROR SAVING IN BG THREAD: %@", [*error description])
-            }
+			DLog(@"ERROR SAVING IN BG THREAD: %@", [writeError description])
         }
     }];
     
@@ -676,8 +578,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     //    - The undo manager doesn’t maintain strong references to changed objects and so prevent them from being deallocated
     //-------------------------------------------------------
     [context setUndoManager:nil];
-    
-    
+
     //set it to the App Delegates persistant store coordinator
 //    [context setPersistentStoreCoordinator:[self persistentStoreCoordinator]];
     
@@ -691,7 +592,6 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 
 -(NSManagedObjectContext *)threadSafeSideSaveMOC
 {
-    
     NSManagedObjectContext * context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
     
     //-------------------------------------------------------
@@ -701,8 +601,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     //    - The undo manager doesn’t maintain strong references to changed objects and so prevent them from being deallocated
     //-------------------------------------------------------
     [context setUndoManager:nil];
-    
-    
+
     //set it to the App Delegates persistant store coordinator
 
     if (self.privateWriterContext) {
@@ -736,51 +635,42 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 
 - (void)clearDatabase
 {
-    // pop to the root vc
     [[[self mainWindowController] navigationViewController] popToRootViewController];
-
-    /*
-    for(NSPersistentStore *aStore in _persistentStoreBackgroundCoordinator.persistentStores)
-    {
-        NSError * error = nil;
-        [_persistentStoreBackgroundCoordinator removePersistentStore:aStore error:&error];
-        
-        if(error)
-        {
-            NSLog(@"Error removing persistant store: %@", error.description);
-        }
-    }
     
-    for(NSPersistentStore *aStore in _persistentStoreCoordinator.persistentStores)
-    {
-        NSError * error = nil;
-        [_persistentStoreCoordinator removePersistentStore:aStore error:&error];
-        
-        if(error)
-        {
-            NSLog(@"Error removing persistant store: %@", error.description);
-        }
-    }
-     [self.managedObjectContext setParentContext:nil];
-     */
-    
-    
-    
-    _managedObjectContext = nil;
-    _privateWriterContext = nil;
-    _persistentStoreCoordinator = nil;
-    _persistentStoreBackgroundCoordinator = nil;
-    
-    [[PIXFileParser sharedFileParser] setParseContext:nil];
-    
-    NSURL *url = [[self applicationFilesDirectory] URLByAppendingPathComponent:@"UnboundApp.sqlite"];
-    
-    NSError * error;
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (![fileManager removeItemAtPath:url.path error:&error]) {
-        NSLog(@"Failed to remove database file: %@", url);
-    }
-    
+	// This is kind of hairy.
+	// Deletions are broken into 3 stages.
+	// 1. We perform the actual deletion in our writer context (in memory only).
+	// 2. We merge those changes into the managed object context we give out to the rest of the app.
+	//    This is basically a cache flush for the reader context---without it, the other context will
+	//    keep the now-deleted objects around in memory, maybe until restart (!!).
+	// 3. We write the changes to disk
+	//
+	// More info here: https://stackoverflow.com/questions/53823083/why-entries-are-not-deleted-until-app-is-restarted-or-i-execute-my-nsbatchdelete
+	// And from Apple: https://developer.apple.com/library/archive/featuredarticles/CoreData_Batch_Guide/BatchDeletes/BatchDeletes.html
+	NSManagedObjectContext * moc = [self managedObjectContext];
+	for(NSString * entity in @[kPhotoEntityName, kAlbumEntityName]) {
+		// 1. Do the deletion
+		NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:entity];
+		NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:request];
+		[delete setResultType:NSBatchDeleteResultTypeObjectIDs];
+		NSError *deleteError = nil;
+		id resultIds = [_persistentStoreCoordinator executeRequest:delete withContext:_privateWriterContext error:&deleteError];
+		
+		// 2. Sync the changes across everyone who might have held onto it in memory
+		if(resultIds) {
+			[NSManagedObjectContext mergeChangesFromRemoteContextSave:@{NSDeletedObjectsKey: [resultIds result]} intoContexts:@[moc]];
+		} else {
+			NSLog(@"Error running deletion on %@: %@", entity, [deleteError description]);
+		}
+		
+		// 3. Write the changes to disk before continuing
+		NSError * saveError = nil;
+		[_privateWriterContext save:&saveError];
+		if(saveError) {
+			NSLog(@"Error saving %@: %@", entity, [saveError description]);
+		}
+	}
+	
     [self clearThumbSorageDirectory];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
@@ -791,11 +681,9 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
     NSManagedObjectContext *postingContext = [notification object];
     
     // save the writer context in the bg
-    
     if(postingContext.parentContext ==  self.privateWriterContext && postingContext != self.managedObjectContext)
     {
         [self.privateWriterContext performBlock:^{
-            
             NSError * error = nil;
             if (![self.privateWriterContext save:&error])
             {

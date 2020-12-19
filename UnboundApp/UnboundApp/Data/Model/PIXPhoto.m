@@ -200,14 +200,14 @@ const CGFloat kThumbnailSize = 370.0f;
         
         if (weakSelf == nil || aPath==nil) {
             DLog(@"fullsize operation completed after object was dealloced - return");
-            _fullsizeImageIsLoading = NO;
+			self->_fullsizeImageIsLoading = NO;
             weakSelf.cancelFullsizeLoadOperation = NO;
             return;
         }
         
         if (weakSelf.cancelFullsizeLoadOperation==YES) {
             DLog(@"1)fullsize operation was canceled - return");
-            _fullsizeImageIsLoading = NO;
+			self->_fullsizeImageIsLoading = NO;
             weakSelf.cancelFullsizeLoadOperation = NO;
             return;
         }
@@ -223,7 +223,7 @@ const CGFloat kThumbnailSize = 370.0f;
             if (weakSelf.cancelFullsizeLoadOperation==YES) {
                 DLog(@"2)fullsize operation was canceled - return");
                 CFRelease(imageSource);
-                _fullsizeImageIsLoading = NO;
+				self->_fullsizeImageIsLoading = NO;
                 weakSelf.cancelFullsizeLoadOperation = NO;
                 return;
             }
@@ -234,7 +234,7 @@ const CGFloat kThumbnailSize = 370.0f;
             if (weakSelf.cancelFullsizeLoadOperation==YES) {
                 DLog(@"4)fulllsize operation was canceled - return");
                 CFRelease(imageSource);
-                _fullsizeImageIsLoading = NO;
+				self->_fullsizeImageIsLoading = NO;
                 weakSelf.cancelFullsizeLoadOperation = NO;
                 return;
             }
@@ -523,7 +523,7 @@ const CGFloat kThumbnailSize = 370.0f;
                         [weakSelf postPhotoUpdatedNote];
                     });
                     
-                    _thumbnailImageIsLoading = NO;
+					self->_thumbnailImageIsLoading = NO;
                 }
                 
                 // if we still haven't found the thumb then laod from original image
@@ -647,7 +647,7 @@ const CGFloat kThumbnailSize = 370.0f;
         
         if (weakSelf == nil || aPath==nil || weakSelf.cancelThumbnailLoadOperation==YES) {
             DLog(@"thumbnail operation completed after object was dealloced or canceled - return");
-            _thumbnailImageIsLoading = NO;
+			self->_thumbnailImageIsLoading = NO;
             weakSelf.cancelThumbnailLoadOperation = NO;
             
             [[PIXFileParser sharedFileParser] decrementWorking];
@@ -663,7 +663,6 @@ const CGFloat kThumbnailSize = 370.0f;
             DLog(@"Not a vidoe file - returning");
             return;
         }
-        NSError *anError;
 
         AVAsset *asset = [AVAsset assetWithURL:urlForImage];
         AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
@@ -674,7 +673,7 @@ const CGFloat kThumbnailSize = 370.0f;
         CGImageRef cgImage = [imageGenerator copyCGImageAtTime:time actualTime:NULL error:&err];
         if (err != nil) {
             DLog(@"Failed to generate movie thumbnail: %@\n%@", err, err.userInfo);
-            _thumbnailImageIsLoading = NO;
+			self->_thumbnailImageIsLoading = NO;
             weakSelf.cancelThumbnailLoadOperation = NO;
 
             [[PIXFileParser sharedFileParser] decrementWorking];
@@ -684,7 +683,7 @@ const CGFloat kThumbnailSize = 370.0f;
         if (weakSelf.cancelThumbnailLoadOperation==YES) {
             //DLog(@"2)thumbnail operation was canceled - return");
             CFRelease(cgImage);
-            _thumbnailImageIsLoading = NO;
+			self->_thumbnailImageIsLoading = NO;
             weakSelf.cancelThumbnailLoadOperation = NO;
 
             [[PIXFileParser sharedFileParser] decrementWorking];
@@ -716,11 +715,10 @@ const CGFloat kThumbnailSize = 370.0f;
 
             // we've finished updating the ui with the image, do everythinge else at a lower priority
             self.slowThumbLoad = [NSBlockOperation blockOperationWithBlock:^{
-                
                 // if the load was cancelled then bail
                 if (weakSelf.cancelThumbnailLoadOperation) {
                     //DLog(@"3)thumbnail operation was canceled - return");
-                    _thumbnailImageIsLoading = NO;
+					self->_thumbnailImageIsLoading = NO;
                     weakSelf.cancelThumbnailLoadOperation = NO;
                     
                     [[PIXFileParser sharedFileParser] decrementWorking];
@@ -740,7 +738,7 @@ const CGFloat kThumbnailSize = 370.0f;
                 // if the load was cancelled then bail
                 if (weakSelf.cancelThumbnailLoadOperation==YES) {
                     //DLog(@"3)thumbnail operation was canceled - return");
-                    _thumbnailImageIsLoading = NO;
+					self->_thumbnailImageIsLoading = NO;
                     weakSelf.cancelThumbnailLoadOperation = NO;
 
                     [[PIXFileParser sharedFileParser] decrementWorking];
@@ -806,8 +804,7 @@ const CGFloat kThumbnailSize = 370.0f;
                 //////////////// end options
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                    _thumbnailImageIsLoading = NO;
+					self->_thumbnailImageIsLoading = NO;
                     self.slowThumbLoad = nil;
                 });
                 
@@ -851,7 +848,6 @@ const CGFloat kThumbnailSize = 370.0f;
         [self loadThumbnailImageFromVideo];
         return;
     }
-
     
     // increment once for each bg operation (each will decrement itself
     [[PIXFileParser sharedFileParser] incrementWorking];
@@ -868,7 +864,7 @@ const CGFloat kThumbnailSize = 370.0f;
         
         if (weakSelf == nil || aPath==nil || weakSelf.cancelThumbnailLoadOperation==YES) {
             DLog(@"thumbnail operation completed after object was dealloced or canceled - return");
-            _thumbnailImageIsLoading = NO;
+            self->_thumbnailImageIsLoading = NO;
             weakSelf.cancelThumbnailLoadOperation = NO;
             
             [[PIXFileParser sharedFileParser] decrementWorking];
@@ -891,7 +887,7 @@ const CGFloat kThumbnailSize = 370.0f;
             CGImageRef cgImage = [imageGenerator copyCGImageAtTime:time actualTime:NULL error:&err];
             if (err != nil) {
                 DLog(@"Failed to generate movie thumbnail: %@\n%@", err, err.userInfo);
-                _thumbnailImageIsLoading = NO;
+				self->_thumbnailImageIsLoading = NO;
                 weakSelf.cancelThumbnailLoadOperation = NO;
 
                 [[PIXFileParser sharedFileParser] decrementWorking];
@@ -901,7 +897,7 @@ const CGFloat kThumbnailSize = 370.0f;
             if (weakSelf.cancelThumbnailLoadOperation==YES) {
                 //DLog(@"2)thumbnail operation was canceled - return");
                 CFRelease(cgImage);
-                _thumbnailImageIsLoading = NO;
+				self->_thumbnailImageIsLoading = NO;
                 weakSelf.cancelThumbnailLoadOperation = NO;
 
                 [[PIXFileParser sharedFileParser] decrementWorking];
@@ -943,11 +939,10 @@ const CGFloat kThumbnailSize = 370.0f;
             }
             
             if (movieImageSource) {
-                
                 if (weakSelf.cancelThumbnailLoadOperation==YES) {
                     //DLog(@"2)thumbnail operation was canceled - return");
                     CFRelease(movieImageSource);
-                    _thumbnailImageIsLoading = NO;
+                    self->_thumbnailImageIsLoading = NO;
                     weakSelf.cancelThumbnailLoadOperation = NO;
                     
                     [[PIXFileParser sharedFileParser] decrementWorking];
@@ -975,18 +970,14 @@ const CGFloat kThumbnailSize = 370.0f;
             }
             [[PIXFileParser sharedFileParser] decrementWorking];
             self.fastThumbLoad = nil;
-
-
         }
-        
         
         CGImageSourceRef imageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)urlForImage, nil);
         if (imageSource) {
-            
             if (weakSelf.cancelThumbnailLoadOperation==YES) {
                 //DLog(@"2)thumbnail operation was canceled - return");
                 CFRelease(imageSource);
-                _thumbnailImageIsLoading = NO;
+				self->_thumbnailImageIsLoading = NO;
                 weakSelf.cancelThumbnailLoadOperation = NO;
                 
                 [[PIXFileParser sharedFileParser] decrementWorking];
@@ -1042,7 +1033,7 @@ const CGFloat kThumbnailSize = 370.0f;
                 if (weakSelf.cancelThumbnailLoadOperation==YES) {
                     //DLog(@"3)thumbnail operation was canceled - return");
                     CFRelease(imageSource);
-                    _thumbnailImageIsLoading = NO;
+					self->_thumbnailImageIsLoading = NO;
                     weakSelf.cancelThumbnailLoadOperation = NO;
                     
                     [[PIXFileParser sharedFileParser] decrementWorking];
@@ -1058,7 +1049,7 @@ const CGFloat kThumbnailSize = 370.0f;
                     //DLog(@"3)thumbnail operation was canceled - return");
                     if(cfDict) CFRelease(cfDict);
                     CFRelease(imageSource);
-                    _thumbnailImageIsLoading = NO;
+					self->_thumbnailImageIsLoading = NO;
                     weakSelf.cancelThumbnailLoadOperation = NO;
                     
                     [[PIXFileParser sharedFileParser] decrementWorking];
@@ -1134,7 +1125,7 @@ const CGFloat kThumbnailSize = 370.0f;
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
 
-                    _thumbnailImageIsLoading = NO;
+					self->_thumbnailImageIsLoading = NO;
                     self.slowThumbLoad = nil;
                 });
                 

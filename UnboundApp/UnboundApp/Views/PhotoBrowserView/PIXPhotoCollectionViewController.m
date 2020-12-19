@@ -117,7 +117,7 @@
     // this will allow droping files into the larger grid view
     [self.collectionView registerForDraggedTypes:@[NSURLPboardType]];
 
-    [self updateToolbar];
+    [self updateToolbarForPhotos];
 }
 
 #pragma mark - Background Colors
@@ -211,7 +211,7 @@
         [[[PIXAppDelegate sharedAppDelegate] window] setTitle:[self.album title]];
 
         self.title = _album.title;
-        [self updateToolbar];
+        [self updateToolbarForPhotos];
         [self updateAlbum:nil];
 
         [self.collectionView scrollPoint:NSZeroPoint];
@@ -285,7 +285,7 @@
     [self.gridViewTitle setStringValue:gridTitle];
 
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self updateToolbar];
+        [self updateToolbarForPhotos];
     });
 
 
@@ -417,7 +417,7 @@
         // if the clicked item isn't part of the current selection, reset the current selection
         if (![self.collectionView.selectionIndexPaths containsObject:[self.collectionView indexPathForItem:self.clickedItem]]) {
             self.collectionView.selectionIndexPaths = [NSSet setWithObject:[self.collectionView indexPathForItem:self.clickedItem]];
-            [self updateToolbar];
+            [self updateToolbarForPhotos];
         }
 
         NSUInteger count = self.collectionView.selectionIndexPaths.count;
@@ -523,6 +523,8 @@
         case PhotoStyleCompact: return @"SimplePhotoItem";
         case PhotoStyleRegular: return @"RegularPhotoItem";
     }
+    assert(false); // "Unhandleded photo style"
+    return @"SimplePhotoItem";
 }
 
 - (NSObject<PhotoItem> *)photoItemForObjectAtIndexPath:(NSIndexPath *)indexPath inCollectionView:(NSCollectionView *)collectionView {
@@ -625,7 +627,7 @@
             ((PIXCollectionViewItem *) item).selected = selected;
         }
     }
-    [self updateToolbar];
+    [self updateToolbarForPhotos];
 }
 
 #pragma mark - Drop Operation
@@ -718,16 +720,6 @@
     }
 
     return YES;
-}
-
-- (void)updateToolbar {
-    NSUInteger count = self.collectionView.selectionIndexPaths.count;
-    if (count == 0) {
-        [self.toolbar hideToolbar:YES];
-    } else {
-        [self.toolbar showToolbar:YES];
-    }
-    [self.toolbar setTitle:[NSString localizedStringWithFormat:NSLocalizedString(@"%lu photo(s) selected", @"Number of selected photos"), (unsigned long)count]];
 }
 
 - (void)setupToolbar {

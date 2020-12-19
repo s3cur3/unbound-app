@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -11,35 +11,34 @@
                 <outlet property="copyright" destination="L69-lu-ufc" id="Rtw-Fb-Oav"/>
                 <outlet property="icon" destination="Czj-nE-6nH" id="gM5-OY-Fhm"/>
                 <outlet property="link" destination="fVy-kX-q8l" id="gAK-mh-t2m"/>
-                <outlet property="logo" destination="BSP-eb-hkh" id="JfC-aX-w3t"/>
                 <outlet property="title" destination="sAV-zM-ZHB" id="B0B-pX-oOF"/>
                 <outlet property="version" destination="CeL-JH-5TJ" id="1JA-Fa-f0x"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" animationBehavior="default" id="QvC-M9-y7g">
+        <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="310" height="342"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1050"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="310" height="342"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sAV-zM-ZHB">
-                        <rect key="frame" x="18" y="204" width="274" height="17"/>
+                        <rect key="frame" x="18" y="297" width="274" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="5yf-GK-W8W"/>
                         </constraints>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" allowsEditingTextAttributes="YES" id="5Ob-ud-96L">
-                            <font key="font" size="14" name=".AppleSystemUIFontBold"/>
+                            <font key="font" metaFont="systemBold" size="14"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CeL-JH-5TJ">
-                        <rect key="frame" x="18" y="179" width="274" height="17"/>
+                        <rect key="frame" x="18" y="272" width="274" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="B8T-vT-XJZ"/>
                         </constraints>
@@ -50,26 +49,18 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="L69-lu-ufc">
-                        <rect key="frame" x="18" y="141" width="274" height="30"/>
+                        <rect key="frame" x="18" y="234" width="274" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="wEI-DC-ebW"/>
                         </constraints>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="© 2016 Analog Ocean, Ltd." id="Sda-4g-5so">
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="© 2017 Conversion Insights, Inc." id="Sda-4g-5so">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BSP-eb-hkh">
-                        <rect key="frame" x="107" y="35" width="97" height="55"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="97" id="LzZ-YJ-H62"/>
-                            <constraint firstAttribute="height" constant="55" id="PDT-A0-XKN"/>
-                        </constraints>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="logo_ao" id="Kwl-x1-DFT"/>
-                    </imageView>
-                    <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fVy-kX-q8l">
-                        <rect key="frame" x="20" y="114" width="270" height="17"/>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fVy-kX-q8l">
+                        <rect key="frame" x="20" y="207" width="270" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="idh-Jz-Sel"/>
                         </constraints>
@@ -82,7 +73,7 @@
                         </connections>
                     </button>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Czj-nE-6nH">
-                        <rect key="frame" x="109" y="229" width="93" height="93"/>
+                        <rect key="frame" x="109" y="322" width="93" height="0.0"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="93" id="rsx-sf-evE"/>
                         </constraints>
@@ -97,22 +88,16 @@
                     <constraint firstItem="sAV-zM-ZHB" firstAttribute="top" secondItem="Czj-nE-6nH" secondAttribute="bottom" constant="8" symbolic="YES" id="NBb-yT-2Io"/>
                     <constraint firstItem="Czj-nE-6nH" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="20" symbolic="YES" id="Qvh-7r-Lu1"/>
                     <constraint firstItem="sAV-zM-ZHB" firstAttribute="leading" secondItem="CeL-JH-5TJ" secondAttribute="leading" id="Wr7-sf-6Xh"/>
-                    <constraint firstItem="BSP-eb-hkh" firstAttribute="top" secondItem="fVy-kX-q8l" secondAttribute="bottom" constant="24" id="YTJ-Ye-d7K"/>
                     <constraint firstItem="L69-lu-ufc" firstAttribute="leading" secondItem="fVy-kX-q8l" secondAttribute="leading" id="bqy-Zo-cak"/>
                     <constraint firstAttribute="trailing" secondItem="sAV-zM-ZHB" secondAttribute="trailing" constant="20" symbolic="YES" id="de3-IU-5wd"/>
                     <constraint firstItem="CeL-JH-5TJ" firstAttribute="leading" secondItem="L69-lu-ufc" secondAttribute="leading" id="gZ0-uz-scw"/>
                     <constraint firstItem="sAV-zM-ZHB" firstAttribute="trailing" secondItem="CeL-JH-5TJ" secondAttribute="trailing" id="gqQ-lI-je2"/>
                     <constraint firstItem="CeL-JH-5TJ" firstAttribute="top" secondItem="sAV-zM-ZHB" secondAttribute="bottom" constant="8" symbolic="YES" id="hN7-aJ-R75"/>
                     <constraint firstItem="fVy-kX-q8l" firstAttribute="top" secondItem="L69-lu-ufc" secondAttribute="bottom" constant="6" id="mPV-IN-XMX"/>
-                    <constraint firstAttribute="bottom" secondItem="BSP-eb-hkh" secondAttribute="bottom" constant="35" id="p1v-hJ-3oC"/>
                     <constraint firstItem="Czj-nE-6nH" firstAttribute="centerX" secondItem="sAV-zM-ZHB" secondAttribute="centerX" id="r4d-AJ-lxb"/>
-                    <constraint firstItem="fVy-kX-q8l" firstAttribute="centerX" secondItem="BSP-eb-hkh" secondAttribute="centerX" id="x63-cT-sDm"/>
                 </constraints>
             </view>
             <point key="canvasLocation" x="324" y="403"/>
         </window>
     </objects>
-    <resources>
-        <image name="logo_ao" width="188" height="100"/>
-    </resources>
 </document>

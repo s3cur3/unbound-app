@@ -33,12 +33,15 @@ static Preferences * instance = nil;
 
 	// second step : create the dictionary containing the parameters' keys and values
 	NSMutableDictionary * defaults = [NSMutableDictionary dictionary];
-    
-    
-    // 0 for light, 1 for dark
-    [defaults setValue:[NSNumber numberWithInt:0] forKey:@"backgroundTheme"];
-    
-    [defaults setValue:@(0) forKey:kPrefPhotoStyle];
+
+	// 0 for light, 1 for dark
+	if(@available(macOS 10.14, *)) {
+		BOOL wantDark = [[[NSApplication sharedApplication] effectiveAppearance] name] == NSAppearanceNameDarkAqua;
+		[defaults setValue:[NSNumber numberWithInt:wantDark] forKey:@"backgroundTheme"];
+	}
+
+	defaults[kAppShowedCrashDialog] = @NO;
+    [defaults setValue:@"Compact" forKey:kPrefPhotoStyle];
 
 	[defaults setValue:[NSNumber numberWithFloat:0.38f] forKey:@"thumbnailSize"];
 	

@@ -15,6 +15,7 @@
 
 #import "ArchDirectoryObservationCenter.h"
 #import "NSURL+DirectoryObserver.h"
+#import "PIXPhotoUtils.h"
 
 #include <sys/types.h>
 #include <pwd.h>
@@ -134,9 +135,8 @@ NSString * aDefaultDropBoxPhotosDirectory(void)
  * tight loops where it's called
  */
  
-NSDictionary * dictionaryForURL(NSURL * url)
+static NSDictionary * dictionaryForURL(NSURL * url)
 {
-    
     BOOL isImageFile = NO;
     NSString *utiValue;
     [url getResourceValue:&utiValue forKey:NSURLTypeIdentifierKey error:nil];
@@ -554,7 +554,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                                                           options:options
                                                      errorHandler:^(NSURL *url, NSError *error) {
                                                          
-                                                         for(NSURL * aScopeURL in _sandboxScopeURLs)
+                                                         for(NSURL * aScopeURL in self->_sandboxScopeURLs)
                                                          {
                                                              [aScopeURL stopAccessingSecurityScopedResource];
                                                          }
@@ -626,23 +626,22 @@ NSDictionary * dictionaryForURL(NSURL * url)
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dateLastUpdated == NULL || dateLastUpdated < %@", startScanTime, nil];
             
             // be sure to delete albums first so there are less photos to iterate through in the second delete
-            if (![self deleteObjectsForEntityName:@"PIXAlbum" inContext:context withPredicate:predicate]) {
+            if (![self deleteObjectsForEntityName:kAlbumEntityName inContext:context withPredicate:predicate]) {
                 DLog(@"There was a problem trying to delete old objects");
             }
-            if (![self deleteObjectsForEntityName:@"PIXPhoto" inContext:context withPredicate:predicate]) {
+            if (![self deleteObjectsForEntityName:kPhotoEntityName inContext:context withPredicate:predicate]) {
                 DLog(@"There was a problem trying to delete old objects");
             }
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                
-                [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
+                [[PIXAppDelegate sharedAppDelegate] saveDBToDiskWithRateLimit];
                 
                 // use this flag so the deep scan will restart if the app closes half way through
                 [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kDeepScanIncompleteKey];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
                 
-                for(NSURL * aScopeURL in _sandboxScopeURLs)
+				for(NSURL * aScopeURL in self->_sandboxScopeURLs)
                 {
                     [aScopeURL stopAccessingSecurityScopedResource];
                 }
@@ -805,7 +804,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
             }
             
             // be sure to delete albums first so there are less photos to iterate through in the second delete
-            if (![self deleteObjectsForEntityName:@"PIXAlbum" inContext:context withPredicate:predicate]) {
+            if (![self deleteObjectsForEntityName:kAlbumEntityName inContext:context withPredicate:predicate]) {
                 DLog(@"There was a problem trying to delete old objects");
             }
             
@@ -817,7 +816,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 predicate = [NSPredicate predicateWithFormat:@"album.path CONTAINS %@ && (dateLastUpdated == NULL || dateLastUpdated < %@)",path, startParseDate, nil];
             }
             
-            if (![self deleteObjectsForEntityName:@"PIXPhoto" inContext:context withPredicate:predicate]) {
+            if (![self deleteObjectsForEntityName:kPhotoEntityName inContext:context withPredicate:predicate]) {
                 DLog(@"There was a problem trying to delete old objects");
             }
             
@@ -904,20 +903,18 @@ NSDictionary * dictionaryForURL(NSURL * url)
 
         NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] threadSafeSideSaveMOC];
         // be sure to delete albums first so there are less photos to iterate through in the second delete
-        if (![self deleteObjectsForEntityName:@"PIXAlbum" inContext:context withPredicate:predicate]) {
+        if (![self deleteObjectsForEntityName:kAlbumEntityName inContext:context withPredicate:predicate]) {
             DLog(@"There was a problem trying to delete old objects");
         }
-        
         [context save:nil];
     }
-    
     else
     {
         NSPredicate * predicate = [NSPredicate predicateWithFormat:@"path == %@", fileURL.path, nil];
         
         NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] threadSafeSideSaveMOC];
         // be sure to delete albums first so there are less photos to iterate through in the second delete
-        if (![self deleteObjectsForEntityName:@"PIXPhoto" inContext:context withPredicate:predicate]) {
+        if (![self deleteObjectsForEntityName:kPhotoEntityName inContext:context withPredicate:predicate]) {
             DLog(@"There was a problem trying to delete old objects");
         }
         
@@ -935,7 +932,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
     NSManagedObjectContext *context = [[PIXAppDelegate sharedAppDelegate] threadSafeSideSaveMOC];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PIXAlbum" inManagedObjectContext:context];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:kAlbumEntityName inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
     
     [fetchRequest setPropertiesToFetch:@[@"path"]];
@@ -1026,7 +1023,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 // if we didn't find an existing album then we need to create it
                 if (lastAlbum==nil)
                 {
-                    lastAlbum = [NSEntityDescription insertNewObjectForEntityForName:@"PIXAlbum" inManagedObjectContext:context];
+                    lastAlbum = [NSEntityDescription insertNewObjectForEntityForName:kAlbumEntityName inManagedObjectContext:context];
                     [lastAlbum setValue:aPath forKey:@"path"];
                 }
                 else
@@ -1079,7 +1076,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
                 // if we didn't find the photo we'll need to create a new entity
                 if(dbPhoto==nil)
                 {
-                    dbPhoto = [NSEntityDescription insertNewObjectForEntityForName:@"PIXPhoto" inManagedObjectContext:context];
+                    dbPhoto = [NSEntityDescription insertNewObjectForEntityForName:kPhotoEntityName inManagedObjectContext:context];
                 }
                 
                 // if we found the photo, remove it from the album's existing photos
@@ -1237,7 +1234,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
 -(PIXAlbum *)fetchAlbumWithPath:(NSString *)aPath inContext:(NSManagedObjectContext *)context
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PIXAlbum" inManagedObjectContext:context];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:kAlbumEntityName inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"path == %@", aPath];
@@ -1674,18 +1671,14 @@ NSDictionary * dictionaryForURL(NSURL * url)
 
 -(BOOL)userChooseFolderDialog
 {
-    // Create the File Open Dialog class.
     NSOpenPanel* openPanel = [NSOpenPanel openPanel];
-    
     [openPanel setAllowsMultipleSelection:NO];
     [openPanel setCanChooseDirectories:YES];
     [openPanel setCanChooseFiles:NO];
-    
     [openPanel setCanCreateDirectories:YES];
     //[openPanel setDirectoryURL:[NSURL fileURLWithPath:@"~/"]];
     
     NSInteger result = [openPanel runModal];
-    
     if(result == NSFileHandlingPanelOKButton && [[openPanel URLs] count] == 1)
     {
         NSURL *selectedURL = [[openPanel URLs] lastObject];
@@ -1694,9 +1687,7 @@ NSDictionary * dictionaryForURL(NSURL * url)
             [self mountedVolumesInfo];
 #endif
             NSString *warningMessage = [NSString stringWithFormat:@"The root folder you selected is read-only which may prevent some app features from functioning properly. Continue with this folder anyway?"];
-            if (NSRunAlertPanel(@"Read & Write Permissions Are Required", warningMessage, @"OK", @"Cancel", nil) == NSAlertDefaultReturn) {
-                //User selected to continue with this folder - do nothing
-            } else {
+            if(cancellableAlert(@"Read & Write Permissions Are Required", warningMessage) == modal_response_cancel) {
                 //If user cancels go back to the preferenes view without making a change
                 return NO;
             }
@@ -1708,13 +1699,10 @@ NSDictionary * dictionaryForURL(NSURL * url)
         // Check if the user chose a dropbox folder where we should only use the Photos and Camera Uploads subfolders
         if([[selectedURL lastPathComponent] isEqualToString:@"Dropbox"])
         {
-            
-            
             NSArray * dropboxURLS = @[[selectedURL URLByAppendingPathComponent:@"Photos"],
                                       [selectedURL URLByAppendingPathComponent:@"Camera Uploads"]];
             
             BOOL urlsExist = YES;
-            
             for(NSURL * aURL in dropboxURLS)
             {
                 BOOL isDir = NO;
@@ -1723,19 +1711,21 @@ NSDictionary * dictionaryForURL(NSURL * url)
                     urlsExist = NO;
                 }
             }
-            
-            
-            
+
             // if all the urls are good, ask the user if we should use the subfolders
             if(urlsExist)
             {
-                NSString *message = [NSString stringWithFormat:@"You've selected your Dropbox folder for your photos. Would you like Unbound to scan just the Photos and Camera Uploads subfolders? This matches the default configuration of Unbound for iPhone and iPad."];
-                if (NSRunAlertPanel(@"Use Photos and Camera Uploads Folder?", message, @"Use Subfolders", @"Use entire Dropbox folder", nil) == NSAlertDefaultReturn) {
-                    urls = dropboxURLS;
-                }
+				NSAlert * alert = [[NSAlert alloc] init];
+				alert.messageText = @"Use Photos and Camera Uploads Folder?";
+				alert.informativeText = [NSString stringWithFormat:@"You've selected your Dropbox folder for your photos. Would you like Unbound to scan just the Photos and Camera Uploads subfolders? This is a common usage."];
+				[alert addButtonWithTitle:@"Use Just Photos & Camera Uploads"];
+				[alert addButtonWithTitle:@"Use Entire Dropbox"];
+				if([alert runModal] == NSAlertFirstButtonReturn)
+				{
+					urls = dropboxURLS;
+				}
             }
         }
-        
         
         [[PIXAppDelegate sharedAppDelegate] showMainWindow:nil];
         

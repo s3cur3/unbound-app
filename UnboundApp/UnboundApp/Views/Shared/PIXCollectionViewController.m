@@ -17,6 +17,7 @@
 #import "PIXAlbum.h"
 #import "PIXCollectionToolbar.h"
 #import "PIXCollectionView.h"
+#import "PIXPhotoUtils.h"
 #import <Quartz/Quartz.h>
 
 static NSString *kContentTitleKey, *kContentImageKey;
@@ -55,6 +56,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
     self.view.wantsLayer = true;
     self.collectionView.wantsLayer = true;
+    self.macAppStoreBtn.hidden = !TRIAL;
 
     if (@available(macOS 10.14, *)) {
         // The collection view actually seems to take it's color from the primary color defined in the
@@ -144,15 +146,13 @@ static NSString *kContentTitleKey, *kContentImageKey;
         return;
     }
     NSColor * color = nil;
-    if([[NSUserDefaults standardUserDefaults] integerForKey:@"backgroundTheme"] == 0)
-    {
-        color = [NSColor colorWithCalibratedWhite:0.912 alpha:1.000];
-    }
-    
-    else
+    if([[PIXAppDelegate sharedAppDelegate] wantDarkMode])
     {
         color = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
-        //[[self enclosingScrollView] setBackgroundColor:color];
+    }
+    else
+    {
+        color = [NSColor colorWithCalibratedWhite:0.912 alpha:1.000];
     }
 
     self.collectionView.layer.backgroundColor = color.CGColor;
@@ -274,11 +274,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 - (BOOL)verifyActionForItemsWithTitle:(NSString *)aTitle message:(NSString *)warningMessage
 {
-    if (NSRunAlertPanel(aTitle, warningMessage, @"OK", @"Cancel", nil) == NSAlertDefaultReturn) {
-        return YES;
-    } else {
-        return NO;
-    }
+    return cancellableAlert(aTitle, warningMessage) == modal_response_ok;
 }
 
 - (void)getInfo:(id)sender
@@ -377,6 +373,29 @@ static NSString *kContentTitleKey, *kContentImageKey;
         [[NSWorkspace sharedWorkspace] openFile:path];
         
     }
+}
+
+- (void)updateToolbarForPhotos {
+    [self updateToolbar:NSLocalizedString(@"%lu photo(s) selected", @"Number of selected photos")];
+}
+- (void)updateToolbarForAlbums {
+    [self updateToolbar:NSLocalizedString(@"%lu album(s) selected", @"Number of selected albums")];
+}
+- (void)updateToolbar:(NSString *)localizerForCount {
+    NSUInteger count = self.collectionView.selectionIndexPaths.count;
+    if (count == 0) {
+        [self.toolbar hideToolbar];
+        self.macAppStoreBtn.hidden = !TRIAL;
+    } else {
+        [self.toolbar showToolbar];
+        self.macAppStoreBtn.hidden = YES;
+    }
+    [self.toolbar setTitle:[NSString localizedStringWithFormat:localizerForCount, (unsigned long)count]];
+}
+
+- (IBAction)macAppStoreButtonPressed:(id)sender
+{
+    [[PIXAppDelegate sharedAppDelegate] purchaseOnlinePressed:nil];
 }
 
 - (IBAction)chooseFolderButtonPressed:(id)sender

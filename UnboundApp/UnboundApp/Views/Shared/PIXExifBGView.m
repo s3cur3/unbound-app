@@ -7,6 +7,7 @@
 //
 
 #import "PIXExifBGView.h"
+#import "PIXAppDelegate.h"
 
 @implementation PIXExifBGView
 
@@ -20,20 +21,10 @@
     return self;
 }
 
-static BOOL isDarkMode()
-{
-	NSAppearance *appearance = NSAppearance.currentAppearance;
-	if (@available(*, macOS 10.14)) {
-		return appearance.name == NSAppearanceNameDarkAqua;
-	}
-
-	return [[NSUserDefaults standardUserDefaults] integerForKey:@"backgroundTheme"] != 0;
-}
-
 - (void)drawRect:(NSRect)dirtyRect
 {
 	// Only draw the green background in light mode
-	if(!isDarkMode()) {
+	if(![[PIXAppDelegate sharedAppDelegate] wantDarkMode]) {
 		// inset the rect by half a pixel so the 1px stroke at the end lines up with the pixels correctly
 		NSRect greenRect = NSInsetRect([self bounds], 0.5, 0.5);
 		

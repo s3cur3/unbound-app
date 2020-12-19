@@ -32,18 +32,15 @@
 - (IBAction)showMainWindow:(id)sender;
 - (IBAction)showIntroWindow:(id)sender;
 - (IBAction)showAboutWindow:(id)sender;
-- (IBAction)analogOceanWebsitePressed:(id)sender;
+- (IBAction)leaveAReview:(id)sender;
 - (IBAction)helpPressed:(id)sender;
 - (IBAction)chooseFolder:(id)sender;
 - (IBAction)rescanPhotosPressed:(id)sender;
 - (IBAction)importPhotosPressed:(id)sender;
-- (IBAction)checkForUpdates:(id)sender;
 - (IBAction)purchaseOnlinePressed:(id)sender;
 - (IBAction)showHomepagePressed:(id)sender;
-- (IBAction)startActivationProcess:(id)sender;
 
 @property BOOL isDebugBuild;
-@property BOOL isTrialBuild;
 @property BOOL isOwned;
 
 @property (nonatomic, strong) IBOutlet NSMenuItem * progressItem;
@@ -88,14 +85,15 @@
 
 
 // this will save the db to the disk in the background
-// note error and return value will only be populated if this is called from the main thread
--(BOOL)saveDBToDisk:(NSError **)error;
+// note return value will only be valid if this is called from the main thread
+-(BOOL)saveDBToDisk:(id)ignored;
 
 //The file parsing system (keeps file system in sync)
 @property (nonatomic, strong) PIXFileParser *fileParser;
 
 @property (strong, nonatomic) IBOutlet NSUndoManager *undoManager;
 
+-(BOOL)wantDarkMode;
 
 //find or create helpers
 @property (nonatomic, retain) NSArray *photoFiles;

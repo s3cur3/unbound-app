@@ -102,26 +102,18 @@
 }
 
 #pragma mark - Show/Hide Toolbar
-- (void)showToolbar:(BOOL)animated {
+- (void)showToolbar {
     if (!self.isShowing) {
-        if (animated) {
-            self.position.animator.constant = 0;
-        } else {
-            self.position.constant = 0;
-        }
+        self.position.animator.constant = 0;
         self.isShowing = YES;
     }
 
 }
 
-- (void)hideToolbar:(BOOL)animated {
+- (void)hideToolbar {
     if(self.isShowing)
     {
-        if (animated) {
-            self.position.animator.constant = -self.frame.size.height;
-        } else {
-            self.position.constant = -self.frame.size.height;
-        }
+        self.position.animator.constant = -self.frame.size.height;
         self.isShowing = NO;
     }
 }

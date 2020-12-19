@@ -5,16 +5,16 @@
 import Foundation
 
 extension NSRect {
-  /// Creates a new NSRect that matches this aspect ratio but fits within the supplied container.
-  func fitting(container: NSRect) -> NSRect {
-    let containerWidth = container.width
-    let containerHeight = container.height
-    let width = size.width
-    let height = size.height
+    /// Creates a new NSRect that matches this aspect ratio but fits within the supplied container.
+    func fitting(container: NSRect) -> NSRect {
+        let containerWidth = container.width
+        let containerHeight = container.height
+        let width = size.width
+        let height = size.height
 
-    let scale = min(containerWidth / width, containerHeight / height)
-    let dx = round((containerWidth - width * scale) * 0.5) + container.origin.x
-    let dy = round((containerHeight - height * scale) * 0.5) + container.origin.y
-    return NSMakeRect(dx, dy, width * scale, height * scale)
-  }
+        let scale = min(containerWidth / width, containerHeight / height)
+        let dx = round((containerWidth - width * scale) * 0.5) + container.origin.x
+        let dy = round((containerHeight - height * scale) * 0.5) + container.origin.y
+        return NSMakeRect(dx, dy, width * scale, height * scale)
+    }
 }

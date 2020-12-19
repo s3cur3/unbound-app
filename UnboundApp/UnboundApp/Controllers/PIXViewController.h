@@ -26,8 +26,6 @@
 
 -(NSMenu *)menuForObjects:(NSArray *)objects selectedObject:(id)selectdObject;
 
--(void)setupToolbar;
-
 -(void)willShowPIXView;
 
 -(void)willHidePIXView;

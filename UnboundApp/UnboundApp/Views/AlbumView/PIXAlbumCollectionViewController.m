@@ -19,6 +19,7 @@
 #import "PIXAlbumCollectionViewItem.h"
 #import "PIXCollectionToolbar.h"
 #import "PIXCollectionView.h"
+#import "PIXApplicationExtensions.h"
 
 @interface PIXAlbumCollectionViewController () <NSCollectionViewDelegate, NSCollectionViewDataSource, PIXSplitViewControllerDelegate, NSSearchFieldDelegate>
 
@@ -105,13 +106,18 @@
         [self.searchField setStringValue:@""];
     }
 
-    [self updateCollectionToolbar];
+    [self updateToolbarForAlbums];
     
     [[PIXFileParser sharedFileParser] addObserver:self forKeyPath:@"fullScanProgress" options:NSKeyValueObservingOptionNew context:nil];
     
 	NSWindow * window = [[[PIXAppDelegate sharedAppDelegate] mainWindowController] window];
     [window setTitle:@"Unbound"];
-	[window setMinSize:NSMakeSize(720, 480)];
+    #if TRIAL
+        // Gotta have enough room for the big "go to Mac App Store" button next to the centered title
+        [window setMinSize:NSMakeSize(855, 480)];
+	#else
+        [window setMinSize:NSMakeSize(720, 480)];
+	#endif
 
     self.navigationViewController.leftToolbarItems = @[self.importItem];
     self.navigationViewController.rightToolbarItems = @[self.self.neuAlbumButton, self.sortButton, self.searchBar];
@@ -288,7 +294,7 @@
 
     // select just this item
     self.collectionView.selectionIndexPaths = [NSSet setWithObject:[NSIndexPath indexPathForItem:index inSection:0]];
-    [self updateCollectionToolbar];
+    [self updateToolbarForAlbums];
 
     /*
     // this will scroll to the item and make the text field the first responder
@@ -333,16 +339,6 @@
     return _searchBar;
 }
 
-- (void)updateCollectionToolbar {
-    NSUInteger count = self.collectionView.selectionIndexPaths.count;
-    if (count == 0) {
-        [self.toolbar hideToolbar:YES];
-    } else {
-        [self.toolbar showToolbar:YES];
-    }
-    [self.toolbar setTitle:[NSString localizedStringWithFormat:NSLocalizedString(@"%lu photo(s) selected", @"Number of selected photos"), (unsigned long)count]];
-}
-
 - (void)setupCollectionToolbar {
     NSButton * deleteButton = [[NSButton alloc] initWithFrame:CGRectMake(0, 0, 80, 25)];
     if([self.selectedItems count] > 1) {
@@ -380,6 +376,8 @@
     }
 
     [PIXFileManager.sharedInstance deleteItemsWorkflow:self.selectedItems];
+	self.collectionView.selectionIndexes = [NSIndexSet new];
+	[self updateToolbarForAlbums];
 }
 
 #pragma mark - Album
@@ -388,6 +386,7 @@
 {
     // retain the old set of albums so they won't be released on change
     NSArray * oldAlbums = self.albums;
+	#pragma unused(oldAlbums)
     
     // set the new one
     self.albums = [PIXAlbum sortedAlbums:self.searchField.stringValue];
@@ -546,7 +545,7 @@
         // if the clicked item isn't part of the current selection, reset the current selection
         if (![self.collectionView.selectionIndexPaths containsObject:[self.collectionView indexPathForItem:self.clickedItem]]) {
             self.collectionView.selectionIndexPaths = [NSSet setWithObject:[self.collectionView indexPathForItem:self.clickedItem]];
-            [self updateSelectedTitle];
+            [self updateToolbarForAlbums];
         }
 
         NSUInteger count = self.collectionView.selectionIndexPaths.count;
@@ -601,18 +600,7 @@
             ((PIXCollectionViewItem *) item).selected = selected;
         }
     }
-    [self updateSelectedTitle];
-}
-
-- (void)updateSelectedTitle {
-    NSUInteger count = self.collectionView.selectionIndexPaths.count;
-    if (count == 0) {
-        [self.toolbar hideToolbar:YES];
-    } else {
-        [self.toolbar showToolbar:YES];
-    }
-
-    [self.toolbar setTitle:[NSString localizedStringWithFormat:NSLocalizedString(@"%lu album(s) selected", @"Number of selected albums"), (unsigned long)count]];
+    [self updateToolbarForAlbums];
 }
 
 -(void)reselectItems:(NSArray *)itemsToReselect
@@ -639,10 +627,20 @@
         self.gridViewTitle.stringValue = [NSString stringWithFormat:format, self.albums.count, self.searchField.stringValue];
     } else {
         NSFetchRequest * fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kPhotoEntityName];
+        #if TRIAL
+            [fetchRequest setFetchLimit:TRIAL_MAX_PHOTOS];
+        #endif
         NSUInteger numPhotos = [[[PIXAppDelegate sharedAppDelegate] managedObjectContext] countForFetchRequest:fetchRequest error:nil];
 
-        NSString *format = NSLocalizedString(@"%lu album(s) containing %lu photos", @"Count albums and photos");
-        self.gridViewTitle.stringValue = [NSString stringWithFormat:format, self.albums.count, numPhotos];
+		if(TRIAL && (self.albums.count == TRIAL_MAX_ALBUMS || numPhotos == TRIAL_MAX_PHOTOS))
+		{
+			self.gridViewTitle.stringValue = [NSString stringWithFormat:@"Trial limited to %d albums & %d photos.", TRIAL_MAX_ALBUMS, TRIAL_MAX_PHOTOS];
+		}
+        else
+		{
+			NSString * format = NSLocalizedString(@"%lu album(s) containing %lu photos", @"Count albums and photos");
+			self.gridViewTitle.stringValue = [NSString stringWithFormat:format, self.albums.count, numPhotos];
+		}
     }
 }
 
@@ -660,7 +658,7 @@
 
     [self albumsChanged:nil];
 
-    [self updateCollectionToolbar];
+    [self updateToolbarForAlbums];
     [self updateGridTitle];
 }
 

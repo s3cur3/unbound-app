@@ -9,11 +9,10 @@
 #import "PIXAlbumCollectionViewItem.h"
 #import "PIXAlbum.h"
 #import "PIXPhoto.h"
-#import <QuartzCore/QuartzCore.h>
 #import "PIXDefines.h"
 #import "PIXFileManager.h"
 #import "PIXViewController.h"
-#include <stdlib.h>
+#import "PIXAppDelegate.h" // for wantDarkMode
 
 @implementation PIXAlbumCollectionViewItem
 
@@ -365,14 +364,14 @@
         textColor = NSColor.controlTextColor;
         subtitleColor = NSColor.controlTextColor;
     } else {
-        if ([[NSUserDefaults standardUserDefaults] integerForKey:@"backgroundTheme"] == 0) {
-            bgColor = [NSColor colorWithCalibratedWhite:0.912 alpha:1.000];
-            textColor = [NSColor colorWithCalibratedWhite:0.15 alpha:1.0];
-            subtitleColor = [NSColor colorWithCalibratedWhite:0.35 alpha:1.0];
-        } else {
+        if([[PIXAppDelegate sharedAppDelegate] wantDarkMode]) {
             bgColor = [NSColor colorWithPatternImage:[NSImage imageNamed:@"dark_bg"]];
             textColor = [NSColor colorWithCalibratedWhite:0.9 alpha:1.0];
             subtitleColor = [NSColor colorWithCalibratedWhite:0.55 alpha:1.0];
+        } else {
+            bgColor = [NSColor colorWithCalibratedWhite:0.912 alpha:1.000];
+            textColor = [NSColor colorWithCalibratedWhite:0.15 alpha:1.0];
+            subtitleColor = [NSColor colorWithCalibratedWhite:0.35 alpha:1.0];
         }
     }
 
@@ -478,7 +477,6 @@
         CGRect imageRect = CGRectInset(imageFrame, 3, 3);
         //[photo drawInRect:imageRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
         NSImage *playButtonImage = [NSImage imageNamed:@"playbutton"];
-        [playButtonImage setScalesWhenResized:YES];
         CGRect playButtonRect = CGRectMake(CGRectGetMidX(imageRect)-20.0, CGRectGetMidY(imageRect)-20.0, 40.0, 40.0);//CGRectApplyAffineTransform(imageRect, CGAffineTransformMakeScale(0.33, 0.33));
         [playButtonImage drawInRect:playButtonRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];
     }
@@ -556,13 +554,11 @@
 {
     // seem to need to handl
     if (commandSelector == @selector(cancelOperation:)) {
-        
-        
-        [self controlTextDidEndEditing:nil];
-        
+        [self.titleEditField setTarget:nil];
+        [self.titleEditField removeFromSuperview];
+        self.titleEditField = nil;
         return YES;
     }
-    
     return NO;
 }
 
@@ -571,12 +567,6 @@
 {
     if(self.titleEditField != nil)
     {
-        // this will stop the action from being sent if we called this from the cancelOperation detection above
-        if(obj == nil)
-        {
-            [self.titleEditField setTarget:nil];
-        }
-        
         [self.titleEditField removeFromSuperview];
         self.titleEditField = nil;
     }

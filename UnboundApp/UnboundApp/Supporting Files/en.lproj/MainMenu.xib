@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -23,15 +23,11 @@
                                     <action selector="showAboutWindow:" target="494" id="563"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Check for Updates" id="590">
+                            <menuItem title="Leave a Review" id="Bgs-Df-dQY">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="checkForUpdates:" target="494" id="593"/>
-                                    <binding destination="494" name="hidden" keyPath="self.isTrialBuild" id="BVU-eD-Umo">
-                                        <dictionary key="options">
-                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                        </dictionary>
-                                    </binding>
+                                    <action selector="leaveAReview:" target="494" id="kYq-ce-bIy"/>
+                                    <binding destination="-3" name="hidden" keyPath="self.isTrial" id="Hxl-gv-MUd"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="236">
@@ -150,7 +146,7 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Purchase" id="353-td-7oi">
                         <items>
-                            <menuItem title="Purchase Unbound Online..." id="22i-E5-pr9">
+                            <menuItem title="Purchase in the Mac App Store" id="22i-E5-pr9">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="purchaseOnlinePressed:" target="494" id="dOn-7h-Kfl"/>
@@ -160,13 +156,6 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="showHomepagePressed:" target="494" id="wf5-Vu-gr2"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="zby-Jo-zOJ"/>
-                            <menuItem title="Unlock Unbound..." id="K9g-8J-PRC">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="startActivationProcess:" target="494" id="uuM-Xp-8zQ"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -185,12 +174,6 @@
                                     <action selector="requestFeaturePressed:" target="494" id="646"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Analog Ocean Website" id="568">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="analogOceanWebsitePressed:" target="494" id="584"/>
-                                </connections>
-                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="570">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
@@ -203,6 +186,7 @@
                     </menu>
                 </menuItem>
             </items>
+            <point key="canvasLocation" x="-136" y="135"/>
         </menu>
         <customObject id="494" customClass="PIXAppDelegate">
             <connections>

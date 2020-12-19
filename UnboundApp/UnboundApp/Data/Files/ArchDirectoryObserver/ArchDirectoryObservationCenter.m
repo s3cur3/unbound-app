@@ -7,6 +7,7 @@
 //
 
 #import "ArchDirectoryObservationCenter.h"
+#import "PIXPhotoUtils.h"
 
 @interface ArchDirectoryEventStream : NSObject {
     @private
@@ -211,7 +212,7 @@ static void ArchDirectoryEventStreamCallback(
         if(!FSEventStreamStart(eventStream))
         {
             NSString *errMsg = [NSString stringWithFormat:@"There was a problem monitoring the directory: %@ \n\nPlease change the main photos folder from the file menu.", url.path];
-            NSRunCriticalAlertPanel(@"Error Watching Directory", errMsg, @"OK", nil, nil);
+            alertCritical(@"Error Watching Directory", errMsg);
         }
         
         if(eventID == kFSEventStreamEventIdSinceNow) {

@@ -6,6 +6,33 @@
 #import "PIXPhotoUtils.h"
 
 
+void alert(NSString * title, NSString * message)
+{
+    NSAlert * alert = [[NSAlert alloc] init];
+    alert.messageText = title;
+    alert.informativeText = message;
+    [alert runModal];
+}
+
+void alertCritical(NSString * title, NSString * message)
+{
+    NSAlert * alert = [[NSAlert alloc] init];
+    alert.messageText = title;
+    alert.informativeText = message;
+    alert.alertStyle = NSAlertStyleCritical;
+    [alert runModal];
+}
+
+enum modal_response cancellableAlert(NSString * title, NSString * message)
+{
+    NSAlert * alert = [[NSAlert alloc] init];
+    alert.messageText = title;
+    alert.informativeText = message;
+    [alert addButtonWithTitle:@"OK"];
+    [alert addButtonWithTitle:@"Cancel"];
+    return [alert runModal] == NSAlertSecondButtonReturn ? modal_response_cancel : modal_response_ok;
+}
+
 @implementation PIXPhotoUtils {
 
 }

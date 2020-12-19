@@ -39,15 +39,14 @@
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2017 Analog Ocean, Ltd. All rights reserved.</string>
+	<string>Copyright © 2017 Tyler Young</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>PIXAppLink</key>
-	<string>http://www.unboundformac.com</string>
+	<string>https://www.unboundapp.com</string>
 	<key>PIXCopyright</key>
-	<string>Copyright © 2017 Analog Ocean, Ltd.
-		All rights reserved.</string>
+	<string>Copyright © 2017 Tyler Young</string>
 </dict>
 </plist>

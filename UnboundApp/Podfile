@@ -3,12 +3,9 @@ platform :osx, '10.11'
 use_frameworks!
 
 target 'Unbound' do
-  pod 'Fabric'
-  pod 'Crashlytics'
   pod 'MASPreferences'
+  pod 'SwiftFormat/CLI'
 
   target 'Unbound Trial' do
-    pod 'DevMateKit', '~>1.9'
   end
-  
 end
