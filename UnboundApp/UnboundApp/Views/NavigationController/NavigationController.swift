@@ -188,10 +188,10 @@ import Cocoa
     override func keyDown(with event: NSEvent) {
         switch event.keyCode {
         case 53: // escape
-			// If we're in full screen mode *only* because of the slideshow, get out
-			if(inFullScreenMode()) {
+            // If we're in full screen mode *only* because of the slideshow, get out
+            if inFullScreenMode() {
                 view.window?.toggleFullScreen(nil)
-			} else {
+            } else {
                 popViewController()
             }
         default:
@@ -200,7 +200,7 @@ import Cocoa
     }
 
     @objc func inFullScreenMode() -> Bool {
-		mainWindow.styleMask.contains(NSWindow.StyleMask.fullScreen)
+        mainWindow.styleMask.contains(NSWindow.StyleMask.fullScreen)
     }
 
     // MARK: - Appearance

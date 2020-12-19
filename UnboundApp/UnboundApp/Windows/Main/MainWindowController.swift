@@ -63,7 +63,7 @@ import StoreKit
     private func maybeSolicitReview() {
         // If we showed the embarassing "the app crashed, wanna reset?" dialog,
         // don't count this toward our happy launches, and don't also immediately ask for a review
-        if(!defaults.bool(forKey: kAppShowedCrashDialog)) {
+        if !defaults.bool(forKey: kAppShowedCrashDialog) {
             let launchCount = defaults.integer(forKey: prefLaunchCount) + 1
             defaults.set(launchCount, forKey: prefLaunchCount)
 
