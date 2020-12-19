@@ -422,15 +422,13 @@
 - (void)albumRenamed:(NSNotification *)notification
 {
     PIXAlbum * album = [notification object];
-    
     if(album)
     {
         NSUInteger index = [self.albums indexOfObject:album];
         if(index != NSNotFound)
         {
-#warning Tyler tried to make scrolling update, but failed.
-//			NSSet<NSIndexPath *> * indices = [NSSet setWithObject:[self.collectionView indexPathForItem:[notification object]]];
-//			[self.collectionView scrollToItemsAtIndexPaths:indices scrollPosition:NSCollectionViewScrollPositionNearestHorizontalEdge|NSCollectionViewScrollPositionNearestVerticalEdge];
+			NSSet<NSIndexPath *> * indices = [NSSet setWithObject:[NSIndexPath indexPathForItem:index inSection:0]];
+			[self.collectionView scrollToItemsAtIndexPaths:indices scrollPosition:NSCollectionViewScrollPositionNearestHorizontalEdge|NSCollectionViewScrollPositionNearestVerticalEdge];
         }
     }
 }
