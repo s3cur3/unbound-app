@@ -326,6 +326,7 @@ static NSString *const kItemsKey = @"photos";
         NSDate *aDate = self.albumDate;
         
         NSString *formattedDateString = [[PIXAlbum sharedSubtitleDateFormatter] stringFromDate:aDate];
+        #warning TODO: Support 1 item
         self.subtitle = [NSString stringWithFormat:@"%ld items from %@", photoCount, formattedDateString];
         
     }
