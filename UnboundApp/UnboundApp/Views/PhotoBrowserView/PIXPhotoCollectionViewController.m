@@ -160,6 +160,7 @@
     [super keyDown:event];
 }
 
+// Tyler says: this is suspicious
 -(void)updateItemDimensions {
     CGFloat columnCount = (int) (self.scrollView.frame.size.width / (140  + (self.itemSize * 260)));
     CGFloat actualWidth = (self.scrollView.frame.size.width
@@ -226,6 +227,15 @@
 
 -(void)updateAlbum:(NSNotification *)note
 {
+	NSMutableArray<PIXPhoto *> * prevSelected = [NSMutableArray arrayWithCapacity:self.collectionView.selectionIndexPaths.count];
+	for(NSIndexPath * idxPath in self.collectionView.selectionIndexPaths)
+	{
+		if(!idxPath.section && [self.photos count] > idxPath.item)
+		{
+			[prevSelected addObject:self.photos[idxPath.item]];
+		}
+	}
+	
     NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
     [numberFormatter setNumberStyle: NSNumberFormatterDecimalStyle];
     NSString *photosCount = [numberFormatter stringFromNumber:@((self.album.photos.count))];
@@ -233,7 +243,19 @@
     NSString * gridTitle = nil;
 
     self.photos = _album.sortedPhotos;
-    [self.collectionView reloadData];
+	[self.collectionView reloadData]; // This blows away our previous selection
+	
+	// Replace the selection
+	NSMutableSet<NSIndexPath *> * newSelection = [NSMutableSet setWithCapacity:prevSelected.count];
+	for(PIXPhoto * photo in prevSelected)
+	{
+		NSUInteger idx = [self.photos indexOfObject:photo];
+		if(idx != NSNotFound)
+		{
+			[newSelection addObject:[NSIndexPath indexPathForItem:idx inSection:0]];
+		}
+	}
+	self.collectionView.selectionIndexPaths = newSelection;
 
     // if we've got more than one photo then display the whole date range
     if (self.album.photos.count > 1) {
