@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -71,7 +71,7 @@
                             </textFieldCell>
                         </textField>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9oX-k4-h5Y">
-                            <rect key="frame" x="156" y="92" width="200" height="25"/>
+                            <rect key="frame" x="156" y="93" width="200" height="23"/>
                             <buttonCell key="cell" type="roundTextured" title="Change Main Photos Folder" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jRT-wP-ba9">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" size="12" name="Helvetica"/>
@@ -81,7 +81,7 @@
                             </connections>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="m2p-A4-arK">
-                            <rect key="frame" x="156" y="122" width="200" height="25"/>
+                            <rect key="frame" x="156" y="123" width="200" height="23"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="200" id="F0B-bf-jMq"/>
                             </constraints>
@@ -108,8 +108,8 @@
                         <constraint firstItem="m2p-A4-arK" firstAttribute="top" secondItem="kcO-6j-nBU" secondAttribute="top" constant="94" id="wHV-3k-Iyf"/>
                     </constraints>
                 </customView>
-                <customView hidden="YES" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pyq-Cn-tHT" customClass="PIXRoundedProgressIndicator">
-                    <rect key="frame" x="176" y="346" width="300" height="20"/>
+                <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pyq-Cn-tHT" customClass="PIXRoundedProgressIndicator">
+                    <rect key="frame" x="176" y="345" width="300" height="20"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="300" id="DAB-Wu-bao"/>
                         <constraint firstAttribute="height" constant="20" id="pWo-I5-RBN"/>
@@ -117,7 +117,7 @@
                 </customView>
                 <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lQ1-RR-8z3">
                     <rect key="frame" x="0.0" y="0.0" width="652" height="335"/>
-                    <clipView key="contentView" drawsBackground="NO" id="dHo-0i-AJM">
+                    <clipView key="contentView" id="dHo-0i-AJM">
                         <rect key="frame" x="0.0" y="0.0" width="652" height="335"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -152,6 +152,7 @@
                 <constraint firstAttribute="trailing" secondItem="lQ1-RR-8z3" secondAttribute="trailing" id="Qbr-C6-ykv"/>
                 <constraint firstItem="lQ1-RR-8z3" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="RQI-Rr-Fvx"/>
                 <constraint firstItem="iYX-Z2-2rd" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="50" id="V8C-3n-deb"/>
+                <constraint firstItem="pyq-Cn-tHT" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="15" id="Vse-Ka-58O"/>
                 <constraint firstItem="kcO-6j-nBU" firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" id="dc7-6a-7FW"/>
                 <constraint firstAttribute="bottom" secondItem="lQ1-RR-8z3" secondAttribute="bottom" id="fAA-Gb-e2X"/>
                 <constraint firstItem="iYX-Z2-2rd" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="15" id="gs3-S4-bIp"/>
