@@ -165,15 +165,9 @@
 
 -(void)albumsChanged:(NSNotification *)note
 {
-    
     self.albums = nil;
-    
-    //[self.outlineView.enclosingScrollView setWantsLayer:NO];
-    
     [self.outlineView reloadData];
     [self scrollToSelectedAlbum];
-    
-    
 }
 
 -(Album *)currentlySelectedAlbum

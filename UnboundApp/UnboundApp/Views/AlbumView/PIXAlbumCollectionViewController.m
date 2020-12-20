@@ -35,6 +35,9 @@
 @property (nonatomic, strong) PIXSplitViewController *aSplitViewController;
 
 @property BOOL isMountDisconnected;
+
+- (void)albumsCreated:(NSNotification *)notification;
+
 @end
 
 @implementation PIXAlbumCollectionViewController
@@ -63,15 +66,10 @@
 
     self.toolbar.collectionView = self.collectionView;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(albumsChanged:)
-                                                 name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(albumRenamed:)
-                                                 name:AlbumWasRenamedNotification
-                                               object:nil];
+	NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
+	[nc addObserver:self selector:@selector(albumsChanged:) name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
+	[nc addObserver:self selector:@selector(albumRenamed:)  name:AlbumWasRenamedNotification       object:nil];
+	[nc addObserver:self selector:@selector(albumsCreated:) name:AlbumsCreatedNotification         object:nil];
 
     [self.scrollView setIdentifier:@"albumGridScroller"];
 
@@ -415,8 +413,28 @@
     {
         [self.centerStatusView setHidden:YES];
     }
-    
-    //NSLog(@"updated");
+}
+
+- (void)albumsCreated:(NSNotification *)notification
+{
+	[self albumsChanged:nil]; // force-reload all our albums first, so that we already have the album(s) in question when we try to select them & scroll to them
+
+	NSArray * albums = [notification object];
+	if(albums)
+	{
+		NSMutableSet<NSIndexPath *> * newSelections = [NSMutableSet new];
+		for(PIXAlbum * album in albums)
+		{
+			NSUInteger index = [self.albums indexOfObject:album];
+			if(index != NSNotFound)
+			{
+				[newSelections addObject:[NSIndexPath indexPathForItem:index inSection:0]];
+			}
+		}
+		[self.collectionView scrollToItemsAtIndexPaths:newSelections scrollPosition:NSCollectionViewScrollPositionNearestHorizontalEdge|NSCollectionViewScrollPositionNearestVerticalEdge];
+		self.collectionView.selectionIndexPaths = newSelections;
+		[self updateToolbarForAlbums];
+	}
 }
 
 - (void)albumRenamed:(NSNotification *)notification
