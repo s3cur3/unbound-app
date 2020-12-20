@@ -1309,6 +1309,15 @@ const CGFloat kThumbnailSize = 370.0f;
         if (self.height == nil || [self.height isEqualToNumber:@0]) {
             self.height = newExifData[(NSString *)kCGImagePropertyPixelHeight];
         }
+		
+		const int rotation = [(NSNumber *)newExifData[(NSString *)kCGImagePropertyOrientation] intValue];
+		if(rotation == kCGImagePropertyOrientationLeft         || rotation == kCGImagePropertyOrientationRight ||
+		   rotation == kCGImagePropertyOrientationLeftMirrored || rotation == kCGImagePropertyOrientationRightMirrored)
+		{
+			double prev_h = [self.height doubleValue];
+			self.height = [NSNumber numberWithDouble:[self.width doubleValue]];
+			self.width = [NSNumber numberWithDouble:prev_h];
+		}
     }
 }
 
