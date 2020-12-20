@@ -21,6 +21,8 @@
 #define PHOTO @"Photo"
 
 #define AlbumCreatedNotification @"AlbumCreatedNotification"
+// Data is an array of PIXAlbum
+#define AlbumsCreatedNotification @"AlbumsCreatedNotification"
 #define AlbumDidChangeNotification @"AlbumDidChangeNotification"
 #define AlbumWasRenamedNotification @"AlbumWasRenamedNotification"
 #define AlbumStackDidChangeNotification @"AlbumStackDidChangeNotification"

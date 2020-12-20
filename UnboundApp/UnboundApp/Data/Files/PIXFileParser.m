@@ -980,6 +980,7 @@ static NSDictionary * dictionaryForURL(NSURL * url)
         
         // lastalbum will be used to cache the album fetch when looping through photos
         PIXAlbum *lastAlbum = nil;
+		NSMutableArray * createdAlbums = [NSMutableArray new];
         
         // i will be used to track the loop count and fire a save every 500 loops
         int i = 0;
@@ -1025,6 +1026,7 @@ static NSDictionary * dictionaryForURL(NSURL * url)
                 {
                     lastAlbum = [NSEntityDescription insertNewObjectForEntityForName:kAlbumEntityName inManagedObjectContext:context];
                     [lastAlbum setValue:aPath forKey:@"path"];
+					[createdAlbums addObject:lastAlbum];
                 }
                 else
                 {
@@ -1130,10 +1132,18 @@ static NSDictionary * dictionaryForURL(NSURL * url)
         
         // save the context
         [context save:nil];
-        
-        // update flush albums and the UI with a notification
-        // use performSelector instead of dispatch async because it's faster
-        [self performSelectorOnMainThread:@selector(flushAlbumsWithIDs:) withObject:[editedAlbumObjectIDs copy] waitUntilDone:NO];
+
+		// If we *only* created a small number of albums, we send a special notification
+		if(i < UI_UPDATE_INTERVAL && [createdAlbums count] && ![editedAlbumObjectIDs count])
+		{
+			[self performSelectorOnMainThread:@selector(notifyCreatedAlbums:) withObject:[createdAlbums copy] waitUntilDone:NO];
+		}
+		else
+		{
+			// update flush albums and the UI with a notification
+			// use performSelector instead of dispatch async because it's faster
+			[self performSelectorOnMainThread:@selector(flushAlbumsWithIDs:) withObject:[editedAlbumObjectIDs copy] waitUntilDone:NO];
+		}
         
         self.fullScanProgress = (float)self.fullScannProgressCurrent / (float)self.fullScannProgressTotal;
  
@@ -1259,7 +1269,6 @@ static NSDictionary * dictionaryForURL(NSURL * url)
     // fetch any the albums with these ids
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kAlbumEntityName];
     [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(self IN %@)", albumIDS]];
-
     NSError * error;
     NSArray * editedAlbums = [context executeFetchRequest:fetchRequest error:&error];
     for(PIXAlbum * album in editedAlbums)
@@ -1267,14 +1276,29 @@ static NSDictionary * dictionaryForURL(NSURL * url)
         [album flush];
         //NSLog(@"flushed album %@ has %ld items", album.title, album.photos.count);
     }
-   
-    
-   // NSNotification *albumNotification = [NSNotification notificationWithName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil];
-    //[[NSNotificationQueue defaultQueue] enqueueNotification:albumNotification postingStyle:NSPostASAP coalesceMask:NSNotificationCoalescingOnName forModes:nil];
 
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:nil userInfo:nil];
     });
+}
+
+-(void)notifyCreatedAlbums:(NSArray *)albumIds
+{
+	NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
+	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kAlbumEntityName];
+	[fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(self IN %@)", albumIds]];
+	NSError * error_ignored;
+	NSArray * created = [context executeFetchRequest:fetchRequest error:&error_ignored];
+	
+	for(PIXAlbum * album in created)
+	{
+		[album flush];
+	}
+	
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:created userInfo:nil];
+		[[NSNotificationCenter defaultCenter] postNotificationName:AlbumsCreatedNotification object:created];
+	});
 }
 
 -(BOOL)deleteObjectsForEntityName:(NSString *)entityName inContext:(NSManagedObjectContext *)context withPredicate:(NSPredicate *)predicate
