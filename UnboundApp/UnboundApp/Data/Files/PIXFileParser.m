@@ -1260,7 +1260,7 @@ static NSDictionary * dictionaryForURL(NSURL * url)
     return [fetchedObjects lastObject];
 }
 
-
+#warning This needs to not be done a million times
 // this should always be called on the main thread
 -(void)flushAlbumsWithIDs:(NSSet *)albumIDS
 {
@@ -1292,6 +1292,7 @@ static NSDictionary * dictionaryForURL(NSURL * url)
 	
 	for(PIXAlbum * album in created)
 	{
+		#warning This needs to be done in a batch
 		[album flush];
 	}
 	
