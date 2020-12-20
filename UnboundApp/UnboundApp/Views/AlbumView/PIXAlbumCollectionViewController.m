@@ -384,12 +384,31 @@
 {
     // retain the old set of albums so they won't be released on change
     NSArray * oldAlbums = self.albums;
-	#pragma unused(oldAlbums)
+	NSMutableArray<PIXAlbum *> * prevSelectedAlbums = [NSMutableArray arrayWithCapacity:self.collectionView.selectionIndexPaths.count];
+	for(NSIndexPath * idxPath in self.collectionView.selectionIndexPaths)
+	{
+		if(!idxPath.section && [oldAlbums count] > idxPath.item)
+		{
+			[prevSelectedAlbums addObject:oldAlbums[idxPath.item]];
+		}
+	}
     
     // set the new one
     self.albums = [PIXAlbum sortedAlbums:self.searchField.stringValue];
-    [self.collectionView reloadData];
+    [self.collectionView reloadData]; // This blows away our previous selection
     [self updateGridTitle];
+
+	// Replace the selection
+	NSMutableSet<NSIndexPath *> * newSelection = [NSMutableSet setWithCapacity:prevSelectedAlbums.count];
+	for(PIXAlbum * album in prevSelectedAlbums)
+	{
+		NSUInteger idx = [self.albums indexOfObject:album];
+		if(idx != NSNotFound)
+		{
+			[newSelection addObject:[NSIndexPath indexPathForItem:idx inSection:0]];
+		}
+	}
+	self.collectionView.selectionIndexPaths = newSelection;
 
     if([self.albums count] == 0 && ![[NSUserDefaults standardUserDefaults] boolForKey:kDeepScanIncompleteKey])
     {
