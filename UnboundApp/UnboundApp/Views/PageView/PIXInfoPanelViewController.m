@@ -146,7 +146,6 @@ NSString * formatByteCount(NSUInteger byteCount)
             self.cameraModel.stringValue = duration;
         }
     } else {
-
         NSString * nameString = [self.photo name];
         
         if(nameString == nil) nameString = @"";
@@ -243,12 +242,9 @@ NSString * formatByteCount(NSUInteger byteCount)
 {
     // seem to need to handl
     if (commandSelector == @selector(cancelOperation:)) {
-        
         // reset the filename so we don't edit it
-        
         [self.photoName setStringValue:self.photo.name];
         [self fileNameAction:nil];
-        
         return YES;
     }
     
