@@ -139,7 +139,6 @@
         }
     }
     
-    
     NSRect imgRect = NSMakeRect(0.0, 0.0, size.width, size.height);
     
     // create a bitmap representation
@@ -160,9 +159,8 @@
     NSGraphicsContext *g = [NSGraphicsContext graphicsContextWithBitmapImageRep:offscreenRep];
     [NSGraphicsContext saveGraphicsState];
     [NSGraphicsContext setCurrentContext:g];
-    
-    
-    // draw the albums stack
+
+	// draw the albums stack
     NSColor * textColor = [NSColor colorWithCalibratedWhite:0.9 alpha:1.0];
     
     NSRect textRect = NSMakeRect(imgRect.origin.x + 3,
@@ -210,9 +208,7 @@
     [textBubbleRectPath fill];
     
     [title drawInRect:textRect withAttributes:attributes];
-    
-    
-    
+
     CGRect albumFrame = CGRectInset(imgRect, 18, 20);
     albumFrame.origin.y += 10;
     
@@ -241,8 +237,7 @@
     [[self class] drawBorderedPhoto:image2 inRect:albumFrame];
     
     CGContextRestoreGState(context);
-    
-    
+
     // draw the top image
     CGRect topImageRect = [[self class] drawBorderedPhoto:image1 inRect:albumFrame];
     
@@ -288,9 +283,7 @@
         [[NSColor colorWithCalibratedWhite:1.0 alpha:1.0] setStroke];
         [countRectPath setLineWidth:2];
         [countRectPath stroke];
-        
-        
-        
+
         countBubbleRect.origin.y -= 2;
         
         [countString drawInRect:countBubbleRect withAttributes:attributes];

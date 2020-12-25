@@ -12,6 +12,7 @@
 #import "PIXSidebarTableCellView.h"
 #import "PIXSplitViewController.h"
 #import "PIXPhotoCollectionViewController.h"
+#import "PIXCollectionView.h"
 #import "PIXFileParser.h"
 #import "PIXAlbum.h"
 #import "PIXPhoto.h"
@@ -38,7 +39,6 @@
 
 -(NSArray *)albums
 {
-    //[self.outlineView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
     if(_albums != nil) {return _albums;}
     
     //[self.view setWantsLayer:YES];
@@ -202,8 +202,7 @@
     }
 
     DLog(@"Sidebar acccepting drop with source : %@, option key presssed : %@", [info draggingSource], ([PIXViewController optionKeyIsPressed] ? @"YES" : @"NO"));
-    //TODO: find out why this doesn't work
-    if ( [[info draggingSource] class] == [PIXPhotoCollectionViewController class])
+    if ( [[info draggingSource] class] == [PIXCollectionView class])
     {
         if (![PIXViewController optionKeyIsPressed])
         {
@@ -255,7 +254,7 @@
     
     DLog(@"Sidebar validating drop with source : %@, option key presssed : %@", [info draggingSource], ([PIXViewController optionKeyIsPressed] ? @"YES" : @"NO"));
     
-    if ( [[info draggingSource] class] == [PIXPhotoCollectionViewController class])
+    if ( [[info draggingSource] class] == [PIXCollectionView class])
     {
 		
         if ([PIXViewController optionKeyIsPressed]) {
