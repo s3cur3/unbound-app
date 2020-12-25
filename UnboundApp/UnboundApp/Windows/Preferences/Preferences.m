@@ -60,7 +60,7 @@ static Preferences * instance = nil;
     [defaults setValue:[NSNumber numberWithBool:NO] forKey:kAppObservedDirectoryUnavailableSupressAlert];
     
     [defaults setValue:[NSNumber numberWithInteger:PIXPhotoSortOldToNew] forKey:@"PIXPhotoSort"];
-    [defaults setValue:[NSNumber numberWithInteger:PIXAlbumSortNewToOld] forKey:@"PIXAlbumSort"];
+    [defaults setValue:[NSNumber numberWithInteger:PIXAlbumSortAtoZ] forKey:@"PIXAlbumSort"];
     
 
 	// last step : register the default parameters
