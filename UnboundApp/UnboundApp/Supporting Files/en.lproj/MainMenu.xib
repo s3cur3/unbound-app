@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -110,9 +110,30 @@
                             <menuItem isSeparatorItem="YES" id="206">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Select All" keyEquivalent="a" id="198">
+                            <menuItem title="Cut" keyEquivalent="x" id="198">
                                 <connections>
-                                    <action selector="selectAll:" target="-1" id="232"/>
+                                    <action selector="cut:" target="-1" id="z2D-4d-NHE"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Copy" keyEquivalent="c" id="wDI-Sk-CWm">
+                                <connections>
+                                    <action selector="copy:" target="-1" id="Xop-HQ-lZd"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Paste" keyEquivalent="v" id="wWw-5b-ClJ">
+                                <connections>
+                                    <action selector="pasteAsPlainText:" target="-1" id="GGE-Pm-qJG"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Delete" id="rZX-RK-dcE">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="delete:" target="-1" id="bTK-dw-tpO"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Select All" keyEquivalent="a" id="Ub9-Iv-vH8">
+                                <connections>
+                                    <action selector="selectAll:" target="-1" id="4O9-VP-GQO"/>
                                 </connections>
                             </menuItem>
                         </items>

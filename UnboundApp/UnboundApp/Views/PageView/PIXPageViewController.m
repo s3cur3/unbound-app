@@ -697,7 +697,6 @@
 
 -(void)keyDown:(NSEvent *)event
 {
-
     if ([event type] == NSKeyDown)
     {
         NSString* pressedChars = [event characters];
@@ -726,10 +725,7 @@
         }
     }
 
-
     [super keyDown:event];
-
-
 }
 
 -(void)cancelOperation:(id)sender
