@@ -581,26 +581,9 @@
     return YES;
 }
 
-- (BOOL)collectionView:(NSCollectionView *)collectionView writeItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths toPasteboard:(NSPasteboard *)pasteboard {
-    NSMutableArray<NSURL *> *photoUrls = [NSMutableArray arrayWithCapacity:indexPaths.count];
-    for (NSIndexPath *path in indexPaths) {
-        PIXPhoto *photo = self.photos[path.item];
-        [photoUrls addObject:photo.filePath];
-    }
-    [pasteboard clearContents];
-    [pasteboard writeObjects:photoUrls];
-    return YES;
-}
-
-- (NSImage *)collectionView:(NSCollectionView *)collectionView draggingImageForItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths withEvent:(NSEvent *)event offset:(NSPointPointer)dragImageOffset {
-    NSMutableArray<PIXPhoto *> *photos = [NSMutableArray arrayWithCapacity:indexPaths.count];
-    int i = 0;
-    for (NSIndexPath *path in indexPaths) {
-        PIXPhoto *photo = self.photos[path.item];
-        [photos addObject:photo];
-        if (++i > 3) break;
-    }
-    return [PIXPhotoCollectionViewItemView dragImageForPhotos:photos count:indexPaths.count size:NSMakeSize(150, 150)];
+- (id <NSPasteboardWriting>)collectionView:(NSCollectionView *)collectionView pasteboardWriterForItemAtIndexPath:(NSIndexPath *)indexPath {
+    PIXPhoto *photo = self.photos[indexPath.item];
+    return photo.filePath;
 }
 
 - (NSSize)collectionView:(NSCollectionView *)collectionView layout:(NSCollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -683,13 +666,11 @@
 - (NSDragOperation)draggingUpdated:(id<NSDraggingInfo>)sender
 {
     // we can check the files here and return NSDragOperationNone if we can't accept them
-
     // for now don't accept drags from our own app (this will be used for re-ordering photos later)
     if([sender draggingSource] != nil)
     {
         return NSDragOperationNone;
     }
-
 
     // check the modifier keys and show with operation we support
     if([NSEvent modifierFlags] & NSAlternateKeyMask)

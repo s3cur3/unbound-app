@@ -412,9 +412,7 @@
 
     NSMutableParagraphStyle *textStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
     [textStyle setAlignment: NSCenterTextAlignment];
-    
 
-    // TODO: Don't draw if we're editing
     if(self.titleEditField == nil)
     {
         [self.album.title drawInRect:textRect withAttributes:@{NSFontAttributeName: [NSFont fontWithName:@"Helvetica Neue Bold" size:14],
@@ -425,13 +423,11 @@
     [self.album.imageSubtitle drawInRect:subTitleRect withAttributes:@{NSFontAttributeName: [NSFont fontWithName:@"Helvetica Neue" size:11],
                                                                        NSForegroundColorAttributeName: subtitleColor,
                                                                        NSParagraphStyleAttributeName: textStyle}];
-    
-    
+
     CGRect albumFrame = CGRectInset(self.bounds, 18, 35);
     albumFrame.origin.y -= 20;
     
     // draw the stack of imagess
-    
     CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
     
     CGContextSaveGState(context);
@@ -449,8 +445,7 @@
     [[self class] drawBorderedPhoto:self.stackThumb1 inRect:albumFrame];
     
     CGContextRestoreGState(context);
-    
-    
+
     // draw the top image
     CGRect imageFrame = [[self class] drawBorderedPhoto:self.albumThumb inRect:albumFrame];
     //PIXPhoto * thumbPhoto = [[self.album stackPhotos] objectAtIndex:0];
@@ -461,12 +456,10 @@
         CGRect playButtonRect = CGRectMake(CGRectGetMidX(imageRect)-20.0, CGRectGetMidY(imageRect)-20.0, 40.0, 40.0);//CGRectApplyAffineTransform(imageRect, CGAffineTransformMakeScale(0.33, 0.33));
         [playButtonImage drawInRect:playButtonRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];
     }
-    
-    
+
     // include the title area in the contentFrame so clicks there will select the item
     albumFrame.size.height = (textRect.origin.y+textRect.size.height) - albumFrame.origin.y;
     self.contentFrame = albumFrame;
-    
 }
 
 -(void)startEditing
