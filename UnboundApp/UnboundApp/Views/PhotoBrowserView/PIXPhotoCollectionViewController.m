@@ -227,35 +227,39 @@
 
 -(void)updateAlbum:(NSNotification *)note
 {
-	NSMutableArray<PIXPhoto *> * prevSelected = [NSMutableArray arrayWithCapacity:self.collectionView.selectionIndexPaths.count];
-	for(NSIndexPath * idxPath in self.collectionView.selectionIndexPaths)
-	{
-		if(!idxPath.section && [self.photos count] > idxPath.item)
-		{
-			[prevSelected addObject:self.photos[idxPath.item]];
-		}
-	}
-	
-    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-    [numberFormatter setNumberStyle: NSNumberFormatterDecimalStyle];
-    NSString *photosCount = [numberFormatter stringFromNumber:@((self.album.photos.count))];
+	NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+	[numberFormatter setNumberStyle: NSNumberFormatterDecimalStyle];
+	NSString *photosCount = [numberFormatter stringFromNumber:@((self.album.photos.count))];
 
-    NSString * gridTitle = nil;
-
-    self.photos = _album.sortedPhotos;
-	[self.collectionView reloadData]; // This blows away our previous selection
+	NSString * gridTitle = nil;
 	
-	// Replace the selection
-	NSMutableSet<NSIndexPath *> * newSelection = [NSMutableSet setWithCapacity:prevSelected.count];
-	for(PIXPhoto * photo in prevSelected)
-	{
-		NSUInteger idx = [self.photos indexOfObject:photo];
-		if(idx != NSNotFound)
+	// Only reload if the photos changed, to prevent your selection wigging out on you unnecessarily
+	NSArray<PIXPhoto *> * latest = _album.sortedPhotos;
+	if(![self.photos isEqualToArray:latest]) {
+		NSMutableArray<PIXPhoto *> * prevSelected = [NSMutableArray arrayWithCapacity:self.collectionView.selectionIndexPaths.count];
+		for(NSIndexPath * idxPath in self.collectionView.selectionIndexPaths)
 		{
-			[newSelection addObject:[NSIndexPath indexPathForItem:idx inSection:0]];
+			if(!idxPath.section && [self.photos count] > idxPath.item)
+			{
+				[prevSelected addObject:self.photos[idxPath.item]];
+			}
 		}
+		
+		self.photos = latest;
+		[self.collectionView reloadData]; // This blows away our previous selection
+
+		// Replace the selection
+		NSMutableSet<NSIndexPath *> * newSelection = [NSMutableSet setWithCapacity:prevSelected.count];
+		for(PIXPhoto * photo in prevSelected)
+		{
+			NSUInteger idx = [self.photos indexOfObject:photo];
+			if(idx != NSNotFound)
+			{
+				[newSelection addObject:[NSIndexPath indexPathForItem:idx inSection:0]];
+			}
+		}
+		self.collectionView.selectionIndexPaths = newSelection;
 	}
-	self.collectionView.selectionIndexPaths = newSelection;
 
     // if we've got more than one photo then display the whole date range
     if (self.album.photos.count > 1) {
@@ -291,14 +295,12 @@
             gridTitle = [NSString stringWithFormat:@"%@ photos from %@", photosCount, endDateString];
         }
     }
-
     else if (self.album.photos.count == 1)
     {
         [self.titleDateFormatter setDateStyle:NSDateFormatterLongStyle];
 
         gridTitle = [NSString stringWithFormat:@"%@ photo from %@", photosCount, [self.titleDateFormatter stringFromDate:self.album.albumDate]];
     }
-
     else
     {
         gridTitle = @"No Photos";
@@ -309,8 +311,6 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self updateToolbarForPhotos];
     });
-
-
 }
 
 #pragma mark - Clicks
