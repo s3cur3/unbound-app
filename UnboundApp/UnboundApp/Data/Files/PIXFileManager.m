@@ -1350,7 +1350,6 @@ typedef NSUInteger PIXOverwriteStrategy;
 
     // now do the actual file moves in the background
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        
         // move the files
         for (id aDict in items)
         {
@@ -1363,7 +1362,7 @@ typedef NSUInteger PIXOverwriteStrategy;
             if(![[NSFileManager defaultManager] moveItemAtPath:src toPath:fullDestPath error:&move_error])
             {
                 DLog(@"%@", move_error);
-                [[NSApplication sharedApplication] presentError:move_error];
+				[PIXAppDelegate presentError:move_error];
             }
         }
         
@@ -1379,10 +1378,6 @@ typedef NSUInteger PIXOverwriteStrategy;
         [undoManager registerUndoWithTarget:self selector:@selector(moveFiles:) object:undoArray];
         [undoManager setActionName:@"Move Files"];
     });
-    
-   
-    
-
 }
 
 
