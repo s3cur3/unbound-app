@@ -134,21 +134,15 @@
 {
     if ([self currentlySelectedAlbum] != nil)
     {
-        NSUInteger index = NSNotFound;
-        
-        if(self.searchedAlbums)
-        {
-            index = [self.searchedAlbums indexOfObject:[self currentlySelectedAlbum]];
-        }
-        
-        else
-        {
-            index = [self.albums indexOfObject:[self currentlySelectedAlbum]];
-        }
-        
+		NSArray * albums = self.searchedAlbums == nil ? self.albums : self.searchedAlbums;
+        NSUInteger index = [albums indexOfObject:[self currentlySelectedAlbum]];
         if(index != NSNotFound)
         {
-            [self.outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
+			NSIndexSet * newSelection = [NSIndexSet indexSetWithIndex:index];
+			if(![self.outlineView.selectedRowIndexes isEqualToIndexSet:newSelection])
+			{
+				[self.outlineView selectRowIndexes:newSelection byExtendingSelection:NO];
+			}
             [self.outlineView scrollRowToVisible:index];
         }
     }
@@ -158,9 +152,18 @@
 {
     NSArray * latestAlbums = [PIXAlbum sortedAlbums];
     if(![latestAlbums isEqualToArray:self.albums]) {
+		BOOL editing = self.outlineView.currentEditor != nil;
+		if(editing)
+		{
+			[self.outlineView commitEditing];
+		}
         self.albums = latestAlbums;
         [self.outlineView reloadData];
         [self scrollToSelectedAlbum];
+		if(editing)
+		{
+			[self editSelectionName];
+		}
     }
 }
 
