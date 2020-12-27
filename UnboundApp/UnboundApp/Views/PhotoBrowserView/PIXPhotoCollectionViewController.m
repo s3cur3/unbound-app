@@ -697,7 +697,6 @@
 
 - (BOOL)performDragOperation:(id < NSDraggingInfo >)sender
 {
-
     // for now don't accept drags from our own app (this will be used for re-ordering photos later)
     if([sender draggingSource] != nil || (sender.numberOfValidItemsForDrop == 0))
     {
@@ -705,7 +704,6 @@
     }
 
     NSArray *pathsToPaste = [[PIXFileManager sharedInstance] itemsForDraggingInfo:sender forDestination:self.album.path];
-
     if (pathsToPaste.count > 0)
     {
         if([NSEvent modifierFlags] & NSAlternateKeyMask)

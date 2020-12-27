@@ -1234,16 +1234,12 @@ typedef NSUInteger PIXOverwriteStrategy;
 //TODO: background thread these operations
 -(void)moveFiles:(NSArray *)items
 {
-    
     DLog(@"moving %ld files...", items.count);
     NSString *aDestinationPath = [[items lastObject] valueForKey:@"destination"];
     NSURL *destinationURL = [NSURL fileURLWithPath:aDestinationPath isDirectory:YES];
     
-    
     BOOL hadLockedFiles = NO;
-    
     NSMutableArray * validatedFiles = [NSMutableArray new];
-    
     // remove any locked files
     for(id file in items)
 	{
@@ -1252,17 +1248,14 @@ typedef NSUInteger PIXOverwriteStrategy;
         NSError * error;
         NSDictionary *attributes =  [[NSFileManager defaultManager] attributesOfItemAtPath:sourcePath error:&error];
         BOOL isLocked = [[attributes objectForKey:@"NSFileImmutable"] boolValue];
-        
         if(!isLocked)
         {
             [validatedFiles addObject:file];
         }
-        
         else
         {
             hadLockedFiles = YES;
         }
-        
     }
     
     if(hadLockedFiles)
@@ -1281,11 +1274,9 @@ typedef NSUInteger PIXOverwriteStrategy;
             return;
         }
     }
-    
-    
+
     items = validatedFiles;
-    
-    
+
     NSArray *newItems = [self userValidatedFiles:items forDestination:destinationURL];
     if (newItems.count == 0) {
         return;
@@ -1301,8 +1292,6 @@ typedef NSUInteger PIXOverwriteStrategy;
     NSMutableSet * changedAlbums = [[NSMutableSet alloc] init];
     
     NSManagedObjectContext * context = [[PIXAppDelegate sharedAppDelegate] managedObjectContext];
-    
-    
     for (id aDict in items)
     {
         NSString *src = [aDict valueForKey:@"source"];
@@ -1770,10 +1759,8 @@ typedef NSUInteger PIXOverwriteStrategy;
 {
     NSString *newAlbumPath = nil;
     if (!aPath) {
-        
         NSString *defaultPhotosPathString = [self defaultPhotosPath];
         aPath = defaultPhotosPathString;
-        
     }
     newAlbumPath = [NSString stringWithFormat:@"%@/%@",aPath, aName];
     
