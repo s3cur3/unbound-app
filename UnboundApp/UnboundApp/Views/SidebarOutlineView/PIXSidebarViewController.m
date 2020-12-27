@@ -118,11 +118,18 @@
     [self.outlineView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
     
     [self.outlineView setDraggingSourceOperationMask:(NSDragOperationCopy) forLocal:NO];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                                   selector:@selector(albumsChanged:)
-                                                       name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM
-                                                     object:nil];
+
+    NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self
+           selector:@selector(albumsChanged:)
+               name:kUB_ALBUMS_LOADED_FROM_FILESYSTEM
+             object:nil];
+
+    [nc addObserver:self
+           selector:@selector(albumCreated:)
+               name:AlbumCreatedNotification
+             object:nil];
+	
     
     NSString * searchString = [[NSUserDefaults standardUserDefaults] objectForKey:@"PIX_AlbumSearchString"];
     
@@ -165,9 +172,23 @@
 
 -(void)albumsChanged:(NSNotification *)note
 {
-    self.albums = nil;
-    [self.outlineView reloadData];
+    NSArray * latestAlbums = [PIXAlbum sortedAlbums];
+    if(![latestAlbums isEqualToArray:self.albums]) {
+        self.albums = latestAlbums;
+        [self.outlineView reloadData];
+        [self scrollToSelectedAlbum];
+    }
+}
+
+-(void)albumCreated:(NSNotification *)note
+{
+    PIXAlbum * album = note.userInfo[@"album"];
+    if(![self.albums containsObject:album]) {
+        [self.outlineView reloadData];
+    }
+    self.splitViewController.selectedAlbum = album;
     [self scrollToSelectedAlbum];
+
 }
 
 -(Album *)currentlySelectedAlbum
