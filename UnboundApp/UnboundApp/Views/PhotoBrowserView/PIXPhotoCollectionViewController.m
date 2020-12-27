@@ -405,8 +405,8 @@
 }
 
 - (void)deleteItems {
-    if (self.selectedItems.count == 0) return;
-    [PIXFileManager.sharedInstance deleteItemsWorkflow:self.selectedItems];
+	NSSet * toDelete = self.selectedItems.count ? self.selectedItems : [NSSet setWithObject:self.album];
+    [PIXFileManager.sharedInstance deleteItemsWorkflow:toDelete];
 }
 
 - (void)duplicateItems {

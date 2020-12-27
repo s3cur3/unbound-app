@@ -334,8 +334,6 @@
     [self.sidebarViewController.view setFrame:self.leftPane.bounds];
     [self.leftPane addSubview:self.sidebarViewController.view];
     [self.sidebarViewController.outlineView reloadData];
-    
-    
 }
 
 -(void)setupBrowser

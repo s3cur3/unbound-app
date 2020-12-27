@@ -55,50 +55,32 @@
 
 -(IBAction)newAlbumPressed:(id)sender
 {
-    PIXAlbum * newAlbum = [[PIXFileManager sharedInstance] createAlbumWithName:@"New Album"];
-    
-    // the above method will automatically call a notification that causes the album list to refresh
-    
+    PIXAlbum * newAlbum = [[PIXFileManager sharedInstance] createAlbumWithName:@"New Album"]; // sends a notification that causes the album list to refresh
     NSUInteger index = [self.albums indexOfObject:newAlbum];
-    
-    
     NSAssert(index != NSNotFound, @"We should always find the album");
-    
-    
     [self.outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
-    
-    [self.outlineView editColumn:0 row:index withEvent:nil select:YES];
-    //[self.outlineView scrollRowToVisible:index];
-    
+	[self scrollToSelectedAlbum];
+	[self editSelectionName];
+}
+
+-(void)editSelectionName
+{
+	[self.outlineView editColumn:0 row:self.outlineView.selectedRow withEvent:nil select:YES];
 }
 
 -(void)updateSearch
 {
-	
+    NSArray * prev = self.searchedAlbums == nil ? self.albums : self.searchedAlbums;
     NSString * searchText = [self.searchField stringValue];
     if(searchText != nil && [searchText length] > 0)
     {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.title CONTAINS[cd] %@", searchText];
-        
-        if([self.albums count] > 0)
-        {
-            // if this search is more narrow than the last filter then re-filter based on the last set
-            // (this happens while typing)
-            
-            if(self.lastSearch != nil && [searchText rangeOfString:self.lastSearch].length != 0)
-            {
-                self.searchedAlbums = [self.searchedAlbums filteredArrayUsingPredicate:predicate];
-            }
-            
-            else
-            {
-                self.searchedAlbums = [self.albums filteredArrayUsingPredicate:predicate];
-            }
-            
-            self.lastSearch = searchText;
-        }
+		// if this search is more narrow than the last filter then re-filter based on the last set (this happens while typing)
+		NSArray * toFilter = self.lastSearch != nil && [searchText rangeOfString:self.lastSearch].length > 0 ?
+                             self.searchedAlbums :
+                             self.albums;
+        self.searchedAlbums = [toFilter filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.title CONTAINS[cd] %@", searchText]];
+		self.lastSearch = searchText;
     }
-    
     else
     {
         self.searchedAlbums = nil;
@@ -106,10 +88,12 @@
     }
     
     [[NSUserDefaults standardUserDefaults] setObject:searchText forKey:@"PIX_AlbumSearchString"];
-        
-    [self.outlineView reloadData];
-    [self scrollToSelectedAlbum];
-	
+
+    NSArray * current = self.searchedAlbums == nil ? self.albums : self.searchedAlbums;
+    if(![prev isEqualToArray:current]) {
+        [self.outlineView reloadData];
+        [self scrollToSelectedAlbum];
+    }
 }
 
 
@@ -188,13 +172,31 @@
     }
     self.splitViewController.selectedAlbum = album;
     [self scrollToSelectedAlbum];
-
+	[self editSelectionName];
 }
 
 -(Album *)currentlySelectedAlbum
 {
     return self.splitViewController.selectedAlbum;
 }
+
+-(void)keyDown:(NSEvent *)event
+{
+	DLog("Keycode pressed: %d", event.keyCode);
+	NSEventModifierFlags modifiers = event.modifierFlags & NSEventModifierFlagDeviceIndependentFlagsMask;
+	if(modifiers == NSEventModifierFlagCommand) {
+		if (event.keyCode == 51 && self.currentlySelectedAlbum != nil) { // Cmd + Backspace/delete
+            [PIXFileManager.sharedInstance deleteItemsWorkflow:[NSSet setWithObject:self.currentlySelectedAlbum]];
+			return;
+		} else if ([@"n" isEqualToString:event.characters]) {
+			[self newAlbumPressed:nil];
+			return;
+		}
+	}
+
+	[super keyDown:event];
+}
+
 
 #pragma mark - Drag and Drop Support
 
