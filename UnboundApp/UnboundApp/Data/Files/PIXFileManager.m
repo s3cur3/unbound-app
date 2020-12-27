@@ -1791,7 +1791,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     [[PIXAppDelegate sharedAppDelegate] saveDBToDisk:nil];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
-    
+	[[NSNotificationCenter defaultCenter] postNotificationName:AlbumCreatedNotification object:self userInfo:@{@"album": newAlbum}];
     return newAlbum;
 }
 

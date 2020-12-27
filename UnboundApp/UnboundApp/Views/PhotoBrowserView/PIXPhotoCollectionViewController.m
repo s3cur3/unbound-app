@@ -418,8 +418,8 @@
 - (void)newFolderWithSelection {
     NSSet<PIXPhoto *> * selected = self.selectedItems;
     if(self.selectedItems.count) {
-        NSURL * currentAlbumParentPath = [NSURL URLWithString:@"../" relativeToURL:self.album.filePathURL];
-        PIXAlbum * newAlbum = [PIXFileManager.sharedInstance createAlbumAtPath:currentAlbumParentPath.absoluteString withName:@"New Album"];
+		NSString * parentPath = self.album.path.stringByDeletingLastPathComponent;
+        PIXAlbum * newAlbum = [PIXFileManager.sharedInstance createAlbumAtPath:parentPath withName:@"New Album"];
 
         NSMutableArray * pathChangeSpec = [NSMutableArray arrayWithCapacity:[selected count]];
         for(PIXPhoto * photo in selected)
