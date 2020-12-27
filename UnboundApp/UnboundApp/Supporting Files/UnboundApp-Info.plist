@@ -20,6 +20,8 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.photography</string>
 	<key>LSMinimumSystemVersion</key>
@@ -34,7 +36,5 @@
 	<string>https://www.unboundapp.com</string>
 	<key>PIXCopyright</key>
 	<string>Copyright © 2017 Tyler Young</string>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
 </dict>
 </plist>
