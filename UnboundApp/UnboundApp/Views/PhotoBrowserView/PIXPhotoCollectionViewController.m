@@ -264,8 +264,17 @@
 		self.collectionView.selectionIndexPaths = newSelection;
 	}
 
+	if(self.album.startDate == nil) {
+		if(self.album.photos.count == 1) {
+			gridTitle = @"1 photo";
+		} else if(self.album.photos.count > 1) {
+			gridTitle = [NSString stringWithFormat:@"%@ photos", photosCount];
+		} else {
+			gridTitle = @"No Photos";
+		}
+	}
     // if we've got more than one photo then display the whole date range
-    if (self.album.photos.count > 1) {
+    else if (self.album.photos.count > 1) {
         NSDate * startDate = [self.album startDate];
         NSDate * endDate = [self.album albumDate];
 
