@@ -549,7 +549,7 @@
     return @"SimplePhotoItem";
 }
 
-- (NSObject<PhotoItem> *)photoItemForObjectAtIndexPath:(NSIndexPath *)indexPath inCollectionView:(NSCollectionView *)collectionView {
+- (NSCollectionViewItem *)photoItemForObjectAtIndexPath:(NSIndexPath *)indexPath inCollectionView:(NSCollectionView *)collectionView {
     return [collectionView makeItemWithIdentifier:self.photoItemIdentifier forIndexPath:indexPath];
 }
 
@@ -558,8 +558,9 @@
 }
 
 - (NSCollectionViewItem *)collectionView:(NSCollectionView *)collectionView itemForRepresentedObjectAtIndexPath:(NSIndexPath *)indexPath {
-    NSObject<PhotoItem> *item = [self photoItemForObjectAtIndexPath:indexPath inCollectionView:collectionView];
-    item.photo = self.photos[indexPath.item];
+	NSCollectionViewItem * item = [self photoItemForObjectAtIndexPath:indexPath inCollectionView:collectionView];
+	NSObject<PhotoItem> * photoItem = (NSObject<PhotoItem> *)item;
+	photoItem.photo = self.photos[indexPath.item];
     return item;
 }
 
@@ -693,8 +694,6 @@
 
     return YES;
 }
-
-
 
 - (BOOL)performDragOperation:(id < NSDraggingInfo >)sender
 {
