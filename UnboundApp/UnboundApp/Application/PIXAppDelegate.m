@@ -129,7 +129,6 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
 
     [NSValueTransformer setValueTransformer:[TextColorForThemeTransformer newInstance]
                                     forName:@"TextColorForThemeTransformer"];
-
 }
 
 - (void)setupProgressIndicator

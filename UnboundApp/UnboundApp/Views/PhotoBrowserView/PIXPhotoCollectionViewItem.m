@@ -261,22 +261,18 @@
 
 -(void)updateLayer
 {
-    
     //[CATransaction begin];
     //[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
-    
     if(self.isVideo) // use local property for performance reasons (set when photo is set)
     {
         [self.layer addSublayer:self.videoLayover.layer];
     }
-    
     else
     {
         [_videoLayover.layer removeFromSuperlayer];
         self.videoLayover = nil;
     }
-    
-    
+
     NSImage * photo = self.itemImage;
     CGRect rect = CGRectInset(self.bounds, 10, 10);
 
