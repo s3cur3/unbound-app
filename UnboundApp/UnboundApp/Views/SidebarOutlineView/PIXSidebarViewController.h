@@ -22,6 +22,7 @@
 @property (nonatomic, strong) PIXAlbum *dragDropDestination;
 
 -(IBAction)newAlbumPressed:(id)sender;
+-(void)editSelectionName;
 
 @end
 
