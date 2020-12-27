@@ -142,13 +142,11 @@ const CGFloat kThumbnailSize = 370.0f;
     if (_fullsizeImage == nil)
     {
         [self fullsizeImageStartLoadingIfNeeded:YES];
-        
-        
+
         //While full image is loading show the thumbnail stretched
         if (_thumbnailImage!=nil) {
             return _thumbnailImage;
         } else if (self.thumbnailFilePath) {
-            
             NSData * thumbData = [NSData dataWithContentsOfFile:self.thumbnailFilePath];
             NSImage *thumbImage = [[NSImage alloc] initWithData:thumbData];
             [self setThumbnailImage:thumbImage];
@@ -418,7 +416,6 @@ const CGFloat kThumbnailSize = 370.0f;
 
 -(void)cancelThumbnailLoading
 {
-    
     // do nothing if we're not loading
     if(_thumbnailImageIsLoading == NO) return;
     
@@ -498,13 +495,10 @@ const CGFloat kThumbnailSize = 370.0f;
         // if we've pregenerated a thumb load the file
         NSString * imagePath = self.thumbnailFilePath;
         if (imagePath != nil) {
-            
-            
             _thumbnailImageIsLoading = YES;
             __weak PIXPhoto *weakSelf = self;
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
-                // this seems to perform a little faster than [NSImage initWithContentsOfFile:] 
+                // this seems to perform a little faster than [NSImage initWithContentsOfFile:]
                 NSData * imgData = [NSData dataWithContentsOfFile:imagePath];
                 NSImage * thumb = [[NSImage alloc] initWithData:imgData];
 
@@ -525,7 +519,6 @@ const CGFloat kThumbnailSize = 370.0f;
                     
 					self->_thumbnailImageIsLoading = NO;
                 }
-                
                 // if we still haven't found the thumb then laod from original image
                 else
                 {
@@ -643,8 +636,6 @@ const CGFloat kThumbnailSize = 370.0f;
     __weak PIXPhoto *weakSelf = self;
     
     self.fastThumbLoad = [NSBlockOperation blockOperationWithBlock:^{
-        
-        
         if (weakSelf == nil || aPath==nil || weakSelf.cancelThumbnailLoadOperation==YES) {
             DLog(@"thumbnail operation completed after object was dealloced or canceled - return");
 			self->_thumbnailImageIsLoading = NO;
@@ -653,8 +644,7 @@ const CGFloat kThumbnailSize = 370.0f;
             [[PIXFileParser sharedFileParser] decrementWorking];
             return;
         }
-        
-        
+
         //NSLog(@"Loading thumbnail");
         __block NSImage *image = nil;
         NSURL *urlForImage = [NSURL fileURLWithPath:aPath];
@@ -666,6 +656,7 @@ const CGFloat kThumbnailSize = 370.0f;
 
         AVAsset *asset = [AVAsset assetWithURL:urlForImage];
         AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+        imageGenerator.appliesPreferredTrackTransform = YES;
         CMTime time = [asset duration];
         time.value = 0;
 
@@ -1254,17 +1245,26 @@ const CGFloat kThumbnailSize = 370.0f;
         // set this to non-nil so we don't try and load it again
         [self setExifData:@{@"noExif":@"noExif"}];
         self.dateTaken = nil;
-        
+		
+		if([self isVideo]) // Try to get our dimensions some other way
+		{
+			AVURLAsset * asset = [AVURLAsset URLAssetWithURL:[self filePath] options:nil];
+			NSArray * tracks = [asset tracksWithMediaType:AVMediaTypeVideo];
+			if([tracks count])
+			{
+				AVAssetTrack * track = [tracks objectAtIndex:0];
+				CGSize dimensions = CGSizeApplyAffineTransform(track.naturalSize, track.preferredTransform);
+				self.width = [NSNumber numberWithDouble:fabs(dimensions.width)];
+				self.height = [NSNumber numberWithDouble:fabs(dimensions.height)];
+				// TODO: figure out date
+			}
+		}
     }
-    
     else
     {
         // set the exif data the normal way
         [self setExifData:newExifData];
-        
-        //self.dateTaken = nil;
-        
-        
+
         // now also set attributes that are derived from the exif data
         NSString * dateTakenString = [[newExifData objectForKey:@"{Exif}"] objectForKey:@"DateTimeOriginal"];
         
@@ -1277,17 +1277,12 @@ const CGFloat kThumbnailSize = 370.0f;
         {
             self.dateTaken = [[PIXPhoto exifDateFormatter] dateFromString:dateTakenString];
         }
-        
-       
-        
+
         // set the lat and lon in the db (so we can fetch based on location)
-        
         NSNumber * latitudeNumber = [newExifData valueForKeyPath: @"{GPS}.Latitude"];
         NSNumber * longitudeNumber = [newExifData valueForKeyPath: @"{GPS}.Longitude"];
-        
         NSString * latRef = [newExifData valueForKeyPath: @"{GPS}.LatitudeRef"];
         NSString * longRef = [newExifData valueForKeyPath: @"{GPS}.LongitudeRef"];
-        
         if (latitudeNumber && longitudeNumber) {
             double latitude = [latitudeNumber doubleValue];
             double longitude = [longitudeNumber doubleValue];
@@ -1302,7 +1297,6 @@ const CGFloat kThumbnailSize = 370.0f;
         }
 
         // set the dimensions if they haven't been set by the actual image
-
         if (self.width == nil || [self.width isEqualToNumber:@0]) {
             self.width = newExifData[(NSString *)kCGImagePropertyPixelWidth];
         }
