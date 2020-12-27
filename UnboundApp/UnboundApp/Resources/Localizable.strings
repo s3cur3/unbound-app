@@ -24,6 +24,7 @@
 "menu.share" = "Share";
 "menu.edit_with" = "Edit with";
 "menu.edit_with_default" = "Edit with %@";
+"menu.new_folder_with_selection" = "New Folder with Selection (%lu Items)";
 "menu.get_info" = "Get Info";
 "menu.set_desktop_picture" = "Set Desktop Picture";
 

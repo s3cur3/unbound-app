@@ -154,6 +154,9 @@
         } else if ([@"d" isEqualToString:event.characters]) {
             [self duplicateItems];
             return;
+        } else if ([@"n" isEqualToString:event.characters] && self.collectionView.selectionIndexPaths.count > 1) {
+            [self newFolderWithSelection];
+            return;
         }
     }
 
@@ -403,6 +406,21 @@
     [PIXFileManager.sharedInstance duplicatePhotos:self.selectedItems];
 }
 
+- (void)newFolderWithSelection {
+    NSSet<PIXPhoto *> * selected = self.selectedItems;
+    if(self.selectedItems.count) {
+        NSURL * currentAlbumParentPath = [NSURL URLWithString:@"../" relativeToURL:self.album.filePathURL];
+        PIXAlbum * newAlbum = [PIXFileManager.sharedInstance createAlbumAtPath:currentAlbumParentPath.absoluteString withName:@"New Album"];
+
+        NSMutableArray * pathChangeSpec = [NSMutableArray arrayWithCapacity:[selected count]];
+        for(PIXPhoto * photo in selected)
+        {
+            [pathChangeSpec addObject:@{@"source" : photo.path, @"destination" : newAlbum.path}];
+        }
+        [PIXFileManager.sharedInstance moveFiles:pathChangeSpec];
+    }
+}
+
 - (void)getInfo {
     if (self.selectedItems.count == 0) return;
     [self.selectedItems enumerateObjectsUsingBlock:^(PIXPhoto *obj, BOOL *stop) {
@@ -476,6 +494,17 @@
             }
 
             [menu addItem:[NSMenuItem separatorItem]];
+
+            NSUInteger selectionCount = self.collectionView.selectionIndexPaths.count;
+            if(selectionCount > 1) {
+				NSMenuItem * newFolderWithSelection = [[NSMenuItem alloc] init];
+                newFolderWithSelection.title = [NSString stringWithFormat:NSLocalizedString(@"menu.new_folder_with_selection", @"New Folder with Selection (%lu Items)"), selectionCount];
+                newFolderWithSelection.target = self;
+                newFolderWithSelection.action = @selector(newFolderWithSelection);
+                newFolderWithSelection.keyEquivalent = @"n";
+                newFolderWithSelection.keyEquivalentModifierMask = NSEventModifierFlagCommand;
+				[menu addItem:newFolderWithSelection];
+            }
 
             NSString *defaultAppName = [[NSUserDefaults standardUserDefaults] stringForKey:@"defaultEditorName"];
             if (!defaultAppName) {
