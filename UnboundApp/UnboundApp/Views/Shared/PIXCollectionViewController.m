@@ -291,8 +291,8 @@ static NSString *kContentTitleKey, *kContentImageKey;
     [aSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
         
         NSPasteboard *pboard = [NSPasteboard pasteboardWithUniqueName];
-        [pboard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
-        [pboard setString:[obj path]  forType:NSStringPboardType];
+        [pboard declareTypes:[NSArray arrayWithObject:NSPasteboardTypeString] owner:nil];
+        [pboard setString:[obj path]  forType:NSPasteboardTypeString];
         NSPerformService(@"Finder/Show Info", pboard);
         
     }];

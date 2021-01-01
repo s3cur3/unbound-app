@@ -50,7 +50,7 @@
     }
     
     
-    [self.image drawInRect:cropRect fromRect:imageRect operation:NSCompositeCopy fraction:1.0];
+    [self.image drawInRect:cropRect fromRect:imageRect operation:NSCompositingOperationCopy fraction:1.0];
     
 }
 

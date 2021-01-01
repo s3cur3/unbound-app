@@ -134,10 +134,10 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
 - (void)setupProgressIndicator
 {
     NSProgressIndicator * indicator = [[NSProgressIndicator alloc] initWithFrame:CGRectMake(0, 0, 18, 18)];
-    [indicator setStyle:NSProgressIndicatorSpinningStyle];
+    [indicator setStyle:NSProgressIndicatorStyleSpinning];
     [indicator setIndeterminate:YES];
     
-    [indicator setControlSize:NSSmallControlSize];
+    [indicator setControlSize:NSControlSizeSmall];
     [indicator sizeToFit];
     
     [indicator setDisplayedWhenStopped:YES];
@@ -894,7 +894,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
                              informativeTextWithFormat:@"%@", title];
     
 
-	[testAlert setAlertStyle:NSWarningAlertStyle];
+	[testAlert setAlertStyle:NSAlertStyleWarning];
     
     NSImage* image = [NSImage imageNamed:@"icon.icns"];
     [testAlert setIcon: image];

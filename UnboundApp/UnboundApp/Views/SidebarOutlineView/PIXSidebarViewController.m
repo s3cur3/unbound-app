@@ -99,7 +99,7 @@
 
 -(void)willShowPIXView
 {    
-    [self.outlineView registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
+    [self.outlineView registerForDraggedTypes:[NSArray arrayWithObject: NSPasteboardTypeURL]];
     
     [self.outlineView setDraggingSourceOperationMask:(NSDragOperationCopy) forLocal:NO];
 

@@ -36,8 +36,8 @@
                 styleMask:(NSWindowStyleMask)aStyle
                   backing:(NSBackingStoreType)bufferingType
                     defer:(BOOL)flag {
-    // Using NSBorderlessWindowMask results in a window without a title bar.
-    self = [super initWithContentRect:contentRect styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:YES];
+    // Using NSWindowStyleMaskBorderless results in a window without a title bar.
+    self = [super initWithContentRect:contentRect styleMask:NSWindowStyleMaskBorderless backing:NSBackingStoreBuffered defer:YES];
     if (self != nil) {
         // Start with no transparency for all drawing into the window
         [self setAlphaValue:1.0];
@@ -281,7 +281,7 @@
 
 
 /*
- Custom windows that use the NSBorderlessWindowMask can't become key by default. Override this method
+ Custom windows that use the NSWindowStyleMaskBorderless can't become key by default. Override this method
  so that controls in this window will be enabled.
  */
 - (BOOL)canBecomeKeyWindow {

@@ -115,7 +115,7 @@
     [self updateAlbum:nil];
 
     // this will allow droping files into the larger grid view
-    [self.collectionView registerForDraggedTypes:@[NSURLPboardType]];
+    [self.collectionView registerForDraggedTypes:@[NSPasteboardTypeURL]];
 
     [self updateToolbarForPhotos];
 }
@@ -434,8 +434,8 @@
     if (self.selectedItems.count == 0) return;
     [self.selectedItems enumerateObjectsUsingBlock:^(PIXPhoto *obj, BOOL *stop) {
         NSPasteboard *pboard = [NSPasteboard pasteboardWithUniqueName];
-        [pboard declareTypes:@[NSStringPboardType] owner:nil];
-        [pboard setString:obj.path forType:NSStringPboardType];
+        [pboard declareTypes:@[NSPasteboardTypeString] owner:nil];
+        [pboard setString:obj.path forType:NSPasteboardTypeString];
         NSPerformService(@"Finder/Show Info", pboard);
     }];
 }
@@ -694,7 +694,7 @@
     [sender setNumberOfValidItemsForDrop:fileCount];
 
     // check the modifier keys and show with operation we support
-    if([NSEvent modifierFlags] & NSAlternateKeyMask)
+    if([NSEvent modifierFlags] & NSEventModifierFlagOption)
     {
         return NSDragOperationMove;
     }
@@ -712,7 +712,7 @@
     }
 
     // check the modifier keys and show with operation we support
-    if([NSEvent modifierFlags] & NSAlternateKeyMask)
+    if([NSEvent modifierFlags] & NSEventModifierFlagOption)
     {
         return NSDragOperationMove;
     }
@@ -744,7 +744,7 @@
     NSArray *pathsToPaste = [[PIXFileManager sharedInstance] itemsForDraggingInfo:sender forDestination:self.album.path];
     if (pathsToPaste.count > 0)
     {
-        if([NSEvent modifierFlags] & NSAlternateKeyMask)
+        if([NSEvent modifierFlags] & NSEventModifierFlagOption)
         {
             // perform a move here
             [[PIXFileManager sharedInstance] moveFiles:pathsToPaste];

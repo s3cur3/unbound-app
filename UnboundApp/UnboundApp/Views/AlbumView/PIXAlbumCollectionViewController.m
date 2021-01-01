@@ -197,7 +197,7 @@
         
         if(i-1 == sortOrder)
         {
-            [item setState:NSOnState];
+            [item setState:NSControlStateValueOn];
         }
         
         [item setTag:i-1];
@@ -223,7 +223,7 @@
         }
 
         NSMenuItem * thisItem = sender;
-        [thisItem setState:NSOnState];
+        [thisItem setState:NSControlStateValueOn];
         [[NSUserDefaults standardUserDefaults] setInteger:[thisItem tag] forKey:@"PIXAlbumSort"];
         
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -763,7 +763,7 @@
         return NSDragOperationNone;
     }
     
-    if([NSEvent modifierFlags] & NSAlternateKeyMask)
+    if([NSEvent modifierFlags] & NSEventModifierFlagOption)
     {
         return NSDragOperationMove;
     }
@@ -780,7 +780,7 @@
     }
     
     // here we need to return the kind of drop operation allowed. This is where we decide if its a copy or move
-    if([NSEvent modifierFlags] & NSAlternateKeyMask)
+    if([NSEvent modifierFlags] & NSEventModifierFlagOption)
     {
         return NSDragOperationMove;
     }

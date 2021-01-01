@@ -118,7 +118,7 @@
         
         [[self.captionTextView textStorage] setFont:[NSFont fontWithName:@"Helvetica" size:18]];
         [[self.captionTextView textStorage] setForegroundColor:[NSColor whiteColor]];
-        [[self.captionTextView textStorage] setAlignment:NSCenterTextAlignment range:NSMakeRange(0, [self.captionTextView textStorage].length)];
+        [[self.captionTextView textStorage] setAlignment:NSTextAlignmentCenter range:NSMakeRange(0, [self.captionTextView textStorage].length)];
         
         NSTextStorage *textStorage = [[NSTextStorage alloc] initWithAttributedString:self.captionTextView.attributedString];
         NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
@@ -446,7 +446,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [[self.captionTextView textStorage] setFont:[NSFont fontWithName:@"Helvetica" size:18]];
         [[self.captionTextView textStorage] setForegroundColor:[NSColor whiteColor]];
-        [[self.captionTextView textStorage] setAlignment:NSCenterTextAlignment range:NSMakeRange(0, [self.captionTextView textStorage].length)];
+        [[self.captionTextView textStorage] setAlignment:NSTextAlignmentCenter range:NSMakeRange(0, [self.captionTextView textStorage].length)];
         [self.captionTextView alignCenter:nil];
     });
     

@@ -82,7 +82,7 @@
             
             //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photoChanged:) name:PhotoThumbDidChangeNotification object:self.representedObject];
             self.imageView.image = [newPhoto fullsizeImageForFullscreenDisplay];
-            [self.imageView setNeedsDisplay];
+			self.imageView.needsDisplay = YES;
             NSCParameterAssert(self.imageView.image);
             
         }

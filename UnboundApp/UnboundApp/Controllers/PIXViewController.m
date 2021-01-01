@@ -21,7 +21,7 @@
 
 +(BOOL)optionKeyIsPressed
 {
-    if(( [NSEvent modifierFlags] & NSAlternateKeyMask ) != 0 ) {
+    if(( [NSEvent modifierFlags] & NSEventModifierFlagOption ) != 0 ) {
         return YES;
     } else {
         return NO;

@@ -29,7 +29,7 @@
         self.mainWindow = [[[PIXAppDelegate sharedAppDelegate] mainWindowController] window];
         
         self.spinnerwindow  = [[NSWindow alloc] initWithContentRect:frame
-                                                         styleMask:NSBorderlessWindowMask
+                                                         styleMask:NSWindowStyleMaskBorderless
                                                            backing:NSBackingStoreBuffered
                                                              defer:NO];
         
@@ -44,10 +44,10 @@
         NSView *progressIndicatorHolder = [[NSView alloc] initWithFrame:frame];
         
          self.indicator = [[NSProgressIndicator alloc] initWithFrame:CGRectMake(0, 1, 18, 18)];
-         [self.indicator setStyle:NSProgressIndicatorSpinningStyle];
+         [self.indicator setStyle:NSProgressIndicatorStyleSpinning];
          [self.indicator setIndeterminate:YES];
          
-         [self.indicator setControlSize:NSSmallControlSize];
+         [self.indicator setControlSize:NSControlSizeSmall];
          [self.indicator sizeToFit];
          
          [self.indicator setDisplayedWhenStopped:NO];

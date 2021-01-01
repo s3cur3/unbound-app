@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "PIXThumbnailLoadingDelegate.h"
 
-@class PIXAccount, PIXPhoto;
+@class PIXPhoto;
 
 typedef enum {
     

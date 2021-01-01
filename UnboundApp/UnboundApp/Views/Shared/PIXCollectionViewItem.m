@@ -175,7 +175,7 @@
     [textShadow setShadowBlurRadius:3.0];
     
     NSMutableParagraphStyle *textStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
-    [textStyle setAlignment: NSCenterTextAlignment];
+    [textStyle setAlignment: NSTextAlignmentCenter];
     
     NSDictionary * attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                  [NSFont fontWithName:@"Helvetica Neue Bold" size:14], NSFontAttributeName,

@@ -1704,7 +1704,7 @@ static NSDictionary * dictionaryForURL(NSURL * url)
     //[openPanel setDirectoryURL:[NSURL fileURLWithPath:@"~/"]];
     
     NSInteger result = [openPanel runModal];
-    if(result == NSFileHandlingPanelOKButton && [[openPanel URLs] count] == 1)
+    if(result == NSModalResponseOK && [[openPanel URLs] count] == 1)
     {
         NSURL *selectedURL = [[openPanel URLs] lastObject];
         if (![self checWriteAccess:selectedURL]) {

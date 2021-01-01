@@ -132,7 +132,7 @@
         self.stackThumb1 = [NSImage imageNamed:@"temp"];
         self.stackThumb2 = [NSImage imageNamed:@"temp-portrait"];
         
-        [self registerForDraggedTypes:[NSArray arrayWithObject: NSURLPboardType]];
+        [self registerForDraggedTypes:[NSArray arrayWithObject: NSPasteboardTypeURL]];
     }
     return self;
 }
@@ -411,7 +411,7 @@
     self.titleEditFrame = NSInsetRect(textRect, -3, -3);
 
     NSMutableParagraphStyle *textStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
-    [textStyle setAlignment: NSCenterTextAlignment];
+    [textStyle setAlignment: NSTextAlignmentCenter];
 
     if(self.titleEditField == nil)
     {
@@ -472,7 +472,7 @@
         [self.titleEditField setFont:[NSFont fontWithName:@"Helvetica Neue Bold" size:14]];
 		[self.titleEditField setTextColor:NSColor.whiteColor];
 
-        [self.titleEditField setAlignment:NSCenterTextAlignment];
+        [self.titleEditField setAlignment:NSTextAlignmentCenter];
         
         [self.titleEditField setTarget:self];
         [self.titleEditField setAction:@selector(titleEdited:)];

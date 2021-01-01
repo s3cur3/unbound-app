@@ -201,7 +201,7 @@
 
         if(i-1 == sortOrder)
         {
-            [item setState:NSOnState];
+            [item setState:NSControlStateValueOn];
         }
 
         [item setTag:i-1];
@@ -225,7 +225,7 @@
         }
 
         NSMenuItem * thisItem = sender;
-        [thisItem setState:NSOnState];
+        [thisItem setState:NSControlStateValueOn];
         [[NSUserDefaults standardUserDefaults] setInteger:[thisItem tag] forKey:@"PIXPhotoSort"];
         [NSUserDefaults.standardUserDefaults synchronize];
         

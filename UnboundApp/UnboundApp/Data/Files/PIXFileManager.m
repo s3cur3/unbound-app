@@ -588,7 +588,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     
     if (suppressAlert || [alert runModal] == NSAlertFirstButtonReturn) {
         
-        if ([[alert suppressionButton] state] == NSOnState) {
+        if ([[alert suppressionButton] state] == NSControlStateValueOn) {
             // Suppress this alert from now on.
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:suppressKey];
         }
@@ -858,7 +858,7 @@ typedef NSUInteger PIXOverwriteStrategy;
         
         
         
-        [alert setAlertStyle: NSWarningAlertStyle];
+        [alert setAlertStyle: NSAlertStyleWarning];
         alertResult = [alert runModal];
         
         if (alertResult == NSAlertFirstButtonReturn)	// Keep
@@ -1172,7 +1172,7 @@ typedef NSUInteger PIXOverwriteStrategy;
     [panel beginSheetModalForWindow:mainWindow completionHandler:^(NSInteger result) {
         
         // if the user pressed ok, then copy the files into the correct folder
-        if(result == NSFileHandlingPanelOKButton)
+        if(result == NSModalResponseOK)
         {
             // go through selected items and create the copy items array
             BOOL containsDirectories = NO;
@@ -1635,7 +1635,7 @@ typedef NSUInteger PIXOverwriteStrategy;
                     [alert setInformativeText:@"already exists in this location. Do you want to keep both this file and the one you are moving?"];
                 }
                 
-                [alert setAlertStyle: NSWarningAlertStyle];
+                [alert setAlertStyle: NSAlertStyleWarning];
                 alertResult = [alert runModal];
                 
                 if (alertResult == NSAlertFirstButtonReturn)	// Keep

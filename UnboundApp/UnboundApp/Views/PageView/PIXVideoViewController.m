@@ -176,7 +176,7 @@
 //    self.overlayWindow=[[PIXPlayVideoHUDWindow alloc] initWithContentRect:NSMakeRect(screenOrigin.x,screenOrigin.y,
 //                                                                   movieFrame.size.width,
 //                                                                   movieFrame.size.height)
-//                                              styleMask:NSBorderlessWindowMask
+//                                              styleMask:NSWindowStyleMaskBorderless
 //                                                backing:NSBackingStoreBuffered
 //                                                  defer:NO];
     
@@ -205,7 +205,7 @@
                                             200.0f,
                                             200.0f);
     self.overlayWindow=[[PIXPlayVideoHUDWindow alloc] initWithContentRect:playButtonWindowFrame
-                                                                styleMask:NSBorderlessWindowMask
+                                                                styleMask:NSWindowStyleMaskBorderless
                                                                   backing:NSBackingStoreBuffered
                                                                     defer:NO];
     [self.overlayWindow setParentView:self.pageViewController.pageController.selectedViewController.view];
