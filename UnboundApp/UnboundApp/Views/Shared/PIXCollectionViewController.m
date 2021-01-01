@@ -400,7 +400,7 @@ static NSString *kContentTitleKey, *kContentImageKey;
 
 - (IBAction)chooseFolderButtonPressed:(id)sender
 {
-    [[PIXFileParser sharedFileParser] userChooseFolderDialog];
+	[PIXAppDelegate.sharedAppDelegate showLibraryPicker:self];
 }
 
 - (IBAction)importPhotosButtonPressed:(id)sender

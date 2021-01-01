@@ -21,7 +21,7 @@
     
     @public
     
-    PIXInfoWindowController *showIntroWindow;
+    PIXInfoWindowController * showLibraryPicker;
     PIXAboutWindowController *showAboutWindow;
 
 }
@@ -30,11 +30,10 @@
 +(void)presentError:(NSError *)error;
 
 - (IBAction)showMainWindow:(id)sender;
-- (IBAction)showIntroWindow:(id)sender;
+- (IBAction)showLibraryPicker:(id)sender;
 - (IBAction)showAboutWindow:(id)sender;
 - (IBAction)leaveAReview:(id)sender;
 - (IBAction)helpPressed:(id)sender;
-- (IBAction)chooseFolder:(id)sender;
 - (IBAction)rescanPhotosPressed:(id)sender;
 - (IBAction)importPhotosPressed:(id)sender;
 - (IBAction)purchaseOnlinePressed:(id)sender;
@@ -46,7 +45,7 @@
 @property (nonatomic, strong) IBOutlet NSMenuItem * progressItem;
 // for MASPreferences class:
 @property (nonatomic, strong) MainWindowController *mainWindowController;
-@property (nonatomic, strong) NSWindowController * introWindow;
+@property (nonatomic, strong) NSWindowController * libraryPickerWindow;
 
 @property (nonatomic, strong) NSWindowController *preferencesWindowController;
 @property (nonatomic) NSInteger focusedAdvancedControlIndex;

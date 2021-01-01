@@ -96,7 +96,6 @@ NSString * aDefaultDropBoxPhotosDirectory(void);
 
 -(BOOL)canAccessObservedDirectories;
 
-
 -(BOOL)userChooseFolderDialog;
 
 -(void)rescanFiles;

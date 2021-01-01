@@ -109,7 +109,7 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
 
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kAppFirstRun])
     {
-        [self showIntroWindow:self];
+        [self showLibraryPicker:self];
 
     } else {
         
@@ -179,16 +179,13 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
 }
 
 #pragma mark - Menu Items
-// -------------------------------------------------------------------------------
-//	showIntroWindow:sender
-// -------------------------------------------------------------------------------
-- (IBAction)showIntroWindow:(id)sender
+- (IBAction)showLibraryPicker:(id)sender
 {
-    if (self.introWindow == nil)
+    if (self.libraryPickerWindow == nil)
     {
-		self.introWindow = [LibraryPickerObjCBridge makeLibraryPicker];
+		self.libraryPickerWindow = [LibraryPickerObjCBridge makeLibraryPicker];
     }
-    [self.introWindow showWindow:self];
+    [self.libraryPickerWindow showWindow:self];
 }
 
 - (IBAction)showAboutWindow:(id)sender
@@ -215,14 +212,6 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
 {
     NSURL * url = [NSURL URLWithString:kFeatureRequestUrl];
     [[NSWorkspace sharedWorkspace] openURL:url];
-}
-
-- (IBAction)chooseFolder:(id)sender
-{
-    if([[PIXFileParser sharedFileParser] userChooseFolderDialog])
-    {
-        [self showMainWindow:nil];
-    }
 }
 
 - (IBAction)rescanPhotosPressed:(id)sender

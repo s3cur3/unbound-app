@@ -82,7 +82,7 @@
                             <menuItem title="Change Main Photos Folder" id="624">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="chooseFolder:" target="494" id="626"/>
+                                    <action selector="showLibraryPicker:" target="494" id="626"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Rescan Photos Folder" keyEquivalent="r" id="634">
