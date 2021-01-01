@@ -79,7 +79,7 @@
                             <menuItem isSeparatorItem="YES" id="627">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Change Main Photos Folder" id="624">
+                            <menuItem title="Change Main Photos Folder(s)" id="624">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="showLibraryPicker:" target="494" id="626"/>

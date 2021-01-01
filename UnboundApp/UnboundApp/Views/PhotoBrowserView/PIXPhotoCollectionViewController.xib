@@ -72,7 +72,7 @@
                         </textField>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9oX-k4-h5Y">
                             <rect key="frame" x="156" y="93" width="200" height="23"/>
-                            <buttonCell key="cell" type="roundTextured" title="Change Main Photos Folder" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jRT-wP-ba9">
+                            <buttonCell key="cell" type="roundTextured" title="Change Main Photos Folder(s)" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jRT-wP-ba9">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" size="12" name="Helvetica"/>
                             </buttonCell>
