@@ -61,7 +61,8 @@ static Preferences * instance = nil;
     
     [defaults setValue:[NSNumber numberWithInteger:PIXPhotoSortOldToNew] forKey:@"PIXPhotoSort"];
     [defaults setValue:[NSNumber numberWithInteger:PIXAlbumSortAtoZ] forKey:@"PIXAlbumSort"];
-    
+	
+	[[NSUserDefaults standardUserDefaults] setFloat:300 forKey:@"albumSideBarToggleWidth"];
 
 	// last step : register the default parameters
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
