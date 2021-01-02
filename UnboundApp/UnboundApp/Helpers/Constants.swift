@@ -8,3 +8,4 @@ import Foundation
 let prefDefaultEditorPath = "defaultEditorPath"
 let prefDefaultEditorName = "defaultEditorName"
 let prefLaunchCount = "launchCount"
+let prefObservedDirectories = "PIX_ObservedDirectoriesKey"

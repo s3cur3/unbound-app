@@ -49,6 +49,7 @@ NSString * aDefaultDropBoxPhotosDirectory(void);
  */
 +(PIXFileParser *)sharedFileParser;
 
+-(id)init;
 
 -(void)startObserving;
 
@@ -84,8 +85,6 @@ NSString * aDefaultDropBoxPhotosDirectory(void);
 -(NSURL *) defaultDBFolder;
 -(NSURL *) defaultDBCameraUploadsFolder;
 
--(void)setObservedURLs:(NSArray *)direcoryURLs;
-
 -(NSArray *)fetchAlbumsWithPaths:(NSArray *)paths;
 -(NSArray *)fetchPhotosWithPaths:(NSArray *)paths;
 
@@ -94,9 +93,8 @@ NSString * aDefaultDropBoxPhotosDirectory(void);
 -(void)incrementWorking;
 -(void)decrementWorking;
 
+-(void)observedDirectoriesChanged;
 -(BOOL)canAccessObservedDirectories;
-
--(BOOL)userChooseFolderDialog;
 
 -(void)rescanFiles;
 

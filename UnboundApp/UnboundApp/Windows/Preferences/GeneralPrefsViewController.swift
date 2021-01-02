@@ -87,7 +87,8 @@ class GeneralPrefsViewController: NSViewController, MASPreferencesViewController
     // MARK: - IBActions
 
     @IBAction func chooseFolder(sender _: NSButton) {
-        PIXFileParser.shared().userChooseFolderDialog()
+        #warning("Nuke this")
+        // PIXFileParser.shared().userChooseFolderDialog()
         updateFolderField()
     }
 

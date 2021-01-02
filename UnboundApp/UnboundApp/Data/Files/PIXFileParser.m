@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Pixite Apps LLC. All rights reserved.
 //
 
+#import "Unbound-Swift.h"
 #import "PIXFileParser.h"
 #import "PIXFileManager.h"
 #import "PIXAppDelegate.h"
@@ -128,6 +129,19 @@ NSString * aDefaultDropBoxPhotosDirectory(void)
 }
 
 
+-(id)init
+{
+	self = [super init];
+	if(self == nil)
+		return nil;
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(observedDirectoriesChanged)
+                                                 name:kAppObservedDirectoriesChanged
+                                               object:nil];
+	return self;
+}
+
 /*
  * dictionaryForURL will check if a file is an image or unbound file. If it is it will 
  * create the correct dictionary for that object for parsing later in the parseFiles 
@@ -180,9 +194,7 @@ static NSDictionary * dictionaryForURL(NSURL * url)
 
         
         return info;
-        
     }
-    
     else
     {
         NSNumber * isDirectoryValue;
@@ -215,6 +227,43 @@ static NSDictionary * dictionaryForURL(NSURL * url)
 }
 
 #pragma mark - File System Change Oberver Methods
+
+-(void)observedDirectoriesChanged
+{
+    NSArray<NSURL *> * latest = [LibraryDirectoriesObjCBridge libraryUrlsFromPrefs];
+    NSArray<NSURL *> * added = [LibraryDirectoriesObjCBridge diffNewlyAddedWithLatestPrefs:latest previous:_observedDirectories];
+    NSArray<NSURL *> * dropped = [LibraryDirectoriesObjCBridge diffNewlyRemovedWithLatestPrefs:latest previous:_observedDirectories];
+    _observedDirectories = latest;
+
+    // Stop observing anything we no longer need
+    for(NSURL * url in dropped) {
+        [url stopAccessingSecurityScopedResource];
+        [url removeDirectoryObserver:self];
+    }
+    [self.loadingAlbumsDict removeAllObjects];
+
+    // if sandbox scoped urls empty, set to nil?
+    [self setSandboxScopeURLs:latest];
+
+    if([dropped count]) {
+        // TODO: Find a better way to do this...
+        [[PIXAppDelegate sharedAppDelegate] clearDatabase];
+    }
+    [self scanFullDirectory];
+
+    for(NSURL * pathURL in self.observedDirectories)
+    {
+        NSString * tokenKeyString = [NSString stringWithFormat:@"resumeToken-%@", pathURL.path];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:tokenKeyString];
+    }
+
+    [self startObserving];
+
+    if([added count] > 0) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDeepScanIncompleteKey];
+    }
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kAppFirstRun];
+}
 
 -(BOOL)canAccessObservedDirectories
 {
@@ -1412,91 +1461,12 @@ static NSDictionary * dictionaryForURL(NSURL * url)
 
 -(NSArray<NSURL *> *) observedDirectories
 {
-    if (_observedDirectories==nil) {
-        
-        // pull the observed directories from the NSUserDefaults
-        
-        NSArray * bookmarkArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"PIX_ObservedDirectoriesKey"];
-        
-        
-        // if we have not observed directories in the settings then we need the user to pick some...
-        if([bookmarkArray count] == 0)
-        {
-            _observedDirectories = nil;
-        }
-        
-        // otherwise loop through and create NSUrls from the strings
-        else
-        {
-            NSMutableArray<NSURL *> * urlArray = [NSMutableArray new];
-            
-            for(NSData * bookmark in bookmarkArray)
-            {
-                if([bookmark isKindOfClass:[NSData class]])
-                {
-                    BOOL stale = NO;
-                    NSError * error = nil;
-                    NSURL * url = [NSURL URLByResolvingBookmarkData:bookmark
-                                                            options:0 // these arent security scoped. thats what sandboxScopeURLs are for
-                                                      relativeToURL:nil
-                                                bookmarkDataIsStale:&stale
-                                                              error:&error];
-                    
-                    if(stale)
-                    {
-                        NSLog(@"Error creating url from saved bookmark. Bookmark is stale.");
-                    }
-                    
-                    if(url && !error && !stale)
-                    {
-                        [urlArray addObject:url];
-                    }
-                }
-            }
-            
-            _observedDirectories = urlArray;
-            return _observedDirectories;
-        }
+    if(_observedDirectories == nil) {
+        NSArray<NSURL *> * urls = [LibraryDirectoriesObjCBridge libraryUrlsFromPrefs];
+        _observedDirectories = [urls count] ? urls : nil;
     }
-    
     return _observedDirectories;
 }
-
--(void)setObservedURLs:(NSArray *)direcoryURLs
-{
-    NSMutableArray * pathArray = [NSMutableArray new];
-    
-    for(NSURL * url in direcoryURLs)
-    {
-        
-        BOOL isDir = NO;
-        if ([[NSFileManager defaultManager] fileExistsAtPath:url.path isDirectory:&isDir] && isDir) {
-            
-            NSError * error = nil;
-            NSData * bookMarkData =  [url bookmarkDataWithOptions:0 // these arent security scoped. thats what sandboxScopeURLs are for
-                                   includingResourceValuesForKeys:nil
-                                                    relativeToURL:nil
-                                                            error:&error];
-            
-            if(bookMarkData && error == nil)
-            {
-                [pathArray addObject:bookMarkData];
-            }
-            
-            else
-            {
-                NSLog(@"Error creating security scoped bookmark: %@", error);
-            }
-        } else {
-            DLog(@"Can't observe file URL, either it doesn't exist or is not a directory : %@", url);
-        }
-        
-    }
-    
-    [[NSUserDefaults standardUserDefaults] setObject:pathArray forKey:@"PIX_ObservedDirectoriesKey"];
-    self.sandboxScopeURLs = nil;
-}
-
 
 // we need these to be seperate from observedURLS because if the user chooses the dropbox subfolders option the security scoped url doesn't pass through to subfolders
 -(NSArray *) sandboxScopeURLs
@@ -1563,10 +1533,8 @@ static NSDictionary * dictionaryForURL(NSURL * url)
 -(void)setSandboxScopeURLs:(NSArray *)sandboxScopeURLs
 {
     NSMutableArray * bookmarkArray = [NSMutableArray new];
-    
     for(NSURL * url in sandboxScopeURLs)
     {
-        
         [url startAccessingSecurityScopedResource];
         
         BOOL isDir = NO;
@@ -1681,107 +1649,6 @@ static NSDictionary * dictionaryForURL(NSURL * url)
         [volumeInfos addObject:aVolumeInfoDict];
     }
     return volumeInfos;
-}
-
--(BOOL)checWriteAccess:(NSURL *)filePathURL
-{
-    NSString *filePath = filePathURL.path;
-    if (access([filePath UTF8String], W_OK) != 0) {
-        DLog(@"No write to file permissions on the new root folder : %@", filePathURL);
-        return NO;
-    }
-    return YES;
-    
-}
-
--(BOOL)userChooseFolderDialog
-{
-    NSOpenPanel* openPanel = [NSOpenPanel openPanel];
-    [openPanel setAllowsMultipleSelection:NO];
-    [openPanel setCanChooseDirectories:YES];
-    [openPanel setCanChooseFiles:NO];
-    [openPanel setCanCreateDirectories:YES];
-    //[openPanel setDirectoryURL:[NSURL fileURLWithPath:@"~/"]];
-    
-    NSInteger result = [openPanel runModal];
-    if(result == NSModalResponseOK && [[openPanel URLs] count] == 1)
-    {
-        NSURL *selectedURL = [[openPanel URLs] lastObject];
-        if (![self checWriteAccess:selectedURL]) {
-#ifdef DEBUG
-            [self mountedVolumesInfo];
-#endif
-            NSString *warningMessage = [NSString stringWithFormat:@"The root folder you selected is read-only which may prevent some app features from functioning properly. Continue with this folder anyway?"];
-            if(cancellableAlert(@"Read & Write Permissions Are Required", warningMessage) == modal_response_cancel) {
-                //If user cancels go back to the preferenes view without making a change
-                return NO;
-            }
-        }
-        
-        NSArray * urls = @[selectedURL];
-        [selectedURL startAccessingSecurityScopedResource];
-        
-        // Check if the user chose a dropbox folder where we should only use the Photos and Camera Uploads subfolders
-        if([[selectedURL lastPathComponent] isEqualToString:@"Dropbox"])
-        {
-            NSArray * dropboxURLS = @[[selectedURL URLByAppendingPathComponent:@"Photos"],
-                                      [selectedURL URLByAppendingPathComponent:@"Camera Uploads"]];
-            
-            BOOL urlsExist = YES;
-            for(NSURL * aURL in dropboxURLS)
-            {
-                BOOL isDir = NO;
-                if (![[NSFileManager defaultManager] fileExistsAtPath:aURL.path isDirectory:&isDir] || !isDir)
-                {
-                    urlsExist = NO;
-                }
-            }
-
-            // if all the urls are good, ask the user if we should use the subfolders
-            if(urlsExist)
-            {
-				NSAlert * alert = [[NSAlert alloc] init];
-				alert.messageText = @"Use Photos and Camera Uploads Folder?";
-				alert.informativeText = [NSString stringWithFormat:@"You've selected your Dropbox folder for your photos. Would you like Unbound to scan just the Photos and Camera Uploads subfolders? This is a common usage."];
-				[alert addButtonWithTitle:@"Use Just Photos & Camera Uploads"];
-				[alert addButtonWithTitle:@"Use Entire Dropbox"];
-				if([alert runModal] == NSAlertFirstButtonReturn)
-				{
-					urls = dropboxURLS;
-				}
-            }
-        }
-        
-        [[PIXAppDelegate sharedAppDelegate] showMainWindow:nil];
-        
-        // use this flag so the deep scan will restart if the app crashes half way through
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDeepScanIncompleteKey];
-        
-        [self stopObserving];
-        
-        [self setObservedURLs:urls];
-        [self setSandboxScopeURLs:@[selectedURL]]; // s
-        
-        [selectedURL stopAccessingSecurityScopedResource];
-        
-        [[PIXAppDelegate sharedAppDelegate] clearDatabase];
-        
-        [self scanFullDirectory];
-        
-        for(NSURL * pathURL in self.observedDirectories)
-        {
-            NSString *tokenKeyString = [NSString stringWithFormat:@"resumeToken-%@", pathURL.path];
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:tokenKeyString];
-        }
-        
-        [self startObserving];
-        
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kAppFirstRun];
-        
-        return YES;
-    }
-    
-    return NO;
 }
 
 -(void)rescanFiles

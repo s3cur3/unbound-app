@@ -39,6 +39,7 @@
 #define kAppDidNotExitCleanly @"appDidNotExitCleanly"
 #define kAppShowedCrashDialog @"appShowedCrashDialog"
 
+#define kAppObservedDirectoriesChanged @"observedDirectoriesChanged"
 #define kAppObservedDirectoryUnavailable @"observedDirectoryUnavailable"
 #define kAppObservedDirectoryUnavailableSupressAlert @"observedDirectoryUnavailableSupressAlert"
 #define kRootFolderUnavailableDetailMessage @"Cannot Access Your Photos Folder"

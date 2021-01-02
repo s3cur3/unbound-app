@@ -15,6 +15,12 @@
 		1D4A1E2B167D2A4D00C9A895 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4A1E2A167D2A4C00C9A895 /* Quartz.framework */; };
 		1DB2F84F167ABE87008AC0F7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DB2F84E167ABE87008AC0F7 /* Cocoa.framework */; };
 		1DB2F862167ABE87008AC0F7 /* PIXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2F861167ABE87008AC0F7 /* PIXAppDelegate.m */; };
+		2F64E3CE259FAF2200931A45 /* LibraryDirectories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F64E3CD259FAF2200931A45 /* LibraryDirectories.swift */; };
+		2F64E3CF259FAF2200931A45 /* LibraryDirectories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F64E3CD259FAF2200931A45 /* LibraryDirectories.swift */; };
+		2F64E3D125A00B7000931A45 /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F64E3D025A00B7000931A45 /* FileUtils.swift */; };
+		2F64E3D225A00B7000931A45 /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F64E3D025A00B7000931A45 /* FileUtils.swift */; };
+		2F64E3D425A00C4100931A45 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F64E3D325A00C4100931A45 /* Alerts.swift */; };
+		2F64E3D525A00C4100931A45 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F64E3D325A00C4100931A45 /* Alerts.swift */; };
 		2F670611257C7E5500487B31 /* PIXApplicationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F67060F257C7E5500487B31 /* PIXApplicationExtensions.m */; };
 		2F670612257C7E5500487B31 /* PIXApplicationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F67060F257C7E5500487B31 /* PIXApplicationExtensions.m */; };
 		2F6706332582B7E100487B31 /* PIXAboutWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD849574325C47243A590 /* PIXAboutWindowController.xib */; };
@@ -449,6 +455,9 @@
 		1DB2F853167ABE87008AC0F7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DB2F860167ABE87008AC0F7 /* PIXAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PIXAppDelegate.h; sourceTree = "<group>"; };
 		1DB2F861167ABE87008AC0F7 /* PIXAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PIXAppDelegate.m; sourceTree = "<group>"; };
+		2F64E3CD259FAF2200931A45 /* LibraryDirectories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryDirectories.swift; sourceTree = "<group>"; };
+		2F64E3D025A00B7000931A45 /* FileUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtils.swift; sourceTree = "<group>"; };
+		2F64E3D325A00C4100931A45 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		2F67060F257C7E5500487B31 /* PIXApplicationExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIXApplicationExtensions.m; path = Kevlar/PIXApplicationExtensions.m; sourceTree = "<group>"; };
 		2F670610257C7E5500487B31 /* PIXApplicationExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIXApplicationExtensions.h; path = Kevlar/PIXApplicationExtensions.h; sourceTree = "<group>"; };
 		2F6706372583111600487B31 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -1048,6 +1057,7 @@
 				458AD62BFA47F0D56A53A583 /* PIXFileManager.m */,
 				458ADFBE5E3326D375EAB428 /* PIXFileParser.m */,
 				458ADF7D4B1DC53CC98D436E /* ArchDirectoryObserver */,
+				2F64E3D025A00B7000931A45 /* FileUtils.swift */,
 			);
 			path = Files;
 			sourceTree = "<group>";
@@ -1267,6 +1277,7 @@
 				458AD2CBB6A3C616CE0F6982 /* Notification+Unbound.swift */,
 				2FC02C3E2482BEDD00408258 /* MathUtils.h */,
 				2FC02C3F2482C1DC00408258 /* MathUtils.c */,
+				2F64E3D325A00C4100931A45 /* Alerts.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1311,6 +1322,7 @@
 				458ADE86B70DA362B49D2476 /* PIXPhoto.h */,
 				458AD488AB617F0797FF5049 /* PIXDataModel.xcdatamodeld */,
 				2F7781DD2585AF5900C24525 /* LibraryDirectory.swift */,
+				2F64E3CD259FAF2200931A45 /* LibraryDirectories.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1771,6 +1783,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1DB2F862167ABE87008AC0F7 /* PIXAppDelegate.m in Sources */,
+				2F64E3D125A00B7000931A45 /* FileUtils.swift in Sources */,
 				1D4A1E00167BEAF300C9A895 /* PIXViewController.m in Sources */,
 				458ADB4C4EB29CEC6E271D7D /* PIXAboutWindowController.swift in Sources */,
 				458AD5A64C03540A01C7E839 /* PIXProgressWindowController.m in Sources */,
@@ -1826,6 +1839,7 @@
 				458AD157D58D09CCDCEA7088 /* PIXVideoViewController.m in Sources */,
 				458ADEFFCFC8EB27D8B971B8 /* PIXAlbum.m in Sources */,
 				458AD6004550C984953B0481 /* PIXPhoto.m in Sources */,
+				2F64E3CE259FAF2200931A45 /* LibraryDirectories.swift in Sources */,
 				458AD04678D2A1BE2EC5642D /* PIXDataModel.xcdatamodeld in Sources */,
 				458AD0BAA89DFD1CCF9DBECC /* PIXCollectionToolbar.m in Sources */,
 				458AD01FBD59225A8AD793B2 /* NSCollectionView+PIXSelection.m in Sources */,
@@ -1838,6 +1852,7 @@
 				458AD902BB7B5E83100EB491 /* MainWindowController.swift in Sources */,
 				2F7781DB2585AB5700C24525 /* LibraryPicker.swift in Sources */,
 				458ADBF01CCAA09C34846927 /* AppearancePrefsViewController.swift in Sources */,
+				2F64E3D425A00C4100931A45 /* Alerts.swift in Sources */,
 				458ADED197ED5AF95CF390CF /* PreferencesWindowController.swift in Sources */,
 				458AD560700838388CD47D32 /* GeneralPrefsViewController.swift in Sources */,
 				458ADA595F31A84CEB5CB5D1 /* NSEventExt.swift in Sources */,
@@ -1862,6 +1877,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C28605C17308566009A0B35 /* PIXAppDelegate.m in Sources */,
+				2F64E3D225A00B7000931A45 /* FileUtils.swift in Sources */,
 				8C28606017308566009A0B35 /* PIXViewController.m in Sources */,
 				458AD90A3936F05DFB98A581 /* PIXAboutWindowController.swift in Sources */,
 				458ADD1104108B91EF3C347B /* PIXProgressWindowController.m in Sources */,
@@ -1917,6 +1933,7 @@
 				458ADFEF169BA3EA6E3F72B2 /* PIXVideoViewController.m in Sources */,
 				458AD9029029B61965654D12 /* PIXAlbum.m in Sources */,
 				458AD6F233473D8441CA9006 /* PIXPhoto.m in Sources */,
+				2F64E3CF259FAF2200931A45 /* LibraryDirectories.swift in Sources */,
 				458AD64DEAB0920DB18F855C /* PIXDataModel.xcdatamodeld in Sources */,
 				458AD5A5BACB12ED72838495 /* PIXCollectionToolbar.m in Sources */,
 				2F7781E92586B30600C24525 /* LibraryPickerObjCBridge.swift in Sources */,
@@ -1929,6 +1946,7 @@
 				2F7781DC2585AE5700C24525 /* LibraryPicker.swift in Sources */,
 				458AD4C2F6AEB03E7D0D5642 /* MainWindowController.swift in Sources */,
 				458AD082EB9DB013717272CD /* AppearancePrefsViewController.swift in Sources */,
+				2F64E3D525A00C4100931A45 /* Alerts.swift in Sources */,
 				458ADE5749D884460DE19968 /* PreferencesWindowController.swift in Sources */,
 				458ADE36AF81BC54C90A4BA2 /* GeneralPrefsViewController.swift in Sources */,
 				458AD26D858FE945231E9234 /* NSEventExt.swift in Sources */,

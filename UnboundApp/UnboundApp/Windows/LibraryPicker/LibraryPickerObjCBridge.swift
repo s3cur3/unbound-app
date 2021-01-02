@@ -13,7 +13,6 @@ class SwiftUIWindowController<RootView: View>: NSWindowController {
 
 @objc class LibraryPickerObjCBridge: NSView {
     @objc class func makeLibraryPicker() -> NSWindowController {
-        // TODO: pull dirs from prefs
-        SwiftUIWindowController(rootView: LibraryPicker(), title: "Select Main Photo Folder(s)")
+        SwiftUIWindowController(rootView: LibraryPicker(library: LibraryDirectories()), title: "Select Main Photo Folder(s)")
     }
 }
