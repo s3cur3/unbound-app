@@ -44,27 +44,6 @@ struct LibraryDirectory: Codable, Equatable, Identifiable {
                     }
                 }
             }
-
-            // App delegate showMainWindow?
-            // fileparser stopObserving
-            // fileparser setSandboxScopeURLs
-            NSLog("TODO: File parser massaging?")
-
-            openPanel.url!.stopAccessingSecurityScopedResource()
-
-            // [[PIXAppDelegate sharedAppDelegate] clearDatabase]?
-            // fileparser scanFullDirectory
-
-            // for(NSURL * pathURL in self.observedDirectories)
-            // {
-            //     NSString *tokenKeyString = [NSString stringWithFormat:@"resumeToken-%@", pathURL.path];
-            //     [[NSUserDefaults standardUserDefaults] removeObjectForKey:tokenKeyString];
-            // }
-            //
-            // [self startObserving];
-            //
-            // [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kAppFirstRun];
-
             return out
         } else {
             return []

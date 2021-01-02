@@ -21,6 +21,10 @@
 		2F64E3D225A00B7000931A45 /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F64E3D025A00B7000931A45 /* FileUtils.swift */; };
 		2F64E3D425A00C4100931A45 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F64E3D325A00C4100931A45 /* Alerts.swift */; };
 		2F64E3D525A00C4100931A45 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F64E3D325A00C4100931A45 /* Alerts.swift */; };
+		2F64E3F225A10DFB00931A45 /* PathControlDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F64E3E625A10DFB00931A45 /* PathControlDelegate.swift */; };
+		2F64E3F325A10DFB00931A45 /* PathControlDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F64E3E625A10DFB00931A45 /* PathControlDelegate.swift */; };
+		2F64E3F825A10DFB00931A45 /* PathControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F64E3E925A10DFB00931A45 /* PathControl.swift */; };
+		2F64E3F925A10DFB00931A45 /* PathControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F64E3E925A10DFB00931A45 /* PathControl.swift */; };
 		2F670611257C7E5500487B31 /* PIXApplicationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F67060F257C7E5500487B31 /* PIXApplicationExtensions.m */; };
 		2F670612257C7E5500487B31 /* PIXApplicationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F67060F257C7E5500487B31 /* PIXApplicationExtensions.m */; };
 		2F6706332582B7E100487B31 /* PIXAboutWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458AD849574325C47243A590 /* PIXAboutWindowController.xib */; };
@@ -458,6 +462,8 @@
 		2F64E3CD259FAF2200931A45 /* LibraryDirectories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryDirectories.swift; sourceTree = "<group>"; };
 		2F64E3D025A00B7000931A45 /* FileUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtils.swift; sourceTree = "<group>"; };
 		2F64E3D325A00C4100931A45 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
+		2F64E3E625A10DFB00931A45 /* PathControlDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathControlDelegate.swift; sourceTree = "<group>"; };
+		2F64E3E925A10DFB00931A45 /* PathControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathControl.swift; sourceTree = "<group>"; };
 		2F67060F257C7E5500487B31 /* PIXApplicationExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PIXApplicationExtensions.m; path = Kevlar/PIXApplicationExtensions.m; sourceTree = "<group>"; };
 		2F670610257C7E5500487B31 /* PIXApplicationExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIXApplicationExtensions.h; path = Kevlar/PIXApplicationExtensions.h; sourceTree = "<group>"; };
 		2F6706372583111600487B31 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -891,6 +897,15 @@
 			name = 3rdParty;
 			sourceTree = "<group>";
 		};
+		2F64E3E325A10DFB00931A45 /* PathControl */ = {
+			isa = PBXGroup;
+			children = (
+				2F64E3E625A10DFB00931A45 /* PathControlDelegate.swift */,
+				2F64E3E925A10DFB00931A45 /* PathControl.swift */,
+			);
+			path = PathControl;
+			sourceTree = "<group>";
+		};
 		438CEA45569AE30A178EA3A2 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1215,6 +1230,7 @@
 			children = (
 				2F7781DA2585AB5700C24525 /* LibraryPicker.swift */,
 				2F7781E22585B48E00C24525 /* LibraryPickerObjCBridge.swift */,
+				2F64E3E325A10DFB00931A45 /* PathControl */,
 			);
 			path = LibraryPicker;
 			sourceTree = "<group>";
@@ -1809,6 +1825,7 @@
 				458ADFA9CE2B8264C131C64D /* NSBezierPath+pathUtilities.m in Sources */,
 				458ADBE50AA83CF3152E2A12 /* PIXPhotoCollectionViewController.m in Sources */,
 				458AD1E2489A8C932781A5E7 /* PIXSelectionLayer.m in Sources */,
+				2F64E3F225A10DFB00931A45 /* PathControlDelegate.swift in Sources */,
 				458ADA1BC43ECFE3B2BC08E5 /* PIXCollectionViewItem.m in Sources */,
 				458ADB58BC71CB81ABC4135A /* PIXFileTextField.m in Sources */,
 				458AD9C47AF96748D782283D /* PIXCollectionViewController.m in Sources */,
@@ -1823,6 +1840,7 @@
 				458AD3B923225F0E1F1568CE /* PIXSidebarTableCellView.m in Sources */,
 				458AD1E0426A34D8B2060A96 /* PIXOutlineView.m in Sources */,
 				458ADAB7419CBF7965756F7D /* PIXSplitViewController.m in Sources */,
+				2F64E3F825A10DFB00931A45 /* PathControl.swift in Sources */,
 				458AD09AEB93AA1870A754E8 /* AutoSizingImageView.m in Sources */,
 				458AD9EF93ADEB195EFCA37B /* AutoSizingVideoView.m in Sources */,
 				458ADD071379BA3797E3D940 /* PIXImageViewController.m in Sources */,
@@ -1903,6 +1921,7 @@
 				458AD3594B74C3E86859DBAE /* NSBezierPath+pathUtilities.m in Sources */,
 				458AD4A52CA45C433D533E97 /* PIXPhotoCollectionViewController.m in Sources */,
 				458AD5197A400018C1D6A70F /* PIXSelectionLayer.m in Sources */,
+				2F64E3F325A10DFB00931A45 /* PathControlDelegate.swift in Sources */,
 				458ADD0AAFB4BECFF889329E /* PIXCollectionViewItem.m in Sources */,
 				458AD631585A61819691D37C /* PIXFileTextField.m in Sources */,
 				458AD3B6ED19827F561573D1 /* PIXCollectionViewController.m in Sources */,
@@ -1917,6 +1936,7 @@
 				458ADAEBF3385C1847B3B393 /* PIXOutlineView.m in Sources */,
 				458AD46B3B89B95634EF4C88 /* PIXSplitViewController.m in Sources */,
 				458ADE340B6D4200DCE7369C /* AutoSizingImageView.m in Sources */,
+				2F64E3F925A10DFB00931A45 /* PathControl.swift in Sources */,
 				458AD5FFCAC344919D0FF505 /* AutoSizingVideoView.m in Sources */,
 				458AD84C0FEB7495643AB893 /* PIXImageViewController.m in Sources */,
 				2FC02C412482C1DC00408258 /* MathUtils.c in Sources */,

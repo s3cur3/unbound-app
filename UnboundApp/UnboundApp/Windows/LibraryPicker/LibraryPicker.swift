@@ -13,14 +13,9 @@ struct LibraryPicker: View {
             List {
                 ForEach(library.directories) { dir in
                     HStack(alignment: .center) {
-                        Button(action: {
-                            NSWorkspace.shared.selectFile(nil, inFileViewerRootedAtPath: dir.path.path)
-                        }, label: {
-                            Text(LibraryPicker.formatPath(dir))
-                                .frame(width: 280, alignment: .leading)
-                                .lineLimit(1)
-                                .truncationMode(.head)
-                        }).buttonStyle(LinkButtonStyle())
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            PathControl(url: dir.path)
+                        }
 
                         // TODO: Count of images we've found here?
                         Spacer()
@@ -52,7 +47,7 @@ struct LibraryPicker: View {
 
 struct LibraryPickerPreview: PreviewProvider {
     static var previews: some View {
-        let previewDirs = ["/Users/tyler/Dropbox", "/Users/tyler/Desktop", "/Users/tyler/Pictures", "/Volumes/Synology", "/Volumes/Synology2", "~/Lorem/Ipsum/Dolar/sit-amet/consectetur-adipiscing-elit", "~/Documents"]
+        let previewDirs = ["/Users/tyler/Dropbox", "~/Lorem/Ipsum/Dolar/sit-amet/consectetur-adipiscing-elit", "/Users/tyler/Desktop", "/Users/tyler/Pictures", "/Volumes/Synology", "/Volumes/Synology2", "~/Documents"]
             .map { LibraryDirectory(withUrl: URL(string: $0)!) }
         LibraryPicker(library: LibraryDirectories(withDirectories: previewDirs))
             .frame(width: 400.0, height: 240)
