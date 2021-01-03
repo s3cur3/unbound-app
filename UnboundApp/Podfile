@@ -8,4 +8,7 @@ target 'Unbound' do
 
   target 'Unbound Trial' do
   end
+
+  target 'UnitTests' do
+  end
 end

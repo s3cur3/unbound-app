@@ -33,7 +33,7 @@ struct LibraryPicker: View {
                 Spacer()
 
                 Button("Add Directory to Scan") {
-                    library.add(LibraryDirectory.chooseFromSystemDialog())
+                    library.add(LibraryDirectory.chooseFromSystemDialog(withExisting: LibraryDirectories.fromPrefs()))
                 }
                 .padding(EdgeInsets(top: 0, leading: 8, bottom: 8, trailing: 8))
             }

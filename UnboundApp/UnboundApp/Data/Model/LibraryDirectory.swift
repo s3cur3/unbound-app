@@ -7,7 +7,7 @@ struct LibraryDirectory: Codable, Equatable, Identifiable {
         id = url.absoluteString
     }
 
-    static func chooseFromSystemDialog() -> [LibraryDirectory] {
+    static func chooseFromSystemDialog(withExisting: [LibraryDirectory]) -> [LibraryDirectory] {
         let openPanel = NSOpenPanel()
         openPanel.allowsMultipleSelection = false
         openPanel.canChooseDirectories = true
@@ -15,24 +15,43 @@ struct LibraryDirectory: Codable, Equatable, Identifiable {
         openPanel.canCreateDirectories = true
         openPanel.title = "Select a Directory to Scan for Photos"
 
-        if openPanel.runModal() == .OK, openPanel.url != nil {
-            guard hasWriteAccess(openPanel.url!) || LibraryDirectory.userDGAFAboutWriteAccess()
+        if openPanel.runModal() == .OK, let url = openPanel.url {
+            guard hasWriteAccess(url) || LibraryDirectory.userDGAFAboutWriteAccess()
             else {
                 return []
             }
 
-            guard openPanel.url!.startAccessingSecurityScopedResource() else {
+            guard url.startAccessingSecurityScopedResource() else {
                 modalAlert(title: "Could Not Access Folder",
                            body: "Your Mac’s security settings prevented Unbound from accessing the folder you chose.")
                 return []
             }
 
-            var out = [LibraryDirectory(withUrl: openPanel.url!)]
+            // Reject if we already have this exact directory
+            guard !withExisting.contains(LibraryDirectory(withUrl: url)) else {
+                modalAlert(title: "Already Scanning Directory",
+                           body: "Unbound is already set to scan \(url.path).")
+                return []
+            }
+
+            // Reject if the selected URL is a subdirectory of an existing one
+            if let parent = withExisting.first(where: { pathHasAncestor(maybeChild: url, maybeAncestor: $0.path) }) {
+                modalAlert(title: "Already Scanning Directory",
+                           body: "Unbound is already set to scan \(parent.path.path), which includes \(url.path).")
+                return []
+            }
+
+            // If any existing directory is a subdirectory the new one
+            if let child = withExisting.first(where: { pathHasAncestor(maybeChild: $0.path, maybeAncestor: url) }) {
+                modalAlert(title: "Cannot Add Parent Directory",
+                           body: "Unbound is already set to scan \(child.path.path). Remove that folder first before adding its parent directory \(url.path).")
+                return []
+            }
 
             // Check if the user chose a dropbox folder where we should only use the Photos and Camera Uploads subfolders
-            if openPanel.url!.lastPathComponent == "Dropbox" {
-                let dropboxUrls = [openPanel.url!.appendingPathComponent("Photos"),
-                                   openPanel.url!.appendingPathComponent("Camera Uploads")]
+            if url.lastPathComponent == "Dropbox" {
+                let dropboxUrls = [url.appendingPathComponent("Photos"),
+                                   url.appendingPathComponent("Camera Uploads")]
                 if dropboxUrls.allSatisfy(directoryExistsAtPath) {
                     let alert = NSAlert()
                     alert.messageText = "Use Photos and Camera Uploads Folder?"
@@ -40,11 +59,11 @@ struct LibraryDirectory: Codable, Equatable, Identifiable {
                     alert.addButton(withTitle: "Use Just Photos & Camera Uploads")
                     alert.addButton(withTitle: "Use Entire Dropbox")
                     if alert.runModal() == .alertFirstButtonReturn {
-                        out = dropboxUrls.map { LibraryDirectory(withUrl: $0) }
+                        return dropboxUrls.map { LibraryDirectory(withUrl: $0) }
                     }
                 }
             }
-            return out
+            return [LibraryDirectory(withUrl: url)]
         } else {
             return []
         }
