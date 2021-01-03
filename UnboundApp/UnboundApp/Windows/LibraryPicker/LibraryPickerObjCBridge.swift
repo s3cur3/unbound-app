@@ -11,8 +11,8 @@ class SwiftUIWindowController<RootView: View>: NSWindowController {
     }
 }
 
-@objc class LibraryPickerObjCBridge: NSView {
-    @objc class func makeLibraryPicker() -> NSWindowController {
-        SwiftUIWindowController(rootView: LibraryPicker(library: LibraryDirectories()), title: "Select Main Photo Folder(s)")
+@objc class LibraryPickerObjCBridge: NSObject {
+    @objc class func makeLibraryPickerWindow() -> NSWindowController {
+        SwiftUIWindowController(rootView: LibraryPickerWindow(library: LibraryDirectories()), title: "Select Main Photo Folder(s)")
     }
 }

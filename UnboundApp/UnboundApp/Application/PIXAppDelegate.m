@@ -183,7 +183,7 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
 {
     if (self.libraryPickerWindow == nil)
     {
-		self.libraryPickerWindow = [LibraryPickerObjCBridge makeLibraryPicker];
+		self.libraryPickerWindow = [LibraryPickerObjCBridge makeLibraryPickerWindow];
     }
     [self.libraryPickerWindow showWindow:self];
 }

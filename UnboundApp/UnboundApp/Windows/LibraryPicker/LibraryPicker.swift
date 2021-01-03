@@ -6,11 +6,7 @@ struct LibraryPicker: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Library Directories to Scan for Photos")
-                .font(.headline)
-                .padding(EdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 8))
-
-            List {
+            ScrollView(.vertical) {
                 ForEach(library.directories) { dir in
                     HStack(alignment: .center) {
                         ScrollView(.horizontal, showsIndicators: false) {
@@ -24,8 +20,8 @@ struct LibraryPicker: View {
                             library.remove(dir)
                         }
                         .buttonStyle(BorderedButtonStyle())
+						.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 4))
                     }
-                    .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
                 }.moveDisabled(true)
             }
 
@@ -35,8 +31,7 @@ struct LibraryPicker: View {
                 Button("Add Directory to Scan") {
                     library.add(LibraryDirectory.chooseFromSystemDialog(withExisting: LibraryDirectories.fromPrefs()))
                 }
-                .padding(EdgeInsets(top: 0, leading: 8, bottom: 8, trailing: 8))
-            }
+            }.padding(EdgeInsets(top: 8, leading: 0, bottom: 0, trailing: 0))
         }
     }
 
@@ -45,11 +40,27 @@ struct LibraryPicker: View {
     }
 }
 
-struct LibraryPickerPreview: PreviewProvider {
+struct LibraryPickerWindow: View {
+    @ObservedObject var library: LibraryDirectories
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text("Photo Folder(s)")
+                .font(.headline)
+
+            Text("Unbound will scan these folders and all their sub-folders.")
+                .padding(EdgeInsets(top: 4, leading: 0, bottom: 8, trailing: 0))
+
+            LibraryPicker(library: library)
+        }.padding(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
+    }
+}
+
+struct LibraryPickerWindowPreview: PreviewProvider {
     static var previews: some View {
         let previewDirs = ["/Users/tyler/Dropbox", "~/Lorem/Ipsum/Dolar/sit-amet/consectetur-adipiscing-elit", "/Users/tyler/Desktop", "/Users/tyler/Pictures", "/Volumes/Synology", "/Volumes/Synology2", "~/Documents"]
             .map { LibraryDirectory(withUrl: URL(string: $0)!) }
-        LibraryPicker(library: LibraryDirectories(withDirectories: previewDirs))
+        LibraryPickerWindow(library: LibraryDirectories(withDirectories: previewDirs))
             .frame(width: 400.0, height: 240)
     }
 }
