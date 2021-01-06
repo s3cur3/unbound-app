@@ -3,6 +3,7 @@ import SwiftUI
 
 struct LibraryPicker: View {
     @ObservedObject var library: LibraryDirectories
+    var supportsRescan: Bool = true
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -20,16 +21,22 @@ struct LibraryPicker: View {
                             library.remove(dir)
                         }
                         .buttonStyle(BorderedButtonStyle())
-						.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 4))
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 4))
                     }
                 }.moveDisabled(true)
             }
 
             HStack {
-                Spacer()
-
                 Button("Add Directory to Scan") {
                     library.add(LibraryDirectory.chooseFromSystemDialog(withExisting: LibraryDirectories.fromPrefs()))
+                }
+
+                if supportsRescan {
+                    Spacer()
+
+                    Button("Rescan All") {
+                        PIXFileParser.shared().rescanFiles()
+                    }
                 }
             }.padding(EdgeInsets(top: 8, leading: 0, bottom: 0, trailing: 0))
         }
@@ -37,6 +44,22 @@ struct LibraryPicker: View {
 
     static func formatPath(_ dir: LibraryDirectory) -> String {
         dir.path.path
+    }
+}
+
+struct LibraryPickerForPrefs: View {
+    @ObservedObject var library = LibraryDirectories()
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text("Photo Folder(s)")
+                .font(.headline)
+
+            Text("Unbound will scan these folders and all their sub-folders.")
+                .padding(EdgeInsets(top: 2, leading: 0, bottom: 4, trailing: 0))
+
+            LibraryPicker(library: library, supportsRescan: true)
+        }
     }
 }
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,11 +14,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+            <rect key="frame" x="0.0" y="0.0" width="465" height="319"/>
             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
             <subviews>
                 <matrix focusRingType="none" verticalHuggingPriority="750" selectionByRect="NO" allowsEmptySelection="NO" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5n4-g9-5GD">
-                    <rect key="frame" x="123" y="123" width="110" height="129"/>
+                    <rect key="frame" x="123" y="170" width="110" height="129"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="110" id="9FF-5Z-k3z"/>
                         <constraint firstAttribute="height" constant="129" id="NJx-9l-EOO"/>
@@ -44,7 +44,7 @@
                     </connections>
                 </matrix>
                 <matrix focusRingType="none" verticalHuggingPriority="750" selectionByRect="NO" allowsEmptySelection="NO" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RNZ-ib-V8F">
-                    <rect key="frame" x="248" y="123" width="110" height="129"/>
+                    <rect key="frame" x="248" y="170" width="110" height="129"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="110" id="7aS-Gd-lVj"/>
                     </constraints>
@@ -69,7 +69,7 @@
                     </connections>
                 </matrix>
                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iLW-9I-q4O">
-                    <rect key="frame" x="180" y="61" width="202" height="26"/>
+                    <rect key="frame" x="180" y="108" width="202" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="Compact" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="bqL-5n-qBR" id="KQG-r3-qrw">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -89,7 +89,7 @@
                     </connections>
                 </popUpButton>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mba-tQ-Gef">
-                    <rect key="frame" x="98" y="67" width="78" height="17"/>
+                    <rect key="frame" x="98" y="114" width="78" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Photo Style:" id="xs4-fD-hu7">
                         <font key="font" metaFont="system"/>
@@ -98,7 +98,7 @@
                     </textFieldCell>
                 </textField>
                 <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="xcc-HA-vMk">
-                    <rect key="frame" x="68" y="103" width="345" height="5"/>
+                    <rect key="frame" x="68" y="150" width="345" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </box>
             </subviews>
@@ -115,9 +115,9 @@
         <userDefaultsController representsSharedInstance="YES" id="tdO-kq-TsS"/>
     </objects>
     <resources>
-        <image name="btn_theme_dark" width="100" height="95"/>
+        <image name="btn_theme_dark" width="99" height="94"/>
         <image name="btn_theme_dark_selected" width="100" height="95"/>
-        <image name="btn_theme_light" width="100" height="95"/>
+        <image name="btn_theme_light" width="99" height="94"/>
         <image name="btn_theme_light_selected" width="100" height="95"/>
     </resources>
 </document>

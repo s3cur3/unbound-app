@@ -5,14 +5,13 @@
 
 import CoreServices
 import Foundation
+import SwiftUI
 
 class GeneralPrefsViewController: NSViewController, MASPreferencesViewController {
     private var defaults = UserDefaults.standard
 
-    @IBOutlet var dbFolderButton: NSButton?
-    @IBOutlet var folderDisplay: NSPathControl?
-    @IBOutlet var workingSpinner: NSProgressIndicator?
     @IBOutlet var defaultEditorButton: NSPopUpButton?
+    @IBOutlet var libraryPickerView: NSView!
 
     private var editorApps: [AppInfo]?
 
@@ -24,17 +23,12 @@ class GeneralPrefsViewController: NSViewController, MASPreferencesViewController
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateFolderField()
         updateEditors()
-    }
 
-    private func updateFolderField() {
-        let urls = PIXFileParser.shared().observedDirectories
-        if urls == nil || urls!.isEmpty {
-            folderDisplay?.url = nil
-        } else {
-            folderDisplay?.url = urls![0]
-        }
+        let childView = NSHostingController(rootView: LibraryPickerForPrefs())
+        addChild(childView)
+        childView.view.frame = libraryPickerView.bounds
+        libraryPickerView.addSubview(childView.view)
     }
 
     private func updateEditors() {
@@ -85,16 +79,6 @@ class GeneralPrefsViewController: NSViewController, MASPreferencesViewController
     }
 
     // MARK: - IBActions
-
-    @IBAction func chooseFolder(sender _: NSButton) {
-        #warning("Nuke this")
-        // PIXFileParser.shared().userChooseFolderDialog()
-        updateFolderField()
-    }
-
-    @IBAction func reloadFiles(sender _: NSButton) {
-        PIXFileParser.shared().rescanFiles()
-    }
 
     @IBAction func setDefaultEditor(sender: NSPopUpButton) {
         guard let index = sender.selectedItem?.tag, let item = editorApps?[index] else {

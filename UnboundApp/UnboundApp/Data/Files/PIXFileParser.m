@@ -1656,7 +1656,6 @@ static NSDictionary * dictionaryForURL(NSURL * url)
     // use this flag so the deep scan will restart if the app crashes half way through
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDeepScanIncompleteKey];
     
-    //[[PIXAppDelegate sharedAppDelegate] clearDatabase];
     [[PIXFileParser sharedFileParser] scanFullDirectory];
     
     [[PIXFileParser sharedFileParser] stopObserving];
