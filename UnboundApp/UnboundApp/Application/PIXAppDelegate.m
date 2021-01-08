@@ -623,6 +623,7 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 
 - (void)clearDatabase
 {
+	[PIXFileParser.sharedFileParser cancelScans];
     [[[self mainWindowController] navigationViewController] popToRootViewController];
     
 	// This is kind of hairy.
@@ -661,6 +662,8 @@ NSString *const kFocusedAdvancedControlIndex = @"FocusedAdvancedControlIndex";
 	
     [self clearThumbSorageDirectory];
     
+	// Set this to true so that we'll display the "no directory selected"
+	[[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDeepScanIncompleteKey];
     [[NSNotificationCenter defaultCenter] postNotificationName:kUB_ALBUMS_LOADED_FROM_FILESYSTEM object:self userInfo:nil];
 }
 

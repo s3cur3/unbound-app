@@ -539,17 +539,15 @@ static NSDictionary * dictionaryForURL(NSURL * url)
 
 - (void)scanFullDirectory
 {
-    
     // force a new context to be used
     [self.parseContext rollback];
     
     // must do this at the begining of each new scan to reset context
     self.parseContext = nil;
-    
+	self.scansCancelledFlag = NO;
     [self incrementWorking];
-    
     self.fullScanProgress = 0.0;
-    
+
     // use this flag so the deep scan will restart if the app crashes half way through
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDeepScanIncompleteKey];
     
@@ -709,8 +707,6 @@ static NSDictionary * dictionaryForURL(NSURL * url)
         } andGroup:NULL];
         
         [self decrementWorking];
-        
-        
     });
 }
 
