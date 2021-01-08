@@ -28,7 +28,8 @@
 
 @property (strong) IBOutlet NSView * centerStatusView;
 @property (strong) IBOutlet NSTextField * centerStatusViewTextField;
-@property (strong) IBOutlet NSTextField * centerStatusViewSubTextField;
+@property (weak) IBOutlet NSButton * centerImportAlbumBtn;
+@property (weak) IBOutlet NSView * centerLibraryPicker;
 
 @property (strong) IBOutlet NSProgressIndicator * progressIndicator;
 

@@ -109,12 +109,8 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photosFinishedLoading:) name:SearchDidFinishNotification object:self.spotLightFetchController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminate:) name:NSApplicationWillTerminateNotification object:nil];
 
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kAppFirstRun]) {
-        [self showLibraryPicker:self];
-    } else {
-        [self startFileSystemLoading];
-        [self showMainWindow:self];
-    }
+	[self startFileSystemLoading];
+	[self showMainWindow:self];
 
     // show constraint debug info if debuging
 #ifdef DEBUG

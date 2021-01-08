@@ -4,10 +4,11 @@ import SwiftUI
 struct LibraryPicker: View {
     @ObservedObject var library: LibraryDirectories
     var supportsRescan: Bool = true
+    var topPadding: CGFloat = 0
 
     var body: some View {
         VStack(alignment: .leading) {
-            ScrollView(.vertical) {
+            List {
                 ForEach(library.directories) { dir in
                     HStack(alignment: .center) {
                         ScrollView(.horizontal, showsIndicators: false) {
@@ -21,7 +22,6 @@ struct LibraryPicker: View {
                             library.remove(dir)
                         }
                         .buttonStyle(BorderedButtonStyle())
-                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 4))
                     }
                 }.moveDisabled(true)
             }
@@ -31,7 +31,7 @@ struct LibraryPicker: View {
                     library.add(LibraryDirectory.chooseFromSystemDialog(withExisting: LibraryDirectories.fromPrefs()))
                 }
 
-                if supportsRescan {
+                if supportsRescan && !library.directories.isEmpty {
                     Spacer()
 
                     Button("Rescan All") {
@@ -39,7 +39,7 @@ struct LibraryPicker: View {
                     }
                 }
             }.padding(EdgeInsets(top: 8, leading: 0, bottom: 0, trailing: 0))
-        }
+        }.padding(EdgeInsets(top: topPadding, leading: 0, bottom: 0, trailing: 0))
     }
 
     static func formatPath(_ dir: LibraryDirectory) -> String {
@@ -52,8 +52,7 @@ struct LibraryPickerForPrefs: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Photo Folder(s)")
-                .font(.headline)
+            Text("Photo Folder(s)").font(.headline)
 
             Text("Unbound will scan these folders and all their sub-folders.")
                 .padding(EdgeInsets(top: 2, leading: 0, bottom: 4, trailing: 0))

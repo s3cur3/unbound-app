@@ -56,6 +56,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+	NSViewController * childLibPicker = [LibraryPickerObjCBridge makeLibraryPickerForFirstRunWithLib:PIXAppDelegate.sharedAppDelegate.libraryDirs];
+    [self addChildViewController:childLibPicker];
+    [childLibPicker.view setFrame:[self.centerLibraryPicker bounds]];
+    [self.centerLibraryPicker addSubview:childLibPicker.view];
 }
 
 - (void)awakeFromNib
@@ -410,27 +415,19 @@
 	}
 	self.collectionView.selectionIndexPaths = newSelection;
 
-    if([self.albums count] == 0 && ![[NSUserDefaults standardUserDefaults] boolForKey:kDeepScanIncompleteKey])
-    {
-        [self.centerStatusView setHidden:NO];
-        
-        NSArray * directoryURLs = [[PIXFileParser sharedFileParser] observedDirectories];
-        
-        NSString * rootFolderInfo = nil;
-        
-        if([directoryURLs count])
-        {
-            rootFolderInfo = [NSString stringWithFormat:@"Current Folder: %@", [(NSURL *)[directoryURLs objectAtIndex:0] path]];
-            [self.centerStatusViewSubTextField setStringValue:rootFolderInfo];
-        }
-        else
-        {
-            [self.centerStatusViewSubTextField setStringValue:@"No Current Folder"];
-        }
-    }
-    else
-    {
-        [self.centerStatusView setHidden:YES];
+	BOOL haveAnythingToShow = [self.albums count] > 0;
+	[self.centerStatusView setHidden:haveAnythingToShow];
+	if(!haveAnythingToShow) {
+		NSArray<NSURL *> * directoryURLs = [[PIXFileParser sharedFileParser] observedDirectories];
+		if(directoryURLs.count > 0) { // we're observing a directory, it's just totally empty
+			NSString * firstLibraryDir = [directoryURLs[0] path];
+            [self.centerStatusViewTextField setStringValue:@"Choose where you keep your photos, or copy into your existing folders"];
+			[self.centerImportAlbumBtn setStringValue:[NSString stringWithFormat:@"Copy Photos Into %@", firstLibraryDir]];
+			self.centerImportAlbumBtn.hidden = NO;
+		} else {
+			[self.centerStatusViewTextField setStringValue:@"Choose where you keep your photos"];
+			self.centerImportAlbumBtn.hidden = YES;
+		}
     }
 }
 

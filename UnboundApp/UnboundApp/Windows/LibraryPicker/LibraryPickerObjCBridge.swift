@@ -15,4 +15,9 @@ class SwiftUIWindowController<RootView: View>: NSWindowController {
     @objc class func makeLibraryPickerWindow(withLib: LibraryDirectoriesObjCBridge) -> NSWindowController {
         SwiftUIWindowController(rootView: LibraryPickerWindow(library: withLib.lib), title: "Select Main Photo Folder(s)")
     }
+
+    @objc class func makeLibraryPickerForFirstRun(withLib _: LibraryDirectoriesObjCBridge) -> NSViewController {
+        // TODO: the 16px top padding here is a horrifying hack to work around a SwiftUI bug where the top of our list is getting cut off
+        NSHostingController(rootView: LibraryPicker(library: PIXAppDelegate.shared()!.libraryDirs.lib, topPadding: 16))
+    }
 }
