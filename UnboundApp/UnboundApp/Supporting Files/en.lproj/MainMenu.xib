@@ -71,7 +71,7 @@
                 <menuItem title="File" id="608">
                     <menu key="submenu" title="File" id="609">
                         <items>
-                            <menuItem title="Import Photos" keyEquivalent="i" id="628">
+                            <menuItem title="Copy Photos into Library" keyEquivalent="i" id="628">
                                 <connections>
                                     <action selector="importPhotosPressed:" target="494" id="630"/>
                                 </connections>

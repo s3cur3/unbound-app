@@ -1131,41 +1131,32 @@ typedef NSUInteger PIXOverwriteStrategy;
 -(IBAction)importPhotosToAlbum:(PIXAlbum *)album allowDirectories:(BOOL)allowDirectories
 {
     NSOpenPanel * panel = [NSOpenPanel openPanel];
-    
-    
     [panel setCanChooseDirectories:allowDirectories];
     [panel setAllowsMultipleSelection:YES];
     
     // if we have an album to import photos into...    
-    if(album && ![album isReallyDeleted])
-    {
-        panel.prompt = @"Import";
-        
-        if(allowDirectories)
-        {
-            panel.message = @"Choose photo files or folders to import. Selecting folders will create new albums with the same name.";
-        }
-        
-        else
-        {
-            panel.message = @"Choose photo files to import.";
+    if(album && ![album isReallyDeleted]) {
+        panel.prompt = @"Copy Into Album";
+        NSString * dest = [FileUtilsBridge formatUrlForDisplay:album.filePathURL];
+        if(allowDirectories) {
+            panel.message = [NSString stringWithFormat:@"Choose photos or folders to copy into %@. Selecting folders will create new albums with the same name.", dest];
+        } else {
+            panel.message = [NSString stringWithFormat:@"Choose photos to copy into %@", dest];
         }
         
         [panel setCanChooseFiles:YES];
-        
         [panel setAllowedFileTypes:@[@"public.image"]];
     }
-    
     else
     {
         album = nil;
-        panel.prompt = @"Import Folders into Library";
-        panel.message = @"Choose folders of photos to copy into your library directory.";
-        [panel setCanChooseFiles:NO];    
+        NSString * firstLibraryDir = [FileUtilsBridge formatUrlForDisplay:PIXFileParser.sharedFileParser.observedDirectories[0]];
+        panel.prompt = [NSString stringWithFormat:@"Copy Folder(s) into %@", firstLibraryDir];
+        panel.defaultButtonCell.title = [NSString stringWithFormat:@"Copy Into %@", firstLibraryDir];
+        [panel setCanChooseFiles:NO];
     }
     
     NSWindow * mainWindow = [[[PIXAppDelegate sharedAppDelegate] mainWindowController] window];
-    
     [panel beginSheetModalForWindow:mainWindow completionHandler:^(NSInteger result) {
         
         // if the user pressed ok, then copy the files into the correct folder
@@ -1183,13 +1174,9 @@ typedef NSUInteger PIXOverwriteStrategy;
                 if([self directoryIsSubpathOfObservedDirectories:[aURL path]])
                 {
                     NSAlert* alert = [[NSAlert alloc] init];
-                    
                     [alert addButtonWithTitle:@"OK"];
-                    
-                    
-                    [alert setMessageText: @"Cannot import from main photos folder"];
-                    [alert setInformativeText:@"The files you chose to import are already accessable through Unbound."];
-                     
+                    [alert setMessageText: @"Cannot copy from main photos folder"];
+                    [alert setInformativeText:@"The files you chose to copy are already accessible in Unbound."];
                     [alert beginSheetModalForWindow:mainWindow modalDelegate:nil didEndSelector:nil contextInfo:nil];
                      
                      // don't do anything if the user did this

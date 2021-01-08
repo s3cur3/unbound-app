@@ -21,3 +21,25 @@ func pathHasAncestor(maybeChild: URL, maybeAncestor: URL) -> Bool {
 func canonicalize(_ url: URL) -> URL {
     url.standardizedFileURL.resolvingSymlinksInPath()
 }
+
+func formatForDisplay(_ url: URL) -> String {
+    let components = url.pathComponents
+    if components.count > 3 {
+        if components.starts(with: ["/", "Users"]) {
+            let shortened = ["~"] + components.dropFirst(3)
+            return shortened.joined(separator: "/")
+        } else if components.starts(with: ["/", "Volumes"]) {
+            return components.dropFirst(3).joined(separator: "/")
+        }
+    } else if components.count == 3, components.starts(with: ["/", "Volumes"]) {
+        return components.dropFirst(2).joined(separator: "/")
+    }
+
+    return url.path
+}
+
+@objc class FileUtilsBridge: NSObject {
+    @objc class func formatUrlForDisplay(_ url: URL) -> String {
+        formatForDisplay(url)
+    }
+}

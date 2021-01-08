@@ -67,9 +67,6 @@ struct LibraryPickerWindow: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Photo Folder(s)")
-                .font(.headline)
-
             Text("Unbound will scan these folders and all their sub-folders.")
                 .padding(EdgeInsets(top: 4, leading: 0, bottom: 8, trailing: 0))
 

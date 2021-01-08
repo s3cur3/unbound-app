@@ -36,6 +36,7 @@
 
 @property BOOL isMountDisconnected;
 
+- (void)updateCenterSetupView;
 - (void)albumsCreated:(NSNotification *)notification;
 
 @end
@@ -61,6 +62,8 @@
     [self addChildViewController:childLibPicker];
     [childLibPicker.view setFrame:[self.centerLibraryPicker bounds]];
     [self.centerLibraryPicker addSubview:childLibPicker.view];
+	
+	[self updateCenterSetupView];
 }
 
 - (void)awakeFromNib
@@ -243,9 +246,9 @@
     if(_importItem != nil) return _importItem;
     
     _importItem = [[NSToolbarItem alloc] initWithItemIdentifier:@"importAlbumButton"];
-    [_importItem setLabel:@"Import"];
-    [_importItem setPaletteLabel:@"Import"];
-    [_importItem setToolTip:@"Import photos"];
+    [_importItem setLabel:@"Copy Photos into Library"];
+    [_importItem setPaletteLabel:@"Copy Photos into Library"];
+    [_importItem setToolTip:@"Copy photos into library"];
 
     NSButton *button = [[ToolbarButton alloc] initWithImageNamed:@"ic_import" target:self action:@selector(importPhotosPressed:)];
     _importItem.view = button;
@@ -415,20 +418,25 @@
 	}
 	self.collectionView.selectionIndexPaths = newSelection;
 
+	[self updateCenterSetupView];
+}
+
+- (void)updateCenterSetupView
+{
 	BOOL haveAnythingToShow = [self.albums count] > 0;
 	[self.centerStatusView setHidden:haveAnythingToShow];
 	if(!haveAnythingToShow) {
 		NSArray<NSURL *> * directoryURLs = [[PIXFileParser sharedFileParser] observedDirectories];
 		if(directoryURLs.count > 0) { // we're observing a directory, it's just totally empty
-			NSString * firstLibraryDir = [directoryURLs[0] path];
-            [self.centerStatusViewTextField setStringValue:@"Choose where you keep your photos, or copy into your existing folders"];
-			[self.centerImportAlbumBtn setStringValue:[NSString stringWithFormat:@"Copy Photos Into %@", firstLibraryDir]];
+			NSString * firstLibraryDir = [FileUtilsBridge formatUrlForDisplay:directoryURLs[0]];
+			[self.centerStatusViewTextField setStringValue:@"Choose where you keep your photos, or copy into your existing folders"];
+			[self.centerImportAlbumBtn setTitle:[NSString stringWithFormat:@"Copy Photos Into %@", firstLibraryDir]];
 			self.centerImportAlbumBtn.hidden = NO;
 		} else {
 			[self.centerStatusViewTextField setStringValue:@"Choose where you keep your photos"];
 			self.centerImportAlbumBtn.hidden = YES;
 		}
-    }
+	}
 }
 
 - (void)albumsCreated:(NSNotification *)notification

@@ -84,7 +84,7 @@
                     <subviews>
                         <textField horizontalHuggingPriority="1" verticalHuggingPriority="744" horizontalCompressionResistancePriority="324" preferredMaxLayoutWidth="460" translatesAutoresizingMaskIntoConstraints="NO" id="WIY-ms-Q0S">
                             <rect key="frame" x="42" y="299" width="428" height="21"/>
-                            <textFieldCell key="cell" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="center" title="Import photos or choose a different main photos folder." id="XKW-Da-us6">
+                            <textFieldCell key="cell" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="center" title="Choose where you keep your photos, or copy photos into your existing folders" id="XKW-Da-us6">
                                 <font key="font" textStyle="title2" name=".SFNS-Regular"/>
                                 <color key="textColor" red="0.48806895379999998" green="0.48806895379999998" blue="0.48806895379999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -105,10 +105,7 @@
                             </constraints>
                         </customView>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="m2p-A4-arK">
-                            <rect key="frame" x="17" y="-2" width="206" height="25"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="200" id="F0B-bf-jMq"/>
-                            </constraints>
+                            <rect key="frame" x="17" y="-2" width="177" height="25"/>
                             <buttonCell key="cell" type="bevel" title="Copy Folders Into Library" bezelStyle="regularSquare" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nLO-27-ZRW">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
