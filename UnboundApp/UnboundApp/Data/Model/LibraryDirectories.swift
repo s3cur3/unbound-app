@@ -29,6 +29,10 @@ class LibraryDirectories: ObservableObject {
         }
     }
 
+    func urls() -> [URL] {
+        directories.map(\.path)
+    }
+
     class func urlsFromPrefs() -> [URL] {
         bookmarksFromPrefs().compactMap(LibraryDirectories.toURL)
     }
@@ -66,8 +70,14 @@ class LibraryDirectories: ObservableObject {
 }
 
 @objc class LibraryDirectoriesObjCBridge: NSObject {
-    @objc class func libraryUrlsFromPrefs() -> [URL] {
-        LibraryDirectories.urlsFromPrefs()
+    var lib = LibraryDirectories()
+
+    @objc func urls() -> [URL] {
+        lib.urls()
+    }
+
+    @objc var count: Int {
+        lib.directories.count
     }
 
     @objc class func diffNewlyAdded(latestPrefs: [URL], previous: [URL]) -> [URL] {

@@ -25,7 +25,7 @@ class GeneralPrefsViewController: NSViewController, MASPreferencesViewController
         super.viewDidLoad()
         updateEditors()
 
-        let childView = NSHostingController(rootView: LibraryPickerForPrefs())
+        let childView = NSHostingController(rootView: LibraryPickerForPrefs(library: PIXAppDelegate.shared()!.libraryDirs.lib))
         addChild(childView)
         childView.view.frame = libraryPickerView.bounds
         libraryPickerView.addSubview(childView.view)

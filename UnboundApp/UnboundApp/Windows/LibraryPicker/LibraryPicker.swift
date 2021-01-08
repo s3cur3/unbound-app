@@ -48,7 +48,7 @@ struct LibraryPicker: View {
 }
 
 struct LibraryPickerForPrefs: View {
-    @ObservedObject var library = LibraryDirectories()
+    @ObservedObject var library: LibraryDirectories
 
     var body: some View {
         VStack(alignment: .leading) {

@@ -75,6 +75,8 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
 {
 	_sharedAppDelegate = (PIXAppDelegate *)[[NSApplication sharedApplication] delegate];
 
+    self.libraryDirs = [[LibraryDirectoriesObjCBridge alloc] init];
+
 	BOOL showCrashDialog = [[NSUserDefaults standardUserDefaults] boolForKey:kAppDidNotExitCleanly];
     if(showCrashDialog)
     {
@@ -107,20 +109,13 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photosFinishedLoading:) name:SearchDidFinishNotification object:self.spotLightFetchController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminate:) name:NSApplicationWillTerminateNotification object:nil];
 
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kAppFirstRun])
-    {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kAppFirstRun]) {
         [self showLibraryPicker:self];
-
     } else {
-        
         [self startFileSystemLoading];
         [self showMainWindow:self];
     }
-    
-    //[self setupProgressIndicator];
-    
-    
-    
+
     // show constraint debug info if debuging
 #ifdef DEBUG
     self.isDebugBuild = YES;
@@ -183,7 +178,7 @@ static PIXAppDelegate * _sharedAppDelegate = nil;
 {
     if (self.libraryPickerWindow == nil)
     {
-		self.libraryPickerWindow = [LibraryPickerObjCBridge makeLibraryPickerWindow];
+		self.libraryPickerWindow = [LibraryPickerObjCBridge makeLibraryPickerWindowWithLib:self.libraryDirs];
     }
     [self.libraryPickerWindow showWindow:self];
 }

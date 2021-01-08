@@ -13,6 +13,7 @@
 @class PIXAboutWindowController;
 @class PIXFileParser;
 @class PIXAlbum;
+@class LibraryDirectoriesObjCBridge;
 
 @interface PIXAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSAlertDelegate>
 {
@@ -61,6 +62,8 @@
 @property (nonatomic,strong) NSDate *startDate;
 
 @property (assign) IBOutlet NSWindow *window;
+
+@property (nonatomic,strong) LibraryDirectoriesObjCBridge * libraryDirs;
 
 //Core Data
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;

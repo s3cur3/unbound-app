@@ -230,7 +230,7 @@ static NSDictionary * dictionaryForURL(NSURL * url)
 
 -(void)observedDirectoriesChanged
 {
-    NSArray<NSURL *> * latest = [LibraryDirectoriesObjCBridge libraryUrlsFromPrefs];
+	NSArray<NSURL *> * latest = [PIXAppDelegate.sharedAppDelegate.libraryDirs urls];
     NSArray<NSURL *> * added = [LibraryDirectoriesObjCBridge diffNewlyAddedWithLatestPrefs:latest previous:_observedDirectories];
     NSArray<NSURL *> * dropped = [LibraryDirectoriesObjCBridge diffNewlyRemovedWithLatestPrefs:latest previous:_observedDirectories];
     _observedDirectories = latest;
@@ -1458,7 +1458,7 @@ static NSDictionary * dictionaryForURL(NSURL * url)
 -(NSArray<NSURL *> *) observedDirectories
 {
     if(_observedDirectories == nil) {
-        NSArray<NSURL *> * urls = [LibraryDirectoriesObjCBridge libraryUrlsFromPrefs];
+        NSArray<NSURL *> * urls = [PIXAppDelegate.sharedAppDelegate.libraryDirs urls];
         _observedDirectories = [urls count] ? urls : nil;
     }
     return _observedDirectories;
