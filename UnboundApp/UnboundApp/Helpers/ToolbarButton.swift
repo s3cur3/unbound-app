@@ -13,9 +13,11 @@ import Cocoa
         image.isTemplate = true
         self.image = image
         imagePosition = .imageOverlaps
-        imageScaling = .scaleProportionallyDown
+        imageScaling = .scaleNone
+        setButtonType(.momentaryPushIn)
+        showsBorderOnlyWhileMouseInside = false
         isBordered = true
-        bezelStyle = .texturedSquare
+        bezelStyle = .texturedRounded
         title = ""
         self.target = target
         self.action = action
