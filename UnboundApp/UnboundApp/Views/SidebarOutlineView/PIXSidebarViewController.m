@@ -55,7 +55,7 @@
 
 -(IBAction)newAlbumPressed:(id)sender
 {
-    PIXAlbum * newAlbum = [[PIXFileManager sharedInstance] createAlbumWithName:@"New Album"]; // sends a notification that causes the album list to refresh
+    PIXAlbum * newAlbum = [[PIXFileManager sharedInstance] createAlbumWithName:@"New Folder"]; // sends a notification that causes the album list to refresh
     NSUInteger index = [self.albums indexOfObject:newAlbum];
     NSAssert(index != NSNotFound, @"We should always find the album");
     [self.outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];

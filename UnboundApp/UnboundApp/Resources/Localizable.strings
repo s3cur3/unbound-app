@@ -14,8 +14,8 @@
 "%lu photo(s) selected" = "%lu photo(s) selected";
 
 
-"Create new album" = "Create new album";
-"New Album" = "New Album";
+"Create new folder" = "Create new album";
+"New Folder" = "New Folder";
 "menu.reveal" = "Reveal in Finder";
 "menu.rename" = "Rename";
 "menu.open" = "Open";

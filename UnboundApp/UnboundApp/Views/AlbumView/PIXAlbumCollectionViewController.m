@@ -224,9 +224,9 @@
     if(_neuAlbumButton != nil) return _neuAlbumButton;
     
     _neuAlbumButton = [[NSToolbarItem alloc] initWithItemIdentifier:@"NewAlbumButton"];
-    _neuAlbumButton.label = NSLocalizedString(@"New Album", @"New Album");
-    _neuAlbumButton.paletteLabel = NSLocalizedString(@"New Album", @"New Album");
-    _neuAlbumButton.toolTip = NSLocalizedString(@"Create new album", @"Create new album");
+    _neuAlbumButton.label = NSLocalizedString(@"New Folder", @"New Folder");
+    _neuAlbumButton.paletteLabel = NSLocalizedString(@"New Folder", @"New Folder");
+    _neuAlbumButton.toolTip = NSLocalizedString(@"Create new folder", @"Create new folder");
 
     NSButton *buttonView = [[ToolbarButton alloc] initWithImageNamed:NSImageNameAddTemplate target:self action:@selector(newAlbumPressed:)];
     _neuAlbumButton.view = buttonView;
@@ -240,7 +240,7 @@
     // turn off the search if needed
     self.searchField.stringValue = @"";
     
-    PIXAlbum * newAlbum = [[PIXFileManager sharedInstance] createAlbumWithName:@"New Album"];
+    PIXAlbum * newAlbum = [[PIXFileManager sharedInstance] createAlbumWithName:@"New Folder"];
     
     // the above method will automatically call a notification that causes the album list to refresh
     
