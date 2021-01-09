@@ -30,21 +30,21 @@ struct LibraryDirectory: Codable, Equatable, Identifiable {
             // Reject if we already have this exact directory
             guard !withExisting.contains(LibraryDirectory(withUrl: url)) else {
                 modalAlert(title: "Already Scanning Directory",
-                           body: "Unbound is already set to scan \(url.path).")
+                           body: "Unbound is already set to scan \(formatForDisplay(url)).")
                 return []
             }
 
             // Reject if the selected URL is a subdirectory of an existing one
             if let parent = withExisting.first(where: { pathHasAncestor(maybeChild: url, maybeAncestor: $0.path) }) {
                 modalAlert(title: "Already Scanning Directory",
-                           body: "Unbound is already set to scan \(parent.path.path), which includes \(url.path).")
+                           body: "Unbound is already set to scan \(formatForDisplay(parent.path)), which includes \(formatForDisplay(url)).")
                 return []
             }
 
             // If any existing directory is a subdirectory the new one
             if let child = withExisting.first(where: { pathHasAncestor(maybeChild: $0.path, maybeAncestor: url) }) {
                 modalAlert(title: "Cannot Add Parent Directory",
-                           body: "Unbound is already set to scan \(child.path.path). Remove that folder first before adding its parent directory \(url.path).")
+                           body: "Unbound is already set to scan \(formatForDisplay(child.path)). Remove that folder first before adding its parent directory \(formatForDisplay(url)).")
                 return []
             }
 
@@ -73,5 +73,11 @@ struct LibraryDirectory: Codable, Equatable, Identifiable {
         let result = cancellableAlert(title: "Write Permissions Are Required",
                                       body: "The folder you selected is read-only, which may prevent some app features from functioning properly. Scan this folder anyway?")
         return result == .OK
+    }
+}
+
+@objc class LibraryDirectoryObjCBridge: NSObject {
+    @objc class func chooseFromSystemDialog(existing: LibraryDirectoriesObjCBridge) -> [Any] {
+        LibraryDirectory.chooseFromSystemDialog(withExisting: existing.lib.directories)
     }
 }

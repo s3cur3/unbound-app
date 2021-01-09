@@ -80,6 +80,11 @@ class LibraryDirectories: ObservableObject {
         lib.directories.count
     }
 
+    @objc func addLibDirs(_ libDirs: [Any]) {
+        let safeDirs = libDirs.compactMap { $0 as? LibraryDirectory }
+        lib.add(safeDirs)
+    }
+
     @objc class func diffNewlyAdded(latestPrefs: [URL], previous: [URL]) -> [URL] {
         latestPrefs.filter { !previous.contains($0) }
     }

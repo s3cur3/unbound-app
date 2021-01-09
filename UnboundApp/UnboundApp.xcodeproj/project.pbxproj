@@ -15,6 +15,10 @@
 		1D4A1E2B167D2A4D00C9A895 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D4A1E2A167D2A4C00C9A895 /* Quartz.framework */; };
 		1DB2F84F167ABE87008AC0F7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DB2F84E167ABE87008AC0F7 /* Cocoa.framework */; };
 		1DB2F862167ABE87008AC0F7 /* PIXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2F861167ABE87008AC0F7 /* PIXAppDelegate.m */; };
+		2F0D919325AA483700C33294 /* folder-check.svg in Resources */ = {isa = PBXBuildFile; fileRef = 2F0D919125AA483700C33294 /* folder-check.svg */; };
+		2F0D919425AA483700C33294 /* folder-check.svg in Resources */ = {isa = PBXBuildFile; fileRef = 2F0D919125AA483700C33294 /* folder-check.svg */; };
+		2F0D919525AA483700C33294 /* folder-plus.svg in Resources */ = {isa = PBXBuildFile; fileRef = 2F0D919225AA483700C33294 /* folder-plus.svg */; };
+		2F0D919625AA483700C33294 /* folder-plus.svg in Resources */ = {isa = PBXBuildFile; fileRef = 2F0D919225AA483700C33294 /* folder-plus.svg */; };
 		2F28047E25A7F1E100AE8EB4 /* LibraryDirectoriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69B49319569756F0A5C47F90 /* LibraryDirectoriesTests.swift */; };
 		2F28048225A7F35800AE8EB4 /* LibraryDirectories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F64E3CD259FAF2200931A45 /* LibraryDirectories.swift */; };
 		2F28048425A7F35C00AE8EB4 /* LibraryDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7781DD2585AF5900C24525 /* LibraryDirectory.swift */; };
@@ -467,6 +471,8 @@
 		1DB2F853167ABE87008AC0F7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DB2F860167ABE87008AC0F7 /* PIXAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PIXAppDelegate.h; sourceTree = "<group>"; };
 		1DB2F861167ABE87008AC0F7 /* PIXAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PIXAppDelegate.m; sourceTree = "<group>"; };
+		2F0D919125AA483700C33294 /* folder-check.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "folder-check.svg"; sourceTree = "<group>"; };
+		2F0D919225AA483700C33294 /* folder-plus.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "folder-plus.svg"; sourceTree = "<group>"; };
 		2F64E3CD259FAF2200931A45 /* LibraryDirectories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryDirectories.swift; sourceTree = "<group>"; };
 		2F64E3D025A00B7000931A45 /* FileUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtils.swift; sourceTree = "<group>"; };
 		2F64E3D325A00C4100931A45 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
@@ -1184,6 +1190,8 @@
 		458ADD662B8EDFF6F4DED34D /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				2F0D919125AA483700C33294 /* folder-check.svg */,
+				2F0D919225AA483700C33294 /* folder-plus.svg */,
 				458ADEC56F74773AFE527439 /* Mask.jpg */,
 				458ADA5D25C211D99C7CF0AE /* preferences_dark_theme.png */,
 				458ADE903A39B8A52515D9E2 /* Unbound-For-Mac-512.png */,
@@ -1632,6 +1640,8 @@
 				458AD180BC115721CB9BC296 /* PIXAlbumCollectionViewItem.xib in Resources */,
 				458ADD424B02E2EFD3F008D6 /* PIXCollectionToolbar.xib in Resources */,
 				458AD93CA9FB9A1A858417C7 /* Localizable.strings in Resources */,
+				2F0D919325AA483700C33294 /* folder-check.svg in Resources */,
+				2F0D919525AA483700C33294 /* folder-plus.svg in Resources */,
 				458AD5E7813AD54948D98FEA /* Localizable.stringsdict in Resources */,
 				458AD822D55D75B3603B5623 /* AppearancePrefsViewController.xib in Resources */,
 				458AD88787C4D505ABB71837 /* SimplePhotoItem.xib in Resources */,
@@ -1728,6 +1738,7 @@
 				458AD5938B1D9FAEAD7A7369 /* captionbutton.png in Resources */,
 				458AD44E9DBD039E19CE622D /* buttongrid_facebook.png in Resources */,
 				458AD7F087A985CAE0B55869 /* contract@2x.png in Resources */,
+				2F0D919625AA483700C33294 /* folder-plus.svg in Resources */,
 				458ADF362D117149BCB9FE3E /* buttongrid_email@2x.png in Resources */,
 				458ADAF343FACAD6B33DD192 /* playbutton.png in Resources */,
 				458AD615FF4E2DF80AF2FDC8 /* buttongrid_print@2x.png in Resources */,
@@ -1752,6 +1763,7 @@
 				458AD892258BE9F7BDC6FE52 /* PIXAlbumCollectionViewItem.xib in Resources */,
 				458ADA347B1449F3CB15ED8A /* PIXCollectionToolbar.xib in Resources */,
 				458ADAEC8D42E95CBA6ED16A /* Localizable.strings in Resources */,
+				2F0D919425AA483700C33294 /* folder-check.svg in Resources */,
 				458ADAF6F511F512B382DAC5 /* Localizable.stringsdict in Resources */,
 				458ADCB23CCC2C76DBFF2069 /* Images.xcassets in Resources */,
 				458AD006CB3407A33D3B47A9 /* AppearancePrefsViewController.xib in Resources */,

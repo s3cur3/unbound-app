@@ -30,6 +30,7 @@
 @property (nonatomic, strong) NSToolbarItem * neuAlbumButton;
 @property (nonatomic, strong) NSToolbarItem * searchBar;
 @property (nonatomic, strong) NSToolbarItem * importItem;
+@property (nonatomic, strong) NSToolbarItem * observeNewDirectory;
 @property (nonatomic, strong) NSSearchField * searchField;
 
 @property (nonatomic, strong) PIXSplitViewController *aSplitViewController;
@@ -125,7 +126,7 @@
         [window setMinSize:NSMakeSize(720, 480)];
 	#endif
 
-    self.navigationViewController.leftToolbarItems = @[self.importItem];
+    self.navigationViewController.leftToolbarItems = @[self.observeNewDirectory, self.importItem];
     self.navigationViewController.rightToolbarItems = @[self.self.neuAlbumButton, self.sortButton, self.searchBar];
 }
 
@@ -219,6 +220,31 @@
     [[PIXFileManager sharedInstance] importPhotosToAlbum:currentAlbum allowDirectories:YES];
 }
 
+- (NSToolbarItem *)observeNewDirectory
+{
+	if(_observeNewDirectory != nil) return _observeNewDirectory;
+
+	_observeNewDirectory = [[NSToolbarItem alloc] initWithItemIdentifier:@"observeNewDirectoryButton"];
+	[_observeNewDirectory setTitle:@"Add Existing Folder to Scan"];
+	[_observeNewDirectory setLabel:@"Scan Existing Folder"];
+	[_observeNewDirectory setPaletteLabel:@"Scan Existing Folder"];
+	[_observeNewDirectory setToolTip:@"Scan an existing folder for photos"];
+
+	NSButton *button = [[ToolbarButton alloc] initWithImageNamed:@"ic_folder_check" target:self action:@selector(observeNewDirectoryPressed:)];
+	_observeNewDirectory.view = button;
+
+	return _observeNewDirectory;
+}
+
+-(void)observeNewDirectoryPressed:(id)sender
+{
+	LibraryDirectoriesObjCBridge * sharedLibDirs = PIXAppDelegate.sharedAppDelegate.libraryDirs;
+	NSArray * selections = [LibraryDirectoryObjCBridge chooseFromSystemDialogWithExisting:sharedLibDirs];
+	if(selections.count > 0) {
+		[sharedLibDirs addLibDirs:selections];
+	}
+}
+
 - (NSToolbarItem *)neuAlbumButton
 {
     if(_neuAlbumButton != nil) return _neuAlbumButton;
@@ -228,7 +254,7 @@
     _neuAlbumButton.paletteLabel = NSLocalizedString(@"New Folder", @"New Folder");
     _neuAlbumButton.toolTip = NSLocalizedString(@"Create new folder", @"Create new folder");
 
-    NSButton *buttonView = [[ToolbarButton alloc] initWithImageNamed:NSImageNameAddTemplate target:self action:@selector(newAlbumPressed:)];
+    NSButton *buttonView = [[ToolbarButton alloc] initWithImageNamed:@"ic_folder_plus" target:self action:@selector(newAlbumPressed:)];
     _neuAlbumButton.view = buttonView;
 
     return _neuAlbumButton;
