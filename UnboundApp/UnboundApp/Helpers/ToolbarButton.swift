@@ -13,7 +13,7 @@ import Cocoa
         image.isTemplate = true
         self.image = image
         imagePosition = .imageOverlaps
-        imageScaling = .scaleNone
+        imageScaling = .scaleProportionallyDown
         setButtonType(.momentaryPushIn)
         showsBorderOnlyWhileMouseInside = false
         isBordered = true
