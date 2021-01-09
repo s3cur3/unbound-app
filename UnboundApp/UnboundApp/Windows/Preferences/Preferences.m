@@ -59,8 +59,8 @@ static Preferences * instance = nil;
     [defaults setValue:[NSNumber numberWithBool:NO] forKey:kAppObservedDirectoryUnavailable];
     [defaults setValue:[NSNumber numberWithBool:NO] forKey:kAppObservedDirectoryUnavailableSupressAlert];
     
-    [defaults setValue:[NSNumber numberWithInteger:PIXPhotoSortOldToNew] forKey:@"PIXPhotoSort"];
-    [defaults setValue:[NSNumber numberWithInteger:PIXAlbumSortAtoZ] forKey:@"PIXAlbumSort"];
+    [defaults setValue:[NSNumber numberWithInteger:PIXPhotoSortOldToNew] forKey:kPrefPhotoSortOrder];
+    [defaults setValue:[NSNumber numberWithInteger:PIXAlbumSortAtoZ] forKey:kPrefAlbumSortOrder];
 	
 	[[NSUserDefaults standardUserDefaults] setFloat:300 forKey:@"albumSideBarToggleWidth"];
 

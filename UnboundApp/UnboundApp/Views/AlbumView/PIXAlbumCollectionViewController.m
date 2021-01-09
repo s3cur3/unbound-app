@@ -162,60 +162,10 @@
 
 - (NSToolbarItem *)sortButton
 {
-    if(_sortButton != nil) return _sortButton;
-    
-    _sortButton = [[NSToolbarItem alloc] initWithItemIdentifier:@"sortButton"];
-    //_settingsButton.image = [NSImage imageNamed:NSImageNameSmartBadgeTemplate];
-    
-    NSPopUpButton * buttonView = [[NSPopUpButton alloc] initWithFrame:CGRectMake(0, 0, 46, 29) pullsDown:YES];
-    
-    [buttonView setImagePosition:NSImageOverlaps];
-    [buttonView setBordered:YES];
-    [buttonView setBezelStyle:NSTexturedSquareBezelStyle];
-    [buttonView setTitle:@""];
-    [(NSPopUpButtonCell *) buttonView.cell setArrowPosition:NSPopUpNoArrow];
-    
-    _sortButton.view = buttonView;
-    
-    [_sortButton setLabel:@"Sort Albums"];
-    [_sortButton setPaletteLabel:@"Sort Albums"];
-    
-    // Set up a reasonable tooltip, and image
-    // you will likely want to localize many of the item's properties
-    [_sortButton setToolTip:@"Choose Album Sort"];
-    
-    
-    // Tell the item what message to send when it is clicked
-    
-    [buttonView insertItemWithTitle:@"" atIndex:0]; // first index is always the title
-    [buttonView insertItemWithTitle:@"New to Old" atIndex:1];
-    [buttonView insertItemWithTitle:@"Old to New" atIndex:2];
-    [buttonView insertItemWithTitle:@"A to Z" atIndex:3];
-    [buttonView insertItemWithTitle:@"Z to A" atIndex:4];
-    
-    NSMenuItem * item = buttonView.itemArray[0];
-    item.image = [NSImage imageNamed:@"ic_sort"];
-    [item.image setTemplate:YES];
-    
-    
-    int sortOrder = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"PIXAlbumSort"];
-    
-    for (int i = 1; i <= 4; i++) {
-        item = buttonView.itemArray[i];
-        
-        if(i-1 == sortOrder)
-        {
-            [item setState:NSControlStateValueOn];
-        }
-        
-        [item setTag:i-1];
-        [item setTarget:self];
-        [item setAction:@selector(sortChanged:)];
-        
+    if(_sortButton == nil) {
+        _sortButton = [ToolbarButton makeAlbumSortWithTarget:self selector:@selector(sortChanged:)];
     }
-    
     return _sortButton;
-    
 }
 
 -(void)sortChanged:(id)sender
@@ -232,7 +182,7 @@
 
         NSMenuItem * thisItem = sender;
         [thisItem setState:NSControlStateValueOn];
-        [[NSUserDefaults standardUserDefaults] setInteger:[thisItem tag] forKey:@"PIXAlbumSort"];
+        [[NSUserDefaults standardUserDefaults] setInteger:[thisItem tag] forKey:kPrefAlbumSortOrder];
         
         [[NSUserDefaults standardUserDefaults] synchronize];
         

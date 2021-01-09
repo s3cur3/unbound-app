@@ -11,6 +11,7 @@
 #import "PIXDefines.h"
 #import "PIXAppDelegate.h"
 #import "PIXApplicationExtensions.h"
+#import "Unbound-Swift.h"
 //#include <unistd.h>
 
 static NSString *const kItemsKey = @"photos";
@@ -77,7 +78,7 @@ NSArray * albumSortDescriptors(PIXAlbumSort currentSort);
 
 PIXAlbumSort albumSortPref(void)
 {
-    return (PIXAlbumSort)[[NSUserDefaults standardUserDefaults] integerForKey:@"PIXAlbumSort"];
+    return (PIXAlbumSort)[[NSUserDefaults standardUserDefaults] integerForKey:kPrefAlbumSortOrder];
 }
 
 NSArray * albumSortDescriptors(PIXAlbumSort currentSort)
@@ -260,7 +261,7 @@ NSArray * albumSortDescriptors(PIXAlbumSort currentSort)
 
 -(NSArray *)photoSortDescriptors
 {
-    PIXPhotoSort currentSort = (PIXPhotoSort) [[NSUserDefaults standardUserDefaults] integerForKey:@"PIXPhotoSort"];
+    PIXPhotoSort currentSort = (PIXPhotoSort) [[NSUserDefaults standardUserDefaults] integerForKey:kPrefPhotoSortOrder];
     switch (currentSort) {
         case PIXPhotoSortOldToNew:
             return @[

@@ -59,6 +59,8 @@
 #define kPrefSupressAlbumDeleteWarning @"PIX_supressAlbumDeleteWarning"
 #define kPrefShowMoreExifInfo @"showExifMore"
 #define kPrefShowInfoPanel @"showInfoPanel"
+#define kPrefPhotoSortOrder @"PIXPhotoSort"
+#define kPrefAlbumSortOrder @"PIXAlbumSort"
 
 // key for obtaining the path of an image field
 #define kPathKey @"path"
