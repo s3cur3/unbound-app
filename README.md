@@ -1,6 +1,14 @@
-# Unbound for Mac
+# [<img src="https://www.unboundapp.com/images/unbound-for-mac-icon-512.png" width="30" height="30"> Unbound for Mac](https://unboundapp.com/)
 
 A simple, no-nonsense photo manager and viewer for Mac. See the [marketing website](https://unboundapp.com/) for more information about what makes Unbound different from, say, Apple's Photos app.
+
+[![Unbound screenshot](https://www.unboundapp.com/images/screenshots/single-album-transition-light@2x.png)](https://unboundapp.com/)
+
+| Light Mode | Dark Mode |
+|------------|-----------|
+| ![All albums](https://www.unboundapp.com/images/screenshots/albums-overview-light@2x.png) | ![All albums](https://www.unboundapp.com/images/screenshots/albums-overview-dark@2x.png) |
+| ![Photos in an album](https://www.unboundapp.com/images/screenshots/album-photos-light@2x.png) | ![Photos in an album](https://www.unboundapp.com/images/screenshots/album-photos-dark@2x.png) |
+| ![Single photo](https://www.unboundapp.com/images/screenshots/single-photo-light@2x.png) | ![Single photo](https://www.unboundapp.com/images/screenshots/single-photo-dark@2x.png) |
 
 ## Unbound is now free*
 
