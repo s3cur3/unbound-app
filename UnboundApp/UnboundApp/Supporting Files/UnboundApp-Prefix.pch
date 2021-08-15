@@ -1,0 +1,22 @@
+//
+// Prefix header for all source files of the 'UnboundApp' target in the 'UnboundApp' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
+
+// DLog is almost a drop-in replacement for NSLog
+// DLog();
+// DLog(@"here");
+// DLog(@"value: %d", x);
+// Unfortunately this doesn't work DLog(aStringVariable); you have to do this instead DLog(@"%@", aStringVariable);
+
+#ifdef DEBUG
+#	define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+#else
+#	define DLog(...)
+#   ifndef NS_BLOCK_ASSERTIONS
+#       define NS_BLOCK_ASSERTIONS
+#   endif
+#endif

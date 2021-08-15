@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="PIXCollectionToolbar">
+            <connections>
+                <outlet property="bottomBorderView" destination="oAv-ST-izF" id="fkE-vS-IcB"/>
+                <outlet property="buttonHolder" destination="iPS-px-nbh" id="kY5-Az-dE9"/>
+                <outlet property="contentView" destination="c22-O7-iKe" id="MR6-po-zwV"/>
+                <outlet property="titleField" destination="Vko-NF-F62" id="8Wr-qH-hev"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="672" height="35"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button horizontalHuggingPriority="451" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="m3U-29-rg4">
+                    <rect key="frame" x="151" y="0.0" width="56" height="32"/>
+                    <buttonCell key="cell" type="push" title="All" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WwB-zS-D53">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="selectAll:" target="-2" id="Znl-kb-6Sm"/>
+                    </connections>
+                </button>
+                <button horizontalHuggingPriority="373" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1" translatesAutoresizingMaskIntoConstraints="NO" id="aob-gY-IMA">
+                    <rect key="frame" x="2" y="0.0" width="73" height="32"/>
+                    <buttonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NAz-sl-hGe">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="selectNone:" target="-2" id="lS2-nP-lGa"/>
+                    </connections>
+                </button>
+                <button horizontalHuggingPriority="537" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1" translatesAutoresizingMaskIntoConstraints="NO" id="yd9-hK-Jvl">
+                    <rect key="frame" x="71" y="0.0" width="84" height="32"/>
+                    <buttonCell key="cell" type="push" title="Inverse" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xl7-8q-F2q">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="toggleSelection:" target="-2" id="WXH-pT-bxx"/>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="252" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vko-NF-F62">
+                    <rect key="frame" x="283" y="9" width="106" height="18"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="1 Item Selected" id="3Wp-t5-DAc">
+                        <font key="font" size="14" name="Helvetica-Bold"/>
+                        <color key="textColor" red="0.18412449049999999" green="0.18412449049999999" blue="0.18412449049999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <stackView orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iPS-px-nbh">
+                    <rect key="frame" x="395" y="6" width="269" height="23"/>
+                </stackView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="oAv-ST-izF">
+                    <rect key="frame" x="0.0" y="0.0" width="672" height="1"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="6Pf-Nh-NUu"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="aob-gY-IMA" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="8" id="4Jd-LJ-8Ii"/>
+                <constraint firstItem="Vko-NF-F62" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="4jU-Tq-fyh"/>
+                <constraint firstItem="yd9-hK-Jvl" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="5wr-4r-2w2"/>
+                <constraint firstItem="m3U-29-rg4" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="8Dc-34-714"/>
+                <constraint firstAttribute="trailing" secondItem="iPS-px-nbh" secondAttribute="trailing" constant="8" id="B66-D0-waP"/>
+                <constraint firstItem="iPS-px-nbh" firstAttribute="leading" secondItem="Vko-NF-F62" secondAttribute="trailing" constant="8" id="I8Q-BM-hKg"/>
+                <constraint firstItem="iPS-px-nbh" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="6" id="Iee-dI-qoe"/>
+                <constraint firstAttribute="trailing" secondItem="oAv-ST-izF" secondAttribute="trailing" id="Mny-W3-c32"/>
+                <constraint firstItem="oAv-ST-izF" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="NG0-Ma-LgD"/>
+                <constraint firstAttribute="bottom" secondItem="oAv-ST-izF" secondAttribute="bottom" id="Wmy-4D-siE"/>
+                <constraint firstItem="m3U-29-rg4" firstAttribute="leading" secondItem="yd9-hK-Jvl" secondAttribute="trailing" constant="8" id="ZjW-zX-yYB"/>
+                <constraint firstAttribute="bottom" secondItem="iPS-px-nbh" secondAttribute="bottom" constant="6" id="ZoI-xw-e1U"/>
+                <constraint firstItem="yd9-hK-Jvl" firstAttribute="leading" secondItem="aob-gY-IMA" secondAttribute="trailing" constant="8" id="aLE-hx-Pg0"/>
+                <constraint firstItem="aob-gY-IMA" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="sd5-Lg-z31"/>
+                <constraint firstItem="Vko-NF-F62" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="xn3-aL-y70"/>
+            </constraints>
+            <point key="canvasLocation" x="118" y="168"/>
+        </customView>
+    </objects>
+</document>

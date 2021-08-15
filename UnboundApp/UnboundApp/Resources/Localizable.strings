@@ -1,0 +1,35 @@
+/* 
+  Localizable.strings
+  UnboundApp
+
+  Created by Ryan Harter on 10/7/17.
+    Copyright © 2017 Pixite Apps LLC. All rights reserved.
+*/
+
+"%lu album(s) selected" = "%lu album(s) selected";
+"%lu album(s) containing %lu photos" = "%1$lu album(s) containing %2$lu photos";
+"%lu album(s) matched search" = "%lu album(s) matched search";
+"Search Albums" = "Search Albums";
+
+"%lu photo(s) selected" = "%lu photo(s) selected";
+
+
+"Create new album" = "Create new album";
+"New Album" = "New Album";
+"menu.reveal" = "Reveal in Finder";
+"menu.rename" = "Rename";
+"menu.open" = "Open";
+"menu.duplicate" = "Duplicate";
+"menu.move_to_trash" = "Move to Trash";
+"menu.share" = "Share";
+"menu.edit_with" = "Edit with";
+"menu.edit_with_default" = "Edit with %@";
+"menu.get_info" = "Get Info";
+"menu.set_desktop_picture" = "Set Desktop Picture";
+
+"undo.duplicate_photo" = "Duplicate Photo";
+
+"preferences.window.title" = "Preferences";
+"preferences.general.title" = "General";
+"preferences.general.no_folders" = "No folder set";
+"preferences.interface.title" = "Appearance";

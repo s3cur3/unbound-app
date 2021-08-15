@@ -1,0 +1,6 @@
+body { border: 1px solid black;}
+
+div#MKMapViewTopLayer {
+    -webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.7);
+    pointer-events: none;
+}
