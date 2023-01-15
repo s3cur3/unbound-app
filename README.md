@@ -1,4 +1,4 @@
-# [<img src="https://www.unboundapp.com/images/unbound-for-mac-icon-512.png" width="30" height="30"> Unbound for Mac](https://unboundapp.com/)
+# [<img src="./UnboundApp/Unbound.app/Contents/Resources/Unbound-For-Mac-512.png" width="30" height="30"> Unbound for Mac](https://unboundapp.com/)
 
 A simple, no-nonsense photo manager and viewer for Mac. See the [marketing website](https://unboundapp.com/) for more information about what makes Unbound different from, say, Apple's Photos app.
 
